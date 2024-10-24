@@ -1,0 +1,43 @@
+import { ErrorBar } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as ErrorBarStories from './index.stories';
+import ExampleErrorBar from '!!raw-loader!./snippets/ExampleErrorBar.snippet.tsx';
+
+<Meta of={ErrorBarStories} />
+
+# ErrorBar
+
+`ErrorBar` is a wrapper on fluent UI's `MessageBar` with additional features for surfacing Azure Communication
+Services errors on the UI consistently.
+
+Set the `showErrorBar` feature for `ChatComposite` to use an `ErrorBar` to show errors.
+
+## Example ErrorBar
+
+<Canvas of={ErrorBarStories.ExampleErrorBarTextExampleDocsOnly} source={{ code: ExampleErrorBar }} />
+
+## Localization
+
+Similar to other UI components in this library, `ErrorBarProps` accepts all strings shown on the UI as a
+`strings` field. The `activeErrorMessages` field selects from these strings to show in the `ErrorBar` UI.
+
+## Dismissed messages
+
+User can dismiss the errors shown via `ErrorBar`. The `ErrorBar` component internally tracks dismissed errors
+and only shows a `MessageBar` for errors that have not been dismissed. When `activeErrorMessages` include a
+timestamp, errors that occur after the latest dismissal are shown on the UI. When `activeErrorMessages` do not
+include a timestamp a dismissed error is only shown on the UI if it is removed from the active errors and then
+occurs again.
+
+This way, `ErrorBar` separates the tracking of active errors from the purely UI related state of `ErrorBar`
+dismissals.
+
+## Multiple errors
+
+More than one error can occur at the same time. The `ErrorBar` component can show multiple active errors. To
+avoid confusing the user, it is important to be mindful to limit the total number of errors that are shown
+together.
+
+## Props
+
+<ArgTypes of={ErrorBar} />

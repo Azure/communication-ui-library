@@ -1,0 +1,61 @@
+import { DevicesButton } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as DevicesButtonStories from './index.stories';
+import DevicesButtonCustomExampleText from '!!raw-loader!./snippets/Custom.snippet.tsx';
+import DevicesButtonDefaultExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
+import DevicesButtonWithLabelExampleText from '!!raw-loader!./snippets/WithLabel.snippet.tsx';
+
+<Meta of={DevicesButtonStories} />
+
+# Devices Button
+
+A button to open a menu that allows for device selection. For use with the [Control
+Bar](./?path=/docs/components-controlbar-control-bar--docs).
+
+Note that for accessibility purposes, this button can be focused on even when disabled. This behaviour can be
+changed by setting the button prop `allowDisabledFocus` to `false`.
+
+## Importing
+
+```tsx
+import { DevicesButton } from '@azure/communication-react';
+```
+
+## Example
+
+The default `DevicesButton` component shows an horizontal `More` icon with no label as in the example below.
+
+<Canvas
+  of={DevicesButtonStories.DevicesButtonDefaultExampleDocsOnly}
+  source={{ code: DevicesButtonDefaultExampleText }}
+/>
+
+## DevicesButton with default label
+
+You can display the button label which, by default, will show below the icon as `Devices`.
+
+<Canvas
+  of={DevicesButtonStories.DevicesButtonWithLabelExampleDocsOnly}
+  source={{ code: DevicesButtonWithLabelExampleText }}
+/>
+
+## Custom DevicesButton Styles
+
+You can change the styles of the `DevicesButton` as you would customized any Button (styles, primary,
+onRenderIcon, onRenderText, etc... ).
+
+Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
+to each element to avoid warning for children in a list.
+
+<Canvas
+  of={DevicesButtonStories.DevicesButtonCustomExampleDocsOnly}
+  source={{ code: DevicesButtonCustomExampleText }}
+/>
+
+## Props
+
+`DevicesButton` features all props a [FluentUI
+Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional
+properties.
+
+<ArgTypes of={DevicesButton} />

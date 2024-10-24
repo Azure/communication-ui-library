@@ -13,6 +13,7 @@ import { MobileChatSidePaneTabHeaderProps } from '../../common/TabHeader';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
+import { ActiveNotification } from '@internal/react-components';
 
 /**
  * @beta
@@ -23,10 +24,11 @@ export interface HoldPageProps {
   modalLayerHostId: string;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
-  latestErrors: ActiveErrorMessage[];
-  onDismissError: (error: ActiveErrorMessage) => void;
-
+  latestErrors: ActiveErrorMessage[] | ActiveNotification[];
+  onDismissError: (error: ActiveErrorMessage | ActiveNotification) => void;
+  onDismissNotification?: (notification: ActiveNotification) => void;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
+  latestNotifications: ActiveNotification[];
 }
 
 /**
@@ -45,8 +47,6 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
     'microphoneButton',
     'devicesButton',
     'screenShareButton',
-    /* @conditional-compile-remove(PSTN-calls) */
-    /* @conditional-compile-remove(one-to-n-calling) */
     'holdButton'
   ]);
 
@@ -54,6 +54,7 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
     <CallArrangement
       complianceBannerProps={{ strings }}
       errorBarProps={props.options?.errorBar !== false && errorBarProps}
+      showErrorNotifications={props.options?.errorBar ?? true}
       callControlProps={{
         options: callControlOptions,
         increaseFlyoutItemSize: props.mobileView
@@ -65,7 +66,11 @@ export const HoldPage = (props: HoldPageProps): JSX.Element => {
       updateSidePaneRenderer={props.updateSidePaneRenderer}
       mobileChatTabHeader={props.mobileChatTabHeader}
       latestErrors={props.latestErrors}
+      latestNotifications={props.latestNotifications}
       onDismissError={props.onDismissError}
+      onDismissNotification={props.onDismissNotification}
+      /* @conditional-compile-remove(call-readiness) */
+      doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
     />
   );
 };

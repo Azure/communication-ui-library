@@ -147,22 +147,36 @@ exports.default = babelHelper.declare((_api, opts) => {
 function Handle(path, featureSet, stabilizedFeatureSet, relaceWith = undefined) {
   let { node } = path;
 
+  // If Node has no comments, it hence has no conditional compilation directives, skip this node.
   if (!node.leadingComments) {
     return;
   }
 
-  const removalInstructions = node.leadingComments.map((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet));
-  if (!shouldRemoveNode(removalInstructions)) {
+  // If Node has comments, but none are conditional-compile directives, skip this node.
+  const firstConditionalCompileInstructionIdx = node.leadingComments.findIndex((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet) !== 'none');
+  if (firstConditionalCompileInstructionIdx === -1) {
     return;
   }
 
+  // If Node has conditional-compile directives, but at least one of them is to keep the node, skip this node - but still remove the conditional compile line from the code.
+  const shouldKeepNode = node.leadingComments.some((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet) === 'keep');
+  if (shouldKeepNode) {
+    // Strip conditional compile comments only
+    node.leadingComments.forEach((comment) => {
+      if (nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet) !== 'none') {
+        comment.ignore = true;
+        comment.value = '';
+      }
+    });
+    return;
+  }
+
+  // Node has conditional-compile directives. Remove the first comments starting at compile directive, and also remove all following comments so that
+  // those comments aren't added to the AST node that follows the removed node.
   const firstRemovalInstructionIdx = node.leadingComments.findIndex((comment) => nodeRemovalInstruction(node, comment, featureSet, stabilizedFeatureSet) === 'remove');
   if (firstRemovalInstructionIdx === -1) {
     return;
   }
-
-  // Remove the first removal instruction as well as all following comments so that
-  // those comments aren't added to the AST node that follows the removed node.
   node.leadingComments.slice(firstRemovalInstructionIdx).forEach((comment) => {
     comment.ignore = true;
     // Comment is inherited by next line even it is set to 'ignore'.

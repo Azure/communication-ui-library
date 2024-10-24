@@ -11,8 +11,11 @@ import {
   ScreenShareButton,
   VideoGallery
 } from '@internal/react-components';
+import { IncomingCallStack } from '@internal/react-components';
+
+import { NotificationStack } from '@internal/react-components';
 import { Dialpad } from '@internal/react-components';
-/* @conditional-compile-remove(PSTN-calls) */
+
 import { HoldButton } from '@internal/react-components';
 import { RaiseHandButton } from '@internal/react-components';
 import { raiseHandButtonSelector } from '../callControlSelectors';
@@ -26,7 +29,6 @@ import {
   ScreenShareButtonSelector,
   screenShareButtonSelector
 } from '../callControlSelectors';
-/* @conditional-compile-remove(PSTN-calls) */
 import { holdButtonSelector, HoldButtonSelector } from '../callControlSelectors';
 import { VideoGallerySelector, videoGallerySelector } from '../videoGallerySelector';
 import { ParticipantListSelector, participantListSelector } from '../participantListSelector';
@@ -40,8 +42,9 @@ import { ErrorBarSelector, errorBarSelector } from '../errorBarSelector';
 import { CommonCallingHandlers } from '../handlers/createCommonHandlers';
 import { reactionButtonSelector } from '../callControlSelectors';
 import { ReactionButton } from '@internal/react-components';
-/* @conditional-compile-remove(spotlight) */
 import { _ComponentCallingHandlers } from '../handlers/createHandlers';
+import { notificationStackSelector, NotificationStackSelector } from '../notificationStackSelector';
+import { incomingCallStackSelector, IncomingCallStackSelector } from '../incomingCallStackSelector';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -65,10 +68,7 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
   ? ReturnType<GetSelector<Component>> &
-      Common<
-        CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ _ComponentCallingHandlers,
-        Parameters<Component>[0]
-      >
+      Common<CommonCallingHandlers & _ComponentCallingHandlers, Parameters<Component>[0]>
   : undefined => {
   const selector = getSelector(component);
   const props = useSelector(selector);
@@ -95,32 +95,34 @@ const emptySelector: EmptySelector = (): Record<string, never> => ({});
  *
  * @public
  */
-export type GetSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<
-  Component,
-  typeof VideoGallery
-> extends true
-  ? VideoGallerySelector
-  : AreEqual<Component, typeof DevicesButton> extends true
-  ? DevicesButtonSelector
-  : AreEqual<Component, typeof MicrophoneButton> extends true
-  ? MicrophoneButtonSelector
-  : AreEqual<Component, typeof CameraButton> extends true
-  ? CameraButtonSelector
-  : AreEqual<Component, typeof ScreenShareButton> extends true
-  ? ScreenShareButtonSelector
-  : AreEqual<Component, typeof ParticipantList> extends true
-  ? ParticipantListSelector
-  : AreEqual<Component, typeof ParticipantsButton> extends true
-  ? ParticipantsButtonSelector
-  : AreEqual<Component, typeof EndCallButton> extends true
-  ? EmptySelector
-  : AreEqual<Component, typeof ErrorBar> extends true
-  ? ErrorBarSelector
-  : AreEqual<Component, typeof Dialpad> extends true
-  ? EmptySelector
-  : AreEqual<Component, typeof HoldButton> extends true
-  ? /* @conditional-compile-remove(PSTN-calls) */ HoldButtonSelector
-  : undefined;
+export type GetSelector<Component extends (props: any) => JSX.Element | undefined> =
+  AreEqual<Component, typeof VideoGallery> extends true
+    ? VideoGallerySelector
+    : AreEqual<Component, typeof DevicesButton> extends true
+      ? DevicesButtonSelector
+      : AreEqual<Component, typeof MicrophoneButton> extends true
+        ? MicrophoneButtonSelector
+        : AreEqual<Component, typeof CameraButton> extends true
+          ? CameraButtonSelector
+          : AreEqual<Component, typeof ScreenShareButton> extends true
+            ? ScreenShareButtonSelector
+            : AreEqual<Component, typeof ParticipantList> extends true
+              ? ParticipantListSelector
+              : AreEqual<Component, typeof ParticipantsButton> extends true
+                ? ParticipantsButtonSelector
+                : AreEqual<Component, typeof EndCallButton> extends true
+                  ? EmptySelector
+                  : AreEqual<Component, typeof ErrorBar> extends true
+                    ? ErrorBarSelector
+                    : AreEqual<Component, typeof Dialpad> extends true
+                      ? EmptySelector
+                      : AreEqual<Component, typeof HoldButton> extends true
+                        ? HoldButtonSelector
+                        : AreEqual<Component, typeof NotificationStack> extends true
+                          ? NotificationStackSelector
+                          : AreEqual<Component, typeof IncomingCallStack> extends true
+                            ? IncomingCallStackSelector
+                            : undefined;
 
 /**
  * Get the selector for a specified component.
@@ -134,11 +136,6 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component
 ): GetSelector<Component> => {
-  /* @conditional-compile-remove(PSTN-calls) */
-  if (component === HoldButton) {
-    return findConditionalCompiledSelector(component);
-  }
-
   return findSelector(component);
 };
 
@@ -171,16 +168,19 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return raiseHandButtonSelector;
     case ReactionButton:
       return reactionButtonSelector;
+    case NotificationStack:
+      return notificationStackSelector;
+    case HoldButton:
+      return holdButtonSelector;
+    case IncomingCallStack:
+      return incomingCallStackSelector;
   }
   return undefined;
 };
-
-/* @conditional-compile-remove(PSTN-calls) */
-const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
-  switch (component) {
-    /* @conditional-compile-remove(PSTN-calls) */
-    case HoldButton:
-      /* @conditional-compile-remove(PSTN-calls) */
-      return holdButtonSelector;
-  }
-};
+/**
+ * Selector for new components that are conditionally compiled. Comment out when there is no CC'd components
+ */
+// const findConditionalCompiledSelector = (component: (props: any) => JSX.Element | undefined): any => {
+//   switch (component) {
+//   }
+// };

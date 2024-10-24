@@ -20,11 +20,13 @@
     "complianceBannerTranscriptionStopped": "Přepis se zastavil.",
     "configurationPageTitle": "Začít hovor",
     "copyInviteLinkButtonLabel": "Kopírovat odkaz pro pozvání",
+    "copyInviteLinkButtonActionedLabel": "Odkaz byl zkopírován.",
     "copyInviteLinkActionedAriaLabel": "Odkaz pozvánky se zkopíroval",
     "defaultPlaceHolder": "Vyberte jednu možnost",
     "dismissSidePaneButtonLabel": "Zavřít",
     "videoEffectsPaneTitle": "Efekty",
     "videoEffectsPaneBackgroundSelectionTitle": "Pozadí",
+    "videoEffectsPaneAriaLabel": "Podokno video efektů",
     "configurationPageVideoEffectsButtonLabel": "Efekty",
     "unableToStartVideoEffect": "Nelze použít efekt videa.",
     "blurBackgroundEffectButtonLabel": "Rozostření",
@@ -134,6 +136,7 @@
     "dtmfDialerButtonTooltipOff": "Skrýt číselník",
     "dtmfDialerMoreButtonLabelOn": "Zobrazit číselník",
     "dtmfDialerMoreButtonLabelOff": "Skrýt číselník",
+    "phoneCallMoreButtonLabel": "Telefonní hovor",
     "spokenLanguageStrings": {
       "ar-ae": "Arabština - Spojené arabské emiráty",
       "ar-sa": "Arabština - Saúdská Arábie",
@@ -335,11 +338,33 @@
     "leaveConfirmDialogContent": "Opravdu chcete hovor opustit?",
     "endCallConfirmDialogTitle": "Chcete hovor ukončit?",
     "endCallConfirmDialogContent": "Hovor ukončíte pro všechny.",
-    "invalidMeetingIdentifier": "Neplatné ID schůzky nebo heslo"
+    "invalidMeetingIdentifier": "Neplatné ID schůzky nebo heslo",
+    "pinParticipantMenuLabel": "Připnout pro mě",
+    "pinParticipantLimitReachedMenuLabel": "Připnout (dosáhlo se limitu)",
+    "unpinParticipantMenuLabel": "Odepnout",
+    "pinParticipantMenuItemAriaLabel": "Připnout pro mě",
+    "unpinParticipantMenuItemAriaLabel": "Odepnout",
+    "muteAllMenuLabel": "Ztlumit všechny",
+    "muteAllDialogTitle": "Chcete všechny ztlumit?",
+    "muteAllDialogContent": "Ztlumí všechny účastníky schůzky kromě vás.",
+    "muteAllConfirmButtonLabel": "Ztlumit všechny",
+    "muteAllCancelButtonLabel": "Zrušit",
+    "joinBreakoutRoomButtonLabel": "Připojí se ke skupinové místnosti.",
+    "returnFromBreakoutRoomButtonLabel": "Opustit místnost",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Opustit schůzku",
+    "breakoutRoomJoinedNotificationTitle": "Připojili jste se ke skupinové místnosti {roomName}",
+    "joinBreakoutRoomBannerTitle": "Skupinová místnost {roomName} je otevřená",
+    "joinBreakoutRoomBannerButtonLabel": "Připojit se",
+    "returnFromBreakoutRoomBannerTitle": "Vrátit se k hlavní schůzce",
+    "returnFromBreakoutRoomBannerButtonLabel": "Znovu připojit"
   },
   "chat": {
     "chatListHeader": "V tomto chatu",
-    "uploadAttachment": "Odeslat přílohu"
+    "uploadAttachment": "Odeslat přílohu",
+    "uploadImageDataNotProvided": "Data obrázku nebyla zadána.",
+    "uploadImageIsTooLarge": "Obrázek je příliš velký. Zvolte míň než {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Nahrávání. Obrázek {imageExtension} není povolený.",
+    "uploadImageFailed": "Obrázek nejde nahrát. Zkuste to prosím znovu později."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -349,6 +374,7 @@
     "chatButtonTooltipOpen": "Zobrazit chat",
     "chatPaneTitle": "Chat",
     "copyInviteLinkButtonLabel": "Kopírovat odkaz pro pozvání",
+    "copyInviteLinkButtonActionedLabel": "Odkaz byl zkopírován.",
     "copyInviteLinkActionedAriaLabel": "Odkaz pozvánky se zkopíroval",
     "dismissSidePaneButtonLabel": "Zavřít",
     "moreDrawerAudioDeviceMenuTitle": "Zvukové zařízení",
@@ -364,6 +390,8 @@
     "selectedPeopleButtonLabel": "Vybráno tlačítko Lidé",
     "peopleButtonTooltipOpen": "Zobrazit účastníky",
     "peopleButtonTooltipClose": "Skrýt účastníky",
+    "peopleButtonTooltipOpenAriaLabel": "Tlačítko Lidé, Zobrazit účastníky",
+    "peopleButtonTooltipCloseAriaLabel": "Tlačítko Lidé, Skrýt účastníky",
     "peoplePaneSubTitle": "V tomto hovoru",
     "peoplePaneTitle": "Lidé",
     "pictureInPictureTileAriaLabel": "Informační kanály videa. Kliknutím se vrátíte na obrazovku hovoru.",
@@ -377,6 +405,8 @@
     "dialpadModalAriaLabel": "Číselník",
     "dialpadCloseModalButtonAriaLabel": "Zavřít číselník",
     "openDtmfDialpadLabel": "Zobrazit číselník",
-    "dtmfDialpadPlaceholderText": "Zadejte číslo"
+    "dtmfDialpadPlaceholderText": "Zadejte číslo",
+    "breakoutRoomChatPaneTitle": "Chat ve skupinové místnosti",
+    "chatContentSpinnerLabel": "Načítání..."
   }
 }

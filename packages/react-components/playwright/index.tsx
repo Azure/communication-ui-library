@@ -3,17 +3,35 @@
 
 import { initializeIcons, registerIcons } from '@fluentui/react';
 import { DEFAULT_COMPONENT_ICONS } from '../src/theming/icons';
-import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 import { FluentThemeProvider } from '../src/theming/FluentThemeProvider';
 import React from 'react';
 import { beforeMount } from '@playwright/experimental-ct-react/hooks';
+import {
+  getAttachmentIconDismiss,
+  getAttachmentIconDocx,
+  getAttachmentIconGenericFile,
+  getAttachmentIconMenu,
+  getAttachmentIconPdf,
+  getAttachmentIconPpt,
+  getAttachmentIconTxt,
+  getAttachmentIconXlsx
+} from './assets/AttachmentCardIcon';
 
 // Apply theme here, add anything your component needs at runtime here.
 registerIcons({
-  icons: DEFAULT_COMPONENT_ICONS
+  icons: {
+    ...DEFAULT_COMPONENT_ICONS,
+    docx24_svg: getAttachmentIconDocx(),
+    pdf24_svg: getAttachmentIconPdf(),
+    ppt24_svg: getAttachmentIconPpt(),
+    txt24_svg: getAttachmentIconTxt(),
+    xlxs24_svg: getAttachmentIconXlsx(),
+    AttachmentMoreMenu: getAttachmentIconMenu(),
+    cancelattachmentupload: getAttachmentIconDismiss(),
+    genericfile24_svg: getAttachmentIconGenericFile()
+  }
 });
 initializeIcons();
-initializeFileTypeIcons();
 
 /**
  * custom configuration options for the test hooks.

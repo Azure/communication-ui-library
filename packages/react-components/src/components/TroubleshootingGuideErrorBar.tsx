@@ -108,7 +108,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
   const toShow = errorsToShow(props.activeErrorMessages, dismissedErrors);
 
   return (
-    <Stack data-ui-id="error-bar-stack">
+    <Stack data-ui-id="notifications-stack">
       {toShow.map((error) => {
         const devicePermissionErrorBar = (
           <div>
@@ -120,7 +120,9 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
                 }}
                 underline
               >
-                <span>{troubleshootingGuideStrings.devicePermissionLinkText}</span>
+                <span style={{ color: theme.palette.themeDarkAlt }}>
+                  {troubleshootingGuideStrings.devicePermissionLinkText}
+                </span>
               </Link>
             )}
           </div>
@@ -131,7 +133,9 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
             {strings[error.type]}{' '}
             {onNetworkingTroubleshootingClick && (
               <Link onClick={onNetworkingTroubleshootingClick} underline>
-                <span>{troubleshootingGuideStrings.networkTroubleshootingLinkText}</span>
+                <span style={{ color: theme.palette.themeDarkAlt }}>
+                  {troubleshootingGuideStrings.networkTroubleshootingLinkText}
+                </span>
               </Link>
             )}
           </div>
@@ -151,7 +155,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
                 onClick={() => {
                   setDismissedErrors(dismissError(dismissedErrors, error));
                 }}
-                ariaLabel={strings.dismissButtonAriaLabel}
+                ariaLabel={troubleshootingGuideStrings.dismissButtonText}
               />
             }
             isMultiline={false}

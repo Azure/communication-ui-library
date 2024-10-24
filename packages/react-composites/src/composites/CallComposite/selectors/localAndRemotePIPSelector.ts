@@ -2,15 +2,12 @@
 // Licensed under the MIT License.
 
 import { _videoGalleryRemoteParticipantsMemo } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(PSTN-calls) */
 import { _updateUserDisplayNames } from '@internal/calling-component-bindings';
-import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
 import { localVideoSelector } from './localVideoStreamSelector';
 import { dominantRemoteParticipantSelector } from './dominantRemoteParticipantSelector';
 import { getDisplayName } from './baseSelectors';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
-/* @conditional-compile-remove(spotlight) */
 import { getFirstSpotlightedRemoteParticipant } from './getFirstSpotlightedRemoteParticipantSelector';
 
 /**
@@ -23,22 +20,21 @@ export const localAndRemotePIPSelector = reselect.createSelector(
     dominantRemoteParticipantSelector,
     localVideoSelector,
     getLocalParticipantRaisedHand,
-    /* @conditional-compile-remove(spotlight) */ getFirstSpotlightedRemoteParticipant
+    getFirstSpotlightedRemoteParticipant
   ],
   (
     displayName,
     dominantRemoteParticipantState,
     localVideoStreamInfo,
     raisedHand,
-    /* @conditional-compile-remove(spotlight) */ firstSpotlightedRemoteParticipantState
+    firstSpotlightedRemoteParticipantState
   ) => {
     let remoteParticipantState = dominantRemoteParticipantState;
-    /* @conditional-compile-remove(spotlight) */
     if (firstSpotlightedRemoteParticipantState) {
       remoteParticipantState = firstSpotlightedRemoteParticipantState;
     }
     const remoteParticipant = remoteParticipantState
-      ? _videoGalleryRemoteParticipantsMemo(updateUserDisplayNamesTrampoline([remoteParticipantState]))[0]
+      ? _videoGalleryRemoteParticipantsMemo(_updateUserDisplayNames([remoteParticipantState]))[0]
       : undefined;
     return {
       localParticipant: {
@@ -50,9 +46,3 @@ export const localAndRemotePIPSelector = reselect.createSelector(
     };
   }
 );
-
-const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
-  /* @conditional-compile-remove(PSTN-calls) */
-  return _updateUserDisplayNames(remoteParticipants);
-  return remoteParticipants;
-};

@@ -1,0 +1,54 @@
+import { VideoTile } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as VideoTileStories from './index.stories';
+import VideoTileStylineExampleText from '!!raw-loader!./snippets/StylingVideoTile.snippet';
+import VideoTileExampleText from '!!raw-loader!./snippets/VideoTile.snippet';
+import VideoTileMenuItemsExampleText from '!!raw-loader!./snippets/VideoTileMenuItems.snippet';
+import VideoTilePlaceholderText from '!!raw-loader!./snippets/VideoTilePlaceholder.snippet';
+
+<Meta of={VideoTileStories} />
+
+# VideoTile
+
+The VideoTile component displays a static component or the available video stream of a participant.
+
+## Importing
+
+```ts
+import { VideoTile } from '@azure/communication-react';
+```
+
+## Example
+
+### Default Usage
+
+The default VideoTile component shows a displayName and a Persona with the initials of `displayName` when no video is available.
+
+<Canvas of={VideoTileStories.VideoTileExamplesDocsOnly} source={{ code: VideoTileExampleText }} />
+
+### Custom Placeholder
+
+A custom placeholder can be provided to override the default Persona avatar by providing a JSX element to the
+`placeholder` prop.
+
+<Canvas of={VideoTileStories.VideoTilePlaceholderExampleDocsOnly} source={{ code: VideoTilePlaceholderText }} />
+
+## Styling
+
+A VideoTile component can be styled just like other components using the `styles` property.
+
+<Canvas of={VideoTileStories.VideoTileStylineExampleDocsOnly} source={{ code: VideoTileStylineExampleText }} />
+
+## Contextual Menu Items
+
+A VideoTile component can have a contextual menu by assigning
+[IContextualMenuProps](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuProps)
+to the `contextualMenu` property. The contextual menu items can be opened by hovering on the VideoTile and then
+clicking on the menu button next to the display name. The menu button is also accessible by keyboard using the
+tab button.
+
+<Canvas of={VideoTileStories.VideoTileMenuItemsExampleDocsOnly} source={{ code: VideoTileMenuItemsExampleText }} />
+
+## Props
+
+<ArgTypes of={VideoTile} />

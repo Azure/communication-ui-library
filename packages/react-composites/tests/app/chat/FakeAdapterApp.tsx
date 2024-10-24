@@ -46,7 +46,7 @@ export const FakeAdapterApp = (): JSX.Element => {
         return;
       }
 
-      if (fakeChatAdapterArgs.sendRemoteFileSharingMessage && fakeChatAdapterArgs.remoteParticipants.length > 0) {
+      if (fakeChatAdapterArgs.sendRemoteFileSharingMessage && fakeChatAdapterArgs.remoteParticipants[0]) {
         sendRemoteFileSharingMessage(
           fakeAdapters.service.model,
           fakeChatAdapterArgs.remoteParticipants[0],
@@ -54,7 +54,7 @@ export const FakeAdapterApp = (): JSX.Element => {
         );
       }
 
-      if (fakeChatAdapterArgs.sendRemoteInlineImageMessage && fakeChatAdapterArgs.remoteParticipants.length > 0) {
+      if (fakeChatAdapterArgs.sendRemoteInlineImageMessage && fakeChatAdapterArgs.remoteParticipants[0]) {
         sendRemoteInlineImageMessage(
           fakeAdapters.service.model,
           fakeChatAdapterArgs.localParticipant,
@@ -145,7 +145,7 @@ const sendRemoteInlineImageMessage = (
     sequenceId: `${thread.messages.length}`,
     version: '0',
     content: {
-      message: `<p>Test</p><p><img alt="image" src="${imgSrcPreview}" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
+      message: `<p>Test</p><p><img alt="image" src="${imgSrcPreview}" itemscope="png" width="200" height="300" id="SomeImageId1" style="vertical-align:bottom; aspect-ratio: 200 / 300;"></p><p>&nbsp;</p>`,
       attachments: [
         {
           id: 'SomeImageId1',

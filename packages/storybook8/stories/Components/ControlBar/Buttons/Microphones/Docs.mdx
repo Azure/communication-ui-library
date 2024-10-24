@@ -1,0 +1,64 @@
+import { MicrophoneButton } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as MicrophoneStories from './index.stories';
+import CustomMicrophoneButtonExampleText from '!!raw-loader!./snippets/Custom.snippet.tsx';
+import MicrophoneButtonExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
+import ButtonWithDevicesMenuExampleText from '!!raw-loader!./snippets/WithDevicesMenu.snippet.tsx';
+import MicrophoneButtonWithLabelExampleText from '!!raw-loader!./snippets/WithLabel.snippet.tsx';
+
+<Meta of={MicrophoneStories} />
+
+# Microphone Button
+
+A button to toggle the user's microphone on and off. For use with the [Control Bar](./?path=/docs/components-controlbar-control-bar--docs).
+
+Note that for accessibility purposes, this button can be focused on even when disabled. This behaviour can be changed by setting the button prop `allowDisabledFocus` to `false`.
+
+## Importing
+
+```tsx
+import { MicrophoneButton } from '@azure/communication-react';
+```
+
+## Example
+
+The default `MicrophoneButton` component shows a microphone icon with no label. The following example displays an unmuted `MicrophoneButton` and a muted `MicrophoneButton`.
+
+<Canvas of={MicrophoneStories.MicrophoneButtonExampleDocsOnly} source={{ code: MicrophoneButtonExampleText }} />
+
+## Microphone with default label
+
+You can display the button label which, by default, will show below the icon as `Mute` or `Unmute`.
+
+<Canvas
+  of={MicrophoneStories.MicrophoneButtonWithLabelExampleDocsOnly}
+  source={{ code: MicrophoneButtonWithLabelExampleText }}
+/>
+
+## Microphone with device selection menu
+
+`MicrophoneButton` can be optionally rendered as a split button. The secondary button in this mode opens a menu where users can select the audio devices to use. To render `MicrophoneButton` in this mode, set the `enableDeviceSelectionMenu` prop to `true`.
+
+<Canvas
+  of={MicrophoneStories.MicrophoneButtonWithDevicesMenuExampleDocsOnly}
+  source={{ code: ButtonWithDevicesMenuExampleText }}
+/>
+
+## Custom MicrophoneButton Styles
+
+You can change the styles of the `MicrophoneButton` as you would customized any Button (styles, primary, onRenderIcon, onRenderText, etc... ).
+
+Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key to each element to avoid warning for children in a list.
+
+<Canvas
+  of={MicrophoneStories.MicrophoneButtonCustomExampleDocsOnly}
+  source={{ code: CustomMicrophoneButtonExampleText }}
+/>
+
+## Props
+
+`MicrophoneButton` features all props a [FluentUI
+Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the additional following
+properties.
+
+<ArgTypes of={MicrophoneButton} />

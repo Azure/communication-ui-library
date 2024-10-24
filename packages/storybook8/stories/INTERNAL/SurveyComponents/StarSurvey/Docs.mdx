@@ -1,0 +1,20 @@
+import { _StarSurvey as StarSurveyComponent } from '@internal/react-components';
+import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs';
+import * as StarSurveyStories from './index.stories';
+import ExampleSurveyText from '!!raw-loader!./snippets/StarSurvey.snippet.tsx';
+
+<Meta of={StarSurveyStories} />
+
+# Star Survey
+
+Component to render a Star Survey
+
+## Usage
+
+Here is an example of how to use `StarSurvey`
+
+<Canvas of={StarSurveyStories.StarSurveyExampleDocsOnly} source={{ code: ExampleSurveyText }} />
+
+## Props
+
+<ArgTypes of={StarSurveyComponent} />

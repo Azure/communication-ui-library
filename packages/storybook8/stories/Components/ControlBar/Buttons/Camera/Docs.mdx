@@ -1,0 +1,66 @@
+import { CameraButton } from '@azure/communication-react';
+import { Meta } from '@storybook/addon-docs';
+import { Canvas, ArgTypes } from '@storybook/blocks';
+import * as CameraStories from './index.stories';
+import CustomButtonExampleText from '!!raw-loader!./snippets/Custom.snippet.tsx';
+import DefaultButtonExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
+import ButtonWithDevicesMenuExampleText from '!!raw-loader!./snippets/WithDevicesMenu.snippet.tsx';
+import ButtonWithLabelExampleText from '!!raw-loader!./snippets/WithLabel.snippet.tsx';
+
+<Meta of={CameraStories} />
+
+# Camera Button
+
+A button to toggle the user's camera on and off. For use with the [Control
+Bar](./?path=/docs/components-controlbar-control-bar--docs).
+
+Note that for accessibility purposes, this button can be focused on even when disabled. This behaviour can be
+changed by setting the button prop `allowDisabledFocus` to `false`.
+
+## Importing
+
+```ts
+import { CameraButton } from '@azure/communication-react';
+```
+
+## Example
+
+The default `CameraButton` component shows a Camera icon with no label. The following example displays the
+`CameraButton` with camera turned on and off.
+
+<Canvas of={CameraStories.DefaultButtonExampleDocsOnly} source={{ code: DefaultButtonExampleText }} />
+
+## Camera with default label
+
+You can display the button label which, by default, will show below the icon as `Turn on` or `Turn off`.
+
+<Canvas of={CameraStories.CameraButtonWithLabelExampleDocsOnly} source={{ code: ButtonWithLabelExampleText }} />
+
+## Camera with device selection menu
+
+`CameraButton` can be optionally rendered as a split button. The secondary button in this mode opens a menu
+where users can select the camera to use. To render `CameraButton` in this mode, set the
+`enableDeviceSelectionMenu` prop to `true`.
+
+<Canvas
+  of={CameraStories.CameraButtonWithDevicesMenuExampleDocsOnly}
+  source={{ code: ButtonWithDevicesMenuExampleText }}
+/>
+
+## Custom CameraButton Styles
+
+You can change the styles of the `CameraButton` as you would customized any Button (styles, primary,
+onRenderIcon, onRenderText, etc... ).
+
+Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
+to each element to avoid warning for children in a list.
+
+<Canvas of={CameraStories.CustomCameraButtonExampleDocsOnly} source={{ code: CustomButtonExampleText }} />
+
+## Props
+
+`CameraButton` features all props a [FluentUI
+Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional
+properties:
+
+<ArgTypes of={CameraButton} />

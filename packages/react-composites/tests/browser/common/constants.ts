@@ -129,7 +129,7 @@ export const captionsFeatureState = {
       timestamp: new Date(0),
       speaker: {
         displayName: 'Participant 1',
-        identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'en-us' as const,
       captionText: 'How are you?'
@@ -139,7 +139,7 @@ export const captionsFeatureState = {
       timestamp: new Date(10000),
       speaker: {
         displayName: 'Participant 2',
-        identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'en-us',
       captionText: 'I am good.'
@@ -149,7 +149,7 @@ export const captionsFeatureState = {
       timestamp: new Date(10001),
       speaker: {
         displayName: 'Participant 3',
-        identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'en-us',
       captionText: 'Nice to see you today!'
@@ -161,7 +161,7 @@ export const captionsFeatureState = {
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true,
   startCaptionsInProgress: true,
-  /* @conditional-compile-remove(acs-close-captions) */
+
   captionsKind: 'Captions' as const
 };
 
@@ -172,7 +172,7 @@ export const captionsFeatureStateArabic = {
       timestamp: new Date(0),
       speaker: {
         displayName: 'Participant 1',
-        identifier: { communicationUserId: 'communicationId1', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'ar-ae' as const,
       captionText: '!سعيد بلقائك! مرحبًا'
@@ -182,7 +182,7 @@ export const captionsFeatureStateArabic = {
       timestamp: new Date(10000),
       speaker: {
         displayName: 'Participant 2',
-        identifier: { communicationUserId: 'communicationId2', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'ar-ae' as const,
       captionText: 'انا جيد، كيف حالك؟'
@@ -192,7 +192,7 @@ export const captionsFeatureStateArabic = {
       timestamp: new Date(10001),
       speaker: {
         displayName: 'Participant 3',
-        identifier: { communicationUserId: 'communicationId3', kind: 'communicationUser' as const }
+        identifier: { communicationUserId: '1', kind: 'communicationUser' as const }
       },
       spokenLanguage: 'ar-ae' as const,
       captionText: '!سُعدت برؤيتك'
@@ -204,6 +204,6 @@ export const captionsFeatureStateArabic = {
   currentSpokenLanguage: 'ar-ae',
   isCaptionsFeatureActive: true,
   startCaptionsInProgress: true,
-  /* @conditional-compile-remove(acs-close-captions) */
+
   captionsKind: 'Captions' as const
 };

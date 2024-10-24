@@ -3,17 +3,16 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import type { SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(breakout-rooms) */
+import type { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -31,18 +30,18 @@ import type {
   MicrosoftTeamsAppIdentifier,
   UnknownIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-adhoc-call) */
 import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
-
-import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(end-of-call-survey) */
+/* @conditional-compile-remove(breakout-rooms) */
+import type { AdapterNotifications } from '../../common/adapters';
+import {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency
+} from '@internal/calling-component-bindings';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 
@@ -55,14 +54,15 @@ export type CallCompositePage =
   | 'accessDeniedTeamsMeeting'
   | 'call'
   | 'configuration'
-  | /* @conditional-compile-remove(PSTN-calls) */ 'hold'
+  | 'hold'
   | 'joinCallFailedDueToNoNetwork'
   | 'leftCall'
   | 'leaving'
   | 'lobby'
   | 'removedFromCall'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
-  | 'transferring';
+  | 'transferring'
+  | 'badRequest';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -95,9 +95,9 @@ export type CallAdapterUiState = {
 export type StartCallIdentifier =
   | (
       | MicrosoftTeamsAppIdentifier
-      | /* @conditional-compile-remove(PSTN-calls) */ PhoneNumberIdentifier
-      | /* @conditional-compile-remove(one-to-n-calling) */ CommunicationUserIdentifier
-      | /* @conditional-compile-remove(teams-adhoc-call) */ MicrosoftTeamsUserIdentifier
+      | PhoneNumberIdentifier
+      | CommunicationUserIdentifier
+      | MicrosoftTeamsUserIdentifier
       | UnknownIdentifier
     )
   | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
@@ -134,12 +134,15 @@ export type CallAdapterClientState = {
    * Latest error encountered for each operation performed via the adapter.
    */
   latestErrors: AdapterErrors;
-  /* @conditional-compile-remove(PSTN-calls) */
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Latest notifications from call client state.
+   */
+  latestNotifications: AdapterNotifications;
   /**
    * Azure communications Phone number to make PSTN calls with.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
   /**
    * Environment information about system the adapter is made on
    */
@@ -159,7 +162,20 @@ export type CallAdapterClientState = {
    * Dependency to be injected for video background effect.
    */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-
+  /**
+   * Dependency to be injected for deep noise suppression effect.
+   */
+  onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
+  /**
+   * State to track whether the noise suppression should be on by default.
+   * @default true
+   */
+  deepNoiseSuppressionOnByDefault?: boolean;
+  /**
+   * State to track whether to hide the noise suppression button.
+   * @default false
+   */
+  hideDeepNoiseSuppressionButton?: boolean;
   /**
    * State to track the selected video background effect.
    */
@@ -168,7 +184,6 @@ export type CallAdapterClientState = {
    * Call from transfer request accepted by local user
    */
   acceptedTransferCallState?: CallState;
-  /* @conditional-compile-remove(hide-attendee-name) */
   /**
    * Hide attendee names in teams meeting
    */
@@ -404,7 +419,6 @@ export type TransferAcceptedListener = (event: TransferEventArgs) => void;
  */
 export type CapabilitiesChangedListener = (data: CapabilitiesChangeInfo) => void;
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'spotlightChanged' event.
  *
@@ -463,6 +477,37 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
    * key for unique identification of the custom background
    */
   key?: string;
+}
+
+/**
+ * Options passed to adapter.startCaptions
+ *
+ * @public
+ */
+export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
+  /**
+   * Start captions in the background without showing the captions UI to the Composite user.
+   *
+   * @defaultValue false
+   */
+  startInBackground?: boolean;
+}
+
+/**
+ * Options passed to adapter.stopCaptions
+ *
+ * @public
+ */
+export interface StopCaptionsAdapterOptions {
+  /**
+   * Stop captions that have been started in the background.
+   *
+   * @remarks
+   * This option is only applicable when stopping captions that have been started using the `startInBackground` property of adpater.startCaptions.
+   *
+   * @defaultValue false
+   */
+  stopInBackground?: boolean;
 }
 
 /**
@@ -545,11 +590,10 @@ export interface CallAdapterCallOperations {
    * @public
    */
   removeParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Remove a participant from the call.
    * @param participant - {@link @azure/communication-common#CommunicationIdentifier} of the participant to be removed
-   * @beta
+   * @public
    */
   removeParticipant(participant: CommunicationIdentifier): Promise<void>;
   /**
@@ -603,28 +647,24 @@ export interface CallAdapterCallOperations {
    * @public
    */
   disposeLocalVideoStreamView(): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Holds the call.
    *
-   * @beta
+   * @public
    */
   holdCall(): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Resumes the call from a `LocalHold` state.
    *
-   * @beta
+   * @public
    */
   resumeCall(): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Add a participant to the call.
    *
-   * @beta
+   * @public
    */
   addParticipant(participant: PhoneNumberIdentifier, options?: AddPhoneNumberOptions): Promise<void>;
-  /* @conditional-compile-remove(PSTN-calls) */
   addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
   /**
    * send dtmf tone to another participant in a 1:1 PSTN call
@@ -641,7 +681,7 @@ export interface CallAdapterCallOperations {
    * Function to Start captions
    * @param options - options for start captions
    */
-  startCaptions(options?: StartCaptionsOptions): Promise<void>;
+  startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
   /**
    * Function to set caption language
    * @param language - language set for caption
@@ -655,7 +695,7 @@ export interface CallAdapterCallOperations {
   /**
    * Funtion to stop captions
    */
-  stopCaptions(): Promise<void>;
+  stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
 
   /**
    * Start the video background effect.
@@ -686,30 +726,51 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-  /* @conditional-compile-remove(end-of-call-survey) */
+  /**
+   * Start the noise suppression effect.
+   *
+   */
+  startNoiseSuppressionEffect(): Promise<void>;
+  /**
+   * Stop the noise suppression effect.
+   *
+   */
+  stopNoiseSuppressionEffect(): Promise<void>;
   /**
    * Send the end of call survey result
    *
    * @public
    */
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Start spotlight for local and remote participants by their user ids.
    * If no array of user ids is passed then action is performed on local participant.
    */
   startSpotlight(userIds?: string[]): Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Stop spotlight for local and remote participants by their user ids.
    * If no array of user ids is passed then action is performed on local participant.
    */
   stopSpotlight(userIds?: string[]): Promise<void>;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
+  /**
+   * Mute a participant
+   *
+   * @param userId - Id of the participant to mute
+   */
+  muteParticipant(userId: string): Promise<void>;
+  /**
+   * Mute All participants
+   */
+  muteAllRemoteParticipants(): Promise<void>;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Return to origin call of breakout room
+   */
+  returnFromBreakoutRoom(): Promise<void>;
 }
 
 /**
@@ -728,7 +789,7 @@ export interface CallAdapterDeviceManagement {
    *
    * @public
    */
-  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
   /**
    * Query for available camera devices.
    *
@@ -889,12 +950,19 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'roleChanged' event.
    */
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Subscribe function for 'spotlightChanged' event.
    */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-
+  /**
+   * Subscribe function for 'mutedByOthers' event.
+   */
+  on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Subscribe function for 'breakoutRoomsUpdated' event.
+   */
+  on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
   /**
    * Unsubscribe function for 'participantsJoined' event.
    */
@@ -972,11 +1040,19 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'roleChanged' event.
    */
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
-  /* @conditional-compile-remove(spotlight) */
   /**
-   * Subscribe function for 'spotlightChanged' event.
+   * Unsubscribe function for 'spotlightChanged' event.
    */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
+  /**
+   * Unsubscribe function for 'mutedByOthers' event.
+   */
+  off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Unsubscribe function for 'breakoutRoomsUpdated' event.
+   */
+  off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 }
 
 // This type remains for non-breaking change reason
@@ -1014,7 +1090,6 @@ export interface CallAdapterCallManagement extends CallAdapterCallOperations {
    * @public
    */
   startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
@@ -1112,19 +1187,16 @@ export interface CallAdapter extends CommonCallAdapter {
   startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * An Adapter interface specific for Teams identity which extends {@link CommonCallAdapter}.
  *
- * @beta
+ * @public
  */
 export interface TeamsCallAdapter extends CommonCallAdapter {
   /**
    * Join the call with microphone initially on/off.
    * @deprecated Use joinCall(options?:JoinCallOptions) instead.
    * @param microphoneOn - Whether microphone is initially enabled
-   *
-   * @beta
    */
   joinCall(microphoneOn?: boolean): TeamsCall | undefined;
   /**
@@ -1143,14 +1215,13 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
    *
    * @param participants - An array of participant ids to join
    *
-   * @beta
+   * @public
    */
   startCall(participants: string[], options?: StartCallOptions): TeamsCall | undefined;
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Start the call.
    * @param participants - An array of {@link @azure/communication-common#CommunicationIdentifier} to be called
-   * @beta
+   * @public
    */
-  startCall(participants: CommunicationIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
+  startCall(participants: StartCallIdentifier[], options?: StartCallOptions): TeamsCall | undefined;
 }

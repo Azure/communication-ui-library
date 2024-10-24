@@ -9,7 +9,8 @@ import {
   useTheme,
   VideoTilesOptions
 } from '@internal/react-components';
-/* @conditional-compile-remove(end-of-call-survey) */
+
+import { ActiveNotification, NotificationStack } from '@internal/react-components';
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
@@ -22,7 +23,9 @@ import { CallPage } from './pages/CallPage';
 import { ConfigurationPage } from './pages/ConfigurationPage';
 import { NoticePage } from './pages/NoticePage';
 import { useSelector } from './hooks/useSelector';
-import { getEndedCall, getPage, getTargetCallees } from './selectors/baseSelectors';
+import { getAlternateCallerId, getEndedCall, getPage, getRole, getTargetCallees } from './selectors/baseSelectors';
+/* @conditional-compile-remove(unsupported-browser) */
+import { getEnvironmentInfo } from './selectors/baseSelectors';
 import { LobbyPage } from './pages/LobbyPage';
 import { TransferPage } from './pages/TransferPage';
 import {
@@ -35,33 +38,33 @@ import { CallControlOptions } from './types/CallControlOptions';
 import { LayerHost, mergeStyles } from '@fluentui/react';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
 import { useId } from '@fluentui/react-hooks';
-/* @conditional-compile-remove(one-to-n-calling) */ /* @conditional-compile-remove(PSTN-calls) */
 import { HoldPage } from './pages/HoldPage';
 /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserPage } from './pages/UnsupportedBrowser';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey } from '@azure/communication-calling';
 import { ParticipantRole, PermissionConstraints } from '@azure/communication-calling';
 import { MobileChatSidePaneTabHeaderProps } from '../common/TabHeader';
 import { InjectedSidePaneProps, SidePaneProvider, SidePaneRenderer } from './components/SidePane/SidePaneProvider';
 import {
-  filterLatestErrors,
+  filterLatestNotifications,
   getEndedCallPageProps,
-  trackErrorAsDismissed,
-  updateTrackedErrorsWithActiveErrors
+  trackNotificationAsDismissed,
+  updateTrackedNotificationsWithActiveNotifications
 } from './utils';
-import { TrackedErrors } from './types/ErrorTracking';
+
+import { CachedComplianceNotificationProps, computeComplianceNotification } from './utils';
+import { TrackedNotifications } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
 import { VideoGalleryLayout } from '@internal/react-components';
-
 import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
-
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
+
+import { complianceBannerSelector } from './selectors/complianceBannerSelector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 /**
  * Props for {@link CallComposite}.
@@ -152,6 +155,9 @@ export interface LocalVideoTileOptions {
  * @public
  */
 export type CallCompositeOptions = {
+  captionsBanner?: {
+    height: 'full' | 'default';
+  };
   /**
    * Surface Azure Communication Services backend errors in the UI with {@link @azure/communication-react#ErrorBar}.
    * Hide or show the error bar.
@@ -248,7 +254,6 @@ export type CallCompositeOptions = {
      */
     layout?: VideoGalleryLayout;
   };
-  /* @conditional-compile-remove(end-of-call-survey) */
   /**
    * Options for end of call survey
    */
@@ -325,7 +330,6 @@ export type CallCompositeOptions = {
       url: string;
     };
   };
-  /* @conditional-compile-remove(spotlight) */
   /**
    * Options for settings related to spotlight.
    */
@@ -361,22 +365,38 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const hasCameras = camerasCount > 0;
   const hasMicrophones = microphonesCount > 0;
 
+  const role = useSelector(getRole);
+  const { video: cameraHasPermission, audio: micHasPermission } = useSelector(devicePermissionSelector);
+
   useEffect(() => {
     (async () => {
-      const constrain = getQueryOptions({
-        role: adapter.getState().call?.role
-      });
-      await adapter.askDevicePermission(constrain);
-      adapter.queryCameras();
-      adapter.queryMicrophones();
+      const constrain = getQueryOptions({ role });
+      /* @conditional-compile-remove(call-readiness) */
+      {
+        constrain.audio = props.options?.deviceChecks?.microphone === 'doNotPrompt' ? false : constrain.audio;
+        constrain.video = props.options?.deviceChecks?.camera === 'doNotPrompt' ? false : constrain.video;
+      }
+      const permissionsResult = await adapter.askDevicePermission(constrain);
+      if (permissionsResult?.audio) {
+        adapter.queryMicrophones();
+      }
+      if (permissionsResult?.video) {
+        adapter.queryCameras();
+      }
       adapter.querySpeakers();
     })();
   }, [
     adapter,
+    role,
+    /* @conditional-compile-remove(call-readiness) */
+    props.options?.deviceChecks,
     // Ensure we re-ask for permissions if the number of devices goes from 0 -> n during a call
     // as we cannot request permissions when there are no devices.
     hasCameras,
-    hasMicrophones
+    hasMicrophones,
+    // Ensure we re-query for devices when permission for the device is granted.
+    cameraHasPermission,
+    micHasPermission
   ]);
 
   const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
@@ -430,19 +450,96 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   // This works by tracking the most recent timestamp of any active error type.
   // And then tracking when that error type was last dismissed.
   const activeErrors = usePropsFor(ErrorBar).activeErrorMessages;
-  const [trackedErrors, setTrackedErrors] = useState<TrackedErrors>({} as TrackedErrors);
+
+  const activeInCallErrors = usePropsFor(NotificationStack).activeErrorMessages;
+
+  const activeNotifications = usePropsFor(NotificationStack).activeNotifications;
+
+  const complianceProps = useSelector(complianceBannerSelector);
+
+  const cachedProps = useRef<CachedComplianceNotificationProps>({
+    latestBooleanState: {
+      callTranscribeState: false,
+      callRecordState: false
+    },
+    latestStringState: {
+      callTranscribeState: 'off',
+      callRecordState: 'off'
+    },
+    lastUpdated: Date.now()
+  });
+
+  const complianceNotification: ActiveNotification | undefined = useMemo(() => {
+    return computeComplianceNotification(complianceProps, cachedProps);
+  }, [complianceProps, cachedProps]);
+
   useEffect(() => {
-    setTrackedErrors((prev) => updateTrackedErrorsWithActiveErrors(prev, activeErrors));
-  }, [activeErrors]);
-  const onDismissError = useCallback((error: ActiveErrorMessage) => {
-    setTrackedErrors((prev) => trackErrorAsDismissed(error.type, prev));
+    if (complianceNotification) {
+      activeNotifications.forEach((notification, index) => {
+        if (
+          [
+            'recordingStarted',
+            'transcriptionStarted',
+            'recordingStopped',
+            'transcriptionStopped',
+            'recordingAndTranscriptionStarted',
+            'recordingAndTranscriptionStopped',
+            'recordingStoppedStillTranscribing',
+            'transcriptionStoppedStillRecording'
+          ].includes(notification.type)
+        ) {
+          activeNotifications.splice(index, 1);
+        }
+      });
+      activeNotifications.push(complianceNotification);
+    }
+    setTrackedNotifications((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeNotifications));
+  }, [complianceNotification, activeNotifications]);
+
+  const [trackedErrors, setTrackedErrors] = useState<TrackedNotifications>({} as TrackedNotifications);
+
+  const [trackedInCallErrors, setTrackedInCallErrors] = useState<TrackedNotifications>({} as TrackedNotifications);
+
+  const [trackedNotifications, setTrackedNotifications] = useState<TrackedNotifications>({} as TrackedNotifications);
+
+  useEffect(() => {
+    setTrackedErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeErrors));
+
+    setTrackedInCallErrors((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeInCallErrors));
+  }, [activeErrors, activeInCallErrors]);
+
+  const onDismissError = useCallback((error: ActiveErrorMessage | ActiveNotification) => {
+    setTrackedErrors((prev) => trackNotificationAsDismissed(error.type, prev));
+
+    setTrackedInCallErrors((prev) => trackNotificationAsDismissed(error.type, prev));
   }, []);
-  const latestErrors = useMemo(() => filterLatestErrors(activeErrors, trackedErrors), [activeErrors, trackedErrors]);
+
+  const onDismissNotification = useCallback((notification: ActiveNotification) => {
+    setTrackedNotifications((prev) => trackNotificationAsDismissed(notification.type, prev));
+  }, []);
+  const latestErrors = useMemo(
+    () => filterLatestNotifications(activeErrors, trackedErrors),
+    [activeErrors, trackedErrors]
+  );
+
+  const latestInCallErrors = useMemo(
+    () => filterLatestNotifications(activeInCallErrors, trackedInCallErrors),
+    [activeInCallErrors, trackedInCallErrors]
+  ) as ActiveNotification[];
+
+  const latestNotifications = useMemo(() => {
+    const result = filterLatestNotifications(activeNotifications, trackedNotifications);
+    // sort notifications by timestamp from earliest to latest
+    result.sort(
+      (a, b) => (a.timestamp ?? new Date(Date.now())).getTime() - (b.timestamp ?? new Date(Date.now())).getTime()
+    );
+    return result;
+  }, [activeNotifications, trackedNotifications]) as ActiveNotification[];
+
   const callees = useSelector(getTargetCallees) as StartCallIdentifier[];
   const locale = useLocale();
   const palette = useTheme().palette;
-  /* @conditional-compile-remove(PSTN-calls) */
-  const alternateCallerId = adapter.getState().alternateCallerId;
+  const alternateCallerId = useSelector(getAlternateCallerId);
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
   const [pinnedParticipants, setPinnedParticipants] = useState<string[]>([]);
@@ -455,9 +552,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             if (callees) {
               adapter.startCall(
                 callees,
-                /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
-                  ? { alternateCallerId: { phoneNumber: alternateCallerId } }
-                  : {}
+                alternateCallerId ? { alternateCallerId: { phoneNumber: alternateCallerId } } : {}
               );
             } else {
               adapter.joinCall({
@@ -467,7 +562,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             }
           }}
           updateSidePaneRenderer={setSidePaneRenderer}
-          latestErrors={latestErrors}
+          latestErrors={latestErrors as ActiveErrorMessage[]}
           onDismissError={onDismissError}
           modalLayerHostId={props.modalLayerHostId}
           /* @conditional-compile-remove(call-readiness) */
@@ -522,9 +617,21 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
+    case 'badRequest': {
+      const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
+      pageElement = (
+        <NoticePage
+          iconName={iconName}
+          title={title}
+          moreDetails={callees ? '' : moreDetails}
+          dataUiId={'left-call-page'}
+          disableStartCallButton={disableStartCallButton}
+        />
+      );
+      break;
+    }
     case 'leftCall': {
       const { title, moreDetails, disableStartCallButton, iconName } = getEndedCallPageProps(locale, endedCall);
-      /* @conditional-compile-remove(end-of-call-survey) */
       if (!props.options?.surveyOptions?.disableSurvey) {
         pageElement = (
           <SurveyPage
@@ -559,8 +666,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           options={props.options}
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
-          latestErrors={latestErrors}
+          latestErrors={latestInCallErrors}
+          latestNotifications={latestNotifications}
           onDismissError={onDismissError}
+          onDismissNotification={onDismissNotification}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
@@ -574,8 +683,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
-          latestErrors={latestErrors}
+          latestErrors={latestInCallErrors}
+          latestNotifications={latestNotifications}
           onDismissError={onDismissError}
+          onDismissNotification={onDismissNotification}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
         />
       );
@@ -592,8 +703,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
           onCloseChatPane={props.onCloseChatPane}
-          latestErrors={latestErrors}
+          latestErrors={latestInCallErrors}
+          latestNotifications={latestNotifications}
           onDismissError={onDismissError}
+          onDismissNotification={onDismissNotification}
           galleryLayout={userSetGalleryLayout}
           onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
           onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
@@ -606,7 +719,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         />
       );
       break;
-    /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
     case 'hold':
       pageElement = (
         <>
@@ -617,8 +729,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
               options={props.options}
               updateSidePaneRenderer={setSidePaneRenderer}
               mobileChatTabHeader={props.mobileChatTabHeader}
-              latestErrors={latestErrors}
+              latestErrors={latestInCallErrors}
+              latestNotifications={latestNotifications}
               onDismissError={onDismissError}
+              onDismissNotification={onDismissNotification}
               capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
             />
           }
@@ -630,6 +744,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   useEndedCallConsoleErrors(endedCall);
 
   /* @conditional-compile-remove(unsupported-browser) */
+  const environmentInfo = useSelector(getEnvironmentInfo);
+
+  /* @conditional-compile-remove(unsupported-browser) */
   switch (page) {
     case 'unsupportedEnvironment':
       pageElement = (
@@ -638,7 +755,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             /* @conditional-compile-remove(unsupported-browser) */
             <UnsupportedBrowserPage
               onTroubleshootingClick={props.options?.onEnvironmentInfoTroubleshootingClick}
-              environmentInfo={adapter.getState().environmentInfo}
+              environmentInfo={environmentInfo}
             />
           }
         </>

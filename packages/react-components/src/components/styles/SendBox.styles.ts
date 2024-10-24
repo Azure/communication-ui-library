@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import { IStyle, mergeStyles, Theme } from '@fluentui/react';
+import { makeStyles } from '@fluentui/react-components';
 
 /**
  * @private
@@ -38,27 +39,20 @@ export const sendButtonStyle = mergeStyles({
  */
 export const sendIconStyle = (props: {
   theme: Theme;
-  hasText: boolean;
-  /* @conditional-compile-remove(attachment-upload) */ hasAttachment: boolean;
-  disabled?: boolean;
-  hasErrorMessage: boolean;
+  isSendBoxButtonDisabled: boolean;
   customSendIconStyle?: IStyle;
   defaultTextColor?: string;
 }): string => {
   const {
     theme,
-    hasText,
-    disabled = false,
-    /* @conditional-compile-remove(attachment-upload) */ hasAttachment,
-    hasErrorMessage,
+    isSendBoxButtonDisabled,
     customSendIconStyle,
     defaultTextColor = theme.palette.neutralTertiary
   } = props;
-  const hasNoContent = !hasText && /* @conditional-compile-remove(attachment-upload) */ !hasAttachment;
   return mergeStyles(
     editorTextBoxButtonStyle,
     {
-      color: disabled || hasErrorMessage || hasNoContent ? defaultTextColor : theme.palette.themePrimary
+      color: isSendBoxButtonDisabled ? defaultTextColor : theme.palette.themePrimary
     },
     customSendIconStyle
   );
@@ -79,6 +73,15 @@ export const editorTextBoxButtonStyle: IStyle = {
 export const attachmentUploadCardsStyles = mergeStyles({
   margin: '0 0.25rem 0.25rem 0.25rem',
   overflow: 'auto'
+});
+
+/**
+ * @private
+ */
+export const useV9CustomStyles = makeStyles({
+  clearBackground: {
+    backgroundColor: 'transparent'
+  }
 });
 
 /**

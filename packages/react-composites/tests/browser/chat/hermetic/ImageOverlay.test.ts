@@ -7,6 +7,9 @@ import { dataUiId, stableScreenshot, waitForSelector } from '../../common/utils'
 
 test.describe('ImageOverlay tests', () => {
   test('ImageOverlay loads correctly when an inline image is clicked', async ({ page, serverUrl }) => {
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -35,12 +38,15 @@ test.describe('ImageOverlay tests', () => {
 
     await page.route(serverUrl + '/images/inlineImageExample1-fullSize.png', async (route) => {
       try {
-        await route.fulfill({ status: 300, contentType: 'text/html' });
+        await route.fulfill({ status: 404, contentType: 'text/html' });
       } catch (error) {
         console.error('Failed at fulfill route, Error: ', error);
       }
     });
 
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -66,6 +72,9 @@ test.describe('ImageOverlay tests', () => {
       }, 3000);
     });
 
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -88,6 +97,9 @@ test.describe('ImageOverlay tests', () => {
   });
 
   test('ImageOverlay loads correctly in dark theme', async ({ page, serverUrl }) => {
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],
@@ -102,6 +114,9 @@ test.describe('ImageOverlay tests', () => {
   });
 
   test('ImageOverlay loads correctly in light theme', async ({ page, serverUrl }) => {
+    if (!TEST_PARTICIPANTS[0] || !TEST_PARTICIPANTS[1] || !TEST_PARTICIPANTS[2]) {
+      throw new Error('TEST_PARTICIPANTS must be defined');
+    }
     await page.goto(
       buildUrlForChatAppUsingFakeAdapter(serverUrl, {
         localParticipant: TEST_PARTICIPANTS[1],

@@ -13,10 +13,10 @@ interface ErrorBoundaryState {
 }
 
 /**
- * @private
+ * @internal
  * ErrorBoundary component to handle errors in React components.
  */
-export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class _ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };

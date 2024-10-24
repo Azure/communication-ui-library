@@ -1,16 +1,17 @@
 {
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
+    "noUncheckedIndexedAccess": false,
     "baseUrl": "./src",
     "outDir": "./dist/dist-esm",
     "paths": {
-      "@internal/chat-component-bindings": ["../../chat-component-bindings/src"],
-      "@internal/calling-component-bindings": ["../../calling-component-bindings/src"],
-      "@internal/acs-ui-common": ["../../acs-ui-common/src"],
-      "@internal/calling-stateful-client": ["../../calling-stateful-client/src"],
-      "@internal/chat-stateful-client": ["../../chat-stateful-client/src"],
-      "@internal/react-components": ["../../react-components/src"],
-      "@internal/react-composites": ["../../react-composites/src"]
+      "@internal/chat-component-bindings": ["../../chat-component-bindings/src/index"],
+      "@internal/calling-component-bindings": ["../../calling-component-bindings/src/index"],
+      "@internal/acs-ui-common": ["../../acs-ui-common/src/index"],
+      "@internal/calling-stateful-client": ["../../calling-stateful-client/src/index"],
+      "@internal/chat-stateful-client": ["../../chat-stateful-client/src/index"],
+      "@internal/react-components": ["../../react-components/src/index"],
+      "@internal/react-composites": ["../../react-composites/src/index-public"]
     },
     "plugins": [
       { "transform": "typescript-transform-paths" },

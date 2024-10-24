@@ -29,8 +29,6 @@ import {
   participantStateStringStyles
 } from './styles/ParticipantItem.styles';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(one-to-n-calling) */
-/* @conditional-compile-remove(PSTN-calls) */
 import { ParticipantState } from '../types';
 import { useId } from '@fluentui/react-hooks';
 
@@ -68,15 +66,10 @@ export interface ParticipantItemStrings {
   mutedIconLabel: string;
   /** placeholder text for participants who does not have a display name*/
   displayNamePlaceholder?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Ringing` */
   participantStateRinging?: string;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   /** String shown when `participantState` is `Hold` */
   participantStateHold?: string;
-  /* @conditional-compile-remove(hide-attendee-name) */
   /** String for the attendee role */
   attendeeRole: string;
 }
@@ -119,8 +112,6 @@ export interface ParticipantItemProps {
   onClick?: (props?: ParticipantItemProps) => void;
   /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * Optional value to determine and display a participants connection status.
    * For example, `Connecting`, `Ringing` etc.
@@ -166,7 +157,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
 
   const strings = { ...localeStrings, ...props.strings };
   const participantStateString = participantStateStringTrampoline(props, strings);
-  const showMenuIcon = !me && !participantStateString && (itemHovered || !menuHidden);
+  const showMenuIcon = !participantStateString && (itemHovered || !menuHidden) && menuItems && menuItems?.length > 0;
 
   // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
   const meAvatarText = displayName?.trim() || '';
@@ -207,10 +198,10 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     () =>
       mergeStyles(
         iconContainerStyle,
-        { color: theme.palette.neutralTertiary, marginLeft: 'auto' },
+        { color: theme.palette.neutralSecondary, marginLeft: 'auto' },
         styles?.iconContainer
       ),
-    [theme.palette.neutralTertiary, styles?.iconContainer]
+    [theme.palette.neutralSecondary, styles?.iconContainer]
   );
 
   const onDismissMenu = (): void => {
@@ -240,10 +231,12 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     <div
       ref={containerRef}
       role={'menuitem'}
+      aria-expanded={!me ? !menuHidden : undefined}
+      aria-disabled={(menuItems && menuItems.length > 0) || props.onClick ? false : true}
       data-is-focusable={true}
       data-ui-id="participant-item"
       className={mergeStyles(
-        participantItemContainerStyle({ clickable: !!menuItems && menuItems.length > 0 }),
+        participantItemContainerStyle({ clickable: !!menuItems && menuItems.length > 0 }, theme),
         styles?.root
       )}
       onMouseEnter={() => setItemHovered(true)}
@@ -310,13 +303,11 @@ const participantStateStringTrampoline = (
   props: ParticipantItemProps,
   strings: ParticipantItemStrings
 ): string | undefined => {
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
-    ? strings?.participantStateHold
-    : undefined;
+      ? strings?.participantStateHold
+      : undefined;
 
   return undefined;
 };

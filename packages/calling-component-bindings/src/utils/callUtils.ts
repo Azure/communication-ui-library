@@ -2,9 +2,13 @@
 // Licensed under the MIT License.
 
 import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
-import { CallState as CallStatus, ParticipantRole } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { Features, EnvironmentInfo } from '@azure/communication-calling';
+import {
+  CallState as CallStatus,
+  EnvironmentInfo,
+  Features,
+  LocalVideoStream,
+  ParticipantRole
+} from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
@@ -17,7 +21,12 @@ import {
 } from '@azure/communication-common';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 
-type ParticipantConnectionState =
+/**
+ * Type for connmection state
+ *
+ * @internal
+ */
+export type ParticipantConnectionState =
   | 'Idle'
   | 'Connecting'
   | 'Ringing'
@@ -25,7 +34,8 @@ type ParticipantConnectionState =
   | 'Hold'
   | 'InLobby'
   | 'EarlyMedia'
-  | 'Disconnected';
+  | 'Disconnected'
+  | 'Reconnecting';
 
 /**
  * Check if the call state represents being in the call
@@ -53,7 +63,7 @@ export const _isInLobbyOrConnecting = (callStatus: CallStatus | undefined): bool
 export const _isPreviewOn = (deviceManager: DeviceManagerState): boolean => {
   // TODO: we should take in a LocalVideoStream that developer wants to use as their 'Preview' view. We should also
   // handle cases where 'Preview' view is in progress and not necessary completed.
-  return deviceManager.unparentedViews.length > 0 && deviceManager.unparentedViews[0].view !== undefined;
+  return deviceManager.unparentedViews[0]?.view !== undefined;
 };
 
 /**
@@ -98,7 +108,6 @@ const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participa
   }
 });
 
-/* @conditional-compile-remove(unsupported-browser) */
 /**
  * Check whether the call is in a supported browser
  *
@@ -133,7 +142,15 @@ export const isACSCallParticipants = (
  * @private
  * Checks whether the user is a 'Ringing' PSTN user.
  */
-export const _isRingingPSTNParticipant = (participant: RemoteParticipantState): ParticipantConnectionState => {
+export const _convertParticipantState = (participant: RemoteParticipantState): ParticipantConnectionState => {
+  /* @conditional-compile-remove(remote-ufd) */
+  if (
+    participant.diagnostics &&
+    participant.diagnostics['ServerConnection'] &&
+    participant.diagnostics['ServerConnection']?.value === false
+  ) {
+    return 'Reconnecting';
+  }
   return isPhoneNumberIdentifier(participant.identifier) && participant.state === 'Connecting'
     ? 'Ringing'
     : participant.state;
@@ -162,4 +179,16 @@ export const maskDisplayNameWithRole = (
     }
   }
   return maskedDisplayName;
+};
+
+/**
+ * Helper to create a local video stream from the selected camera.
+ * @private
+ */
+export const createLocalVideoStream = async (callClient: StatefulCallClient): Promise<LocalVideoStream | undefined> => {
+  const camera = await callClient?.getState().deviceManager.selectedCamera;
+  if (camera) {
+    return new LocalVideoStream(camera);
+  }
+  return undefined;
 };

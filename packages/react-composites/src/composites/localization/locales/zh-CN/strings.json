@@ -20,11 +20,13 @@
     "complianceBannerTranscriptionStopped": "听录已停止。",
     "configurationPageTitle": "开始通话",
     "copyInviteLinkButtonLabel": "复制邀请链接",
+    "copyInviteLinkButtonActionedLabel": "已复制链接",
     "copyInviteLinkActionedAriaLabel": "已复制邀请链接",
     "defaultPlaceHolder": "选择一个选项",
     "dismissSidePaneButtonLabel": "关闭",
     "videoEffectsPaneTitle": "效果",
     "videoEffectsPaneBackgroundSelectionTitle": "背景",
+    "videoEffectsPaneAriaLabel": "视频效果窗格",
     "configurationPageVideoEffectsButtonLabel": "效果",
     "unableToStartVideoEffect": "无法应用视频效果。",
     "blurBackgroundEffectButtonLabel": "模糊",
@@ -134,6 +136,7 @@
     "dtmfDialerButtonTooltipOff": "隐藏拨号盘",
     "dtmfDialerMoreButtonLabelOn": "显示拨号盘",
     "dtmfDialerMoreButtonLabelOff": "隐藏拨号盘",
+    "phoneCallMoreButtonLabel": "电话呼叫",
     "spokenLanguageStrings": {
       "ar-ae": "阿拉伯语 - 阿拉伯联合酋长国",
       "ar-sa": "阿拉伯语 - 沙特阿拉伯",
@@ -335,11 +338,33 @@
     "leaveConfirmDialogContent": "是否确实要离开此聊天?",
     "endCallConfirmDialogTitle": "结束通话?",
     "endCallConfirmDialogContent": "你将结束所有人的通话。",
-    "invalidMeetingIdentifier": "会议 ID 或密码无效"
+    "invalidMeetingIdentifier": "会议 ID 或密码无效",
+    "pinParticipantMenuLabel": "为我固定",
+    "pinParticipantLimitReachedMenuLabel": "固定(已达到上限)",
+    "unpinParticipantMenuLabel": "取消固定",
+    "pinParticipantMenuItemAriaLabel": "为我固定",
+    "unpinParticipantMenuItemAriaLabel": "取消固定",
+    "muteAllMenuLabel": "全部静音",
+    "muteAllDialogTitle": "对所有人静音?",
+    "muteAllDialogContent": "这会将会议中除你之外的所有人静音。",
+    "muteAllConfirmButtonLabel": "全部静音",
+    "muteAllCancelButtonLabel": "取消",
+    "joinBreakoutRoomButtonLabel": "加入分组讨论室",
+    "returnFromBreakoutRoomButtonLabel": "离开房间",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "离开会议",
+    "breakoutRoomJoinedNotificationTitle": "你已加入分组讨论室“{roomName}”",
+    "joinBreakoutRoomBannerTitle": "分组讨论室“{roomName}”已打开",
+    "joinBreakoutRoomBannerButtonLabel": "加入",
+    "returnFromBreakoutRoomBannerTitle": "返回到主会议",
+    "returnFromBreakoutRoomBannerButtonLabel": "重新加入"
   },
   "chat": {
     "chatListHeader": "在此聊天中",
-    "uploadAttachment": "上传附件"
+    "uploadAttachment": "上传附件",
+    "uploadImageDataNotProvided": "未提供图像数据。",
+    "uploadImageIsTooLarge": "图像太大。选择小于 {maxImageSize} MB 的选项。",
+    "uploadImageExtensionIsNotAllowed": "上传。不允许使用 {imageExtension} 图像。",
+    "uploadImageFailed": "无法上传图像。请稍后重试。"
   },
   "callWithChat": {
     "chatButtonLabel": "聊天",
@@ -349,6 +374,7 @@
     "chatButtonTooltipOpen": "显示聊天",
     "chatPaneTitle": "聊天",
     "copyInviteLinkButtonLabel": "复制邀请链接",
+    "copyInviteLinkButtonActionedLabel": "已复制链接",
     "copyInviteLinkActionedAriaLabel": "已复制邀请链接",
     "dismissSidePaneButtonLabel": "关闭",
     "moreDrawerAudioDeviceMenuTitle": "音频设备",
@@ -364,6 +390,8 @@
     "selectedPeopleButtonLabel": "已选择“人员”按钮",
     "peopleButtonTooltipOpen": "显示参与者",
     "peopleButtonTooltipClose": "隐藏参与者",
+    "peopleButtonTooltipOpenAriaLabel": "“人员”按钮，显示参与者",
+    "peopleButtonTooltipCloseAriaLabel": "“人员”按钮，隐藏参与者",
     "peoplePaneSubTitle": "在此通话中",
     "peoplePaneTitle": "人员",
     "pictureInPictureTileAriaLabel": "视频源。单击以返回到通话屏幕。",
@@ -377,6 +405,8 @@
     "dialpadModalAriaLabel": "拨号盘",
     "dialpadCloseModalButtonAriaLabel": "关闭拨号盘",
     "openDtmfDialpadLabel": "显示拨号盘",
-    "dtmfDialpadPlaceholderText": "输入号码"
+    "dtmfDialpadPlaceholderText": "输入号码",
+    "breakoutRoomChatPaneTitle": "分组讨论室聊天",
+    "chatContentSpinnerLabel": "正在加载..."
   }
 }

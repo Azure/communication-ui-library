@@ -1,19 +1,20 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Icon, TooltipHost } from '@fluentui/react';
+import { Icon } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { useMemo } from 'react';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { useLocale } from '../../localization';
 import { _AttachmentCard } from './AttachmentCard';
-import { _AttachmentCardGroup } from './AttachmentCardGroup';
-/* @conditional-compile-remove(attachment-download) */
-import { getAttachmentCountLiveMessage } from '../ChatMessage/ChatMessageContent';
-import { _formatString } from '@internal/acs-ui-common';
+import { _AttachmentCardGroup, _AttachmentCardGroupLayout } from './AttachmentCardGroup';
+import { _formatString, _isIdentityMicrosoftTeamsUser } from '@internal/acs-ui-common';
 import { AttachmentMenuAction } from '../../types/Attachment';
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { ChatMessage } from '../../types';
+import { mergeClasses } from '@griffel/react';
+import { _ATTACHMENT_CARD_WIDTH_IN_REM } from '../styles/AttachmentCard.styles';
+import { useAttachmentCardGroupStyles } from '../styles/AttachmentCardGroup.styles';
 
 /**
  * Represents the type of attachment
@@ -22,7 +23,7 @@ import { ChatMessage } from '../../types';
 export type ChatAttachmentType =
   | 'unknown'
   | 'image'
-  | /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ 'file';
+  | /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */ 'file';
 
 /**
  * Strings of _AttachmentDownloadCards that can be overridden.
@@ -30,6 +31,7 @@ export type ChatAttachmentType =
  * @internal
  */
 export interface _AttachmentDownloadCardsStrings {
+  /* @conditional-compile-remove(file-sharing-acs) */
   /** Aria label to notify user when focus is on attachment download button. */
   downloadAttachment: string;
   /** Aria label to notify user when focus is on attachment open button. */
@@ -63,16 +65,13 @@ export interface _AttachmentDownloadCardsProps {
   strings?: _AttachmentDownloadCardsStrings;
 }
 
-const attachmentDownloadCardsStyle = {
-  marginTop: '0.25rem'
-};
-
 /**
  * @internal
  */
 export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): JSX.Element => {
   const { attachments, message } = props;
   const localeStrings = useLocaleStringsTrampoline();
+  const attachmentCardGroupStyles = useAttachmentCardGroupStyles();
 
   const getMenuActions = useCallback(
     (
@@ -96,42 +95,34 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
     []
   );
 
-  const downloadAttachmentButtonString = useMemo(
-    () => () => {
-      return props.strings?.downloadAttachment ?? localeStrings.downloadAttachment;
-    },
-    [props.strings?.downloadAttachment, localeStrings.downloadAttachment]
-  );
-
-  const attachmentCardGroupDescription = useMemo(
-    () => () => {
-      /* @conditional-compile-remove(attachment-download) */
-      return getAttachmentCountLiveMessage(
-        attachments ?? [],
-        props.strings?.attachmentCardGroupMessage ?? localeStrings.attachmentCardGroupMessage
-      );
-      return '';
-    },
-    [props.strings?.attachmentCardGroupMessage, localeStrings.attachmentCardGroupMessage, attachments]
-  );
+  const hasMultipleAttachments = useMemo(() => {
+    return (props.attachments?.length ?? 0) > 1;
+  }, [props.attachments]);
 
   if (!attachments || attachments.length === 0 || !attachments) {
     return <></>;
   }
 
   return (
-    <div style={attachmentDownloadCardsStyle} data-ui-id="attachment-download-card-group">
-      <_AttachmentCardGroup ariaLabel={attachmentCardGroupDescription()}>
+    <div
+      className={mergeClasses(
+        attachmentCardGroupStyles.root,
+        hasMultipleAttachments
+          ? attachmentCardGroupStyles.multipleAttachments
+          : attachmentCardGroupStyles.singleAttachment
+      )}
+      data-ui-id="attachment-download-card-group"
+    >
+      <_AttachmentCardGroup attachmentGroupLayout={_AttachmentCardGroupLayout.Grid}>
         {attachments &&
           attachments.map((attachment) => (
-            <TooltipHost content={downloadAttachmentButtonString()} key={attachment.name}>
-              <_AttachmentCard
-                attachment={attachment}
-                key={attachment.id}
-                menuActions={getMenuActions(attachment, localeStrings, message, props.actionsForAttachment)}
-                onActionHandlerFailed={props.onActionHandlerFailed}
-              />
-            </TooltipHost>
+            <_AttachmentCard
+              attachment={attachment}
+              key={attachment.id}
+              menuActions={getMenuActions(attachment, localeStrings, message, props.actionsForAttachment)}
+              onActionHandlerFailed={props.onActionHandlerFailed}
+              selfResizing={hasMultipleAttachments}
+            />
           ))}
       </_AttachmentCardGroup>
     </div>
@@ -142,9 +133,14 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
  * @private
  */
 const useLocaleStringsTrampoline = (): _AttachmentDownloadCardsStrings => {
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   return useLocale().strings.messageThread;
-  return { downloadAttachment: '', openAttachment: '', attachmentCardGroupMessage: '' };
+  return {
+    /* @conditional-compile-remove(file-sharing-acs) */
+    downloadAttachment: '',
+    openAttachment: '',
+    attachmentCardGroupMessage: ''
+  };
 };
 
 /**
@@ -154,23 +150,38 @@ const getDefaultMenuActions = (
   locale: _AttachmentDownloadCardsStrings,
   chatMessage?: ChatMessage
 ): AttachmentMenuAction[] => {
+  let actionName = locale.openAttachment;
   // if message is sent by a Teams user, we need to use a different icon ("open")
-  if (chatMessage?.senderId?.includes('8:orgid:')) {
+  const isTeamsUser = _isIdentityMicrosoftTeamsUser(chatMessage?.senderId);
+  if (isTeamsUser) {
     return [
       {
-        ...defaultAttachmentMenuAction,
-        name: locale.openAttachment,
-        icon: <Icon iconName="OpenAttachment" />
+        name: actionName,
+        icon: <Icon iconName="OpenAttachment" />,
+        onClick: defaultOnClickHandler
       }
     ];
   }
   // otherwise, use the default icon ("download")
+  /* @conditional-compile-remove(file-sharing-acs) */
+  actionName = locale.downloadAttachment;
   return [
     {
       ...defaultAttachmentMenuAction,
-      name: locale.downloadAttachment
+      name: actionName
     }
   ];
+};
+
+/**
+ *
+ * The default action handler for downloading attachments. This handler will open the attachment's URL in a new tab.
+ */
+const defaultOnClickHandler = (attachment: AttachmentMetadata): Promise<void> => {
+  return new Promise<void>((resolve) => {
+    window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
+    resolve();
+  });
 };
 
 /**
@@ -194,10 +205,5 @@ export const defaultAttachmentMenuAction: AttachmentMenuAction = {
   // this is the icon shown on the right of the attachment card
   icon: <Icon iconName="DownloadAttachment" data-ui-id="attachment-download-card-download-icon" />,
   // this is the action that runs when the icon is clicked
-  onClick: (attachment: AttachmentMetadata) => {
-    return new Promise<void>((resolve) => {
-      window.open((attachment as AttachmentMetadata).url, '_blank', 'noopener,noreferrer');
-      resolve();
-    });
-  }
+  onClick: defaultOnClickHandler
 };

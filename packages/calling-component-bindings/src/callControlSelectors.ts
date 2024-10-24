@@ -41,15 +41,15 @@ export type MicrophoneButtonSelector = (
  * @public
  */
 export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.createSelector(
-  [getCallExists, getIsMuted, getDeviceManager, getCapabilities, getRole],
-  (callExists, isMuted, deviceManager, capabilities, role) => {
+  [getCallExists, getIsMuted, getDeviceManager, getCapabilities, getRole, getCallState],
+  (callExists, isMuted, deviceManager, capabilities, role, callState) => {
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
 
     const incapable =
       (capabilities?.unmuteMic.isPresent === false && capabilities?.unmuteMic.reason !== 'NotInitialized') ||
       role === 'Consumer';
     return {
-      disabled: !callExists || !permission || incapable,
+      disabled: !callExists || !permission || incapable || callState === 'LocalHold',
       checked: callExists ? !isMuted : false,
       microphones: deviceManager.microphones,
       speakers: deviceManager.speakers,
@@ -80,8 +80,8 @@ export type CameraButtonSelector = (
  * @public
  */
 export const cameraButtonSelector: CameraButtonSelector = reselect.createSelector(
-  [getLocalVideoStreams, getDeviceManager, getCapabilities, getRole],
-  (localVideoStreams, deviceManager, capabilities, role) => {
+  [getLocalVideoStreams, getDeviceManager, getCapabilities, getRole, getCallState],
+  (localVideoStreams, deviceManager, capabilities, role, callState) => {
     const previewOn = _isPreviewOn(deviceManager);
     const localVideoFromCall = localVideoStreams?.find((stream) => stream.mediaStreamType === 'Video');
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.video : true;
@@ -90,7 +90,12 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
       (capabilities?.turnVideoOn.isPresent === false && capabilities?.turnVideoOn.reason !== 'NotInitialized') ||
       role === 'Consumer';
     return {
-      disabled: !deviceManager.selectedCamera || !permission || !deviceManager.cameras.length || incapable,
+      disabled:
+        !deviceManager.selectedCamera ||
+        !permission ||
+        !deviceManager.cameras.length ||
+        incapable ||
+        callState === 'LocalHold',
       checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
       cameras: deviceManager.cameras,
       selectedCamera: deviceManager.selectedCamera
@@ -173,8 +178,8 @@ export const reactionButtonSelector: ReactionButtonSelector = reselect.createSel
  * @public
  */
 export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.createSelector(
-  [getIsScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ getCallState, getCapabilities, getRole],
-  (isScreenSharingOn, /* @conditional-compile-remove(PSTN-calls) */ callState, capabilities, role) => {
+  [getIsScreenSharingOn, getCallState, getCapabilities, getRole],
+  (isScreenSharingOn, callState, capabilities, role) => {
     let disabled: boolean | undefined = undefined;
 
     disabled =
@@ -182,8 +187,7 @@ export const screenShareButtonSelector: ScreenShareButtonSelector = reselect.cre
       (capabilities?.shareScreen.isPresent === false && capabilities?.shareScreen.reason !== 'NotInitialized') ||
       role === 'Consumer' ||
       role === 'Attendee';
-    /* @conditional-compile-remove(PSTN-calls) */
-    disabled = disabled || ['InLobby', 'Connecting', 'LocalHold'].includes(callState);
+    disabled = disabled || ['InLobby', 'Connecting', 'LocalHold'].includes(callState ?? 'None');
     return {
       checked: isScreenSharingOn,
       disabled
@@ -231,7 +235,6 @@ function removeBlankNameDevices<T extends { name: string }>(devices: T[]): T[] {
   return devices.filter((device) => device.name !== '');
 }
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Selector type for the {@link HoldButton} component.
  * @public
@@ -243,7 +246,6 @@ export type HoldButtonSelector = (
   checked: boolean;
 };
 
-/* @conditional-compile-remove(PSTN-calls) */
 /**
  * Selector for the {@link HoldButton} component.
  * @public

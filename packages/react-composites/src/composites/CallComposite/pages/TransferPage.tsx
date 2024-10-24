@@ -89,6 +89,7 @@ export const TransferPage = (
         complianceBannerProps={{ strings }}
         // Ignore errors from before current call. This avoids old errors from showing up when a user re-joins a call.
         errorBarProps={props.options?.errorBar !== false && errorBarProps}
+        showErrorNotifications={props.options?.errorBar ?? true}
         callControlProps={{
           options: callControlOptions,
           increaseFlyoutItemSize: props.mobileView
@@ -115,6 +116,10 @@ export const TransferPage = (
         mobileChatTabHeader={props.mobileChatTabHeader}
         latestErrors={props.latestErrors}
         onDismissError={props.onDismissError}
+        onDismissNotification={props.onDismissNotification}
+        latestNotifications={props.latestNotifications}
+        /* @conditional-compile-remove(call-readiness) */
+        doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
       />
     </Stack>
   );
@@ -150,6 +155,9 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
 
   const observer = useRef(
     new ResizeObserver((entries): void => {
+      if (!entries[0]) {
+        return;
+      }
       const { width, height } = entries[0].contentRect;
       const personaSize = Math.min(width, height) / 2;
       setPersonaSize(Math.max(Math.min(personaSize, 150), 32));

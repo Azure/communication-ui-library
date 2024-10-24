@@ -40,6 +40,7 @@ export const CallReadinessModal = (props: {
     camera: PermissionState;
     microphone: PermissionState;
   }) => void;
+  doNotPromptCamera: boolean;
 }): JSX.Element => {
   const {
     mobileView,
@@ -59,7 +60,10 @@ export const CallReadinessModal = (props: {
   const audioState: PermissionState = permissionsState.microphone;
 
   const showModal =
-    videoState === 'denied' || videoState === 'prompt' || audioState === 'denied' || audioState === 'prompt';
+    (!props.doNotPromptCamera && videoState === 'denied') ||
+    (!props.doNotPromptCamera && videoState === 'prompt') ||
+    audioState === 'denied' ||
+    audioState === 'prompt';
   /* @conditional-compile-remove(unsupported-browser) */
   const isSafari = _isSafari(environmentInfo);
 
@@ -67,7 +71,7 @@ export const CallReadinessModal = (props: {
     ? undefined
     : () => {
         // if both video and audio permission are not set
-        if (videoState === 'prompt' && audioState === 'prompt') {
+        if (videoState === 'prompt' && !props.doNotPromptCamera && audioState === 'prompt') {
           return (
             <CameraAndMicrophoneSitePermissions
               appName={'app'}
@@ -85,7 +89,7 @@ export const CallReadinessModal = (props: {
           );
         }
         // if audio permission is set up but video is not
-        else if (videoState === 'prompt') {
+        else if (videoState === 'prompt' && !props.doNotPromptCamera) {
           return (
             <CameraSitePermissions
               appName={'app'}
@@ -124,7 +128,7 @@ export const CallReadinessModal = (props: {
           );
         }
         // if both video and audio are denied
-        else if (videoState === 'denied' && audioState === 'denied') {
+        else if (videoState === 'denied' && !props.doNotPromptCamera && audioState === 'denied') {
           return (
             <CameraAndMicrophoneSitePermissions
               appName={'app'}
@@ -142,7 +146,7 @@ export const CallReadinessModal = (props: {
           );
         }
         // if only video is denied
-        else if (videoState === 'denied') {
+        else if (videoState === 'denied' && !props.doNotPromptCamera) {
           return (
             <CameraSitePermissions
               appName={'app'}

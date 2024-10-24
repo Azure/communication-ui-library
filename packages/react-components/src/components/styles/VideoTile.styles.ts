@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme } from '@fluentui/react';
+import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme, ISpinnerStyles } from '@fluentui/react';
 import { keyframes, memoizeFunction } from '@fluentui/react';
 import { REACTION_SCREEN_SHARE_ANIMATION_TIME_MS } from '../VideoGallery/utils/reactionUtils';
+import { isDarkThemed } from '../../theming/themeUtils';
 
 /**
  * @private
@@ -117,24 +118,29 @@ export const participantStateStringStyles = (theme: Theme): IStyle => {
 /**
  * @private
  */
-export const moreButtonStyles: IButtonStyles = {
-  root: {
-    // To ensure that the button is clickable when there is a floating video tile
-    zIndex: 1,
-    color: 'inherit',
-    top: '-0.125rem',
-    height: '100%',
-    padding: '0rem'
-  },
-  rootHovered: {
-    background: 'none'
-  },
-  rootPressed: {
-    background: 'none'
-  },
-  rootExpanded: {
-    background: 'none'
-  }
+export const moreButtonStyles = (theme: Theme): IButtonStyles => {
+  return {
+    root: {
+      // To ensure that the button is clickable when there is a floating video tile
+      zIndex: 1,
+      top: '-0.125rem',
+      height: '100%',
+      padding: '0rem'
+    },
+    rootHovered: {
+      background: 'none'
+    },
+    rootPressed: {
+      background: 'none'
+    },
+    icon: {
+      color: theme.palette.neutralPrimary
+    },
+    iconExpanded: {
+      background: 'none',
+      color: theme.palette.themePrimary
+    }
+  };
 };
 
 /**
@@ -211,4 +217,43 @@ export const reactionRenderingStyle = (args: {
     transform: `scale(${args.emojiSize / frameSizePx})`,
     transformOrigin: 'top left'
   });
+};
+
+/**
+ * @private
+ */
+export const loadSpinnerStyles = (theme: ITheme, isOverLay: boolean): ISpinnerStyles => {
+  return {
+    circle: {
+      width: '2rem',
+      height: '2rem'
+    },
+    label: {
+      fontSize: '1rem',
+      color: isOverLay ? (isDarkThemed(theme) ? theme.palette.black : theme.palette.white) : theme.palette.themeDarkAlt
+    }
+  };
+};
+
+/**
+ * @private
+ */
+export const overlayStyles = (): IStyle => {
+  return {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'rgba(0, 0, 0, 0.3)'
+  };
+};
+
+/**
+ * @private
+ */
+export const overlayStylesTransparent = (): IStyle => {
+  return {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  };
 };

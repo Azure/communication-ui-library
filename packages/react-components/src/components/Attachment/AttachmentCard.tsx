@@ -1,10 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  // eslint-disable-next-line no-restricted-imports
-  Icon
-} from '@fluentui/react';
+import { Icon, TooltipHost } from '@fluentui/react';
 import {
   Card,
   CardHeader,
@@ -17,7 +14,8 @@ import {
   MenuList,
   Toolbar,
   CardFooter,
-  ProgressBar
+  ProgressBar,
+  mergeClasses
 } from '@fluentui/react-components';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
@@ -30,8 +28,8 @@ import { AttachmentMenuAction } from '../../types/Attachment';
 import { AttachmentMetadata, AttachmentMetadataInProgress } from '@internal/acs-ui-common';
 import {
   useAttachmentCardStyles,
-  attachmentNameContainerClassName,
-  ATTACHMENT_CARD_MIN_PROGRESS
+  ATTACHMENT_CARD_MIN_PROGRESS,
+  titleTooltipContainerStyle
 } from '../styles/AttachmentCard.styles';
 
 /**
@@ -55,6 +53,10 @@ export interface _AttachmentCardProps {
    * Optional callback that runs if menu bar action onclick throws.
    */
   onActionHandlerFailed?: (errMsg: string) => void;
+  /**
+   * Optional flag to enable self resizing of the attachment card.
+   */
+  selfResizing?: boolean;
 }
 
 /**
@@ -64,7 +66,7 @@ export interface _AttachmentCardProps {
  * `_AttachmentCard` internally uses the `Card` component from `@fluentui/react-components`. You can checkout the details about these components [here](https://react.fluentui.dev/?path=/docs/components-card).
  */
 export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
-  const { attachment, menuActions, onActionHandlerFailed } = props;
+  const { attachment, menuActions, onActionHandlerFailed, selfResizing } = props;
   const attachmentCardStyles = useAttachmentCardStyles();
 
   const progress = useMemo(() => {
@@ -99,38 +101,61 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
     <div data-is-focusable={true}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <Card
-        className={attachmentCardStyles.root}
+        className={mergeClasses(
+          attachmentCardStyles.root,
+          selfResizing ? attachmentCardStyles.dynamicWidth : attachmentCardStyles.staticWidth
+        )}
         size="small"
         role="listitem"
         appearance="filled-alternative"
         aria-label={attachment.name}
+        data-testid={'attachment-card'}
       >
         <CardHeader
-          image={
-            <Icon
-              data-ui-id={'attachmenttype-icon'}
-              iconName={
-                getFileTypeIconProps({
-                  extension: extension,
-                  size: 24,
-                  imageFileType: 'svg'
-                }).iconName
-              }
-            />
-          }
-          header={
-            <div className={attachmentNameContainerClassName}>
-              <Text title={attachment.name}>{attachment.name}</Text>
-            </div>
-          }
-          action={MappedMenuItems(
-            menuActions,
-            {
-              ...attachment,
-              url: attachment.url ?? ''
-            },
-            onActionHandlerFailed
-          )}
+          className={attachmentCardStyles.content}
+          image={{
+            className: attachmentCardStyles.fileIcon,
+            children: (
+              <Icon
+                data-ui-id={'attachmenttype-icon'}
+                iconName={
+                  getFileTypeIconProps({
+                    extension: extension,
+                    size: 24,
+                    imageFileType: 'svg'
+                  }).iconName
+                }
+              />
+            )
+          }}
+          header={{
+            id: 'attachment-' + attachment.id,
+            children: (
+              <TooltipHost
+                content={attachment.name}
+                calloutProps={{
+                  gapSpace: 0,
+                  target: '#attachment-' + attachment.id
+                }}
+                hostClassName={titleTooltipContainerStyle}
+              >
+                <Text className={attachmentCardStyles.title} aria-label={attachment.name}>
+                  {attachment.name}
+                </Text>
+              </TooltipHost>
+            )
+          }}
+          action={{
+            className: attachmentCardStyles.actions,
+            children: MappedMenuItems(
+              menuActions,
+              {
+                ...attachment,
+                url: attachment.url ?? ''
+              },
+              onActionHandlerFailed
+            )
+          }}
         />
       </Card>
       {isUploadInProgress ? (
@@ -155,31 +180,41 @@ const MappedMenuItems = (
 ): JSX.Element => {
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
 
-  if (menuActions.length === 0) {
+  if (!menuActions[0]) {
     return <></>;
   }
   return menuActions.length === 1 ? (
-    <ToolbarButton
-      aria-label={menuActions[0].name}
-      icon={menuActions[0].icon}
-      onClick={() => {
-        try {
-          menuActions[0].onClick(attachment);
-        } catch (e) {
-          handleOnClickError?.((e as Error).message);
-        }
-      }}
-    />
+    <TooltipHost content={menuActions[0].name}>
+      <ToolbarButton
+        aria-label={menuActions[0].name}
+        role="button"
+        icon={menuActions[0].icon}
+        onClick={() => {
+          try {
+            menuActions[0]?.onClick(attachment);
+          } catch (e) {
+            handleOnClickError?.((e as Error).message);
+          }
+        }}
+      />
+    </TooltipHost>
   ) : (
     <Toolbar>
       <Menu>
-        <MenuTrigger>
-          <ToolbarButton icon={<Icon iconName="AttachmentMoreMenu" aria-label={localeStrings.attachmentMoreMenu} />} />
-        </MenuTrigger>
+        <TooltipHost content={localeStrings.attachmentMoreMenu}>
+          <MenuTrigger>
+            <ToolbarButton
+              aria-label={localeStrings.attachmentMoreMenu}
+              role="button"
+              icon={<Icon iconName="AttachmentMoreMenu" />}
+            />
+          </MenuTrigger>
+        </TooltipHost>
         <MenuPopover>
           <MenuList>
             {menuActions.map((menuItem, index) => (
               <MenuItem
+                aria-label={menuItem.name}
                 key={index}
                 icon={menuItem.icon}
                 onClick={async () => {

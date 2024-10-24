@@ -27,6 +27,7 @@ export interface PromptProps {
   text?: string;
   confirmButtonLabel?: string;
   cancelButtonLabel?: string;
+  closeButtonLabel?: string;
   onConfirm?: () => void;
   onCancel?: () => void;
   styles?: Partial<IModalStyles>;
@@ -43,7 +44,12 @@ export const Prompt = (props: PromptProps): JSX.Element => {
     <Modal styles={styles} isOpen={props.isOpen} onDismiss={props.onDismiss} isBlocking={false}>
       <Stack className={mergeStyles({ position: 'relative' })}>
         <Text className={mergeStyles({ fontWeight: 600, fontSize: '1.25rem' })}>{props.heading}</Text>
-        <IconButton styles={iconButtonStyles(theme)} iconProps={{ iconName: 'Cancel' }} onClick={props.onCancel} />
+        <IconButton
+          styles={iconButtonStyles(theme)}
+          iconProps={{ iconName: 'Cancel' }}
+          onClick={props.onCancel}
+          ariaLabel={props.closeButtonLabel}
+        />
       </Stack>
       <Stack verticalAlign="center" className={mergeStyles({ minHeight: '6rem' })}>
         <Text className={mergeStyles({ fontSize: '0.875rem' })}>{props.text}</Text>
@@ -72,7 +78,6 @@ const modalStyles = { main: { padding: '1.5rem ', maxWidth: '30rem' } };
 
 const buttonTextStyles: IButtonStyles = { label: { fontSize: '0.875rem' } };
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * Strings used in prompt related to spotlight
  * @public

@@ -37,13 +37,12 @@ export const VideoEffectsPaneContent = (props: {
   activeVideoEffectError?: ActiveErrorMessage;
   onDismissError: (error: ActiveErrorMessage) => void;
   activeVideoEffectChange: (effect: ActiveVideoEffect) => void;
+  updateFocusHandle: React.RefObject<{
+    focus: () => void;
+  }>;
+  backgroundImages: VideoBackgroundImage[] | undefined;
 }): JSX.Element => {
-  const {
-    onDismissError,
-    activeVideoEffectError,
-
-    activeVideoEffectChange
-  } = props;
+  const { onDismissError, activeVideoEffectError, activeVideoEffectChange } = props;
 
   const locale = useLocale();
 
@@ -76,10 +75,9 @@ export const VideoEffectsPaneContent = (props: {
         }
       }
     ];
-    const videoEffectImages = adapter.getState().videoBackgroundImages;
 
-    if (videoEffectImages) {
-      videoEffectImages.forEach((img: VideoBackgroundImage) => {
+    if (props.backgroundImages) {
+      props.backgroundImages.forEach((img: VideoBackgroundImage) => {
         videoEffects.push({
           itemKey: img.key,
           backgroundProps: {
@@ -92,7 +90,13 @@ export const VideoEffectsPaneContent = (props: {
       });
     }
     return videoEffects;
-  }, [strings, adapter]);
+  }, [
+    strings.removeBackgroundEffectButtonLabel,
+    strings.removeBackgroundTooltip,
+    strings.blurBackgroundEffectButtonLabel,
+    strings.blurBackgroundTooltip,
+    props.backgroundImages
+  ]);
 
   const onEffectChange = useCallback(
     async (effectKey: string) => {
@@ -140,18 +144,21 @@ export const VideoEffectsPaneContent = (props: {
     };
     adapter.updateSelectedVideoBackgroundEffect(noneEffect);
   }
+
   return VideoEffectsPaneTrampoline(
     onDismissError,
+    props.updateFocusHandle,
     activeVideoEffectError,
-
     selectableVideoEffects,
-
     onEffectChange
   );
 };
 
 const VideoEffectsPaneTrampoline = (
   onDismissError: (error: ActiveErrorMessage) => void,
+  updateFocusHandle: React.RefObject<{
+    focus: () => void;
+  }>,
   activeVideoEffectError?: ActiveErrorMessage,
   selectableVideoEffects?: _VideoEffectsItemProps[],
   onEffectChange?: (effectKey: string) => Promise<void>
@@ -182,6 +189,7 @@ const VideoEffectsPaneTrampoline = (
         options={selectableVideoEffects ?? []}
         onChange={onEffectChange}
         selectedEffectKey={selectedEffect}
+        componentRef={updateFocusHandle}
       />
     </Stack>
   );

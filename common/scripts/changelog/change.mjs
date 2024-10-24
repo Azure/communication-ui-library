@@ -17,7 +17,7 @@
 import fs from 'fs';
 import path from 'path';
 
-import { BEACHBALL, CHANGE_DIR, CHANGE_DIR_BETA } from './constants.mjs';
+import { BEACHBALL, CHANGE_DIR_STABLE, CHANGE_DIR_BETA } from './constants.mjs';
 import { parseNewChangeFiles } from './utils.mjs';
 import { exec, exec_output } from '../lib/index.mjs';
 
@@ -57,7 +57,7 @@ async function adjustAndCommitChangeFile() {
     }
 
     const changeFilename = newChangeFilesFilenames[0];
-    const filepath = path.join(CHANGE_DIR, changeFilename);
+    const filepath = path.join(CHANGE_DIR_STABLE, changeFilename);
     const changeFile = JSON.parse(fs.readFileSync(filepath, 'utf-8'));
     console.log(`Duplicating ${filepath} change files into ${CHANGE_DIR_BETA}`);
     fs.copyFileSync(filepath, path.join(CHANGE_DIR_BETA, changeFilename));
@@ -67,7 +67,7 @@ async function adjustAndCommitChangeFile() {
     if (changeFile.type === "prerelease") {
         console.log(`Deleting stable change file ${filepath}`);
         fs.unlinkSync(filepath);
-        await exec(`git add ${CHANGE_DIR}`);
+        await exec(`git add ${CHANGE_DIR_STABLE}`);
     }
 
     await exec(`git commit -m 'Change files'`);

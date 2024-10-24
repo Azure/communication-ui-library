@@ -101,7 +101,6 @@ test.describe('Overflow gallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-many-audio-participants-on-page-1.png');
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('Overflow gallery should have 1 PSTN participant', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
@@ -117,7 +116,6 @@ test.describe('Overflow gallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-joining-participant.png');
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('Overflow gallery should have multiple audio participants and 1 PSTN participant', async ({
     page,
     serverUrl
@@ -142,7 +140,37 @@ test.describe('Overflow gallery tests', async () => {
     );
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
+  test('Overflow gallery should have multiple calling participants in the grid and overflow when there are no overflow participants', async ({
+    page,
+    serverUrl
+  }) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    paul.isSpeaking = true;
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    reina.isSpeaking = true;
+    const phoneUser = defaultMockRemotePSTNParticipant('+15555555555');
+    const luciana = defaultMockRemoteParticipant('Luciana Rodriguez');
+    luciana.state = 'Ringing';
+    const antonie = defaultMockRemoteParticipant('Antonie van Leeuwenhoek');
+    antonie.state = 'Ringing';
+    const gerald = defaultMockRemoteParticipant('Gerald Ho');
+    gerald.state = 'Ringing';
+    const pardeep = defaultMockRemoteParticipant('Pardeep Singh');
+    pardeep.state = 'Ringing';
+    const eryka = defaultMockRemoteParticipant('Eryka Klein');
+    eryka.state = 'Ringing';
+    const phone2 = defaultMockRemotePSTNParticipant('+15553334444');
+    phone2.state = 'Connecting';
+    const participants = [paul, fiona, reina, phoneUser, luciana, antonie, gerald, pardeep, eryka, phone2];
+    const initialState = defaultMockCallAdapterState(participants);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-joining-in-grid-and-overflow.png');
+  });
+
   test('Overflow gallery should have multiple audio participants and 1 PSTN participant on second page', async ({
     page,
     serverUrl
@@ -191,7 +219,6 @@ test.describe('Overflow gallery tests', async () => {
     );
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('Overflow gallery should have 2 video participants during screenshare and 1 PSTN participant', async ({
     page,
     serverUrl
@@ -218,17 +245,6 @@ test.describe('Overflow gallery tests', async () => {
     );
   });
 
-  /*
-    This test should actually be stabilized only when *both* the `PSTN-calls` and `one-to-n-calling`
-    features are stabilized.
-    There is no way to specify this in conditional compilation directives though.
-
-    If one of these features is stabilized alone, this test will be stabilized, and will likely fail.
-    We will need to update the conditional compilation directive at that time to only reference
-    the unstabilized feature.
-
-    @conditional-compile-remove(PSTN-calls) @conditional-compile-remove(one-to-n-calling)
-  */
   test('Overflow gallery should have 1 PSTN and 1 1-N participants', async ({ page, serverUrl }) => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     addVideoStream(reina, true);
@@ -247,7 +263,6 @@ test.describe('Overflow gallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('overflow-gallery-with-2-joining-participants.png');
   });
 
-  /* @conditional-compile-remove(PSTN-calls) */
   test('Overflow gallery should have 1 PSTN and 1 On Hold participant', async ({ page, serverUrl }) => {
     const reina = defaultMockRemoteParticipant('Reina Takizawa');
     reina.state = 'Hold';

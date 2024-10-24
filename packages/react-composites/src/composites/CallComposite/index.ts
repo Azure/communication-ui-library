@@ -16,13 +16,14 @@ export {
   useAzureCommunicationCallAdapter
 } from './adapter';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export { createTeamsCallAdapter, createTeamsCallAdapterFromClient, useTeamsCallAdapter } from './adapter';
 
 export type { TeamsAdapterOptions } from './adapter';
 
-/* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapter, TeamsCallAdapterArgs } from './adapter';
+export type { TeamsCallAdapterArgsCommon, TeamsCallAdapter, TeamsCallAdapterArgs } from './adapter';
+/* @conditional-compile-remove(teams-identity-support-beta) */
+export type { TeamsOutboundCallAdapterArgs, StartTeamsCallIdentifier } from './adapter';
+
 export type { Profile, OnFetchProfileCallback } from './adapter';
 
 export type {
@@ -37,7 +38,7 @@ export type { AzureCommunicationCallAdapterOptions } from './adapter';
 
 export type { CommonCallAdapterOptions } from './adapter';
 
-/* @conditional-compile-remove(teams-adhoc-call) */
+/* @conditional-compile-remove(call-participants-locator) */
 export type { CallParticipantsLocator } from './adapter';
 
 export type {
@@ -70,7 +71,9 @@ export type {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
   JoinCallOptions,
-  StartCallIdentifier
+  StartCallIdentifier,
+  StartCaptionsAdapterOptions,
+  StopCaptionsAdapterOptions
 } from './adapter';
 
 export type {
@@ -86,10 +89,8 @@ export type { CapabilitiesChangedListener } from './adapter';
 
 export type { CapabilityChangedNotificationStrings } from './components/CapabilitiesChangedNotificationBar';
 
-/* @conditional-compile-remove(spotlight) */
 export type { SpotlightChangedListener } from './adapter';
 
 export type { CallingSounds, SoundEffect } from './adapter';
 
-/* @conditional-compile-remove(spotlight) */
 export type { SpotlightPromptStrings } from './components/Prompt';

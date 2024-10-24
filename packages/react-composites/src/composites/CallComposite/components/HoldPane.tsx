@@ -4,10 +4,8 @@
 import { PrimaryButton, Stack, Text } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import React, { useRef, useState } from 'react';
-import { CompositeLocale, useLocale } from '../../localization';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
+import { useLocale } from '../../localization';
 import { HoldButton } from '@internal/react-components';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { usePropsFor } from '../hooks/usePropsFor';
 import {
   holdPaneContentStyles,
@@ -31,11 +29,16 @@ interface HoldPaneStrings {
  * @beta
  */
 export const HoldPane = (): JSX.Element => {
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   const holdButtonProps = usePropsFor(HoldButton);
   const locale = useLocale();
 
-  const strings = stringsTrampoline(locale);
+  const strings: HoldPaneStrings = {
+    holdScreenLabel: locale.strings.call.holdScreenLabel ?? '',
+    resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel ?? '',
+    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel ?? '',
+    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel ?? '',
+    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel ?? ''
+  };
 
   const [time, setTime] = useState<number>(0);
 
@@ -57,7 +60,9 @@ export const HoldPane = (): JSX.Element => {
     <Stack styles={paneStyles}>
       <Stack horizontal styles={holdPaneContentStyles}>
         <Text styles={holdPaneTimerStyles}>{elapsedTime}</Text>
-        <Text styles={holdPaneLabelStyles}>{strings.holdScreenLabel}</Text>
+        <Text styles={holdPaneLabelStyles} role="status" aria-live="assertive">
+          {strings.holdScreenLabel}
+        </Text>
         <PrimaryButton
           text={!resumingCall ? strings.resumeCallButtonLabel : strings.resumingCallButtonLabel}
           ariaLabel={!resumingCall ? strings.resumeCallButtonAriaLabel : strings.resumingCallButtonAriaLabel}
@@ -66,7 +71,6 @@ export const HoldPane = (): JSX.Element => {
           onClick={async () => {
             setResumingCall(true);
             try {
-              /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
               await holdButtonProps.onToggleHold();
             } catch (e) {
               setResumingCall(false);
@@ -101,22 +105,4 @@ export const getReadableTime = (time: number): string => {
   const readableMinutes = ('0' + (getMinutes(time) % 60)).slice(-2);
   const readableSeconds = ('0' + (getSeconds(time) % 60)).slice(-2);
   return `${hours > 0 ? hours + ':' : ''}${readableMinutes}:${readableSeconds}`;
-};
-
-const stringsTrampoline = (locale: CompositeLocale): HoldPaneStrings => {
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
-  return {
-    holdScreenLabel: locale.strings.call.holdScreenLabel,
-    resumeCallButtonLabel: locale.strings.call.resumeCallButtonLabel,
-    resumeCallButtonAriaLabel: locale.strings.call.resumeCallButtonAriaLabel,
-    resumingCallButtonLabel: locale.strings.call.resumingCallButtonLabel,
-    resumingCallButtonAriaLabel: locale.strings.call.resumingCallButtonAriaLabel
-  };
-  return {
-    holdScreenLabel: '',
-    resumeCallButtonLabel: '',
-    resumeCallButtonAriaLabel: '',
-    resumingCallButtonLabel: '',
-    resumingCallButtonAriaLabel: ''
-  };
 };

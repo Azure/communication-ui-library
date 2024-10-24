@@ -9,6 +9,7 @@ export * from './CallWithChatComposite';
 export { COMPOSITE_LOCALE_EN_GB } from './localization/locales/en-GB/CompositeLocale';
 export { COMPOSITE_LOCALE_AR_SA } from './localization/locales/ar-SA/CompositeLocale';
 export { COMPOSITE_LOCALE_CS_CZ } from './localization/locales/cs-CZ/CompositeLocale';
+export { COMPOSITE_LOCALE_CY_GB } from './localization/locales/cy-GB/CompositeLocale';
 export { COMPOSITE_LOCALE_DE_DE } from './localization/locales/de-DE/CompositeLocale';
 export { COMPOSITE_LOCALE_ES_ES } from './localization/locales/es-ES/CompositeLocale';
 export { COMPOSITE_LOCALE_FI_FI } from './localization/locales/fi-FI/CompositeLocale';
@@ -40,6 +41,8 @@ export type {
 export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';
 export type { AdapterError, AdapterErrors } from './common/adapters';
+/* @conditional-compile-remove(breakout-rooms) */
+export type { AdapterNotification, AdapterNotifications } from './common/adapters';
 export type { BaseCompositeProps } from './common/BaseComposite';
 export type {
   CustomCallControlButtonCallback,
@@ -51,3 +54,5 @@ export type {
 export { onResolveVideoEffectDependencyLazy } from './common/resolveVideoEffectDependencyLazy';
 
 export { onResolveVideoEffectDependency } from './common/resolveVideoEffectDependency';
+export { onResolveDeepNoiseSuppressionDependencyLazy } from './common/resolveDeepNoiseSuppressionDependencyLazy';
+export { onResolveDeepNoiseSuppressionDependency } from './common/resolveDeepNoiseSuppressionDependency';

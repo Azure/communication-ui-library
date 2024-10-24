@@ -27,7 +27,7 @@ describe('AttachmentUploadCards should be rendered properly', () => {
       ]
     } as AttachmentUploadCardsProps;
     renderAttachmentUploadCardWithDefaults(props);
-    expect(await screen.findByText('MockAttachmentUpload')).toBeDefined();
+    expect(screen.queryByTestId('attachment-card')).toBeDefined();
   });
 
   it('should not render the component with no attachments', async () => {
@@ -35,7 +35,7 @@ describe('AttachmentUploadCards should be rendered properly', () => {
       attachments: undefined
     } as AttachmentUploadCardsProps;
     renderAttachmentUploadCardWithDefaults(props);
-    expect(screen.queryByText('MockAttachmentUpload')).toBeNull();
+    expect(screen.queryByTestId('attachment-card')).toBeNull();
   });
 });
 

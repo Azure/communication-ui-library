@@ -125,6 +125,10 @@ export interface ErrorBarStrings {
   callNetworkQualityLow: string;
 
   /**
+   * Message shown when poor network quality is detected during a call.
+   */
+  teamsMeetingCallNetworkQualityLow: string;
+  /**
    * Message shown on failure to detect audio output devices.
    */
   callNoSpeakerFound: string;
@@ -224,11 +228,16 @@ export interface ErrorBarStrings {
    * Unable to start effect
    */
   unableToStartVideoEffect?: string;
-  /* @conditional-compile-remove(spotlight) */
+
   /**
    * An error message when starting spotlight while max participants are spotlighted
    */
   startSpotlightWhileMaxParticipantsAreSpotlighted: string;
+
+  /**
+   * An error message when local user is muted by a remote participant
+   */
+  mutedByRemoteParticipant: string;
 }
 
 /**
@@ -297,7 +306,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
   );
 
   return (
-    <Stack data-ui-id="error-bar-stack">
+    <Stack data-ui-id="notifications-stack">
       {toShow.map((error) => (
         <MessageBar
           {...props}
@@ -312,8 +321,8 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
               lineHeight: 'inherit'
             },
             dismissal: {
-              height: 0,
-              paddingTop: '0.8rem'
+              height: '2rem',
+              paddingBottom: '0.8rem'
             }
           }}
           key={error.type}
@@ -324,7 +333,7 @@ export const ErrorBar = (props: ErrorBarProps): JSX.Element => {
               ? setDismissedErrors(dismissError(dismissedErrors, error))
               : props.onDismissError?.(error)
           }
-          dismissButtonAriaLabel={strings.dismissButtonAriaLabel}
+          dismissButtonAriaLabel={`${strings[error.type]}, ${strings.dismissButtonAriaLabel}`}
           dismissIconProps={{ iconName: 'ErrorBarClear' }}
         >
           {strings[error.type]}

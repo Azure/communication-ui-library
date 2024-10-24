@@ -1,0 +1,118 @@
+import { Meta, Source } from '@storybook/addon-docs';
+import QuickstartPSTNSnippet from '!!raw-loader!./snippets/QuickstartPSTN.snippet.tsx';
+
+<Meta title="Composites/CallComposite/PSTN/Docs" />
+
+# Getting Started With PSTN
+
+The UI Library CallWithChat Composite and Calling Composite supports PSTN by enabling developers to dial and call phone numbers through
+Azure Communication Services call service. The UI Library renders a dialpad that supports DTMF (dual tone multi-frequency) and other
+features such as being put on hold and dialing in and removing users from an existing call.
+
+More specifically, the following features are supported:
+
+1. [DTMF](./?path=/docs/components-dialpad--docs#dtmf-mode) (dual tone multi-frequency)
+2. [Dialpad UI](./?path=/docs/components-dialpad--docs#dialer-mode)
+3. [On/Off hold features](./?path=/docs/composites-adapters--docs)
+4. 1 to 1 participant PSTN calls
+5. Multi participant PSTN calls
+6. Dialing/Adding PSTN participants into an existing call
+7. Removing PSTN participants from a call
+
+## Download the Code
+
+We will be modifying the composite quickstarts to enable PSTN calling.
+Download the [UI Library quickstart composites](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-quickstart-composites) to get started.
+
+## Prerequisites
+
+- An Azure account with an active subscription. [Create an account for free](https://azure.microsoft.com/free/?WT.mc_id=A261C142F).
+- [Node.js](https://nodejs.org/) Active LTS and Maintenance LTS versions (Node 18.0.0 and above).
+- An active Communication Services resource. [Create a Communication Services resource](https://docs.microsoft.com/azure/communication-services/quickstarts/create-communication-resource?tabs=windows&pivots=platform-azp).
+- An identity with VoIP scope. Generate an identity using the [Azure Portal](https://docs.microsoft.com/azure/communication-services/quickstarts/identity/quick-create-identity).
+- A [phone number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number) created within the active Communication Service resource.
+
+## Setting Up
+
+### Set Up React App
+
+We'll use the create-react-app template for this quickstart. For more information, see: [Get Started with React](https://reactjs.org/docs/create-a-new-react-app.html)
+
+```bash
+
+npx create-react-app ui-library-quickstart-composites --template typescript
+
+cd ui-library-quickstart-composites
+
+```
+
+At the end of this process, you should have a full application inside of the folder `ui-library-quickstart-composites`.
+For this quickstart, we'll be modifying files inside of the `src` folder.
+
+### Install the Package
+
+Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
+
+```bash
+
+npm install @azure/communication-react
+
+```
+
+`@azure/communication-react` specifies core Azure Communication Services as `peerDependencies` so that
+you can most consistently use the API from the core libraries in your application. You need to install those libraries as well:
+
+```bash
+
+npm install @azure/communication-calling@1.6.1-beta.1
+npm install @azure/communication-chat@1.3.2
+
+```
+
+### Run Create React App
+
+Let's test the Create React App installation by running:
+
+```bash
+
+npm run start
+
+```
+
+## Get and Manage Phone Numbers
+
+For this quickstart, you are required to provide a [phonenumber](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number)
+known as an alternate caller ID from an Azure Communications resource. This phone number serves as your caller ID when calling PSTN.
+
+You can follow the [quickstart](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number) to get phone numbers
+for PSTN use.
+
+## Initialize Composite
+
+Go to the `src` folder inside of `ui-library-quickstart-composites` and look for the file `App.tsx`.
+Here we'll drop the following code to initialize our Composite Components for PSTN Calling using the call adapter.
+
+The adapter requires an [access token](https://docs.microsoft.com/azure/communication-services/concepts/identity-model#access-tokens),
+[alternate caller ID](./?path=/docs/composites-adapters--docs), and phone number(s) for the call to be setup for PSTN.
+For this quickstart, the access tokens required need to have `VoIP` scope.
+
+`App.tsx`
+
+<Source code={QuickstartPSTNSnippet} />
+
+## Run Quickstart
+
+To run the code above use the command:
+
+```bash
+
+npm run start
+
+```
+
+Successfully starting the quickstart will call the phone number(s) provided as seen in the image below.
+![pstn joining call](images/pstn-quickstart.png)
+
+## Troubleshooting
+
+See the [troubleshooting page](./?path=/docs/concepts-troubleshooting--docs) for some common problems and recommended solutions.

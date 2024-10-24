@@ -19,8 +19,14 @@ export function perStepLocalTimeout(): number {
   return PER_STEP_TIMEOUT_MS;
 }
 
-/** Selector string to get element by data-ui-id property */
+/**
+ *  Selector string to get element by data-ui-id property
+ * @deprecated Use native Playwright functions to get locators or use `dataTestId` instead.
+ */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
+
+/** Selector string to get element by data-testid property */
+export const dataTestId = (id: string): string => `[data-testid="${id}"]`;
 
 /**
  * Wrapper function to take a screenshot if the provided callback fails.
@@ -373,8 +379,8 @@ export const waitForParticipants = async (page: Page, numParticipants: number): 
 
 export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
-  for (const key in qArgs) {
-    qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(qArgs[key]));
+  for (const [key, value] of Object.entries(qArgs || {})) {
+    qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
   }
   return qs.join('&');
 };
@@ -642,7 +648,7 @@ export const dragToRight = async (page: Page, selector: string): Promise<void> =
   const boundingBox = await handle.boundingBox();
   if (!boundingBox) {
     page.screenshot({ path: `test-results/failure-screenshot-${generateGUID()}.png` });
-    fail(`Bounding box for selector '${selector}' could not be found.`);
+    throw new Error(`Bounding box for selector '${selector}' could not be found.`);
   }
   await screenshotOnFailure(
     page,

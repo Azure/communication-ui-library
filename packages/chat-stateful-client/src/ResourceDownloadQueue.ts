@@ -68,15 +68,15 @@ export class ResourceDownloadQueue {
   }
 
   public cancelAllRequests(): void {
-    for (const key in this._requestsToCancel) {
-      this._requestsToCancel[key].abortController.abort();
+    for (const cancelation of Object.values(this._requestsToCancel)) {
+      cancelation.abortController.abort();
     }
     this._requestsToCancel = {};
   }
 
   public cancelRequest(url: string): void {
     if (this._requestsToCancel[url]) {
-      this._requestsToCancel[url].abortController.abort();
+      this._requestsToCancel[url]?.abortController.abort();
       delete this._requestsToCancel[url];
     }
   }
@@ -192,6 +192,11 @@ export const fetchImageSource = async (
   }
 
   const response = await fetchWithAuthentication(src, token, options);
+
+  if (response.status >= 400) {
+    throw new Error(`Failed to fetch image source. Status code: ${response.status}`);
+  }
+
   const blob = await response.blob();
 
   return URL.createObjectURL(blob);

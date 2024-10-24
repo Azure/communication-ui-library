@@ -29,10 +29,7 @@ export const MessageStatusIcon = (props: MessageStatusIconProps): JSX.Element =>
     <>
       {/* live message is used here so that aria labels are announced on mobile */}
       {ariaLabel && shouldAnnounce && <LiveMessage message={ariaLabel} ariaLive="polite" />}
-      <div
-        // make icon accessible
-        tabIndex={0}
-      >
+      <div>
         <Icon
           role={'status'}
           // Role `status` is one of the live region roles and is used to notify screen readers of changes to the status of the message

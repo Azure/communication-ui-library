@@ -1,0 +1,28 @@
+import { Canvas, Meta } from '@storybook/addon-docs';
+import * as VideoEffectsStories from './index.stories';
+import SelectableVideoEffectsExample from '!!raw-loader!./snippets/SelectableVideoEffects.snippet.tsx';
+import VideoBackgroundEffectsPickerExample from '!!raw-loader!./snippets/VideoBackgroundEffectsPicker.snippet.tsx';
+
+<Meta of={VideoEffectsStories} />
+
+# Video Background Effects
+
+Components to allow a user to select video background effects.
+
+## Video Background Effects Item
+
+A selection of premade video effects items.
+
+<Canvas
+  of={VideoEffectsStories.SelectableVideoEffectsExampleDocsOnly}
+  source={{ code: SelectableVideoEffectsExample }}
+/>
+
+## Video Background Effects Picker
+
+The picker can be used as a choice group to allow users to select backgrounds.
+
+<Canvas
+  of={VideoEffectsStories.VideoBackgroundEffectsPickerExampleDocsOnly}
+  source={{ code: VideoBackgroundEffectsPickerExample }}
+/>

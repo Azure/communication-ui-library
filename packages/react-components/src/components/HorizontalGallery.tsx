@@ -68,7 +68,7 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
 
   useEffect(() => {
     if (onFetchTilesToRender && indexesArray) {
-      onFetchTilesToRender(indexesArray[page]);
+      onFetchTilesToRender(indexesArray[page] ?? []);
     }
   }, [indexesArray, onFetchTilesToRender, page]);
 
@@ -76,12 +76,11 @@ export const HorizontalGallery = (props: HorizontalGalleryProps): JSX.Element =>
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
 
   const childrenOnCurrentPage = useMemo(() => {
-    if (indexesArray[0] !== undefined) {
-      return indexesArray[clippedPage].map((index) => {
-        return React.Children.toArray(children)[index];
-      });
+    const indexes = indexesArray?.[clippedPage];
+    if (!indexes) {
+      return [];
     }
-    return [];
+    return indexes.map((index) => React.Children.toArray(children)[index]);
   }, [indexesArray, clippedPage, children]);
 
   const showButtons = numberOfChildren > childrenPerPage;

@@ -4,18 +4,16 @@
 import {
   AudioDeviceInfo,
   Call,
+  DeviceAccess,
   DtmfTone,
   ParticipantRole,
   PermissionConstraints,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import type { CallAdapter, CallAdapterState } from './adapter';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
 /**
@@ -25,7 +23,7 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 // TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported
 export class _MockCallAdapter implements CallAdapter {
   constructor(testState: {
-    askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
+    askDevicePermission?: (constrain: PermissionConstraints) => Promise<DeviceAccess>;
     localParticipantRole?: ParticipantRole;
   }) {
     this.state = {
@@ -112,6 +110,9 @@ export class _MockCallAdapter implements CallAdapter {
   createStreamView(): Promise<void> {
     throw Error('createStreamView not implemented');
   }
+  startTogetherMode(): Promise<void> {
+    throw Error('startTogetherMode not implemented');
+  }
   disposeStreamView(): Promise<void> {
     return Promise.resolve();
   }
@@ -125,7 +126,7 @@ export class _MockCallAdapter implements CallAdapter {
     return Promise.resolve();
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess> {
     throw Error('askDevicePermission not implemented');
   }
   async queryCameras(): Promise<VideoDeviceInfo[]> {
@@ -156,7 +157,6 @@ export class _MockCallAdapter implements CallAdapter {
   off(): void {
     return;
   }
-  /* @conditional-compile-remove(PSTN-calls) */
   getEnvironmentInfo(): Promise<EnvironmentInfo> {
     throw Error('getEnvironmentInfo not implemented');
   }
@@ -192,21 +192,40 @@ export class _MockCallAdapter implements CallAdapter {
   public updateSelectedVideoBackgroundEffect(): void {
     throw new Error('updateSelectedVideoBackgroundEffect not implemented.');
   }
-  /* @conditional-compile-remove(end-of-call-survey) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
+  startNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('startNoiseSuppressionEffect not implemented.');
+  }
+
+  stopNoiseSuppressionEffect(): Promise<void> {
+    throw new Error('stopNoiseSuppressionEffect not implemented.');
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     throw Error('submitStarSurvey not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   startSpotlight(userIds?: string[]): Promise<void> {
     throw Error('startSpotlight not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */ // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   stopSpotlight(userIds?: string[]): Promise<void> {
     throw Error('stopSpotlight not implemented');
   }
-  /* @conditional-compile-remove(spotlight) */
   stopAllSpotlight(): Promise<void> {
     throw Error('stopAllSpotlight not implemented');
+  }
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  muteParticipant(userId: string): Promise<void> {
+    throw Error('muteParticipant not implemented');
+  }
+  muteAllRemoteParticipants(): Promise<void> {
+    throw Error('muteAllRemoteParticipants not implemented');
+  }
+  /* @conditional-compile-remove(breakout-rooms) */
+  returnFromBreakoutRoom(): Promise<void> {
+    throw Error('returnFromBreakoutRoom not implemented');
   }
 }
 
@@ -220,7 +239,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
     page: 'call',
     call: {
       id: 'call1',
-      /* @conditional-compile-remove(teams-identity-support) */
       kind: CallKind.Call,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
@@ -238,7 +256,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       remoteParticipants: {},
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
-      /* @conditional-compile-remove(ppt-live) */
+      /* @conditional-compile-remove(together-mode) */
+      togetherMode: { stream: [] },
       pptLive: { isActive: false },
       localParticipantReaction: undefined,
       role,
@@ -250,7 +269,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false,
-        /* @conditional-compile-remove(acs-close-captions) */
+
         captionsKind: 'Captions'
       },
       transfer: {
@@ -280,6 +299,8 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
     isTeamsCall: false,
     isTeamsMeeting: false,
     isRoomsCall: false,
-    latestErrors: {}
+    latestErrors: {},
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestNotifications: {}
   };
 };

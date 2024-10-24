@@ -8,7 +8,6 @@ import {
   PersonaPresence,
   PersonaSize
 } from '@fluentui/react';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { ParticipantState } from '.';
 
 /**
@@ -34,10 +33,8 @@ export type CustomAvatarOptions = {
   styles?: IStyleFunctionOrObject<IPersonaStyleProps, IPersonaStyles>;
   /** Display name to be used in Persona  */
   text?: string;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /** State for the participant to be displayed in the defaultPlaceHolder */
   participantState?: ParticipantState;
-  /* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
   /**
    * If true, show the special coin for unknown persona.
    * It has '?' in place of initials, with static font and background colors
@@ -61,4 +58,4 @@ export type OnRenderAvatarCallback = (
    * Pass the `options` to the `onRender` component for default rendering.
    */
   defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
-) => JSX.Element;
+) => JSX.Element | undefined;

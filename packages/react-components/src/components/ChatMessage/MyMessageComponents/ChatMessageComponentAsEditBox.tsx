@@ -7,7 +7,7 @@ import { mergeClasses } from '@fluentui/react-components';
 import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { useReducer } from 'react';
 import { editBoxStyle, editingButtonStyle, editBoxStyleSet, inputBoxIcon } from '../../styles/EditBox.styles';
 import { InputBoxComponent } from '../../InputBoxComponent';
@@ -15,9 +15,9 @@ import { InputBoxButton } from '../../InputBoxButton';
 import { MessageThreadStrings } from '../../MessageThread';
 import { useChatMyMessageStyles } from '../../styles/MessageThread.styles';
 import { ChatMessage } from '../../../types';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import {
   chatMessageFailedTagStyle,
@@ -29,14 +29,17 @@ import {
 /* @conditional-compile-remove(mention) */
 import { MentionLookupOptions } from '../../MentionPopover';
 import { MAXIMUM_LENGTH_OF_MESSAGE } from '../../utils/SendBoxUtils';
-/* @conditional-compile-remove(attachment-upload) */
-import { attachmentMetadataReducer } from '../../utils/ChatMessageComponentAsEditBoxUtils';
+/* @conditional-compile-remove(file-sharing-acs) */
+import {
+  attachmentMetadataReducer,
+  doesMessageContainMultipleAttachments
+} from '../../utils/ChatMessageComponentAsEditBoxUtils';
 import {
   getMessageState,
   onRenderCancelIcon,
   onRenderSubmitIcon
 } from '../../utils/ChatMessageComponentAsEditBoxUtils';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { getMessageWithAttachmentMetadata } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 
 /** @private */
@@ -44,7 +47,7 @@ export type ChatMessageComponentAsEditBoxProps = {
   onCancel?: (messageId: string) => void;
   onSubmit: (
     text: string,
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     attachmentMetadata?: AttachmentMetadata[]
   ) => void;
   message: ChatMessage;
@@ -62,7 +65,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const { mentionLookupOptions } = props;
 
   const [textValue, setTextValue] = useState<string>(message.content || '');
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   const [attachmentMetadata, handleAttachmentAction] = useReducer(
     attachmentMetadataReducer,
     getMessageWithAttachmentMetadata(message) ?? []
@@ -71,7 +74,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   const theme = useTheme();
   const messageState = getMessageState(
     textValue,
-    /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata ?? []
+    /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []
   );
   const submitEnabled = messageState === 'OK';
 
@@ -113,11 +116,16 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     [iconClassName]
   );
 
+  /* @conditional-compile-remove(file-sharing-acs) */
+  const hasMultipleAttachments = useMemo(() => {
+    return doesMessageContainMultipleAttachments(message);
+  }, [message]);
+
   const editBoxStyles = useMemo(() => {
     return concatStyleSets(editBoxStyleSet, { textField: { borderColor: theme.palette.themePrimary } });
   }, [theme.palette.themePrimary]);
 
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   const onRenderAttachmentUploads = useCallback(() => {
     return (
       !!attachmentMetadata &&
@@ -156,7 +164,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
             submitEnabled &&
               onSubmit(
                 textValue,
-                /* @conditional-compile-remove(attachment-upload) */
+                /* @conditional-compile-remove(file-sharing-acs) */
                 attachmentMetadata
               );
           }}
@@ -190,6 +198,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
                 onCancel && onCancel(message.messageId);
               }}
               id={'dismissIconWrapper'}
+              data-testId="chat-message-edit-box-cancel-button"
             />
           </Stack.Item>
           <Stack.Item align="end">
@@ -204,14 +213,15 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
                 // if you set it to undefined, the attachments pre-edited would still be there
                 // until edit message event is received
                 submitEnabled &&
-                  onSubmit(textValue, /* @conditional-compile-remove(attachment-upload) */ attachmentMetadata);
+                  onSubmit(textValue, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata);
                 e.stopPropagation();
               }}
               id={'submitIconWrapper'}
+              data-testId="chat-message-edit-box-submit-button"
             />
           </Stack.Item>
         </Stack>
-        {/* @conditional-compile-remove(attachment-upload) */ onRenderAttachmentUploads()}
+        {/* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentUploads()}
       </>
     );
   };
@@ -221,7 +231,11 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     <ChatMyMessage
       attached={attached}
       root={{
-        className: chatMyMessageStyles.root
+        className: mergeClasses(
+          chatMyMessageStyles.root,
+          /* @conditional-compile-remove(file-sharing-acs) */
+          hasMultipleAttachments ? chatMyMessageStyles.multipleAttachmentsInEditing : undefined
+        )
       }}
       body={{
         className: mergeClasses(

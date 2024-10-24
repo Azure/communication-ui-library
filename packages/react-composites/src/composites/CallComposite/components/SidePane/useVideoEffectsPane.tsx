@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { createRef, useCallback, useEffect, useMemo } from 'react';
 import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 
@@ -9,6 +9,8 @@ import { useLocale } from '../../../localization';
 import { VideoEffectsPaneContent } from '../../../common/VideoEffectsPane';
 import { ActiveErrorMessage } from '@internal/react-components';
 import { IButton } from '@fluentui/react';
+import { useSelector } from '../../hooks/useSelector';
+import { getVideoBackgroundImages } from '../../selectors/baseSelectors';
 
 /** @private */
 export const VIDEO_EFFECTS_SIDE_PANE_ID = 'videoeffects';
@@ -52,6 +54,9 @@ export const useVideoEffectsPane = (
   }, [closePane, locale.strings, mobileView]);
 
   const latestVideoEffectError = latestErrors.find((error) => error.type === 'unableToStartVideoEffect');
+  const updateFocusHandle = useMemo(() => createRef<{ focus: () => void }>(), []);
+
+  const backgroundImages = useSelector(getVideoBackgroundImages);
 
   const onRenderContent = useCallback((): JSX.Element => {
     return (
@@ -63,9 +68,11 @@ export const useVideoEffectsPane = (
 
           latestVideoEffectError && onDismissError?.(latestVideoEffectError);
         }}
+        updateFocusHandle={updateFocusHandle}
+        backgroundImages={backgroundImages}
       />
     );
-  }, [latestVideoEffectError, onDismissError]);
+  }, [latestVideoEffectError, onDismissError, updateFocusHandle, backgroundImages]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(
     () => ({
@@ -78,7 +85,10 @@ export const useVideoEffectsPane = (
 
   const openPane = useCallback(() => {
     updateSidePaneRenderer(sidePaneRenderer);
-  }, [sidePaneRenderer, updateSidePaneRenderer]);
+
+    // Run in a setTimeout as it must be called only once the imperative handle is available
+    setTimeout(() => updateFocusHandle.current?.focus(), 0);
+  }, [sidePaneRenderer, updateSidePaneRenderer, updateFocusHandle]);
 
   const isOpen = useIsParticularSidePaneOpen(VIDEO_EFFECTS_SIDE_PANE_ID);
 

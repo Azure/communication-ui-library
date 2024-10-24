@@ -20,11 +20,13 @@
     "complianceBannerTranscriptionStopped": "A transcrição foi interrompida.",
     "configurationPageTitle": "Iniciar uma chamada",
     "copyInviteLinkButtonLabel": "Copiar o link de convite",
+    "copyInviteLinkButtonActionedLabel": "Link copiado",
     "copyInviteLinkActionedAriaLabel": "Link de convite copiado",
     "defaultPlaceHolder": "Selecionar uma opção",
     "dismissSidePaneButtonLabel": "Fechar",
     "videoEffectsPaneTitle": "Efeitos",
     "videoEffectsPaneBackgroundSelectionTitle": "Tela de fundo",
+    "videoEffectsPaneAriaLabel": "Painel de efeitos de vídeo",
     "configurationPageVideoEffectsButtonLabel": "Efeitos",
     "unableToStartVideoEffect": "Não é possível aplicar o efeito de vídeo.",
     "blurBackgroundEffectButtonLabel": "Desfoque",
@@ -134,6 +136,7 @@
     "dtmfDialerButtonTooltipOff": "Ocultar teclado de discagem",
     "dtmfDialerMoreButtonLabelOn": "Mostrar teclado de discagem",
     "dtmfDialerMoreButtonLabelOff": "Ocultar teclado de discagem",
+    "phoneCallMoreButtonLabel": "Chamada Telefônica",
     "spokenLanguageStrings": {
       "ar-ae": "Árabe - Emirados Árabes Unidos",
       "ar-sa": "Árabe - Arábia Saudita",
@@ -335,11 +338,33 @@
     "leaveConfirmDialogContent": "Tem certeza de que deseja sair da chamada?",
     "endCallConfirmDialogTitle": "Encerrar a chamada?",
     "endCallConfirmDialogContent": "Você encerrará a chamada para todos.",
-    "invalidMeetingIdentifier": "ID ou senha de reunião inválida"
+    "invalidMeetingIdentifier": "ID ou senha de reunião inválida",
+    "pinParticipantMenuLabel": "Fixar para mim",
+    "pinParticipantLimitReachedMenuLabel": "Fixar (limite alcançado)",
+    "unpinParticipantMenuLabel": "Desafixar",
+    "pinParticipantMenuItemAriaLabel": "Fixar para mim",
+    "unpinParticipantMenuItemAriaLabel": "Desafixar",
+    "muteAllMenuLabel": "Ativar mudo de todos",
+    "muteAllDialogTitle": "Ativar mudo para todos?",
+    "muteAllDialogContent": "Isso ativará o mudo para todas as pessoas na reunião, exceto para você.",
+    "muteAllConfirmButtonLabel": "Ativar mudo de todos",
+    "muteAllCancelButtonLabel": "Cancelar",
+    "joinBreakoutRoomButtonLabel": "Ingressar na sala da sessão de grupo",
+    "returnFromBreakoutRoomButtonLabel": "Sair da sala",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Sair da reunião",
+    "breakoutRoomJoinedNotificationTitle": "Você ingressou na sala para sessão de grupo '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "A sala para sessão de grupo '{roomName}' está aberta",
+    "joinBreakoutRoomBannerButtonLabel": "Ingressar",
+    "returnFromBreakoutRoomBannerTitle": "Voltar à reunião principal",
+    "returnFromBreakoutRoomBannerButtonLabel": "Reingressar"
   },
   "chat": {
     "chatListHeader": "Neste chat",
-    "uploadAttachment": "Carregar anexo"
+    "uploadAttachment": "Carregar anexo",
+    "uploadImageDataNotProvided": "Os dados da imagem não foram fornecidos.",
+    "uploadImageIsTooLarge": "A imagem é muito grande. Escolha um que seja menor que {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "O upload da imagem .{imageExtension} não é permitido.",
+    "uploadImageFailed": "Não é possível carregar a imagem. Tente novamente mais tarde."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -349,6 +374,7 @@
     "chatButtonTooltipOpen": "Mostrar chat",
     "chatPaneTitle": "Chat",
     "copyInviteLinkButtonLabel": "Copiar o link de convite",
+    "copyInviteLinkButtonActionedLabel": "Link copiado",
     "copyInviteLinkActionedAriaLabel": "Link de convite copiado",
     "dismissSidePaneButtonLabel": "Fechar",
     "moreDrawerAudioDeviceMenuTitle": "Dispositivo de Áudio",
@@ -364,6 +390,8 @@
     "selectedPeopleButtonLabel": "Botão Pessoas Selecionado",
     "peopleButtonTooltipOpen": "Mostrar Participantes",
     "peopleButtonTooltipClose": "Ocultar participantes",
+    "peopleButtonTooltipOpenAriaLabel": "Botão Pessoas, Mostrar participantes",
+    "peopleButtonTooltipCloseAriaLabel": "Botão Pessoas, Ocultar participantes",
     "peoplePaneSubTitle": "Nesta chamada",
     "peoplePaneTitle": "Pessoas",
     "pictureInPictureTileAriaLabel": "Feeds de vídeo. Clique para retornar à tela de chamada.",
@@ -377,6 +405,8 @@
     "dialpadModalAriaLabel": "Teclado de discagem",
     "dialpadCloseModalButtonAriaLabel": "Fechar teclado",
     "openDtmfDialpadLabel": "Mostrar teclado de discagem",
-    "dtmfDialpadPlaceholderText": "Digite o número"
+    "dtmfDialpadPlaceholderText": "Digite o número",
+    "breakoutRoomChatPaneTitle": "Chat da Sala para Sessão de Grupo",
+    "chatContentSpinnerLabel": "Carregando..."
   }
 }

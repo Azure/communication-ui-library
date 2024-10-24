@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { CommonCallingHandlers } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(spotlight) */
 import { _ComponentCallingHandlers } from '@internal/calling-component-bindings';
 import { CommonProperties, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { ReactElement } from 'react';
@@ -13,7 +12,6 @@ import { VideoBackgroundBlurEffect, VideoBackgroundReplacementEffect } from '..'
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isCameraOn } from '../utils';
 import { DtmfTone } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 
@@ -22,16 +20,17 @@ import type {
   BackgroundBlurConfig,
   ParticipantCapabilities
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(end-of-call-survey) */
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
   PhoneNumberIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(PSTN-calls) */
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { useSelector } from './useSelector';
+import { getCapabilites } from '../selectors/baseSelectors';
+
+type AdapterCommonCallingHandlers = Omit<CommonCallingHandlers, 'onAcceptCall' | 'onRejectCall'>;
 
 /**
  * @private
@@ -40,10 +39,10 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _component: (props: PropsT) => ReactElement | null
-): Pick<CommonCallingHandlers, CommonProperties<CommonCallingHandlers, PropsT>> &
-  /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
+): Pick<AdapterCommonCallingHandlers, CommonProperties<AdapterCommonCallingHandlers, PropsT>> &
+  Partial<_ComponentCallingHandlers> => {
   const adapter = useAdapter();
-  const capabilities = adapter.getState().call?.capabilitiesFeature?.capabilities;
+  const capabilities = useSelector(getCapabilites);
   return createCompositeHandlers(adapter, capabilities);
 };
 
@@ -51,7 +50,7 @@ const createCompositeHandlers = memoizeOne(
   (
     adapter: CommonCallAdapter,
     capabilities?: ParticipantCapabilities
-  ): CommonCallingHandlers & /* @conditional-compile-remove(spotlight) */ Partial<_ComponentCallingHandlers> => {
+  ): AdapterCommonCallingHandlers & Partial<_ComponentCallingHandlers> => {
     return {
       onCreateLocalStreamView: async (options) => {
         return await adapter.createStreamView(undefined, options);
@@ -62,11 +61,9 @@ const createCompositeHandlers = memoizeOne(
       onHangUp: async (forEveryone?: boolean) => {
         await adapter.leaveCall(forEveryone);
       },
-      /* @conditional-compile-remove(PSTN-calls) */
       onToggleHold: async () => {
         return adapter.getState().call?.state === 'LocalHold' ? await adapter.resumeCall() : await adapter.holdCall();
       },
-      /* @conditional-compile-remove(PSTN-calls) */
       onAddParticipant: async (
         participant: Partial<CommunicationUserIdentifier & PhoneNumberIdentifier>,
         options?: AddPhoneNumberOptions
@@ -80,13 +77,10 @@ const createCompositeHandlers = memoizeOne(
       onSendDtmfTone: async (dtmfTone: DtmfTone) => {
         await adapter.sendDtmfTone(dtmfTone);
       },
-      onRemoveParticipant: async (
-        userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-      ) => {
+      onRemoveParticipant: async (userId: string | CommunicationIdentifier) => {
         if (typeof userId === 'string') {
           await adapter.removeParticipant(userId);
         } else {
-          /* @conditional-compile-remove(PSTN-calls) */
           await adapter.removeParticipant(_toCommunicationIdentifier(userId));
         }
       },
@@ -148,12 +142,15 @@ const createCompositeHandlers = memoizeOne(
       onDisposeRemoteScreenShareStreamView: async (userId) => {
         return adapter.disposeScreenShareStreamView(userId);
       },
+      onDisposeLocalScreenShareStreamView: async () => {
+        return adapter.disposeScreenShareStreamView('');
+      },
       onDisposeRemoteVideoStreamView: async (userId) => {
         return adapter.disposeRemoteVideoStreamView(userId);
       },
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission: async (constrain) => {
-        return adapter.askDevicePermission(constrain);
+        await adapter.askDevicePermission(constrain);
       },
 
       onRemoveVideoBackgroundEffects: async () => {
@@ -175,6 +172,15 @@ const createCompositeHandlers = memoizeOne(
         };
         return await adapter.startVideoBackgroundEffect(replacementConfig);
       },
+
+      onStartNoiseSuppressionEffect: async () => {
+        return await adapter.startNoiseSuppressionEffect();
+      },
+
+      onStopNoiseSuppressionEffect: async () => {
+        return await adapter.stopNoiseSuppressionEffect();
+      },
+
       onStartCaptions: async (options) => {
         await adapter.startCaptions(options);
       },
@@ -187,44 +193,42 @@ const createCompositeHandlers = memoizeOne(
       onSetCaptionLanguage: async (language) => {
         await adapter.setCaptionLanguage(language);
       },
-      /* @conditional-compile-remove(end-of-call-survey) */
       onSubmitSurvey: async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> => {
         return await adapter.submitSurvey(survey);
       },
-      /* @conditional-compile-remove(spotlight) */
       onStartSpotlight: async (userIds?: string[]): Promise<void> => {
         await adapter.startSpotlight(userIds);
       },
-      /* @conditional-compile-remove(spotlight) */
       onStopSpotlight: async (userIds?: string[]): Promise<void> => {
         await adapter.stopSpotlight(userIds);
       },
-      /* @conditional-compile-remove(spotlight) */
       onStopAllSpotlight: async (): Promise<void> => {
         await adapter.stopAllSpotlight();
       },
-      /* @conditional-compile-remove(spotlight) */
       onStartLocalSpotlight: capabilities?.spotlightParticipant.isPresent
         ? async (): Promise<void> => {
             await adapter.startSpotlight();
           }
         : undefined,
-      /* @conditional-compile-remove(spotlight) */
       onStopLocalSpotlight: async (): Promise<void> => {
         await adapter.stopSpotlight();
       },
-      /* @conditional-compile-remove(spotlight) */
       onStartRemoteSpotlight: capabilities?.spotlightParticipant.isPresent
         ? async (userIds?: string[]): Promise<void> => {
             await adapter.startSpotlight(userIds);
           }
         : undefined,
-      /* @conditional-compile-remove(spotlight) */
       onStopRemoteSpotlight: capabilities?.removeParticipantsSpotlight.isPresent
         ? async (userIds?: string[]): Promise<void> => {
             await adapter.stopSpotlight(userIds);
           }
-        : undefined
+        : undefined,
+      onMuteParticipant: async (userId: string): Promise<void> => {
+        await adapter.muteParticipant(userId);
+      },
+      onMuteAllRemoteParticipants: async (): Promise<void> => {
+        await adapter.muteAllRemoteParticipants();
+      }
     };
   }
 );

@@ -20,19 +20,17 @@ import {
   WifiWarning20Filled,
   Circle20Regular
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(spotlight) */
+import { PersonCall20Regular, Clock20Filled } from '@fluentui/react-icons';
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
-
 import { MicProhibited20Filled, VideoProhibited20Filled } from '@fluentui/react-icons';
 import { Grid20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(PSTN-calls) */
 import { PersonAdd20Regular, Call20Regular } from '@fluentui/react-icons';
 import { Dialpad20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
 // eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { Attach20Regular } from '@fluentui/react-icons';
 
 import { VideoBackgroundEffect20Regular, VideoPerson20Filled } from '@fluentui/react-icons';
@@ -68,7 +66,6 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   ControlButtonCameraProhibited: <VideoProhibited20Filled />,
 
   ControlButtonMicProhibited: <MicProhibited20Filled />,
-  /* @conditional-compile-remove(spotlight) */
   ControlButtonExitSpotlight: <VideoPersonStarOff20Filled />,
   ControlBarPeopleButton: <People20Regular />,
   MoreDrawerMicrophones: <Mic20Regular />,
@@ -87,13 +84,10 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   NoticePageRoomNotValid: <Info20Filled />,
   NoticePageCallRejected: <Info20Filled />,
   NoticePageCallTimeout: <Info20Filled />,
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   SendBoxAttachFile: <Attach20Regular />,
-  /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneAddPerson: <PersonAdd20Regular />,
-  /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneOpenDialpad: <Dialpad20Regular />,
-  /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall: <Call20Regular />,
   NoticePageInviteToRoomRemoved: <Info20Filled />,
 
@@ -109,9 +103,11 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   LargeGalleryLayout: <Table20Regular />,
   DefaultCustomButton: <Circle20Regular />,
   DtmfDialpadButton: <Dialpad20Regular />,
-  /* @conditional-compile-remove(spotlight) */
+  PhoneNumberButton: <PersonCall20Regular />,
+  JoinByPhoneDialStepIcon: <PersonCall20Regular />,
+  JoinByPhoneConferenceIdIcon: <Dialpad20Regular />,
+  JoinByPhoneWaitToBeAdmittedIcon: <Clock20Filled />,
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
-  /* @conditional-compile-remove(spotlight) */
   StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
 };
 
@@ -146,7 +142,7 @@ export type ChatCompositeIcons = {
   ParticipantItemOptionsHovered?: JSX.Element;
   SendBoxSend?: JSX.Element;
   SendBoxSendHovered?: JSX.Element;
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   SendBoxAttachFile?: JSX.Element;
 };
 
@@ -183,7 +179,6 @@ export type CallCompositeIcons = {
   ControlButtonMicProhibited?: JSX.Element;
   ControlButtonRaiseHand?: JSX.Element;
   ControlButtonLowerHand?: JSX.Element;
-  /* @conditional-compile-remove(spotlight) */
   ControlButtonExitSpotlight?: JSX.Element;
   RaiseHandContextualMenuItem?: JSX.Element;
   ReactionContextualMenuItem?: JSX.Element;
@@ -229,11 +224,8 @@ export type CallCompositeIcons = {
   ParticipantItemScreenShareStart?: JSX.Element;
   VideoTileMicOff?: JSX.Element;
   LocalCameraSwitch?: JSX.Element;
-  /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneAddPerson?: JSX.Element;
-  /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneOpenDialpad?: JSX.Element;
-  /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
   NoticePageInviteToRoomRemoved?: JSX.Element;
 
@@ -249,9 +241,11 @@ export type CallCompositeIcons = {
   LargeGalleryLayout?: JSX.Element;
   DefaultCustomButton?: JSX.Element;
   DtmfDialpadButton?: JSX.Element;
-  /* @conditional-compile-remove(spotlight) */
+  PhoneNumberButton?: JSX.Element;
+  JoinByPhoneDialStepIcon?: JSX.Element;
+  JoinByPhoneConferenceIdIcon?: JSX.Element;
+  JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
   PeoplePaneMoreButton?: JSX.Element;
-  /* @conditional-compile-remove(spotlight) */
   StopAllSpotlightMenuButton?: JSX.Element;
 };
 
@@ -330,11 +324,8 @@ export type CallWithChatCompositeIcons = {
   ParticipantItemScreenShareStart?: JSX.Element;
   VideoTileMicOff?: JSX.Element;
   LocalCameraSwitch?: JSX.Element;
-  /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneAddPerson?: JSX.Element;
-  /* @conditional-compile-remove(PSTN-calls) */
   PeoplePaneOpenDialpad?: JSX.Element;
-  /* @conditional-compile-remove(PSTN-calls) */
   DialpadStartCall?: JSX.Element;
   DefaultCustomButton?: JSX.Element;
   DtmfDialpadButton?: JSX.Element;
@@ -355,10 +346,7 @@ export type CallWithChatCompositeIcons = {
   // Icons common to Call and Chat.
   ParticipantItemOptions?: JSX.Element;
   ParticipantItemOptionsHovered?: JSX.Element;
-
-  /* @conditional-compile-remove(spotlight) */
   PeoplePaneMoreButton?: JSX.Element;
-  /* @conditional-compile-remove(spotlight) */
   StopAllSpotlightMenuButton?: JSX.Element;
 };
 

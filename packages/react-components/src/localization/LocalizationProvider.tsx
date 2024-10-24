@@ -17,9 +17,8 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings
 } from '../components';
-
+import { NotificationStackStrings } from '../components';
 import { RaiseHandButtonStrings } from '../components';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(one-to-n-calling) */
 import { HoldButtonStrings } from '../components';
 import { DialpadStrings } from '../components';
 /* @conditional-compile-remove(call-readiness) */
@@ -30,8 +29,6 @@ import { BrowserPermissionDeniedStrings } from '../components/DevicePermissions/
 import { BrowserPermissionDeniedIOSStrings } from '../components/DevicePermissions/BrowserPermissionDeniedIOS';
 /* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserStrings } from '../components/UnsupportedBrowser';
-/* @conditional-compile-remove(one-to-n-calling) */
-// @conditional-compile-remove(PSTN-calls)
 import { VideoTileStrings } from '../components/VideoTile';
 import { COMPONENT_LOCALE_EN_US } from './locales';
 /* @conditional-compile-remove(unsupported-browser) */
@@ -47,6 +44,8 @@ import { ImageOverlayStrings } from '../components/ImageOverlay';
 import { ReactionButtonStrings } from '../components';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
+import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
+import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
 
 /**
  * Locale information for all components exported from this library.
@@ -106,17 +105,17 @@ export interface ComponentStrings {
   imageOverlay: ImageOverlayStrings;
   /** Strings for MessageStatusIndicator */
   messageStatusIndicator: MessageStatusIndicatorStrings;
-  /** Strings for ErroBar */
+  /** Strings for ErrorBar */
   errorBar: ErrorBarStrings;
+
+  /** Strings for NotificationStack */
+  notificationStack: NotificationStackStrings;
   /** Strings for VideoGallery */
   videoGallery: VideoGalleryStrings;
   /** Strings for Dialpad */
   dialpad: DialpadStrings;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  // @conditional-compile-remove(PSTN-calls)
   /** Strings for VideoTile */
   videoTile: VideoTileStrings;
-  /* @conditional-compile-remove(one-to-n-calling) @conditional-compile-remove(PSTN-calls) */
   /** Strings for HoldButton */
   holdButton: HoldButtonStrings;
   /* @conditional-compile-remove(call-readiness) */
@@ -178,6 +177,10 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(total-participant-count) */
   /** Strings for the participant list component */
   ParticipantList: ParticipantListStrings;
+  /** Strings for the MeetingConferencePhoneInfoModal */
+  meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
+
+  IncomingCallNotification: IncomingCallNotificationStrings;
 }
 
 /**

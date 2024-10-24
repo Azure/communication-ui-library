@@ -10,7 +10,12 @@ import {
   ContextualMenuItemType,
   IContextualMenuItem,
   IContextualMenuItemStyles,
-  IContextualMenuStyles
+  IContextualMenuStyles,
+  Toggle,
+  Stack,
+  IStyleFunctionOrObject,
+  IToggleStyleProps,
+  IToggleStyles
 } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
@@ -80,6 +85,22 @@ export interface MicrophoneButtonStrings {
    * Title for primary action section of split button
    */
   microphonePrimaryActionSplitButtonTitle?: string;
+  /**
+   * Aria description for the microphone button
+   */
+  microphoneAriaDescription?: string;
+  /**
+   * Title for deep noise suppression button
+   */
+  deepNoiseSuppressionTitle?: string;
+  /**
+   * Noise Suppression turned on string for announcer
+   */
+  deepNoiseSuppressionOnAnnouncement?: string;
+  /**
+   * Noise Suppression turned off string for announcer
+   */
+  deepNoiseSuppressionOffAnnouncement?: string;
 }
 
 /**
@@ -155,6 +176,18 @@ export interface MicrophoneButtonProps extends ControlBarButtonProps {
    * Styles for {@link MicrophoneButton} and the device selection flyout.
    */
   styles?: Partial<MicrophoneButtonStyles>;
+  /**
+   * Whether the deep noise suppression is on or off
+   */
+  isDeepNoiseSuppressionOn?: boolean;
+  /**
+   * Callback when noise suppression is clicked
+   */
+  onClickNoiseSuppression?: () => void;
+  /**
+   * Show/Hide the deep noise suppression button
+   */
+  showNoiseSuppressionButton?: boolean;
 }
 
 /**
@@ -213,6 +246,57 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     }
   }, [isMicOn, onToggleMicrophone, toggleAnnouncerString]);
 
+  const deepNoiseSuppressionToggleStyles: IStyleFunctionOrObject<IToggleStyleProps, IToggleStyles> = {
+    root: {
+      margin: '4px',
+      padding: '0px 12px',
+      flexFlow: 'row-reverse',
+      justifyContent: 'space-between'
+    },
+    label: { fontWeight: 400 }
+  };
+
+  const splitButtonMenuItems: IContextualMenuItem[] = [];
+
+  if (props.showNoiseSuppressionButton) {
+    splitButtonMenuItems.push({
+      key: 'microphoneDNSToggle',
+      onRender: () => {
+        return (
+          <Stack
+            onClick={async () => {
+              await props.onClickNoiseSuppression?.();
+              setAnnouncerString(
+                props.isDeepNoiseSuppressionOn
+                  ? strings.deepNoiseSuppressionOnAnnouncement
+                  : strings.deepNoiseSuppressionOffAnnouncement
+              );
+            }}
+          >
+            <Toggle
+              label={strings.deepNoiseSuppressionTitle}
+              checked={props.isDeepNoiseSuppressionOn}
+              inlineLabel
+              styles={deepNoiseSuppressionToggleStyles}
+            />
+          </Stack>
+        );
+      }
+    });
+  }
+
+  splitButtonMenuItems.push({
+    key: 'microphonePrimaryAction',
+    text: props.checked ? strings.onSplitButtonMicrophonePrimaryAction : strings.offSplitButtonMicrophonePrimaryAction,
+    onClick: () => {
+      onToggleClick();
+    },
+    iconProps: {
+      iconName: props.checked ? 'SplitButtonPrimaryActionMicUnmuted' : 'SplitButtonPrimaryActionMicMuted',
+      styles: { root: { lineHeight: 0 } }
+    }
+  });
+
   /**
    * We need to also include the primary action of the button to the
    * split button for mobile devices.
@@ -223,21 +307,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     itemType: ContextualMenuItemType.Section,
     sectionProps: {
       topDivider: true,
-      items: [
-        {
-          key: 'microphonePrimaryAction',
-          text: props.checked
-            ? strings.onSplitButtonMicrophonePrimaryAction
-            : strings.offSplitButtonMicrophonePrimaryAction,
-          onClick: () => {
-            onToggleClick();
-          },
-          iconProps: {
-            iconName: props.checked ? 'SplitButtonPrimaryActionMicUnmuted' : 'SplitButtonPrimaryActionMicMuted',
-            styles: { root: { lineHeight: 0 } }
-          }
-        }
-      ]
+      items: splitButtonMenuItems
     }
   };
 
@@ -266,6 +336,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
         aria-roledescription={
           props.enableDeviceSelectionMenu ? strings.microphoneButtonSplitRoleDescription : undefined
         }
+        aria-description={strings.microphoneAriaDescription}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         disabled={disabled}
         primaryDisabled={primaryDisabled}

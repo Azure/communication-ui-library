@@ -24,10 +24,10 @@ const convertChatParticipantsToCommunicationParticipants = (
 };
 
 /**
- * get the index of moderator to help updating its display name if they are the local user or removing them from list of participants otherwise
+ * get the moderator to help updating its display name if they are the local user or removing them from list of participants otherwise
  */
-const moderatorIndex = (participants: ParticipantListParticipant[]): number => {
-  return participants.map((p) => p.displayName).indexOf(undefined);
+const getModerator = (participants: ParticipantListParticipant[]): ParticipantListParticipant | undefined => {
+  return participants.find((p) => p.displayName === undefined);
 };
 
 /**
@@ -52,17 +52,13 @@ export const chatParticipantListSelector: ChatParticipantListSelector = reselect
   [getUserId, getParticipants, getDisplayName],
   (userId, chatParticipants: { [key: string]: ChatParticipant }, displayName) => {
     let participants = convertChatParticipantsToCommunicationParticipants(Object.values(chatParticipants));
-    if (0 !== participants.length) {
-      const moderatorIdx = moderatorIndex(participants);
 
-      if (-1 !== moderatorIdx) {
-        const userIndex = participants.map((p) => p.userId).indexOf(userId);
-        if (moderatorIdx === userIndex) {
-          participants[moderatorIdx].displayName = displayName;
-        } else {
-          participants = participants.filter((p) => p.displayName);
-        }
-      }
+    // Update the moderator display name if they are the local user, otherwise remove them from list of participants
+    const moderator = getModerator(participants);
+    if (moderator?.userId === userId) {
+      moderator.displayName = displayName;
+    } else {
+      participants = participants.filter((p) => p.displayName);
     }
 
     return {

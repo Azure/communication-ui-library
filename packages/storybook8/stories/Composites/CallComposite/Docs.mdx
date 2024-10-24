@@ -1,0 +1,393 @@
+import { MessageBar, Stack, Text } from '@fluentui/react';
+import { Meta, Source, ArgTypes } from '@storybook/blocks';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import { overviewPageImagesStackStyle } from '../../constants';
+import * as CallCompositeStories from './index.stories';
+import containerText from '!!raw-loader!./snippets/Container.snippet.tsx';
+import customDataModelExampleContainerText from '!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx';
+
+<Meta of={CallCompositeStories} />
+
+# CallComposite
+
+The CallComposite provides a calling experience that allows users to start or join a call. Inside the experience
+users can configure their devices, participate in the call with video and see other participants, including
+those with video turned on. Here are visual examples of Call composite where participants have their camera
+turned off, then some have them turned on. People speaking with microphone unmuted will have their tile
+appearing with a blue border.
+
+<Stack
+  horizontal
+  horizontalAlign="space-between"
+  tokens={{ childrenGap: '2rem' }}
+  style={overviewPageImagesStackStyle}
+  wrap
+>
+  <Stack.Item grow align="center" style={{ textAlign: 'center' }}>
+    <img
+      style={{ width: '100%', maxWidth: '25rem' }}
+      src="images/callComposite_CamerasOff.png"
+      alt="Call composite where all participants have their camera turned off"
+    />
+  </Stack.Item>
+  <Stack.Item grow align="center" style={{ textAlign: 'center' }}>
+    <img
+      style={{ width: '100%', maxWidth: '25rem' }}
+      src="images/callComposite_CamerasOn.png"
+      alt="Call composite where some participants have their camera turned on"
+    />
+  </Stack.Item>
+</Stack>
+
+When joining a Microsoft Teams call ([Teams Interop experience](./?path=/docs/concepts-teams-interop-compliance-banner--docs)), the Call Composite
+includes a lobby experience where the user is waiting to be admitted into the call.
+
+<Stack
+  horizontal
+  horizontalAlign="space-between"
+  tokens={{ childrenGap: '3rem' }}
+  style={overviewPageImagesStackStyle}
+  wrap
+>
+  <Stack.Item grow align="center" style={{ textAlign: 'center' }}>
+    <img
+      style={{ width: '100%', maxWidth: '30rem' }}
+      src="images/callComposite_TeamsInterop_WaitingLobby.png"
+      alt="Call composite waiting to be admitted in a Teams meeting"
+    />
+  </Stack.Item>
+  <Stack.Item grow align="center">
+    <Stack horizontalAlign="center" tokens={{ childrenGap: '1rem' }}>
+      <img
+        style={{ width: '100%', maxWidth: '20rem' }}
+        src="images/callComposite_TeamsInterop_AdmissionFromTeams.png"
+        alt="Popup in Teams to admit ACS participants"
+      />
+      <Text style={{ textAlign: 'center' }}>{'Popup appearing in Teams to admit ACS participant.'}</Text>
+    </Stack>
+  </Stack.Item>
+</Stack>
+
+Note that CallComposite has the following min width and height:
+
+- mobile: 17.5rem x 21rem (280px x 336px, with default rem at 16px)
+- desktop: 30rem x 22rem (480px x 352px, with default rem at 16px)
+
+## Basic usage
+
+There are two parts to the composite - a `CallComposite` react component and a `CallAdapter` that connects the
+react component to the backend APIs.
+
+The key thing to note is that initialization of `CallAdapter` is asynchronous. Thus, the initialization step
+requires special handling, as the example code below shows.
+
+<Source code={containerText} />
+
+## Prerequisites
+
+CallComposite provides the UI for an _existing user_ to join a call. The user must be created beforehand.
+Typically, the user and group call or teams meeting are created on a Contoso-owned service and provided to the
+client application that then passes it to the CallComposite.
+
+## Styling
+
+CallComposite is designed to fill the space of the parent it is in. By default these examples put the composite
+in a container of a set height and width. If your composite is living outside of any parent container and you
+wish for it to fill the page, we recommend ensuring your react app is set to fill the screen by adding the
+following css to your primary css file:
+
+```ts
+html,
+body,
+#root {
+  height: 100%;
+}
+```
+
+## Running in a Mobile browser
+
+CallComposite by default is optimized for desktop views. To provide an optimized mobile experience, you may set
+the `formFactor` property to `"mobile"`. The CallComposite does not detect if it is running on mobile device vs
+desktop, instead you must identify if your clients device is a mobile device and set the `formFactor` property
+to `"mobile"`. This prop can be set at any time and immediately updates the composite UI to be optimized for a
+mobile device.
+
+```ts
+<CallComposite formFactor="mobile" />
+```
+
+<MessageBar>
+  Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
+</MessageBar>
+
+You can try out the form factor property in the [CallComposite Basic Example](./?path=/story/composites-callcomposite--basic-example).
+
+## Theming
+
+CallComposite can be themed with Fluent UI themes, just like the base components. Look at the [CallComposite
+theme example](./?path=/story/composites-callcomposite-theme-example--theme-example) to see theming in action or the
+[overall theming example](./?path=/docs/concepts-theming--docs) to see how theming works for all the components in this
+UI library.
+
+## Custom Branding
+
+Along with applying a Fluent Theme to style the composites, you can also inject your own custom branding. You
+can inject a background and logo into the Composite configuration page to present to your users. This is done by
+passing background and logo properties to the `options` of the Composite.
+
+**Image recommendations.** The background image should be as simple and uncluttered as possible to avoid text
+becoming unreadable against the background. The background image should have a minimum size of 576x576 pixels
+and a maximum size of 2048x2048 pixels. The recommended size is 1280x720 pixels. The recommended size for the
+logo image is 128x128 pixels.
+
+<Stack horizontalAlign="center">
+  <img
+    style={{ width: '100%', maxWidth: '50rem' }}
+    src="images/composite-logo-background.png"
+    alt="CallComposite with a logo and background applied"
+  />
+</Stack>
+
+```ts
+<CallComposite options={{
+  branding: {
+    logo: {
+      url: 'https://...',
+      alt: 'My company logo',
+      shape: 'circle'
+    },
+    backgroundImage: {
+      url: 'https://...'
+    }
+  }
+}} />
+```
+
+## Custom Data Model
+
+It is a primary tenet of Azure Communication Services that customers bring their own user identities.
+Customers then use the Azure Communication Services identity service to create corresponding authentication
+tokens for their users. The CallComposite allows developers to easily inject custom data associated with these
+user identities. Look at the [example
+canvas](./?path=/story/composites-callcomposite--custom-data-model-example) to see how the
+initials displayed for users can be provided by Contoso.
+
+Note that, by default, the initials text color is setup to `white`
+
+<Source code={customDataModelExampleContainerText} />
+
+See the [Custom data model example documentation](./?path=/docs/concepts-custom-user-data-model--docs) to understand how
+custom data model can be injected for all the components in this UI library.
+
+## Fonts
+
+Custom fonts can be applied to the CallComposite using the in built theming mechanism. Look at the
+[CallComposite themes canvas](./?path=/docs/examples-themes-teams--docs) to see custom fonts in
+action or the [overall theming example](./?path=/docs/concepts-theming--docs) to see how theming works for all the
+components in this UI library. Read more about fonts in [Fluent UI
+Typography](https://developer.microsoft.com/fluentui#/styles/web/typography).
+
+## Icons
+
+Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
+accepts an object where you can provide a custom JSX element against an icon name key.
+
+## Customize Call Controls
+
+The `options` prop allows you to customize some parts of the Call Composite. This prop is of type
+[CallCompositeOptions](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/callcompositeoptions?view=azure-node-latest).
+The `callControls` property can be used to customize the call controls. This property is of type
+[CallControlOptions](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/callcontroloptions?view=azure-node-latest).
+
+For example, you can hide the camera button by using `callControls` as shown below:
+
+```ts
+<CallComposite options={{ callControls: { cameraButton: false } }} />
+```
+
+You can display the call controls in a compact mode using `callControls` as shown below:
+
+```ts
+<CallComposite options={{ callControls: { displayType: 'compact' } }} />
+```
+
+You can disable some call controls (refer to
+[CallControlOptions](https://docs.microsoft.com/en-us/javascript/api/@azure/communication-react/callcontroloptions?view=azure-node-latest))
+using `callControls` as shown below:
+
+```ts
+<CallComposite options={{ callControls: { screenShareButton: { disabled: true } } }} />
+```
+
+### End Call Modal
+
+Our `CallComposite` is able to use the end call for everyone functionality found on the end call button. This
+functionality will end the call for everyone present in the call. As such it will present the user with a
+confirmation modal to make sure that the action of ending, or leaving the call was intentional. This mode can be
+turned on with the following snippet.
+
+```ts
+<CallComposite options={{ callControls: { endCallButton: { hangUpForEveryone: 'endCallOptions' } } }} />
+```
+
+With this mode the `EndCallButton` will always present the user with a confirmation modal before ending the
+call. If you are wanting to end the call without the confirmation modal you can use the following snippet to
+disable the confirmation.
+
+```ts
+<CallComposite options={{ callControls: { endCallButton: { disableEndCallModal: true } } }} />
+```
+
+## Customize Local Video Tile
+
+Just like customizing the control bar we have some configuration options for the local video tile. These
+controls are to help facilitate different calling experiences like creating an audio only call.
+
+These options allow for you to decide which part of the gallery that the composite shows the local video tile.
+We currently support controls to show the local video tile in either the `grid view` of the gallery or in the
+`floating` position we see today.
+
+<Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
+  <Stack horizontalAlign="center">
+    <img
+      style={{ width: '100%', maxWidth: '25rem' }}
+      src="images/storybook-grid-layout.png"
+      alt="Grid layout for composite video gallery"
+    />
+    Call Composite with `grid` layout.
+  </Stack>
+  <Stack horizontalAlign="center">
+    <img
+      style={{ width: '100%', maxWidth: '25rem' }}
+      src="images/storybook-floating-layout.png"
+      alt="Floating layout for composite video gallery"
+    />
+    Call Composite with `floating` layout.
+  </Stack>
+</Stack>
+
+```ts
+<CallComposite options={localVideoTileOptions: {position: 'grid'}} />
+```
+
+```ts
+<CallComposite options={localVideoTileOptions: {position: 'floating'}} />
+```
+
+Just like the `CallControlOptions` we can also disable the local video tile from the gallery by providing false
+instead of the options object.
+
+```ts
+<CallComposite options={localVideoTileOptions: false} />
+```
+
+This will hide the local video tile from the composite's video gallery. The default value is `floating` which
+will have the local video tile follow our `floatingLocalLayout`. See our [video
+gallery](./?path=/docs/components-video-gallery--docs) component docs for more information on our
+local video tile and some of the other options we have for the local video tile when just using the components.
+
+## Customizing the default Gallery Layout
+
+We allow for the customization of the starting layout of the gallery. The layout can be changed by the user
+though the gallery options menu found in the more button of the call controls.
+
+<Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '1rem' }}>
+  <Stack>
+    <Stack horizontalAlign="center">
+      <img
+        style={{ width: '100%', maxWidth: '25rem' }}
+        src="images/callcomposite-dynamic-layout.png"
+        alt="Dynamic layout for composite video gallery"
+      />
+      Call Composite with `dynamic` layout.
+    </Stack>
+    <Stack horizontalAlign="center">
+      <img
+        style={{ width: '100%', maxWidth: '25rem' }}
+        src="images/callcomposite-focused-content.png"
+        alt="Focused content layout for composite video gallery"
+      />
+      Call Composite with `focused content` layout.
+    </Stack>
+  </Stack>
+  <Stack>
+    <Stack horizontalAlign="center">
+      <img
+        style={{ width: '100%', maxWidth: '25rem' }}
+        src="images/callcomposite-gallery-layout.png"
+        alt="Gallery layout for composite video gallery"
+      />
+      Call Composite with `gallery` layout.
+    </Stack>
+    <Stack horizontalAlign="center">
+      <img
+        style={{ width: '100%', maxWidth: '25rem' }}
+        src="images/callcomposite-speaker-layout.png"
+        alt="Speaker layout for composite video gallery"
+      />
+      Call Composite with `speaker` layout.
+    </Stack>
+  </Stack>
+</Stack>
+
+You can set the gallery layout using the following:
+
+```ts
+<CallComposite options={galleryOptions: {layout: 'speaker'}} />
+```
+
+```ts
+<CallComposite options={galleryOptions: {layout: 'default'}} />
+```
+
+```ts
+<CallComposite options={galleryOptions: {layout: 'floatingLocalVideo'}} />
+```
+
+```ts
+<CallComposite options={galleryOptions: {layout: 'focusedContent'}} />
+```
+
+## PSTN and 1:N Calling
+
+<SingleLineBetaBanner version={'1.3.2-beta.1'} />
+
+The CallComposite supports making outbound PSTN and 1:N calls. 1:N is a call either between just Azure
+Communication Users or, a mix between ACS and PSTN users. To make these outbound calls you need to provide an
+array of `targetCallees` that contains participantIds that you are looking to call to the
+[CallAdapter](./?path=/docs/composites-adapters--docs). For PSTN these IDs are the phone numbers that you are
+looking to call. For Azure Communication Users you will need to provide their unique ACS acquired `userId`.
+These are to be provided to the `CallAdapter` properties in place of a locator as `targetCallees`.
+
+```ts
+// You will want to make sure that any flat id's are converted to CommunicationUserIdentifier or PhoneNumberIdentifier
+const createTargetCallees = (targetCallees: string[]): CommunicationUserIdentifier[] => {
+  return targetCallees.map((c) => fromFlatCommunicationIdentifier(c) as CommunicationUserIdentifier);
+};
+
+const createTargetCallees = useMemo(() => {
+  return participantIds.map((c) => fromFlatCommunicationIdentifier(c) as PhoneNumberIdentifier);
+}, [participantIds]);
+```
+
+As well as these participantIds you are required to provide a [phone
+number](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/telephony/get-phone-number?tabs=windows&pivots=platform-azcli)
+known as an alternate caller ID from an Azure Communications resource to the composite's adapter for PSTN. This
+phone number serves as your caller ID when calling PSTN. This phone number is not required for calling other
+Azure Communications users, however, will be required if you are looking to call a ACS user and a PSTN user in
+the same call.
+
+## Rooms
+
+The CallComposite supports [Rooms](./?path=/docs/concepts-rooms--docs). To join a room call you need to provide a
+`locator` that contains the roomId of the room call you want to join to the
+[CallAdapter](./?path=/docs/composites-adapters--docs). An example snippet is shown in the 'How to incorporate
+Rooms in your experience' section in our [Rooms doc](./?path=/docs/concepts-rooms--docs).
+
+Note: A room needs be created using the Rooms Client to obtain a roomId. Also with the Rooms Client, ACS users
+need to be added to that room using their userId. To use the Rooms Client to create a room follow these
+[quickstarts](https://docs.microsoft.com/en-us/azure/communication-services/quickstarts/rooms/get-started-rooms).
+
+## Props
+
+<ArgTypes of={CallCompositeStories} include={['adapter', 'formFactor', 'callInvitationUrl', 'options']} />

@@ -22,7 +22,6 @@ import {
 } from './VideoGallery/useVideoStreamLifecycleMaintainer';
 import { useVideoTileContextualMenuProps } from './VideoGallery/useVideoTileContextualMenuProps';
 import { VideoTile } from './VideoTile';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { _formatString } from '@internal/acs-ui-common';
 import { ReactionResources } from '../types/ReactionTypes';
 import { MeetingReactionOverlay } from './MeetingReactionOverlay';
@@ -62,14 +61,16 @@ export const _RemoteVideoTile = React.memo(
     onUnpinParticipant?: (userId: string) => void;
     onUpdateScalingMode?: (userId: string, scalingMode: ViewScalingMode) => void;
     isPinned?: boolean;
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds?: string[];
-    /* @conditional-compile-remove(spotlight) */ isSpotlighted?: boolean;
-    /* @conditional-compile-remove(spotlight) */ onStartSpotlight?: (userIds: string[]) => void;
-    /* @conditional-compile-remove(spotlight) */ onStopSpotlight?: (userIds: string[]) => void;
-    /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight?: number;
+    spotlightedParticipantUserIds?: string[];
+    isSpotlighted?: boolean;
+    onStartSpotlight?: (userIds: string[]) => void;
+    onStopSpotlight?: (userIds: string[]) => void;
+    maxParticipantsToSpotlight?: number;
+    onMuteParticipant?: (userId: string) => void;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
     reactionResources?: ReactionResources;
+    onLongTouch?: (() => void) | undefined;
   }) => {
     const {
       isAvailable,
@@ -88,11 +89,12 @@ export const _RemoteVideoTile = React.memo(
       isPinned,
       onPinParticipant,
       onUnpinParticipant,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
-      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
-      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight,
+      spotlightedParticipantUserIds,
+      isSpotlighted,
+      onStartSpotlight,
+      onStopSpotlight,
+      maxParticipantsToSpotlight,
+      onMuteParticipant,
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
@@ -140,11 +142,12 @@ export const _RemoteVideoTile = React.memo(
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
-      /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds,
-      /* @conditional-compile-remove(spotlight) */ isSpotlighted,
-      /* @conditional-compile-remove(spotlight) */ onStartSpotlight,
-      /* @conditional-compile-remove(spotlight) */ onStopSpotlight,
-      /* @conditional-compile-remove(spotlight) */ maxParticipantsToSpotlight
+      spotlightedParticipantUserIds,
+      isSpotlighted,
+      onStartSpotlight,
+      onStopSpotlight,
+      maxParticipantsToSpotlight,
+      onMuteParticipant
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
@@ -157,21 +160,25 @@ export const _RemoteVideoTile = React.memo(
     }, [contextualMenuProps, menuKind]);
 
     const showLoadingIndicator = isAvailable && isReceiving === false && participantState !== 'Disconnected';
+    const isReconnecting = participantState === 'Reconnecting';
 
     const [drawerMenuItemProps, setDrawerMenuItemProps] = React.useState<_DrawerMenuItemProps[]>([]);
 
     const renderVideoStreamElement = useMemo(() => {
       // Checking if renderElement is well defined or not as calling SDK has a number of video streams limitation which
       // implies that, after their threshold, all streams have no child (blank video)
-      if (!renderElement || !renderElement.childElementCount) {
+      if ((!renderElement || !renderElement.childElementCount) && !isReconnecting) {
         // Returning `undefined` results in the placeholder with avatar being shown
         return undefined;
       }
 
       return (
-        <StreamMedia videoStreamElement={renderElement} loadingState={showLoadingIndicator ? 'loading' : 'none'} />
+        <StreamMedia
+          videoStreamElement={renderElement ?? null}
+          loadingState={showLoadingIndicator ? 'loading' : isReconnecting ? 'reconnecting' : 'none'}
+        />
       );
-    }, [renderElement, showLoadingIndicator]);
+    }, [isReconnecting, renderElement, showLoadingIndicator]);
 
     const onKeyDown = useCallback(
       (e: KeyboardEvent) => {
@@ -184,18 +191,18 @@ export const _RemoteVideoTile = React.memo(
       [setDrawerMenuItemProps, contextualMenuProps]
     );
 
-    let displayName = remoteParticipant.displayName || strings.displayNamePlaceholder;
-    /* @conditional-compile-remove(hide-attendee-name) */
     const attendeeRoleString = props.strings?.attendeeRole;
 
-    /* @conditional-compile-remove(hide-attendee-name) */
-    const formatDisplayName = (): string => {
-      if (displayName && attendeeRoleString) {
-        return _formatString(displayName, { AttendeeRole: attendeeRoleString });
+    const formatDisplayName = (displayName: string, role: string): string => {
+      if (displayName && role) {
+        return _formatString(displayName, { AttendeeRole: role });
       }
       return displayName;
     };
-
+    const displayName = formatDisplayName(
+      remoteParticipant.displayName ? remoteParticipant.displayName : strings.displayNamePlaceholder,
+      attendeeRoleString
+    );
     const formatInitialsName = (): string | undefined => {
       if (remoteParticipant.displayName && attendeeRoleString) {
         return _formatString(remoteParticipant.displayName, { AttendeeRole: attendeeRoleString });
@@ -203,16 +210,14 @@ export const _RemoteVideoTile = React.memo(
       return remoteParticipant.displayName;
     };
 
-    const reactionOverlay = (
+    const reactionOverlay = reactionResources && (
       <MeetingReactionOverlay
         overlayMode="grid-tiles"
         reaction={remoteParticipant.reaction}
-        reactionResources={reactionResources!}
+        reactionResources={reactionResources}
       />
     );
 
-    /* @conditional-compile-remove(hide-attendee-name) */
-    displayName = formatDisplayName();
     return (
       <Stack
         tabIndex={menuKind === 'drawer' ? 0 : undefined}
@@ -233,17 +238,19 @@ export const _RemoteVideoTile = React.memo(
           personaMinSize={props.personaMinSize}
           showLabel={props.showLabel}
           alwaysShowLabelBackground={props.alwaysShowLabelBackground}
-          /* @conditional-compile-remove(one-to-n-calling) */
-          /* @conditional-compile-remove(PSTN-calls) */
           participantState={participantState}
           {...videoTileContextualMenuProps}
           isPinned={props.isPinned}
-          onLongTouch={() =>
-            setDrawerMenuItemProps(
-              convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () => setDrawerMenuItemProps([]))
-            )
+          onLongTouch={
+            props.onLongTouch
+              ? props.onLongTouch
+              : () =>
+                  setDrawerMenuItemProps(
+                    convertContextualMenuItemsToDrawerMenuItemProps(contextualMenuProps, () =>
+                      setDrawerMenuItemProps([])
+                    )
+                  )
           }
-          /* @conditional-compile-remove(spotlight) */
           isSpotlighted={isSpotlighted}
           overlay={reactionOverlay}
         />

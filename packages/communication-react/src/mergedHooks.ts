@@ -61,35 +61,32 @@ export const useSelector = <ParamT extends Selector | undefined>(
  *
  * @public
  */
-export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (
-  state: ChatClientState,
-  props: any
-) => any
-  ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]>
-  : never;
+export type ChatReturnProps<Component extends (props: any) => JSX.Element> =
+  GetChatSelector<Component> extends (state: ChatClientState, props: any) => any
+    ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]>
+    : never;
 
 /**
  * Helper type for {@link usePropsFor}.
  *
  * @public
  */
-export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (
-  state: CallClientState,
-  props: any
-) => any
-  ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]>
-  : never;
+export type CallingReturnProps<Component extends (props: any) => JSX.Element> =
+  GetCallingSelector<Component> extends (state: CallClientState, props: any) => any
+    ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]>
+    : never;
 
 /**
  * Helper type for {@link usePropsFor}.
  *
  * @public
  */
-export type ComponentProps<Component extends (props: any) => JSX.Element> = ChatReturnProps<Component> extends never
-  ? CallingReturnProps<Component> extends never
-    ? undefined
-    : CallingReturnProps<Component>
-  : ChatReturnProps<Component>;
+export type ComponentProps<Component extends (props: any) => JSX.Element> =
+  ChatReturnProps<Component> extends never
+    ? CallingReturnProps<Component> extends never
+      ? undefined
+      : CallingReturnProps<Component>
+    : ChatReturnProps<Component>;
 
 /**
  * Primary hook to get all hooks necessary for a React Component from this library.

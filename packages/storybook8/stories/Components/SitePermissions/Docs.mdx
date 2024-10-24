@@ -1,0 +1,64 @@
+import { CameraSitePermissions } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import * as SitePermissionsStories from './index.stories';
+import SitePermissionsCheckModalExample from '!!raw-loader!./snippets/SitePermissionsCheckModal.snippet.tsx';
+import SitePermissionsDeniedModalExample from '!!raw-loader!./snippets/SitePermissionsDeniedModal.snippet.tsx';
+import SitePermissionsExample from '!!raw-loader!./snippets/SitePermissionsExample.snippet.tsx';
+import SitePermissionsRequestModalExample from '!!raw-loader!./snippets/SitePermissionsRequestModal.snippet.tsx';
+
+<Meta of={SitePermissionsStories} />
+
+<SingleLineBetaBanner />
+
+# Site Permissions
+
+Component to display information to the end user when their device permissions are not set appropriately
+
+## Importing
+
+```ts
+import {
+  CameraAndMicrophoneSitePermissions,
+  CameraSitePermissions,
+  MicrophoneSitePermissions,
+  CameraAndMicrophoneSitePermissionsProps,
+  CameraSitePermissionsProps,
+  MicrophoneSitePermissionsProps
+} from '@azure/communication-react';
+```
+
+## Example
+
+<Canvas of={SitePermissionsStories.SitePermissionsExampleDocsOnly} source={{ code: SitePermissionsExample }} />
+
+## Hosting in a Fluent modal
+
+The Site Permissions components can be hosted in a fluent modal, inside a fluent modal the components and be
+displayed when the conditions are met and disappear when conditions are no longer valid. Click on the buttons
+below to see the component.
+
+## Request site permissions
+
+<Canvas
+  of={SitePermissionsStories.SitePermissionsRequestModalDocsOnly}
+  source={{ code: SitePermissionsRequestModalExample }}
+/>
+
+## Checking for site permissions
+
+<Canvas
+  of={SitePermissionsStories.SitePermissionsCheckModalDocsOnly}
+  source={{ code: SitePermissionsCheckModalExample }}
+/>
+
+## Site permissions denied
+
+<Canvas
+  of={SitePermissionsStories.SitePermissionsDeniedModalDocsOnly}
+  source={{ code: SitePermissionsDeniedModalExample }}
+/>
+
+## Props
+
+<ArgTypes of={CameraSitePermissions} />

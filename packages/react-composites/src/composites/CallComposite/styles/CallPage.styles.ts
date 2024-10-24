@@ -59,7 +59,8 @@ export const galleryParentContainerStyles = (backgroundColor: string): IStackSty
  */
 export const mediaGalleryContainerStyles: IStackItemStyles = {
   root: {
-    height: '100%'
+    height: '100%',
+    width: '100%'
   }
 };
 
@@ -85,6 +86,17 @@ export const bannerNotificationStyles: IStackStyles = {
   root: {
     zIndex: NOTIFICATION_CONTAINER_Z_INDEX,
     pointerEvents: 'auto' // to allow the dismissal or error and warning bars in the notification container
+  }
+};
+
+/**
+ * @private
+ */
+export const notificationStackStyles: IStackStyles = {
+  root: {
+    zIndex: NOTIFICATION_CONTAINER_Z_INDEX,
+    pointerEvents: 'auto', // to allow the dismissal or error and warning bars in the notification container,
+    marginBottom: '0.5rem'
   }
 };
 

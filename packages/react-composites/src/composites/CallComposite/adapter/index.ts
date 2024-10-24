@@ -8,16 +8,18 @@ export {
   useAzureCommunicationCallAdapter
 } from './AzureCommunicationCallAdapter';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export {
   createTeamsCallAdapter,
   createTeamsCallAdapterFromClient,
   useTeamsCallAdapter
 } from './AzureCommunicationCallAdapter';
 
+/* @conditional-compile-remove(teams-identity-support-beta) */
+export type { TeamsOutboundCallAdapterArgs, StartTeamsCallIdentifier } from './AzureCommunicationCallAdapter';
+
 export type { TeamsAdapterOptions } from './AzureCommunicationCallAdapter';
-/* @conditional-compile-remove(teams-identity-support) */
-export type { TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
+
+export type { TeamsCallAdapterArgsCommon, TeamsCallAdapterArgs } from './AzureCommunicationCallAdapter';
 
 export type { OnFetchProfileCallback, Profile } from './OnFetchProfileCallback';
 export type {
@@ -30,7 +32,7 @@ export type { AzureCommunicationCallAdapterOptions } from './AzureCommunicationC
 
 export type { CommonCallAdapterOptions } from './AzureCommunicationCallAdapter';
 
-/* @conditional-compile-remove(teams-adhoc-call) */
+/* @conditional-compile-remove(call-participants-locator) */
 export type { CallParticipantsLocator } from './AzureCommunicationCallAdapter';
 
 export type {
@@ -57,7 +59,9 @@ export type {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
   JoinCallOptions,
-  StartCallIdentifier
+  StartCallIdentifier,
+  StartCaptionsAdapterOptions,
+  StopCaptionsAdapterOptions
 } from './CallAdapter';
 
 export type {
@@ -71,10 +75,8 @@ export type { TransferAcceptedListener } from './CallAdapter';
 
 export type { CapabilitiesChangedListener } from './CallAdapter';
 
-/* @conditional-compile-remove(spotlight) */
 export type { SpotlightChangedListener } from './CallAdapter';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapter } from './CallAdapter';
 
 export type { CallingSounds, SoundEffect } from './CallAdapter';

@@ -26,7 +26,7 @@ betaTest.describe('MessageThread inline image tests', () => {
       {
         messageType: 'chat',
         senderId: 'user3',
-        content: `<p>How should I design my new house?</p><p><img alt="image" src="${imgSrc}" itemscope="png" width="374.53183520599254" height="250" id="SomeImageId2" style="vertical-align:bottom"></p><p>&nbsp;</p>`,
+        content: `<p>How should I design my new house?</p><p><img alt="image" src="${imgSrc}" itemscope="png" width="374" height="250" id="SomeImageId2" style="vertical-align:bottom; aspect-ratio: 374 / 250"></p><p>&nbsp;</p>`,
         senderDisplayName: 'Miguel Garcia',
         messageId: Math.random().toString(),
         createdOn: new Date('2019-04-13T00:00:00.000+08:09'),

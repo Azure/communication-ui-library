@@ -1,0 +1,97 @@
+import { ParticipantsButton } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as ParticipantsStories from './index.stories';
+import ParticipantsButtonDefaultExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
+import ParticipantsButtonWithCallLinkExampleText from '!!raw-loader!./snippets/WithCallLink.snippet.tsx';
+import ParticipantsButtonWithCustomRenderExampleText from '!!raw-loader!./snippets/WithCustomRender.snippet.tsx';
+import ParticipantsButtonWithCustomStylesExampleText from '!!raw-loader!./snippets/WithCustomStyles.snippet.tsx';
+import ParticipantsButtonWithLabelExampleText from '!!raw-loader!./snippets/WithLabel.snippet.tsx';
+import ParticipantsButtonWithMuteAllOptionExampleText from '!!raw-loader!./snippets/WithMuteAllOption.snippet.tsx';
+import ParticipantsButtonWithUserExcludeFromListExampleText from '!!raw-loader!./snippets/WithUserExcludeFromList.snippet.tsx';
+
+<Meta of={ParticipantsStories} />
+
+# Participants Button
+
+A button to show a menu containing the call or chat participants. For use with the [Control Bar](./?path=/docs/components-controlbar-control-bar--docs).
+
+Note that for accessibility purposes, this button can be focused on even when disabled. This behaviour can be changed by setting the button prop `allowDisabledFocus` to `false`.
+
+## Importing
+
+```tsx
+import { ParticipantsButton } from '@azure/communication-react';
+```
+
+## Default Example
+
+The default `ParticipantsButton` component shows `People` icon with no label, and contains menu items displaying the number of participants with a list as sub-menu like shown in the example below.
+
+<Canvas
+  of={ParticipantsStories.ParticipantsButtonDefaultExampleDocsOnly}
+  source={{ code: ParticipantsButtonDefaultExampleText }}
+/>
+
+## ParticipantsButton with default label
+
+You can display the button label which, by default, will show below the icon as `People`.
+
+<Canvas
+  of={ParticipantsStories.ParticipantsButtonWithLabelExampleDocsOnly}
+  source={{ code: ParticipantsButtonWithLabelExampleText }}
+/>
+
+## ParticipantsButton with local user excluded from participant list
+
+When excluding local user from participant list, `ParticipantsButton` displays their presence to the call as a menu item above the number of remote participants like shown in the example below.
+
+<Canvas
+  of={ParticipantsStories.ParticipantsButtonWithUserExcludeFromListExampleDocsOnly}
+  source={{ code: ParticipantsButtonWithUserExcludeFromListExampleText }}
+/>
+
+## ParticipantsButton with copyable call invitation link
+
+When opting to have a copyable link available, `ParticipantsButton` displays it as a menu item below the number of participants like shown in the example below.
+
+<Canvas
+  of={ParticipantsStories.ParticipantsButtonWithCallLinkExampleDocsOnly}
+  source={{ code: ParticipantsButtonWithCallLinkExampleText }}
+/>
+
+## ParticipantsButton with option to mute all participants
+
+When opting to have the possibility of muting all participants, `ParticipantsButton` displays this options as a sub-menu item of the number of participants, just below the list of participants, like shown in the example below.
+
+<Canvas
+  of={ParticipantsStories.ParticipantsButtonWithMuteAllOptionExampleDocsOnly}
+  source={{ code: ParticipantsButtonWithMuteAllOptionExampleText }}
+/>
+
+## ParticipantsButton with custom styles
+
+You can change the styles of `ParticipantsButton` through its `styles` props as you would customize any Button styles (root, label, etc..) with the addition of customizing the participant list container like shown in the example below.
+
+Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key to each element to avoid warning for children in a list.
+
+<Canvas
+  of={ParticipantsStories.ParticipantsButtonWithCustomStylesExampleDocsOnly}
+  source={{ code: ParticipantsButtonWithCustomStylesExampleText }}
+/>
+
+## ParticipantsButton with custom render
+
+You can change the render of the `ParticipantsButton` as you would do for any Button (onRenderIcon,
+onRenderText, etc... ) with the addition of customizing the render of the participant list (see
+[ParticipantList](./?path=/docs/ui-components-participantlist--participant-list) component).
+
+<Canvas
+  of={ParticipantsStories.ParticipantsButtonWithCustomRenderExampleDocsOnly}
+  source={{ code: ParticipantsButtonWithCustomRenderExampleText }}
+/>
+
+## Props
+
+`ParticipantsButton` features all props a [FluentUI Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional properties.
+
+<ArgTypes of={ParticipantsButton} />

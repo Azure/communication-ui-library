@@ -7,7 +7,7 @@ import { TeamsCall } from './BetaToStableTypes';
 
 /**
  *
- * @private
+ * @public
  */
 export type DeclarativeTeamsCall = TeamsCall & {
   /**
@@ -18,15 +18,14 @@ export type DeclarativeTeamsCall = TeamsCall & {
 
 class ProxyTeamsCall extends ProxyCallCommon implements ProxyHandler<TeamsCall> {
   public get<P extends keyof TeamsCall>(target: TeamsCall, prop: P): any {
-    /* @conditional-compile-remove(teams-identity-support) */
     switch (prop) {
+      /* @conditional-compile-remove(teams-identity-support-beta) */
       case 'addParticipant': {
         return this.getContext().withAsyncErrorTeedToState(async function (
           ...args: Parameters<TeamsCall['addParticipant']>
         ) {
           return await target.addParticipant(...args);
-        },
-        'TeamsCall.addParticipant');
+        }, 'TeamsCall.addParticipant');
       }
       default:
         return super.get(target, prop as any);

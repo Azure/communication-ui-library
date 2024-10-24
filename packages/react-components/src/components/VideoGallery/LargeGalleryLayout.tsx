@@ -8,7 +8,7 @@ import { LayoutProps } from './Layout';
 import { OverflowGallery } from './OverflowGallery';
 import { GridLayout } from '../GridLayout';
 import { Stack } from '@fluentui/react';
-import { useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
+import { renderTiles, useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 import { VERTICAL_GALLERY_TILE_SIZE_REM } from './styles/VideoGalleryResponsiveVerticalGallery.styles';
@@ -44,7 +44,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
     parentHeight,
     pinnedParticipantUserIds = [],
     overflowGalleryPosition = 'horizontalBottom',
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds = []
+    spotlightedParticipantUserIds = []
   } = props;
 
   const isNarrow = parentWidth ? isNarrowWidth(parentWidth) : false;
@@ -71,17 +71,7 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
       : childrenPerPage.current,
     pinnedParticipantUserIds,
     /* @conditional-compile-remove(large-gallery) */ layout: 'largeGallery',
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
-  });
-  let activeVideoStreams = 0;
-
-  let gridTiles = gridParticipants.map((p) => {
-    return onRenderRemoteParticipant(
-      p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
-    );
+    spotlightedParticipantUserIds
   });
 
   /**
@@ -93,17 +83,17 @@ export const LargeGalleryLayout = (props: LargeGalleryProps): JSX.Element => {
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
-  let overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
-    return onRenderRemoteParticipant(
-      p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && indexesToRender.includes(i) && activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
-    );
-  });
+  let { gridTiles, overflowGalleryTiles } = renderTiles(
+    gridParticipants,
+    onRenderRemoteParticipant,
+    maxRemoteVideoStreams,
+    indexesToRender,
+    overflowGalleryParticipants,
+    dominantSpeakers
+  );
 
   if (localVideoComponent) {
-    if (screenShareComponent || /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds.length > 0) {
+    if (screenShareComponent || spotlightedParticipantUserIds.length > 0) {
       overflowGalleryTiles = [localVideoComponent].concat(overflowGalleryTiles);
     } else {
       gridTiles = [localVideoComponent].concat(gridTiles);

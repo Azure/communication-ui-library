@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { isMessageTooLong, sanitizeText, MAXIMUM_LENGTH_OF_MESSAGE } from './SendBoxUtils';
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 import { hasIncompleteAttachmentUploads, isAttachmentUploadCompleted } from './SendBoxUtils';
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 describe('SendBoxUtils hasIncompleteAttachmentUploads tests', () => {
   test('hasIncompleteAttachmentUploads should return false when progress property set to undefined', () => {
     const attachments = [
@@ -75,7 +75,7 @@ describe('SendBoxUtils hasIncompleteAttachmentUploads tests', () => {
   });
 });
 
-/* @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-acs) */
 describe('SendBoxUtils hasCompletedAttachmentUploads tests', () => {
   test('hasCompletedAttachmentUploads should return true when all attachments are complete', () => {
     const attachments = [

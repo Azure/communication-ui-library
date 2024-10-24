@@ -11,14 +11,15 @@ describe('AttachmentCard should be rendered properly', () => {
     registerIcons({
       icons: {
         docx24_svg: <></>,
-        cancelattachmentupload: <></>
+        cancelattachmentupload: <></>,
+        genericfile24_svg: <></>
       }
     });
   });
 
   it('should render the component', () => {
     renderAttachmentCardWithDefaults();
-    expect(screen.getByText('MockAttachmentCard')).toBeDefined();
+    expect(screen.queryByTestId('attachment-card')).toBeDefined();
   });
 
   it('should render the component with progress bar', () => {
@@ -71,7 +72,7 @@ describe('AttachmentCard action handler should be called', () => {
     });
 
     const button = screen.getAllByRole('button')[0];
-    button.click();
+    button?.click();
     expect(actionHandler).toHaveBeenCalledTimes(1);
   });
 });

@@ -1,29 +1,30 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallAgent } from '@azure/communication-calling';
+import { CallAgent, TeamsCallAgent } from '@azure/communication-calling';
 import { CallingHandlers, createDefaultCallingHandlers } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(teams-identity-support)) */
 import { createDefaultTeamsCallingHandlers, TeamsCallingHandlers } from '@internal/calling-component-bindings';
 import {
   CallCommon,
   StatefulCallClient,
   StatefulDeviceManager,
-  TeamsCallAgent,
   _isACSCall,
   _isACSCallAgent,
   _isTeamsCall,
   _isTeamsCallAgent
 } from '@internal/calling-stateful-client';
 
-import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
+import {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency
+} from '@internal/calling-component-bindings';
 
 /**
  * @private
  */
 export type CallHandlersOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent
   ? CallingHandlers
-  : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallingHandlers;
+  : never | TeamsCallingHandlers;
 
 /**
  * @private
@@ -38,6 +39,7 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
 
   options?: {
     onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+    onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
   }
 ): CallHandlersOf<AgentType> {
   // Call can be either undefined or ACS Call
@@ -47,19 +49,16 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
       callAgent,
       deviceManager,
       call,
-
       options
     ) as CallHandlersOf<AgentType>;
   }
 
-  /* @conditional-compile-remove(teams-identity-support) */
   if (_isTeamsCallAgent(callAgent) && (!call || (call && _isTeamsCall(call)))) {
     return createDefaultTeamsCallingHandlers(
       callClient,
       callAgent,
       deviceManager,
       call,
-
       options
     ) as CallHandlersOf<AgentType>;
   }

@@ -152,6 +152,7 @@ const selectTableContextMenu = async ({
   cellName: string;
 }): Promise<void> => {
   const cell = component.getByRole('cell', { name: cellName });
+  await cell.click();
   await cell.click({ button: 'right' });
   await page.getByText(menuTitle, { exact: true }).hover();
   await page.getByText(subMenuTitle).click();

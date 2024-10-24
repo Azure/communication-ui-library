@@ -1,0 +1,49 @@
+import { NotificationStack } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as NotificationStackStories from './index.stories';
+import NotificationStackExampleText from '!!raw-loader!./snippets/NotificationStack.snippet';
+
+<Meta of={NotificationStackStories} />
+
+# Notification Stack
+
+A wrapper on the `Notification` component with additional features for surfacing Azure Communication Services notifications on the UI consistently.
+
+## Importing
+
+```ts
+import { NotificationStack } from '@azure/communication-react';
+```
+
+## Example
+
+<Canvas
+  of={NotificationStackStories.NotificationStackExampleDocsOnly}
+  source={{ code: NotificationStackExampleText }}
+/>
+
+## Localization
+
+Similar to other UI components in this library, `NotificationStackProps` accepts all strings shown on the UI as a `strings` field. The `activeNotifications` field selects from these strings to show in the `NotificationStack` UI.
+
+## Dismissed messages
+
+User can dismiss the notifications shown by clicking on the X icon. If you wish to dismiss the notifications automatically, simply set the `autoDismiss` field to true for that specific notification.
+
+## Tracking dismissed messages
+
+The `NotificationStack` component internally tracks dismissed notifications and only shows a `Notification` for
+notifications that have not been dismissed. When `activeNotifications` include a timestamp, notifications that
+occur after the latest dismissal are shown on the UI. When `activeNotifications` do not include a timestamp, a
+dismissed notification is only shown on the UI if it is removed from the active notifications and if it occurs
+again.
+
+## Multiple Notification Stack
+
+More than one notification can occur at the same time. The `NotificationStack` component can show multiple
+active notifications. To avoid confusing the user, it is important to be mindful to limit the total number of
+notifications that are shown together by setting the `maxNotificationsToShow` field.
+
+## Props
+
+<ArgTypes of={NotificationStack} />

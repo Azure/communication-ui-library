@@ -1,0 +1,17 @@
+import { IncomingCallStack } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
+import { IncomingCallStackExampleDocsOnly } from './index.stories';
+import * as IncomingCallStackComponent from './index.stories';
+
+import IncomingCallStackExampleText from '!!raw-loader!./snippets/IncomingCallStack.snippet';
+
+<Meta of={IncomingCallStackComponent} />
+
+# IncomingCallStack
+
+This component is a manager for your different incoming calls. It will render the different calls using the
+`IncomingCallNotification` component. Using the `usePropsFor` hook it will be able to get these calls from the
+`Statefulcallclient` and render them in the UI. This component will allow you to manage multiple incoming calls.
+
+<Canvas of={IncomingCallStackExampleDocsOnly} source={{ code: IncomingCallStackExampleText }} />
+<ArgTypes of={IncomingCallStack}></ArgTypes>

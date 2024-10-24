@@ -1,45 +1,52 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
-import { Anchor, DocsContainer } from '@storybook/addon-docs';
+import { DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
 import React from 'react';
-import {
-  COMPONENT_FOLDER_PREFIX,
-  COMPOSITE_FOLDER_PREFIX,
-  EXAMPLES_FOLDER_PREFIX,
-  CONCEPTS_FOLDER_PREFIX,
-  STATEFUL_CLIENT_PREFIX
-} from '../stories/constants';
+
 import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
+import { initializeIcons, registerIcons } from '@fluentui/react';
+import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
+initializeIcons();
+initializeFileTypeIcons();
+registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS } });
 
 export const parameters = {
   layout: 'fullscreen',
   docs: {
-    container: props => (
-      <DocsContainer context={props.context}>
-        <Anchor storyId={props.context.id} />
-        {props.children}
-      </DocsContainer>
-    ),
+    toc: {
+        title: 'On this page',
+        headingSelector: 'h2'
+      }
   },
   options: {
-    // storySort: {
+    storySort: {
       order: [
         'Overview',
         'Use Cases',
         'Feedback',
-        COMPOSITE_FOLDER_PREFIX,
+        'Setup',
+        'Composites',
         [
           'Get Started',
           'CallWithChatComposite',
           'CallComposite',
+          [
+            'Basic Example',
+            'Custom Data Model Example',
+            
+            'Join Existing Call',
+            'Join Existing Call As Teams User',
+            'Theme Example',
+            '1:N',
+            'PSTN',
+          ],
           'ChatComposite',
           'Adapters',
           'Cross-Framework Support',
         ],
-        COMPONENT_FOLDER_PREFIX,
+        'Components',
         [
           'Overview',
           'Get Started',
@@ -54,7 +61,7 @@ export const parameters = {
           'Participant Item',
           'Participant List',
         ],
-        CONCEPTS_FOLDER_PREFIX,
+        'Concepts',
         [
           'Styling',
           'Theming',
@@ -72,7 +79,7 @@ export const parameters = {
           'Transfer',
           'Video Effects'
         ],
-        EXAMPLES_FOLDER_PREFIX,
+        'Examples',
         [
           "Device Settings",
           "Local Preview",
@@ -85,7 +92,7 @@ export const parameters = {
           ],
           "Incoming Call Alerts"
         ],  
-        STATEFUL_CLIENT_PREFIX,
+        'Stateful Client',
         [
           'Overview',
           'Get Started (Call)',
@@ -99,13 +106,6 @@ export const parameters = {
           ],
         ],
       ]
-    // }
-  },
-  viewMode: 'docs',
-  previewTabs: {
-    'storybook/docs/panel': { index: -1 },
-    'canvas': {
-      title: 'Preview'
     }
   }
 };
@@ -154,7 +154,11 @@ const withLocalization = (Story: any, context: any) => {
   }
 };
 
-const withCenterStory = (Story: any) => {
+const withCenterStory = (Story: any, context: any) => {
+  if(context.viewMode === 'docs') {
+    return <Story />;
+  }
+
   return (
     <div style={{
       display: 'flex',

@@ -13,7 +13,8 @@ describe('AttachmentDownloadCards should be rendered properly', () => {
       icons: {
         downloadattachment: <></>,
         docx24_svg: <></>,
-        editboxcancel: <></>
+        editboxcancel: <></>,
+        genericfile24_svg: <></>
       }
     });
   });
@@ -30,8 +31,7 @@ describe('AttachmentDownloadCards should be rendered properly', () => {
       attachments: [attachment]
     };
     renderAttachmentDownloadCardsWithDefaults(props);
-    const card = await screen.findByText('MockAttachmentCard');
-    expect(card).toBeDefined();
+    expect(screen.queryByTestId('attachment-card')).toBeDefined();
   });
 });
 

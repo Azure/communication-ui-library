@@ -1,0 +1,57 @@
+import { ControlBarButton } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as ControlBarButtonStories from './index.stories';
+import CustomControlBarButtonExampleText from '!!raw-loader!./snippets/Custom.snippet.tsx';
+import ControlBarButtonExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
+import ControlBarButtonWithLabelExampleText from '!!raw-loader!./snippets/WithLabel.snippet.tsx';
+
+<Meta of={ControlBarButtonStories} />
+
+# ControlBar Button
+
+Default button styled for use with the [Control Bar](./?path=/docs/components-controlbar-control-bar--docs).
+
+Note that for accessibility purposes, this button can be focused on even when disabled. This behaviour can be
+changed by setting the button prop `allowDisabledFocus` to `false`.
+
+## Importing
+
+```tsx
+import { ControlBarButton } from '@azure/communication-react';
+```
+
+## Example
+
+Here we see a `ControlBarButton` with some custom icons set:
+
+<Canvas of={ControlBarButtonStories.ControlBarButtonExampleDocsOnly} source={{ code: ControlBarButtonExampleText }} />
+
+## ControlBar with default label
+
+Here we see the same icons but with labels set to show:
+
+<Canvas
+  of={ControlBarButtonStories.ControlBarButtonWithLabelExampleDocsOnly}
+  source={{ code: ControlBarButtonWithLabelExampleText }}
+/>
+
+## Custom ControlBarButton Styles
+
+You can override the styles of the `ControlBarButton` as you would customized any Button (styles, primary,
+onRenderIcon, onRenderText, etc... ).
+
+Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key
+to each element to avoid warning for children in a list.
+
+<Canvas
+  of={ControlBarButtonStories.CustomControlBarButtonExampleDocsOnly}
+  source={{ code: CustomControlBarButtonExampleText }}
+/>
+
+## Props
+
+`ControlBarButton` features all props a [FluentUI
+Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the additional following
+properties.
+
+<ArgTypes of={ControlBarButton} />

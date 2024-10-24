@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { _dominantSpeakersWithFlatId } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(PSTN-calls) */
 import { _updateUserDisplayNames } from '@internal/calling-component-bindings';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import * as reselect from 'reselect';
@@ -29,7 +28,7 @@ export const dominantRemoteParticipantSelector = reselect.createSelector(
 const findDominantRemoteParticipant = (
   remoteParticipants: { [keys: string]: RemoteParticipantState },
   dominantSpeakerIds: string[]
-): RemoteParticipantState => {
+): RemoteParticipantState | undefined => {
   let dominantRemoteParticipantId = dominantSpeakerIds[0];
 
   // Fallback to using the first remote participant if there are no dominant speaker IDs
@@ -39,5 +38,5 @@ const findDominantRemoteParticipant = (
     dominantRemoteParticipantId = remoteParticipantIds[0];
   }
 
-  return remoteParticipants[dominantRemoteParticipantId];
+  return dominantRemoteParticipantId ? remoteParticipants[dominantRemoteParticipantId] : undefined;
 };

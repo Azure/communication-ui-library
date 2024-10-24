@@ -25,7 +25,7 @@ let allDependencies = new Set();
 let allPeerDependencies = new Set();
 
 for (const packlet of Object.keys(downstreamPacklets)) {
-  const packageJsonRelativePath = '../';
+  const packageJsonRelativePath = '../../';
 
   const packletPackageData = require(path.resolve(
     __dirname,

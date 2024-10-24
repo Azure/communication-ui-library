@@ -2,9 +2,8 @@
 // Licensed under the MIT License.
 
 import { Call, CallAgent, StartCallOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
+import { IncomingCallCommon } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(PSTN-calls) */
 import {
   isCommunicationUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
@@ -13,12 +12,15 @@ import {
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
+import { DeclarativeCallAgent } from '@internal/calling-stateful-client';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { isACSCallParticipants } from '../utils/callUtils';
+import { createLocalVideoStream } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
 import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
+import { DeepNoiseSuppressionEffectDependency } from './createCommonHandlers';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -38,6 +40,11 @@ export interface CallingHandlers extends CommonCallingHandlers {
  */
 export type CallingHandlersOptions = {
   onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
+  /**
+   * Dependency resolver for deep noise suppression effect.
+   * @beta
+   */
+  onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 };
 
 /**
@@ -64,18 +71,23 @@ export type CreateDefaultCallingHandlers = (
  */
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoizeOne((...args) => {
   const [callClient, callAgent, deviceManager, call, options] = args;
+  /* @conditional-compile-remove(breakout-rooms) */
+  const callState = call?.id ? callClient.getState().calls[call?.id] : undefined;
+  /* @conditional-compile-remove(breakout-rooms) */
+  const breakoutRoomOriginCallId = callState?.breakoutRooms?.breakoutRoomOriginCallId;
+  /* @conditional-compile-remove(breakout-rooms) */
+  const breakoutRoomOriginCall = callAgent?.calls.find((call) => call.id === breakoutRoomOriginCallId);
+  const commonCallingHandlers = createDefaultCommonCallingHandlers(callClient, deviceManager, call, options);
   return {
-    ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, options),
+    ...commonCallingHandlers,
     // FIXME: onStartCall API should use string, not the underlying SDK types.
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
-      /* @conditional-compile-remove(teams-adhoc-call) */
       return callAgent?.startCall(participants, options);
       if (!isACSCallParticipants(participants)) {
         throw new Error('TeamsUserIdentifier in Teams call is not supported!');
       }
       return callAgent?.startCall(participants, options);
     },
-    /* @conditional-compile-remove(PSTN-calls) */
     onAddParticipant: async (
       userId: string | CommunicationIdentifier,
       options?: AddPhoneNumberOptions
@@ -87,16 +99,36 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
         call?.addParticipant(participant);
       }
     },
-    onRemoveParticipant: async (
-      userId: string | /* @conditional-compile-remove(PSTN-calls) */ CommunicationIdentifier
-    ): Promise<void> => {
+    onRemoveParticipant: async (userId: string | CommunicationIdentifier): Promise<void> => {
       const participant = _toCommunicationIdentifier(userId);
       await call?.removeParticipant(participant);
-    }
+    },
+    onAcceptCall: async (incomingCallId: string, useVideo?: boolean): Promise<void> => {
+      const localVideoStream = useVideo ? await createLocalVideoStream(callClient) : undefined;
+      const incomingCall = (callAgent as DeclarativeCallAgent)?.incomingCalls.find(
+        (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
+      );
+      if (incomingCall) {
+        await incomingCall.accept(
+          localVideoStream ? { videoOptions: { localVideoStreams: [localVideoStream] } } : undefined
+        );
+      }
+    },
+    onRejectCall: async (incomingCallId: string): Promise<void> => {
+      const incomingCall = (callAgent as DeclarativeCallAgent)?.incomingCalls.find(
+        (incomingCall: IncomingCallCommon) => incomingCall.id === incomingCallId
+      );
+      if (incomingCall) {
+        await incomingCall.reject();
+      }
+    },
+    /* @conditional-compile-remove(breakout-rooms) */
+    onHangUp: breakoutRoomOriginCall
+      ? async () => breakoutRoomOriginCall.hangUp().then(() => commonCallingHandlers.onHangUp())
+      : commonCallingHandlers.onHangUp
   };
 });
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * Handlers only for calling components
  * @internal

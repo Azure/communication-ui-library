@@ -1,16 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { SendBoxErrorBar, SendBoxErrorBarError } from '../SendBoxErrorBar';
 
 /**
  * @private
  */
 export interface RichTextSendBoxErrorsProps {
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   attachmentUploadsPendingError?: SendBoxErrorBarError;
-  /* @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-acs) */
   attachmentProgressError?: SendBoxErrorBarError;
   systemMessage?: string;
   textTooLongMessage?: string;
@@ -21,9 +21,9 @@ export interface RichTextSendBoxErrorsProps {
  */
 export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.Element => {
   const {
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     attachmentProgressError,
-    /* @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-acs) */
     attachmentUploadsPendingError,
     systemMessage,
     textTooLongMessage
@@ -57,11 +57,11 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
       if (prev) {
         errors.push(prev);
       }
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       if (attachmentUploadsPendingError) {
         errors.push(attachmentUploadsPendingError);
       }
-      /* @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-acs) */
       if (attachmentProgressError) {
         errors.push(attachmentProgressError);
       }
@@ -73,26 +73,29 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
       return sortedErrors[0];
     });
   }, [
-    /* @conditional-compile-remove(attachment-upload) */ attachmentProgressError,
-    /* @conditional-compile-remove(attachment-upload) */ attachmentUploadsPendingError
+    /* @conditional-compile-remove(file-sharing-acs) */ attachmentProgressError,
+    /* @conditional-compile-remove(file-sharing-acs) */ attachmentUploadsPendingError
   ]);
 
   const onDismiss = useCallback(() => {
     if (systemMessage && !isMessageEmpty(systemMessage)) {
       setSendBoxError({ message: systemMessage, timestamp: Date.now() });
+      return;
     }
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    setSendBoxError(undefined);
   }, [systemMessage]);
 
-  return (
-    <SendBoxErrorBar
-      error={sendBoxError}
-      dismissAfterMs={
-        // don't dismiss the system message
-        systemMessage !== undefined && sendBoxError?.message !== systemMessage ? 10 * 1000 : undefined
-      }
-      onDismiss={onDismiss}
-    />
-  );
+  const dismissAfterMs = useMemo(() => {
+    const delayInMs = 10 * 1000;
+    // don't dismiss the system message
+    if (systemMessage) {
+      return sendBoxError?.message !== systemMessage ? delayInMs : undefined;
+    }
+    return delayInMs;
+  }, [sendBoxError?.message, systemMessage]);
+
+  return <SendBoxErrorBar error={sendBoxError} dismissAfterMs={dismissAfterMs} onDismiss={onDismiss} />;
 };
 
 const isMessageEmpty = (message: string): boolean => {

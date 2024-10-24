@@ -41,10 +41,10 @@ import {
 import { useLocale } from '../../localization';
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
 import { usePropsFor } from '../hooks/usePropsFor';
-import { useAdapter } from '../adapter/CallAdapterProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite';
 import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorBar';
+import { _isSafari } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
@@ -60,7 +60,10 @@ import { localVideoSelector } from '../../CallComposite/selectors/localVideoStre
 
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 import { SvgWithWordWrapping } from '../components/SvgWithWordWrapping';
-import { EnvironmentInfo } from '@azure/communication-calling';
+import { getMicrophones, getRole } from '../selectors/baseSelectors';
+import { getEnvironmentInfo } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(call-readiness) */
+import { getCameras } from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -120,13 +123,11 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   getDevicePermissionState(setVideoState, setAudioState);
 
   const errorBarProps = usePropsFor(ErrorBar);
-  const adapter = useAdapter();
-  const deviceState = adapter.getState().devices;
-  /* @conditional-compile-remove(unsupported-browser) */
-  const environmentInfo = adapter.getState().environmentInfo;
+  const microphones = useSelector(getMicrophones);
+  const environmentInfo = useSelector(getEnvironmentInfo);
 
-  let disableStartCallButton = !microphonePermissionGranted || deviceState.microphones?.length === 0;
-  const role = adapter.getState().call?.role;
+  let disableStartCallButton = !microphonePermissionGranted || microphones?.length === 0;
+  const role = useSelector(getRole);
 
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
 
@@ -150,6 +151,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   }
 
   /* @conditional-compile-remove(call-readiness) */
+  const cameras = useSelector(getCameras);
+
+  /* @conditional-compile-remove(call-readiness) */
   // Overrides role permissions if CallCompositeOptions deviceChecks are set
   if (deviceChecks) {
     if (
@@ -158,7 +162,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     ) {
       disableStartCallButton = false;
     } else if (deviceChecks.camera === 'required') {
-      disableStartCallButton = !cameraPermissionGranted || deviceState.cameras?.length === 0;
+      disableStartCallButton = !cameraPermissionGranted || cameras?.length === 0;
     }
   }
 
@@ -171,6 +175,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           lineHeightPx={16 * 1.5}
           bufferHeightPx={16}
           text={locale.strings.call.configurationPageTitle}
+          role="heading"
         />
       </Stack.Item>
     ) : (
@@ -197,20 +202,20 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           ? videoState
           : 'denied'
         : cameraPermissionGranted !== false
-        ? cameraPermissionGranted
-          ? 'granted'
-          : 'prompt'
-        : 'denied',
+          ? cameraPermissionGranted
+            ? 'granted'
+            : 'prompt'
+          : 'denied',
     microphone:
       audioState && audioState !== 'unsupported'
         ? microphonePermissionGranted !== false
           ? audioState
           : 'denied'
         : microphonePermissionGranted !== false
-        ? microphonePermissionGranted
-          ? 'granted'
-          : 'prompt'
-        : 'denied'
+          ? microphonePermissionGranted
+            ? 'granted'
+            : 'prompt'
+          : 'denied'
   };
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
@@ -293,6 +298,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             isPermissionsModalDismissed={isPermissionsModalDismissed}
             setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
             onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
+            doNotPromptCamera={deviceChecks?.camera === 'doNotPrompt'}
           />
         )
       }
@@ -337,18 +343,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             {localPreviewTrampoline(mobileWithPreview, !!(role === 'Consumer'))}
             <Stack styles={mobileView ? undefined : configurationSectionStyle}>
               {!mobileWithPreview && (
-                <Stack
-                  className={
-                    mobileView
-                      ? undefined
-                      : selectionContainerStyle(
-                          theme,
-                          isSafariBrowserEnvironmentTrampoline(
-                            /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
-                          )
-                        )
-                  }
-                >
+                <Stack className={mobileView ? undefined : selectionContainerStyle(theme, _isSafari(environmentInfo))}>
                   <LocalDeviceSettings
                     {...options}
                     {...localDeviceSettingsHandlers}
@@ -394,6 +389,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
         >
           <SidePane
+            ariaLabel={isVideoEffectsPaneOpen ? locale.strings.call.videoEffectsPaneAriaLabel : undefined}
             mobileView={props.mobileView}
             updateSidePaneRenderer={props.updateSidePaneRenderer}
             maxWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
@@ -437,11 +433,4 @@ const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'unset' | 'ci
     return <></>;
   }
   return <Image styles={logoStyles(props.logo.shape)} src={props.logo.url} alt={props.logo.alt} />;
-};
-
-const isSafariBrowserEnvironmentTrampoline = (environmentInfo?: EnvironmentInfo): boolean | undefined => {
-  /* @conditional-compile-remove(unsupported-browser) */
-  return environmentInfo && environmentInfo?.environment.browser.toLowerCase() === 'safari';
-
-  return false;
 };

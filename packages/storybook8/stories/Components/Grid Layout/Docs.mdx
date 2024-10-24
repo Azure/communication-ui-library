@@ -1,0 +1,28 @@
+import { GridLayout } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as GridLayoutStories from './index.stories';
+import GridLayoutExampleText from '!!raw-loader!./snippets/GridLayout.snippet';
+
+<Meta of={GridLayoutStories} />
+
+# Grid Layout
+
+The `GridLayout` organizes components passed to it as children in a grid layout. It can display a grid of call
+participants through the use of `VideoTile` component.
+
+## Importing
+
+```ts
+import { GridLayout, VideoTile } from '@azure/communication-react';
+```
+
+## Example
+
+The following example shows how you can render `VideoTile` components inside a grid layout. For styling the
+children video tiles, please read the [VideoTile component docs](./?path=/docs/components-video-tile--docs).
+
+<Canvas of={GridLayoutStories.GridLayoutExampleDocsOnly} source={{ code: GridLayoutExampleText }} />
+
+## Props
+
+<ArgTypes of={GridLayout} />

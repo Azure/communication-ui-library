@@ -9,6 +9,7 @@ export { LocalizationProvider } from './localization';
 export { COMPONENT_LOCALE_EN_GB } from './localization/locales/en-GB/ComponentLocale';
 export { COMPONENT_LOCALE_AR_SA } from './localization/locales/ar-SA/ComponentLocale';
 export { COMPONENT_LOCALE_CS_CZ } from './localization/locales/cs-CZ/ComponentLocale';
+export { COMPONENT_LOCALE_CY_GB } from './localization/locales/cy-GB/ComponentLocale';
 export { COMPONENT_LOCALE_DE_DE } from './localization/locales/de-DE/ComponentLocale';
 export { COMPONENT_LOCALE_ES_ES } from './localization/locales/es-ES/ComponentLocale';
 export { COMPONENT_LOCALE_FI_FI } from './localization/locales/fi-FI/ComponentLocale';
@@ -63,7 +64,6 @@ export type {
 
 export type { RaisedHand } from './types';
 
-/* @conditional-compile-remove(spotlight) */
 export type { Spotlight } from './types';
 
 export type { Reaction, ReactionResources, ReactionSprite } from './types';
@@ -78,9 +78,9 @@ export { _spokenLanguageToCaptionLanguage } from './types';
 
 /* @conditional-compile-remove(data-loss-prevention) */
 export type { BlockedMessage } from './types';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { SurveyIssues } from './types';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { SurveyIssuesHeadingStrings } from './types';
-/* @conditional-compile-remove(end-of-call-survey) */
+
 export type { CallSurveyImprovementSuggestions } from './types';

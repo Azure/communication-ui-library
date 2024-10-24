@@ -1,0 +1,49 @@
+import { EndCallButton } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as EndCallStories from './index.stories';
+import EndCallButtonCustomExampleText from '!!raw-loader!./snippets/Custom.snippet.tsx';
+import EndCallButtonDefaultExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
+import EndCallButtonWithLabelExampleText from '!!raw-loader!./snippets/WithLabel.snippet.tsx';
+
+<Meta of={EndCallStories} />
+
+# End Call Button
+
+A button to end an ongoing call. For use with the [Control Bar](./?path=/docs/components-controlbar-control-bar--docs).
+
+Note that for accessibility purposes, this button can be focused on even when disabled. This behaviour can be changed by setting the button prop `allowDisabledFocus` to `false`.
+
+## Importing
+
+```tsx
+import { EndCallButton } from '@azure/communication-react';
+```
+
+## Example
+
+The default `EndCallButton` component shows a hangup icon with no label as in the example below.
+
+<Canvas of={EndCallStories.EndCallButtonDefaultExampleDocsOnly} source={{ code: EndCallButtonDefaultExampleText }} />
+
+## EndCallButton with default label
+
+You can display the button label which, by default, will show below the icon as `Hangup`.
+
+<Canvas
+  of={EndCallStories.EndCallButtonWithLabelExampleDocsOnly}
+  source={{ code: EndCallButtonWithLabelExampleText }}
+/>
+
+## Custom EndCallButton Styles
+
+You can change the styles of the `EndCallButton` as you would customized any Button (styles, primary, onRenderIcon, onRenderText, etc... ).
+
+Note: When overriding a render, like using `onRenderIcon` or `onRenderText`, do not forget to add a unique key to each element to avoid warning for children in a list.
+
+<Canvas of={EndCallStories.EndCallButtonCustomExampleDocsOnly} source={{ code: EndCallButtonCustomExampleText }} />
+
+## Props
+
+`EndCallButton` features all props a [FluentUI Button](https://developer.microsoft.com/fluentui#/controls/web/button) offers, with the following additional properties.
+
+<ArgTypes of={EndCallButton} />

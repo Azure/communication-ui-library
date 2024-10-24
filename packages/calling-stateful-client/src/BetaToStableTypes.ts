@@ -9,42 +9,26 @@
 // So we remove CallCommonBeta type in stable
 // In beta, Call | CallCommon = CallCommon because Call is just a super set of CallCommon
 
-import { Call, CallAgent, IncomingCall } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
+import { Call, CallAgent } from '@azure/communication-calling';
 import {
   TeamsCall as TeamsCallBeta,
   CallCommon as CallCommonBeta,
-  CallAgentCommon as CallAgentCommonBeta,
-  TeamsCallAgent as TeamsCallAgentBeta,
-  IncomingCallCommon as IncomingCallCommonBeta
+  CallAgentCommon as CallAgentCommonBeta
 } from '@azure/communication-calling';
 
 /**
  * @public
  * The common interface for all types of Calls
  */
-export type CallCommon = Call | /* @conditional-compile-remove(teams-identity-support) */ CallCommonBeta;
+export type CallCommon = Call | CallCommonBeta;
 
 /**
  * @public
  * The common interface for all types of CallAgents
  */
-export type CallAgentCommon = CallAgent | /* @conditional-compile-remove(teams-identity-support) */ CallAgentCommonBeta;
+export type CallAgentCommon = CallAgent | CallAgentCommonBeta;
 
 /**
  * @beta
  */
-export type TeamsCall = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallBeta;
-
-/**
- * @beta
- */
-export type TeamsCallAgent = never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAgentBeta;
-
-/**
- * @public
- * The common interface for all types of IncomingCalls
- */
-export type IncomingCallCommon =
-  | IncomingCall
-  | /* @conditional-compile-remove(teams-identity-support) */ IncomingCallCommonBeta;
+export type TeamsCall = never | TeamsCallBeta;

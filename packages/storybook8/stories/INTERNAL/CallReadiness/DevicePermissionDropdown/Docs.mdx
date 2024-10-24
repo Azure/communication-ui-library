@@ -1,0 +1,17 @@
+import { _DevicePermissionDropdown } from '@internal/react-components';
+import { Canvas, Meta, ArgTypes } from '@storybook/addon-docs';
+import * as DeviceDropdownStories from './index.stories';
+import DevicePermissionDropdownStoryText from '!!raw-loader!./DevicePermissionDropdown.story';
+
+<Meta of={DeviceDropdownStories} />
+
+# Device Permission Dropdown
+
+A dropdown to trigger device permission prompt
+
+<Canvas
+  of={DeviceDropdownStories.DevicePermissionDropdownExampleDocsOnly}
+  source={{ code: DevicePermissionDropdownStoryText }}
+/>
+
+<ArgTypes of={_DevicePermissionDropdown} />

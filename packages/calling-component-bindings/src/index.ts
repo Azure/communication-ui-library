@@ -4,14 +4,19 @@
 export type { CallingBaseSelectorProps } from './baseSelectors';
 export * from './callControlSelectors';
 export { createDefaultCallingHandlers } from './handlers/createHandlers';
-/* @conditional-compile-remove(teams-identity-support) */
+
 export { createDefaultTeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { ParticipantListSelector } from './participantListSelector';
 export type { ParticipantsButtonSelector } from './participantsButtonSelector';
 export type { VideoGallerySelector } from './videoGallerySelector';
 export type { ErrorBarSelector } from './errorBarSelector';
-/* @conditional-compile-remove(PSTN-calls) */
+
+export type { NotificationStackSelector } from './notificationStackSelector';
+
+export { notificationStackSelector } from './notificationStackSelector';
 export type { HoldButtonSelector } from './callControlSelectors';
+export type { IncomingCallStackSelector } from './incomingCallStackSelector';
+export { incomingCallStackSelector } from './incomingCallStackSelector';
 
 export type {
   _StartCaptionsButtonSelector,
@@ -22,17 +27,18 @@ export type {
 export { _captionsBannerSelector, _startCaptionsButtonSelector, _captionSettingsSelector } from './captionsSelector';
 
 export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/createHandlers';
-/* @conditional-compile-remove(teams-identity-support) */
+
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
 export type { CaptionsOptions } from './handlers/createCommonHandlers';
 
-export type { VideoBackgroundEffectsDependency } from './handlers/createCommonHandlers';
-/* @conditional-compile-remove(spotlight) */
-export type { _ComponentCallingHandlers } from './handlers/createHandlers';
+export type {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency
+} from './handlers/createCommonHandlers';
 
-export type { CallingHandlersOptions } from './handlers/createHandlers';
-/* @conditional-compile-remove(teams-identity-support) */
+export type { _ComponentCallingHandlers, CallingHandlersOptions } from './handlers/createHandlers';
+
 export { useTeamsCall, useTeamsCallAgent } from './providers';
 
 export {
@@ -52,11 +58,13 @@ export type { GetSelector as GetCallingSelector, EmptySelector } from './hooks/u
 export { useSelector as useCallingSelector } from './hooks/useSelector';
 export { useHandlers as useCallingHandlers } from './hooks/useHandlers';
 
-export { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from './utils/callUtils';
-/* @conditional-compile-remove(PSTN-calls) */ /* @conditional-compile-remove(spotlight) */
-export { _updateUserDisplayNames } from './utils/callUtils';
-/* @conditional-compile-remove(unsupported-browser) */
-export { _getEnvironmentInfo } from './utils/callUtils';
+export {
+  _isInCall,
+  _isPreviewOn,
+  _isInLobbyOrConnecting,
+  _updateUserDisplayNames,
+  _getEnvironmentInfo
+} from './utils/callUtils';
 
 export { _videoGalleryRemoteParticipantsMemo, _dominantSpeakersWithFlatId } from './utils/videoGalleryUtils';
 export type { _VideoGalleryRemoteParticipantsMemoFn } from './utils/videoGalleryUtils';

@@ -5,7 +5,11 @@ import { Text, mergeStyles } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { chatMessageDateStyle, chatMessageFailedTagStyle } from '../../styles/ChatMessageComponent.styles';
+import {
+  chatMessageDateStyle,
+  chatMessageFailedTagStyle,
+  chatMessageDateFailedStyle
+} from '../../styles/ChatMessageComponent.styles';
 import { useIdentifiers } from '../../../identifiers/IdentifierProvider';
 import { useTheme } from '../../../theming';
 import { ChatMessageActionFlyout } from '../ChatMessageActionsFlyout';
@@ -16,9 +20,9 @@ import { BlockedMessage } from '../../../types/ChatMessage';
 import { MessageThreadStrings } from '../../MessageThread';
 import { chatMessageActionMenuProps } from '../ChatMessageActionMenu';
 import { ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMenuAction } from '../../../types/Attachment';
-/* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { _AttachmentDownloadCards } from '../../Attachment/AttachmentDownloadCards';
 import { useLocale } from '../../../localization';
@@ -33,6 +37,8 @@ import {
   getMessageBubbleContent,
   getMessageEditedDetails
 } from '../../utils/ChatMessageComponentUtils';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { doesMessageContainMultipleAttachments } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 
 type ChatMyMessageComponentAsMessageBubbleProps = {
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
@@ -77,12 +83,12 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to render message attachments in the message component.
    */
   onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to define custom actions for attachments.
    */
@@ -113,9 +119,9 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     /* @conditional-compile-remove(mention) */
     mentionDisplayOptions,
     onDisplayDateTimeString,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     actionsForAttachment
   } = props;
 
@@ -172,6 +178,11 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     setChatMessageActionFlyoutTarget(undefined);
   }, [setChatMessageActionFlyoutTarget]);
 
+  /* @conditional-compile-remove(file-sharing-acs) */
+  const hasMultipleAttachments = useMemo(() => {
+    return doesMessageContainMultipleAttachments(message as ChatMessage);
+  }, [message]);
+
   const getMessageDetails = useCallback(() => {
     if (messageStatus === 'failed') {
       return <div className={chatMessageFailedTagStyle(theme)}>{strings.failToSendTag}</div>;
@@ -188,17 +199,17 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
       inlineImageOptions,
       /* @conditional-compile-remove(mention) */
       mentionDisplayOptions,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       onRenderAttachmentDownloads,
-      /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */
+      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       actionsForAttachment
     );
   }, [
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ actionsForAttachment,
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */ actionsForAttachment,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
-    /* @conditional-compile-remove(attachment-download) @conditional-compile-remove(attachment-upload) */ onRenderAttachmentDownloads,
+    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentDownloads,
     strings,
     userId
   ]);
@@ -220,12 +231,18 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
             className: mergeClasses(
               chatMessageCommonStyles.body,
               chatMyMessageStyles.body,
+              /* @conditional-compile-remove(rich-text-editor-image-upload) */
+              chatMessageCommonStyles.bodyWithPlaceholderImage,
+              /* @conditional-compile-remove(rich-text-editor-image-upload) */
+              chatMyMessageStyles.bodyWithPlaceholderImage,
               isBlockedMessage
                 ? chatMessageCommonStyles.blocked
                 : props.message.status === 'failed'
-                ? chatMessageCommonStyles.failed
-                : undefined,
+                  ? chatMessageCommonStyles.failed
+                  : undefined,
               attached !== 'top' ? chatMyMessageStyles.bodyAttached : undefined,
+              /* @conditional-compile-remove(file-sharing-acs) */
+              hasMultipleAttachments ? chatMyMessageStyles.multipleAttachmentsInViewing : undefined,
               mergeStyles(messageContainerStyle)
             ),
             style: { ...createStyleFromV8Style(messageContainerStyle) },
@@ -247,20 +264,17 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
               // react onFocus is called even when nested component receives focus (i.e. it bubbles)
               // so when focus moves within actionMenu, the `focus` state in chatMessage remains true, and keeps actionMenu visible
               setFocused(true);
-            },
-            // make body not focusable to remove repetitions from narrators.
-            // inner components are already focusable
-            role: 'none',
-            tabIndex: -1
+            }
           }}
-          data-ui-id="chat-composite-message"
-          author={
-            <Text className={chatMessageDateStyle} tabIndex={0}>
-              {message.senderDisplayName}
-            </Text>
-          }
+          data-testid="chat-composite-message"
+          author={<Text className={chatMessageDateStyle(theme)}>{message.senderDisplayName}</Text>}
           timestamp={
-            <Text className={chatMessageDateStyle} data-ui-id={ids.messageTimestamp} tabIndex={0}>
+            <Text
+              className={
+                props.message.status === 'failed' ? chatMessageDateFailedStyle(theme) : chatMessageDateStyle(theme)
+              }
+              data-ui-id={ids.messageTimestamp}
+            >
               {formattedTimestamp}
             </Text>
           }

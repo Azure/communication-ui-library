@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-/* @conditional-compile-remove(meeting-id) */
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { CallAndChatLocator } from '@azure/communication-react';
@@ -24,7 +23,6 @@ import {
   getTeamsLinkFromUrl,
   isOnIphoneAndNotSafari
 } from './utils/AppUtils';
-/* @conditional-compile-remove(meeting-id) */
 import { ensureJoinableMeetingIdPushedToUrl, getMeetingIdFromUrl } from './utils/AppUtils';
 import { CallScreen } from './views/CallScreen';
 import { HomeScreen } from './views/HomeScreen';
@@ -34,7 +32,7 @@ import { joinThread } from './utils/joinThread';
 import { getThread } from './utils/getThread';
 import { getExistingThreadIdFromURL } from './utils/getThreadId';
 import { WEB_APP_TITLE } from './utils/constants';
-/* @conditional-compile-remove(PSTN-calls) */
+/* @conditional-compile-remove(call-participants-locator) */
 import { CallParticipantsLocator } from '@azure/communication-react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 
@@ -50,11 +48,9 @@ interface CallWithChatArgs {
   credentials: Credentials;
   endpointUrl: string;
   displayName: string;
-  locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
-  /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId?: string;
+  locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
+  alternateCallerId?: string;
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled?: boolean;
 }
 type AppPages = 'home' | 'call' | 'error';
 
@@ -71,9 +67,7 @@ const App = (): JSX.Element => {
   }
 
   const joiningExistingCallWithChat: boolean =
-    (!!getGroupIdFromUrl() && !!getExistingThreadIdFromURL()) ||
-    !!getTeamsLinkFromUrl() ||
-    /* @conditional-compile-remove(meeting-id) */ !!getMeetingIdFromUrl();
+    (!!getGroupIdFromUrl() && !!getExistingThreadIdFromURL()) || !!getTeamsLinkFromUrl() || !!getMeetingIdFromUrl();
 
   switch (page) {
     case 'home': {
@@ -88,8 +82,9 @@ const App = (): JSX.Element => {
               const callWithChatArgs = await generateCallWithChatArgs(
                 homeScreenDetails.displayName,
                 homeScreenDetails?.meetingLocator,
-                /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.alternateCallerId,
-                /* @conditional-compile-remove(PSTN-calls) */ homeScreenDetails.outboundParticipants
+                homeScreenDetails.alternateCallerId,
+                homeScreenDetails.outboundParticipants,
+                /* @conditional-compile-remove(rich-text-editor-composite-support) */ homeScreenDetails.isRichTextEditorEnabled
               );
               setCallWithChatArgs(callWithChatArgs);
             } catch (e) {
@@ -118,8 +113,9 @@ const App = (): JSX.Element => {
           displayName={callWithChatArgs.displayName}
           locator={callWithChatArgs.locator}
           endpoint={callWithChatArgs.endpointUrl}
-          /* @conditional-compile-remove(PSTN-calls) */
           alternateCallerId={callWithChatArgs.alternateCallerId}
+          /* @conditional-compile-remove(rich-text-editor-composite-support) */
+          isRichTextEditorEnabled={callWithChatArgs.isRichTextEditorEnabled}
         />
       );
     }
@@ -133,24 +129,20 @@ export default App;
 
 const generateCallWithChatArgs = async (
   displayName: string,
-  teamsLocator?: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator,
-  /* @conditional-compile-remove(PSTN-calls) */
+  teamsLocator?: TeamsMeetingLinkLocator | TeamsMeetingIdLocator,
   alternateCallerId?: string,
-  /* @conditional-compile-remove(PSTN-calls) */
-  outboundParticipants?: string[]
+  outboundParticipants?: string[],
+  /* @conditional-compile-remove(rich-text-editor-composite-support) */
+  isRichTextEditorEnabled?: boolean
 ): Promise<CallWithChatArgs> => {
   const { token, user } = await fetchTokenResponse();
   const credentials = { userId: user, token: token };
   const endpointUrl = await getEndpointUrl();
 
-  let locator:
-    | CallAndChatLocator
-    | TeamsMeetingLinkLocator
-    | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator;
+  let locator: CallAndChatLocator | TeamsMeetingLinkLocator | TeamsMeetingIdLocator;
 
   // Check if we should join a teams meeting, or an ACS CallWithChat
-  teamsLocator =
-    teamsLocator ?? getTeamsLinkFromUrl() ?? /* @conditional-compile-remove(meeting-id) */ getMeetingIdFromUrl();
+  teamsLocator = teamsLocator ?? getTeamsLinkFromUrl() ?? getMeetingIdFromUrl();
   if (teamsLocator) {
     locator =
       getTeamsLocator(teamsLocator) ??
@@ -160,7 +152,6 @@ const generateCallWithChatArgs = async (
     if ('meetingLink' in teamsLocator) {
       ensureJoinableTeamsLinkPushedToUrl(teamsLocator);
     }
-    /* @conditional-compile-remove(meeting-id) */
     if ('meetingId' in teamsLocator) {
       ensureJoinableMeetingIdPushedToUrl(teamsLocator);
     }
@@ -182,14 +173,15 @@ const generateCallWithChatArgs = async (
     endpointUrl,
     credentials,
     locator,
-    /* @conditional-compile-remove(PSTN-calls) */ alternateCallerId
+    alternateCallerId,
+    /* @conditional-compile-remove(rich-text-editor-composite-support) */ isRichTextEditorEnabled
   };
 };
 
 const callLocatorGen = (
-  /* @conditional-compile-remove(PSTN-calls) */ outBoundParticipants?: string[]
-): GroupCallLocator | /* @conditional-compile-remove(PSTN-calls) */ CallParticipantsLocator => {
-  /* @conditional-compile-remove(PSTN-calls) */
+  outBoundParticipants?: string[]
+): GroupCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator => {
+  /* @conditional-compile-remove(call-participants-locator) */
   if (outBoundParticipants) {
     return { participantIds: outBoundParticipants };
   }
@@ -199,12 +191,11 @@ const callLocatorGen = (
 };
 
 const getTeamsLocator = (
-  teamsLocator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator
-): TeamsMeetingLinkLocator | /* @conditional-compile-remove(meeting-id) */ TeamsMeetingIdLocator | undefined => {
+  teamsLocator: TeamsMeetingLinkLocator | TeamsMeetingIdLocator
+): TeamsMeetingLinkLocator | TeamsMeetingIdLocator | undefined => {
   if ('meetingLink' in teamsLocator) {
     return teamsLocator;
   }
-  /* @conditional-compile-remove(meeting-id) */
   if ('meetingId' in teamsLocator) {
     return teamsLocator;
   }

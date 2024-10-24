@@ -25,12 +25,10 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
    * @beta
    * */
   reaction?: Reaction;
-  /* @conditional-compile-remove(spotlight) */
   /** Whether calling participant is spotlighted **/
   spotlight?: Spotlight;
 };
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * Spotlight state with order
  *
@@ -92,4 +90,5 @@ export type ParticipantState =
   | 'Hold'
   | 'InLobby'
   | 'EarlyMedia'
-  | 'Disconnected';
+  | 'Disconnected'
+  | 'Reconnecting';

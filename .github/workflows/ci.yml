@@ -8,6 +8,7 @@ on:
       - release/**
   # Presubmit CI on PRs to all branches.
   pull_request:
+    types: [labeled, unlabeled, opened, synchronize, reopened]
   # Allows you to run this workflow manually from the Actions tab.
   workflow_dispatch:
 
@@ -19,24 +20,6 @@ concurrency:
 permissions: read-all
 
 jobs:
-  files_changed:
-    name: Determine Changes
-    runs-on: ubuntu-latest
-    timeout-minutes: 3
-    # Map a step output to a job output
-    outputs:
-      storybook8_changes: ${{ steps.changes.outputs.storybook8 }}
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
-      - uses: actions/checkout@v4
-      - uses: dorny/paths-filter@v3
-        id: changes
-        with:
-          # token: ${{ secrets.GITHUB_TOKEN }}
-          filters: |
-            storybook8:
-              - 'packages/storybook8/**'
-
   # get matrix for ci-jobs
   get_matrix:
     name: Load CI Matrix Details
@@ -67,7 +50,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 2 # this job requires depth of 2 for access to diff the SHA for change file check
+          # This job requires to fetch the entire history to access to diff the SHA for change file check.
+          # Otherwise, it can lead to issues when trying to compare branches, as the fetched commits may not
+          # include the common ancestor between the branches.
+          fetch-depth: 0
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -75,7 +61,7 @@ jobs:
           node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -86,10 +72,8 @@ jobs:
         if: ${{ always() && steps.install-dependencies.outcome == 'failure' }}
         run: echo "Failed to install dependencies, please make sure you run `rush update:all-flavors` if dependencies were updated." && exit 1
       - name: Check the necessary change file has been submitted
-        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'do not need changelog')}}
-        run: |
-          git fetch origin main:main --depth=2
-          node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
+        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'does not need changelog')}}
+        run: node common/scripts/changelog/check.mjs ${{ github.event.pull_request.base.sha }} ${{ github.event.pull_request.head.sha }}
 
       # Perform lint check
       - name: Run linter
@@ -122,6 +106,9 @@ jobs:
       # Typescript version check
       - name: Typescript version compatibility check
         run: rush build --only @internal/check-typescript-regression
+      # Scripts tests
+      - name: Test scripts/ folder
+        run: rush test --only @internal/scripts
       # Ensure all downstream packlet versions are consitent with the base packlet version
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
@@ -144,8 +131,6 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -153,7 +138,7 @@ jobs:
           node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -232,15 +217,13 @@ jobs:
 
   in-progress-feature-validation:
     needs: get_matrix
-    name: Check if in progress feature can be removed separately
+    name: Check if in progress feature can be removed separately (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4
@@ -248,7 +231,7 @@ jobs:
           node-version: 'lts/*'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -293,14 +276,12 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -362,14 +343,12 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -431,14 +410,12 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -493,18 +470,18 @@ jobs:
     needs: get_matrix
     name: 'Components automation test (${{ matrix.flavor }})'
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -545,53 +522,20 @@ jobs:
               body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
-  build_storybook:
-    needs: get_matrix
-    name: Build Storybook
-    strategy:
-      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v3
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install Dependencies
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
-        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-      - name: Build
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rush build -o storybook
-      - name: Tests
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rushx test
-        working-directory: packages/storybook
-
   build_storybook8:
-    needs: [get_matrix, files_changed]
-    if: needs.files_changed.outputs.storybook8_changes == 'true'
-    name: Build Storybook v8
+    needs: get_matrix
+    name: Build Storybook v8 (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -602,7 +546,7 @@ jobs:
         run: rush install --max-install-attempts 3
       - name: Build
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rushx build-s8
+        run: rushx build
         working-directory: packages/storybook8
       - name: Tests
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
@@ -617,14 +561,12 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -651,14 +593,12 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -685,14 +625,12 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 'lts/*'
       - name: Restore node_modules from cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
@@ -721,8 +659,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -773,8 +709,6 @@ jobs:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
       - uses: actions/checkout@v4
-        with:
-          fetch-depth: 1
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
@@ -902,7 +836,7 @@ jobs:
     permissions:
       issues: write
     needs:
-      [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
+      [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook8]
     if: failure() && github.ref == 'refs/heads/main'
     name: File issue if main CI failed
     steps:

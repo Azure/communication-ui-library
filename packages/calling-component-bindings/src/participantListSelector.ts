@@ -11,23 +11,18 @@ import {
   CallingBaseSelectorProps
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { CallParticipantListParticipant } from '@internal/react-components';
-import { _isRingingPSTNParticipant, _updateUserDisplayNames } from './utils/callUtils';
+import { _convertParticipantState, _updateUserDisplayNames } from './utils/callUtils';
 import { memoizedConvertAllremoteParticipants } from './utils/participantListSelectorUtils';
-import { memoizedConvertToVideoTileReaction } from './utils/participantListSelectorUtils';
-/* @conditional-compile-remove(spotlight) */
-import { memoizedSpotlight } from './utils/participantListSelectorUtils';
+import { memoizedConvertToVideoTileReaction, memoizedSpotlight } from './utils/participantListSelectorUtils';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
 import { getLocalParticipantReactionState } from './baseSelectors';
-/* @conditional-compile-remove(spotlight) */
 import { getSpotlightCallFeature } from './baseSelectors';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { getParticipantCount } from './baseSelectors';
 import { isMicrosoftTeamsAppIdentifier, isPhoneNumberIdentifier } from '@azure/communication-common';
 import { ParticipantRole, SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(hide-attendee-name) */
 import { maskDisplayNameWithRole } from './utils/callUtils';
 import { getRemoteParticipantsExcludingConsumers } from './getRemoteParticipantsExcludingConsumers';
 
@@ -66,19 +61,18 @@ const convertRemoteParticipantsToParticipantListParticipants = (
            * We want to check the participant to see if they are a PSTN participant joining the call
            * and mapping their state to be 'Ringing'
            */
-          const state = _isRingingPSTNParticipant(participant);
-          let displayName = participant.displayName;
-          /* @conditional-compile-remove(hide-attendee-name) */
-          displayName = maskDisplayNameWithRole(
-            displayName,
+          const state = _convertParticipantState(participant);
+          const displayName = maskDisplayNameWithRole(
+            participant.displayName,
             localUserRole,
             participant.role,
             isHideAttendeeNamesEnabled
           );
           const remoteParticipantReaction = memoizedConvertToVideoTileReaction(participant.reactionState);
-          let spotlight = undefined;
-          /* @conditional-compile-remove(spotlight) */
-          spotlight = memoizedSpotlight(spotlightedParticipants, toFlatCommunicationIdentifier(participant.identifier));
+          const spotlight = memoizedSpotlight(
+            spotlightedParticipants,
+            toFlatCommunicationIdentifier(participant.identifier)
+          );
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             displayName,
@@ -138,10 +132,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getLocalParticipantRaisedHand,
     getRole,
     getParticipantCount,
-    /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     getLocalParticipantReactionState,
-    /* @conditional-compile-remove(spotlight) */
     getSpotlightCallFeature
   ],
   (
@@ -153,10 +145,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     raisedHand,
     role,
     partitipantCount,
-    /* @conditional-compile-remove(hide-attendee-name) */
     isHideAttendeeNamesEnabled,
     localParticipantReactionState,
-    /* @conditional-compile-remove(spotlight) */
     spotlightCallFeature
   ): {
     participants: CallParticipantListParticipant[];
@@ -166,11 +156,10 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     const localUserCanRemoveOthers = localUserCanRemoveOthersTrampoline(role);
     const participants = remoteParticipants
       ? convertRemoteParticipantsToParticipantListParticipants(
-          updateUserDisplayNamesTrampoline(Object.values(remoteParticipants)),
+          _updateUserDisplayNames(Object.values(remoteParticipants)),
           localUserCanRemoveOthers,
-          undefined || /* @conditional-compile-remove(hide-attendee-name) */ isHideAttendeeNamesEnabled,
-          undefined || /* @conditional-compile-remove(hide-attendee-name) */ role,
-          /* @conditional-compile-remove(spotlight) */
+          isHideAttendeeNamesEnabled,
+          role,
           spotlightCallFeature?.spotlightedParticipants
         )
       : [];
@@ -184,7 +173,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       // Local participant can never remove themselves.
       isRemovable: false,
       reaction: memoizedConvertToVideoTileReaction(localParticipantReactionState),
-      /* @conditional-compile-remove(spotlight) */
       spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId)
     });
     /* @conditional-compile-remove(total-participant-count) */
@@ -197,12 +185,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     };
   }
 );
-
-const updateUserDisplayNamesTrampoline = (remoteParticipants: RemoteParticipantState[]): RemoteParticipantState[] => {
-  /* @conditional-compile-remove(PSTN-calls) */
-  return _updateUserDisplayNames(remoteParticipants);
-  return remoteParticipants;
-};
 
 const localUserCanRemoveOthersTrampoline = (role?: string): boolean => {
   return role === 'Presenter' || role === 'Unknown' || role === undefined;

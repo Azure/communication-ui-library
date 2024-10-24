@@ -20,8 +20,7 @@ import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '.
 import { CallingTheme } from '../theming';
 import { RaisedHand } from '../types';
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
-/* @conditional-compile-remove(one-to-n-calling) */
-/* @conditional-compile-remove(PSTN-calls) */
+
 import { ParticipantState } from '../types';
 import {
   disabledVideoHint,
@@ -41,10 +40,14 @@ import { ReactionResources } from '../types/ReactionTypes';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
- * @beta
+ * @public
  */
 export interface VideoTileStrings {
+  /** Aria label for announcing the remote video tile drawer menu */
+  moreOptionsButtonAriaLabel: string;
+  /** String for displaying the Ringing of the remote participant */
   participantStateRinging: string;
+  /** String for displaying the Hold state of the remote participant */
   participantStateHold: string;
 }
 
@@ -145,15 +148,14 @@ export interface VideoTileProps {
   /** Whether the participant is raised hand. Show a indicator (border) and icon with order */
   raisedHand?: RaisedHand;
 
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   /**
    * The call connection state of the participant.
    * For example, `Hold` means the participant is on hold.
    */
   participantState?: ParticipantState;
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
+  /**
+   * Strings to override in the component.
+   */
   strings?: VideoTileStrings;
   /**
    * Display custom menu items in the VideoTile's contextual menu.
@@ -165,7 +167,6 @@ export interface VideoTileProps {
    * Callback triggered by video tile on touch and hold.
    */
   onLongTouch?: () => void;
-  /* @conditional-compile-remove(spotlight) */
   /**
    * If true, the video tile will show the spotlighted icon.
    */
@@ -214,6 +215,10 @@ const VideoTileMoreOptionsButton = (props: {
   contextualMenu?: IContextualMenuProps;
   canShowContextMenuButton: boolean;
 }): JSX.Element => {
+  const locale = useLocale();
+  const theme = useTheme();
+  const strings = { ...locale.strings.videoTile };
+
   const { contextualMenu, canShowContextMenuButton } = props;
   if (!contextualMenu) {
     return <></>;
@@ -224,7 +229,8 @@ const VideoTileMoreOptionsButton = (props: {
   return (
     <IconButton
       data-ui-id="video-tile-more-options-button"
-      styles={moreButtonStyles}
+      ariaLabel={strings?.moreOptionsButtonAriaLabel}
+      styles={moreButtonStyles(theme)}
       menuIconProps={videoTileMoreMenuIconProps}
       menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
       iconProps={{ iconName: optionsIcon }}
@@ -246,7 +252,6 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     initialsName,
     isMirrored,
     isMuted,
-    /* @conditional-compile-remove(spotlight) */
     isSpotlighted,
     isPinned,
     onRenderPlaceholder,
@@ -279,6 +284,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const observer = useRef(
     new ResizeObserver((entries): void => {
+      if (!entries[0]) {
+        return;
+      }
       const { width, height } = entries[0].contentRect;
       const personaCalcSize = Math.min(width, height) / 3;
       // we only want to set the persona size if it has changed
@@ -296,11 +304,10 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     return () => currentObserver.disconnect();
   }, [videoTileRef]);
 
-  /* @conditional-compile-remove(ppt-live) */
   // TODO: Remove after calling sdk fix the keybaord focus
   useEffect(() => {
-    // PPTLive display name is undefined, return as it is not screen share
-    if (displayName !== undefined) {
+    // PPTLive stream id is null
+    if (videoTileRef.current?.id) {
       return;
     }
     let observer: MutationObserver | undefined;
@@ -372,7 +379,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const ids = useIdentifiers();
 
   const canShowLabel = showLabel && (displayName || (showMuteIndicator && isMuted));
-  const participantStateString = participantStateStringTrampoline(props, locale);
+  const participantStateString = getParticipantStateString(props, locale);
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
@@ -415,11 +422,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         ) : (
           <Stack
             className={mergeStyles(videoContainerStyles, {
-              opacity:
-                participantStateString ||
-                /* @conditional-compile-remove(PSTN-calls) */ props.participantState === 'Idle'
-                  ? 0.4
-                  : 1
+              opacity: participantStateString || props.participantState === 'Idle' ? 0.4 : 1
             })}
           >
             {onRenderPlaceholder ? (
@@ -453,14 +456,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   <Icon iconName="VideoTileMicOff" />
                 </Stack>
               )}
-              {
-                /* @conditional-compile-remove(spotlight) */
-                isSpotlighted && (
-                  <Stack className={mergeStyles(iconContainerStyle)}>
-                    <Icon iconName="VideoTileSpotlighted" />
-                  </Stack>
-                )
-              }
+              {isSpotlighted && (
+                <Stack className={mergeStyles(iconContainerStyle)}>
+                  <Icon iconName="VideoTileSpotlighted" />
+                </Stack>
+              )}
               {isPinned && (
                 <Stack className={mergeStyles(iconContainerStyle)}>
                   <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
@@ -496,19 +496,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   );
 };
 
-const participantStateStringTrampoline = (props: VideoTileProps, locale: ComponentLocale): string | undefined => {
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
+const getParticipantStateString = (props: VideoTileProps, locale: ComponentLocale): string | undefined => {
   const strings = { ...locale.strings.videoTile, ...props.strings };
-  /* @conditional-compile-remove(one-to-n-calling) */
-  /* @conditional-compile-remove(PSTN-calls) */
   return props.participantState === 'EarlyMedia' || props.participantState === 'Ringing'
     ? strings?.participantStateRinging
     : props.participantState === 'Hold'
-    ? strings?.participantStateHold
-    : undefined;
-
-  return undefined;
+      ? strings?.participantStateHold
+      : undefined;
 };
 
 const tileInfoContainerTokens = {

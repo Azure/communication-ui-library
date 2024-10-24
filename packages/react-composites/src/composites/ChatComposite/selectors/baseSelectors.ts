@@ -3,8 +3,24 @@
 
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ChatAdapterState } from '../adapter/ChatAdapter';
+import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
 
-/**
- * @private
- */
+/** @private */
 export const getUserId = (state: ChatAdapterState): CommunicationIdentifierKind => state.userId;
+
+/** @private */
+export const getThreadId = (state: ChatAdapterState): string => state.thread.threadId;
+
+/** @private */
+export const getChatMessages = (state: ChatAdapterState): { [key: string]: ChatMessageWithStatus } =>
+  state.thread.chatMessages;
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/** @private */
+export const getTextOnlyChat = (state: ChatAdapterState): boolean | undefined =>
+  state.thread.properties?.messagingPolicy?.textOnlyChat;
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/** @private */
+export const getCreatedBy = (state: ChatAdapterState): CommunicationIdentifierKind | undefined =>
+  state.thread.properties?.createdBy;

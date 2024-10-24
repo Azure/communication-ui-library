@@ -31,6 +31,68 @@ test.describe('User Facing Diagnostics tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-ufd-network-reconnect-is-bad.png');
   });
 
+  test('Teams meeting phone info tile should be showing when network reconnect is bad ', async ({
+    page,
+    serverUrl
+  }) => {
+    const initialState = defaultMockCallAdapterState();
+    initialState.isTeamsMeeting = true;
+    if (initialState.call) {
+      initialState.call.meetingConference = {
+        conferencePhones: [
+          {
+            phoneNumber: '1234567890',
+            conferenceId: '',
+            isTollFree: false
+          }
+        ]
+      };
+    }
+    setNetworkDiagnostic(initialState, {
+      networkReconnect: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
+    });
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-hangup-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-teams-tile-when-ufd-network-reconnect-is-bad.png');
+  });
+
+  test('Tile notification in case of bad network connection ', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
+    setNetworkDiagnostic(initialState, {
+      networkReceiveQuality: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
+    });
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-hangup-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-ufd-network-quality-is-bad.png');
+  });
+
+  test('Teams meeting phone info notification in case of bad network connection ', async ({ page, serverUrl }) => {
+    const initialState = defaultMockCallAdapterState();
+    initialState.isTeamsMeeting = true;
+    console.log('zdor initial state ' + initialState);
+    if (initialState.call) {
+      console.log('zdor initial state call ' + initialState.call);
+      initialState.call.meetingConference = {
+        conferencePhones: [
+          {
+            phoneNumber: '1234567890',
+            conferenceId: '',
+            isTollFree: false
+          }
+        ]
+      };
+    }
+    setNetworkDiagnostic(initialState, {
+      networkReceiveQuality: { value: DiagnosticQuality.Bad, valueType: 'DiagnosticQuality' }
+    });
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    await waitForSelector(page, dataUiId('call-composite-hangup-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('tile-when-teams-meeting-ufd-network-quality-is-bad.png');
+  });
+
   test('Error bar should be showing when camera freezes ', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     setMediaDiagnostic(initialState, {

@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { concatStyleSets, Icon, IStyle, PartialTheme } from '@fluentui/react';
-/* @conditional-compile-remove(end-call-options) */
 import { IContextualMenuProps, mergeStyles } from '@fluentui/react';
 import React, { useCallback } from 'react';
 import { useLocale } from '../localization';
@@ -10,7 +9,6 @@ import { useTheme } from '../theming';
 import { CallingTheme, darkTheme, lightTheme } from '../theming/themes';
 import { isDarkThemed } from '../theming/themeUtils';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-/* @conditional-compile-remove(end-call-options) */
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
@@ -26,11 +24,9 @@ export interface EndCallButtonStrings {
   /** Tooltip content. */
   tooltipContent?: string;
 
-  /* @conditional-compile-remove(end-call-options) */
   /** Label for leave option when ending call */
   leaveOption?: string;
 
-  /* @conditional-compile-remove(end-call-options) */
   /** Label for end the whole call option when ending call */
   endCallOption?: string;
 }
@@ -47,7 +43,6 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
    */
   onHangUp?: (forEveryone?: boolean) => Promise<void>;
 
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Set this to true to make it a split button.
    * The split arrow will trigger a contextual menu to allow end for everyone or just for the user.
@@ -60,7 +55,6 @@ export interface EndCallButtonProps extends ControlBarButtonProps {
   strings?: EndCallButtonStrings;
 }
 
-/* @conditional-compile-remove(end-call-options) */
 const spacerClass = mergeStyles({
   width: 4
 });
@@ -73,7 +67,7 @@ const spacerClass = mergeStyles({
  * @public
  */
 export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
-  const { styles, /* @conditional-compile-remove(end-call-options) */ enableEndCallMenu, onHangUp } = props;
+  const { styles, enableEndCallMenu, onHangUp } = props;
 
   const localeStrings = useLocale().strings.endCallButton;
   const strings = { ...localeStrings, ...props.strings };
@@ -82,7 +76,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
   const isDarkTheme = isDarkThemed(theme);
   const componentStyles = concatStyleSets(
     isDarkTheme ? darkThemeCallButtonStyles : lightThemeCallButtonStyles,
-    /* @conditional-compile-remove(end-call-options) */ enableEndCallMenu ? menupButtonPadding : {},
+    enableEndCallMenu ? menupButtonPadding : {},
     styles ?? {}
   );
 
@@ -90,13 +84,12 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     (): JSX.Element => (
       <>
         <Icon iconName="ControlButtonEndCall" />
-        {/* @conditional-compile-remove(end-call-options) */ enableEndCallMenu && <span className={spacerClass} />}
+        {enableEndCallMenu && <span className={spacerClass} />}
       </>
     ),
-    [/* @conditional-compile-remove(end-call-options) */ enableEndCallMenu]
+    [enableEndCallMenu]
   );
 
-  /* @conditional-compile-remove(end-call-options) */
   const defaultMenuProps: IContextualMenuProps = {
     items: [
       {
@@ -131,8 +124,7 @@ export const EndCallButton = (props: EndCallButtonProps): JSX.Element => {
     <>
       <ControlBarButton
         {...props}
-        /* @conditional-compile-remove(end-call-options) */
-        menuProps={enableEndCallMenu ? defaultMenuProps : undefined}
+        menuProps={enableEndCallMenu ? defaultMenuProps : props.menuProps}
         onClick={onHangUp ? () => onHangUp() : props.onClick}
         styles={componentStyles}
         onRenderIcon={props.onRenderIcon ?? onRenderEndCallIcon}
@@ -223,7 +215,6 @@ const lightThemeCallButtonStyles = {
   }
 };
 
-/* @conditional-compile-remove(end-call-options) */
 const menupButtonPadding = {
   root: { padding: '0 0.75rem' }
 };

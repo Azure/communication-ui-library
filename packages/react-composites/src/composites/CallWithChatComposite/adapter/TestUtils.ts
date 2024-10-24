@@ -22,7 +22,6 @@ import {
   ConnectionState,
   ConnectionStateChangedEvent
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import {
   CommunicationTokenCredential,
@@ -44,7 +43,9 @@ import {
   CallErrors,
   CreateViewResult
 } from '@internal/calling-stateful-client';
-import EventEmitter from 'events';
+/* @conditional-compile-remove(breakout-rooms) */
+import { CallNotifications } from '@internal/calling-stateful-client';
+import { EventEmitter } from 'events';
 /**
  * @private
  */
@@ -85,12 +86,10 @@ export class MockCallClient {
     return {
       name: 'mockFeature',
       dispose: {},
-      /* @conditional-compile-remove(unsupported-browser) */
       getEnvironmentInfo: mockEnvInfo
     } as unknown as TFeature;
   }
 }
-/* @conditional-compile-remove(unsupported-browser) */
 const mockEnvInfo = (): Promise<EnvironmentInfo> => {
   return Promise.resolve({
     environment: {
@@ -172,7 +171,9 @@ export const createStatefulCallClientMock = (): StatefulCallClient => {
       incomingCalls: {},
       incomingCallsEnded: {},
       userId: userId,
-      latestErrors: {} as CallErrors
+      latestErrors: {} as CallErrors,
+      /* @conditional-compile-remove(breakout-rooms) */
+      latestNotifications: {} as CallNotifications
     })
   );
   return statefulCallClient;
@@ -211,7 +212,6 @@ export declare interface MockCallerInfo {
 
 function createMockCall(mockCallId: string): CallState {
   const call: CallState = {
-    /* @conditional-compile-remove(teams-identity-support) */
     kind: 'Call' as CallKind,
     id: mockCallId,
     callerInfo: {} as MockCallerInfo,
@@ -239,7 +239,8 @@ function createMockCall(mockCallId: string): CallState {
     endTime: undefined,
     dominantSpeakers: undefined,
     raiseHand: { raisedHands: [] },
-    /* @conditional-compile-remove(ppt-live) */
+    /* @conditional-compile-remove(together-mode) */
+    togetherMode: { stream: [] },
     pptLive: { isActive: false },
     localParticipantReaction: undefined,
     captionsFeature: {
@@ -250,7 +251,6 @@ function createMockCall(mockCallId: string): CallState {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false,
-      /* @conditional-compile-remove(acs-close-captions) */
       captionsKind: 'Captions'
     },
     transfer: {

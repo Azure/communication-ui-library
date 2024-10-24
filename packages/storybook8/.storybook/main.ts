@@ -4,21 +4,32 @@
 import { StorybookConfig } from '@storybook/react-webpack5';
 import path from 'path';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
+import remarkGfm from 'remark-gfm';
 
 const DEVELOPMENT_BUILD = process.env.NODE_ENV === 'development';
 console.log(`Creating storybook with internal-only stories: ${DEVELOPMENT_BUILD}`);
 // Include all stories that have .ts, .tsx or .mdx extensions in development builds.
-const storybookDevGlobPaths = ['../stories/**/*.stories.@(ts|tsx|mdx)'];
+const storybookDevGlobPaths = ['../stories/**/*.@(mdx)', '../stories/**/*.stories.@(ts|tsx)'];
 // In production builds include all stories except those in the INTERNAL/ folder
 const storybookProdGlobPaths = [
-  '../stories/!(INTERNAL)/**/*.stories.@(ts|tsx|mdx)', // includes all stories in folders, *excluding* anything in the INTERNAL folder
-  '../stories/*.stories.@(ts|tsx|mdx)' // includes all top level stories
+  '../stories/!(INTERNAL)/**/*.@(mdx)', // includes all stories in folders, *excluding* anything in the INTERNAL folder
+  '../stories/*.@(mdx)', // includes all top level stories
+  '../stories/!(INTERNAL)/**/*.stories.@(ts|tsx)', // includes all stories in folders, *excluding* anything in the INTERNAL folder
+  '../stories/*.stories.@(ts|tsx)' // includes all top level stories
 ];
 const storybookConfig: StorybookConfig = {
   addons: [
     '@storybook/addon-links',
     '@storybook/addon-controls',
-    '@storybook/addon-docs',
+    { name: '@storybook/addon-docs',
+      options: {
+        mdxPluginOptions: {
+          mdxCompileOptions: {
+            remarkPlugins: [remarkGfm],
+          },
+        },
+      },
+    },
     {
       name: '@storybook/addon-essentials',
       options: {
@@ -34,6 +45,11 @@ const storybookConfig: StorybookConfig = {
     name: '@storybook/react-webpack5',
     options: { }
   },
+  // Use this to remove stories if we don't want to show; name <NameOfStory>DocsOnly
+  managerHead: (head) => `
+  ${head}
+  <style>div[data-item-id$="-docs-only"] { display: none; }</style>
+  `,
   staticDirs: ['../public', '.'],
   stories: DEVELOPMENT_BUILD ? storybookDevGlobPaths : storybookProdGlobPaths,
   typescript: { reactDocgen: 'react-docgen' },
@@ -81,9 +97,14 @@ const storybookConfig: StorybookConfig = {
         },
     };
 
+    const txtRule = {
+        test: /\.txt$/,
+        use: 'raw-loader',
+    };
+
     return {
       ...config,
-      module: { ...config.module, rules: [...(config.module?.rules || []), tsRule] },
+      module: { ...config.module, rules: [...(config.module?.rules || []), tsRule, txtRule] },
     };
   },
 };

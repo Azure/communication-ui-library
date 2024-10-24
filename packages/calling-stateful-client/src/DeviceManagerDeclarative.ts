@@ -65,24 +65,29 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     this._deviceManager.on('selectedSpeakerChanged', this.selectedSpeakerChanged);
 
     // Subscribe to browser camera permissions changes
-    try {
-      navigator.permissions.query({ name: 'camera' as PermissionName }).then((cameraPermissions): void => {
-        cameraPermissions.addEventListener('change', this.permissionsApiStateChangeHandler);
-      });
-    } catch (e) {
-      console.info('Could not subscribe to Permissions API Camera changed events, API is not supported by browser', e);
-    }
+    if (navigator.permissions) {
+      try {
+        navigator.permissions.query({ name: 'camera' as PermissionName }).then((cameraPermissions): void => {
+          cameraPermissions.addEventListener('change', this.permissionsApiStateChangeHandler);
+        });
+      } catch (e) {
+        console.info(
+          'Could not subscribe to Permissions API Camera changed events, API is not supported by browser',
+          e
+        );
+      }
 
-    // Subscribe to browser microphone permissions changes
-    try {
-      navigator.permissions.query({ name: 'microphone' as PermissionName }).then((micPermissions): void => {
-        micPermissions.addEventListener('change', this.permissionsApiStateChangeHandler);
-      });
-    } catch (e) {
-      console.info(
-        'Could not subscribe to Permissions API Microphone changed events, API is not supported by browser',
-        e
-      );
+      // Subscribe to browser microphone permissions changes
+      try {
+        navigator.permissions.query({ name: 'microphone' as PermissionName }).then((micPermissions): void => {
+          micPermissions.addEventListener('change', this.permissionsApiStateChangeHandler);
+        });
+      } catch (e) {
+        console.info(
+          'Could not subscribe to Permissions API Microphone changed events, API is not supported by browser',
+          e
+        );
+      }
     }
   };
 
@@ -95,28 +100,30 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     this._deviceManager.off('selectedMicrophoneChanged', this.selectedMicrophoneChanged);
     this._deviceManager.off('selectedSpeakerChanged', this.selectedSpeakerChanged);
 
-    // Unsubscribe from browser camera permissions changes
-    try {
-      navigator.permissions.query({ name: 'camera' as PermissionName }).then((cameraPermissions): void => {
-        cameraPermissions.removeEventListener('change', this.permissionsApiStateChangeHandler);
-      });
-    } catch (e) {
-      console.info(
-        'Could not Unsubscribe to Permissions API Camera changed events, API is not supported by browser',
-        e
-      );
-    }
+    if (navigator.permissions) {
+      // Unsubscribe from browser camera permissions changes
+      try {
+        navigator.permissions.query({ name: 'camera' as PermissionName }).then((cameraPermissions): void => {
+          cameraPermissions.removeEventListener('change', this.permissionsApiStateChangeHandler);
+        });
+      } catch (e) {
+        console.info(
+          'Could not Unsubscribe to Permissions API Camera changed events, API is not supported by browser',
+          e
+        );
+      }
 
-    // Unsubscribe from browser microphone permissions changes
-    try {
-      navigator.permissions.query({ name: 'microphone' as PermissionName }).then((micPermissions): void => {
-        micPermissions.removeEventListener('change', this.permissionsApiStateChangeHandler);
-      });
-    } catch (e) {
-      console.info(
-        'Could not Unsubscribe to Permissions API Camera changed events, API is not supported by browser',
-        e
-      );
+      // Unsubscribe from browser microphone permissions changes
+      try {
+        navigator.permissions.query({ name: 'microphone' as PermissionName }).then((micPermissions): void => {
+          micPermissions.removeEventListener('change', this.permissionsApiStateChangeHandler);
+        });
+      } catch (e) {
+        console.info(
+          'Could not Unsubscribe to Permissions API Camera changed events, API is not supported by browser',
+          e
+        );
+      }
     }
   };
 
@@ -142,7 +149,9 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
 
   private audioDevicesUpdated = async (): Promise<void> => {
     this._context.setDeviceManagerMicrophones(dedupeById(await this._deviceManager.getMicrophones()));
-    this._context.setDeviceManagerSpeakers(dedupeById(await this._deviceManager.getSpeakers()));
+    if (this._deviceManager.isSpeakerSelectionAvailable) {
+      this._context.setDeviceManagerSpeakers(dedupeById(await this._deviceManager.getSpeakers()));
+    }
   };
 
   private selectedMicrophoneChanged = (): void => {
@@ -163,16 +172,18 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     // information about the device permission state, but is not supported yet in Firefox or Android WebView.
     // Note: It also has the limitation where it cannot detect if the device is blocked by the Operating System
     // permissions.
-    try {
-      const [cameraPermissions, micPermissions] = await Promise.all([
-        navigator.permissions.query({ name: 'camera' as PermissionName }),
-        navigator.permissions.query({ name: 'microphone' as PermissionName })
-      ]);
+    if (navigator.permissions) {
+      try {
+        const [cameraPermissions, micPermissions] = await Promise.all([
+          navigator.permissions.query({ name: 'camera' as PermissionName }),
+          navigator.permissions.query({ name: 'microphone' as PermissionName })
+        ]);
 
-      hasCameraPermission = cameraPermissions.state === 'granted';
-      hasMicPermission = micPermissions.state === 'granted';
-    } catch (e) {
-      console.info('Permissions API is not supported by browser', e);
+        hasCameraPermission = cameraPermissions.state === 'granted';
+        hasMicPermission = micPermissions.state === 'granted';
+      } catch (e) {
+        console.info('Permissions API is not supported by browser', e);
+      }
     }
 
     this._context.setDeviceManagerDeviceAccess({

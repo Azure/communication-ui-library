@@ -1,16 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(spotlight) */
 import { useMemo } from 'react';
-/* @conditional-compile-remove(spotlight) */
 import { CallCompositeStrings } from '../Strings';
-/* @conditional-compile-remove(spotlight) */
 import { PromptProps } from '../components/Prompt';
-/* @conditional-compile-remove(spotlight) */
 import { useLocale } from '../../localization';
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @internal
  */
@@ -43,7 +38,6 @@ export const useLocalSpotlightCallbacksWithPrompt = (
   }, [onStartLocalSpotlight, onStopLocalSpotlight, setIsPromptOpen, setPromptProps, strings]);
 };
 
-/* @conditional-compile-remove(spotlight) */
 const getStartLocalSpotlightWithPromptCallback = (
   onStartSpotlight: (userIds?: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
@@ -66,7 +60,6 @@ const getStartLocalSpotlightWithPromptCallback = (
   };
 };
 
-/* @conditional-compile-remove(spotlight) */
 const getStopLocalSpotlightWithPromptCallback = (
   onStopSpotlight: () => void,
   setIsPromptOpen: (isOpen: boolean) => void,
@@ -89,7 +82,6 @@ const getStopLocalSpotlightWithPromptCallback = (
   };
 };
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @internal
  */
@@ -122,7 +114,6 @@ export const useRemoteSpotlightCallbacksWithPrompt = (
   }, [onStartRemoteSpotlight, onStopRemoteSpotlight, setIsPromptOpen, setPromptProps, strings]);
 };
 
-/* @conditional-compile-remove(spotlight) */
 const getStartRemoteSpotlightWithPromptCallback = (
   onStartSpotlight: (userIds: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
@@ -148,7 +139,6 @@ const getStartRemoteSpotlightWithPromptCallback = (
   };
 };
 
-/* @conditional-compile-remove(spotlight) */
 const getStopRemoteSpotlightWithPromptCallback = (
   onStopSpotlight: (userIds: string[]) => void,
   setIsPromptOpen: (isOpen: boolean) => void,
@@ -175,7 +165,6 @@ const getStopRemoteSpotlightWithPromptCallback = (
   };
 };
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @internal
  */
@@ -202,7 +191,6 @@ export const useStopAllSpotlightCallbackWithPrompt = (
   }, [stopAllSpotlight, setIsPromptOpen, setPromptProps, strings]);
 };
 
-/* @conditional-compile-remove(spotlight) */
 const getStopAllSpotlightCallbackWithPromptCallback = (
   stopAllSpotlight: () => void,
   setIsPromptOpen: (isOpen: boolean) => void,

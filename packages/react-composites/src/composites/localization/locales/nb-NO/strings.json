@@ -20,11 +20,13 @@
     "complianceBannerTranscriptionStopped": "Transkripsjon er stoppet.",
     "configurationPageTitle": "Start en samtale",
     "copyInviteLinkButtonLabel": "Kopier invitasjonskobling",
+    "copyInviteLinkButtonActionedLabel": "Koblingen er kopiert",
     "copyInviteLinkActionedAriaLabel": "Invitasjonskobling er kopiert",
     "defaultPlaceHolder": "Velg et alternativ",
     "dismissSidePaneButtonLabel": "Lukk",
     "videoEffectsPaneTitle": "Effekter",
     "videoEffectsPaneBackgroundSelectionTitle": "Bakgrunn",
+    "videoEffectsPaneAriaLabel": "Videoeffekter-ruten",
     "configurationPageVideoEffectsButtonLabel": "Effekter",
     "unableToStartVideoEffect": "Kan ikke bruke videoeffekt.",
     "blurBackgroundEffectButtonLabel": "Uskarp bakgrunn",
@@ -134,6 +136,7 @@
     "dtmfDialerButtonTooltipOff": "Skjul numerisk tastatur",
     "dtmfDialerMoreButtonLabelOn": "Vis numerisk tastatur",
     "dtmfDialerMoreButtonLabelOff": "Skjul numerisk tastatur",
+    "phoneCallMoreButtonLabel": "Telefonsamtale",
     "spokenLanguageStrings": {
       "ar-ae": "Arabisk – De forente arabiske emirater",
       "ar-sa": "Arabisk – Saudi-Arabia",
@@ -335,11 +338,33 @@
     "leaveConfirmDialogContent": "Er du sikker på at du vil forlate samtalen?",
     "endCallConfirmDialogTitle": "Avslutt samtalen?",
     "endCallConfirmDialogContent": "Du avslutter møtet for alle.",
-    "invalidMeetingIdentifier": "Ugyldig møte-ID eller passord"
+    "invalidMeetingIdentifier": "Ugyldig møte-ID eller passord",
+    "pinParticipantMenuLabel": "Fest for meg",
+    "pinParticipantLimitReachedMenuLabel": "Fest (grensen er nådd)",
+    "unpinParticipantMenuLabel": "Løsne",
+    "pinParticipantMenuItemAriaLabel": "Fest for meg",
+    "unpinParticipantMenuItemAriaLabel": "Løsne",
+    "muteAllMenuLabel": "Demp alle",
+    "muteAllDialogTitle": "Vil du dempe alle?",
+    "muteAllDialogContent": "Dette demper alle i møtet, bortsett fra deg selv.",
+    "muteAllConfirmButtonLabel": "Demp alle",
+    "muteAllCancelButtonLabel": "Avbryt",
+    "joinBreakoutRoomButtonLabel": "Bli med i grupperommet",
+    "returnFromBreakoutRoomButtonLabel": "Forlat rom",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Forlat møte",
+    "breakoutRoomJoinedNotificationTitle": "Du har blitt med i grupperommet {roomName}",
+    "joinBreakoutRoomBannerTitle": "Grupperommet {roomName} er åpent",
+    "joinBreakoutRoomBannerButtonLabel": "Bli med",
+    "returnFromBreakoutRoomBannerTitle": "Gå tilbake til hovedmøte",
+    "returnFromBreakoutRoomBannerButtonLabel": "Bli med på nytt"
   },
   "chat": {
     "chatListHeader": "I denne chatten",
-    "uploadAttachment": "Last opp vedlegg"
+    "uploadAttachment": "Last opp vedlegg",
+    "uploadImageDataNotProvided": "Bildedata er ikke angitt.",
+    "uploadImageIsTooLarge": "Bildet er for stort. Velg en som er mindre enn {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Opplasting av .{imageExtension}-bilde er ikke tillatt.",
+    "uploadImageFailed": "Kan ikke laste opp bilde. Prøv på nytt senere."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -349,6 +374,7 @@
     "chatButtonTooltipOpen": "Vis chat",
     "chatPaneTitle": "Chat",
     "copyInviteLinkButtonLabel": "Kopier invitasjonskobling",
+    "copyInviteLinkButtonActionedLabel": "Koblingen er kopiert",
     "copyInviteLinkActionedAriaLabel": "Invitasjonskobling er kopiert",
     "dismissSidePaneButtonLabel": "Lukk",
     "moreDrawerAudioDeviceMenuTitle": "Lydenhet",
@@ -364,6 +390,8 @@
     "selectedPeopleButtonLabel": "Personer-knappen er valgt",
     "peopleButtonTooltipOpen": "Vis deltakere",
     "peopleButtonTooltipClose": "Skjul deltakere",
+    "peopleButtonTooltipOpenAriaLabel": "Personer-knapp, Vis deltakere",
+    "peopleButtonTooltipCloseAriaLabel": "Personer-knapp, Skjul deltakere",
     "peoplePaneSubTitle": "I denne samtalen",
     "peoplePaneTitle": "Personer",
     "pictureInPictureTileAriaLabel": "Videofeeder. Klikk for å gå tilbake til samtaleskjermen.",
@@ -377,6 +405,8 @@
     "dialpadModalAriaLabel": "Numerisk tastatur",
     "dialpadCloseModalButtonAriaLabel": "Lukk numerisk tastatur",
     "openDtmfDialpadLabel": "Vis numerisk tastatur",
-    "dtmfDialpadPlaceholderText": "Skriv inn nummer"
+    "dtmfDialpadPlaceholderText": "Skriv inn nummer",
+    "breakoutRoomChatPaneTitle": "Grupperomchat",
+    "chatContentSpinnerLabel": "Laster inn ..."
   }
 }

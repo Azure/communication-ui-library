@@ -121,29 +121,28 @@ export const createAnnouncementString = (
       }
     );
   }
-  const participantNames = sortedParticipants.map((p) => p.displayName ?? strings.unnamedParticipantString);
 
   switch (sortedParticipants.length) {
     case 1:
       return _formatString(
         direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
-        { displayName: participantNames[0] }
+        { displayName: sortedParticipants[0]?.displayName ?? strings.unnamedParticipantString }
       );
     case 2:
       return _formatString(
         direction === 'joined' ? strings.twoParticipantJoinedNoticeString : strings.twoParticipantLeftNoticeString,
         {
-          displayName1: participantNames[0],
-          displayName2: participantNames[1]
+          displayName1: sortedParticipants[0]?.displayName ?? strings.unnamedParticipantString,
+          displayName2: sortedParticipants[1]?.displayName ?? strings.unnamedParticipantString
         }
       );
     case 3:
       return _formatString(
         direction === 'joined' ? strings.threeParticipantJoinedNoticeString : strings.threeParticipantLeftNoticeString,
         {
-          displayName1: participantNames[0],
-          displayName2: participantNames[1],
-          displayName3: participantNames[2]
+          displayName1: sortedParticipants[0]?.displayName ?? strings.unnamedParticipantString,
+          displayName2: sortedParticipants[1]?.displayName ?? strings.unnamedParticipantString,
+          displayName3: sortedParticipants[2]?.displayName ?? strings.unnamedParticipantString
         }
       );
   }
@@ -159,9 +158,9 @@ export const createAnnouncementString = (
   const numberOfExtraParticipants = sortedParticipants.length - 3;
 
   return _formatString(direction === 'joined' ? strings.manyParticipantsJoined : strings.manyParticipantsLeft, {
-    displayName1: sortedParticipants[0].displayName ?? strings.unnamedParticipantString,
-    displayName2: sortedParticipants[1].displayName ?? strings.unnamedParticipantString,
-    displayName3: sortedParticipants[2].displayName ?? strings.unnamedParticipantString,
+    displayName1: sortedParticipants[0]?.displayName ?? strings.unnamedParticipantString,
+    displayName2: sortedParticipants[1]?.displayName ?? strings.unnamedParticipantString,
+    displayName3: sortedParticipants[2]?.displayName ?? strings.unnamedParticipantString,
     numOfParticipants: numberOfExtraParticipants.toString()
   });
 };
@@ -190,5 +189,7 @@ export const showDtmfDialer = (
       }
     });
   }
+  /* @conditional-compile-remove(dtmf-dialer-on-by-default) */
+  showDtmfDialer = true;
   return showDtmfDialer;
 };

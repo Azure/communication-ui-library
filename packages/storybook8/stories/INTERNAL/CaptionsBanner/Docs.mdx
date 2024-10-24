@@ -1,0 +1,16 @@
+import { _CaptionsBanner } from '@internal/react-components';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as CaptionsBannerStories from './index.stories';
+import CaptionsBannerExampleText from '!!raw-loader!./snippets/CaptionsBanner.snippet.tsx';
+
+<Meta of={CaptionsBannerStories} />
+
+# CaptionsBanner
+
+A component for displaying a CaptionsBanner with user icon, displayName and captions text.
+
+<Canvas of={CaptionsBannerStories.CaptionsBanner} source={{ code: CaptionsBannerExampleText }} />
+
+## Props
+
+<ArgTypes of={_CaptionsBanner} />

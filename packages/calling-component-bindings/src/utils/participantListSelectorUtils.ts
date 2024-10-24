@@ -2,14 +2,11 @@
 // Licensed under the MIT License.
 
 import { RemoteParticipantState } from '@azure/communication-calling';
-/* @conditional-compile-remove(spotlight) */
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { getIdentifierKind } from '@azure/communication-common';
 import { fromFlatCommunicationIdentifier, memoizeFnAll } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(spotlight) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallParticipantListParticipant } from '@internal/react-components';
-/* @conditional-compile-remove(spotlight) */
 import { Spotlight } from '@internal/react-components';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
@@ -26,7 +23,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
   raisedHand: RaisedHandState | undefined,
   localUserCanRemoveOthers: boolean,
   reaction: undefined | Reaction,
-  spotlight: undefined | /* @conditional-compile-remove(spotlight) */ Spotlight
+  spotlight: undefined | Spotlight
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
   return {
@@ -44,7 +41,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
         getIdentifierKind(identifier).kind === 'phoneNumber') &&
       localUserCanRemoveOthers,
     reaction,
-    /* @conditional-compile-remove(spotlight) */ spotlight
+    spotlight
   };
 };
 
@@ -62,7 +59,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     raisedHand: RaisedHandState | undefined,
     localUserCanRemoveOthers: boolean,
     reaction: undefined | Reaction,
-    spotlight: undefined | /* @conditional-compile-remove(spotlight) */ Spotlight
+    spotlight: undefined | Spotlight
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
       userId,
@@ -93,7 +90,6 @@ export const memoizedConvertToVideoTileReaction = memoizeOne(
   }
 );
 
-/* @conditional-compile-remove(spotlight) */
 /**
  * @private
  */

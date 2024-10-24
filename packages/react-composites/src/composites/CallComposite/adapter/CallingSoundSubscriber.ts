@@ -23,11 +23,12 @@ const CALL_TRANSFER_SUBCODE = 7015;
 export class CallingSoundSubscriber {
   private call: CallCommon;
   private soundsLoaded?: CallingSoundsLoaded;
-  private callee: CommunicationIdentifier[] | undefined;
+  private callees: CommunicationIdentifier[] | undefined;
+  public playingSounds: boolean = false;
 
-  constructor(call: CallCommon, callee?: CommunicationIdentifier[], sounds?: CallingSounds) {
+  constructor(call: CallCommon, callees?: CommunicationIdentifier[], sounds?: CallingSounds) {
     this.call = call;
-    this.callee = callee;
+    this.callees = callees;
     if (sounds) {
       this.soundsLoaded = this.loadSounds(sounds);
       this.subscribeCallSoundEvents();
@@ -36,23 +37,27 @@ export class CallingSoundSubscriber {
 
   private onCallStateChanged = (): void => {
     this.call.on('stateChanged', () => {
-      if (shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
+      if (shouldPlayRinging(this.call, this.callees) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = true;
         this.playSound(this.soundsLoaded.callRingingSound);
+        this.playingSounds = true;
       }
-      if (!shouldPlayRinging(this.call, this.callee) && this.soundsLoaded?.callRingingSound) {
+      if (!shouldPlayRinging(this.call, this.callees) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = false;
         this.soundsLoaded.callRingingSound.pause();
+        this.playingSounds = false;
       }
       if (this.call.state === 'Disconnected') {
         if (this.soundsLoaded?.callBusySound && this.call.callEndReason?.code === CALL_REJECTED_CODE) {
           this.playSound(this.soundsLoaded.callBusySound);
+          this.playingSounds = true;
         } else if (
           this.soundsLoaded?.callEndedSound &&
           this.call.callEndReason?.code === CALL_ENDED_CODE &&
           this.call.callEndReason?.subCode !== CALL_TRANSFER_SUBCODE
         ) {
           this.playSound(this.soundsLoaded.callEndedSound);
+          this.playingSounds = true;
         }
       }
     });
@@ -66,6 +71,21 @@ export class CallingSoundSubscriber {
     this.call?.off('stateChanged', this.onCallStateChanged);
     if (this.soundsLoaded?.callRingingSound) {
       this.soundsLoaded.callRingingSound.pause();
+    }
+  }
+
+  public pauseSounds(): void {
+    if (this.soundsLoaded?.callRingingSound) {
+      this.soundsLoaded.callRingingSound.pause();
+      this.playingSounds = false;
+    }
+    if (this.soundsLoaded?.callEndedSound) {
+      this.soundsLoaded.callEndedSound.pause();
+      this.playingSounds = false;
+    }
+    if (this.soundsLoaded?.callBusySound) {
+      this.soundsLoaded.callBusySound.pause();
+      this.playingSounds = false;
     }
   }
 
@@ -103,16 +123,15 @@ export class CallingSoundSubscriber {
  * Helper function to allow the calling sound subscriber to determine when to play the ringing
  * sound when making an outbound call.
  */
-const shouldPlayRinging = (call: CallCommon, callee?: CommunicationIdentifier[]): boolean => {
+const shouldPlayRinging = (call: CallCommon, callees?: CommunicationIdentifier[]): boolean => {
   if (
-    callee &&
-    callee.length >= 1 &&
-    !isPhoneNumberIdentifier(callee[0]) &&
+    callees &&
+    callees[0] &&
+    !isPhoneNumberIdentifier(callees[0]) &&
     (call.state === 'Ringing' || call.state === 'Connecting')
   ) {
     return true;
   } else {
     return false;
   }
-  return false;
 };

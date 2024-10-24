@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { PartialTheme } from '@fluentui/react';
+import { createTheme, PartialTheme } from '@fluentui/react';
 
 /**
  * Custom Fluent theme palette used by calling related components in this library.
@@ -63,12 +63,7 @@ export const lightTheme: PartialTheme & CallingTheme = {
   }
 };
 
-/**
- * Preset dark theme for components exported from this library.
- *
- * @public
- */
-export const darkTheme: PartialTheme & CallingTheme = {
+const partialDarkTheme: PartialTheme = {
   palette: {
     themePrimary: '#2899f5',
     themeLighterAlt: '#02060a',
@@ -94,6 +89,21 @@ export const darkTheme: PartialTheme & CallingTheme = {
     white: '#252423',
     whiteTranslucent40: 'rgba(0, 0, 0, 0.4)'
   },
+  semanticColors: {
+    errorText: '#f1707b'
+  }
+};
+
+/**
+ * Preset dark theme for components exported from this library.
+ *
+ * @public
+ */
+export const darkTheme: PartialTheme & CallingTheme = {
+  ...createTheme({
+    ...partialDarkTheme,
+    isInverted: true
+  }),
   callingPalette: {
     callRed: '#c4314b',
     callRedDark: '#a42e43',
@@ -101,9 +111,6 @@ export const darkTheme: PartialTheme & CallingTheme = {
     iconWhite: '#ffffff',
     raiseHandGold: '#eaa300',
     videoTileLabelBackgroundLight: 'rgba(37,36,35,0.8)'
-  },
-  semanticColors: {
-    errorText: '#f1707b'
   }
 };
 

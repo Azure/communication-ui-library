@@ -20,12 +20,14 @@ export interface SidePaneProps {
   mobileView?: boolean;
   maxWidth?: string;
   minWidth?: string;
+  ariaLabel?: string;
 
   // legacy arguments to be removed in breaking change
   disablePeopleButton?: boolean;
   disableChatButton?: boolean;
   onChatButtonClicked?: () => void;
   onPeopleButtonClicked?: () => void;
+  showAddPeopleButton?: boolean;
 }
 
 /** @private */
@@ -44,8 +46,8 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
   const paneStyles = renderingOnlyHiddenContent
     ? hiddenStyles
     : props.mobileView
-    ? availableSpaceStyles
-    : widthConstrainedStyles;
+      ? availableSpaceStyles
+      : widthConstrainedStyles;
 
   const Header =
     (overrideSidePane?.isActive ? overrideSidePane.renderer.headerRenderer : sidePaneRenderer?.headerRenderer) ??
@@ -86,29 +88,39 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
   const HeaderToRender =
     props.mobileView && (overrideSidePaneId === 'chat' || sidePaneRenderer?.id === 'people') ? LegacyHeader : Header();
 
-  const ContentRender = overrideSidePane?.isActive ? undefined : sidePaneRenderer?.contentRenderer;
-  const OverrideContentRender =
+  const ContentRenderer = overrideSidePane?.isActive ? undefined : sidePaneRenderer?.contentRenderer;
+  const OverrideContentRenderer =
     overrideSidePane?.isActive || overrideSidePane?.persistRenderingWhenClosed
       ? overrideSidePane.renderer.contentRenderer
       : undefined;
 
-  if (!ContentRender && !OverrideContentRender) {
+  if (!ContentRenderer && !OverrideContentRenderer) {
     return <EmptyElement />;
   }
 
   return (
-    <Stack verticalFill grow styles={paneStyles} data-ui-id="SidePane" tokens={props.mobileView ? {} : sidePaneTokens}>
+    <Stack
+      aria-label={props.ariaLabel}
+      data-is-focusable={!!props.ariaLabel}
+      role={props.ariaLabel ? 'navigation' : undefined}
+      tabIndex={props.ariaLabel ? 0 : undefined}
+      verticalFill
+      grow
+      styles={paneStyles}
+      data-ui-id="SidePane"
+      tokens={
+        props.mobileView || (!props.showAddPeopleButton && sidePaneRenderer?.id === 'people') ? {} : sidePaneTokens
+      }
+    >
       {HeaderToRender}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
         <Stack verticalFill styles={scrollableContainer}>
-          {ContentRender && (
+          {ContentRenderer && (
             <Stack.Item verticalFill styles={scrollableContainerContents}>
-              <Stack styles={containerContextStyles}>
-                <ContentRender />
-              </Stack>
+              <Stack styles={containerContextStyles}>{ContentRenderer?.()}</Stack>
             </Stack.Item>
           )}
-          {OverrideContentRender && (
+          {OverrideContentRenderer && (
             <Stack.Item
               verticalFill
               styles={
@@ -117,9 +129,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
                   : scrollableContainerContents
               }
             >
-              <Stack styles={containerContextStyles}>
-                <OverrideContentRender />
-              </Stack>
+              <Stack styles={containerContextStyles}>{OverrideContentRenderer?.()}</Stack>
             </Stack.Item>
           )}
         </Stack>

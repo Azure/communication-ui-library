@@ -1,0 +1,41 @@
+import { ParticipantItem } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as ParticipantItemStories from './index.stories';
+import CustomAvatarExampleText from '!!raw-loader!./snippets/CustomAvatar.snippet.tsx';
+import CustomIconExampleText from '!!raw-loader!./snippets/CustomIcon.snippet.tsx';
+import ParticipantItemExampleText from '!!raw-loader!./snippets/ParticipantItem.snippet.tsx';
+
+<Meta of={ParticipantItemStories} />
+
+# Participant Item
+
+Component to render a calling or chat participant. This component can display the participant's avatar, displayName, online presence as well as optional icons and context menu.
+
+## Import
+
+```ts
+import { ParticipantItem, ParticipantItemProps } from '@azure/communication-react';
+import { IContextualMenuItem, PersonaPresence } from '@fluentui/react';
+```
+
+## Usage
+
+Here is an example of how to use `ParticipantItem`. In this example, the `menuItems` property is used to add a context menu. The type of `menuItems` is an array of [IContextualMenuItem](https://developer.microsoft.com/en-us/fluentui#/controls/web/contextualmenu#IContextualMenuItem). Click on the rendered participant below to see the menu items.
+
+<Canvas of={ParticipantItemStories.ParticipantItemSnippetDocsOnly} source={{ code: ParticipantItemExampleText }} />
+
+## Custom Avatar
+
+To customize the avatar, use the `onRenderAvatar` property like in the example below. We recommend the avatar element to be within 32 by 32 pixels.
+
+<Canvas of={ParticipantItemStories.CustomAvatarSnippetDocsOnly} source={{ code: CustomAvatarExampleText }} />
+
+## Add Icon
+
+To add an icon, use the `onRenderIcon` property like in the example below.
+
+<Canvas of={ParticipantItemStories.CustomIconSnippetDocsOnly} source={{ code: CustomIconExampleText }} />
+
+## Props
+
+<ArgTypes of={ParticipantItem} />

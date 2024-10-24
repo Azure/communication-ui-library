@@ -36,12 +36,12 @@ describe('RichTextEditor should be shown correctly', () => {
       />
     );
     const richTextEditor = screen.queryByTestId('rich-text-editor-wrapper');
-    const richTextEditorRibbon = screen.queryByTestId('rich-text-editor-ribbon');
+    const richTextEditorRibbon = screen.queryByTestId('rich-text-editor-toolbar');
     expect(richTextEditor).not.toBeNull();
     expect(richTextEditorRibbon).toBeNull();
   });
 
-  test('Format bar should not be shown when showRichTextEditorFormatting is true', async () => {
+  test('Format bar should be shown when showRichTextEditorFormatting is true', async () => {
     render(
       <RichTextEditor
         onChange={() => {}}
@@ -51,7 +51,7 @@ describe('RichTextEditor should be shown correctly', () => {
       />
     );
     const richTextEditor = screen.queryByTestId('rich-text-editor-wrapper');
-    const richTextEditorRibbon = screen.queryByTestId('rich-text-editor-ribbon');
+    const richTextEditorRibbon = screen.queryByTestId('rich-text-editor-toolbar');
     expect(richTextEditor).not.toBeNull();
     expect(richTextEditorRibbon).not.toBeNull();
   });
@@ -65,15 +65,15 @@ describe('RichTextEditor should be shown correctly', () => {
         styles={{ minHeight: '1rem', maxHeight: '1rem' }}
       />
     );
-    const boldButton = screen.queryByLabelText('Bold');
-    const italicButton = screen.queryByLabelText('Italic');
-    const underlineButton = screen.queryByLabelText('Underline');
-    const bulletListButton = screen.queryByLabelText('Bulleted list');
-    const numberListButton = screen.queryByLabelText('Numbered list');
-    const indentDecreaseButton = screen.queryByLabelText('Decrease indent');
-    const indentIncreaseButton = screen.queryByLabelText('Increase indent');
+    const boldButton = screen.queryByTestId('rich-text-toolbar-bold-button');
+    const italicButton = screen.queryByTestId('rich-text-toolbar-italic-button');
+    const underlineButton = screen.queryByTestId('rich-text-toolbar-underline-button');
+    const bulletListButton = screen.queryByTestId('rich-text-toolbar-bullet-list-button');
+    const numberListButton = screen.queryByTestId('rich-text-toolbar-number-list-button');
+    const indentDecreaseButton = screen.queryByTestId('rich-text-toolbar-indent-decrease-button');
+    const indentIncreaseButton = screen.queryByTestId('rich-text-toolbar-indent-increase-button');
     const divider = container.querySelectorAll('[data-icon-name="RichTextDividerIcon"]');
-    const insertTableButton = screen.queryByLabelText('Insert table');
+    const insertTableButton = screen.queryByTestId('rich-text-toolbar-insert-table-button');
     expect(boldButton).not.toBeNull();
     expect(italicButton).not.toBeNull();
     expect(underlineButton).not.toBeNull();
@@ -106,14 +106,14 @@ describe('RichTextEditor should be shown correctly', () => {
     // fix for an issue when contentEditable is not set to RoosterJS for tests
     editorDiv?.setAttribute('contentEditable', 'true');
     if (editorDiv === null) {
-      fail('Editor div not found');
+      throw new Error('Editor div not found');
     }
     await userEvent.click(editorDiv);
     await waitFor(async () => {
       // Type into the input field
       await userEvent.keyboard('Test');
     });
-    const result = '<div style="background-color: transparent;">Test<br></div>';
+    const result = '<div>Test</div>';
     expect(value).toEqual(result);
   });
 });

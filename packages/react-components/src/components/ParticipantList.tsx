@@ -98,6 +98,8 @@ export type ParticipantListProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
+  /** Optional callback to render a context menu to mute a participant */
+  onMuteParticipant?: (userId: string) => Promise<void>;
   styles?: ParticipantListStyles;
   /** Optional value to determine if the tooltip should be shown for participants or not */
   showParticipantOverflowTooltip?: boolean;
@@ -109,6 +111,8 @@ export type ParticipantListProps = {
   strings?: ParticipantListStrings;
   /** Optional aria-labelledby prop that prefixes each ParticipantItem aria-label */
   participantAriaLabelledBy?: string;
+  /** List of pinned participants */
+  pinnedParticipants?: string[];
 };
 
 const onRenderParticipantDefault = (
@@ -121,7 +125,8 @@ const onRenderParticipantDefault = (
   onParticipantClick?: (participant?: ParticipantListParticipant) => void,
   showParticipantOverflowTooltip?: boolean,
   participantAriaLabelledBy?: string,
-  theme?: Theme
+  theme?: Theme,
+  pinnedParticipants?: string[]
 ): JSX.Element | null => {
   const callingParticipant = participant as CallParticipantListParticipant;
 
@@ -132,22 +137,20 @@ const onRenderParticipantDefault = (
 
   const menuItems = createParticipantMenuItems && createParticipantMenuItems(participant);
 
-  let displayName = participant.displayName;
-
-  /* @conditional-compile-remove(hide-attendee-name) */
-  const formatDisplayName = (): string | undefined => {
+  const formatDisplayName = (displayName?: string): string | undefined => {
     if (displayName && strings.attendeeRole) {
       return _formatString(displayName, { AttendeeRole: strings.attendeeRole });
     }
     return displayName;
   };
-  /* @conditional-compile-remove(hide-attendee-name) */
-  displayName = formatDisplayName();
+  const displayName = formatDisplayName(participant.displayName);
 
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
+  const isPinned = pinnedParticipants && pinnedParticipants?.includes(participant.userId);
+
   const onRenderIcon =
-    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand
+    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand || isPinned
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
             {callingParticipant.raisedHand && (
@@ -181,11 +184,9 @@ const onRenderParticipantDefault = (
             {callingParticipant.isMuted && (
               <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
             )}
-            {
-              /* @conditional-compile-remove(spotlight) */ callingParticipant.spotlight && (
-                <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />
-              )
-            }
+            {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
+
+            {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
           </Stack>
         )
       : () => null;
@@ -215,10 +216,8 @@ const onRenderParticipantDefault = (
       presence={presence}
       onRenderIcon={onRenderIcon}
       onRenderAvatar={onRenderAvatarWithRaiseHand}
-      onClick={() => onParticipantClick?.(participant)}
+      onClick={onParticipantClick ? () => onParticipantClick?.(participant) : undefined}
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
-      /* @conditional-compile-remove(one-to-n-calling) */
-      /* @conditional-compile-remove(PSTN-calls) */
       participantState={callingParticipant.state}
       ariaLabelledBy={participantAriaLabelledBy}
     />
@@ -293,7 +292,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
     totalParticipantCount,
     /* @conditional-compile-remove(total-participant-count) */
     strings,
-    participantAriaLabelledBy
+    participantAriaLabelledBy,
+    pinnedParticipants
   } = props;
 
   const theme = useTheme();
@@ -320,6 +320,10 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
           onClick: () => onRemoveParticipant(participant.userId),
           itemProps: {
             styles: props.styles?.participantItemStyles?.participantSubMenuItemsStyles
+          },
+          iconProps: {
+            iconName: 'ContextMenuRemoveParticipant',
+            styles: { root: { lineHeight: 0 } }
           },
           'data-ui-id': ids.participantListRemoveParticipantButton
         });
@@ -369,7 +373,8 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
               props.onParticipantClick,
               showParticipantOverflowTooltip,
               participantAriaLabelledBy,
-              theme
+              theme,
+              pinnedParticipants
             )
       )}
       {

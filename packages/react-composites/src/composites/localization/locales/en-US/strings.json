@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Close",
     "videoEffectsPaneTitle": "Effects",
     "videoEffectsPaneBackgroundSelectionTitle": "Background",
+    "videoEffectsPaneAriaLabel": "Video effects pane",
     "configurationPageVideoEffectsButtonLabel": "Effects",
     "unableToStartVideoEffect": "Unable to apply video effect.",
     "blurBackgroundEffectButtonLabel": "Blur",
@@ -135,6 +136,7 @@
     "dtmfDialerButtonTooltipOff": "Hide dialpad",
     "dtmfDialerMoreButtonLabelOn": "Show dialpad",
     "dtmfDialerMoreButtonLabelOff": "Hide dialpad",
+    "phoneCallMoreButtonLabel": "Phone Call",
     "spokenLanguageStrings": {
       "ar-ae": "Arabic - U.A.E.",
       "ar-sa": "Arabic - Saudi Arabia",
@@ -336,11 +338,33 @@
     "leaveConfirmDialogContent": "Are you sure you want to leave the call?",
     "endCallConfirmDialogTitle": "End the call?",
     "endCallConfirmDialogContent": "You'll end the call for everyone.",
-    "invalidMeetingIdentifier": "Invalid meeting ID or passcode"
+    "invalidMeetingIdentifier": "Invalid meeting ID or passcode",
+    "pinParticipantMenuLabel": "Pin for me",
+    "pinParticipantLimitReachedMenuLabel": "Pin (limit reached)",
+    "unpinParticipantMenuLabel": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin for me",
+    "unpinParticipantMenuItemAriaLabel": "Unpin",
+    "muteAllMenuLabel": "Mute all",
+    "muteAllDialogTitle": "Mute everyone?",
+    "muteAllDialogContent": "This will mute everyone in the meeting but you.",
+    "muteAllConfirmButtonLabel": "Mute all",
+    "muteAllCancelButtonLabel": "Cancel",
+    "joinBreakoutRoomButtonLabel": "Join breakout room",
+    "returnFromBreakoutRoomButtonLabel": "Leave room",
+    "leaveBreakoutRoomAndMeetingButtonLabel": "Leave meeting",
+    "breakoutRoomJoinedNotificationTitle": "You've joined Breakout room '{roomName}'",
+    "joinBreakoutRoomBannerTitle": "Breakout room '{roomName}' is open",
+    "joinBreakoutRoomBannerButtonLabel": "Join",
+    "returnFromBreakoutRoomBannerTitle": "Return to main meeting",
+    "returnFromBreakoutRoomBannerButtonLabel": "Rejoin"
   },
   "chat": {
     "chatListHeader": "In this chat",
-    "uploadAttachment": "Upload Attachment"
+    "uploadAttachment": "Upload Attachment",
+    "uploadImageDataNotProvided": "Image data is not provided.",
+    "uploadImageIsTooLarge": "Image is too large. Choose one that's less than {maxImageSize} MB.",
+    "uploadImageExtensionIsNotAllowed": "Uploading .{imageExtension} image is not allowed.",
+    "uploadImageFailed": "Unable to upload image. Please try again later."
   },
   "callWithChat": {
     "chatButtonLabel": "Chat",
@@ -381,6 +405,8 @@
     "dialpadModalAriaLabel": "Dialpad",
     "dialpadCloseModalButtonAriaLabel": "Close dialpad",
     "openDtmfDialpadLabel": "Show dialpad",
-    "dtmfDialpadPlaceholderText": "Enter number"
+    "dtmfDialpadPlaceholderText": "Enter number",
+    "breakoutRoomChatPaneTitle": "Breakout Room Chat",
+    "chatContentSpinnerLabel": "Loading..."
   }
 }

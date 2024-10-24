@@ -10,6 +10,7 @@ import {
 import { COMPONENT_LOCALE_EN_US } from '../../../localization/locales';
 import userEvent from '@testing-library/user-event';
 import { registerIcons } from '@fluentui/react';
+import { modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 
 const icons: {
   [key: string]: string | JSX.Element;
@@ -39,7 +40,7 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
   const onCancelMock = jest.fn();
   const onSubmitMock = jest.fn();
   const text = 'Hello World!';
-  const htmlContent = `<div style="background-color: transparent;">${text}</div>`;
+  const htmlContent = `<div>${text}</div>`;
   const messageId = '1';
 
   const localeStrings = COMPONENT_LOCALE_EN_US.strings;
@@ -83,7 +84,7 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
 
     const cancelButton = screen.queryByTestId(cancelButtonTitle);
     if (cancelButton === null) {
-      fail('Cancel button not found');
+      throw new Error('Cancel button not found');
     }
     await userEvent.click(cancelButton);
 
@@ -96,7 +97,7 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
     // fix for an issue when contentEditable is not set to RoosterJS for tests
     editorDiv?.setAttribute('contentEditable', 'true');
     if (editorDiv === null) {
-      fail('Editor div not found');
+      throw new Error('Editor div not found');
     }
     await userEvent.click(editorDiv);
     await waitFor(async () => {
@@ -106,16 +107,17 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
 
     const submitButton = screen.queryByTestId(submitButtonTitle);
     if (submitButton === null) {
-      fail('Submit button not found');
+      throw new Error('Submit button not found');
     }
     fireEvent.click(submitButton);
+    await modifyInlineImagesInContentString('<div>Hello World! Test</div>', []);
 
     expect(onSubmitMock).toHaveBeenCalledWith(
-      '<div style="background-color: transparent;">Hello World! Test</div>',
+      '<div>Hello World! Test</div>',
       // in beta, attachment metadata is undefined
       // because there is no attachment associated with this message
       // in stable, attachment metadata field do not exist
-      /* @conditional-compile-remove(attachment-upload) */ []
+      /* @conditional-compile-remove(file-sharing-acs) */ []
     );
   });
 });

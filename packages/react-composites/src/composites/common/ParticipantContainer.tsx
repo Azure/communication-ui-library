@@ -8,13 +8,11 @@ import {
   participantListStack,
   participantListStyle,
   participantListWrapper,
-  displayNameStyles
+  displayNameStyles,
+  headingMoreButtonStyles
 } from './styles/ParticipantContainer.styles';
-/* @conditional-compile-remove(spotlight) */
-import { headingMoreButtonStyles } from './styles/ParticipantContainer.styles';
 import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from '@internal/react-components';
-import { FocusZone, Stack, Text, useTheme } from '@fluentui/react';
-/* @conditional-compile-remove(spotlight) */
+import { FocusZone, Stack, Text, TooltipHost, TooltipOverflowMode, getId, useTheme } from '@fluentui/react';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { useId } from '@fluentui/react-hooks';
@@ -50,32 +48,35 @@ export const ParticipantListWithHeading = (props: {
   isMobile?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
-  /* @conditional-compile-remove(spotlight) */
   headingMoreButtonAriaLabel?: string;
-  /* @conditional-compile-remove(spotlight) */
   onClickHeadingMoreButton?: () => void;
-  /* @conditional-compile-remove(spotlight) */
   headingMoreButtonMenuProps?: IContextualMenuProps;
+  pinnedParticipants?: string[];
 }): JSX.Element => {
   const {
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItems,
     title,
     participantListProps,
-    /* @conditional-compile-remove(spotlight) */ headingMoreButtonAriaLabel,
-    /* @conditional-compile-remove(spotlight) */ onClickHeadingMoreButton,
-    /* @conditional-compile-remove(spotlight) */ headingMoreButtonMenuProps
+    headingMoreButtonAriaLabel,
+    onClickHeadingMoreButton,
+    headingMoreButtonMenuProps,
+    pinnedParticipants
   } = props;
   const subheadingUniqueId = useId();
   const theme = useTheme();
   /* @conditional-compile-remove(total-participant-count) */
   const totalParticipantCount = participantListProps.totalParticipantCount;
+  const tooltipId: string = getId('text-tooltip');
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
-        color: theme.palette.neutralSecondary,
-        margin: props.isMobile ? '0.5rem 1rem' : '0.5rem',
-        fontSize: theme.fonts.smallPlus.fontSize
+        h2: {
+          color: theme.palette.neutralSecondary,
+          margin: props.isMobile ? '0.5rem 1rem' : '0.5rem',
+          fontSize: theme.fonts.smallPlus.fontSize,
+          fontWeight: 'normal'
+        }
       }
     }),
     [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize, props.isMobile]
@@ -85,30 +86,32 @@ export const ParticipantListWithHeading = (props: {
     <Stack className={participantListStack}>
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
         <Stack.Item grow styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
-          {paneTitleTrampoline(
-            title ?? '',
-            /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
-          )}
+          <h2>
+            {paneTitleTrampoline(
+              title ?? '',
+              /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
+            )}
+          </h2>
         </Stack.Item>
-        {
-          /* @conditional-compile-remove(spotlight) */ (onClickHeadingMoreButton ||
-            (headingMoreButtonMenuProps?.items && headingMoreButtonMenuProps.items.length > 0)) && (
-            <Stack.Item>
-              <DefaultButton
-                ariaLabel={headingMoreButtonAriaLabel}
-                styles={headingMoreButtonStyles(theme)}
-                iconProps={{ iconName: 'PeoplePaneMoreButton' }}
-                onClick={onClickHeadingMoreButton ? () => onClickHeadingMoreButton() : undefined}
-                menuProps={props.onClickHeadingMoreButton ? undefined : props.headingMoreButtonMenuProps}
-                onRenderMenuIcon={() => null}
-              />
-            </Stack.Item>
-          )
-        }
+        {(onClickHeadingMoreButton ||
+          (headingMoreButtonMenuProps?.items && headingMoreButtonMenuProps.items.length > 0)) && (
+          <Stack.Item>
+            <DefaultButton
+              data-ui-id="people-pane-header-more-button"
+              ariaLabel={headingMoreButtonAriaLabel}
+              styles={headingMoreButtonStyles(theme)}
+              iconProps={{ iconName: 'PeoplePaneMoreButton' }}
+              onClick={onClickHeadingMoreButton ? () => onClickHeadingMoreButton() : undefined}
+              menuProps={props.onClickHeadingMoreButton ? undefined : props.headingMoreButtonMenuProps}
+              onRenderMenuIcon={() => null}
+            />
+          </Stack.Item>
+        )}
       </Stack>
       <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
         <ParticipantList
           {...participantListProps}
+          pinnedParticipants={pinnedParticipants}
           styles={props.isMobile ? participantListMobileStyle : participantListStyle}
           onRenderAvatar={(userId, options) => (
             <>
@@ -121,9 +124,13 @@ export const ParticipantListWithHeading = (props: {
                 allowActiveBorder={true}
               />
               {options?.text && (
-                <Text nowrap={true} styles={displayNameStyles}>
-                  {options?.text}
-                </Text>
+                <div style={displayNameStyles}>
+                  <TooltipHost content={options?.text} id={tooltipId} overflowMode={TooltipOverflowMode.Parent}>
+                    <Text nowrap={false} aria-labelledby={tooltipId}>
+                      {options?.text}
+                    </Text>
+                  </TooltipHost>
+                </div>
               )}
             </>
           )}

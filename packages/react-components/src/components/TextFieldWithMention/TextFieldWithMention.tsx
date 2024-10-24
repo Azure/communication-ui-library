@@ -205,7 +205,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       // because its order depends on mouse events not selection.
       setShouldHandleOnMouseDownDuringSelect(false);
 
-      if (isEnterKeyEventFromCompositionSession(ev)) {
+      if (isEnterKeyEventFromCompositionSession(ev.nativeEvent)) {
         return;
       }
       let isActiveSuggestionIndexUpdated = false;
@@ -679,7 +679,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
       return undefined;
     }
     const currentMention = mentionSuggestions[activeSuggestionIndex ?? 0];
-    return currentMention?.displayText.length > 0
+    return currentMention && currentMention?.displayText.length > 0
       ? currentMention?.displayText
       : localeStrings.participantItem.displayNamePlaceholder;
   }, [activeSuggestionIndex, mentionSuggestions, localeStrings.participantItem.displayNamePlaceholder]);

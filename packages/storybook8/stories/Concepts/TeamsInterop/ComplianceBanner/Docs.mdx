@@ -1,0 +1,26 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+import CallComponentText from '!!raw-loader!./snippets/CallComponent.snippet.tsx';
+import ComplianceBannerText from '!!raw-loader!./snippets/ComplianceBanner.snippet.tsx';
+
+<Meta title="Concepts/Teams Interop/Compliance Banner" />
+
+# _Teams Interop_
+
+Azure Communication Services applications can inter-operate with Microsoft Teams. There are some additional considerations when connecting to a Teams meeting.
+
+---
+
+## Compliance Banner
+
+### Compliance notifications for recording and transcription
+
+This example shows how you might notify your users when a Teams meeting is being recorded or transcribed. Here, a MessageBar is optionally added to the video frame:
+
+### Create Compliance Banner
+
+<Source code={ComplianceBannerText} />
+
+### Use Compliance Banner
+
+<Source code={CallComponentText} />

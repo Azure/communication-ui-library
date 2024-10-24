@@ -1,0 +1,37 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+import { ControlBarExample } from './ControlBar.story';
+import { VideoTileExample } from './VideoTile.story';
+
+import ControlBarExampleText from '!!raw-loader!./snippets/StylingControlBar.snippet.tsx';
+import VideoTileExampleText from '!!raw-loader!./snippets/StylingVideoTile.snippet.tsx';
+
+<Meta title="Concepts/Styling" />
+
+# Styling
+
+The ability to style components using custom CSS is an important feature of Azure Communication UI Library.
+All the UI Components have complete CSS support and provide complex styling capabilities.
+
+## Overview
+
+- UI Components expose a `prop` named `styles` that accepts an Object containing custom CSS for the component root as well as it's child components.
+
+- Users can always provide the `root` property in `styles` object and apply custom CSS to the component root.
+
+- Properties in `styles` object will vary from component to component.
+
+## Example - ControlBar
+
+Let's style the `ControlBar` component and components inside it using the `root` styles property.
+
+<Source code={ControlBarExampleText} />
+<ControlBarExample />
+
+## Example - VideoTile
+
+Let's style the `VideoTile` component.
+`VideoTile` component allows you to style its `root` element, the `Video Container` and the `Overlay Container` (Content rendered in front of the Video Container).
+
+<Source code={VideoTileExampleText} />
+<VideoTileExample />

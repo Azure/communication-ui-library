@@ -1,6 +1,6 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.112.2",
+  "rushVersion": "5.136.0",
   "pnpmVersion": "8.11.0",
   "nodeSupportedVersionRange": ">=16.19.0 <21.0.0",
   "ensureConsistentVersions": true,
@@ -41,6 +41,11 @@
       "reviewCategory": "internal"
     },
     {
+      "packageName": "@internal/acs-ui-javascript-loaders",
+      "projectFolder": "packages/acs-ui-javascript-loaders",
+      "reviewCategory": "internal"
+    },
+    {
       "packageName": "@internal/chat-stateful-client",
       "projectFolder": "packages/chat-stateful-client",
       "reviewCategory": "internal"
@@ -76,6 +81,11 @@
       "reviewCategory": "sample"
     },
     {
+      "packageName": "@internal/callingstateful",
+      "projectFolder": "samples/CallingStateful",
+      "reviewCategory": "sample"
+    },
+    {
       "packageName": "@internal/component-examples",
       "projectFolder": "samples/ComponentExamples",
       "reviewCategory": "sample"
@@ -94,11 +104,6 @@
       "packageName": "@internal/sample-static-html-composites",
       "projectFolder": "samples/StaticHtmlComposites",
       "reviewCategory": "sample"
-    },
-    {
-      "packageName": "@internal/storybook",
-      "projectFolder": "packages/storybook",
-      "reviewCategory": "tools"
     },
     {
       "packageName": "@internal/storybook8",
@@ -128,6 +133,11 @@
     {
       "packageName": "@internal/fake-backends",
       "projectFolder": "packages/fake-backends",
+      "reviewCategory": "tools"
+    },
+    {
+      "packageName": "@internal/eslint-plugin-custom-rules",
+      "projectFolder": "tools/custom-eslint-rules",
       "reviewCategory": "tools"
     }
   ]

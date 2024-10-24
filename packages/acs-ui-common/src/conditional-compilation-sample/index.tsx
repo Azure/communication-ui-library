@@ -134,8 +134,8 @@ export type MyTrutySelector<J> = J extends number ? true : /* @conditional-compi
 export type MyNestedSelector<Q, R> = Q extends number
   ? /* @conditional-compile-remove(demo) */ true
   : R extends number
-  ? /* @conditional-compile-remove(demo) */ true
-  : false;
+    ? /* @conditional-compile-remove(demo) */ true
+    : false;
 /**
  * Add a parameter to an existing function
  *
@@ -303,14 +303,12 @@ export const myExtensibleSelector: MyExtensibleSelector = utils.dummyCreateSelec
  */
 import { AreEqual } from '../areEqual';
 
-export type GetSelector<Component extends (props: unknown) => JSX.Element | undefined> = AreEqual<
-  Component,
-  typeof utils.StableComponentWithSelector
-> extends true
-  ? utils.StableSelector
-  : AreEqual<Component, typeof utils.BetaComponentWithSelector> extends true
-  ? /* @conditional-compile-remove(demo) */ utils.BetaSelector
-  : undefined;
+export type GetSelector<Component extends (props: unknown) => JSX.Element | undefined> =
+  AreEqual<Component, typeof utils.StableComponentWithSelector> extends true
+    ? utils.StableSelector
+    : AreEqual<Component, typeof utils.BetaComponentWithSelector> extends true
+      ? /* @conditional-compile-remove(demo) */ utils.BetaSelector
+      : undefined;
 
 /**
  * Adding a new feature conditionally often involves a few operations together:

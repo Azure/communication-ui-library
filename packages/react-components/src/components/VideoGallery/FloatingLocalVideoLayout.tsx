@@ -23,7 +23,11 @@ import {
 } from './styles/FloatingLocalVideo.styles';
 import { innerLayoutStyle, layerHostStyle, rootLayoutStyle } from './styles/FloatingLocalVideoLayout.styles';
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
-import { MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY, useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
+import {
+  MAX_GRID_PARTICIPANTS_NOT_LARGE_GALLERY,
+  renderTiles,
+  useOrganizedParticipants
+} from './utils/videoGalleryLayoutUtils';
 import { OverflowGallery } from './OverflowGallery';
 import { LocalVideoTileSize } from '../VideoGallery';
 
@@ -68,7 +72,7 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
     overflowGalleryPosition = 'horizontalBottom',
     pinnedParticipantUserIds = [],
     localVideoTileSize,
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
+    spotlightedParticipantUserIds
   } = props;
 
   const theme = useTheme();
@@ -91,25 +95,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       : childrenPerPage.current,
     pinnedParticipantUserIds,
     layout: 'floatingLocalVideo',
-    /* @conditional-compile-remove(spotlight) */ spotlightedParticipantUserIds
+    spotlightedParticipantUserIds
   });
-
-  let activeVideoStreams = 0;
-
-  const gridTiles = gridParticipants.map((p) => {
-    return onRenderRemoteParticipant(
-      p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable && activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
-    );
-  });
-
-  const shouldFloatLocalVideo = remoteParticipants.length > 0;
-
-  if (!shouldFloatLocalVideo && localVideoComponent) {
-    gridTiles.push(localVideoComponent);
-  }
 
   /**
    * instantiate indexes available to render with indexes available that would be on first page
@@ -120,17 +107,20 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
    */
   const [indexesToRender, setIndexesToRender] = useState<number[]>([]);
 
-  const overflowGalleryTiles = overflowGalleryParticipants.map((p, i) => {
-    return onRenderRemoteParticipant(
-      p,
-      maxRemoteVideoStreams && maxRemoteVideoStreams >= 0
-        ? p.videoStream?.isAvailable &&
-            indexesToRender &&
-            indexesToRender.includes(i) &&
-            activeVideoStreams++ < maxRemoteVideoStreams
-        : p.videoStream?.isAvailable
-    );
-  });
+  const { gridTiles, overflowGalleryTiles } = renderTiles(
+    gridParticipants,
+    onRenderRemoteParticipant,
+    maxRemoteVideoStreams,
+    indexesToRender,
+    overflowGalleryParticipants,
+    dominantSpeakers
+  );
+
+  const shouldFloatLocalVideo = remoteParticipants.length > 0;
+
+  if (!shouldFloatLocalVideo && localVideoComponent) {
+    gridTiles.push(localVideoComponent);
+  }
 
   const layerHostId = useId('layerhost');
 
@@ -142,8 +132,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
       return isNarrow
         ? SMALL_FLOATING_MODAL_SIZE_REM
         : isShort
-        ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
-        : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
+          ? SHORT_VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM
+          : VERTICAL_GALLERY_FLOATING_MODAL_SIZE_REM;
     }
     if ((overflowGalleryTiles.length > 0 || screenShareComponent) && overflowGalleryPosition === 'horizontalBottom') {
       return localVideoTileSize === '16:9' || !isNarrow ? LARGE_FLOATING_MODAL_SIZE_REM : SMALL_FLOATING_MODAL_SIZE_REM;

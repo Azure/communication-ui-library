@@ -1,9 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentUploadTask, AttachmentSelectionHandler, AttachmentActionHandler } from '@internal/react-components';
+/* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata, AttachmentMetadataInProgress, AttachmentProgressError } from '@internal/acs-ui-common';
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @internal
  */
@@ -23,13 +26,15 @@ export enum AttachmentUploadActionType {
   Clear = 'clear'
 }
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
-interface Action {
+export interface Action {
   type: AttachmentUploadActionType;
 }
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
@@ -38,54 +43,61 @@ interface SetAction extends Action {
   newUploads: AttachmentUpload[];
 }
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
-interface ProgressAction extends Action {
+export interface ProgressAction extends Action {
   type: AttachmentUploadActionType.Progress;
   taskId: string;
   progress: number;
 }
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
-interface CompleteAction extends Action {
+export interface CompleteAction extends Action {
   type: AttachmentUploadActionType.Completed;
   taskId: string;
   id: string;
   url: string;
 }
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
-interface FailedAction extends Action {
+export interface FailedAction extends Action {
   type: AttachmentUploadActionType.Failed;
   taskId: string;
   message: string;
 }
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
-interface RemoveAction extends Action {
+export interface RemoveAction extends Action {
   type: AttachmentUploadActionType.Remove;
   id: string;
 }
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
-interface ClearAction extends Action {
+export interface ClearAction extends Action {
   type: AttachmentUploadActionType.Clear;
 }
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @private
  */
 type Actions = SetAction | ProgressAction | CompleteAction | FailedAction | RemoveAction | ClearAction;
 
+/* @conditional-compile-remove(file-sharing-acs) */
 /**
  * @internal
  */
@@ -131,6 +143,7 @@ export const AttachmentUploadReducer = (state: AttachmentUpload[], action: Actio
   }
 };
 
+/* @conditional-compile-remove(file-sharing-acs) */
 export type {
   AttachmentMetadata,
   AttachmentSelectionHandler,
