@@ -5,7 +5,7 @@ import { Stack } from '@fluentui/react';
 import { RTTModal } from '@internal/react-components';
 import React from 'react';
 
-export const RTTModalStory = (args: any): JSX.Element => {
+export const RTTModalStory = (): JSX.Element => {
   return (
     <Stack>
       <RTTModal

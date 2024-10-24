@@ -5,7 +5,7 @@ import { mergeStyles, PrimaryButton, Stack } from '@fluentui/react';
 import { RTTModal as RTTModalExample } from '@internal/react-components';
 import React, { useState } from 'react';
 
-const RTTModalStory = (args: any): JSX.Element => {
+const RTTModalStory = (): JSX.Element => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   return (
