@@ -1,7 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { DeviceManagerState, RemoteParticipantState, StatefulCallClient } from '@internal/calling-stateful-client';
+import {
+  CallClientState,
+  CallState,
+  DeviceManagerState,
+  RemoteParticipantState,
+  StatefulCallClient
+} from '@internal/calling-stateful-client';
 import {
   CallState as CallStatus,
   EnvironmentInfo,
@@ -191,4 +197,19 @@ export const createLocalVideoStream = async (callClient: StatefulCallClient): Pr
     return new LocalVideoStream(camera);
   }
   return undefined;
+};
+
+/**
+ * Get call state if existing, if not and the call not exists in ended record return undefined, if it never exists, throw an error.
+ * @private
+ */
+export const getCallStateIfExist = (state: CallClientState, callId: string): CallState | undefined => {
+  if (!state.calls[callId]) {
+    // If call has ended, we don't need to throw an error.
+    if (state.callsEnded[callId]) {
+      return undefined;
+    }
+    throw new Error(`Call Not Found: ${callId}`);
+  }
+  return state.calls[callId];
 };
