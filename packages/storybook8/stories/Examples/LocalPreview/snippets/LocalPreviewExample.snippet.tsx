@@ -84,7 +84,7 @@ const CameraOffPlaceholder = (): JSX.Element => {
  */
 const LocalVideoElement = (): JSX.Element => {
   const videoStreamElement = useVideoStreams(1)[0];
-  return <StreamMedia videoStreamElement={videoStreamElement} />;
+  return videoStreamElement ? <StreamMedia videoStreamElement={videoStreamElement} /> : <></>;
 };
 
 const localPreviewContainerMergedStyles = (theme: ITheme): string =>

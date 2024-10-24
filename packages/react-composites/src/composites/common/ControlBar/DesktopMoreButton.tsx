@@ -420,6 +420,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       strings={moreButtonStrings}
       menuIconProps={{ hidden: true }}
       menuProps={{
+        shouldFocusOnContainer: false,
         items: moreButtonContextualMenuItems,
         calloutProps: {
           preventDismissOnEvent: _preventDismissOnEvent
