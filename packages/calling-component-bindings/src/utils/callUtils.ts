@@ -146,7 +146,7 @@ export const isACSCallParticipants = (
 
 /**
  * @private
- * Checks whether the user is a 'Ringing' PSTN user.
+ * Checks whether the user is a 'Ringing' PSTN user or in a 'Connecting' state.
  */
 export const _convertParticipantState = (participant: RemoteParticipantState): ParticipantConnectionState => {
   /* @conditional-compile-remove(remote-ufd) */
