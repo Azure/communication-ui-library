@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { ISpinnerStyles, mergeStyles, Theme } from '@fluentui/react';
-import { isDarkThemed } from '../../theming/themeUtils';
 
 /**
  * @private
