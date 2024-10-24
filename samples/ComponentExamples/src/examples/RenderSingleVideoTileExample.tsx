@@ -28,12 +28,12 @@ const localStreamSelector = (
   // LocalStreamState is different from stream instance in onStartLocalVideo -
   // the former comes from CallClientState - which is designed for rendering
   // the latter directly comes from call instance - which is for sending request
-  const localStreamState = state.calls[callId].localVideoStreams.find((item) => item.mediaStreamType === 'Video');
+  const localStreamState = state.calls[callId]?.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
   return localStreamState;
 };
 
 const callStatusSelector = (state: CallClientState, { callId }: { callId: string }): CallStatus => {
-  return state.calls[callId].state;
+  return state.calls[callId]?.state ?? 'None';
 };
 
 // It is recommended that use usePropsFor(VideoGallery) + VideoGallery to render videos all together
