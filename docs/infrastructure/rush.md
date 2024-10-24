@@ -47,7 +47,7 @@ Ultimately with Rush we could get all the features we were looking for in our re
 
 For those familiar with running `npm` commands or `yarn` commands, we have a series of `rush` commands that replace most that should be run instead:
 
-* `npm install` --> `rush update`
+* `npm install` --> `rush update:beta` or `rush update:stable`
 * `npm install "package"` --> `rush add -p "package"` (add `--dev` to save to dev dependencies)
 * `npm run build` --> `rush build` (from anywhere), `rush build -t "package-name"` (from anywhere) or `rushx build` (from a package or sample directory)
 * `npm run start` --> `rushx start`
@@ -56,8 +56,8 @@ For those familiar with running `npm` commands or `yarn` commands, we have a ser
 
 Other useful commands
 
-* `rush update` -- run this anytime you pull new changes that have changed any package.json
-* `rush update -p` -- performs a purge before update
+* `rush update:beta` or `rush update:stable` -- run this anytime you pull new changes that have changed any package.json
+* `rush update:beta -p` -- performs a purge before update
 * `rush rebuild` -- performs a full build instead of an incremental build
 * `rush lint` -- perform lint across the whole repo
 * `rush changelog` -- generate change file for the changelog
@@ -67,7 +67,7 @@ Short commands
 * `rush sb` --> `rush switch-flavor:beta`
 * `rush sbr` --> `rush switch-flavor:beta-release`
 * `rush ss` --> `rush switch-flavor:stable`
-* `rush u` --> `rush update`
+* `rush ub` --> `rush update:beta`
 * `rush us` --> `rush update:stable`
 * `rush baf` --> `rush build:all-flavours`
 * `rush bapi` --> `rush build-api:all-flavors`

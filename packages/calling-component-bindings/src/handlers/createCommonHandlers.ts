@@ -2,24 +2,24 @@
 // Licensed under the MIT License.
 
 import {
+  AddPhoneNumberOptions,
   AudioDeviceInfo,
-  Call,
-  LocalVideoStream,
-  StartCallOptions,
-  VideoDeviceInfo,
-  BackgroundBlurEffect,
-  BackgroundReplacementEffect,
+  AudioEffectsStartConfig,
+  AudioEffectsStopConfig,
   BackgroundBlurConfig,
-  BackgroundReplacementConfig
+  BackgroundBlurEffect,
+  BackgroundReplacementConfig,
+  BackgroundReplacementEffect,
+  Call,
+  CallSurvey,
+  CallSurveyResponse,
+  DtmfTone,
+  LocalVideoStream,
+  RemoteParticipant,
+  StartCallOptions,
+  TeamsCall,
+  VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(DNS) */
-import { AudioEffectsStartConfig, AudioEffectsStopConfig } from '@azure/communication-calling';
-/* @conditional-compile-remove(soft-mute) */
-import { RemoteParticipant } from '@azure/communication-calling';
-import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-import { DtmfTone } from '@azure/communication-calling';
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
-import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -27,7 +27,13 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
+import {
+  disposeAllLocalPreviewViews,
+  _isInCall,
+  _isInLobbyOrConnecting,
+  _isPreviewOn,
+  getCallStateIfExist
+} from '../utils/callUtils';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
@@ -85,9 +91,7 @@ export interface CommonCallingHandlers {
   onRemoveVideoBackgroundEffects: () => Promise<void>;
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
-  /* @conditional-compile-remove(DNS) */
   onStartNoiseSuppressionEffect: () => Promise<void>;
-  /* @conditional-compile-remove(DNS) */
   onStopNoiseSuppressionEffect: () => Promise<void>;
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   onStopCaptions: () => Promise<void>;
@@ -97,9 +101,7 @@ export interface CommonCallingHandlers {
   onStartSpotlight: (userIds?: string[]) => Promise<void>;
   onStopSpotlight: (userIds?: string[]) => Promise<void>;
   onStopAllSpotlight: () => Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteParticipant: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants: () => Promise<void>;
 }
 
@@ -129,7 +131,6 @@ export type VideoBackgroundEffectsDependency = {
   createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };
 
-/* @conditional-compile-remove(DNS) */
 /**
  * Dependency type to be injected for deep noise suppression
  *
@@ -150,7 +151,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     call: Call | TeamsCall | undefined,
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-      /* @conditional-compile-remove(DNS) */
       onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
     }
   ): CommonCallingHandlers & Partial<_ComponentCallingHandlers> => {
@@ -399,9 +399,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
 
       const participant = Object.values(callState.remoteParticipants).find(
@@ -450,9 +450,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
 
       const participant = Object.values(callState.remoteParticipants).find(
@@ -481,9 +481,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
 
       const participant = Object.values(callState.remoteParticipants).find(
@@ -494,10 +494,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+      const remoteVideoStream = Object.values(participant.videoStreams).filter((i) => i.mediaStreamType === 'Video');
 
-      if (remoteVideoStream && remoteVideoStream.view) {
-        callClient.disposeView(call.id, participant.identifier, remoteVideoStream);
+      for (const stream of remoteVideoStream) {
+        if (stream.view) {
+          callClient.disposeView(call.id, participant.identifier, stream);
+        }
       }
     };
 
@@ -505,10 +507,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
+
       const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       );
@@ -516,12 +519,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!participant || !participant.videoStreams) {
         return;
       }
-      const screenShareStream = Object.values(participant.videoStreams).find(
+      const screenShareStreams = Object.values(participant.videoStreams).filter(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
-      if (screenShareStream && screenShareStream.view) {
-        callClient.disposeView(call.id, participant.identifier, screenShareStream);
+      for (const stream of screenShareStreams) {
+        if (stream.view) {
+          callClient.disposeView(call.id, participant.identifier, stream);
+        }
       }
     };
 
@@ -529,10 +534,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
+
       const screenShareStream = callState?.localVideoStreams.find((item) => item.mediaStreamType === 'ScreenSharing');
       if (screenShareStream && screenShareStream.view) {
         callClient.disposeView(call.id, undefined, screenShareStream);
@@ -613,7 +619,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(DNS) */
     const onStartNoiseSuppressionEffect = async (): Promise<void> => {
       const audioEffects =
         options?.onResolveDeepNoiseSuppressionDependency &&
@@ -630,7 +635,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(DNS) */
     const onStopNoiseSuppressionEffect = async (): Promise<void> => {
       const stream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
       if (stream && options?.onResolveDeepNoiseSuppressionDependency) {
@@ -671,7 +675,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onStopAllSpotlight = async (): Promise<void> => {
       await call?.feature(Features.Spotlight).stopAllSpotlight();
     };
-    /* @conditional-compile-remove(soft-mute) */
     const onMuteParticipant = async (userId: string): Promise<void> => {
       if (call?.remoteParticipants) {
         call?.remoteParticipants.forEach(async (participant: RemoteParticipant) => {
@@ -683,7 +686,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         });
       }
     };
-    /* @conditional-compile-remove(soft-mute) */
     const onMuteAllRemoteParticipants = async (): Promise<void> => {
       call?.muteAllRemoteParticipants();
     };
@@ -742,9 +744,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onRemoveVideoBackgroundEffects,
       onBlurVideoBackground,
       onReplaceVideoBackground,
-      /* @conditional-compile-remove(DNS) */
       onStartNoiseSuppressionEffect,
-      /* @conditional-compile-remove(DNS) */
       onStopNoiseSuppressionEffect,
       onStartCaptions,
       onStopCaptions,
@@ -758,9 +758,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStopLocalSpotlight,
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
-      /* @conditional-compile-remove(soft-mute) */
       onMuteParticipant,
-      /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants,
       onAcceptCall: notImplemented,
       onRejectCall: notImplemented

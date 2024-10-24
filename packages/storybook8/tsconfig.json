@@ -2,7 +2,6 @@
   "baseUrl": ".",
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
-    "noUncheckedIndexedAccess": false, // todo: turn this to true when instances have been fixed
     "outDir": "./dist",
     "paths": {
       "@azure/communication-react": ["../communication-react/src"],
