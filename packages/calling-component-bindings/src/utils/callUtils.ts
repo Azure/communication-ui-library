@@ -154,8 +154,8 @@ export const _convertParticipantState = (participant: RemoteParticipantState): P
   /* @conditional-compile-remove(remote-ufd) */
   if (
     participant.diagnostics &&
-    participant.diagnostics['ServerConnection' as ServerDiagnosticType] &&
-    participant.diagnostics['ServerConnection' as ServerDiagnosticType]?.value === false
+    participant.diagnostics['serverConnection'] &&
+    participant.diagnostics['serverConnection']?.value === false
   ) {
     return 'Reconnecting';
   }
