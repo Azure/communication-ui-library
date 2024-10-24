@@ -1,15 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 /* @conditional-compile-remove(rtt) */
-import { Link, mergeStyles, Stack, Text } from '@fluentui/react';
+import { Icon, Link, Stack, Text, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(rtt) */
 import React from 'react';
 /* @conditional-compile-remove(rtt) */
-import { titleClassName } from './styles/CaptionsSettingsModal.styles';
-/* @conditional-compile-remove(rtt) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(rtt) */
-import { bannerContainerStyles, bannerLinkStyles } from './styles/RTTDisclosureBanner.styles';
+import {
+  bannerContainerStyles,
+  bannerContentStyles,
+  bannerLinkStyles,
+  bannerTitleClassName
+} from './styles/RTTDisclosureBanner.styles';
 
 /* @conditional-compile-remove(rtt) */
 /**
@@ -42,16 +46,18 @@ export interface RTTDisclosureBannerProps {
 export const RTTDisclosureBanner = (props: RTTDisclosureBannerProps): JSX.Element => {
   const localeStrings = useLocale().strings.rttDisclosureBanner;
   const strings = { ...localeStrings, ...props.strings };
+  const theme = useTheme();
 
   return (
     <Stack className={bannerContainerStyles()}>
+      <Stack horizontal>
+        <Icon iconName="RTTIcon" />
+        <Text className={bannerTitleClassName}>{strings.bannerTitle}</Text>
+      </Stack>
       <Stack.Item>
-        <Text className={titleClassName}>{strings.bannerTitle}</Text>
-      </Stack.Item>
-      <Stack.Item>
-        <Text className={mergeStyles({ lineHeight: '1.5rem' })}>
+        <Text className={bannerContentStyles(theme)}>
           {strings.bannerContent}
-          <Link className={bannerLinkStyles()} href={props.link} target="_blank">
+          <Link className={bannerLinkStyles(theme)} href={props.link} target="_blank">
             {strings.bannerLinkLabel}
           </Link>
         </Text>
