@@ -25,7 +25,7 @@ import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCal
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
 /* @conditional-compile-remove(together-mode) */
-import { createCallFeatureView } from './CallFeatureStreamUtils';
+import { createCallFeatureView, disposeCallFeatureView } from './CallFeatureStreamUtils';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -463,6 +463,13 @@ export const createStatefulCallClientWithDeps = (
     ): void => {
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
       disposeView(context, internalContext, callId, participantIdKind, stream);
+    }
+  });
+  /* @conditional-compile-remove(together-mode) */
+  Object.defineProperty(callClient, 'disposeCallFeatureView', {
+    configurable: false,
+    value: (callId: string | undefined, stream: TogetherModeStreamViewState): void => {
+      disposeCallFeatureView(context, internalContext, callId, stream);
     }
   });
 

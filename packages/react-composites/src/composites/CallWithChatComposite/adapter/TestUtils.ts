@@ -244,7 +244,7 @@ function createMockCall(mockCallId: string): CallState {
     dominantSpeakers: undefined,
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(together-mode) */
-    togetherMode: { streams: {}, seatingPositions: [] },
+    togetherMode: { isActive: false, streams: {}, seatingPositions: [] },
     pptLive: { isActive: false },
     localParticipantReaction: undefined,
     captionsFeature: {

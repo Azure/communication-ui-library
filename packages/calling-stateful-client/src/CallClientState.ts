@@ -27,8 +27,7 @@ import type {
   NetworkDiagnosticType,
   DiagnosticValueType,
   DiagnosticQuality,
-  DiagnosticFlag,
-  TogetherModeSeatingPosition
+  DiagnosticFlag
 } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
@@ -286,7 +285,7 @@ export type CallFeatureStreamName = 'togetherMode';
  * @beta
  */
 export interface CallFeatureStreamState {
-  feature: CallFeatureStreamName;
+  feature?: CallFeatureStreamName;
 }
 
 /* @conditional-compile-remove(together-mode) */
@@ -294,35 +293,7 @@ export interface CallFeatureStreamState {
  * State only version of {@link @azure/communication-calling#TogetherModeVideoStream}.
  * @beta
  */
-export interface TogetherModeStreamViewState extends CallFeatureStreamState {
-  /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.id}.
-   */
-  id: number;
-  /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.mediaStreamType}.
-   */
-  mediaStreamType: MediaStreamType;
-  /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.isReceiving}.
-   * @public
-   */
-  isReceiving: boolean;
-  /**
-   * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
-   * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
-   */
-  view?: VideoStreamRendererViewState;
-  /**
-   * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
-   */
-  streamSize?: { width: number; height: number };
-
-  /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.position}.
-   */
-  recalculateSeatingPositions: (width: number, height: number) => void;
-}
+export interface TogetherModeStreamViewState extends RemoteVideoStreamState, CallFeatureStreamState {}
 
 /* @conditional-compile-remove(together-mode) */
 /**
@@ -331,7 +302,10 @@ export interface TogetherModeStreamViewState extends CallFeatureStreamState {
  */
 export interface TogetherModeSeatingPositionState {
   participantId: string;
-  position: TogetherModeSeatingPosition;
+  top: number;
+  left: number;
+  width: number;
+  height: number;
 }
 
 /* @conditional-compile-remove(together-mode) */
@@ -351,6 +325,7 @@ export interface TogetherModeStreamsState {
  * @beta
  */
 export interface TogetherModeCallFeatureState {
+  isActive: boolean;
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
    */

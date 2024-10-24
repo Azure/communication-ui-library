@@ -111,7 +111,6 @@ import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { Theme } from '@fluentui/react';
-import type { TogetherModeSeatingPosition } from '@azure/communication-calling';
 import { TogetherModeStreamViewResult } from '@internal/react-components/dist/dist-esm/types';
 import { TogetherModeStreamViewResult as TogetherModeStreamViewResult_2 } from '@internal/react-components/dist/dist-esm/types/TogetherModeTypes';
 import { TransferEventArgs } from '@azure/communication-calling';
@@ -1049,7 +1048,7 @@ export type CallFeatureStreamName = 'togetherMode';
 // @beta (undocumented)
 export interface CallFeatureStreamState {
     // (undocumented)
-    feature: CallFeatureStreamName;
+    feature?: CallFeatureStreamName;
 }
 
 // @public
@@ -4899,6 +4898,8 @@ export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier
 
 // @beta
 export interface TogetherModeCallFeature {
+    // (undocumented)
+    isActive: boolean;
     seatingPositions: TogetherModeSeatingPositionState[];
     streams: TogetherModeStreamsState;
 }
@@ -4906,9 +4907,15 @@ export interface TogetherModeCallFeature {
 // @beta
 export interface TogetherModeSeatingPositionState {
     // (undocumented)
+    height: number;
+    // (undocumented)
+    left: number;
+    // (undocumented)
     participantId: string;
     // (undocumented)
-    position: TogetherModeSeatingPosition;
+    top: number;
+    // (undocumented)
+    width: number;
 }
 
 // @beta
@@ -4918,17 +4925,7 @@ export interface TogetherModeStreamsState {
 }
 
 // @beta
-export interface TogetherModeStreamViewState extends CallFeatureStreamState {
-    id: number;
-    // @public
-    isReceiving: boolean;
-    mediaStreamType: MediaStreamType;
-    recalculateSeatingPositions: (width: number, height: number) => void;
-    streamSize?: {
-        width: number;
-        height: number;
-    };
-    view?: VideoStreamRendererViewState;
+export interface TogetherModeStreamViewState extends RemoteVideoStreamState, CallFeatureStreamState {
 }
 
 // @public

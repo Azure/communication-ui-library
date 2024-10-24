@@ -7,8 +7,6 @@ import {
   RemoteVideoStream,
   VideoStreamRenderer
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(together-mode) */
-import { RemoteVideoStreamCommon } from '@azure/communication-calling';
 import { LocalVideoStreamState } from './CallClientState';
 import type { CallContext } from './CallContext';
 import { CallIdHistory } from './CallIdHistory';
@@ -51,7 +49,7 @@ export type RemoteRenderInfo = RenderInfo<RemoteVideoStream>;
 /**
  * Internally used to keep track of the status, renderer, and awaiting promise, associated with a CallFeatureVideoStream.
  */
-export type CallFeatureRenderInfo = RenderInfo<RemoteVideoStreamCommon>;
+export type CallFeatureRenderInfo = RenderInfo<RemoteVideoStream>;
 
 /**
  * Contains internal data used between different Declarative components to share data.
@@ -66,6 +64,7 @@ export class InternalCallContext {
   /* @conditional-compile-remove(together-mode) */
   // <CallId, <featureName, <MediaStreamType, CallFeatureRenderInfo>>>.
   private _callFeatureRenderInfos = new Map<string, Map<string, Map<MediaStreamType, CallFeatureRenderInfo>>>();
+
   // Used for keeping track of rendered LocalVideoStreams that are not part of a Call.
   private _unparentedRenderInfos = new Map<MediaStreamType, LocalRenderInfo>();
   private _callIdHistory = new CallIdHistory();
@@ -271,7 +270,7 @@ export class InternalCallContext {
     callId: string,
     featureNameKey: string,
     streamKey: MediaStreamType,
-    stream: RemoteVideoStreamCommon,
+    stream: RemoteVideoStream,
     status: RenderStatus,
     renderer: VideoStreamRenderer | undefined
   ): void {

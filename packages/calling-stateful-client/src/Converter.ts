@@ -9,6 +9,9 @@ import {
   IncomingCall,
   IncomingCallCommon
 } from '@azure/communication-calling';
+
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeVideoStream as SdkTogetherModeVideoStream } from '@azure/communication-calling';
 import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 
@@ -28,6 +31,8 @@ import {
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
   CallInfoState
 } from './CallClientState';
+/* @conditional-compile-remove(calling-beta-sdk) */
+import { TogetherModeStreamViewState as DeclarativeTogetherVideoStream } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
 import { _isTeamsIncomingCall } from './TypeGuards';
@@ -67,9 +72,27 @@ export function convertSdkLocalStreamToDeclarativeLocalStream(
  * @private
  */
 export function convertSdkRemoteStreamToDeclarativeRemoteStream(
-  stream: SdkRemoteVideoStream
+  stream: SdkRemoteVideoStream | /* @conditional-compile-remove(together-mode) */ SdkTogetherModeVideoStream
 ): DeclarativeRemoteVideoStream {
   return {
+    id: stream.id,
+    mediaStreamType: stream.mediaStreamType,
+    isAvailable: stream.isAvailable,
+    isReceiving: stream.isReceiving,
+    view: undefined,
+    streamSize: stream.size
+  };
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ */
+export function convertSdkTogetherStreamToDeclarativeRemoteStream(
+  stream: SdkTogetherModeVideoStream
+): DeclarativeTogetherVideoStream {
+  return {
+    feature: 'togetherMode',
     id: stream.id,
     mediaStreamType: stream.mediaStreamType,
     isAvailable: stream.isAvailable,
@@ -157,7 +180,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     pptLive: { isActive: false },
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(together-mode) */
-    togetherMode: { streams: {}, seatingPositions: [] },
+    togetherMode: { isActive: false, streams: {}, seatingPositions: [] },
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,

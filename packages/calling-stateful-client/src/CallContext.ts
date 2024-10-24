@@ -67,11 +67,7 @@ import { LocalRecordingInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(local-recording-notification) */
 import { RecordingInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(together-mode) */
-import {
-  TogetherModeStreamsState,
-  TogetherModeStreamViewState,
-  TogetherModeSeatingPositionState
-} from './CallClientState';
+import { TogetherModeStreamViewState, TogetherModeSeatingPositionState } from './CallClientState';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -463,33 +459,78 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(together-mode) */
-  public setTogetherModeVideoStream(
+  public setTogetherModeVideoStreams(
     callId: string,
-    addedStreams: TogetherModeVideoStream[],
-    recalculateSeatingPositions: (width: number, height: number) => void
+    addRemoteVideoStream: TogetherModeStreamViewState[],
+    removeRemoteVideoStream: TogetherModeStreamViewState[]
   ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        const togetherModeStreams: TogetherModeStreamsState = {
-          mainVideoStream: undefined
-        };
-        for (const stream of addedStreams) {
-          const streamToAdd: TogetherModeStreamViewState = {
-            feature: 'togetherMode',
-            id: stream.id,
-            view: undefined,
-            mediaStreamType: stream.mediaStreamType,
-            isReceiving: stream.isReceiving,
-            recalculateSeatingPositions
-          };
-          // SDK does not support panomaric media type
+        for (const stream of removeRemoteVideoStream) {
           if (stream.mediaStreamType === 'Video') {
-            togetherModeStreams.mainVideoStream = streamToAdd;
+            call.togetherMode.streams.mainVideoStream = undefined;
+            call.togetherMode.isActive = false;
             call.togetherMode.seatingPositions = [];
           }
         }
-        call.togetherMode.streams = togetherModeStreams;
+
+        for (const newStream of addRemoteVideoStream) {
+          // This should only be called by the subscriber and some properties are add by other components so if the
+          // stream already exists, only update the values that subscriber knows about.
+          const mainVideoStream = call.togetherMode.streams.mainVideoStream;
+          if (mainVideoStream && mainVideoStream.id === newStream.id) {
+            mainVideoStream.mediaStreamType = newStream.mediaStreamType;
+            mainVideoStream.isAvailable = newStream.isAvailable;
+            mainVideoStream.isReceiving = newStream.isReceiving;
+          } else {
+            call.togetherMode.streams.mainVideoStream = newStream;
+          }
+          call.togetherMode.isActive = true;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamIsAvailable(callId: string, streamId: number, isAvailable: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.isReceiving = isAvailable;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamIsReceiving(callId: string, streamId: number, isReceiving: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.isReceiving = isReceiving;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamSize(
+    callId: string,
+    streamId: number,
+    size: { width: number; height: number }
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.streamSize = size;
+        }
       }
     });
   }
@@ -502,7 +543,7 @@ export class CallContext {
         for (const stream of removedStream) {
           if (stream.mediaStreamType === 'Video') {
             call.togetherMode.streams.mainVideoStream = undefined;
-            call.togetherMode.seatingPositions = [];
+            call.togetherMode.isActive = false;
           }
         }
       }
@@ -510,7 +551,7 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(together-mode) */
-  public setTogetherModeSeatingCoordinatesState(callId: string, seatingMap: TogetherModeSeatingMap): void {
+  public setTogetherModeSeatingCoordinates(callId: string, seatingMap: TogetherModeSeatingMap): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
@@ -518,8 +559,12 @@ export class CallContext {
         for (const [key, value] of seatingMap.entries()) {
           const participantPosition: TogetherModeSeatingPositionState = {
             participantId: key,
-            position: value
+            top: value.top,
+            left: value.left,
+            width: value.width,
+            height: value.height
           };
+
           seatingPositions.push(participantPosition);
         }
         call.togetherMode.seatingPositions = seatingPositions;
@@ -774,7 +819,6 @@ export class CallContext {
   ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      /* @conditional-compile-remove(together-mode) */
       if (call) {
         if (togetherModeStreamType === 'Video') {
           const togetherModeStream = call.togetherMode.streams.mainVideoStream;

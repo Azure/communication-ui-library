@@ -90,7 +90,7 @@ function createMockCall(mockCallId: string): CallState {
     localRecording: { isLocalRecordingActive: false },
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(together-mode) */
-    togetherMode: { streams: {}, seatingPositions: [] },
+    togetherMode: { isActive: false, streams: {}, seatingPositions: [] },
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
