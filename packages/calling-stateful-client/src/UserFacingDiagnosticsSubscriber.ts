@@ -75,7 +75,7 @@ export class UserFacingDiagnosticsSubscriber {
         const { remoteParticipant: _, rawId, ...participantDiagnostic } = diagnostic;
         const participant = call.remoteParticipants[rawId];
         if (participant) {
-          participant.diagnostics = participant.diagnostics || {};
+          participant.diagnostics = participant.diagnostics ?? {};
           participant.diagnostics[participantDiagnostic.diagnostic] = participantDiagnostic;
         }
       }
