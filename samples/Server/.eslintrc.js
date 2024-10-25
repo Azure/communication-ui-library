@@ -26,6 +26,7 @@ module.exports = {
       }
     ],
     eqeqeq: 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'error',
     'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT License.'],
     'react/display-name': 'off',
 
