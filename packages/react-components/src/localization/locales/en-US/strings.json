@@ -536,6 +536,7 @@
   },
   "videoTile": {
     "participantStateRinging": "Calling...",
+    "participantReconnecting": "Reconnecting...",
     "participantStateHold": "On hold",
     "moreOptionsButtonAriaLabel": "More Options {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "muted",

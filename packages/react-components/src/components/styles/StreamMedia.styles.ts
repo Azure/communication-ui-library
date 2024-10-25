@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { ISpinnerStyles, mergeStyles, Theme } from '@fluentui/react';
-import { isDarkThemed } from '../../theming/themeUtils';
 
 /**
  * @private
@@ -47,22 +46,6 @@ export const reconnectingContainer = (): string =>
 /**
  * @private
  */
-export const reconnectingText = (theme: Theme): string =>
-  mergeStyles({
-    // Position centrally on top of content. Parent must have position: relative.
-    height: '3rem',
-    lineHeight: '3rem',
-    justifyContent: 'center',
-    alignItems: 'center',
-    // DarkTheme check is done cause the text color should be light in both dark and light themes
-    // due to background overlay being dark in both themes.
-    color: isDarkThemed(theme) ? theme.palette.themeDarker : theme.palette.neutralLighter,
-    fontSize: theme.fonts.large.fontSize
-  });
-
-/**
- * @private
- */
 export const loadSpinnerStyles: ISpinnerStyles = {
   root: {
     height: '100%' // ensure height fills container
@@ -75,6 +58,21 @@ export const loadSpinnerStyles: ISpinnerStyles = {
     borderWidth: '0.25em'
   }
 };
+
+/**
+ * @private
+ */
+export const reconnectSpinnerStyles = (): ISpinnerStyles => ({
+  ...loadSpinnerStyles,
+  label: {
+    color: 'white'
+  },
+  circle: {
+    ...(loadSpinnerStyles.circle as object),
+    maxHeight: '2rem',
+    borderWidth: 'unset'
+  }
+});
 
 /**
  * @private
