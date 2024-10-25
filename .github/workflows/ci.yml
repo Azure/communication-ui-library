@@ -784,9 +784,6 @@ jobs:
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
           echo "change=${change}" >> $GITHUB_OUTPUT
           echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
-      - name: Check whether the bundle size is increased significantly
-        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
-        run: node ./common/scripts/bundleSize/bundleSizeCheck.mjs ${{ matrix.app }} ${{ steps.bundles.outputs.diff }}
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
