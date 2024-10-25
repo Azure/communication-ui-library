@@ -27,17 +27,17 @@ import { useLocale } from '../localization';
  * strings for rtt modal
  */
 export interface RTTModalStrings {
-  /* The title of the RTT modal */
+  /** The title of the RTT modal */
   rttModalTitle?: string;
-  /* The text of the RTT modal */
+  /** The text of the RTT modal */
   rttModalText?: string;
-  /* The label for the confirm button */
+  /** The label for the confirm button */
   rttConfirmButtonLabel?: string;
-  /* The label for the cancel button */
+  /** The label for the cancel button */
   rttCancelButtonLabel?: string;
-  /* The aria label for the modal */
+  /** The aria label for the modal */
   rttModalAriaLabel?: string;
-  /* The aria label for the close button */
+  /** The aria label for the close button */
   rttCloseModalButtonAriaLabel?: string;
 }
 /* @conditional-compile-remove(rtt) */
@@ -46,13 +46,13 @@ export interface RTTModalStrings {
  * RTTModal Component Props.
  */
 export interface RTTModalProps {
-  /* The strings for the RTT modal */
+  /** The strings for the RTT modal */
   strings?: RTTModalStrings;
-  /* The flag to show the modal */
+  /** The flag to show the modal */
   showModal?: boolean;
-  /* The function to dismiss the modal */
+  /** The function to dismiss the modal */
   onDismissModal?: () => void;
-  /* The function to start RTT */
+  /** The function to start RTT */
   onStartRTT?: () => Promise<void>;
 }
 /* @conditional-compile-remove(rtt) */
