@@ -193,9 +193,11 @@ export const Notification = (props: NotificationProps): JSX.Element => {
         </Stack>
         <Text styles={props.styles?.content ?? messageTextStyles(theme)}>
           {strings?.message}
-          <Link styles={props.styles?.link ?? notificationLinkStyles(theme)} href={props.link} target="_blank">
-            {strings?.linkLabel}
-          </Link>
+          {props.link && strings?.linkLabel && (
+            <Link styles={props.styles?.link ?? notificationLinkStyles(theme)} href={props.link} target="_blank">
+              {strings?.linkLabel}
+            </Link>
+          )}
         </Text>
         <Stack horizontal horizontalAlign="space-evenly">
           {strings?.secondaryButtonLabel && (
