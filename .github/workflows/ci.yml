@@ -801,7 +801,7 @@ jobs:
             await github.issues.deleteComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: ${{ steps.fc.outputs.comment-id }}
+              comment_id: '${{ steps.fc.outputs.comment-id }}'
             })
 
   update_base_bundle_report:
