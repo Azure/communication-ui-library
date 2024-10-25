@@ -5351,6 +5351,7 @@ export interface VideoTileStrings {
     moreOptionsParticipantIsSpeakingAriaLabel: string;
     moreOptionsParticipantMutedStateMutedAriaLabel: string;
     moreOptionsParticipantMutedStateUnmutedAriaLabel: string;
+    participantReconnecting?: string;
     participantStateHold: string;
     participantStateRinging: string;
 }
