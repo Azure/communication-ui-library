@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { registerIcons } from '@fluentui/react';
 import * as acs_ui_common from '@internal/acs-ui-common';
 import React from 'react';
 import { v1 as createGUID } from 'uuid';
@@ -22,16 +21,6 @@ jest.mock('@internal/acs-ui-common', () => {
 });
 
 describe('ResponsiveVerticalGallery tests', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        verticalgalleryleftbutton: <></>,
-        verticalgalleryrightbutton: <></>,
-        contact: <></>
-      }
-    });
-  });
-
   test('should render 3 video tiles if container height of ResponsiveVerticalGallery is 500', () => {
     mockResponsiveVerticalGalleryContainerHeight(500);
     const remoteParticipants = Array.from({ length: 10 }, () =>
