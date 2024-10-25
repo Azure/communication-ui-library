@@ -2396,6 +2396,7 @@ export interface ComponentStrings {
     richTextSendBox: RichTextSendBoxStrings;
     rtt: RealTimeTextStrings;
     rttDisclosureBanner: RTTDisclosureBannerStrings;
+    rttModal: RTTModalStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -4483,6 +4484,25 @@ export interface RTTDisclosureBannerStrings {
     bannerLinkLabel?: string;
     // (undocumented)
     bannerTitle: string;
+=======
+export const RTTModal: (props: RTTModalProps) => JSX.Element;
+
+// @beta
+export interface RTTModalProps {
+    onDismissModal?: () => void;
+    onStartRTT?: () => Promise<void>;
+    showModal?: boolean;
+    strings?: RTTModalStrings;
+}
+
+// @beta
+export interface RTTModalStrings {
+    rttCancelButtonLabel?: string;
+    rttCloseModalButtonAriaLabel?: string;
+    rttConfirmButtonLabel?: string;
+    rttModalAriaLabel?: string;
+    rttModalText?: string;
+    rttModalTitle?: string;
 }
 
 // @public
