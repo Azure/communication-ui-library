@@ -784,7 +784,6 @@ jobs:
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
           echo "change=${change}" >> $GITHUB_OUTPUT
           echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
-
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
@@ -792,22 +791,27 @@ jobs:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body-includes: '## ${{ matrix.app }} bundle size is'
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: Delete existing comment
-        id: delete-comment
-        uses: actions/github-script@v6
+        uses: actions/github-script@v4
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            const comment_id = ${{ steps.fc.outputs.comment-id }};
-            await github.rest.issues.deleteComment({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              comment_id: comment_id
-            });
+            const commentId = '${{ steps.fc.outputs.comment-id }}'
+            if (commentId) {
+              await github.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: commentId
+              })
+            }
       - name: Post new comment
-        uses: actions/github-script@v6
+        uses: actions/github-script@v4
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            await github.rest.issues.createComment({
+            await github.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
@@ -816,6 +820,17 @@ jobs:
               - Base size: ${{ steps.bundles.outputs.base_size }}
               - Diff size: ${{ steps.bundles.outputs.diff }}`
             });
+      - name: Check whether the bundle size is increased significantly
+        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
+        run: |
+          significantBundleSizeThreshold=800
+          app="${{ matrix.app }}"
+          bundleSizeDiff="${{ steps.bundles.outputs.diff }}"
+          if [ "$bundleSizeDiff" -ge "$significantBundleSizeThreshold" ]; then
+            echo "The bundle size diff for $app is greater than the threshold of $significantBundleSizeThreshold! If the bundle size increase is intended, please add \`significant bundle size change\` label to the PR." >&2
+            exit 1
+          fi
+          echo "Bundle size diff for $app is below the threshold of $significantBundleSizeThreshold. All is good!"
   update_base_bundle_report:
     runs-on: ubuntu-latest
     name: Upload bundle size report to gist - ${{ matrix.app }}
