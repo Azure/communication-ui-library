@@ -822,7 +822,16 @@ jobs:
             });
       - name: Check whether the bundle size is increased significantly
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
-        run: node common/scripts/bundleSize/bundleSizeCheck.mjs ${{ matrix.app }} ${{ steps.bundles.outputs.diff }}
+        run: |
+          const significantBundleSizeThreshold = 800
+          const app = '${{ matrix.app }}'
+          const bundleSizeDiff = parseInt('${{ steps.bundles.outputs.diff }}')
+
+          if (bundleSizeDiff >= significantBundleSizeThreshold) {
+            console.error(`The bundle size diff for ${app} is greater than the threshold of ${significantBundleSizeThreshold}! If the bundle size increase is intended, please add \`significant bundle size change\` label to the PR.`)
+            return
+          }
+          console.log(`Bundle size diff for ${app} is below the threshold of ${significantBundleSizeThreshold}. All is good!`)
 
   update_base_bundle_report:
     runs-on: ubuntu-latest
