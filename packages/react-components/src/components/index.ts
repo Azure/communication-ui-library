@@ -310,3 +310,6 @@ export * from './NotificationStack';
 
 export * from './IncomingCallNotification';
 export * from './IncomingCallStack';
+
+/* @conditional-compile-remove(rtt) */
+export * from './RealTimeText';
