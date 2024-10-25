@@ -799,13 +799,11 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const comment_id = ${{ steps.fc.outputs.comment-id }}
-            if (comment_id) {
-              await github.issues.deleteComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: comment_id
-              })
-            }
+            await github.issues.deleteComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              comment_id: comment_id
+            })
 
   update_base_bundle_report:
     runs-on: ubuntu-latest
