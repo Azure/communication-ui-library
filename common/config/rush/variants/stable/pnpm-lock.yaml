@@ -18,8 +18,8 @@ dependencies:
     specifier: 2.3.0
     version: 2.3.0
   '@azure/communication-signaling':
-    specifier: 1.0.0-beta.28
-    version: 1.0.0-beta.28
+    specifier: 1.0.0-beta.29
+    version: 1.0.0-beta.29
   '@rush-temp/acs-ui-common':
     specifier: file:./projects/acs-ui-common.tgz
     version: file:projects/acs-ui-common.tgz
@@ -237,20 +237,6 @@ packages:
       tslib: 1.14.1
     transitivePeerDependencies:
       - supports-color
-    dev: false
-
-  /@azure/communication-signaling@1.0.0-beta.28:
-    resolution: {integrity: sha512-D1ujjaIiXPhePvjKlG+iYazYxLwPHSxD8WOJluCwptElcj1PslF70nmXDJw3udCLTYDbDgV+SrGpAHnJsyuh3Q==}
-    engines: {node: '>=8.0.0'}
-    dependencies:
-      '@azure/abort-controller': 1.1.0
-      '@azure/core-auth': 1.8.0
-      '@azure/core-tracing': 1.1.2
-      '@azure/core-util': 1.10.0
-      '@azure/logger': 1.1.4
-      events: 3.3.0
-      tslib: 2.7.0
-      uuid: 8.3.2
     dev: false
 
   /@azure/communication-signaling@1.0.0-beta.29:
@@ -7861,10 +7847,8 @@ packages:
       ajv: 8.13.0
     dev: false
 
-  /ajv-formats@2.1.1(ajv@8.17.1):
+  /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependencies:
-      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -16203,7 +16187,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.17.1)
     dev: false
 
@@ -19269,13 +19253,13 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-PcCOjXnD4pZ0Jh9E5afwmiE8UpNzIDnC6rESOsV3/0dp4poMXwIXu8yBTxq6ZbO1BSkhBBL+KnlDYDeqlsvLYw==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-PxoDrqU75qArxFIWks1E2KaIR4Q6+o1b8G/zglz5SfLRnHhqODEe/EdgH3f3Hp4f8SqSXmlpdgBS2wj1scGTDA==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
       '@azure/communication-chat': 1.5.4
       '@azure/communication-common': 2.3.1
-      '@azure/communication-signaling': 1.0.0-beta.28
+      '@azure/communication-signaling': 1.0.0-beta.29
       '@azure/core-paging': 1.6.2
       '@azure/logger': 1.1.4
       '@babel/cli': 7.25.6(@babel/core@7.25.2)
@@ -19658,13 +19642,13 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-8ChSsLQYjyUZm/j76CGYP/P+k/yKAd7mBfrEIqgElD3Mw3OJAdqILRISP17sb6b8pBc79QmkmtCPNAyyXjOUPg==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-8WKp3j+5hZXJjtlWUVxK5dUQkA3KBrNb93z1js0Mrn+gF7UBr7J3wQzm6rBO3U8fj20BAmGQTj83dmdfxyvt2Q==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
       '@azure/communication-chat': 1.5.4
       '@azure/communication-common': 2.3.1
-      '@azure/communication-signaling': 1.0.0-beta.28
+      '@azure/communication-signaling': 1.0.0-beta.29
       '@azure/core-paging': 1.6.2
       '@azure/core-rest-pipeline': 1.17.0
       '@babel/cli': 7.25.6(@babel/core@7.25.2)
