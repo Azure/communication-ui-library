@@ -5,7 +5,12 @@ import { CreateViewOptions, VideoStreamRenderer } from '@azure/communication-cal
 /* @conditional-compile-remove(together-mode) */
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(together-mode) */
-import { CallFeatureStreamState, CreateViewResult } from './index-public';
+import {
+  CallFeatureStreamName,
+  CallFeatureStreamState,
+  CreateViewResult,
+  VideoStreamRendererViewState
+} from './index-public';
 /* @conditional-compile-remove(together-mode) */
 import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(together-mode) */
@@ -129,7 +134,7 @@ async function createCallFeatureViewVideo(
     // and clean up the state.
     _logStreamEvent(EventNames.RENDER_INFO_NOT_FOUND, streamLogInfo);
     renderer.dispose();
-    context.setTogetherModeVideoStreamRendererView(callId, stream.mediaStreamType, undefined);
+    setCallFeatureVideoRendererView(callId, featureName, context, stream.mediaStreamType, undefined);
     return;
   }
 
@@ -146,7 +151,7 @@ async function createCallFeatureViewVideo(
       'NotRendered',
       undefined
     );
-    context.setTogetherModeVideoStreamRendererView(callId, stream.mediaStreamType, undefined);
+    setCallFeatureVideoRendererView(callId, featureName, context, stream.mediaStreamType, undefined);
     return;
   }
 
@@ -160,8 +165,10 @@ async function createCallFeatureViewVideo(
     'Rendered',
     renderer
   );
-  context.setTogetherModeVideoStreamRendererView(
+  setCallFeatureVideoRendererView(
     callId,
+    featureName,
+    context,
     stream.mediaStreamType,
     convertFromSDKToDeclarativeVideoStreamRendererView(view)
   );
@@ -211,10 +218,10 @@ function disposeCallFeatureViewVideo(
 
   _logStreamEvent(EventNames.START_DISPOSE_STREAM, streamLogInfo);
 
-  const featureName = getStreamFeatureName(stream);
+  const featureName: CallFeatureStreamName = getStreamFeatureName(stream);
 
   if (streamEventType === 'disposeViewCallFeature') {
-    context.setTogetherModeVideoStreamRendererView(callId, streamType, undefined);
+    setCallFeatureVideoRendererView(callId, featureName, context, streamType, undefined);
   }
 
   const renderInfo = internalContext.getCallFeatureRenderInfo(callId, featureName, stream.mediaStreamType);
@@ -265,7 +272,7 @@ function disposeCallFeatureViewVideo(
       'NotRendered',
       undefined
     );
-    context.setTogetherModeVideoStreamRendererView(callId, streamType, undefined);
+    setCallFeatureVideoRendererView(callId, featureName, context, streamType, undefined);
   } else {
     _logStreamEvent(EventNames.RENDERER_NOT_FOUND, streamLogInfo);
   }
@@ -275,7 +282,23 @@ function disposeCallFeatureViewVideo(
 /**
  * @private
  */
-const getStreamFeatureName = (stream: CallFeatureStreamState): string => {
+const setCallFeatureVideoRendererView = (
+  callId: string,
+  featureName: CallFeatureStreamName,
+  context: CallContext,
+  streamType: string,
+  view: VideoStreamRendererViewState | undefined
+): void => {
+  if (featureName === 'togetherMode') {
+    context.setTogetherModeVideoStreamRendererView(callId, streamType, view);
+  }
+};
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ */
+const getStreamFeatureName = (stream: CallFeatureStreamState): CallFeatureStreamName => {
   if (stream.feature) {
     return stream.feature;
   }
