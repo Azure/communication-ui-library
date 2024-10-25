@@ -806,6 +806,17 @@ jobs:
                 comment_id: commentId
               })
             }
+      - name: Post new comment
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `Report`
+            });
 
   update_base_bundle_report:
     runs-on: ubuntu-latest
