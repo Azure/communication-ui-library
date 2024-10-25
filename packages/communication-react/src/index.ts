@@ -436,3 +436,9 @@ export type {
   ActiveNotification
 } from '../../react-components/src';
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';
+
+/* @conditional-compile-remove(rtt) */
+export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
+
+/* @conditional-compile-remove(rtt) */
+export { RealTimeText } from '../../react-components/src/components/RealTimeText';

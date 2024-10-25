@@ -179,6 +179,9 @@
     "applauseReactionTooltipContent": "Applause",
     "surprisedReactionTooltipContent": "Surprised"
   },
+  "rtt": {
+    "isTypingText": "RTT typing"
+  },
   "messageThread": {
     "yesterday": "Yesterday",
     "sunday": "Sunday",
