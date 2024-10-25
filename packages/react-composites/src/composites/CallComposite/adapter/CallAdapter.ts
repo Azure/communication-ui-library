@@ -25,12 +25,7 @@ import type {
   PropertyChangedEvent
 } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import type {
-  CommunicationIdentifierKind,
-  MicrosoftTeamsAppIdentifier,
-  UnknownIdentifier
-} from '@azure/communication-common';
-import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import type { CommunicationIdentifierKind } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -92,15 +87,7 @@ export type CallAdapterUiState = {
  * Identifier types for initiating a call using the CallAdapter
  * @public
  */
-export type StartCallIdentifier =
-  | (
-      | MicrosoftTeamsAppIdentifier
-      | PhoneNumberIdentifier
-      | CommunicationUserIdentifier
-      | MicrosoftTeamsUserIdentifier
-      | UnknownIdentifier
-    )
-  | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
+export type StartCallIdentifier = CommunicationIdentifier;
 
 /**
  * {@link CommonCallAdapter} state inferred from Azure Communication Services backend.
@@ -756,14 +743,12 @@ export interface CallAdapterCallOperations {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute a participant
    *
    * @param userId - Id of the participant to mute
    */
   muteParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute All participants
    */
@@ -956,7 +941,6 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'spotlightChanged' event.
    */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Subscribe function for 'mutedByOthers' event.
    */
@@ -1047,7 +1031,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'spotlightChanged' event.
    */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Unsubscribe function for 'mutedByOthers' event.
    */
