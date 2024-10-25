@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Breakout rooms",
+  "comment": "Fix BreakoutRoomsBanner component to return null instead of undefined when there is no breakout room state",
+  "packageName": "@azure/communication-react",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
