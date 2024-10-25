@@ -438,3 +438,5 @@ export type {
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';
 /* @conditional-compile-remove(rtt) */
 export type { RTTModalStrings, RTTModalProps } from '../../react-components/src';
+/* @conditional-compile-remove(rtt) */
+export { RTTModal } from '../../react-components/src';

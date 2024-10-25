@@ -182,6 +182,7 @@ export interface ComponentStrings {
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
   IncomingCallNotification: IncomingCallNotificationStrings;
   /* @conditional-compile-remove(rtt) */
+  /** Strings for the RTTModal */
   rttModal: RTTModalStrings;
 }
 

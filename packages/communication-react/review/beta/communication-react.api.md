@@ -2393,7 +2393,6 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
     richTextSendBox: RichTextSendBoxStrings;
-    // (undocumented)
     rttModal: RTTModalStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
@@ -4428,6 +4427,9 @@ export interface RichTextStrings {
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
 }
+
+// @beta
+export const RTTModal: (props: RTTModalProps) => JSX.Element;
 
 // @beta
 export interface RTTModalProps {
