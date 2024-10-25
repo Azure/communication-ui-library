@@ -111,7 +111,7 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
           <Stack className={reconnectingContainer()}>
             <Spinner
               data-ui-id="stream-media-loading-spinner"
-              styles={reconnectSpinnerStyles(theme)}
+              styles={reconnectSpinnerStyles()}
               label={reconnectingText}
             />
           </Stack>
