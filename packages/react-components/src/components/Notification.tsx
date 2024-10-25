@@ -2,14 +2,28 @@
 // Licensed under the MIT License.
 
 import React, { useState } from 'react';
-import { Icon, IconButton, PrimaryButton, Stack, useTheme, Text, IIconProps, DefaultButton } from '@fluentui/react';
+import {
+  Icon,
+  IconButton,
+  PrimaryButton,
+  Stack,
+  useTheme,
+  Text,
+  IIconProps,
+  DefaultButton,
+  Link,
+  IStackStyles,
+  IButtonStyles,
+  IIconStyles
+} from '@fluentui/react';
 import { cancelIcon } from './styles/ImageOverlay.style';
 import {
   containerStyles,
   hiddenContainerStyles,
-  messageTextStyle,
-  notificationIconClassName,
-  titleTextClassName
+  messageTextStyles,
+  notificationIconStyles,
+  notificationLinkStyles,
+  titleTextStyles
 } from './styles/Notification.styles';
 
 /**
@@ -54,6 +68,16 @@ export interface NotificationProps {
    * Callback called when the notification is dismissed.
    */
   onDismiss?: () => void;
+
+  /**
+   * Hyperlink attached to the notification.
+   */
+  link?: string;
+
+  /**
+   * Styles for the incoming call notifications.
+   */
+  styles?: NotificationStyles;
 }
 
 /**
@@ -69,7 +93,7 @@ export interface NotificationStrings {
   /**
    * Notification bar dismiss button aria label
    */
-  dismissButtonAriaLabel: string;
+  dismissButtonAriaLabel?: string;
   /**
    * Notification bar message.
    */
@@ -82,6 +106,46 @@ export interface NotificationStrings {
    * Notification bar secondary button label
    */
   secondaryButtonLabel?: string;
+  /**
+   * Notification bar link label
+   */
+  linkLabel?: string;
+}
+
+/**
+ * Styles for the notification component.
+ *
+ * @public
+ */
+export interface NotificationStyles {
+  /**
+   * Styles for the primary button.
+   */
+  primaryButton?: IButtonStyles;
+  /**
+   * Styles for the secondary button.
+   */
+  secondaryButton?: IButtonStyles;
+  /**
+   * Styles for the root container.
+   */
+  root?: IStackStyles;
+  /**
+   * Styles for the notification title.
+   */
+  title?: IStackStyles;
+  /**
+   * Styles for the notification icon.
+   */
+  icon?: IIconStyles;
+  /**
+   * Styles for the notification content.
+   */
+  content?: IStackStyles;
+  /**
+   * Styles for the notification hyperlink.
+   */
+  link?: IStackStyles;
 }
 
 /**
@@ -108,35 +172,45 @@ export const Notification = (props: NotificationProps): JSX.Element => {
 
   return (
     <Stack horizontalAlign="center">
-      <Stack data-ui-id="notification-bar" className={containerStyles(theme)}>
+      <Stack data-ui-id="notification-bar" styles={props.styles?.root ?? containerStyles(theme)}>
         <Stack horizontal horizontalAlign="space-between">
           <Stack horizontal>
             <Icon
-              className={notificationIconClassName}
+              styles={props.styles?.icon ?? notificationIconStyles()}
               iconName={props.notificationIconProps?.iconName ?? 'ErrorBadge'}
               {...props.notificationIconProps}
             />
-            <Text className={titleTextClassName}>{strings?.title}</Text>
+            <Text styles={props.styles?.title ?? titleTextStyles()}>{strings?.title}</Text>
           </Stack>
-
-          <IconButton
-            iconProps={cancelIcon}
-            ariaLabel={strings?.dismissButtonAriaLabel}
-            aria-live={'polite'}
-            onClick={props.onDismiss}
-          />
+          {props.onDismiss && (
+            <IconButton
+              iconProps={cancelIcon}
+              ariaLabel={strings?.dismissButtonAriaLabel}
+              aria-live={'polite'}
+              onClick={props.onDismiss}
+            />
+          )}
         </Stack>
-        <Text className={messageTextStyle(theme)} style={{ marginTop: '0.25rem' }}>
+        <Text styles={props.styles?.content ?? messageTextStyles(theme)}>
           {strings?.message}
+          <Link styles={props.styles?.link ?? notificationLinkStyles(theme)} href={props.link} target="_blank">
+            {strings?.linkLabel}
+          </Link>
         </Text>
         <Stack horizontal horizontalAlign="space-evenly">
           {strings?.secondaryButtonLabel && (
-            <DefaultButton onClick={props.onClickSecondaryButton} style={{ marginTop: '1rem' }}>
+            <DefaultButton
+              onClick={props.onClickSecondaryButton}
+              styles={props.styles?.secondaryButton ?? { root: { marginTop: '1rem' } }}
+            >
               {strings?.secondaryButtonLabel}
             </DefaultButton>
           )}
           {strings?.primaryButtonLabel && (
-            <PrimaryButton onClick={props.onClickPrimaryButton} style={{ marginTop: '1rem' }}>
+            <PrimaryButton
+              onClick={props.onClickPrimaryButton}
+              styles={props.styles?.primaryButton ?? { root: { marginTop: '1rem' } }}
+            >
               {strings?.primaryButtonLabel}
             </PrimaryButton>
           )}

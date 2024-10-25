@@ -2,18 +2,15 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(rtt) */
-import { Icon, Link, Stack, Text, useTheme } from '@fluentui/react';
-/* @conditional-compile-remove(rtt) */
 import React from 'react';
 /* @conditional-compile-remove(rtt) */
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(rtt) */
-import {
-  bannerContainerStyles,
-  bannerContentStyles,
-  bannerLinkStyles,
-  bannerTitleClassName
-} from './styles/RTTDisclosureBanner.styles';
+import { Notification } from './Notification';
+/* @conditional-compile-remove(rtt) */
+import { useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(rtt) */
+import { rttContainerStyles } from './styles/RTTDisclosureBanner.styles';
 
 /* @conditional-compile-remove(rtt) */
 /**
@@ -21,8 +18,8 @@ import {
  * strings for rtt modal
  */
 export interface RTTDisclosureBannerStrings {
-  bannerTitle?: string;
-  bannerContent?: string;
+  bannerTitle: string;
+  bannerContent: string;
   bannerLinkLabel?: string;
 }
 
@@ -49,19 +46,15 @@ export const RTTDisclosureBanner = (props: RTTDisclosureBannerProps): JSX.Elemen
   const theme = useTheme();
 
   return (
-    <Stack className={bannerContainerStyles()}>
-      <Stack horizontal>
-        <Icon iconName="RTTIcon" />
-        <Text className={bannerTitleClassName}>{strings.bannerTitle}</Text>
-      </Stack>
-      <Stack.Item>
-        <Text className={bannerContentStyles(theme)}>
-          {strings.bannerContent}
-          <Link className={bannerLinkStyles(theme)} href={props.link} target="_blank">
-            {strings.bannerLinkLabel}
-          </Link>
-        </Text>
-      </Stack.Item>
-    </Stack>
+    <Notification
+      notificationStrings={{
+        title: strings.bannerTitle,
+        message: strings.bannerContent,
+        linkLabel: strings.bannerLinkLabel
+      }}
+      notificationIconProps={{ iconName: 'RTTIcon' }}
+      link={props.link}
+      styles={{ root: rttContainerStyles(theme) }}
+    />
   );
 };

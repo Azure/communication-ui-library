@@ -433,9 +433,12 @@ export type {
   NotificationStrings,
   NotificationStackStrings,
   NotificationType,
-  ActiveNotification
+  ActiveNotification,
+  NotificationStyles
 } from '../../react-components/src';
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';
 
 /* @conditional-compile-remove(rtt) */
 export type { RTTDisclosureBannerProps, RTTDisclosureBannerStrings } from '../../react-components/src';
+/* @conditional-compile-remove(rtt) */
+export { RTTDisclosureBanner } from '../../react-components/src';
