@@ -827,7 +827,7 @@ jobs:
           app="${{ matrix.app }}"
           bundleSizeDiff="${{ steps.bundles.outputs.diff }}"
           if [ "$bundleSizeDiff" -ge "$significantBundleSizeThreshold" ]; then
-            echo "The bundle size diff for $app is greater than the threshold of $significantBundleSizeThreshold! If the bundle size increase is intended, please add \`significant bundle size change\` label to the PR." >&2
+            echo "The bundle size diff for $app is greater than the threshold of $significantBundleSizeThreshold kb! If the bundle size increase is intended, please add \`significant bundle size change\` label to the PR." >&2
             exit 1
           fi
           echo "Bundle size diff for $app is below the threshold of $significantBundleSizeThreshold. All is good!"
