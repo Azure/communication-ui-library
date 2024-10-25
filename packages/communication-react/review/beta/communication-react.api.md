@@ -4423,6 +4423,7 @@ export interface RichTextStrings {
     richTextNewNumberedListItemAnnouncement: string;
     richTextNumberedListAppliedAnnouncement: string;
     richTextNumberListTooltip: string;
+    richTextToolbarAriaLabel: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
 }

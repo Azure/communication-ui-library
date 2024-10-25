@@ -117,7 +117,10 @@ export const isOnIphoneAndNotSafari = (): boolean => {
 export const isLandscape = (): boolean => window.innerWidth < window.innerHeight;
 
 export const navigateToHomePage = (): void => {
-  window.location.href = window.location.href.split('?')[0];
+  const urlToNavigate = window.location.href.split('?')[0];
+  if (urlToNavigate) {
+    window.location.href = urlToNavigate;
+  }
 };
 
 export const WEB_APP_TITLE = document.title;
