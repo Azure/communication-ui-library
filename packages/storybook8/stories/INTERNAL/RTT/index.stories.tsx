@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { RTT } from '@internal/react-components';
+import { RealTimeText } from '@internal/react-components';
 import { Meta } from '@storybook/react';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { ExampleRTT } from './snippets/ExampleRTT.snippet';
@@ -10,11 +10,11 @@ export const ExampleRTTExampleDocsOnly = {
   render: ExampleRTT
 };
 
-export { RTT } from './RTT.story';
+export { RealTimeText } from './RealTimeText.story';
 
 const meta: Meta = {
-  title: 'Components/Internal/RTT',
-  component: RTT,
+  title: 'Components/Internal/Real Time Text',
+  component: RealTimeText,
   argTypes: {
     isTyping: controlsToAdd.isRTTTyping,
     displayName: controlsToAdd.rttDisplayName,

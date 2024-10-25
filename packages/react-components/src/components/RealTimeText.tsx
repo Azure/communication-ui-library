@@ -26,7 +26,7 @@ import { useLocale } from '../localization';
  * @beta
  * strings for rtt
  */
-export interface RTTStrings {
+export interface RealTimeTextStrings {
   /**
    * String indicating that the user is typing
    */
@@ -36,11 +36,11 @@ export interface RTTStrings {
 /* @conditional-compile-remove(rtt) */
 /**
  * @beta
- * Props for a single line of RTT.
+ * Props for a single line of RealTimeText.
  */
-export interface RTTProps {
+export interface RealTimeTextProps {
   /**
-   * RTT id
+   * RealTimeText id
    */
   id: string;
   /**
@@ -48,7 +48,7 @@ export interface RTTProps {
    */
   displayName: string;
   /**
-   * RTT content
+   * RealTimeText content
    */
   captionText: string;
   /**
@@ -62,21 +62,21 @@ export interface RTTProps {
    */
   onRenderAvatar?: OnRenderAvatarCallback;
   /**
-   * Boolean indicating whether the RTT is still in progress
+   * Boolean indicating whether the RealTimeText is still in progress
    */
   isTyping?: boolean;
   /**
-   * Strings for RTT
+   * Strings for RealTimeText
    */
-  strings?: RTTStrings;
+  strings?: RealTimeTextStrings;
 }
 
 /* @conditional-compile-remove(rtt) */
 /**
  * @beta
- * A component for displaying a single line of RTT
+ * A component for displaying a single line of RealTimeText
  */
-export const RTT = (props: RTTProps): JSX.Element => {
+export const RealTimeText = (props: RealTimeTextProps): JSX.Element => {
   const { displayName, userId, captionText, onRenderAvatar, isTyping } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.rtt;

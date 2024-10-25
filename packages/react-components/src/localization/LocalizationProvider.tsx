@@ -47,7 +47,7 @@ import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSen
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
 /* @conditional-compile-remove(rtt) */
-import { RTTStrings } from '../components/RTT';
+import { RealTimeTextStrings } from '../components/RealTimeText';
 
 /**
  * Locale information for all components exported from this library.
@@ -184,7 +184,8 @@ export interface ComponentStrings {
 
   IncomingCallNotification: IncomingCallNotificationStrings;
   /* @conditional-compile-remove(rtt) */
-  rtt: RTTStrings;
+  /** Strings for RealTimeText */
+  rtt: RealTimeTextStrings;
 }
 
 /**
