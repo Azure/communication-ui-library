@@ -4484,7 +4484,9 @@ export interface RTTDisclosureBannerStrings {
     bannerLinkLabel?: string;
     // (undocumented)
     bannerTitle: string;
-=======
+}
+
+// @beta
 export const RTTModal: (props: RTTModalProps) => JSX.Element;
 
 // @beta
