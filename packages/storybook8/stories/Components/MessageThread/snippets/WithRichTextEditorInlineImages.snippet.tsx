@@ -1,5 +1,6 @@
 import {
   AttachmentMetadataInProgress,
+  ChatMessage,
   FluentThemeProvider,
   MessageThread,
   RichTextEditBoxOptions
@@ -20,7 +21,7 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
       if (index === -1) {
         return Promise.reject('Message not found');
       }
-      const message = updatedMessages[index];
+      const message = updatedMessages[index] as ChatMessage;
       message.content = content;
       message.editedOn = new Date(Date.now());
       updatedMessages[index] = message;
@@ -36,8 +37,12 @@ export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Eleme
     return {
       onInsertInlineImage: (imageAttributes: Record<string, string>, messageId: string) => {
         const inlineImagesWithProgress = messagesInlineImagesWithProgress?.[messageId] ?? [];
+        const id = imageAttributes.id;
+        if (!id) {
+          throw new Error('Image id is missing');
+        }
         const newImage: AttachmentMetadataInProgress = {
-          id: imageAttributes.id,
+          id,
           name: imageAttributes['data-image-file-name'] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
           progress: 1,
           url: imageAttributes.src,

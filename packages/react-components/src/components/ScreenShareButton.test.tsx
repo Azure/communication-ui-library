@@ -4,18 +4,9 @@
 import React from 'react';
 import { ScreenShareButton } from './ScreenShareButton';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
-import { registerIcons } from '@fluentui/react';
 import { screen } from '@testing-library/react';
 
 describe('ScreenShareButton strings should be localizable and overridable', () => {
-  beforeEach(() => {
-    registerIcons({
-      icons: {
-        controlbuttonscreensharestart: <></>,
-        controlbuttonscreensharestop: <></>
-      }
-    });
-  });
   test('Should localize button label', async () => {
     const testLocale = createTestLocale({
       screenShareButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
