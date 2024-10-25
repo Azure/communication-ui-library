@@ -186,6 +186,7 @@ export interface ComponentStrings {
 
   IncomingCallNotification: IncomingCallNotificationStrings;
   /* @conditional-compile-remove(rtt) */
+  /** Strings for the RTT Disclosure Banner */
   rttDisclosureBanner: RTTDisclosureBannerStrings;
   /* @conditional-compile-remove(rtt) */
   /** Strings for RealTimeText */

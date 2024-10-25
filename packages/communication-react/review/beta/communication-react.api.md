@@ -2394,8 +2394,8 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
     richTextSendBox: RichTextSendBoxStrings;
-    rttDisclosureBanner: RTTDisclosureBannerStrings;
     rtt: RealTimeTextStrings;
+    rttDisclosureBanner: RTTDisclosureBannerStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
