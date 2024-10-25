@@ -66,6 +66,14 @@
     "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
     "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
+  "rttModal": {
+    "rttModalAriaLabel": "Turn on RTT Modal",
+    "rttModalTitle": "Turn on RTT?",
+    "rttModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "rttConfirmButtonLabel": "Turn on",
+    "rttCancelButtonLabel": "Cancel",
+    "rttCloseModalButtonAriaLabel": "Close RTT Modal"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
   },
@@ -178,6 +186,9 @@
     "laughReactionTooltipContent": "Laugh",
     "applauseReactionTooltipContent": "Applause",
     "surprisedReactionTooltipContent": "Surprised"
+  },
+  "rtt": {
+    "isTypingText": "RTT typing"
   },
   "messageThread": {
     "yesterday": "Yesterday",

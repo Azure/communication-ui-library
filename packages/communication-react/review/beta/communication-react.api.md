@@ -2393,6 +2393,8 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
     richTextSendBox: RichTextSendBoxStrings;
+    rtt: RealTimeTextStrings;
+    rttModal: RTTModalStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -4292,6 +4294,25 @@ export type ReadReceiptsBySenderId = {
     };
 };
 
+// @beta
+export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
+
+// @beta
+export interface RealTimeTextProps {
+    captionText: string;
+    displayName: string;
+    id: string;
+    isTyping?: boolean;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    strings?: RealTimeTextStrings;
+    userId?: string;
+}
+
+// @beta
+export interface RealTimeTextStrings {
+    isTypingText?: string;
+}
+
 // @public
 export interface RecordingCallFeature {
     activeRecordings?: RecordingInfo[];
@@ -4426,6 +4447,27 @@ export interface RichTextStrings {
     richTextToolbarAriaLabel: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
+}
+
+// @beta
+export const RTTModal: (props: RTTModalProps) => JSX.Element;
+
+// @beta
+export interface RTTModalProps {
+    onDismissModal?: () => void;
+    onStartRTT?: () => Promise<void>;
+    showModal?: boolean;
+    strings?: RTTModalStrings;
+}
+
+// @beta
+export interface RTTModalStrings {
+    rttCancelButtonLabel?: string;
+    rttCloseModalButtonAriaLabel?: string;
+    rttConfirmButtonLabel?: string;
+    rttModalAriaLabel?: string;
+    rttModalText?: string;
+    rttModalTitle?: string;
 }
 
 // @public
