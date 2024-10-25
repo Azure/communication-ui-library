@@ -798,10 +798,11 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
+            const commentId = '${{ steps.fc.outputs.comment-id }}'
             await github.issues.deleteComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              comment_id: '${{ steps.fc.outputs.comment-id }}'
+              comment_id: commentId
             })
 
   update_base_bundle_report:
