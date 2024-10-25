@@ -13,7 +13,7 @@ const meta: Meta = {
   argTypes: {
     // By default, all props of the primary component are added as controls.
     // We disable all of them because the story provides checkboxes to control the props.
-    link: hiddenControl,
+    onClickLink: hiddenControl,
     strings: hiddenControl
   }
 };

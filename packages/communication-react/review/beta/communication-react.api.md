@@ -3877,9 +3877,9 @@ export { Notification_2 as Notification }
 // @public
 export interface NotificationProps {
     autoDismiss?: boolean;
-    link?: string;
     notificationIconProps?: IIconProps;
     notificationStrings?: NotificationStrings;
+    onClickLink?: () => void;
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
@@ -4451,7 +4451,7 @@ export const RTTDisclosureBanner: (props: RTTDisclosureBannerProps) => JSX.Eleme
 
 // @beta
 export interface RTTDisclosureBannerProps {
-    link?: string;
+    onClickLink?: () => void;
     strings?: RTTDisclosureBannerStrings;
 }
 

@@ -8,7 +8,11 @@ import React from 'react';
 export const RTTDisclosureBanner = (): JSX.Element => {
   return (
     <Stack styles={containerStyles}>
-      <RTTDisclosureBannerComponent />
+      <RTTDisclosureBannerComponent
+        onClickLink={() => {
+          alert('Link Clicked');
+        }}
+      />
     </Stack>
   );
 };

@@ -29,8 +29,10 @@ export interface RTTDisclosureBannerStrings {
  * Props for RTT Banner
  */
 export interface RTTDisclosureBannerProps {
-  /** Link to learn more about RTT */
-  link?: string;
+  /**
+   * Optional callback to supply users with further troubleshooting steps or more information for the Real Time Text feature.
+   */
+  onClickLink?: () => void;
   /** RTT Banner strings */
   strings?: RTTDisclosureBannerStrings;
 }
@@ -53,7 +55,7 @@ export const RTTDisclosureBanner = (props: RTTDisclosureBannerProps): JSX.Elemen
         linkLabel: strings.bannerLinkLabel
       }}
       notificationIconProps={{ iconName: 'RTTIcon' }}
-      link={props.link}
+      onClickLink={props.onClickLink}
       styles={{ root: rttContainerStyles(theme) }}
     />
   );

@@ -70,9 +70,9 @@ export interface NotificationProps {
   onDismiss?: () => void;
 
   /**
-   * Hyperlink attached to the notification.
+   * Optional callback to supply users with further troubleshooting steps or more information for the notification.
    */
-  link?: string;
+  onClickLink?: () => void;
 
   /**
    * Styles for the incoming call notifications.
@@ -191,14 +191,14 @@ export const Notification = (props: NotificationProps): JSX.Element => {
             />
           )}
         </Stack>
-        <Text styles={props.styles?.content ?? messageTextStyles(theme)}>
-          {strings?.message}
-          {props.link && strings?.linkLabel && (
-            <Link styles={props.styles?.link ?? notificationLinkStyles(theme)} href={props.link} target="_blank">
+        <span>
+          <Text styles={props.styles?.content ?? messageTextStyles(theme)}> {strings?.message}</Text>
+          {props.onClickLink && strings?.linkLabel && (
+            <Link styles={props.styles?.link ?? notificationLinkStyles(theme)} onClick={props.onClickLink}>
               {strings?.linkLabel}
             </Link>
           )}
-        </Text>
+        </span>
         <Stack horizontal horizontalAlign="space-evenly">
           {strings?.secondaryButtonLabel && (
             <DefaultButton
