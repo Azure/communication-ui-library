@@ -799,6 +799,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const commentId = '${{ steps.fc.outputs.comment-id }}'
+            console.log(`Deleting comment ${commentId}`)
             await github.issues.deleteComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
