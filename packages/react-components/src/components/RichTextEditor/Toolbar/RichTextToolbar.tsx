@@ -258,6 +258,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       data-testid={'rich-text-editor-toolbar'}
       styles={richTextToolbarStyle}
       overflowButtonProps={overflowButtonProps}
+      aria-label={strings.richTextToolbarAriaLabel}
     />
   );
 };
