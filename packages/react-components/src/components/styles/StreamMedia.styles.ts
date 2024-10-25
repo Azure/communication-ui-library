@@ -62,10 +62,10 @@ export const loadSpinnerStyles: ISpinnerStyles = {
 /**
  * @private
  */
-export const reconnectSpinnerStyles = (theme: Theme): ISpinnerStyles => ({
+export const reconnectSpinnerStyles = (): ISpinnerStyles => ({
   ...loadSpinnerStyles,
   label: {
-    color: theme.palette.white
+    color: 'white'
   },
   circle: {
     ...(loadSpinnerStyles.circle as object),
