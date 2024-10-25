@@ -784,6 +784,19 @@ jobs:
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
           echo "change=${change}" >> $GITHUB_OUTPUT
           echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
+      - name: Check whether the bundle size is increased significantly
+        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
+        run: |
+          significantBundleSizeThreshold=800
+          app="${{ matrix.app }}"
+          bundleSizeDiff="${{ steps.bundles.outputs.diff }}"
+
+          if [ "$bundleSizeDiff" -ge "$significantBundleSizeThreshold" ]; then
+            echo "The bundle size diff for $app is greater than the threshold of $significantBundleSizeThreshold! If the bundle size increase is intended, please add \`significant bundle size change\` label to the PR." >&2
+            exit 1
+          fi
+
+          echo "Bundle size diff for $app is below the threshold of $significantBundleSizeThreshold. All is good!"
       - name: Find Comment
         uses: peter-evans/find-comment@v2
         id: fc
@@ -820,18 +833,6 @@ jobs:
               - Base size: ${{ steps.bundles.outputs.base_size }}
               - Diff size: ${{ steps.bundles.outputs.diff }}`
             });
-      - name: Check whether the bundle size is increased significantly
-        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
-        run: |
-          const significantBundleSizeThreshold = 800
-          const app = '${{ matrix.app }}'
-          const bundleSizeDiff = parseInt('${{ steps.bundles.outputs.diff }}')
-
-          if (bundleSizeDiff >= significantBundleSizeThreshold) {
-            console.error(`The bundle size diff for ${app} is greater than the threshold of ${significantBundleSizeThreshold}! If the bundle size increase is intended, please add \`significant bundle size change\` label to the PR.`)
-            return
-          }
-          console.log(`Bundle size diff for ${app} is below the threshold of ${significantBundleSizeThreshold}. All is good!`)
 
   update_base_bundle_report:
     runs-on: ubuntu-latest
