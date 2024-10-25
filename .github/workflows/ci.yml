@@ -795,6 +795,7 @@ jobs:
         id: delete-comment
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const comment_id = ${{ steps.fc.outputs.comment-id }};
             await github.rest.issues.deleteComment({
@@ -805,6 +806,7 @@ jobs:
       - name: Post new comment
         uses: actions/github-script@v6
         with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             await github.rest.issues.createComment({
               owner: context.repo.owner,
