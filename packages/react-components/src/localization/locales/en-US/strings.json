@@ -58,6 +58,7 @@
     "richTextDeleteColumnMenu": "Delete column",
     "richTextDeleteRowMenu": "Delete row",
     "richTextDeleteTableMenu": "Delete table",
+    "richTextToolbarAriaLabel": "Message Formatting Toolbar",
     "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "More Options",
     "richTextNewBulletedListItemAnnouncement": "Bullet, new line",
@@ -177,6 +178,9 @@
     "laughReactionTooltipContent": "Laugh",
     "applauseReactionTooltipContent": "Applause",
     "surprisedReactionTooltipContent": "Surprised"
+  },
+  "rtt": {
+    "isTypingText": "RTT typing"
   },
   "messageThread": {
     "yesterday": "Yesterday",

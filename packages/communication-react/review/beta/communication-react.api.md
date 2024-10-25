@@ -2394,8 +2394,8 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
     richTextSendBox: RichTextSendBoxStrings;
-    // (undocumented)
     rttDisclosureBanner: RTTDisclosureBannerStrings;
+    rtt: RealTimeTextStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -4311,6 +4311,25 @@ export type ReadReceiptsBySenderId = {
     };
 };
 
+// @beta
+export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
+
+// @beta
+export interface RealTimeTextProps {
+    captionText: string;
+    displayName: string;
+    id: string;
+    isTyping?: boolean;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    strings?: RealTimeTextStrings;
+    userId?: string;
+}
+
+// @beta
+export interface RealTimeTextStrings {
+    isTypingText?: string;
+}
+
 // @public
 export interface RecordingCallFeature {
     activeRecordings?: RecordingInfo[];
@@ -4442,6 +4461,7 @@ export interface RichTextStrings {
     richTextNewNumberedListItemAnnouncement: string;
     richTextNumberedListAppliedAnnouncement: string;
     richTextNumberListTooltip: string;
+    richTextToolbarAriaLabel: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
 }

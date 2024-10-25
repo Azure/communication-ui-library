@@ -48,6 +48,8 @@ import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingCon
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
 /* @conditional-compile-remove(rtt) */
 import { RTTDisclosureBannerStrings } from '../components/RTTDisclosureBanner';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextStrings } from '../components/RealTimeText';
 
 /**
  * Locale information for all components exported from this library.
@@ -185,6 +187,9 @@ export interface ComponentStrings {
   IncomingCallNotification: IncomingCallNotificationStrings;
   /* @conditional-compile-remove(rtt) */
   rttDisclosureBanner: RTTDisclosureBannerStrings;
+  /* @conditional-compile-remove(rtt) */
+  /** Strings for RealTimeText */
+  rtt: RealTimeTextStrings;
 }
 
 /**

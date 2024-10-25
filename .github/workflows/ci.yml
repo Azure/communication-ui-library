@@ -80,7 +80,7 @@ jobs:
         run: rush lint
       # Builds
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       # Type check test folder
       # - must be run after building all packlets because it depends on compiled packlet dependencies
       # - must be run only on beta flavor build because the browser test code is not conditional compiled
@@ -95,7 +95,7 @@ jobs:
           then
             echo "Success, no new api changes found."
           else
-            echo "API CHANGES FOUND in ${{ matrix.flavor }} flavor - PLEASE RUN \"${{ matrix.flavor == 'stable' && 'rush switch-flavor:stable &&' || '' }} rush build -t @azure/communication-react\""
+            echo "API CHANGES FOUND in ${{ matrix.flavor }} flavor - PLEASE RUN \"${{ matrix.flavor == 'stable' && 'rush switch-flavor:stable &&' || '' }} rush build -v -t @azure/communication-react\""
             echo "Changes:"
             git status ${{ matrix.flavor != 'stable' && '**/review/beta/**' ||  '**/review/stable/**'  }}.md -s
             exit 1
@@ -147,7 +147,7 @@ jobs:
         run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       # Build and test
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Test Packages
         run: rush test:ci-coverage -t @azure/communication-react
         env:
@@ -246,7 +246,7 @@ jobs:
       # Builds
       - name: Build Packages
         if: ${{ matrix.flavor == 'beta-release'}}
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       # # Type check test folder
       # # - must be run after building all packlets because it depends on compiled packlet dependencies
       # # - must be run only on beta flavor build because the browser test code is not conditional compiled
@@ -298,7 +298,7 @@ jobs:
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
-          rush build -t .
+          rush build -v -t .
       - name: Call Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -365,7 +365,7 @@ jobs:
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
-          rush build -t .
+          rush build -v -t .
       - name: Chat Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -432,7 +432,7 @@ jobs:
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
-          rush build -t .
+          rush build -v -t .
       - name: CallWithChatComposite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -495,7 +495,7 @@ jobs:
       # This is needed because react-components depends on acs-ui-common and
       # acs-ui-common specifies main/module variables in package.json
       - name: Build Common Package
-        run: rush build -t acs-ui-common
+        run: rush build -v -t acs-ui-common
       - name: Components Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -573,7 +573,7 @@ jobs:
       - name: Install Dependencies
         run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Build
         run: rush build:minify -o calling
       - name: Tests
@@ -605,7 +605,7 @@ jobs:
       - name: Install Dependencies
         run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Build
         run: rush build:minify -o chat
       - name: Tests
@@ -637,7 +637,7 @@ jobs:
       - name: Install Dependencies
         run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Build
         run: rush build:minify -o callwithchat
       - name: Tests
@@ -648,6 +648,32 @@ jobs:
         with:
           name: CallWithChat-report
           path: samples/CallWithChat/dist/build/report.json
+
+  build_calling_stateful_samples:
+    needs: get_matrix
+    name: 'Build Calling Stateful Samples (${{ matrix.flavor }})'
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - name: Build dependencies
+        run: rush build -t @azure/communication-react
+      - name: Build
+        run: rush build -o calling-stateful-samples
+      - name: Tests
+        run: rush test -o calling-stateful-samples
 
   build_static_html_composites_sample:
     needs: get_matrix
@@ -670,7 +696,7 @@ jobs:
         with:
           chrome-version: 120.0.6099
       - name: Build
-        run: rush build -t sample-static-html-composites
+        run: rush build -v -t sample-static-html-composites
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -720,7 +746,7 @@ jobs:
         with:
           chrome-version: 120.0.6099
       - name: Build
-        run: rush build -t component-examples
+        run: rush build -v -t component-examples
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
