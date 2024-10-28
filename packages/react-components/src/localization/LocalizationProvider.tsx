@@ -47,6 +47,8 @@ import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSen
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
 /* @conditional-compile-remove(rtt) */
+import { RTTDisclosureBannerStrings } from '../components/RTTDisclosureBanner';
+/* @conditional-compile-remove(rtt) */
 import { RTTModalStrings } from '../components/RTTModal';
 /* @conditional-compile-remove(rtt) */
 import { RealTimeTextStrings } from '../components/RealTimeText';
@@ -183,6 +185,9 @@ export interface ComponentStrings {
   /** Strings for the MeetingConferencePhoneInfoModal */
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
   IncomingCallNotification: IncomingCallNotificationStrings;
+  /* @conditional-compile-remove(rtt) */
+  /** Strings for the RTT Disclosure Banner */
+  rttDisclosureBanner: RTTDisclosureBannerStrings;
   /* @conditional-compile-remove(rtt) */
   /** Strings for the RTTModal */
   rttModal: RTTModalStrings;
