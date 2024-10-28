@@ -274,10 +274,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         </Stack>
       )}
       <Stack>
-        <Label
-          id={'call-composite-local-sound-settings-label'}
-          className={mergeStyles(dropDownStyles(theme).label)}
-        >
+        <Label id={'call-composite-local-sound-settings-label'} className={mergeStyles(dropDownStyles(theme).label)}>
           {soundLabel}
         </Label>
         <Stack data-ui-id="call-composite-sound-settings" tokens={soundStackTokens}>
