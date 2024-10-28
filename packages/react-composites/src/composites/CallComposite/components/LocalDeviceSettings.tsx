@@ -248,7 +248,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
             <Label
               id={'call-composite-local-camera-settings-label'}
               className={mergeStyles(dropDownStyles(theme).label)}
-              disabled={!cameraPermissionGranted} // follows dropdown disabled state
             >
               {cameraLabel}
             </Label>
@@ -278,7 +277,6 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
         <Label
           id={'call-composite-local-sound-settings-label'}
           className={mergeStyles(dropDownStyles(theme).label)}
-          disabled={!micPermissionGranted} // follows Start button disabled state in ConfigurationPage
         >
           {soundLabel}
         </Label>
