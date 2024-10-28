@@ -81,7 +81,7 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "@internal/callingstateful",
+      "packageName": "@internal/calling-stateful-samples",
       "projectFolder": "samples/CallingStateful",
       "reviewCategory": "sample"
     },

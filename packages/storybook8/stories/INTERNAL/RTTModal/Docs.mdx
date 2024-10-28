@@ -1,0 +1,16 @@
+import { RTTModal } from '@internal/react-components';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as RTTModalStories from './index.stories';
+import RTTModalExampleText from '!!raw-loader!./snippets/RTTModal.snippet.tsx';
+
+<Meta of={RTTModalStories} />
+
+# RTT Modal
+
+A component for displaying a modal showing contents related to RTT
+
+<Canvas of={RTTModalStories.RTTModal} source={{ code: RTTModalExampleText }} />
+
+## Props
+
+<ArgTypes of={RTTModal} />

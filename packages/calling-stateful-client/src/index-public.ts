@@ -28,21 +28,18 @@ export type {
 export type { CallNotification, CallNotifications, NotificationTarget } from './CallClientState';
 export type { TeamsIncomingCallState } from './CallClientState';
 /* @conditional-compile-remove(remote-ufd) */
-export type { RemoteDiagnosticState } from './CallClientState';
+export type { RemoteDiagnosticState, RemoteDiagnosticType } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
 export type { TogetherModeCallFeatureState as TogetherModeCallFeature } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
 export type { TogetherModeStreamState } from './CallClientState';
-
 export type { RaisedHandState } from './CallClientState';
 export type { DeclarativeCallAgent, IncomingCallManagement } from './CallAgentDeclarative';
-/* @conditional-compile-remove(teams-identity-support) */
 export type { DeclarativeTeamsCallAgent } from './TeamsCallAgentDeclarative';
 export type { TeamsIncomingCallManagement } from './TeamsCallAgentDeclarative';
 export type { LocalVideoStreamVideoEffectsState } from './CallClientState';
-
 export type { CapabilitiesFeatureState } from './CallClientState';
 export type { CaptionsCallFeatureState, CaptionsInfo } from './CallClientState';
 export type { AcceptedTransfer, TransferFeatureState as TransferFeature } from './CallClientState';

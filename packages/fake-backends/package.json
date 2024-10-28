@@ -1,6 +1,6 @@
 {
   "name": "@internal/fake-backends",
-  "version": "1.20.0-beta.1",
+  "version": "1.21.0-beta.0",
   "description": "Fake implementations of backend services",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -29,12 +29,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-chat": "1.6.0-beta.3 || ^1.5.2",
+    "@azure/communication-chat": "1.6.0-beta.3 || ^1.5.4",
     "@azure/communication-common": "^2.3.1",
-    "@azure/communication-signaling": "1.0.0-beta.27 || 1.0.0-beta.28",
+    "@azure/communication-signaling": "1.0.0-beta.27 || 1.0.0-beta.29",
     "@azure/core-paging": "^1.5.0",
     "@azure/core-rest-pipeline": "^1.13.0",
-    "@internal/acs-ui-common": "1.20.0-beta.1",
+    "@internal/acs-ui-common": "1.21.0-beta.0",
     "@types/events": "^3.0.3",
     "events": "^3.3.0",
     "immer": "10.1.1",

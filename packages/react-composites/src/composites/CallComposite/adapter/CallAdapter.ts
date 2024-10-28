@@ -3,15 +3,13 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
+import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import type { SpotlightedParticipant } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCall } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import type { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
@@ -27,13 +25,7 @@ import type {
   PropertyChangedEvent
 } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import type {
-  CommunicationIdentifierKind,
-  MicrosoftTeamsAppIdentifier,
-  UnknownIdentifier
-} from '@azure/communication-common';
-
-import type { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
+import type { CommunicationIdentifierKind } from '@azure/communication-common';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -41,13 +33,12 @@ import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/
 import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import type { AdapterNotifications } from '../../common/adapters';
-
-import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
-
+import {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency
+} from '@internal/calling-component-bindings';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
-/* @conditional-compile-remove(DNS) */
-import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 
 /**
  * Major UI screens shown in the {@link CallComposite}.
@@ -96,15 +87,7 @@ export type CallAdapterUiState = {
  * Identifier types for initiating a call using the CallAdapter
  * @public
  */
-export type StartCallIdentifier =
-  | (
-      | MicrosoftTeamsAppIdentifier
-      | PhoneNumberIdentifier
-      | CommunicationUserIdentifier
-      | MicrosoftTeamsUserIdentifier
-      | UnknownIdentifier
-    )
-  | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
+export type StartCallIdentifier = CommunicationIdentifier;
 
 /**
  * {@link CommonCallAdapter} state inferred from Azure Communication Services backend.
@@ -147,7 +130,6 @@ export type CallAdapterClientState = {
    * Azure communications Phone number to make PSTN calls with.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
   /**
    * Environment information about system the adapter is made on
    */
@@ -167,18 +149,15 @@ export type CallAdapterClientState = {
    * Dependency to be injected for video background effect.
    */
   onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Dependency to be injected for deep noise suppression effect.
    */
   onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
-  /* @conditional-compile-remove(DNS) */
   /**
    * State to track whether the noise suppression should be on by default.
    * @default true
    */
   deepNoiseSuppressionOnByDefault?: boolean;
-  /* @conditional-compile-remove(DNS) */
   /**
    * State to track whether to hide the noise suppression button.
    * @default false
@@ -734,13 +713,11 @@ export interface CallAdapterCallOperations {
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Start the noise suppression effect.
    *
    */
   startNoiseSuppressionEffect(): Promise<void>;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Stop the noise suppression effect.
    *
@@ -766,14 +743,12 @@ export interface CallAdapterCallOperations {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute a participant
    *
    * @param userId - Id of the participant to mute
    */
   muteParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute All participants
    */
@@ -801,7 +776,7 @@ export interface CallAdapterDeviceManagement {
    *
    * @public
    */
-  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
   /**
    * Query for available camera devices.
    *
@@ -966,7 +941,6 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'spotlightChanged' event.
    */
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Subscribe function for 'mutedByOthers' event.
    */
@@ -1057,7 +1031,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'spotlightChanged' event.
    */
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Unsubscribe function for 'mutedByOthers' event.
    */
@@ -1201,7 +1174,6 @@ export interface CallAdapter extends CommonCallAdapter {
   startCall(participants: StartCallIdentifier[], options?: StartCallOptions): Call | undefined;
 }
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * An Adapter interface specific for Teams identity which extends {@link CommonCallAdapter}.
  *
