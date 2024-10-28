@@ -14,7 +14,7 @@ Mon, 28 Oct 2024 22:53:26 GMT
 - Stop showing speaker dropdown on Safari ([PR #5328](https://github.com/azure/communication-ui-library/pull/5328) by 2684369+JamesBurnside@users.noreply.github.com)
 - Upgrade calling stable version to 1.29.1 ([PR #5330](https://github.com/azure/communication-ui-library/pull/5330) by 79475487+mgamis-msft@users.noreply.github.com)
 ### Bug Fixes
-- Add new strings to better announce the state of the participant ([PR #5345](https://github.com/azure/communication-ui-library/pull/5345) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add new Aria strings to better support narration of participant information in the video gallery ([PR #5345](https://github.com/azure/communication-ui-library/pull/5345) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix BreakoutRoomsBanner component to return null instead of undefined when there is no breakout room state ([PR #5358](https://github.com/azure/communication-ui-library/pull/5358) by 79475487+mgamis-msft@users.noreply.github.com)
 - Fix video dispose problem for multiple video stream ([PR #5188](https://github.com/azure/communication-ui-library/pull/5188) by jiangnanhello@live.com)
 - Fix call not found error when gets removed ([PR #5338](https://github.com/azure/communication-ui-library/pull/5338) by jiangnanhello@live.com)
