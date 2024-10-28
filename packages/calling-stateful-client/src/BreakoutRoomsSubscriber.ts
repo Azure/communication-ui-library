@@ -29,6 +29,7 @@ export class BreakoutRoomsSubscriber {
   private _context: CallContext;
   private _breakoutRoomsFeature: BreakoutRoomsCallFeature;
   private _breakoutRoomClosingSoonTimeoutId: ReturnType<typeof setTimeout> | undefined;
+  private _latestBreakoutRoomState: 'open' | 'closed' | undefined;
 
   constructor(callIdRef: CallIdRef, context: CallContext, breakoutRoomsFeature: BreakoutRoomsCallFeature) {
     this._callIdRef = callIdRef;
@@ -65,10 +66,6 @@ export class BreakoutRoomsSubscriber {
     const callState = this._context.getState().calls[this._callIdRef.callId];
     const currentAssignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
 
-    const returnedFromBreakoutRoom = Object.values(this._context.getState().callsEnded).find((call) => {
-      return call.id === this._callIdRef.callId;
-    })?.breakoutRooms?.returnCallId;
-
     // This call won't exist in the calls array in state if this call is a breakout room that was re-assigned.
     // If so, do nothing.
     if (callState === undefined) {
@@ -83,6 +80,7 @@ export class BreakoutRoomsSubscriber {
         clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
       }
       this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
+      this._latestBreakoutRoomState = undefined;
       return;
     }
 
@@ -102,8 +100,8 @@ export class BreakoutRoomsSubscriber {
       }
     } else if (
       breakoutRoom.state === 'open' &&
-      !returnedFromBreakoutRoom &&
-      !callState?.breakoutRooms?.breakoutRoomSettings
+      !callState?.breakoutRooms?.breakoutRoomSettings &&
+      this._latestBreakoutRoomState === 'closed'
     ) {
       if (!this._context.getState().latestNotifications['assignedBreakoutRoomChanged']) {
         const target: NotificationTarget =
@@ -124,6 +122,7 @@ export class BreakoutRoomsSubscriber {
       clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
     }
     this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
+    this._latestBreakoutRoomState = breakoutRoom.state;
   };
 
   private onBreakoutRoomsJoined = (call: Call | TeamsCall): void => {

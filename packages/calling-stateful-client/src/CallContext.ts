@@ -645,12 +645,11 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public setBreakoutRoomReturnCall(callId: string, returnCallId: string): void {
+  public setEndedBreakoutRoomCall(callId: string, endedBreakoutRoomCallId: string): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
-      if (call.breakoutRooms) {
-        alert('GUKESH');
-        call.breakoutRooms.returnCallId = returnCallId;
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, endedBreakoutRoomCallId };
       }
     });
   }
@@ -1343,9 +1342,9 @@ class ProxyBreakoutRoom implements ProxyHandler<BreakoutRoom> {
       case 'rejoinMainMeeting':
         return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<BreakoutRoom['rejoinMainMeeting']>) => {
-            const ret = await target.rejoinMainMeeting(...args);
-            this._context.setBreakoutRoomReturnCall(this._callid, ret.id);
-            return ret;
+            const mainMeetingCall = await target.rejoinMainMeeting(...args);
+            this._context.setEndedBreakoutRoomCall(mainMeetingCall.id, this._callid);
+            return mainMeetingCall;
           },
           'Call.feature'
         );
