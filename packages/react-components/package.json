@@ -39,7 +39,7 @@
     "@fluentui/react": "^8.120.0",
     "@fluentui/react-components": "^9.54.7",
     "@fluentui/react-file-type-icons": "8.11.18",
-    "@fluentui/react-hooks": "^8.8.10",
+    "@fluentui/react-hooks": "^8.8.16",
     "@fluentui/react-icons": "^2.0.252",
     "@fluentui/react-window-provider": "^2.2.27",
     "@fluentui-contrib/react-chat": "0.1.10",
