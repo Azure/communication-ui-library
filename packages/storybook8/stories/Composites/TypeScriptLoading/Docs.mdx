@@ -78,6 +78,7 @@ The following snippet is an example of how you might import the `CallComposite` 
 ```ts
 import { Component } from '@angular/core';
 import { CallCompositeOptions } from '@azure/communication-react';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 
 @Component({
   selector: 'app-calling',
@@ -109,14 +110,20 @@ export class CallingComponent {
        */
       const compositeContainer = document.getElementById('call-composite-container');
       /**
+       * We want to construct the identifier and credential for the local user
+       */
+      const identifier = fromFlatCommunicationIdentifier(this.userId);
+      const credential = new AzureCommunicationTokenCredential(this.token);
+      /**
        * we only want to call this if the container element is available.
        */
+
       if (compositeContainer) {
         this.adapter = await communicationreact
           .loadCallComposite(
             {
-              userId: this.userId,
-              token: this.token,
+              userId: identifier as CommunicationUserIdentifier,
+              credential: credential,
               displayName: this.displayName,
               locator: {
                 groupId: this.groupId
