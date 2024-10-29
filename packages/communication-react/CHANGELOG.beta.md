@@ -7,34 +7,21 @@
 ## [1.21.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.21.0-beta.1)
 
 Mon, 28 Oct 2024 22:53:26 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.20.0...1.21.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.20.0-beta.1...1.21.0-beta.1)
 
-### Features
-- Update the reconnecting RemoteUFD according to figma ([PR #5216](https://github.com/azure/communication-ui-library/pull/5216) by jiangnanhello@live.com)
-- RTT Modal Component ([PR #5355](https://github.com/azure/communication-ui-library/pull/5355) by 96077406+carocao-msft@users.noreply.github.com)
-- Together mode client state and subscriber implementation ([PR #5152](https://github.com/azure/communication-ui-library/pull/5152) by nwankwojustin93@gmail.com)
-- Together mode client state and subscriber implementation ([PR #5152](https://github.com/azure/communication-ui-library/pull/5152) by nwankwojustin93@gmail.com)
-- Add Remote UFD new types to state ([PR #5348](https://github.com/azure/communication-ui-library/pull/5348) by jiangnanhello@live.com)
-- Together mode client state and subscriber implementation ([PR #5152](https://github.com/azure/communication-ui-library/pull/5152) by nwankwojustin93@gmail.com)
-- Together mode client state and subscriber implementation ([PR #5152](https://github.com/azure/communication-ui-library/pull/5152) by nwankwojustin93@gmail.com)
-- RTT component for single line of RTT ([PR #5356](https://github.com/azure/communication-ui-library/pull/5356) by 96077406+carocao-msft@users.noreply.github.com)
-- This PR contains implementation of together mode client state changes and the event listener for together mode stream updates ([PR #5152](https://github.com/azure/communication-ui-library/pull/5152) by nwankwojustin93@gmail.com)
-- RTT Disclosure Banner ([PR #5360](https://github.com/azure/communication-ui-library/pull/5360) by 96077406+carocao-msft@users.noreply.github.com)
-- Together mode client state and subscriber implementation ([PR #5152](https://github.com/azure/communication-ui-library/pull/5152) by nwankwojustin93@gmail.com)
-- Update API to allow for better identity control ([PR #5322](https://github.com/azure/communication-ui-library/pull/5322) by dmceachern@microsoft.com)
 ### Improvements
-- Updated Chat SDK and Signaling to Latest Stable Release ([PR #5361](https://github.com/azure/communication-ui-library/pull/5361) by 109105353+jpeng-ms@users.noreply.github.com)
-- On safari, do not show speaker dropdown ([PR #5328](https://github.com/azure/communication-ui-library/pull/5328) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update Chat signaling to latest beta ([PR #5361](https://github.com/azure/communication-ui-library/pull/5361) by 109105353+jpeng-ms@users.noreply.github.com)
+- Stop showing speaker dropdown on Safari ([PR #5328](https://github.com/azure/communication-ui-library/pull/5328) by 2684369+JamesBurnside@users.noreply.github.com)
 - Upgrade calling stable version to 1.29.1 ([PR #5330](https://github.com/azure/communication-ui-library/pull/5330) by 79475487+mgamis-msft@users.noreply.github.com)
 ### Bug Fixes
-- add new strings to better announce the state of the participant ([PR #5345](https://github.com/azure/communication-ui-library/pull/5345) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Add new Aria strings to better support narration of participant information in the video gallery ([PR #5345](https://github.com/azure/communication-ui-library/pull/5345) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix BreakoutRoomsBanner component to return null instead of undefined when there is no breakout room state ([PR #5358](https://github.com/azure/communication-ui-library/pull/5358) by 79475487+mgamis-msft@users.noreply.github.com)
 - Fix video dispose problem for multiple video stream ([PR #5188](https://github.com/azure/communication-ui-library/pull/5188) by jiangnanhello@live.com)
 - Fix call not found error when gets removed ([PR #5338](https://github.com/azure/communication-ui-library/pull/5338) by jiangnanhello@live.com)
 - Focus will move into the menu directly when menu open ([PR #5313](https://github.com/azure/communication-ui-library/pull/5313) by jiangnanhello@live.com)
 - Expose environmentInfo in callClient state and callAdapter state ([PR #5328](https://github.com/azure/communication-ui-library/pull/5328) by 2684369+JamesBurnside@users.noreply.github.com)
-- Increase Start Call Button height on the Configuration Page to 52px on mobile form factor ([PR #5336](https://github.com/azure/communication-ui-library/pull/5336) by 2684369+JamesBurnside@users.noreply.github.com)
-- Resolve issue where rich text editor tool bar would not focus when shown. Also fixed issue where editor component would remount when showing/hiding toolbar. ([PR #5337](https://github.com/azure/communication-ui-library/pull/5337) by 73612854+palatter@users.noreply.github.com)
+- Increase Start Call button height on the Configuration Page to 52px on mobile form factor ([PR #5336](https://github.com/azure/communication-ui-library/pull/5336) by 2684369+JamesBurnside@users.noreply.github.com)
+- Resolve issue where rich text editor tool bar would not focus when shown. Also fixed issue where editor component would remount when showing/hiding toolbar ([PR #5337](https://github.com/azure/communication-ui-library/pull/5337) by 73612854+palatter@users.noreply.github.com)
 
 
 ## [1.20.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.20.0-beta.1)
