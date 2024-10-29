@@ -36,9 +36,9 @@
     "@griffel/react": "^1.5.25",
     "@types/events": "^3.0.3",
     "copy-to-clipboard": "^3.3.1",
-    "dompurify": "^3.1.6",
+    "dompurify": "^3.1.7",
     "events": "^3.3.0",
-    "html-react-parser": "^5.1.12",
+    "html-react-parser": "^5.1.18",
     "immer": "10.1.1",
     "memoize-one": "^5.2.1",
     "nanoid": "3.3.6",
@@ -51,7 +51,7 @@
     "roosterjs-content-model-plugins": "^9.9.1",
     "roosterjs-content-model-types": "^9.9.1",
     "textarea-caret-ts": "^4.1.1",
-    "use-debounce": "^10.0.2",
+    "use-debounce": "^10.0.4",
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
