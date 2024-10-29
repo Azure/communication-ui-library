@@ -39,7 +39,7 @@
     "@azure/logger": "^1.0.4",
     "@fluentui/react": "^8.120.0",
     "@fluentui/react-file-type-icons": "8.11.18",
-    "@fluentui/react-icons": "^2.0.252",
+    "@fluentui/react-icons": "^2.0.263",
     "@internal/acs-ui-common": "1.21.0-beta.0",
     "@internal/chat-stateful-client": "1.21.0-beta.0",
     "@internal/chat-component-bindings": "1.21.0-beta.0",
