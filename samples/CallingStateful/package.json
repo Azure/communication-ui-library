@@ -1,5 +1,5 @@
 {
-  "name": "@internal/callingstateful",
+  "name": "@internal/calling-stateful-samples",
   "version": "0.0.1",
   "private": true,
   "description": "This is a sample application to show how the UI Library can be used to build a calling experience. The client-side application is a React based user interface which uses React Hooks for handling complex state while leveraging Microsoft Fluent UI for how things look.",
