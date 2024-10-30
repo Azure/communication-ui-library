@@ -87,7 +87,7 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-junit": "^16.0.0",
     "jest": "29.7.0",
-    "prettier": "3.3.2",
+    "prettier": "3.3.3",
     "pretty-quick": "^4.0.0",
     "rimraf": "^2.6.2",
     "style-loader": "^2.0.0",
@@ -98,6 +98,6 @@
     "webpack-dev-server": "4.15.2",
     "webpack": "5.95.0",
     "webpack-bundle-analyzer": "^4.5.0",
-    "@babel/cli": "^7.24.8"
+    "@babel/cli": "^7.25.9"
   }
 }
