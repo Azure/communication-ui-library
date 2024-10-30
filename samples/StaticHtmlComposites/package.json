@@ -54,6 +54,6 @@
     "webpack-cli": "^5.1.4",
     "webpack-bundle-analyzer": "^4.5.0",
     "cpy-cli": "^5.0.0",
-    "@babel/cli": "^7.25.9"
+    "@babel/cli": "^7.24.8"
   }
 }
