@@ -5237,15 +5237,15 @@ packages:
       react: 18.3.1
     dev: false
 
-  /@microsoft/api-documenter@7.25.14(@types/node@20.14.12):
-    resolution: {integrity: sha512-nysAB+j4l5Al3XvCdee6tw0rw4fXpnlIq9En2opcc3DgITeoehiaYYoZZqoqOQSKlSUDWF7Z55GGsvntVrcBkg==}
+  /@microsoft/api-documenter@7.25.21(@types/node@20.14.12):
+    resolution: {integrity: sha512-Nyfidxbi9wIZ1H7VjVqw3nUhRM1fUJuGqvt2iDEI91Z4k8X+BqxSaLOsnn8n65YaAZhUJRkh1Ouxt90r7cnmjA==}
     hasBin: true
     dependencies:
       '@microsoft/api-extractor-model': 7.29.8(@types/node@20.14.12)
       '@microsoft/tsdoc': 0.15.0
       '@rushstack/node-core-library': 5.9.0(@types/node@20.14.12)
       '@rushstack/terminal': 0.14.2(@types/node@20.14.12)
-      '@rushstack/ts-command-line': 4.22.8(@types/node@20.14.12)
+      '@rushstack/ts-command-line': 4.23.0(@types/node@20.14.12)
       js-yaml: 3.13.1
       resolve: 1.22.8
     transitivePeerDependencies:
@@ -5262,8 +5262,8 @@ packages:
       - '@types/node'
     dev: false
 
-  /@microsoft/api-extractor@7.47.9(@types/node@20.14.12):
-    resolution: {integrity: sha512-TTq30M1rikVsO5wZVToQT/dGyJY7UXJmjiRtkHPLb74Prx3Etw8+bX7Bv7iLuby6ysb7fuu1NFWqma+csym8Jw==}
+  /@microsoft/api-extractor@7.47.11(@types/node@20.14.12):
+    resolution: {integrity: sha512-lrudfbPub5wzBhymfFtgZKuBvXxoSIAdrvS2UbHjoMT2TjIEddq6Z13pcve7A03BAouw0x8sW8G4txdgfiSwpQ==}
     hasBin: true
     dependencies:
       '@microsoft/api-extractor-model': 7.29.8(@types/node@20.14.12)
@@ -5272,7 +5272,7 @@ packages:
       '@rushstack/node-core-library': 5.9.0(@types/node@20.14.12)
       '@rushstack/rig-package': 0.5.3
       '@rushstack/terminal': 0.14.2(@types/node@20.14.12)
-      '@rushstack/ts-command-line': 4.22.8(@types/node@20.14.12)
+      '@rushstack/ts-command-line': 4.23.0(@types/node@20.14.12)
       lodash: 4.17.21
       minimatch: 3.0.8
       resolve: 1.22.8
@@ -5957,8 +5957,8 @@ packages:
       supports-color: 8.1.1
     dev: false
 
-  /@rushstack/ts-command-line@4.22.8(@types/node@20.14.12):
-    resolution: {integrity: sha512-XbFjOoV7qZHJnSuFUHv0pKaFA4ixyCuki+xMjsMfDwfvQjs5MYG0IK5COal3tRnG7KCDe2l/G+9LrzYE/RJhgg==}
+  /@rushstack/ts-command-line@4.23.0(@types/node@20.14.12):
+    resolution: {integrity: sha512-jYREBtsxduPV6ptNq8jOKp9+yx0ld1Tb/Tkdnlj8gTjazl1sF3DwX2VbluyYrNd0meWIL0bNeer7WDf5tKFjaQ==}
     dependencies:
       '@rushstack/terminal': 0.14.2(@types/node@20.14.12)
       '@types/argparse': 1.0.38
@@ -19476,7 +19476,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-JllEuPBONeDAlhFol+QnfR24K7appsajOojCNTMWJ3CymU82NRmRxGVvWdFHl4AjN9HeDK44Rg7aC2kjyQjevg==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-8RmG1vAbl9yioq3Go1fCvbjRT76HEJa/LaAPHjCITAmPvJOa3zr7ymykePiGhXbcNMMFu2wh8245SHdAqcAz7A==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -19497,8 +19497,8 @@ packages:
       '@fluentui/react-icons': 2.0.263(react@18.3.1)
       '@fluentui/react-window-provider': 2.2.28(@types/react@18.3.3)(react@18.3.1)
       '@griffel/react': 1.5.25(react@18.3.1)
-      '@microsoft/api-documenter': 7.25.14(@types/node@20.14.12)
-      '@microsoft/api-extractor': 7.47.9(@types/node@20.14.12)
+      '@microsoft/api-documenter': 7.25.21(@types/node@20.14.12)
+      '@microsoft/api-extractor': 7.47.11(@types/node@20.14.12)
       '@rollup/plugin-json': 6.1.0(rollup@4.22.4)
       '@testing-library/jest-dom': 6.5.0
       '@testing-library/react': 16.0.1(@testing-library/dom@9.3.4)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
@@ -19850,7 +19850,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-1JtA9ZyAi1Cu/g9WKbFbgI53oVGU+Bian1D633ySVOjmDv81sGbJ1DBardmRQrNZMfKRYXdxA4jsqJryVRD+ig==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-0PEfEhfN6Dg2BOGT8RfE8eVFj0vx5XUu5uhpcXjyYvCJxGDBcgKfZlX9jdexR971+zEhKNIcGn499UgOfX0+wA==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -19869,8 +19869,8 @@ packages:
       '@fluentui/react-file-type-icons': 8.11.18(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.16(@types/react@18.3.3)(react@18.3.1)
       '@fluentui/react-icons': 2.0.263(react@18.3.1)
-      '@microsoft/api-documenter': 7.25.14(@types/node@20.14.12)
-      '@microsoft/api-extractor': 7.47.9(@types/node@20.14.12)
+      '@microsoft/api-documenter': 7.25.21(@types/node@20.14.12)
+      '@microsoft/api-extractor': 7.47.11(@types/node@20.14.12)
       '@playwright/test': 1.39.0
       '@testing-library/jest-dom': 6.5.0
       '@testing-library/react': 16.0.1(@testing-library/dom@9.3.4)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
