@@ -59,7 +59,7 @@
     "uuid": "^9.0.0"
   },
   "devDependencies": {
-    "@babel/cli": "^7.24.8",
+    "@babel/cli": "^7.25.9",
     "@babel/core": "^7.25.2",
     "@babel/eslint-parser": "^7.22.15",
     "@babel/preset-env": "7.23.9",

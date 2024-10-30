@@ -98,6 +98,6 @@
     "webpack-dev-server": "4.15.2",
     "webpack": "5.95.0",
     "webpack-bundle-analyzer": "^4.5.0",
-    "@babel/cli": "^7.24.8"
+    "@babel/cli": "^7.25.9"
   }
 }

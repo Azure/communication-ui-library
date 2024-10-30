@@ -43,7 +43,7 @@
   },
   "devDependencies": {
     "@azure/communication-signaling": "1.0.0-beta.27 || 1.0.0-beta.29",
-    "@babel/cli": "^7.24.8",
+    "@babel/cli": "^7.25.9",
     "@babel/core": "^7.25.2",
     "@types/jest": "^29.5.11",
     "@types/react": "18.3.3",
