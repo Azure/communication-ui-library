@@ -28,7 +28,7 @@ export type {
 export type { CallNotification, CallNotifications, NotificationTarget } from './CallClientState';
 export type { TeamsIncomingCallState } from './CallClientState';
 /* @conditional-compile-remove(remote-ufd) */
-export type { RemoteDiagnosticState } from './CallClientState';
+export type { RemoteDiagnosticState, RemoteDiagnosticType } from './CallClientState';
 export type { CreateViewResult } from './StreamUtils';
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
