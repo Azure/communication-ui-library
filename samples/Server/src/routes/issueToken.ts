@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CommunicationUserToken, TokenScope } from '@azure/communication-identity';
-import * as express from 'express';
+import express, { Request, Response } from 'express';
 import { createUserAndToken } from '../lib/identityClient';
 
 const router = express.Router();
@@ -31,7 +31,15 @@ const handleUserTokenRequest = async (requestedScope?: string): Promise<Communic
  * e.g. ?scope=chat,voip
  *
  */
-router.get('/', async (req, res, next) => res.send(await handleUserTokenRequest((req.query.scope as string) ?? '')));
-router.post('/', async (req, res, next) => res.send(await handleUserTokenRequest((req.body.scope as string) ?? '')));
+router.get('/', async (req: Request, res: Response) => {
+  const scope = (req.query.scope as string) ?? '';
+  const token = await handleUserTokenRequest(scope);
+  res.send(token);
+});
+router.post('/', async (req: Request, res: Response) => {
+  const scope = (req.body.scope as string) ?? '';
+  const token = await handleUserTokenRequest(scope);
+  res.send(token);
+});
 
 export default router;

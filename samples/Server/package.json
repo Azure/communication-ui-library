@@ -42,7 +42,7 @@
   "devDependencies": {
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.13",
     "@types/copy-webpack-plugin": "^6.4.0",
-    "@types/express": "^4.17.8",
+    "@types/express": "^5.0.0",
     "@types/http-errors": "^1.8.0",
     "@types/jest": "^29.5.11",
     "@types/morgan": "^1.9.2",

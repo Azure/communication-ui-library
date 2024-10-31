@@ -6909,7 +6909,7 @@ packages:
     resolution: {integrity: sha512-fB3Zu92ucau0iQ0JMCFQE7b/dv8Ot07NI3KaZIkIUNXq82k4eBAqUaneXfleGY9JWskeS9y+u0nXMyspcuQrCg==}
     dependencies:
       '@types/connect': 3.4.38
-      '@types/node': 20.14.12
+      '@types/node': 22.7.1
     dev: false
 
   /@types/bonjour@3.5.13:
@@ -6934,7 +6934,7 @@ packages:
   /@types/connect@3.4.38:
     resolution: {integrity: sha512-K6uROf1LD88uDQqJCktA4yzL1YYAK6NgfsI0v/mTgyPKWsX1CnJ0XPSDhViejru1GcRkLWb8RlzFYJRqGUbaug==}
     dependencies:
-      '@types/node': 20.14.12
+      '@types/node': 22.7.1
     dev: false
 
   /@types/cookiejar@2.1.5:
@@ -7021,7 +7021,7 @@ packages:
   /@types/express-serve-static-core@5.0.0:
     resolution: {integrity: sha512-AbXMTZGt40T+KON9/Fdxx0B2WK5hsgxcfXJLr5bFpZ7b4JCex2WyQPTEKdXqfHiY5nKKBScZ7yCoO6Pvgxfvnw==}
     dependencies:
-      '@types/node': 20.14.12
+      '@types/node': 22.7.1
       '@types/qs': 6.9.16
       '@types/range-parser': 1.2.7
       '@types/send': 0.17.4
@@ -7032,6 +7032,15 @@ packages:
     dependencies:
       '@types/body-parser': 1.19.5
       '@types/express-serve-static-core': 4.19.6
+      '@types/qs': 6.9.16
+      '@types/serve-static': 1.15.7
+    dev: false
+
+  /@types/express@5.0.0:
+    resolution: {integrity: sha512-DvZriSMehGHL1ZNLzi6MidnsDhUZM/x2pRdDIKdwbUNqqwHxMlRdkxtn6/EPKyqKpHqTl/4nRZsRNLpZxZRpPQ==}
+    dependencies:
+      '@types/body-parser': 1.19.5
+      '@types/express-serve-static-core': 5.0.0
       '@types/qs': 6.9.16
       '@types/serve-static': 1.15.7
     dev: false
@@ -7063,7 +7072,7 @@ packages:
   /@types/http-proxy@1.17.15:
     resolution: {integrity: sha512-25g5atgiVNTIv0LBDTg1H74Hvayx0ajtJPLLcYE3whFv75J0pWNtOBzaXJQgDTmrX1bx5U9YC2w/n65BN1HwRQ==}
     dependencies:
-      '@types/node': 20.14.12
+      '@types/node': 22.7.1
     dev: false
 
   /@types/is-empty@1.2.3:
@@ -7154,7 +7163,7 @@ packages:
   /@types/multer@1.4.12:
     resolution: {integrity: sha512-pQ2hoqvXiJt2FP9WQVLPRO+AmiIm/ZYkavPlIQnx282u4ZrVdztx0pkh3jjpQt0Kz+YI0YhSG264y08UJKoUQg==}
     dependencies:
-      '@types/express': 4.17.21
+      '@types/express': 5.0.0
     dev: false
 
   /@types/node-forge@1.3.11:
@@ -8211,7 +8220,7 @@ packages:
   /axios@1.7.7:
     resolution: {integrity: sha512-S4kL7XrjgBmvdGut0sN3yJxqYzrDOnivkBiN0OFs6hLiUam3UPvswUo0kqGyhqUZGEOytHyumEdXsAkgCOUf3Q==}
     dependencies:
-      follow-redirects: 1.15.9
+      follow-redirects: 1.15.9(debug@2.6.9)
       form-data: 4.0.0
       proxy-from-env: 1.1.0
     transitivePeerDependencies:
@@ -10977,7 +10986,7 @@ packages:
         optional: true
     dev: false
 
-  /follow-redirects@1.15.9:
+  /follow-redirects@1.15.9(debug@2.6.9):
     resolution: {integrity: sha512-gew4GsXizNgdoRyqmyfMHyAmXsZDk6mHkSxZFCzW9gwlbtOW44CDtYavM+y+72qD/Vq2l550kMF52DT8fOLJqQ==}
     engines: {node: '>=4.0'}
     peerDependencies:
@@ -10985,6 +10994,8 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+    dependencies:
+      debug: 2.6.9
     dev: false
 
   /for-each@0.3.3:
@@ -11693,8 +11704,8 @@ packages:
       - supports-color
     dev: false
 
-  /http-proxy-middleware@2.0.6(@types/express@4.17.21):
-    resolution: {integrity: sha512-ya/UeJ6HVBYxrgYotAZo1KvPWlgB48kUJLDePFeneHsVujFaW5WNj2NgWCAE//B1Dl02BIfYlpNgBy8Kf8Rjmw==}
+  /http-proxy-middleware@2.0.7(@types/express@4.17.21):
+    resolution: {integrity: sha512-fgVY8AV7qU7z/MmXJ/rxwbrtQH4jBQ9m7kp3llF0liB7glmFeVZFBepQb32T3y8n8k2+AEYuMPCpinYW+/CuRA==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
       '@types/express': ^4.17.13
@@ -11704,7 +11715,7 @@ packages:
     dependencies:
       '@types/express': 4.17.21
       '@types/http-proxy': 1.17.15
-      http-proxy: 1.18.1
+      http-proxy: 1.18.1(debug@2.6.9)
       is-glob: 4.0.3
       is-plain-obj: 3.0.0
       micromatch: 4.0.8
@@ -11712,12 +11723,31 @@ packages:
       - debug
     dev: false
 
-  /http-proxy@1.18.1:
+  /http-proxy-middleware@2.0.7(@types/express@5.0.0)(debug@2.6.9):
+    resolution: {integrity: sha512-fgVY8AV7qU7z/MmXJ/rxwbrtQH4jBQ9m7kp3llF0liB7glmFeVZFBepQb32T3y8n8k2+AEYuMPCpinYW+/CuRA==}
+    engines: {node: '>=12.0.0'}
+    peerDependencies:
+      '@types/express': ^4.17.13
+    peerDependenciesMeta:
+      '@types/express':
+        optional: true
+    dependencies:
+      '@types/express': 5.0.0
+      '@types/http-proxy': 1.17.15
+      http-proxy: 1.18.1(debug@2.6.9)
+      is-glob: 4.0.3
+      is-plain-obj: 3.0.0
+      micromatch: 4.0.8
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
+  /http-proxy@1.18.1(debug@2.6.9):
     resolution: {integrity: sha512-7mz/721AbnJwIVbnaSv1Cz3Am0ZLT/UBwkC92VlxhXv/k/BBQfM2fXElQNC27BVGr0uwUpplYPQM9LnaBMR5NQ==}
     engines: {node: '>=8.0.0'}
     dependencies:
       eventemitter3: 4.0.7
-      follow-redirects: 1.15.9
+      follow-redirects: 1.15.9(debug@2.6.9)
       requires-port: 1.0.0
     transitivePeerDependencies:
       - debug
@@ -11733,7 +11763,7 @@ packages:
       corser: 2.0.1
       he: 1.2.0
       html-encoding-sniffer: 3.0.0
-      http-proxy: 1.18.1
+      http-proxy: 1.18.1(debug@2.6.9)
       mime: 1.6.0
       minimist: 1.2.8
       opener: 1.5.2
@@ -18270,7 +18300,7 @@ packages:
       express: 4.21.1
       graceful-fs: 4.2.11
       html-entities: 2.5.2
-      http-proxy-middleware: 2.0.6(@types/express@4.17.21)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       ipaddr.js: 2.2.0
       launch-editor: 2.9.1
       open: 8.4.2
@@ -18749,7 +18779,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-ft9269IeRgSjypL5RFTOX7YnI4tiIU1JVfycSTeLbOmMA0Yns7IKDqtWdUBRN3z7qCAdysQzwgQGFMZM+nEvpg==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-83t2yzFaROmoAKwPxgxifm1OQD8/lg70A3U2ft3wkKtqx4zJ/MElQEijA1g7hvxS+H0rFfMQCDT54YsxA3VeiA==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -18771,6 +18801,7 @@ packages:
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       prettier: 3.3.2
@@ -18783,9 +18814,11 @@ packages:
       - '@jest/transform'
       - '@jest/types'
       - '@types/eslint'
+      - '@types/express'
       - '@types/node'
       - babel-jest
       - babel-plugin-macros
+      - debug
       - esbuild
       - node-notifier
       - supports-color
@@ -18793,7 +18826,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-xaAUGJEih921VOM0XnQmlQStt/P+8CX1i2LKUrZ9/vxuArBVg1SDNigsraoV6MLqXQ7euGk1vKadtAqJVmW9Hg==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-5KfbOUi3MDZSUYo9rov16DFPOv78jnlTPqnTExebTcgb8qksgForYXjruFSZ3y7Od7qai+p5lStKdUJJZAeBGA==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -18817,6 +18850,7 @@ packages:
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       prettier: 3.3.2
@@ -18830,9 +18864,11 @@ packages:
       - '@jest/transform'
       - '@jest/types'
       - '@types/eslint'
+      - '@types/express'
       - '@types/node'
       - babel-jest
       - babel-plugin-macros
+      - debug
       - esbuild
       - node-notifier
       - supports-color
@@ -18840,7 +18876,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-8ZMGaChZ2De4R6lH+IM6bnh52+LkATiwbRoAm1eGILvrL0E07xtWg79nkWJ+UIS5IAakvz/sZxuqNnFSMMk9tg==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-Bd9Xq1UIJnpaGjBC5GNmGBqeUmYgtUKUtkDeOZWXXAQV9Di5qhl5gc+b8mLD7oRrJPJRhLQjx0N5lM4rksRulg==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -18863,6 +18899,7 @@ packages:
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       memoize-one: 5.2.1
@@ -18877,9 +18914,11 @@ packages:
       - '@jest/transform'
       - '@jest/types'
       - '@types/eslint'
+      - '@types/express'
       - '@types/node'
       - babel-jest
       - babel-plugin-macros
+      - debug
       - esbuild
       - node-notifier
       - supports-color
@@ -18887,7 +18926,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-EqXh6NMt50j3EsfxSFdjkDM4xRPDgWpIrH5iAHGMPErL/4HKYr7PxRy8RaW7C+BJ0Y5JVdKiCVXu970TwOxZlw==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-eSyz9QdTFqQ0MbI4DAJ4YdSjm4a3syOuKpgu/6MbdsJlQXzfBZy22jOcyR5buwbpAMvz1g1SSo4SmuZQywmmgg==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -18913,6 +18952,7 @@ packages:
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       events: 3.3.0
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
@@ -18925,9 +18965,11 @@ packages:
       - '@jest/transform'
       - '@jest/types'
       - '@types/eslint'
+      - '@types/express'
       - '@types/node'
       - babel-jest
       - babel-plugin-macros
+      - debug
       - esbuild
       - node-notifier
       - supports-color
@@ -18935,7 +18977,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-samples.tgz:
-    resolution: {integrity: sha512-xd5/GnyNrgwN11C1KFTnpGQVSU1PkosmkUWEnDe6j+o56bHNDhKb4mtEMo1lb+ZOEMJcVVm2iDR1dg+ZvAbAGA==, tarball: file:projects/calling-stateful-samples.tgz}
+    resolution: {integrity: sha512-FfOfgZbyxfjAkwAPJbhR+/V2GbRCM8xdr/aQ+kMrASeU3hzfOPNE1mvWDlX623ii4BrZktHte0zZrh7j3JUMEg==, tarball: file:projects/calling-stateful-samples.tgz}
     name: '@rush-temp/calling-stateful-samples'
     version: 0.0.0
     dependencies:
@@ -18979,6 +19021,7 @@ packages:
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       follow-redirects: 1.15.6
       html-webpack-plugin: 5.6.0(webpack@5.95.0)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       husky: 8.0.3
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
@@ -19011,6 +19054,7 @@ packages:
       - '@rspack/core'
       - '@swc/core'
       - '@types/eslint'
+      - '@types/express'
       - '@webpack-cli/generators'
       - babel-eslint
       - babel-plugin-macros
@@ -19029,7 +19073,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-OEwVYl4flaaaCYBRhyNm8/t+X4UP9WPVn2X3nKQUtLJOKKMJwlA/37GltiTNYlofMQQO5RGBrSe4LbSSBGEjEQ==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-pY7gi76h6hb5SziiNoR6VConxdsSubnJRvoa82oii8KA76UGBtvVz9W7I/68ptXTG/L+IA8hNkcoE3yhaChb3A==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -19073,6 +19117,7 @@ packages:
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       follow-redirects: 1.15.6
       html-webpack-plugin: 5.6.0(webpack@5.95.0)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       husky: 8.0.3
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
@@ -19105,6 +19150,7 @@ packages:
       - '@rspack/core'
       - '@swc/core'
       - '@types/eslint'
+      - '@types/express'
       - '@webpack-cli/generators'
       - babel-eslint
       - babel-plugin-macros
@@ -19123,7 +19169,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-0+ZHG7ow4gSz21U6nMxAgUIZiIdY4QP8IfvODfPfsFx+YRaKzZjg4M/K5rIfq5vFxQp91sSldwDzekLwNq6ESg==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-bhl8iRoZtwk+/Wl5+nKhQG5eNybOO+2xGU1xbuhVCiVnjeMJB8xSm/LuTfqnoj33P+8S9vVbTQgT6LrSDYS5AA==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -19168,6 +19214,7 @@ packages:
       eslint-plugin-react: 7.37.1(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       html-webpack-plugin: 5.6.0(webpack@5.95.0)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       husky: 8.0.3
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
@@ -19198,6 +19245,7 @@ packages:
       - '@rspack/core'
       - '@swc/core'
       - '@types/eslint'
+      - '@types/express'
       - '@webpack-cli/generators'
       - babel-eslint
       - babel-plugin-macros
@@ -19215,7 +19263,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-qlTVA1tbPIwZUlpVNjcSDsCAZ6q30FBvAY1gyGNXMGc9LhXv7JXtKwfQF8nu+VOumEZ5geSrMsBiKD6dulAsWw==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-5x5rFnYyzDziuFH8P1LJnU+esP43SHaq12B7AXgMVtBrjym8UqnB9Bakj2BhBNjc4PWzM28U3T3y+ULwKG4xtg==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -19236,6 +19284,7 @@ packages:
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       memoize-one: 5.2.1
@@ -19247,15 +19296,17 @@ packages:
       typescript: 5.4.5
     transitivePeerDependencies:
       - '@types/eslint'
+      - '@types/express'
       - '@types/node'
       - babel-plugin-macros
+      - debug
       - node-notifier
       - supports-color
       - ts-node
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-DRuv5cmyelo2se/DhDQ6bx9tCAF5sLSyPSOxRNatsGEEth8l1LAF4lJwq1PZ8Eg9lDWYYe9c7JnA8X+CsZLeSw==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-uwoj63d2VSSAFrVH0ZZPT8PQWzKPYp4qz+cD/DQDElaxjuwGfBKKQsvWh0DN/7M25UfYCyEDXqnZhnsgnxw+XA==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -19283,6 +19334,7 @@ packages:
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       events: 3.3.0
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
@@ -19296,8 +19348,10 @@ packages:
       - '@jest/transform'
       - '@jest/types'
       - '@types/eslint'
+      - '@types/express'
       - babel-jest
       - babel-plugin-macros
+      - debug
       - esbuild
       - node-notifier
       - supports-color
@@ -19305,7 +19359,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-b7+oxlWGOgyTpKpsIDciR1+WsY1aPYRwOq5EZ1eexSQUcS7Jmg9ZmRrbAxu0Z64IoVv1GQLAdq9V3beYaVPOdw==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-RmxzBWgNGYccfxZST0h5m+U7i+H5lIIoNgDGFwO1JyXkdbAe9eMZnK/ZJ0cwErZnjnsAh2n/A42TcOFP00UiNA==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -19346,6 +19400,7 @@ packages:
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       form-data: 4.0.0
       html-webpack-plugin: 5.6.0(webpack@5.95.0)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       husky: 8.0.3
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
@@ -19375,6 +19430,7 @@ packages:
       - '@rspack/core'
       - '@swc/core'
       - '@types/eslint'
+      - '@types/express'
       - '@types/node'
       - '@webpack-cli/generators'
       - babel-eslint
@@ -19394,7 +19450,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-VNn58y9b9Ee5h5yqEcNNip6edSkwHEV+6M7jA7BUhFjEdVMzWU432awwgFkIUJG34EL+4Jxncdpeh+WiBmx0Gg==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-MO5jrqKUIXtU+wCs2IDMlsQN1gNHnopf7ItcF3CEcyR6y6WuuUQp+O49CfSdYNQgSbj320IWhL8idOhs9IJ1Pw==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -19406,6 +19462,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       prettier: 3.3.2
       rimraf: 2.7.1
       webpack: 5.95.0(webpack-cli@5.1.4)
@@ -19413,7 +19470,9 @@ packages:
     transitivePeerDependencies:
       - '@swc/core'
       - '@types/eslint'
+      - '@types/express'
       - '@webpack-cli/generators'
+      - debug
       - esbuild
       - supports-color
       - uglify-js
@@ -19422,7 +19481,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-e9oJsnOJ2X+nt+TYZmSJgSDljBTJiOwO18FQSp2pa0UVZqmp+y5Y8xMcOZ4fPBsbcCEI/AkysswHXHVF/143jA==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-PmIiI+KNCYvrE+uLi1Yq2gtlLOF3NOGmb2D3J1lMFmHHU0iMtFkZs72YpXBFXQa/JabRNdjXIYkkDOc8LQwHGQ==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -19431,16 +19490,19 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       prettier: 3.3.2
       rimraf: 2.7.1
       typescript: 4.6.3
     transitivePeerDependencies:
       - '@types/eslint'
+      - '@types/express'
+      - debug
       - supports-color
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-L5HSwYQEJy93zi/Sgdm+8+OXXKGTeQHUrcZq92BYLh6IgqH34T4ScjvGR3ESm3yJt25Iy0Ap1HcNigTBI2FoMQ==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-SkPnliB7cze+ckP2oz71apU7lp/Wca/0NEDOLW5vfJH+SzXQACdFR6BDReExaGfaAp7sHFsbvkZgsJyIxFsr6w==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -19494,6 +19556,7 @@ packages:
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       events: 3.3.0
       html-react-parser: 5.1.16(@types/react@18.3.3)(react@18.3.1)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
@@ -19537,15 +19600,17 @@ packages:
       - '@swc/wasm'
       - '@testing-library/dom'
       - '@types/eslint'
+      - '@types/express'
       - babel-jest
       - babel-plugin-macros
+      - debug
       - esbuild
       - node-notifier
       - supports-color
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-ojGHb1EKe07lPmGB5VQeDnhWx+i41XN2ZM9k/nCL3DorQzrcM+2SSty4ivJuG6ra6u63U7pUTvb/H/Ho5XRw8g==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-pGtSaBIgqR4YWajLM4XLYabUmQXIl0Jv/yFKL+BRcDl6Tqg5tO0ox5Nf62gLAVbDLdgkvpyI33c2lYP8/sdZMQ==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -19577,6 +19642,7 @@ packages:
       eslint-plugin-react: 7.37.1(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       html-webpack-plugin: 5.6.0(webpack@5.95.0)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       husky: 8.0.3
       if-env: 1.0.4
       prettier: 3.3.2
@@ -19597,6 +19663,7 @@ packages:
       - '@rspack/core'
       - '@swc/core'
       - '@types/eslint'
+      - '@types/express'
       - '@webpack-cli/generators'
       - babel-eslint
       - bufferutil
@@ -19611,7 +19678,7 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-xdEkh9H5mycFczOOmzU2Y+EADwSAA1UHjsxXEaEZjdQV7tborbQ3WIeYoOvlscUoqHelRd8qNVPAw3cJ/CPrvA==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-TO6GSiXUU044mEmDYFzDj5pMVy/tfKIoEjclLKy+TnsXu2aJ1bmqgTW4u39P4ZkXjH7jp9q08KP4nId5hI5jww==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
@@ -19622,6 +19689,7 @@ packages:
       '@rollup/plugin-json': 6.1.0(rollup@4.22.4)
       '@types/node': 20.14.12
       beachball: 2.47.1(typescript@5.4.5)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       rollup: 4.22.4
       rollup-plugin-sourcemaps: 0.6.3(@types/node@20.14.12)(rollup@4.22.4)
       rollup-plugin-svg: 2.0.0
@@ -19630,21 +19698,26 @@ packages:
     transitivePeerDependencies:
       - '@swc/core'
       - '@swc/wasm'
+      - '@types/express'
+      - debug
       - encoding
     dev: false
 
   file:projects/eslint-plugin-custom-rules.tgz:
-    resolution: {integrity: sha512-x1AbWT3cjJ6u8SMkv+SYREtmC1+YqIqGPHzFWKVrDOQdY95rNB26uZOPE/rPqKpx2Cm/5WlrxrXorb90V7cKcQ==, tarball: file:projects/eslint-plugin-custom-rules.tgz}
+    resolution: {integrity: sha512-tDC3ZqHmQUSX9rtUi57KzIUrrn4spQGCcRUDH84g+nx4dooGfW+r3DZoAD1R2qMGHn3jnlXy3STxV7w9LjX/HA==, tarball: file:projects/eslint-plugin-custom-rules.tgz}
     name: '@rush-temp/eslint-plugin-custom-rules'
     version: 0.0.0
     dependencies:
       eslint: 8.57.1
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
     transitivePeerDependencies:
+      - '@types/express'
+      - debug
       - supports-color
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-mL+/gfDwyqorehzHtlp6kzd1Jfw2VeFF0Z87KlqXmPJKmtdHFEWU7XyqSpYdoOP94oGNBMwKHWKHRE3usz74vQ==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-ESaCwyEP9Ext81AWmKVnsEyYrcUWDcHVcsR15cRUFDH+KWazkiYT1ie0ytkcqnMpc8xoEyL+asy9rOggNSi/tA==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -19673,6 +19746,7 @@ packages:
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       events: 3.3.0
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
@@ -19688,8 +19762,10 @@ packages:
       - '@jest/types'
       - '@swc/core'
       - '@types/eslint'
+      - '@types/express'
       - '@types/node'
       - babel-plugin-macros
+      - debug
       - esbuild
       - node-notifier
       - supports-color
@@ -19699,7 +19775,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-ToUtNfmu/kFoi8yQhrj0/67UafpxF4nGX0AKfQcO1/wQByK0fwcqvgQ98oKNZhe/64m/+oKGyhhuQIlx+Kumrw==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-7HoJ3UFHn0vCDag6nBTqDG8Wm4Rfq+UNf58ohW7pTHdMGpXE4/T4aMtAhZGsQ4bumAWYp5fC51zSDDAPBghhbw==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -19753,6 +19829,7 @@ packages:
       eslint-plugin-react: 7.37.1(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       html-react-parser: 5.1.16(@types/react@18.3.3)(react@18.3.1)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       husky: 8.0.3
       if-env: 1.0.4
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
@@ -19794,9 +19871,11 @@ packages:
       - '@swc/core'
       - '@swc/wasm'
       - '@types/eslint'
+      - '@types/express'
       - babel-plugin-macros
       - bufferutil
       - canvas
+      - debug
       - encoding
       - esbuild
       - less
@@ -19814,7 +19893,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-ttkr5FlETZsFqgyV4+drdV3gixGDExiTtAVtkarwCxbFppjDgR7y3IZS2yGHilqQ9Rwm/3TpHG+o5UqM1mhgFw==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-gotWNnbj1mnt8/nn6znAyorzjsjChwdWrwqx0wfD4oSzcq/+/a1ca7iXwIPRHYb9iz7gSdv2paHvh3S81v6JGg==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -19840,7 +19919,7 @@ packages:
       '@testing-library/react': 16.0.1(@testing-library/dom@9.3.4)(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1)(react@18.3.1)
       '@types/copy-webpack-plugin': 6.4.3
       '@types/events': 3.0.3
-      '@types/express': 4.17.21
+      '@types/express': 5.0.0
       '@types/jest': 29.5.13
       '@types/json-stringify-safe': 5.0.3
       '@types/node': 20.14.12
@@ -19877,6 +19956,7 @@ packages:
       express: 4.21.1
       fs-extra: 10.1.0
       html-webpack-plugin: 5.6.0(webpack@5.95.0)
+      http-proxy-middleware: 2.0.7(@types/express@5.0.0)(debug@2.6.9)
       husky: 8.0.3
       if-env: 1.0.4
       immer: 10.1.1
@@ -19933,7 +20013,7 @@ packages:
     dev: false
 
   file:projects/sample-automation-tests.tgz:
-    resolution: {integrity: sha512-XDmCGxCqgUApZhO/8pLgfY8vo1LSxTukPfbPHiyJWa17NQiV+l/CGnrqN6gRnovee2CYWOvnBZMDC0001OH5qA==, tarball: file:projects/sample-automation-tests.tgz}
+    resolution: {integrity: sha512-K89vC55ZAQdqS92SeJfpcUFua/8c6qyN5ctckWSGVDL2lrNe5SPtNzB9th/4lIVPmwOClSaowLgBwqX3q2+82A==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
@@ -19947,17 +20027,20 @@ packages:
       dotenv: 10.0.0
       env-cmd: 10.1.0
       express: 4.21.1
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       if-env: 1.0.4
       path: 0.12.7
       rimraf: 2.7.1
       typescript: 5.4.5
       uuid: 9.0.1
     transitivePeerDependencies:
+      - '@types/express'
+      - debug
       - supports-color
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-V/7FH0JAERQU2yhp43pRMHn0xMnkoYudMaD3PSYzqzg+DoquK/kqMnK0GnJDrF0Mnlkg1pYQaGdTLJjU7jBSww==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-FCrtdIfhUiiwbGE/p7LFYDlnS+fdKGjmJdERkhJpgbw4p84S+c4W0bgUkZW+BagQtViZgdinKvOakfN0L3oqPQ==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
@@ -19980,6 +20063,7 @@ packages:
       dotenv: 10.0.0
       env-cmd: 10.1.0
       html-webpack-plugin: 5.6.0(webpack@5.95.0)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       http-server: 14.1.1
       if-env: 1.0.4
       react: 18.3.1
@@ -19993,6 +20077,7 @@ packages:
     transitivePeerDependencies:
       - '@rspack/core'
       - '@swc/core'
+      - '@types/express'
       - '@webpack-cli/generators'
       - bufferutil
       - debug
@@ -20004,7 +20089,7 @@ packages:
     dev: false
 
   file:projects/scripts.tgz:
-    resolution: {integrity: sha512-Gz39L0FpcaiWmu0vIdx+ag3rElBIi12ECc4QgxWTV4SzlBOCZzDJKWddFdkqhNnqxrUWz7LuHOtSOgRW3tblJg==, tarball: file:projects/scripts.tgz}
+    resolution: {integrity: sha512-mIeNVk9xUP9Bva5mnw8uy+QaAVNgvYNbuNG1stJ7GOQ8wskWoGV4HjdF3WSlQ2MReG3j7vs0iWZV+OFdqXLL4w==, tarball: file:projects/scripts.tgz}
     name: '@rush-temp/scripts'
     version: 0.0.0
     dependencies:
@@ -20012,19 +20097,22 @@ packages:
       '@jest/transform': 29.7.0
       '@types/yargs': 17.0.33
       babel-jest: 29.7.0(@babel/core@7.25.2)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       yargs: 17.7.2
     transitivePeerDependencies:
       - '@babel/core'
+      - '@types/express'
       - '@types/node'
       - babel-plugin-macros
+      - debug
       - node-notifier
       - supports-color
       - ts-node
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-KgGle5UDKaHmwa5Wup8mRq6kMbrKMiUDZ0yjIQWgN9Ajw+n4nLqxrz+yBPzDyV5gIer6nxB7yKV6AuVqCO2xYQ==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-/uBgu4SjNV3T4/SWx11uawMkei3LXuWXfaZKhzBatT0xtj+dCXrCdtp4CLR1e6OUZeoXVT78GFtamI89b6z5vQ==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -20036,7 +20124,7 @@ packages:
       '@pmmmwh/react-refresh-webpack-plugin': 0.5.15(react-refresh@0.14.2)(webpack@5.95.0)
       '@types/copy-webpack-plugin': 6.4.3
       '@types/cors': 2.8.17
-      '@types/express': 4.17.21
+      '@types/express': 5.0.0
       '@types/http-errors': 1.8.2
       '@types/jest': 29.5.13
       '@types/morgan': 1.9.9
@@ -20058,6 +20146,7 @@ packages:
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       express: 4.21.1
       http-errors: 1.8.1
+      http-proxy-middleware: 2.0.7(@types/express@5.0.0)(debug@2.6.9)
       husky: 8.0.3
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       jest-junit: 16.0.0
@@ -20105,7 +20194,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-wohRBeFgrSwen5eIizbn16QAaaOUa6zxkyJxBgEzf32b11iOyIaF8KvDQ0eiD7tonfCzK5BJrJc2BLp/hTW63Q==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-t+t7DiCFIoxwbYk3Q3oQ4fX0pFk86sOCFcFRPCa2XCFzMoaEhMAVpQb5mGUnHMdsmdREkXxvvOCoKT1Gs5FPuw==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
@@ -20170,6 +20259,7 @@ packages:
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       eslint-plugin-react: 7.37.1(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
+      http-proxy-middleware: 2.0.7(@types/express@4.17.21)
       husky: 8.0.3
       jest: 29.7.0(@types/node@20.14.12)(ts-node@10.9.2)
       jest-fetch-mock: 3.0.3
@@ -20211,6 +20301,7 @@ packages:
       - '@swc/wasm'
       - '@types/bun'
       - '@types/eslint'
+      - '@types/express'
       - babel-plugin-macros
       - bufferutil
       - debug
