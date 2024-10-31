@@ -15,7 +15,7 @@ import { CallIdRef } from './CallIdRef';
 /* @conditional-compile-remove(together-mode) */
 import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(together-mode) */
-import { disposeCallFeatureView } from './CallFeatureStreamUtils';
+import { disposeView } from './CallFeatureStreamUtils';
 /* @conditional-compile-remove(together-mode) */
 import { convertSdkCallFeatureStreamToDeclarativeCallFeatureStream } from './Converter';
 /* @conditional-compile-remove(together-mode) */
@@ -82,7 +82,7 @@ export class TogetherModeSubscriber {
   ): void => {
     for (const stream of removedStreams) {
       this._togetherModeVideoStreamSubscribers.get(stream.id)?.unsubscribe();
-      disposeCallFeatureView(
+      disposeView(
         this._context,
         this._internalContext,
         this._callIdRef.callId,

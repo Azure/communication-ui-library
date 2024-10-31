@@ -469,7 +469,7 @@ export class CallContext {
           if (stream.mediaStreamType === 'Video') {
             call.togetherMode.streams.mainVideoStream = undefined;
             call.togetherMode.isActive = false;
-            call.togetherMode.seatingPositions = [];
+            call.togetherMode.seatingPositions = {};
           }
         }
 
@@ -553,17 +553,9 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        const seatingPositions: TogetherModeSeatingPositionState[] = [];
-        for (const [key, value] of seatingMap.entries()) {
-          const participantPosition: TogetherModeSeatingPositionState = {
-            participantId: key,
-            top: value.top,
-            left: value.left,
-            width: value.width,
-            height: value.height
-          };
-
-          seatingPositions.push(participantPosition);
+        const seatingPositions: Record<string, TogetherModeSeatingPositionState> = {};
+        for (const [userId, seatingPosition] of seatingMap.entries()) {
+          seatingPositions[userId] = seatingPosition;
         }
         call.togetherMode.seatingPositions = seatingPositions;
       }

@@ -292,8 +292,6 @@ export interface CallFeatureStreamState extends RemoteVideoStreamState {
  * Represents the seating position of a participant in Together Mode.
  */
 export interface TogetherModeSeatingPositionState {
-  // The participant id of the participant in the seating position.
-  participantId: string;
   // The top left offset from the top of the together mode view.
   top: number;
   // The left offset position from the left of the together mode view.
@@ -329,7 +327,7 @@ export interface TogetherModeCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.TogetherModeSeatingMap}.
    */
-  seatingPositions: TogetherModeSeatingPositionState[];
+  seatingPositions: Record<string, TogetherModeSeatingPositionState>;
 }
 
 /**

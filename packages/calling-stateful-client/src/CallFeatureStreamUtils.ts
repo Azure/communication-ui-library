@@ -25,7 +25,7 @@ import { convertFromSDKToDeclarativeVideoStreamRendererView } from './Converter'
  * @private
  *
  */
-export function createCallFeatureView(
+export function createView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,
@@ -184,7 +184,7 @@ async function createCallFeatureViewVideo(
 /**
  * @private
  */
-export function disposeCallFeatureView(
+export function disposeView(
   context: CallContext,
   internalContext: InternalCallContext,
   callId: string | undefined,

@@ -27,7 +27,7 @@ import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCal
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
 /* @conditional-compile-remove(together-mode) */
-import { createCallFeatureView, disposeCallFeatureView } from './CallFeatureStreamUtils';
+import { createView as createCallFeatureView, disposeView as disposeCallFeatureView } from './CallFeatureStreamUtils';
 
 /**
  * Defines the methods that allow CallClient {@link @azure/communication-calling#CallClient} to be used statefully.
@@ -166,7 +166,7 @@ export interface StatefulCallClient extends CallClient {
    * @param options - Options that are passed to the {@link @azure/communication-calling#VideoStreamRenderer}.
    * @beta
    */
-  createCallFeatureView(
+  createView(
     callId: string,
     stream: CallFeatureStreamState,
     options?: CreateViewOptions
@@ -187,7 +187,7 @@ export interface StatefulCallClient extends CallClient {
    * @param stream - The LocalVideoStreamState or RemoteVideoStreamState to dispose.
    * @beta
    */
-  disposeCallFeatureView(callId: string, stream: CallFeatureStreamState): void;
+  disposeView(callId: string, stream: CallFeatureStreamState): void;
   /**
    * The CallAgent is used to handle calls.
    * To create the CallAgent, pass a CommunicationTokenCredential object provided from SDK.

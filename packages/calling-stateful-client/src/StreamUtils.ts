@@ -582,8 +582,8 @@ export function disposeAllViewsFromCall(
   const callFeatureStreams = internalContext.getCallFeatureRenderInfosForCall(callId);
   /* @conditional-compile-remove(together-mode) */
   if (callFeatureStreams) {
-    for (const [, featureStreams] of callFeatureStreams.entries()) {
-      for (const [, streamAndRenderer] of featureStreams.entries()) {
+    for (const featureStreams of callFeatureStreams.values()) {
+      for (const streamAndRenderer of featureStreams.values()) {
         disposeView(
           context,
           internalContext,

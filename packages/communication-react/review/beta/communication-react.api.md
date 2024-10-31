@@ -4775,13 +4775,13 @@ export type StartTeamsCallIdentifier = MicrosoftTeamsUserIdentifier | PhoneNumbe
 // @public
 export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
-    // @beta
-    createCallFeatureView(callId: string, stream: CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     // @beta
-    disposeCallFeatureView(callId: string, stream: CallFeatureStreamState): void;
+    createView(callId: string, stream: CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
+    // @beta
+    disposeView(callId: string, stream: CallFeatureStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
@@ -4970,7 +4970,7 @@ export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier
 export interface TogetherModeCallFeature {
     // (undocumented)
     isActive: boolean;
-    seatingPositions: TogetherModeSeatingPositionState[];
+    seatingPositions: Record<string, TogetherModeSeatingPositionState>;
     streams: TogetherModeStreamsState;
 }
 
@@ -4980,8 +4980,6 @@ export interface TogetherModeSeatingPositionState {
     height: number;
     // (undocumented)
     left: number;
-    // (undocumented)
-    participantId: string;
     // (undocumented)
     top: number;
     // (undocumented)
