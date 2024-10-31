@@ -53,7 +53,7 @@ exports.default = babelHelper.declare((_api, opts) => {
 
       ImportSpecifier(path) {
         Handle(path, featureSet, stabilizedFeatureSet);
-  	  },
+      },
 
       ExportNamedDeclaration(path) {
         Handle(path, featureSet, stabilizedFeatureSet);
