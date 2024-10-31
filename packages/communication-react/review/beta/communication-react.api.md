@@ -4381,7 +4381,6 @@ export type RemoteDiagnosticType = NetworkDiagnosticType | MediaDiagnosticType |
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     contentSharingStream?: HTMLElement;
-    // (undocumented)
     diagnostics?: Partial<Record<RemoteDiagnosticType, RemoteDiagnosticState>>;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
