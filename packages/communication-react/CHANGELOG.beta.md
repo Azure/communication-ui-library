@@ -1,5 +1,29 @@
 # Change Log - @azure/communication-react
 
+<!-- This log was last generated on Mon, 28 Oct 2024 22:53:26 GMT and should not be manually modified. -->
+
+<!-- Start content -->
+
+## [1.21.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.21.0-beta.1)
+
+Mon, 28 Oct 2024 22:53:26 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.20.0-beta.1...1.21.0-beta.1)
+
+### Improvements
+- Update Chat signaling to latest beta ([PR #5361](https://github.com/azure/communication-ui-library/pull/5361) by 109105353+jpeng-ms@users.noreply.github.com)
+- Stop showing speaker dropdown on Safari ([PR #5328](https://github.com/azure/communication-ui-library/pull/5328) by 2684369+JamesBurnside@users.noreply.github.com)
+- Upgrade calling stable version to 1.29.1 ([PR #5330](https://github.com/azure/communication-ui-library/pull/5330) by 79475487+mgamis-msft@users.noreply.github.com)
+### Bug Fixes
+- Add new Aria strings to better support narration of participant information in the video gallery ([PR #5345](https://github.com/azure/communication-ui-library/pull/5345) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix BreakoutRoomsBanner component to return null instead of undefined when there is no breakout room state ([PR #5358](https://github.com/azure/communication-ui-library/pull/5358) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix video dispose problem for multiple video stream ([PR #5188](https://github.com/azure/communication-ui-library/pull/5188) by jiangnanhello@live.com)
+- Fix call not found error when gets removed ([PR #5338](https://github.com/azure/communication-ui-library/pull/5338) by jiangnanhello@live.com)
+- Focus will move into the menu directly when menu open ([PR #5313](https://github.com/azure/communication-ui-library/pull/5313) by jiangnanhello@live.com)
+- Expose environmentInfo in callClient state and callAdapter state ([PR #5328](https://github.com/azure/communication-ui-library/pull/5328) by 2684369+JamesBurnside@users.noreply.github.com)
+- Increase Start Call button height on the Configuration Page to 52px on mobile form factor ([PR #5336](https://github.com/azure/communication-ui-library/pull/5336) by 2684369+JamesBurnside@users.noreply.github.com)
+- Resolve issue where rich text editor tool bar would not focus when shown. Also fixed issue where editor component would remount when showing/hiding toolbar ([PR #5337](https://github.com/azure/communication-ui-library/pull/5337) by 73612854+palatter@users.noreply.github.com)
+
+
 ## [1.20.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.20.0-beta.1)
 
 Tue, 01 Oct 2024 17:03:44 GMT 
