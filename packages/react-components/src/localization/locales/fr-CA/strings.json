@@ -1,0 +1,692 @@
+{
+  "participantItem": {
+    "isMeText": "(you)",
+    "menuTitle": "More Options",
+    "removeButtonLabel": "Remove",
+    "sharingIconLabel": "Sharing",
+    "mutedIconLabel": "Muted",
+    "displayNamePlaceholder": "Unnamed participant",
+    "participantStateRinging": "Calling...",
+    "participantStateHold": "On hold",
+    "attendeeRole": "Attendee"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} more"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} is typing ...",
+    "multipleUsers": "{users} are typing ...",
+    "multipleUsersAbbreviateOne": "{users} and 1 other are typing ...",
+    "multipleUsersAbbreviateMany": "{users} and {numOthers} others are typing ...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Enter a message",
+    "textTooLong": "Your message length is over the maximum limit.",
+    "sendButtonAriaLabel": "Send message",
+    "attachmentUploadsPendingError": "File is uploading, please wait.",
+    "removeAttachment": "Remove file",
+    "uploading": "Uploading",
+    "uploadCompleted": "Upload completed",
+    "attachmentMoreMenu": "More Options"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Enter a message",
+    "textTooLong": "Your message length is over the maximum limit.",
+    "sendButtonAriaLabel": "Send message",
+    "attachmentUploadsPendingError": "File is uploading, please wait.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
+    "removeAttachment": "Remove file",
+    "uploading": "Uploading",
+    "uploadCompleted": "Upload completed",
+    "richTextBoldTooltip": "Bold",
+    "richTextItalicTooltip": "Italic",
+    "richTextUnderlineTooltip": "Underline",
+    "richTextBulletListTooltip": "Bulleted list",
+    "richTextNumberListTooltip": "Numbered list",
+    "richTextIncreaseIndentTooltip": "Increase indent",
+    "richTextDecreaseIndentTooltip": "Decrease indent",
+    "richTextInsertTableTooltip": "Insert table",
+    "richTextFormatButtonTooltip": "Format",
+    "richTextInsertRowOrColumnMenu": "Insert",
+    "richTextInsertTableMenuTitle": "Insert {column} x {row} table",
+    "richTextInsertRowAboveMenu": "Insert above",
+    "richTextInsertRowBelowMenu": "Insert below",
+    "richTextInsertColumnLeftMenu": "Insert left",
+    "richTextInsertColumnRightMenu": "Insert right",
+    "richTextDeleteRowOrColumnMenu": "Delete",
+    "richTextDeleteColumnMenu": "Delete column",
+    "richTextDeleteRowMenu": "Delete row",
+    "richTextDeleteTableMenu": "Delete table",
+    "richTextToolbarAriaLabel": "Message Formatting Toolbar",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "attachmentMoreMenu": "More Options",
+    "richTextNewBulletedListItemAnnouncement": "Bullet, new line",
+    "richTextNewNumberedListItemAnnouncement": "{0}, new line",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "Turn on RTT Modal",
+    "rttModalTitle": "Turn on RTT?",
+    "rttModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "rttConfirmButtonLabel": "Turn on",
+    "rttCancelButtonLabel": "Cancel",
+    "rttCloseModalButtonAriaLabel": "Close RTT Modal"
+  },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Suggestions"
+  },
+  "imageOverlay": {
+    "downloadButtonLabel": "Download",
+    "dismissButtonAriaLabel": "Close"
+  },
+  "messageStatusIndicator": {
+    "deliveredAriaLabel": "Message sent",
+    "deliveredTooltipText": "Sent",
+    "seenAriaLabel": "Message seen by others",
+    "seenTooltipText": "Seen",
+    "readByTooltipText": "Read by {messageThreadReadCount} of {remoteParticipantsCount}",
+    "sendingAriaLabel": "Message sending",
+    "sendingTooltipText": "Sending",
+    "failedToSendAriaLabel": "Message failed to send",
+    "failedToSendTooltipText": "Failed to send"
+  },
+  "endCallButton": {
+    "label": "Leave",
+    "tooltipContent": "Leave call",
+    "leaveOption": "Leave",
+    "endCallOption": "End call for everyone"
+  },
+  "cameraButton": {
+    "onLabel": "Camera",
+    "offLabel": "Camera",
+    "tooltipDisabledContent": "Camera is disabled",
+    "tooltipOnContent": "Turn off camera",
+    "tooltipOffContent": "Turn on camera",
+    "tooltipVideoLoadingContent": "Video is loading",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Choose camera",
+    "cameraButtonSplitRoleDescription": "Split button",
+    "onSplitButtonAriaLabel": "Turn off camera",
+    "offSplitButtonAriaLabel": "Turn on camera",
+    "cameraActionTurnedOnAnnouncement": "Your camera has been turned on",
+    "cameraActionTurnedOffAnnouncement": "Your camera has been turned off",
+    "onSplitButtonPrimaryActionCamera": "Turn off camera",
+    "offSplitButtonPrimaryActionCamera": "Turn on camera",
+    "cameraPrimaryActionSplitButtonTitle": "Use camera",
+    "videoEffectsMenuItemTitle": "Effects",
+    "cameraButtonAriaDescription": "camera options"
+  },
+  "microphoneButton": {
+    "onLabel": "Mic",
+    "offLabel": "Mic",
+    "tooltipDisabledContent": "Microphone is disabled",
+    "tooltipOnContent": "Mute microphone",
+    "tooltipOffContent": "Unmute microphone",
+    "microphoneMenuTitle": "Microphone",
+    "microphoneMenuTooltip": "Choose microphone",
+    "speakerMenuTitle": "Speaker",
+    "speakerMenuTooltip": "Choose speaker",
+    "microphoneButtonSplitRoleDescription": "Split button",
+    "onSplitButtonAriaLabel": "Mute mic",
+    "offSplitButtonAriaLabel": "Unmute mic",
+    "microphoneActionTurnedOnAnnouncement": "Your microphone has been turned on",
+    "microphoneActionTurnedOffAnnouncement": "Your microphone has been turned off",
+    "offSplitButtonMicrophonePrimaryAction": "Unmute mic",
+    "onSplitButtonMicrophonePrimaryAction": "Mute mic",
+    "microphonePrimaryActionSplitButtonTitle": "Use microphone",
+    "microphoneAriaDescription": "Audio options",
+    "deepNoiseSuppressionTitle": "Noise suppression",
+    "deepNoiseSuppressionOnAnnouncement": "Deep noise suppression has been turned on",
+    "deepNoiseSuppressionOffAnnouncement": "Deep noise suppression has been turned off"
+  },
+  "devicesButton": {
+    "label": "Devices",
+    "tooltipContent": "Manage devices",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Choose camera",
+    "audioDeviceMenuTitle": "Audio Device",
+    "audioDeviceMenuTooltip": "Choose audio device",
+    "microphoneMenuTitle": "Microphone",
+    "microphoneMenuTooltip": "Choose microphone",
+    "speakerMenuTitle": "Speaker",
+    "speakerMenuTooltip": "Choose speaker"
+  },
+  "participantsButton": {
+    "label": "People",
+    "tooltipContent": "Show participants",
+    "menuHeader": "In this call",
+    "participantsListButtonLabel": "{numParticipants} people",
+    "muteAllButtonLabel": "Mute all",
+    "copyInviteLinkButtonLabel": "Copy invite link",
+    "copyInviteLinkActionedAriaLabel": "Invite link copied"
+  },
+  "screenShareButton": {
+    "onLabel": "Stop presenting",
+    "offLabel": "Present",
+    "tooltipDisabledContent": "Presenting is disabled",
+    "tooltipOnContent": "Presenting your screen",
+    "tooltipOffContent": "Present your screen"
+  },
+  "raiseHandButton": {
+    "offLabel": "Raise",
+    "onLabel": "Lower",
+    "tooltipDisabledContent": "Raise Hand action is disabled",
+    "tooltipOnContent": "Lower Hand",
+    "tooltipOffContent": "Raise Hand"
+  },
+  "reactionButton": {
+    "label": "React",
+    "ariaLabel": "React Button, Send a reaction",
+    "tooltipDisabledContent": "Reaction action is disabled",
+    "tooltipContent": "Send a reaction",
+    "likeReactionTooltipContent": "Like",
+    "heartReactionTooltipContent": "Love",
+    "laughReactionTooltipContent": "Laugh",
+    "applauseReactionTooltipContent": "Applause",
+    "surprisedReactionTooltipContent": "Surprised"
+  },
+  "rtt": {
+    "isTypingText": "RTT typing"
+  },
+  "messageThread": {
+    "yesterday": "Yesterday",
+    "sunday": "Sunday",
+    "monday": "Monday",
+    "tuesday": "Tuesday",
+    "wednesday": "Wednesday",
+    "thursday": "Thursday",
+    "friday": "Friday",
+    "saturday": "Saturday",
+    "participantJoined": "joined the chat.",
+    "participantLeft": "left the chat.",
+    "editMessage": "Edit",
+    "removeMessage": "Delete",
+    "resendMessage": "Try sending again",
+    "failToSendTag": "Failed to send",
+    "editedTag": "Edited",
+    "liveAuthorIntro": "{author} says",
+    "messageContentAriaText": "{status} {author} said {message}",
+    "messageContentMineAriaText": "{status} You said {message}",
+    "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
+    "editBoxPlaceholderText": "Edit your message",
+    "newMessagesIndicator": "New messages",
+    "noDisplayNameSub": "No name",
+    "editBoxCancelButton": "Cancel",
+    "editBoxSubmitButton": "Done",
+    "messageReadCount": "Read by {messageReadByCount} of {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "More Options",
+    "downloadAttachment": "Download file",
+    "openAttachment": "Open file",
+    "blockedWarningText": "This message was deleted due to organizational policy.",
+    "blockedWarningLinkText": "Details",
+    "attachmentCardGroupMessage": "The message has {attachmentCount} attachment",
+    "messageDeletedAnnouncementAriaLabel": "The message is deleted",
+    "richTextBoldTooltip": "Bold",
+    "richTextItalicTooltip": "Italic",
+    "richTextUnderlineTooltip": "Underline",
+    "richTextBulletListTooltip": "Bulleted list",
+    "richTextNumberListTooltip": "Numbered list",
+    "richTextIncreaseIndentTooltip": "Increase indent",
+    "richTextDecreaseIndentTooltip": "Decrease indent",
+    "richTextInsertTableTooltip": "Insert table",
+    "richTextFormatButtonTooltip": "Format",
+    "richTextInsertRowOrColumnMenu": "Insert",
+    "richTextInsertTableMenuTitle": "Insert {column} x {row} table",
+    "richTextInsertRowAboveMenu": "Insert above",
+    "richTextInsertRowBelowMenu": "Insert below",
+    "richTextInsertColumnLeftMenu": "Insert left",
+    "richTextInsertColumnRightMenu": "Insert right",
+    "richTextDeleteRowOrColumnMenu": "Delete",
+    "richTextDeleteColumnMenu": "Delete column",
+    "richTextDeleteRowMenu": "Delete row",
+    "richTextDeleteTableMenu": "Delete table",
+    "richTextToolbarMoreButtonAriaLabel": "More options",
+    "attachmentUploadsPendingError": "File is uploading, please wait.",
+    "imageUploadsPendingError": "Image is uploading, please wait.",
+    "richTextNewBulletedListItemAnnouncement": "Bullet, new line",
+    "richTextNewNumberedListItemAnnouncement": "{0}, new line",
+    "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
+    "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
+  },
+  "errorBar": {
+    "unableToReachChatService": "You are offline",
+    "accessDenied": "Unable to access chat services - please check the user credentials provided",
+    "userNotInChatThread": "You are no longer in this chat thread",
+    "sendMessageNotInChatThread": "Failed to send message because you are no longer in this chat thread",
+    "sendMessageGeneric": "Failed to send message",
+    "callingNetworkFailure": "Troubling connecting call - you seem to be offline",
+    "startVideoGeneric": "Failed to start video",
+    "stopVideoGeneric": "Failed to stop video",
+    "muteGeneric": "Failed to mute microphone",
+    "unmuteGeneric": "Failed to unmute microphone",
+    "speakingWhileMuted": "Your microphone is muted",
+    "startScreenShareGeneric": "There was an issue starting screen share.",
+    "stopScreenShareGeneric": "Failed to stop screen sharing",
+    "callNetworkQualityLow": "Network quality is low.",
+    "teamsMeetingCallNetworkQualityLow": "Network quality is low.",
+    "callNoSpeakerFound": "No speakers or headphones found. Connect an audio device to hear the call.",
+    "callNoMicrophoneFound": "No microphones found. Connect an audio input device.",
+    "callMicrophoneAccessDenied": "Unable to access microphone. Click the lock in the address bar to grant permission to this webpage.",
+    "callMicrophoneAccessDeniedSafari": "Unable to access microphone. Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+    "callMicrophoneMutedBySystem": "You are muted by your system.",
+    "callMicrophoneUnmutedBySystem": "Your microphone recovered and you were unmuted by your system.",
+    "callMacOsMicrophoneAccessDenied": "Unable to access microphone. Grant microphone permission in your macOS privacy settings.",
+    "callLocalVideoFreeze": "Network bandwidth is poor. Your video may appear paused for others on the call.",
+    "callCameraAccessDenied": "Unable to access camera. Click the lock in the address bar to grant permission to this webpage.",
+    "callCameraAccessDeniedSafari": "Unable to access camera. Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+    "callCameraAlreadyInUse": "Unable to access camera. It may already be in use by another application.",
+    "callVideoStoppedBySystem": "Your video has been stopped by your system.",
+    "callVideoRecoveredBySystem": "Your video has resumed.",
+    "callMacOsCameraAccessDenied": "MacOS is blocking access to your camera. Update your privacy settings to allow this browser to access your camera.",
+    "callMacOsScreenShareAccessDenied": "MacOS is blocking screen sharing. Update your privacy settings to allow this browser to record your screen.",
+    "dismissButtonAriaLabel": "Close",
+    "failedToJoinCallGeneric": "Failed to join call.",
+    "failedToJoinCallInvalidMeetingLink": "Unable to join Meeting. Invalid Link.",
+    "cameraFrozenForRemoteParticipants": "Users in the call are having issues seeing your video. Please check your devices and network.",
+    "unableToStartVideoEffect": "Unable to apply video effect.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Cannot start spotlight on participant(s) because the maximum number of participants are already spotlighted.",
+    "mutedByRemoteParticipant": "You were muted by another participant."
+  },
+  "notificationStack": {
+    "callingNetworkFailure": {
+      "title": "Troubling connecting call",
+      "message": "You seem to be offline. Please check your network connection and try again.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "startVideoGeneric": {
+      "title": "Failed to start video.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "stopVideoGeneric": {
+      "title": "Failed to stop video.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "muteGeneric": {
+      "title": "Failed to mute microphone.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "unmuteGeneric": {
+      "title": "Failed to unmute microphone.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "speakingWhileMuted": {
+      "title": "You're muted.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "startScreenShareGeneric": {
+      "title": "There was an issue starting screen share.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "stopScreenShareGeneric": {
+      "title": "Failed to stop screen sharing.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callNetworkQualityLow": {
+      "title": "Network quality is low.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
+      "title": "Network quality is low.",
+      "dismissButtonAriaLabel": "Close",
+      "message": "Join this call from your phone for better sound. You can continue viewing the meeting on this device.",
+      "primaryButtonLabel": "Join by Phone"
+    },
+    "callNoSpeakerFound": {
+      "title": "No speakers or headphones found",
+      "message": "Connect an audio device to hear the call.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callNoMicrophoneFound": {
+      "title": "No microphones found",
+      "message": "Connect an audio input device.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "Unable to access microphone",
+      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "Unable to access microphone",
+      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "You are muted by your system.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "Your microphone recovered and you were unmuted by your system.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "Unable to access microphone",
+      "message": "Grant microphone permission in your macOS privacy settings.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callLocalVideoFreeze": {
+      "title": "Network bandwidth is poor",
+      "message": "Your video may appear paused for others on the call.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callCameraAccessDenied": {
+      "title": "Unable to access camera",
+      "message": "Click the lock in the address bar to grant permission to this webpage.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "Unable to access camera",
+      "message": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "Unable to access camera",
+      "message": "It may already be in use by another application.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "Your video has been stopped by your system.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "Your video has resumed.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS is blocking access to your camera",
+      "message": "Update your privacy settings to allow this browser to access your camera.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS is blocking screen sharing",
+      "message": "Update your privacy settings to allow this browser to record your screen.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "Failed to join call.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "Unable to join Meeting. Invalid Link.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "Users in the call are having issues seeing your video",
+      "message": "Please check your devices and network.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "unableToStartVideoEffect": {
+      "title": "Unable to apply video effect.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "Cannot start spotlight on participant(s)",
+      "message": "The maximum number of participants are already spotlighted.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "mutedByRemoteParticipant": {
+      "title": "You were muted by another participant.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "recordingStarted": {
+      "title": "Recording has started.",
+      "message": "By joining, you are giving consent for this meeting to be transcribed.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "transcriptionStarted": {
+      "title": "Transcription has started.",
+      "message": "By joining, you are giving consent for this meeting to be transcribed.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "recordingStopped": {
+      "title": "Recording is being saved.",
+      "message": "Recording has stopped.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "transcriptionStopped": {
+      "title": "Transcription is being saved.",
+      "message": "Transcription has stopped.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "recordingAndTranscriptionStarted": {
+      "title": "Recording and transcription have started.",
+      "message": "By joining, you are giving consent for this meeting to be transcribed.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "recordingAndTranscriptionStopped": {
+      "title": "Recording and transcription are being saved.",
+      "message": "Recording and transcription have stopped.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "recordingStoppedStillTranscribing": {
+      "title": "Recording has stopped.",
+      "message": "You are now only transcribing this meeting.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "transcriptionStoppedStillRecording": {
+      "title": "Transcription has stopped.",
+      "message": "You are now only recording this meeting.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "We'll move you to your assigned room in 5 seconds.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Your breakout room has changed",
+      "message": "We'll move you to your assigned room in 5 seconds.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Join breakout room?",
+      "message": "You've been assigned to a breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room",
+      "secondaryButtonLabel": "Later"
+    },
+    "breakoutRoomJoined": {
+      "title": "You have joined a breakout room.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Room time limit about to expire.",
+      "message": "This room will close in 30 seconds",
+      "dismissButtonAriaLabel": "Close"
+    }
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "You are sharing your screen",
+    "screenShareLoadingMessage": "Loading {participant}'s screen",
+    "localScreenShareLoadingMessage": "Loading your screen",
+    "localVideoLabel": "You",
+    "localVideoCameraSwitcherLabel": "Switch camera",
+    "localVideoMovementLabel": "Movable Local Video Tile",
+    "localVideoMovementAriaLabel": "Movable Local Video Tile",
+    "localVideoSelectedDescription": "{cameraName} selected",
+    "displayNamePlaceholder": "Unnamed participant",
+    "fitRemoteParticipantToFrame": "Fit to frame",
+    "fillRemoteParticipantFrame": "Fill frame",
+    "pinParticipantForMe": "Pin for me",
+    "pinParticipantForMeLimitReached": "Pin (limit reached)",
+    "unpinParticipantForMe": "Unpin",
+    "pinParticipantMenuItemAriaLabel": "Pin {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "Unpin {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "Pinned {participantName}",
+    "unpinnedParticipantAnnouncementAriaLabel": "Unpinned {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Spotlight for everyone",
+    "addSpotlightVideoTileMenuLabel": "Add spotlight",
+    "spotlightLimitReachedMenuTitle": "Spotlight limit reached",
+    "stopSpotlightVideoTileMenuLabel": "Stop spotlighting",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
+    "attendeeRole": "Attendee",
+    "muteParticipantMenuItemLabel": "Mute",
+    "waitingScreenText": "Waiting for others to join"
+  },
+  "dialpad": {
+    "placeholderText": "Enter phone number",
+    "deleteButtonAriaLabel": "Delete"
+  },
+  "holdButton": {
+    "onLabel": "Resume",
+    "offLabel": "Hold",
+    "tooltipOnContent": "Resume call",
+    "tooltipOffContent": "Hold call"
+  },
+  "videoTile": {
+    "participantStateRinging": "Calling...",
+    "participantReconnecting": "Reconnecting...",
+    "participantStateHold": "On hold",
+    "moreOptionsButtonAriaLabel": "More Options {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "muted",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "unmuted",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Hand raised",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Speaking"
+  },
+  "CameraAndMicrophoneSitePermissionsRequest": {
+    "primaryText": "Allow {appName} to use your camera and microphone",
+    "secondaryText": "This is so participants can see and hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera and microphone",
+    "ariaLabel": "Allow camera and microphone access"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "Allow {appName} to use your camera",
+    "secondaryText": "This is so participants can see you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera",
+    "ariaLabel": "Allow camera access"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "Allow {appName} to use your microphone",
+    "secondaryText": "This is so participants can hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without microphone",
+    "ariaLabel": "Allow microphone access"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "Checking for camera and microphone access",
+    "secondaryText": "Allow access if prompted. This is so participants can see and hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera and microphone",
+    "ariaLabel": "Checking for camera and microphone access. Allow access if prompted."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "Checking for camera access",
+    "secondaryText": "Allow access if prompted. This is so participants can see you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without camera",
+    "ariaLabel": "Checking for camera access. Allow access if prompted."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "Checking for microphone access",
+    "secondaryText": "Allow access if prompted. This is so participants can hear you.",
+    "linkText": "Need help? Get troubleshooting help",
+    "primaryButtonText": "Continue without microphone",
+    "ariaLabel": "Checking for microphone access. Allow access if prompted."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "Unable to access camera and microphone",
+    "secondaryText": "Click the lock icon in the address bar to grant microphone permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without camera and microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Unable to access camera and microphone",
+    "secondaryText": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+    "primaryButtonText": "Continue without camera and microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "Unable to access camera",
+    "secondaryText": "Click the lock icon in the address bar to grant camera permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without camera",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "Unable to access microphone",
+    "secondaryText": "Click the lock icon in the address bar to grant microphone permissions to this webpage. A page refresh may be required.",
+    "primaryButtonText": "Continue without microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "Unable to access camera",
+    "secondaryText": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+    "primaryButtonText": "Continue without camera",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Unable to access microphone",
+    "secondaryText": "Refresh the page to allow permissions, or check this browser’s settings and verify permissions are enabled for this website.",
+    "primaryButtonText": "Continue without microphone",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Browser not supported",
+    "secondaryText": "Please join this call using a compatible browser.",
+    "moreHelpLinkText": "See compatibility requirements"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Browser update needed",
+    "secondaryText": "To ensure the best call possible, please update your browser and then try joining the call again.",
+    "moreHelpLinkText": "See compatibility requirements",
+    "continueAnywayButtonText": "Start call without updating"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "Operating system not supported",
+    "secondaryText": "Please join this call using a device with a compatible operating system.",
+    "moreHelpLinkText": "See compatibility requirements"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Can't use your camera or microphone",
+    "secondaryText": "Your browser might not have access to your camera or microphone. To fix this, open System Preferences.",
+    "primaryButtonText": "Try again",
+    "linkText": "Need help? Get troubleshooting help"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Allow microphone access to continue",
+    "secondaryText": "So other participants can hear you.",
+    "primaryButtonText": "Try again",
+    "imageAltText": "Microphone and camera device permission location for iOS",
+    "linkText": "Need help? Get troubleshooting help",
+    "step1Text": "Go to the Settings app",
+    "step2Text": "Scroll down to settings for this browser",
+    "step3Text": "Turn on Microphone (Camera optional)",
+    "step4Text": "Try joining the call again",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
+  },
+  "verticalGallery": {
+    "leftNavButtonAriaLabel": "previous page {current} of {total}",
+    "rightNavButtonAriaLabel": "next page {current} of {total}"
+  },
+  "meetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Join call from your phone",
+    "meetingConferencePhoneInfoModalDialIn": "Dial number",
+    "meetingConferencePhoneInfoModalMeetingId": "Enter meeting ID",
+    "meetingConferencePhoneInfoModalWait": "Wait to be admitted by organizer",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
+    "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
+    "meetingConferencePhoneInfoModalToll": "(Toll)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "Unknown User",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} is calling",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "Accept with audio",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "Accept with video",
+    "incomingCallNoticicationRejectAriaLabel": "Reject",
+    "incomingCallNotificationAcceptButtonLabel": "Accept",
+    "incomingCallNotificationRejectButtonLabel": "Decline",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video",
+    "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "bannerLinkLabel": "Learn more"
+  }
+}
