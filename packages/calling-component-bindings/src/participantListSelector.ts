@@ -8,7 +8,8 @@ import {
   getDisplayName,
   getIsScreenSharingOn,
   getIsMuted,
-  CallingBaseSelectorProps
+  CallingBaseSelectorProps,
+  getCapabilities
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
@@ -73,6 +74,12 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             spotlightedParticipants,
             toFlatCommunicationIdentifier(participant.identifier)
           );
+          /* @conditional-compile-remove(media-access) */
+          const mediaAccess = {
+            isAudioPermitted: participant.mediaAccess?.isAudioPermitted,
+            isVideoPermitted: participant.mediaAccess?.isVideoPermitted
+          };
+
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             displayName,
@@ -83,7 +90,9 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.raisedHand,
             localUserCanRemoveOthers,
             remoteParticipantReaction,
-            spotlight
+            spotlight,
+            /* @conditional-compile-remove(media-access) */
+            mediaAccess
           );
         })
         .sort((a, b) => {
@@ -134,7 +143,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getParticipantCount,
     isHideAttendeeNamesEnabled,
     getLocalParticipantReactionState,
-    getSpotlightCallFeature
+    getSpotlightCallFeature,
+    /* @conditional-compile-remove(media-access) */
+    getCapabilities
   ],
   (
     userId,
@@ -147,7 +158,9 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     partitipantCount,
     isHideAttendeeNamesEnabled,
     localParticipantReactionState,
-    spotlightCallFeature
+    spotlightCallFeature,
+    /* @conditional-compile-remove(media-access) */
+    capabilities
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -173,7 +186,12 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       // Local participant can never remove themselves.
       isRemovable: false,
       reaction: memoizedConvertToVideoTileReaction(localParticipantReactionState),
-      spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId)
+      spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId),
+      /* @conditional-compile-remove(media-access) */
+      mediaAccess: {
+        isAudioPermitted: capabilities ? capabilities.unmuteMic.isPresent : true,
+        isVideoPermitted: capabilities ? capabilities.turnVideoOn.isPresent : true
+      }
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;
