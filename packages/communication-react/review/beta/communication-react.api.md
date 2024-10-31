@@ -59,6 +59,7 @@ import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
+import { IIconStyles } from '@fluentui/react';
 import { ILinkStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
@@ -2495,6 +2496,9 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
     richTextSendBox: RichTextSendBoxStrings;
+    rtt: RealTimeTextStrings;
+    rttDisclosureBanner: RTTDisclosureBannerStrings;
+    rttModal: RTTModalStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2905,6 +2909,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
+    RTTIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -3088,6 +3093,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
+    RTTIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -4000,10 +4006,12 @@ export interface NotificationProps {
     autoDismiss?: boolean;
     notificationIconProps?: IIconProps;
     notificationStrings?: NotificationStrings;
+    onClickLink?: () => void;
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
     showStackedEffect?: boolean;
+    styles?: NotificationStyles;
 }
 
 // @public
@@ -4074,11 +4082,23 @@ export interface NotificationStackStrings {
 
 // @public
 export interface NotificationStrings {
-    dismissButtonAriaLabel: string;
+    dismissButtonAriaLabel?: string;
+    linkLabel?: string;
     message?: string;
     primaryButtonLabel?: string;
     secondaryButtonLabel?: string;
     title: string;
+}
+
+// @public
+export interface NotificationStyles {
+    content?: IStackStyles;
+    icon?: IIconStyles;
+    link?: IStackStyles;
+    primaryButton?: IButtonStyles;
+    root?: IStackStyles;
+    secondaryButton?: IButtonStyles;
+    title?: IStackStyles;
 }
 
 // @public (undocumented)
@@ -4422,6 +4442,25 @@ export type ReadReceiptsBySenderId = {
     };
 };
 
+// @beta
+export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
+
+// @beta
+export interface RealTimeTextProps {
+    captionText: string;
+    displayName: string;
+    id: string;
+    isTyping?: boolean;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    strings?: RealTimeTextStrings;
+    userId?: string;
+}
+
+// @beta
+export interface RealTimeTextStrings {
+    isTypingText?: string;
+}
+
 // @public
 export interface RecordingCallFeature {
     activeRecordings?: RecordingInfo[];
@@ -4431,16 +4470,19 @@ export interface RecordingCallFeature {
 
 // @beta
 export type RemoteDiagnosticState = {
-    readonly diagnostic: NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+    readonly diagnostic: RemoteDiagnosticType;
     readonly value: DiagnosticQuality | DiagnosticFlag;
     readonly valueType: DiagnosticValueType;
 };
+
+// @beta
+export type RemoteDiagnosticType = NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
 
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     contentSharingStream?: HTMLElement;
-    diagnostics?: Record<string, RemoteDiagnosticState>;
+    diagnostics?: Partial<Record<RemoteDiagnosticType, RemoteDiagnosticState>>;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
@@ -4551,8 +4593,49 @@ export interface RichTextStrings {
     richTextNewNumberedListItemAnnouncement: string;
     richTextNumberedListAppliedAnnouncement: string;
     richTextNumberListTooltip: string;
+    richTextToolbarAriaLabel: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
+}
+
+// @beta
+export const RTTDisclosureBanner: (props: RTTDisclosureBannerProps) => JSX.Element;
+
+// @beta
+export interface RTTDisclosureBannerProps {
+    onClickLink?: () => void;
+    strings?: RTTDisclosureBannerStrings;
+}
+
+// @beta
+export interface RTTDisclosureBannerStrings {
+    // (undocumented)
+    bannerContent: string;
+    // (undocumented)
+    bannerLinkLabel?: string;
+    // (undocumented)
+    bannerTitle: string;
+}
+
+// @beta
+export const RTTModal: (props: RTTModalProps) => JSX.Element;
+
+// @beta
+export interface RTTModalProps {
+    onDismissModal?: () => void;
+    onStartRTT?: () => Promise<void>;
+    showModal?: boolean;
+    strings?: RTTModalStrings;
+}
+
+// @beta
+export interface RTTModalStrings {
+    rttCancelButtonLabel?: string;
+    rttCloseModalButtonAriaLabel?: string;
+    rttConfirmButtonLabel?: string;
+    rttModalAriaLabel?: string;
+    rttModalText?: string;
+    rttModalTitle?: string;
 }
 
 // @public
@@ -4777,6 +4860,7 @@ export type SpotlightChangedListener = (args: {
 
 // @public
 export interface SpotlightPromptStrings {
+    closeSpotlightPromptButtonLabel: string;
     startSpotlightCancelButtonLabel: string;
     startSpotlightConfirmButtonLabel: string;
     startSpotlightHeading: string;
@@ -4799,7 +4883,7 @@ export interface SpotlightState {
 }
 
 // @public
-export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier) | /* @conditional-compile-remove(start-call-beta) */ CommunicationIdentifier;
+export type StartCallIdentifier = CommunicationIdentifier;
 
 // @public
 export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
@@ -5457,6 +5541,7 @@ export interface VideoTileStrings {
     moreOptionsParticipantIsSpeakingAriaLabel: string;
     moreOptionsParticipantMutedStateMutedAriaLabel: string;
     moreOptionsParticipantMutedStateUnmutedAriaLabel: string;
+    participantReconnecting?: string;
     participantStateHold: string;
     participantStateRinging: string;
 }

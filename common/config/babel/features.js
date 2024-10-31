@@ -26,7 +26,9 @@ module.exports = {
     // Feature for together mode
     "together-mode",
     // Feature for hard mute audio/video
-    "meida-access"
+    "meida-access",
+    // Feature for RTT
+    "rtt"
   ],
   beta: [
     "call-readiness",
@@ -82,7 +84,5 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Feature for tracking beta start call identifier
-    'start-call-beta',
   ]
 }

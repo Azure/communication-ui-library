@@ -55,9 +55,9 @@
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.30.1-beta.1 || ^1.29.1",
+    "@azure/communication-calling": "1.30.1-beta.2 || ^1.29.1",
     "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.1",
-    "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.2",
+    "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.4",
     "@types/react": ">=16.8.0 <19.0.0",
     "@types/react-dom": ">=16.8.0 <19.0.0",
     "react": ">=16.8.0 <19.0.0",
@@ -110,7 +110,7 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.30.1-beta.1 || ^1.29.1",
+    "@azure/communication-calling": "1.30.1-beta.2 || ^1.29.1",
     "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.1",
     "@azure/core-auth": "^1.7.2",
     "@babel/cli": "^7.24.8",

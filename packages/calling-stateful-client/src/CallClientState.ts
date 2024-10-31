@@ -538,16 +538,12 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
   spotlight?: SpotlightState;
-  /* @conditional-compile-remove(remote-ufd) */
-  /**
-   * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
-   */
-  diagnostics?: Record<string, RemoteDiagnosticState>;
   /* @conditional-compile-remove(meida-access) */
   /**
-   * Proxy of {@link @azure/communication-calling#Call.MediaAccess.mediaAccesses}.
+   * Proxy of {@link @azure/communication-calling#Call.MediaAccess.mediaAccesses}.W
    */
   mediaAccess?: MediaAccessState;
+  diagnostics?: Partial<Record<RemoteDiagnosticType, RemoteDiagnosticState>>;
 }
 
 /**
@@ -1144,12 +1140,20 @@ export interface DiagnosticsCallFeatureState {
 
 /* @conditional-compile-remove(remote-ufd) */
 /**
+ * All type names for {@link @azure/communication-calling#RemoteDiagnosticState}.
+ *
+ * @beta
+ */
+export type RemoteDiagnosticType = NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+
+/* @conditional-compile-remove(remote-ufd) */
+/**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
  *
  * @beta
  */
 export declare type RemoteDiagnosticState = {
-  readonly diagnostic: NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+  readonly diagnostic: RemoteDiagnosticType;
   readonly value: DiagnosticQuality | DiagnosticFlag;
   readonly valueType: DiagnosticValueType;
 };

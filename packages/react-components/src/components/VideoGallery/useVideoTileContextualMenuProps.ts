@@ -281,7 +281,7 @@ export const useVideoTileContextualMenuProps = (props: {
       return undefined;
     }
 
-    return { items, styles: {}, calloutProps: { preventDismissOnEvent } };
+    return { items, styles: {}, calloutProps: { preventDismissOnEvent }, shouldFocusOnContainer: false };
   }, [
     onMuteParticipant,
     strings?.muteParticipantMenuItemLabel,

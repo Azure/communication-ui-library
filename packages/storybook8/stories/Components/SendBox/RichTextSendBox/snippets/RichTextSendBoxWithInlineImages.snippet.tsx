@@ -16,8 +16,12 @@ export const RichTextSendBoxWithInlineImagesExample: () => JSX.Element = () => {
             return;
           }}
           onInsertInlineImage={(imageAttributes: Record<string, string>) => {
+            const id = imageAttributes.id;
+            if (!id) {
+              throw new Error('Image id is missing');
+            }
             const newImage = {
-              id: imageAttributes.id,
+              id,
               name: imageAttributes['data-image-file-name'] ?? _DEFAULT_INLINE_IMAGE_FILE_NAME,
               progress: 1,
               url: imageAttributes.src,
