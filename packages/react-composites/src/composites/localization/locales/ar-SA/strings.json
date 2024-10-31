@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "لن يتم تمييز مقاطع الفيديو بعد الآن للجميع في الاجتماع.",
       "stopSpotlightConfirmButtonLabel": "التوقف عن تسليط الضوء",
       "stopSpotlightOnSelfConfirmButtonLabel": "الخروج من وضع تسليط الضوء",
-      "stopSpotlightCancelButtonLabel": "إلغاء"
+      "stopSpotlightCancelButtonLabel": "إلغاء",
+      "closeSpotlightPromptButtonLabel": "إغلاق"
     },
     "exitSpotlightButtonLabel": "الخروج من وضع تسليط الضوء",
     "exitSpotlightButtonTooltip": "الخروج من وضع تسليط الضوء",

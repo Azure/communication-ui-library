@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Видео больше не будут выделены для всех участников собрания.",
       "stopSpotlightConfirmButtonLabel": "Больше не помечать важное",
       "stopSpotlightOnSelfConfirmButtonLabel": "Выйти из важного",
-      "stopSpotlightCancelButtonLabel": "Отмена"
+      "stopSpotlightCancelButtonLabel": "Отмена",
+      "closeSpotlightPromptButtonLabel": "Закрыть"
     },
     "exitSpotlightButtonLabel": "Выйти из важного",
     "exitSpotlightButtonTooltip": "Выйти из важного",

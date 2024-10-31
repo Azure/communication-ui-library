@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Die Videos werden nicht mehr für alle Teilnehmer der Besprechung hervorgehoben.",
       "stopSpotlightConfirmButtonLabel": "Spotlight beenden",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight beenden",
-      "stopSpotlightCancelButtonLabel": "Abbrechen"
+      "stopSpotlightCancelButtonLabel": "Abbrechen",
+      "closeSpotlightPromptButtonLabel": "Schließen"
     },
     "exitSpotlightButtonLabel": "Spotlight beenden",
     "exitSpotlightButtonTooltip": "Spotlight beenden",
