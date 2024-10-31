@@ -72,7 +72,11 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.raisedHand,
             participant.contentSharingStream,
             remoteParticipantReaction,
-            spotlight
+            spotlight,
+            Math.max(
+              (participant.diagnostics?.networkReceiveQuality?.value ?? 0) as number,
+              (participant.diagnostics?.networkSendQuality?.value ?? 0) as number
+            )
           );
         })
     );
@@ -90,7 +94,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     raisedHand?: RaisedHandState,
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
-    spotlight?: Spotlight
+    spotlight?: Spotlight,
+    signalStrength?: number
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -102,7 +107,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       raisedHand,
       contentSharingStream,
       reaction,
-      spotlight
+      spotlight,
+      signalStrength
     );
   }
 );
@@ -118,7 +124,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   raisedHand?: RaisedHandState,
   contentSharingStream?: HTMLElement,
   reaction?: Reaction,
-  spotlight?: Spotlight
+  spotlight?: Spotlight,
+  signalStrength?: number
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -161,7 +168,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     state,
     raisedHand,
     reaction,
-    spotlight
+    spotlight,
+    signalStrength
   };
 };
 

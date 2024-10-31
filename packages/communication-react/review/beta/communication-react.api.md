@@ -5126,6 +5126,7 @@ export type VideoGalleryParticipant = {
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
     spotlight?: Spotlight;
+    signalStrength?: number;
 };
 
 // @public
