@@ -14,7 +14,7 @@ import {
   messageBarIconProps,
   messageBarType
 } from './utils';
-import { MessageBarLinkStyles } from './styles/MessageBarLink.styles';
+import { messageBarLinkStyles } from './styles/MessageBarLink.styles';
 
 /**
  * Strings for {@link _TroubleshootingGuideErrorBar}.
@@ -119,9 +119,8 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
                 onClick={() => {
                   onPermissionsTroubleshootingClick(permissionsState);
                 }}
-                underline
               >
-                <span className={MessageBarLinkStyles(theme)}>
+                <span className={messageBarLinkStyles(theme, true)}>
                   {troubleshootingGuideStrings.devicePermissionLinkText}
                 </span>
               </Link>
@@ -134,7 +133,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
             {strings[error.type]}{' '}
             {onNetworkingTroubleshootingClick && (
               <Link onClick={onNetworkingTroubleshootingClick} underline>
-                <span className={MessageBarLinkStyles(theme)}>
+                <span className={messageBarLinkStyles(theme, true)}>
                   {troubleshootingGuideStrings.networkTroubleshootingLinkText}
                 </span>
               </Link>

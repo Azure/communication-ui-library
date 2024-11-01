@@ -11,12 +11,13 @@ import { ITheme, mergeStyles } from '@fluentui/react';
  *
  * @private
  */
-export const MessageBarLinkStyles = (theme: ITheme): string =>
+export const messageBarLinkStyles = (theme: ITheme, underline?: boolean): string =>
   mergeStyles({
+    textDecoration: underline ? 'underline' : 'none',
     color: theme.palette.themeDarkAlt,
     textDecorationColor: theme.palette.themeDarkAlt,
     '@media (forced-colors: active)': {
-      color: 'LinkText !important',
-      textDecorationColor: 'LinkText !important'
+      color: 'LinkText',
+      textDecorationColor: 'LinkText'
     }
   });
