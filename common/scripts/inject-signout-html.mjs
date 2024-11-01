@@ -77,8 +77,8 @@ function injectSignoutToIndexHtmlFile(filePath) {
       }
       document.getElementById('signoutButton').addEventListener('click', handleSignOut);
 
-      const urlParams = new URLSearchParams(window.location.search);
-      const display = urlParams.get('hideSignout') === 'true' ? 'none' : 'flex';          
+      const urlQueryParameters = new URLSearchParams(window.location.search);
+      const display = urlQueryParameters.get('hideSignout') === 'true' ? 'none' : 'flex';          
       document.getElementById('signout-bar').style.display = display;
     </script>`;
     try {
