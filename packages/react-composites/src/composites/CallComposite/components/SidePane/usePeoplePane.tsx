@@ -279,7 +279,7 @@ export const usePeoplePane = (props: {
           key: 'permitAllAttendeesVideo',
           text: localeStrings.permitAllAttendeesVideoMenuLabel,
           iconProps: {
-            iconName: 'ContextualMenuCameraOff',
+            iconName: 'ControlButtonCameraOff',
             styles: { root: { lineHeight: 0 } }
           },
           onClick: () => {

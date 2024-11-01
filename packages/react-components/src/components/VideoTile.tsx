@@ -498,21 +498,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
                 </Text>
               )}
-              {!mediaAccess?.isVideoPermitted && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="ControlButtonCameraProhibitedSmall" />
-                </Stack>
-              )}
-              {mediaAccess?.isAudioPermitted && showMuteIndicator && isMuted && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTileMicOff" />
-                </Stack>
-              )}
-              {!mediaAccess?.isAudioPermitted && showMuteIndicator && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
+              <Stack horizontal className={mergeStyles(iconContainerStyle)} tokens={{ childrenGap: '0.24rem' }}>
+                {!mediaAccess?.isVideoPermitted && <Icon iconName="ControlButtonCameraProhibitedSmall" />}
+                {mediaAccess?.isAudioPermitted && showMuteIndicator && isMuted && <Icon iconName="VideoTileMicOff" />}
+                {!mediaAccess?.isAudioPermitted && showMuteIndicator && (
                   <Icon iconName="ControlButtonMicProhibitedSmall" />
-                </Stack>
-              )}
+                )}
+              </Stack>
               {isSpotlighted && (
                 <Stack className={mergeStyles(iconContainerStyle)}>
                   <Icon iconName="VideoTileSpotlighted" />
