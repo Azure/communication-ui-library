@@ -5339,6 +5339,7 @@ export type VideoGalleryParticipant = {
     isScreenSharingOn?: boolean;
     spotlight?: Spotlight;
     mediaAccess?: MediaAccess;
+    role?: string;
 };
 
 // @public
@@ -5394,8 +5395,6 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
-    // (undocumented)
-    mediaAccess?: MediaAccess;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;

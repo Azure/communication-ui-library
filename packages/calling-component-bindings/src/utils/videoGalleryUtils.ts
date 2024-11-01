@@ -78,7 +78,9 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             remoteParticipantReaction,
             spotlight,
             /* @conditional-compile-remove(media-access) */
-            participant.mediaAccess
+            participant.mediaAccess,
+            /* @conditional-compile-remove(media-access) */
+            participant.role
           );
         })
     );
@@ -98,7 +100,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     reaction?: Reaction,
     spotlight?: Spotlight,
     /* @conditional-compile-remove(media-access) */
-    mediaAccess?: MediaAccess
+    mediaAccess?: MediaAccess,
+    /* @conditional-compile-remove(media-access) */
+    role?: string
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -112,7 +116,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       reaction,
       spotlight,
       /* @conditional-compile-remove(media-access) */
-      mediaAccess
+      mediaAccess,
+      /* @conditional-compile-remove(media-access) */
+      role
     );
   }
 );
@@ -130,7 +136,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   reaction?: Reaction,
   spotlight?: Spotlight,
   /* @conditional-compile-remove(media-access) */
-  mediaAccess?: MediaAccess
+  mediaAccess?: MediaAccess,
+  /* @conditional-compile-remove(media-access) */
+  role?: string
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -175,7 +183,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     reaction,
     spotlight,
     /* @conditional-compile-remove(media-access) */
-    mediaAccess
+    mediaAccess,
+    /* @conditional-compile-remove(media-access) */
+    role
   };
 };
 

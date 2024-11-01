@@ -1169,9 +1169,7 @@ export class CallContext {
       if (!call) {
         return;
       }
-      // call.mediaAccess = {
-      //   mediaAccesses
-      // };
+
       mediaAccesses.forEach((participantMediaAccess) => {
         const participant = call.remoteParticipants[toFlatCommunicationIdentifier(participantMediaAccess.participant)];
         if (participant) {

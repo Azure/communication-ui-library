@@ -98,6 +98,64 @@ export const useVideoTileContextualMenuProps = (props: {
         disabled: participant.isMuted
       });
     }
+    const isAttendee = participant.role === 'Attendee';
+    /* @conditional-compile-remove(media-access) */
+    if (isAttendee && !participant.mediaAccess?.isAudioPermitted && onPermitParticipantAudio) {
+      items.push({
+        key: 'permitParticipantAudio',
+        text: strings?.permitParticipantAudioTileMenuLabel,
+        iconProps: {
+          iconName: 'Microphone',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onPermitParticipantAudio([participant.userId]),
+        'data-ui-id': 'audio-tile-unblock-microphone',
+        ariaLabel: 'Unblock microphone'
+      });
+    }
+    /* @conditional-compile-remove(media-access) */
+    if (isAttendee && participant.mediaAccess?.isAudioPermitted && onForbidParticipantAudio) {
+      items.push({
+        key: 'forbidParticipantAudio',
+        text: strings?.forbidParticipantAudioTileMenuLabel,
+        iconProps: {
+          iconName: 'ControlButtonMicProhibited',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onForbidParticipantAudio([participant.userId]),
+        'data-ui-id': 'audio-tile-block-microphone',
+        ariaLabel: 'Block microphone'
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (isAttendee && !participant.mediaAccess?.isVideoPermitted && onPermitParticipantVideo) {
+      items.push({
+        key: 'permitParticipantVideo',
+        text: strings?.permitParticipantVideoTileMenuLabel,
+        iconProps: {
+          iconName: 'Camera',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onPermitParticipantVideo([participant.userId]),
+        'data-ui-id': 'video-tile-permit-camera',
+        ariaLabel: 'Permit camera'
+      });
+    }
+    /* @conditional-compile-remove(media-access) */
+    if (isAttendee && participant.mediaAccess?.isVideoPermitted && onForbidParticipantVideo) {
+      items.push({
+        key: 'forbidParticipantVideo',
+        text: strings?.forbidParticipantVideoTileMenuLabel,
+        iconProps: {
+          iconName: 'ControlButtonCameraProhibited',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onForbidParticipantVideo([participant.userId]),
+        'data-ui-id': 'video-tile-block-microphone',
+        ariaLabel: 'Block microphone'
+      });
+    }
     if (isPinned !== undefined) {
       if (isPinned && onUnpinParticipant && strings?.unpinParticipantForMe) {
         let unpinActionString: string | undefined = undefined;
@@ -185,63 +243,6 @@ export const useVideoTileContextualMenuProps = (props: {
           title: maxSpotlightedParticipantsReached ? strings?.spotlightLimitReachedMenuTitle : undefined
         });
       }
-    }
-    /* @conditional-compile-remove(media-access) */
-    if (!participant.mediaAccess?.isAudioPermitted && onPermitParticipantAudio) {
-      items.push({
-        key: 'permitParticipantAudio',
-        text: strings?.permitParticipantAudioTileMenuLabel,
-        iconProps: {
-          iconName: 'Microphone',
-          styles: { root: { lineHeight: 0 } }
-        },
-        onClick: () => onPermitParticipantAudio([participant.userId]),
-        'data-ui-id': 'audio-tile-unblock-microphone',
-        ariaLabel: 'Unblock microphone'
-      });
-    }
-    /* @conditional-compile-remove(media-access) */
-    if (participant.mediaAccess?.isAudioPermitted && onForbidParticipantAudio) {
-      items.push({
-        key: 'forbidParticipantAudio',
-        text: strings?.forbidParticipantAudioTileMenuLabel,
-        iconProps: {
-          iconName: 'ControlButtonMicProhibited',
-          styles: { root: { lineHeight: 0 } }
-        },
-        onClick: () => onForbidParticipantAudio([participant.userId]),
-        'data-ui-id': 'audio-tile-block-microphone',
-        ariaLabel: 'Block microphone'
-      });
-    }
-
-    /* @conditional-compile-remove(media-access) */
-    if (!participant.mediaAccess?.isVideoPermitted && onPermitParticipantVideo) {
-      items.push({
-        key: 'permitParticipantVideo',
-        text: strings?.permitParticipantVideoTileMenuLabel,
-        iconProps: {
-          iconName: 'Microphone',
-          styles: { root: { lineHeight: 0 } }
-        },
-        onClick: () => onPermitParticipantVideo([participant.userId]),
-        'data-ui-id': 'video-tile-unblock-microphone',
-        ariaLabel: 'Unblock microphone'
-      });
-    }
-    /* @conditional-compile-remove(media-access) */
-    if (participant.mediaAccess?.isVideoPermitted && onForbidParticipantVideo) {
-      items.push({
-        key: 'forbidParticipantVideo',
-        text: strings?.forbidParticipantVideoTileMenuLabel,
-        iconProps: {
-          iconName: 'ControlButtonMicProhibited',
-          styles: { root: { lineHeight: 0 } }
-        },
-        onClick: () => onForbidParticipantVideo([participant.userId]),
-        'data-ui-id': 'video-tile-block-microphone',
-        ariaLabel: 'Block microphone'
-      });
     }
 
     if (scalingMode) {

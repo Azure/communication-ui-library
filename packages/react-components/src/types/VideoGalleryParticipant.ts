@@ -47,8 +47,11 @@ export type VideoGalleryParticipant = {
   /** Whether participant is spotlighted **/
   spotlight?: Spotlight;
   /* @conditional-compile-remove(media-access) */
-  /** audio video access states **/
+  /** Audio video access states **/
   mediaAccess?: MediaAccess;
+  /* @conditional-compile-remove(media-access) */
+  /** Participant user role  **/
+  role?: string;
 };
 
 /**
@@ -132,6 +135,4 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * @public
    * */
   reaction?: Reaction;
-  /* @conditional-compile-remove(media-access) */
-  mediaAccess?: MediaAccess;
 }
