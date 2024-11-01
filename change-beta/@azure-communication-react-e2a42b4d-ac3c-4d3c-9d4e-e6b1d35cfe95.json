@@ -2,7 +2,7 @@
   "type": "patch",
   "area": "fix",
   "workstream": "",
-  "comment": "Increase Start Call Button height on the Configuration Page to 52px on mobile form factor",
+  "comment": "Update video effects picker to a radio group for better A11y control",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"

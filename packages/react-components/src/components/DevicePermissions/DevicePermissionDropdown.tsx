@@ -62,6 +62,10 @@ export interface _DevicePermissionDropdownProps {
    * Styles for devicepermissiondropdown
    */
   styles?: Partial<IDropdownStyles>;
+  /**
+   * Aria-labelledby for the dropdown
+   */
+  ariaLabelledby?: string;
 }
 
 /**
@@ -90,6 +94,7 @@ export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps)
       data-ui-id={'permission-dropdown'}
       placeholder={strings?.placeHolderText}
       label={strings?.label}
+      aria-labelledby={props.ariaLabelledby}
       onRenderPlaceholder={onRenderPlaceholder}
       onRenderCaretDown={onRenderCaretDown}
       onClick={() => {
