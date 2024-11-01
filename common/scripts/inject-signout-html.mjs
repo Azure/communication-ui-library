@@ -20,37 +20,75 @@ function main(args) {
     throw new Error(`Usage: ${args[1]} ['Calling' | 'CallWithChat' | 'Chat']\n`);
   }
   const indexHtmlPath = path.join(REPO_ROOT, 'samples', target, 'public', 'index.html');
-  const signoutHtmlPath = path.join(REPO_ROOT, 'samples', target, 'public', 'signout.html');
   injectSignoutToIndexHtmlFile(indexHtmlPath);
-  createSignoutHtmlFile(signoutHtmlPath);
 }
 
 function injectSignoutToIndexHtmlFile(filePath) {
-    const searchString = '<div id="root" class="Root"></div>';
-    const content = `<div id="signout-container"></div>
+    const bodySearchString = '<div id="root" class="Root"></div>';
+    const headSearchString = '</head>';
+    const styles = `  <style>
+      .signout-bar {
+          display: flex;
+          background-color: #0078d4;
+          color: white;
+          padding: 10px;
+      }
+  
+      .signout-button {
+          margin-left: auto;
+          background-color: white;
+          color: black;
+          border: 1px solid;
+          border-radius: 2px;
+          cursor: pointer;
+          font-size: 16px;
+          padding: 8px 16px;
+          transition: background-color 0.3s, color 0.3s, border-color 0.3s;
+      }
+  
+      .signout-button:hover {
+          background-color: #f3f2f1;
+          border-color: #005a9e;
+      }
+  
+      .signout-button:focus {
+          outline: none;
+          box-shadow: 0 0 0 2px rgba(0, 120, 212, 0.5);
+      }
+  
+      .signout-button:active {
+          background-color: #e0e0e0;
+      }
+    </style>
+  </head>`
+    const content = `<div id="signout-container">
+      <div id="signout-bar" class="signout-bar" style="display: none;">
+        <button id="signoutButton" class="signout-button">Sign Out</button>
+      </div>
+    </div>
     <div id="root" class="Root"></div>
     <script>
       // Ignore: for internal testing only
-      fetch('signout.html').then(response => response.text())
-        .then(data => {
-          document.getElementById('signout-container').innerHTML = data;
-          function handleSignOut() {
-            console.log("You have signed out!");
-            // window.location.href = 'https://login.microsoftonline.com/common/oauth2/v2.0/logout';
-          }
-          var display = document.cookie.split(';').some(item => item.trim().startsWith('AppServiceAuthSession='))
-            ? 'flex' : 'none';
-          document.getElementById('signout-bar').style.display = display;
-
-          document.getElementById('signoutButton').addEventListener('click', handleSignOut);
-        });
+      document.addEventListener('DOMContentLoaded', function() {
+        function handleSignOut() {
+          console.log("You have signed out!");
+          window.location.href = 'https://login.microsoftonline.com/common/oauth2/v2.0/logout';
+        }
+        var display = document.cookie.split(';').some(item => item.trim().startsWith('AppServiceAuthSession='))
+          ? 'flex' : 'none';
+        document.getElementById('signout-bar').style.display = display;
+        document.getElementById('signoutButton').addEventListener('click', handleSignOut);
+      });
     </script>`;
     try {
         
         const fileContent = readFileSync(filePath, 'utf-8');
-        const updatedContent = fileContent.replace(new RegExp(searchString, 'g'), content);
+        const updatedContent = fileContent
+            .replace(new RegExp(bodySearchString, 'g'), content)
+            .replace(new RegExp(headSearchString, 'g'), styles);
+        // const updatedContent = fileContent.replace(new RegExp(searchString, 'g'), content);
         writeFileSync(filePath, updatedContent, 'utf-8');
-        console.log(`Successfully replaced "${searchString}" with signout logic in ${filePath}`);
+        console.log(`Successfully replaced "${bodySearchString}" and "${headSearchString}" with signout logic in ${filePath}`);
     } catch (error) {
         console.error('Error processing the file:', error);
     }
