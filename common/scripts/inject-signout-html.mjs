@@ -71,7 +71,7 @@ function injectSignoutToIndexHtmlFile(filePath) {
       // Ignore: for internal testing only
       function handleSignOut() {
         console.log("You have signed out!");
-        window.location.href = '${window.location.origin}/.auth/logout';
+        window.location.href = window.location.origin + '/.auth/logout';
       }
       document.getElementById('signoutButton').addEventListener('click', handleSignOut);
 
