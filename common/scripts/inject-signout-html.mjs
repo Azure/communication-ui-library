@@ -12,6 +12,8 @@ const MATRIX_JSON = path.join(REPO_ROOT, 'common', 'config', 'workflows', 'matri
 /**
  * This script injects sign-out html logic as part of CI pipeline.
  * 
+ * In uri query parameter add '&hideSignout=true' to hide the signout bar/button.
+ * 
  * Usage: node inject-signout-html.mjs <Calling/CallWithChat/Chat>
  */
 function main(args) {

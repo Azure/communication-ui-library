@@ -35,8 +35,6 @@ jobs:
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
-      # - name: Inject AAD signout html for sample App
-      #   run: node ./common/scripts/inject-signout-html.mjs Calling
       # Switch flavor to stable when it is release branch
       - name: Switch flavor for stable build
         if: ${{ !contains(github.ref, 'beta') }}
@@ -85,8 +83,6 @@ jobs:
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
-      - name: Inject AAD signout html for sample App
-        run: node ./common/scripts/inject-signout-html.mjs Chat
       # Switch flavor to stable when it is release branch
       - name: Switch flavor for stable build
         if: ${{ !contains(github.ref, 'beta') }}
@@ -135,8 +131,6 @@ jobs:
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
-      # - name: Inject AAD signout html for sample App
-      #   run: node ./common/scripts/inject-signout-html.mjs CallWithChat
       # Switch flavor to stable when it is release branch
       - name: Switch flavor for stable build
         if: ${{ !contains(github.ref, 'beta') }}
