@@ -60,6 +60,7 @@ function injectSignoutToIndexHtmlFile(filePath) {
           background-color: #e0e0e0;
       }
     </style>
+    <script type="text/javascript" src="https://alcdn.msauth.net/browser/2.35.0/js/msal-browser.min.js"></script>
   </head>`
     const content = `<div id="signout-container">
       <div id="signout-bar" class="signout-bar" style="display: none;">
@@ -70,13 +71,22 @@ function injectSignoutToIndexHtmlFile(filePath) {
     <script>
       // Ignore: for internal testing only
       document.addEventListener('DOMContentLoaded', function() {
+
+        const msalConfig = {
+          auth: {
+            clientId: '7899f900-b825-41c4-80af-f0247897d3c1',
+            redirectUri: window.location.origin
+          }
+        };
+        const msalInstance = new msal.PublicClientApplication(msalConfig);
+
         function handleSignOut() {
-          console.log("You have signed out!");
-          window.location.href = 'https://login.microsoftonline.com/common/oauth2/v2.0/logout';
+          const logoutRequest = {
+            postLogoutRedirectUri: window.location.origin
+          };
+          msalInstance.logout(logoutRequest);
         }
-        var display = document.cookie.split(';').some(item => item.trim().startsWith('AppServiceAuthSession='))
-          ? 'flex' : 'none';
-        console.log(document.cookie.split(';'));
+        var display = msalInstance.getAllAccounts.length > 0 ? 'flex' : 'none';
         console.log(display);
         document.getElementById('signout-bar').style.display = display;
         document.getElementById('signoutButton').addEventListener('click', handleSignOut);
