@@ -40,7 +40,8 @@ import { Features } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { _ComponentCallingHandlers } from './createHandlers';
-
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult } from '@internal/react-components';
 /**
  * Object containing all the handlers required for calling components.
  *
@@ -103,6 +104,35 @@ export interface CommonCallingHandlers {
   onStopAllSpotlight: () => Promise<void>;
   onMuteParticipant: (userId: string) => Promise<void>;
   onMuteAllRemoteParticipants: () => Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call back to create a view for together mode
+   *
+   * @beta
+   */
+  onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
+
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call back to create a view for together mode
+   *
+   * @beta
+   */
+  onStartTogetherMode: () => Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call set together mode scene size
+   *
+   * @beta
+   */
+  onSetTogetherModeSceneSize: (width: number, height: number) => void;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call back to dispose together mode views
+   *
+   * @beta
+   */
+  onDisposeTogetherModeStreamViews: () => Promise<void>;
 }
 
 /**
@@ -711,7 +741,59 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
           await call?.feature(Features.Spotlight).stopSpotlight(participants);
         }
       : undefined;
+    /* @conditional-compile-remove(together-mode) */
+    const onCreateTogetherModeStreamView = async (
+      options = { scalingMode: 'Fit', isMirrored: false } as VideoStreamOptions
+    ): Promise<void | TogetherModeStreamViewResult> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        return;
+      }
+      const togetherModeStreams = callState.togetherMode.streams;
+      const togetherModeCreateViewResult: TogetherModeStreamViewResult = {};
 
+      const mainVideoStream = togetherModeStreams.mainVideoStream;
+      if (mainVideoStream && mainVideoStream.isAvailable && !mainVideoStream.view) {
+        const createViewResult = await callClient.createView(call.id, mainVideoStream, options);
+        // SDK currently only supports 1 Video media stream type
+        togetherModeCreateViewResult.mainVideoView = createViewResult?.view
+          ? { view: createViewResult?.view }
+          : undefined;
+      }
+
+      return togetherModeCreateViewResult;
+    };
+
+    /* @conditional-compile-remove(together-mode) */
+    const onDisposeTogetherModeStreamViews = async (): Promise<void> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        throw new Error(`Call Not Found: ${call.id}`);
+      }
+
+      const togetherModeStreams = callState.togetherMode.streams;
+
+      if (!togetherModeStreams.mainVideoStream) {
+        return;
+      }
+
+      if (togetherModeStreams.mainVideoStream.view) {
+        callClient.disposeView(call.id, togetherModeStreams.mainVideoStream);
+      }
+    };
+    /* @conditional-compile-remove(together-mode) */
+    const onSetTogetherModeSceneSize = (width: number, height: number): void => {
+      const togetherModeFeature = call?.feature(Features.TogetherMode);
+      if (togetherModeFeature) {
+        togetherModeFeature.sceneSize = { width, height };
+      }
+    };
     return {
       onHangUp,
       onToggleHold,
@@ -761,7 +843,15 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onMuteParticipant,
       onMuteAllRemoteParticipants,
       onAcceptCall: notImplemented,
-      onRejectCall: notImplemented
+      onRejectCall: notImplemented,
+      /* @conditional-compile-remove(together-mode) */
+      onCreateTogetherModeStreamView,
+      /* @conditional-compile-remove(together-mode) */
+      onStartTogetherMode: notImplemented,
+      /* @conditional-compile-remove(together-mode) */
+      onSetTogetherModeSceneSize,
+      /* @conditional-compile-remove(together-mode) */
+      onDisposeTogetherModeStreamViews
     };
   }
 );
