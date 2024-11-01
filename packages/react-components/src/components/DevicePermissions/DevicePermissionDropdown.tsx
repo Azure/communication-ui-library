@@ -124,8 +124,13 @@ const actionButtonStyles: IButtonStyles = {
     border: 'none',
     height: '2rem',
     padding: '0 0',
+    paddingTop: '0.1rem',
     position: 'absolute',
     right: '0',
+    lineHeight: '2rem',
     minWidth: '3rem'
+  },
+  label: {
+    fontWeight: 400
   }
 };
