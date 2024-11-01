@@ -14,6 +14,7 @@ import {
 } from '@internal/react-components';
 import { CallingHandlers } from '@internal/calling-component-bindings';
 import { Common } from '@internal/acs-ui-common';
+import { FocusZone } from '@fluentui/react';
 
 /**
  * @private
@@ -72,5 +73,13 @@ export const ConfigurationPageErrorBar = (props: ConfigurationPageErrorBarProps)
     );
   }
 
-  return <ErrorBar {...errorBarProps} onDismissError={props.onDismissError} />;
+  if (errorBarProps.activeErrorMessages.length === 0) {
+    return <></>;
+  }
+
+  return (
+    <FocusZone shouldFocusOnMount>
+      <ErrorBar {...errorBarProps} onDismissError={props.onDismissError} />
+    </FocusZone>
+  );
 };
