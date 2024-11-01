@@ -1139,9 +1139,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       throw new Error('Could not return from breakout room because the origin call could not be retrieved.');
     }
 
-    if (this.call?.id === this.originCall.id) {
-      console.error('Return from breakout room will not be done because current call is the origin call.');
-      return;
+    if (!this.getState().call?.breakoutRooms) {
+      throw new Error('Return from breakout room cannot be done because current call does not have breakout rooms.');
+    }
+
+    if (this.originCall && this.call?.id === this.originCall.id) {
+      throw new Error('Return from breakout room cannot be done because current call is the origin call.');
     }
 
     const breakoutRoomCall = this.call;
