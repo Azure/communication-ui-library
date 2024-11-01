@@ -73,7 +73,11 @@ function injectSignoutToIndexHtmlFile(filePath) {
         console.log("You have signed out!");
         window.location.href = 'https://login.microsoftonline.com/common/oauth2/v2.0/logout';
       }
-      document.getElementById('signoutButton').addEventListener('click', logout);
+      document.getElementById('signoutButton').addEventListener('click', handleSignOut);
+
+      const urlParams = new URLSearchParams(window.location.search);
+      const display = urlParams.get('hideSignout') === 'true' ? 'none' : 'flex';          
+      document.getElementById('signout-bar').style.display = display;
     </script>`;
     try {
         const fileContent = readFileSync(filePath, 'utf-8');
