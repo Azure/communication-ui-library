@@ -76,6 +76,7 @@ function injectSignoutToIndexHtmlFile(filePath) {
         }
         var display = document.cookie.split(';').some(item => item.trim().startsWith('AppServiceAuthSession='))
           ? 'flex' : 'none';
+        console.log(document.cookie.split(';'));
         console.log(display);
         document.getElementById('signout-bar').style.display = display;
         document.getElementById('signoutButton').addEventListener('click', handleSignOut);
