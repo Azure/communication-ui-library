@@ -42,15 +42,20 @@ export interface TogetherModeStreams {
   mainVideoStream?: TogetherModeVideoStream;
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
- * Interface representing the position of a participant in Together Mode.
+ * Interface representing the seating information in Together Mode.
  * @beta
  */
-export interface TogetherModeParticipantPosition {
-  participantId: string;
+export interface TogetherModeSeatingInfo {
   top: number;
   left: number;
   width: number;
   height: number;
 }
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * Interface representing the position of a participant in Together Mode.
+ * @beta
+ */
+export type TogetherModeParticipantPosition = Record<string, TogetherModeSeatingInfo>;
