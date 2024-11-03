@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "fix",
-  "workstream": "A11y",
-  "comment": "add new strings to better announce the state of the participant",
-  "packageName": "@azure/communication-react",
-  "email": "94866715+dmceachernmsft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
