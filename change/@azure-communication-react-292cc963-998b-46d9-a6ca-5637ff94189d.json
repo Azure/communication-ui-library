@@ -2,7 +2,7 @@
   "type": "patch",
   "area": "improvement",
   "workstream": "Update Dependency",
-  "comment": "Update comunication-calling stable version to 1.30.2",
+  "comment": "Update comunication-calling stable version to 1.30.2 and beta to 1.31.1-beta.1",
   "packageName": "@azure/communication-react",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"
