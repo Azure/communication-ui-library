@@ -231,10 +231,10 @@ const convertCallEndReason = (callEndedData: CallEndReason | undefined): CallEnd
 
   if (callEndedData?.subCode === ACCESS_DENIED_TEAMS_MEETING_SUB_CODE) {
     return CallEndReasons.ACCESS_DENIED;
-  } else if (callEndedData?.code === 400) {
-    return CallEndReasons.BAD_REQUEST;
   } else if (callEndedData?.subCode === 4000 && REMOVED_FROM_CALL_SUB_CODES.includes(callEndedData.subCode)) {
     return CallEndReasons.REMOVED_FROM_CALL;
+  } else if (callEndedData?.code === 400) {
+    return CallEndReasons.BAD_REQUEST;
   } else {
     return CallEndReasons.LEFT_CALL;
   }
