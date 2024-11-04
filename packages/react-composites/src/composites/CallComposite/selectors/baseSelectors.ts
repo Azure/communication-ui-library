@@ -307,3 +307,13 @@ export const getIsRoomsCall = (state: CallAdapterState): boolean => state.isRoom
 /** @private */
 export const getVideoBackgroundImages = (state: CallAdapterState): VideoBackgroundImage[] | undefined =>
   state.videoBackgroundImages;
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ * Gets the together mode streams state.
+ * @param state - The current state of the call adapter.
+ * @returns The together mode streams state or undefined.
+ */
+export const getIsTogetherModeActive = (state: CallAdapterState): boolean | undefined =>
+  state.call?.togetherMode.isActive;

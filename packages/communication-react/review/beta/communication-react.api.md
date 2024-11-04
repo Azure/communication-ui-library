@@ -906,6 +906,7 @@ export interface CallCompositeStrings {
     moreButtonGalleryPositionToggleLabel?: string;
     moreButtonGallerySpeakerLayoutLabel?: string;
     moreButtonLargeGalleryDefaultLayoutLabel?: string;
+    moreButtonTogetherModeLayoutLabel?: string;
     muteAllCancelButtonLabel: string;
     muteAllConfirmButtonLabel: string;
     muteAllDialogContent: string;
@@ -4763,7 +4764,7 @@ export type SpotlightChangedListener = (args: {
 
 // @public
 export interface SpotlightPromptStrings {
-    closeSpotlightPromptButtonLabel: string;
+    closeSpotlightPromptButtonLabel?: string;
     startSpotlightCancelButtonLabel: string;
     startSpotlightConfirmButtonLabel: string;
     startSpotlightHeading: string;
@@ -4994,8 +4995,26 @@ export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier
 export interface TogetherModeCallFeature {
     // (undocumented)
     isActive: boolean;
-    seatingPositions: Record<string, TogetherModeSeatingPositionState>;
+    seatingPositions: TogetherModeParticipantSeatingState;
     streams: TogetherModeStreamsState;
+}
+
+// @beta
+export type TogetherModeParticipantSeatingProp = Record<string, TogetherModeSeatingPositionProp>;
+
+// @beta
+export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
+
+// @beta
+export interface TogetherModeSeatingPositionProp {
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    left: number;
+    // (undocumented)
+    top: number;
+    // (undocumented)
+    width: number;
 }
 
 // @beta
@@ -5011,6 +5030,12 @@ export interface TogetherModeSeatingPositionState {
 }
 
 // @beta
+export interface TogetherModeStreamsProp {
+    // (undocumented)
+    mainVideoStream?: TogetherModeVideoStreamProp;
+}
+
+// @beta
 export interface TogetherModeStreamsState {
     // (undocumented)
     mainVideoStream?: CallFeatureStreamState;
@@ -5020,6 +5045,17 @@ export interface TogetherModeStreamsState {
 export interface TogetherModeStreamViewResult {
     // (undocumented)
     mainVideoView?: CreateVideoStreamViewResult;
+}
+
+// @beta
+export interface TogetherModeVideoStreamProp {
+    // (undocumented)
+    isAvailable?: boolean;
+    renderElement?: HTMLElement;
+    streamSize?: {
+        width: number;
+        height: number;
+    };
 }
 
 // @public
@@ -5241,7 +5277,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | /* @conditional-compile-remove(together-mode) */ 'togetherMode' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
@@ -5262,7 +5298,11 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
+    // (undocumented)
+    canStartTogetherMode?: boolean;
     dominantSpeakers?: string[];
+    // (undocumented)
+    isTogetherModeActive?: boolean;
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
@@ -5272,19 +5312,26 @@ export interface VideoGalleryProps {
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    // (undocumented)
+    onCreateTogetherModeStreamView?: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     onDisposeLocalScreenShareStreamView?: () => Promise<void>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
+    // (undocumented)
+    onDisposeTogetherModeStreamViews?: () => Promise<void>;
     onMuteParticipant?: (userId: string) => Promise<void>;
     onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    // (undocumented)
+    onSetTogetherModeSceneSize?: (width: number, height: number) => void;
     onStartLocalSpotlight?: () => Promise<void>;
     onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
+    onStartTogetherMode?: () => Promise<void>;
     onStopLocalSpotlight?: () => Promise<void>;
     onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
@@ -5299,6 +5346,10 @@ export interface VideoGalleryProps {
     spotlightedParticipants?: string[];
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
+    // (undocumented)
+    togetherModeSeatingCoordinates?: TogetherModeParticipantSeatingProp;
+    // (undocumented)
+    togetherModeStreams?: TogetherModeStreamsProp;
     videoTilesOptions?: VideoTilesOptions;
 }
 
@@ -5320,6 +5371,10 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     optimalVideoCount?: number;
     spotlightedParticipants?: string[];
     maxParticipantsToSpotlight?: number;
+    isTogetherModeActive?: boolean;
+    canStartTogetherMode?: boolean;
+    togetherModeStreamsMap?: TogetherModeStreamsState;
+    togetherModeSeatingCoordinates?: TogetherModeParticipantSeatingState;
 };
 
 // @public

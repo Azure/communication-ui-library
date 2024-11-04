@@ -37,6 +37,7 @@ export type { TogetherModeCallFeatureState as TogetherModeCallFeature } from './
 export type {
   CallFeatureStreamState,
   TogetherModeSeatingPositionState,
+  TogetherModeParticipantSeatingState,
   CallFeatureStreamName,
   TogetherModeStreamsState
 } from './CallClientState';

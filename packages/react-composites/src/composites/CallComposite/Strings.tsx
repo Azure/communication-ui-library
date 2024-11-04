@@ -624,6 +624,11 @@ export interface CallCompositeStrings {
    * Label for the selection of the default (Gallery) layout
    */
   moreButtonLargeGalleryDefaultLayoutLabel?: string;
+  /* conditional-compile-remove(together-mode) */
+  /**
+   * Label for the selection of the default (Gallery) layout
+   */
+  moreButtonTogetherModeLayoutLabel?: string;
   /**
    * Label for the selection of the floatingLocalVideo (Dynamic) layout
    */

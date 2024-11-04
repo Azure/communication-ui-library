@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Gallery view",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focus on content",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Large Gallery",
+    "moreButtonGalleryTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Your camera has been disabled. You can no longer share video.",
@@ -327,8 +328,7 @@
       "stopAllSpotlightText": "The videos will no longer be highlighted for everyone in the meeting.",
       "stopSpotlightConfirmButtonLabel": "Stop spotlighting",
       "stopSpotlightOnSelfConfirmButtonLabel": "Exit spotlight",
-      "stopSpotlightCancelButtonLabel": "Cancel",
-      "closeSpotlightPromptButtonLabel": "Close"
+      "stopSpotlightCancelButtonLabel": "Cancel"
     },
     "exitSpotlightButtonLabel": "Exit spotlight",
     "exitSpotlightButtonTooltip": "Exit spotlight",

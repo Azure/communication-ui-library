@@ -710,6 +710,7 @@ export interface CallCompositeStrings {
     moreButtonGalleryPositionToggleLabel?: string;
     moreButtonGallerySpeakerLayoutLabel?: string;
     moreButtonLargeGalleryDefaultLayoutLabel?: string;
+    moreButtonTogetherModeLayoutLabel?: string;
     muteAllCancelButtonLabel: string;
     muteAllConfirmButtonLabel: string;
     muteAllDialogContent: string;
@@ -4061,7 +4062,7 @@ export type SpotlightChangedListener = (args: {
 
 // @public
 export interface SpotlightPromptStrings {
-    closeSpotlightPromptButtonLabel: string;
+    closeSpotlightPromptButtonLabel?: string;
     startSpotlightCancelButtonLabel: string;
     startSpotlightConfirmButtonLabel: string;
     startSpotlightHeading: string;

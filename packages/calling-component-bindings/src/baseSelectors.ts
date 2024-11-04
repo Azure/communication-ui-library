@@ -26,6 +26,8 @@ import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/r
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeCallFeatureState } from '@internal/calling-stateful-client/dist/dist-esm/CallClientState';
 
 /**
  * Common props used to reference calling declarative client state.
@@ -293,3 +295,12 @@ export const getAssignedBreakoutRoom = (
 ): BreakoutRoom | undefined => {
   return state.calls[props.callId]?.breakoutRooms?.assignedBreakoutRoom;
 };
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ */
+export const getTogetherModeCallFeature = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): TogetherModeCallFeatureState | undefined => state.calls[props.callId]?.togetherMode;

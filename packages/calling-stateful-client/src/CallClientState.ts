@@ -304,6 +304,14 @@ export interface TogetherModeSeatingPositionState {
 
 /* @conditional-compile-remove(together-mode) */
 /**
+ * Represents the seating positions of participants in Together Mode.
+ *
+ * @beta
+ */
+export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
+
+/* @conditional-compile-remove(together-mode) */
+/**
  * Interface representing the streams in Together Mode.
  *
  * @beta
@@ -327,7 +335,7 @@ export interface TogetherModeCallFeatureState {
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.TogetherModeSeatingMap}.
    */
-  seatingPositions: Record<string, TogetherModeSeatingPositionState>;
+  seatingPositions: TogetherModeParticipantSeatingState;
 }
 
 /**

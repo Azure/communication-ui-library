@@ -62,6 +62,15 @@ export type {
   ViewScalingMode
 } from './types';
 
+/* @conditional-compile-remove(together-mode) */
+export type {
+  TogetherModeStreamViewResult,
+  TogetherModeVideoStreamProp,
+  TogetherModeStreamsProp,
+  TogetherModeParticipantSeatingProp,
+  TogetherModeSeatingPositionProp
+} from './types';
+
 export type { RaisedHand } from './types';
 
 export type { Spotlight } from './types';
@@ -84,6 +93,3 @@ export type { SurveyIssues } from './types';
 export type { SurveyIssuesHeadingStrings } from './types';
 
 export type { CallSurveyImprovementSuggestions } from './types';
-
-/* @conditional-compile-remove(together-mode) */
-export type { TogetherModeStreamViewResult } from './types';

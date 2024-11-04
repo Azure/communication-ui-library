@@ -54,3 +54,13 @@ export interface LayoutProps {
    */
   spotlightedParticipantUserIds?: string[];
 }
+
+/**
+ * Props for a layout component
+ *
+ * @beta
+ */
+export interface TogetherModeLayoutProps {
+  /** Callback to render each remote participant */
+  togetherModeStreamComponent?: JSX.Element;
+}
