@@ -4,7 +4,7 @@
 import React from 'react';
 import { TeamsTheme as TeamsThemeComponent } from './snippets/TeamsTheme.snippet';
 
-const TeamsStory: (args: any) => JSX.Element = () => {
+const TeamsStory: () => JSX.Element = () => {
   return (
     <div style={{ width: '40rem' }}>
       <TeamsThemeComponent />
