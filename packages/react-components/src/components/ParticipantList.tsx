@@ -181,15 +181,46 @@ const onRenderParticipantDefault = (
                 ariaLabel={strings.sharingIconLabel}
               />
             )}
-            {callingParticipant.isMuted && (
-              <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
-            )}
+            {getParticipantItemCameraProhibitedTrampoline(callingParticipant)}
+            {getControlButtonMicProhibitedTrampoline(callingParticipant)}
+            {getParticipantItemMicOffTrampoline(callingParticipant)}
             {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
 
             {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
           </Stack>
         )
       : () => null;
+
+  const getControlButtonMicProhibitedTrampoline = (callingParticipant: CallParticipantListParticipant): JSX.Element => {
+    /* @conditional-compile-remove(media-access) */
+    if (!callingParticipant.mediaAccess?.isAudioPermitted) {
+      return <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
+    }
+
+    return <></>;
+  };
+
+  const getParticipantItemMicOffTrampoline = (callingParticipant: CallParticipantListParticipant): JSX.Element => {
+    /* @conditional-compile-remove(media-access) */
+    if (callingParticipant.mediaAccess?.isAudioPermitted && callingParticipant.isMuted) {
+      return <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
+    }
+
+    return <></>;
+  };
+
+  const getParticipantItemCameraProhibitedTrampoline = (
+    callingParticipant: CallParticipantListParticipant
+  ): JSX.Element => {
+    /* @conditional-compile-remove(media-access) */
+    if (!callingParticipant.mediaAccess?.isVideoPermitted) {
+      return (
+        <Icon iconName="ControlButtonCameraProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+      );
+    }
+
+    return <></>;
+  };
 
   const onRenderAvatarWithRaiseHand =
     callingParticipant?.raisedHand && onRenderAvatar

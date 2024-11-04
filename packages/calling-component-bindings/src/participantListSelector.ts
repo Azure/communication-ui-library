@@ -74,11 +74,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             spotlightedParticipants,
             toFlatCommunicationIdentifier(participant.identifier)
           );
-          /* @conditional-compile-remove(media-access) */
-          const mediaAccess = {
-            isAudioPermitted: participant.mediaAccess?.isAudioPermitted,
-            isVideoPermitted: participant.mediaAccess?.isVideoPermitted
-          };
 
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
@@ -92,7 +87,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             remoteParticipantReaction,
             spotlight,
             /* @conditional-compile-remove(media-access) */
-            mediaAccess
+            participant.mediaAccess
           );
         })
         .sort((a, b) => {

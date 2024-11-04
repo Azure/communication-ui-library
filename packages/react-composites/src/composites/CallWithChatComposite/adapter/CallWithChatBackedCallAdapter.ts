@@ -242,6 +242,46 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async returnFromBreakoutRoom(): Promise<void> {
     return this.callWithChatAdapter.returnFromBreakoutRoom();
   }
+
+  /* @conditional-compile-remove(media-access) */
+  public async forbidParticipantAudio(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.forbidParticipantAudio(userIds);
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async permitParticipantAudio(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.permitParticipantAudio(userIds);
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async forbidAllAttendeesAudio(): Promise<void> {
+    return this.callWithChatAdapter.forbidAllAttendeesAudio();
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async permitAllAttendeesAudio(): Promise<void> {
+    return this.callWithChatAdapter.permitAllAttendeesAudio();
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async forbidParticipantVideo(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.forbidParticipantAudio(userIds);
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async permitParticipantVideo(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.permitParticipantAudio(userIds);
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async forbidAllAttendeesVideo(): Promise<void> {
+    return this.callWithChatAdapter.forbidAllAttendeesAudio();
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async permitAllAttendeesVideo(): Promise<void> {
+    return this.callWithChatAdapter.permitAllAttendeesAudio();
+  }
 }
 
 function callAdapterStateFromCallWithChatAdapterState(

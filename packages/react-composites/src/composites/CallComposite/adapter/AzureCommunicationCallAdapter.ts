@@ -623,6 +623,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.stopAllSpotlight.bind(this);
     this.muteParticipant.bind(this);
     this.muteAllRemoteParticipants.bind(this);
+    this.forbidAllAttendeesAudio.bind(this);
+    this.permitAllAttendeesAudio.bind(this);
+    this.forbidAllAttendeesAudio.bind(this);
+    this.permitAllAttendeesAudio.bind(this);
   }
 
   public dispose(): void {
@@ -1131,6 +1135,40 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   public async stopAllSpotlight(): Promise<void> {
     this.handlers.onStopAllSpotlight();
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async forbidParticipantAudio(userIds: string[]): Promise<void> {
+    this.handlers.onForbidParticipantAudio?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitParticipantAudio(userIds: string[]): Promise<void> {
+    this.handlers.onPermitParticipantAudio?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async forbidAllAttendeesAudio(): Promise<void> {
+    this.handlers.onForbidAllAttendeesAudio?.();
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitAllAttendeesAudio(): Promise<void> {
+    this.handlers.onPermitAllAttendeesAudio?.();
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async forbidParticipantVideo(userIds: string[]): Promise<void> {
+    this.handlers.onForbidParticipantVideo?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitParticipantVideo(userIds: string[]): Promise<void> {
+    this.handlers.onPermitParticipantVideo?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async forbidAllAttendeesVideo(): Promise<void> {
+    this.handlers.onForbidAllAttendeesVideo?.();
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitAllAttendeesVideo(): Promise<void> {
+    this.handlers.onPermitAllAttendeesVideo?.();
   }
 
   /* @conditional-compile-remove(breakout-rooms) */

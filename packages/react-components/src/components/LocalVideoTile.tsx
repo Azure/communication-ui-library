@@ -6,7 +6,7 @@ import { concatStyleSets, IContextualMenuProps, Layer } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { KeyboardEvent, useCallback } from 'react';
-import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
+import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult, MediaAccess } from '../types';
 import { Reaction } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
@@ -69,6 +69,7 @@ export const _LocalVideoTile = React.memo(
     reactionResources?: ReactionResources;
     participantsCount?: number;
     isScreenSharingOn?: boolean;
+    mediaAccess?: MediaAccess;
   }) => {
     const {
       isAvailable,
@@ -99,7 +100,8 @@ export const _LocalVideoTile = React.memo(
       menuKind,
       strings,
       reactionResources,
-      isScreenSharingOn
+      isScreenSharingOn,
+      mediaAccess
     } = props;
 
     const theme = useTheme();
@@ -267,6 +269,7 @@ export const _LocalVideoTile = React.memo(
             )
           }
           overlay={videoTileOverlay}
+          mediaAccess={mediaAccess}
         >
           {drawerMenuItemProps.length > 0 && (
             <Layer hostId={props.drawerMenuHostId}>

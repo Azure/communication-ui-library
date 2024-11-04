@@ -28,6 +28,14 @@ export const useVideoTileContextualMenuProps = (props: {
     stopSpotlightOnSelfVideoTileMenuLabel?: string;
     spotlightLimitReachedMenuTitle?: string;
     muteParticipantMenuItemLabel?: string;
+    forbidParticipantAudio?: string;
+    permitParticipantAudio?: string;
+    forbidParticipantVideo?: string;
+    permitParticipantVideo?: string;
+    forbidParticipantAudioTileMenuLabel?: string;
+    permitParticipantAudioTileMenuLabel?: string;
+    forbidParticipantVideoTileMenuLabel?: string;
+    permitParticipantVideoTileMenuLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;
@@ -43,6 +51,10 @@ export const useVideoTileContextualMenuProps = (props: {
   maxParticipantsToSpotlight?: number;
   myUserId?: string;
   onMuteParticipant?: (userId: string) => void;
+  onForbidParticipantAudio?: (userIds: string[]) => void;
+  onPermitParticipantAudio?: (userIds: string[]) => void;
+  onForbidParticipantVideo?: (userIds: string[]) => void;
+  onPermitParticipantVideo?: (userIds: string[]) => void;
 }): IContextualMenuProps | undefined => {
   const {
     participant,
@@ -60,7 +72,11 @@ export const useVideoTileContextualMenuProps = (props: {
     onStopSpotlight,
     maxParticipantsToSpotlight,
     myUserId,
-    onMuteParticipant
+    onMuteParticipant,
+    onForbidParticipantAudio,
+    onPermitParticipantAudio,
+    onForbidParticipantVideo,
+    onPermitParticipantVideo
   } = props;
   const scalingMode = useMemo(() => {
     return props.participant.videoStream?.scalingMode;
@@ -82,6 +98,66 @@ export const useVideoTileContextualMenuProps = (props: {
         disabled: participant.isMuted
       });
     }
+
+    const isAttendee = participant.role === 'Attendee';
+    /* @conditional-compile-remove(media-access) */
+    if (isAttendee && !participant.mediaAccess?.isAudioPermitted && onPermitParticipantAudio) {
+      items.push({
+        key: 'permitParticipantAudio',
+        text: strings?.permitParticipantAudioTileMenuLabel,
+        iconProps: {
+          iconName: 'Microphone',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onPermitParticipantAudio([participant.userId]),
+        'data-ui-id': 'audio-tile-unblock-microphone',
+        ariaLabel: 'Unblock microphone'
+      });
+    }
+    /* @conditional-compile-remove(media-access) */
+    if (isAttendee && participant.mediaAccess?.isAudioPermitted && onForbidParticipantAudio) {
+      items.push({
+        key: 'forbidParticipantAudio',
+        text: strings?.forbidParticipantAudioTileMenuLabel,
+        iconProps: {
+          iconName: 'ControlButtonMicProhibited',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onForbidParticipantAudio([participant.userId]),
+        'data-ui-id': 'audio-tile-block-microphone',
+        ariaLabel: 'Block microphone'
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (isAttendee && !participant.mediaAccess?.isVideoPermitted && onPermitParticipantVideo) {
+      items.push({
+        key: 'permitParticipantVideo',
+        text: strings?.permitParticipantVideoTileMenuLabel,
+        iconProps: {
+          iconName: 'Camera',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onPermitParticipantVideo([participant.userId]),
+        'data-ui-id': 'video-tile-permit-camera',
+        ariaLabel: 'Permit camera'
+      });
+    }
+    /* @conditional-compile-remove(media-access) */
+    if (isAttendee && participant.mediaAccess?.isVideoPermitted && onForbidParticipantVideo) {
+      items.push({
+        key: 'forbidParticipantVideo',
+        text: strings?.forbidParticipantVideoTileMenuLabel,
+        iconProps: {
+          iconName: 'ControlButtonCameraProhibited',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onForbidParticipantVideo([participant.userId]),
+        'data-ui-id': 'video-tile-block-microphone',
+        ariaLabel: 'Block microphone'
+      });
+    }
+
     if (isPinned !== undefined) {
       if (isPinned && onUnpinParticipant && strings?.unpinParticipantForMe) {
         let unpinActionString: string | undefined = undefined;
@@ -209,25 +285,48 @@ export const useVideoTileContextualMenuProps = (props: {
 
     return { items, styles: {}, calloutProps: { preventDismissOnEvent }, shouldFocusOnContainer: false };
   }, [
-    scalingMode,
-    strings,
-    view,
-    isPinned,
-    onPinParticipant,
-    onUnpinParticipant,
-    onUpdateScalingMode,
+    onMuteParticipant,
+    strings?.muteParticipantMenuItemLabel,
+    strings?.permitParticipantAudioTileMenuLabel,
+    strings?.forbidParticipantAudioTileMenuLabel,
+    strings?.permitParticipantVideoTileMenuLabel,
+    strings?.forbidParticipantVideoTileMenuLabel,
+    strings?.unpinParticipantForMe,
+    strings?.pinParticipantForMe,
+    strings?.unpinParticipantMenuItemAriaLabel,
+    strings?.pinnedParticipantAnnouncementAriaLabel,
+    strings?.pinParticipantForMeLimitReached,
+    strings?.stopSpotlightOnSelfVideoTileMenuLabel,
+    strings?.stopSpotlightVideoTileMenuLabel,
+    strings?.addSpotlightVideoTileMenuLabel,
+    strings?.startSpotlightVideoTileMenuLabel,
+    strings?.spotlightLimitReachedMenuTitle,
+    strings?.fitRemoteParticipantToFrame,
+    strings?.fillRemoteParticipantFrame,
+    participant.role,
+    participant.mediaAccess?.isAudioPermitted,
+    participant.mediaAccess?.isVideoPermitted,
+    participant.isMuted,
     participant.userId,
     participant.displayName,
-    disablePinMenuItem,
-    toggleAnnouncerString,
-    spotlightedParticipantUserIds,
+    onPermitParticipantAudio,
+    onForbidParticipantAudio,
+    onPermitParticipantVideo,
+    onForbidParticipantVideo,
+    isPinned,
     isSpotlighted,
-    onStartSpotlight,
-    onStopSpotlight,
-    maxParticipantsToSpotlight,
+    scalingMode,
+    onUnpinParticipant,
+    onPinParticipant,
+    toggleAnnouncerString,
+    disablePinMenuItem,
     myUserId,
-    onMuteParticipant,
-    participant.isMuted
+    onStopSpotlight,
+    spotlightedParticipantUserIds,
+    maxParticipantsToSpotlight,
+    onStartSpotlight,
+    onUpdateScalingMode,
+    view
   ]);
 
   return contextualMenuProps;

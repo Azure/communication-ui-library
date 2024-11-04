@@ -50,6 +50,9 @@ export type VideoGalleryParticipant = {
   /* @conditional-compile-remove(media-access) */
   /** audio video access states **/
   mediaAccess?: MediaAccess;
+  /* @conditional-compile-remove(media-access) */
+  /** Participant user role  **/
+  role?: string;
 };
 
 /**

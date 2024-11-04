@@ -132,6 +132,11 @@ export interface VideoGalleryStrings {
   muteParticipantMenuItemLabel: string;
   /** Text shown when waiting for others to join the call */
   waitingScreenText: string;
+  // to do - check this
+  forbidParticipantAudio: string;
+  permitParticipantAudio: string;
+  forbidParticipantVideo: string;
+  permitParticipantVideo: string;
 }
 
 /**
@@ -313,6 +318,10 @@ export interface VideoGalleryProps {
    * This callback is to mute a remote participant
    */
   onMuteParticipant?: (userId: string) => Promise<void>;
+  onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+  onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
 }
 
 /**
@@ -397,7 +406,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxParticipantsToSpotlight,
     reactionResources,
     videoTilesOptions,
-    onMuteParticipant
+    onMuteParticipant,
+    onForbidParticipantAudio,
+    onPermitParticipantAudio,
+    onForbidParticipantVideo,
+    onPermitParticipantVideo
   } = props;
 
   const ids = useIdentifiers();
@@ -517,6 +530,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           reactionResources={reactionResources}
           participantsCount={remoteParticipants.length + 1}
           isScreenSharingOn={localParticipant.isScreenSharingOn}
+          mediaAccess={localParticipant.mediaAccess}
         />
       </Stack>
     );
@@ -647,32 +661,40 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           reactionResources={reactionResources}
           onMuteParticipant={onMuteParticipant}
+          onForbidParticipantAudio={onForbidParticipantAudio}
+          onPermitParticipantAudio={onPermitParticipantAudio}
+          onForbidParticipantVideo={onForbidParticipantVideo}
+          onPermitParticipantVideo={onPermitParticipantVideo}
         />
       );
     },
     [
+      selectedScalingModeState,
+      pinnedParticipants,
+      videoTilesOptions?.alwaysShowLabelBackground,
       onCreateRemoteStreamView,
       onDisposeRemoteVideoStreamView,
-      remoteVideoViewOptions,
-      localParticipant,
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      drawerMenuHostId,
+      localParticipant.userId,
       remoteVideoTileMenu,
-      selectedScalingModeState,
-      pinnedParticipants,
+      drawerMenuHostId,
       onPinParticipant,
       onUnpinParticipant,
-      toggleAnnouncerString,
       onUpdateScalingMode,
+      toggleAnnouncerString,
       spotlightedParticipants,
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       maxParticipantsToSpotlight,
-      onMuteParticipant,
       reactionResources,
-      videoTilesOptions
+      onMuteParticipant,
+      onForbidParticipantAudio,
+      onPermitParticipantAudio,
+      onForbidParticipantVideo,
+      onPermitParticipantVideo,
+      remoteVideoViewOptions
     ]
   );
 

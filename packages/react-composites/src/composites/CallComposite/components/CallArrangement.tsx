@@ -229,7 +229,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
-    localParticipant
+    localParticipant,
+    onForbidParticipantAudio,
+    onPermitParticipantAudio,
+    onForbidParticipantVideo,
+    onPermitParticipantVideo
   } = videoGalleryProps;
 
   const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
@@ -343,11 +347,52 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     spotlightedParticipants
   ]);
 
+  /* @conditional-compile-remove(media-access) */
+  const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
+    return {
+      onForbidParticipantAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onForbidParticipantAudio
+        : undefined,
+      onPermitParticipantAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onPermitParticipantAudio
+        : undefined,
+      onForbidAllAttendeesAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onForbidAllAttendeesAudio
+        : undefined,
+      onPermitAllAttendeesAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onPermitAllAttendeesAudio
+        : undefined,
+      onForbidParticipantVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onForbidParticipantVideo
+        : undefined,
+      onPermitParticipantVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onPermitParticipantVideo
+        : undefined,
+      onForbidAllAttendeesVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onForbidAllAttendeesVideo
+        : undefined,
+      onPermitAllAttendeesVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onPermitAllAttendeesVideo
+        : undefined
+    };
+  }, [
+    role,
+    onForbidParticipantAudio,
+    onPermitParticipantAudio,
+    muteAllHandlers.onForbidAllAttendeesAudio,
+    muteAllHandlers.onPermitAllAttendeesAudio,
+    muteAllHandlers.onForbidAllAttendeesVideo,
+    muteAllHandlers.onPermitAllAttendeesVideo,
+    onForbidParticipantVideo,
+    onPermitParticipantVideo
+  ]);
+
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
     ...spotlightPeoplePaneProps,
     ...onMuteParticipantPeoplePaneProps,
-    ...pinPeoplePaneProps
+    ...pinPeoplePaneProps,
+    /* @conditional-compile-remove(media-access) */ ...onToggleParticipantMicPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {

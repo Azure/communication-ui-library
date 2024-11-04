@@ -522,7 +522,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
     "attendeeRole": "Attendee",
     "muteParticipantMenuItemLabel": "Mute",
-    "waitingScreenText": "Waiting for others to join"
+    "waitingScreenText": "Waiting for others to join",
+    "forbidParticipantAudio": "Disable mic",
+    "permitParticipantAudio": "Allow mic",
+    "forbidParticipantAudioTileMenuLabel": "Disable mic",
+    "permitParticipantAudioTileMenuLabel": "Allow mic",
+    "forbidParticipantVideo": "Disable camera",
+    "permitParticipantVideo": "Allow camera",
+    "forbidParticipantVideoTileMenuLabel": "Disable camera",
+    "permitParticipantVideoTileMenuLabel": "Allow camera"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
