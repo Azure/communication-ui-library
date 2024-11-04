@@ -247,7 +247,7 @@ const CallApp = (props: {adapter: CallAdapter}) => {
   useEffect(() => {
     const handleCallEnded = (): void => {
       const callEndedData = adapter.getState().endedCall?.callEndReason;
-      setCallEndReason(getCallEndReason(callEndedData));
+      setCallEndReason(convertCallEndReason(callEndedData));
     };
     adapter.on('callEnded', handleCallEnded);
     return () => {
