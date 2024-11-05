@@ -350,7 +350,6 @@ export type {
   AttachmentUploadOptions,
   AttachmentUploadTask
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentMetadata } from '../../acs-ui-common/src';
 
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -434,6 +433,20 @@ export type {
   NotificationStrings,
   NotificationStackStrings,
   NotificationType,
-  ActiveNotification
+  ActiveNotification,
+  NotificationStyles
 } from '../../react-components/src';
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';
+/* @conditional-compile-remove(rtt) */
+export type { RTTModalStrings, RTTModalProps } from '../../react-components/src';
+/* @conditional-compile-remove(rtt) */
+export { RTTModal } from '../../react-components/src';
+
+/* @conditional-compile-remove(rtt) */
+export type { RTTDisclosureBannerProps, RTTDisclosureBannerStrings } from '../../react-components/src';
+/* @conditional-compile-remove(rtt) */
+export { RTTDisclosureBanner } from '../../react-components/src';
+/* @conditional-compile-remove(rtt) */
+export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
+/* @conditional-compile-remove(rtt) */
+export { RealTimeText } from '../../react-components/src/components/RealTimeText';

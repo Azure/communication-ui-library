@@ -52,6 +52,7 @@ import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
+import { IIconStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
 import { IncomingCallKind } from '@azure/communication-calling';
@@ -3413,10 +3414,12 @@ export interface NotificationProps {
     autoDismiss?: boolean;
     notificationIconProps?: IIconProps;
     notificationStrings?: NotificationStrings;
+    onClickLink?: () => void;
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
     showStackedEffect?: boolean;
+    styles?: NotificationStyles;
 }
 
 // @public
@@ -3482,11 +3485,23 @@ export interface NotificationStackStrings {
 
 // @public
 export interface NotificationStrings {
-    dismissButtonAriaLabel: string;
+    dismissButtonAriaLabel?: string;
+    linkLabel?: string;
     message?: string;
     primaryButtonLabel?: string;
     secondaryButtonLabel?: string;
     title: string;
+}
+
+// @public
+export interface NotificationStyles {
+    content?: IStackStyles;
+    icon?: IIconStyles;
+    link?: IStackStyles;
+    primaryButton?: IButtonStyles;
+    root?: IStackStyles;
+    secondaryButton?: IButtonStyles;
+    title?: IStackStyles;
 }
 
 // @public
@@ -4046,6 +4061,7 @@ export type SpotlightChangedListener = (args: {
 
 // @public
 export interface SpotlightPromptStrings {
+    closeSpotlightPromptButtonLabel: string;
     startSpotlightCancelButtonLabel: string;
     startSpotlightConfirmButtonLabel: string;
     startSpotlightHeading: string;
@@ -4068,7 +4084,7 @@ export interface SpotlightState {
 }
 
 // @public
-export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier) | CommunicationIdentifier;
+export type StartCallIdentifier = CommunicationIdentifier;
 
 // @public
 export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
@@ -4618,6 +4634,10 @@ export interface VideoTilesOptions {
 // @public
 export interface VideoTileStrings {
     moreOptionsButtonAriaLabel: string;
+    moreOptionsParticipantHandRaisedAriaLabel: string;
+    moreOptionsParticipantIsSpeakingAriaLabel: string;
+    moreOptionsParticipantMutedStateMutedAriaLabel: string;
+    moreOptionsParticipantMutedStateUnmutedAriaLabel: string;
     participantStateHold: string;
     participantStateRinging: string;
 }

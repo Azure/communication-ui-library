@@ -69,7 +69,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
 
-  const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption>(callOptions[0]);
+  const [chosenCallOption, setChosenCallOption] = useState<IChoiceGroupOption | undefined>(callOptions[0]);
   const [meetingLocator, setMeetingLocator] = useState<TeamsMeetingLinkLocator | TeamsMeetingIdLocator>();
   const [meetingId, setMeetingId] = useState<string>();
   const [passcode, setPasscode] = useState<string>();
@@ -81,11 +81,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
 
   const [alternateCallerIdCalloutVisible, setAlternateCallerIdCalloutVisible] = useState<boolean>(false);
 
-  const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
-  const startGroupCall: boolean = chosenCallOption.key === 'ACSCallWithChat';
-  const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
-
-  const acsCallChosen: boolean = chosenCallOption.key === '1:N';
+  const teamsCallChosen: boolean = chosenCallOption?.key === 'TeamsMeeting';
+  const startGroupCall: boolean = chosenCallOption?.key === 'ACSCallWithChat';
+  const pstnCallChosen: boolean = chosenCallOption?.key === 'PSTN';
+  const acsCallChosen: boolean = chosenCallOption?.key === '1:N';
   const buttonEnabled =
     displayName &&
     (startGroupCall ||

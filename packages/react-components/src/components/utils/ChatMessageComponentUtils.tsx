@@ -13,9 +13,7 @@ import { MessageThreadStrings } from '../MessageThread';
 /* @conditional-compile-remove(mention) */
 import { MentionDisplayOptions } from '../MentionPopover';
 import { _AttachmentDownloadCards } from '../Attachment/AttachmentDownloadCards';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMenuAction } from '../../types/Attachment';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { formatTimeForChatMessage, formatTimestampForChatMessage } from './Datetime';
 import { ComponentLocale } from '../../localization/LocalizationProvider';
@@ -43,12 +41,10 @@ export function getMessageBubbleContent(
   inlineImageOptions: InlineImageOptions | undefined,
   /* @conditional-compile-remove(mention) */
   mentionDisplayOptions?: MentionDisplayOptions,
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to render message attachments in the message component.
    */
   onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element,
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to define custom actions for attachments.
    */
@@ -71,16 +67,14 @@ export function getMessageBubbleContent(
         mentionDisplayOptions={mentionDisplayOptions}
         inlineImageOptions={inlineImageOptions}
       />
-      {
-        /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentDownloads
-          ? onRenderAttachmentDownloads(message)
-          : defaultOnRenderAttachmentDownloads(
-              message,
-              strings,
-              /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-              actionsForAttachment
-            )
-      }
+      {onRenderAttachmentDownloads
+        ? onRenderAttachmentDownloads(message)
+        : defaultOnRenderAttachmentDownloads(
+            message,
+            strings,
+
+            actionsForAttachment
+          )}
     </div>
   );
 }
@@ -88,22 +82,17 @@ export function getMessageBubbleContent(
 /**
  * Default component for rendering attachment downloads.
  */
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 const defaultOnRenderAttachmentDownloads = (
   message: ChatMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage,
   strings: MessageThreadStrings,
   actionsForAttachment?: (attachment: AttachmentMetadata, message?: ChatMessage) => AttachmentMenuAction[]
 ): JSX.Element | undefined => {
   const attachments = 'attachments' in message ? message.attachments : undefined;
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   return (attachments?.length ?? 0) > 0 ? (
     <_AttachmentDownloadCards
       message={message as ChatMessage}
-      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       attachments={attachments}
-      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       actionsForAttachment={actionsForAttachment}
-      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       strings={{
         /* @conditional-compile-remove(file-sharing-acs) */
         downloadAttachment: strings.downloadAttachment,

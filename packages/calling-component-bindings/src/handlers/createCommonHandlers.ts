@@ -27,7 +27,13 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
+import {
+  disposeAllLocalPreviewViews,
+  _isInCall,
+  _isInLobbyOrConnecting,
+  _isPreviewOn,
+  getCallStateIfExist
+} from '../utils/callUtils';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
@@ -393,9 +399,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
 
       const participant = Object.values(callState.remoteParticipants).find(
@@ -444,9 +450,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
 
       const participant = Object.values(callState.remoteParticipants).find(
@@ -475,9 +481,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
 
       const participant = Object.values(callState.remoteParticipants).find(
@@ -488,10 +494,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+      const remoteVideoStream = Object.values(participant.videoStreams).filter((i) => i.mediaStreamType === 'Video');
 
-      if (remoteVideoStream && remoteVideoStream.view) {
-        callClient.disposeView(call.id, participant.identifier, remoteVideoStream);
+      for (const stream of remoteVideoStream) {
+        if (stream.view) {
+          callClient.disposeView(call.id, participant.identifier, stream);
+        }
       }
     };
 
@@ -499,10 +507,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
+
       const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       );
@@ -510,12 +519,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!participant || !participant.videoStreams) {
         return;
       }
-      const screenShareStream = Object.values(participant.videoStreams).find(
+      const screenShareStreams = Object.values(participant.videoStreams).filter(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
-      if (screenShareStream && screenShareStream.view) {
-        callClient.disposeView(call.id, participant.identifier, screenShareStream);
+      for (const stream of screenShareStreams) {
+        if (stream.view) {
+          callClient.disposeView(call.id, participant.identifier, stream);
+        }
       }
     };
 
@@ -523,10 +534,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
+
       const screenShareStream = callState?.localVideoStreams.find((item) => item.mediaStreamType === 'ScreenSharing');
       if (screenShareStream && screenShareStream.view) {
         callClient.disposeView(call.id, undefined, screenShareStream);

@@ -1,17 +1,21 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, Spinner, Text } from '@fluentui/react';
+import { mergeStyles, Spinner } from '@fluentui/react';
+/* @conditional-compile-remove(remote-ufd) */
+import { Stack } from '@fluentui/react';
 import React, { useEffect, useRef, useState } from 'react';
 import {
   invertedVideoInPipStyle,
   mediaContainer,
   container,
   loadingSpinnerContainer,
-  loadSpinnerStyles,
-  reconnectingContainer,
-  reconnectingText
+  loadSpinnerStyles
 } from './styles/StreamMedia.styles';
+/* @conditional-compile-remove(remote-ufd) */
+import { reconnectingContainer, reconnectSpinnerStyles } from './styles/StreamMedia.styles';
+/* @conditional-compile-remove(remote-ufd) */
+import { useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles } from '../types';
 
@@ -53,6 +57,8 @@ export interface StreamMediaProps {
 export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
   const containerEl = useRef<HTMLDivElement>(null);
   const theme = useTheme();
+  /* @conditional-compile-remove(remote-ufd) */
+  const reconnectingText = useLocale().strings.videoTile.participantReconnecting || 'Reconnecting...';
 
   const { isMirrored, videoStreamElement, styles, loadingState = 'none' } = props;
   const [pipEnabled, setPipEnabled] = useState(false);
@@ -99,13 +105,18 @@ export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
           <Spinner data-ui-id="stream-media-loading-spinner" styles={loadSpinnerStyles} />
         </div>
       )}
-      {loadingState === 'reconnecting' && (
-        <div className={reconnectingContainer()}>
-          <Text data-ui-id="stream-media-reconnecting" className={reconnectingText(theme)}>
-            Reconnecting...
-          </Text>
-        </div>
-      )}
+      {
+        /* @conditional-compile-remove(remote-ufd) */
+        loadingState === 'reconnecting' && (
+          <Stack className={reconnectingContainer()}>
+            <Spinner
+              data-ui-id="stream-media-loading-spinner"
+              styles={reconnectSpinnerStyles()}
+              label={reconnectingText}
+            />
+          </Stack>
+        )
+      }
     </div>
   );
 };

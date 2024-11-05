@@ -139,4 +139,8 @@ export interface SpotlightPromptStrings {
    * Label for button to cancel stopping spotlight on participant(s) in prompt
    */
   stopSpotlightCancelButtonLabel: string;
+  /**
+   * Label for button to close prompt
+   */
+  closeSpotlightPromptButtonLabel: string;
 }

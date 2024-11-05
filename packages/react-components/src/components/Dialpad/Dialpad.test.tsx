@@ -5,7 +5,6 @@ import React from 'react';
 import { Dialpad, DialpadStrings, DtmfTone } from './Dialpad';
 import { createTestLocale, renderWithLocalization } from '../utils/testUtils';
 import { act, fireEvent, render, screen } from '@testing-library/react';
-import { registerIcons } from '@fluentui/react';
 
 const mockSendDTMF = jest.fn();
 
@@ -15,13 +14,6 @@ const onSendDtmfTone = (dtmfTone: DtmfTone): Promise<void> => {
 };
 
 describe('Dialpad tests', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        dialpadbackspace: <></>
-      }
-    });
-  });
   beforeEach(() => {
     mockSendDTMF.mockClear();
   });

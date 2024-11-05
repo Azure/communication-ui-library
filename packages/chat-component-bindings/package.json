@@ -1,6 +1,6 @@
 {
   "name": "@internal/chat-component-bindings",
-  "version": "1.21.0-beta.0",
+  "version": "1.21.0-beta.1",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -9,6 +9,7 @@
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:esm": "npm run _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
+    "build:minify": "rollup -c rollup.config.mjs",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
     "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
@@ -31,22 +32,22 @@
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
     "@azure/core-paging": "^1.5.0",
-    "@internal/acs-ui-common": "1.21.0-beta.0",
-    "@internal/chat-stateful-client": "1.21.0-beta.0",
-    "@internal/react-components": "1.21.0-beta.0",
+    "@internal/acs-ui-common": "1.21.0-beta.1",
+    "@internal/chat-stateful-client": "1.21.0-beta.1",
+    "@internal/react-components": "1.21.0-beta.1",
     "reselect": "^4.0.0",
     "memoize-one": "^5.2.1"
   },
   "peerDependencies": {
-    "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.2",
+    "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.4",
     "@types/react": ">=16.8.0 <19.0.0",
     "react": ">=16.8.0 <19.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
-    "@types/jest": "^29.5.11",
-    "@types/react": "18.3.3",
+    "@types/jest": "^29.5.14",
+    "@types/react": "18.3.12",
     "copyfiles": "^2.4.1",
     "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
