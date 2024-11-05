@@ -460,15 +460,14 @@ export interface VideoStreamRendererViewState {
 /* @conditional-compile-remove(media-access) */
 /**
  * Media access state
- * @alpha
  */
 export interface MediaAccessState {
   /**
-   * is audio permitted
+   * Whether the audio is forcibly muted
    */
   isAudioPermitted: boolean;
   /**
-   * is video permitted
+   * Whether the video is forcibly muted
    */
   isVideoPermitted: boolean;
 }
