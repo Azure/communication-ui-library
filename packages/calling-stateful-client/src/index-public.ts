@@ -38,7 +38,8 @@ export type {
   CallFeatureStreamState,
   TogetherModeSeatingPositionState,
   CallFeatureStreamName,
-  TogetherModeStreamsState
+  TogetherModeStreamsState,
+  TogetherModeParticipantSeatingState
 } from './CallClientState';
 
 export type { RaisedHandState } from './CallClientState';

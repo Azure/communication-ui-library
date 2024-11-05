@@ -4970,9 +4970,12 @@ export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier
 export interface TogetherModeCallFeature {
     // (undocumented)
     isActive: boolean;
-    seatingPositions: Record<string, TogetherModeSeatingPositionState>;
+    seatingPositions: TogetherModeParticipantSeatingState;
     streams: TogetherModeStreamsState;
 }
+
+// @beta
+export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
 
 // @beta
 export interface TogetherModeSeatingPositionState {
