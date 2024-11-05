@@ -228,6 +228,14 @@ const createCompositeHandlers = memoizeOne(
       },
       onMuteAllRemoteParticipants: async (): Promise<void> => {
         await adapter.muteAllRemoteParticipants();
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onCreateTogetherModeStreamView: async (options) => {
+        return await adapter.createTogetherModeStreamViews(options);
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onDisposeTogetherModeStreamViews: async () => {
+        return await adapter.disposeTogetherModeStreamViews();
       }
     };
   }
