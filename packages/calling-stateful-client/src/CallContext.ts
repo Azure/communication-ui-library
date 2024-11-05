@@ -23,7 +23,7 @@ import { TeamsCaptionsInfo } from '@azure/communication-calling';
 import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeVideoStream } from '@azure/communication-calling';
+import { TogetherModeVideoStream, TogetherModeSeatingMap } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { EventEmitter } from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -65,6 +65,8 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { LocalRecordingInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(local-recording-notification) */
 import { RecordingInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import { CallFeatureStreamState, TogetherModeSeatingPositionState } from './CallClientState';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -455,11 +457,78 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(together-mode) */
-  public setTogetherModeVideoStream(callId: string, addedStream: TogetherModeVideoStream[]): void {
+  public setTogetherModeVideoStreams(
+    callId: string,
+    addedStreams: CallFeatureStreamState[],
+    removedStreams: CallFeatureStreamState[]
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.togetherMode = { stream: addedStream };
+        for (const stream of removedStreams) {
+          if (stream.mediaStreamType === 'Video') {
+            call.togetherMode.streams.mainVideoStream = undefined;
+            call.togetherMode.isActive = false;
+            call.togetherMode.seatingPositions = {};
+          }
+        }
+
+        for (const newStream of addedStreams) {
+          // This should only be called by the subscriber and some properties are add by other components so if the
+          // stream already exists, only update the values that subscriber knows about.
+          const mainVideoStream = call.togetherMode.streams.mainVideoStream;
+          if (mainVideoStream && mainVideoStream.id === newStream.id) {
+            mainVideoStream.mediaStreamType = newStream.mediaStreamType;
+            mainVideoStream.isAvailable = newStream.isAvailable;
+            mainVideoStream.isReceiving = newStream.isReceiving;
+          } else {
+            call.togetherMode.streams.mainVideoStream = newStream;
+          }
+          call.togetherMode.isActive = true;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamIsAvailable(callId: string, streamId: number, isAvailable: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.isReceiving = isAvailable;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamIsReceiving(callId: string, streamId: number, isReceiving: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.isReceiving = isReceiving;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamSize(
+    callId: string,
+    streamId: number,
+    size: { width: number; height: number }
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.streamSize = size;
+        }
       }
     });
   }
@@ -470,11 +539,25 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         for (const stream of removedStream) {
-          if (stream.mediaStreamType in call.togetherMode.stream) {
-            // Temporary lint fix: Remove the stream from the list
-            call.togetherMode.stream = [];
+          if (stream.mediaStreamType === 'Video') {
+            call.togetherMode.streams.mainVideoStream = undefined;
+            call.togetherMode.isActive = false;
           }
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSeatingCoordinates(callId: string, seatingMap: TogetherModeSeatingMap): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const seatingPositions: Record<string, TogetherModeSeatingPositionState> = {};
+        for (const [userId, seatingPosition] of seatingMap.entries()) {
+          seatingPositions[userId] = seatingPosition;
+        }
+        call.togetherMode.seatingPositions = seatingPositions;
       }
     });
   }
@@ -713,6 +796,25 @@ export class CallContext {
         );
         if (localVideoStream) {
           localVideoStream.view = view;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamRendererView(
+    callId: string,
+    togetherModeStreamType: string,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        if (togetherModeStreamType === 'Video') {
+          const togetherModeStream = call.togetherMode.streams.mainVideoStream;
+          if (togetherModeStream) {
+            togetherModeStream.view = view;
+          }
         }
       }
     });
