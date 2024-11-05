@@ -458,7 +458,8 @@ export function createMockApiFeatures(
       ...new StubDiagnosticsCallFeatureImpl(),
       name: 'Default',
       isRecordingActive: false,
-      isTranscriptionActive: false
+      isTranscriptionActive: false,
+      getRemoteParticipantsMediaAccess: () => []
     });
     return generic;
   };
