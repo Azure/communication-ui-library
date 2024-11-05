@@ -25,6 +25,8 @@ module.exports = {
     "dtmf-dialer-on-by-default",
     // Feature for together mode
     "together-mode",
+    // Feature for hard mute audio/video
+    "meida-access",
     // Feature for RTT
     "rtt"
   ],
