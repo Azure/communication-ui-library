@@ -66,6 +66,14 @@
     "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
     "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
+  "rttModal": {
+    "rttModalAriaLabel": "Turn on RTT Modal",
+    "rttModalTitle": "Turn on RTT?",
+    "rttModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "rttConfirmButtonLabel": "Turn on",
+    "rttCancelButtonLabel": "Cancel",
+    "rttCloseModalButtonAriaLabel": "Close RTT Modal"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
   },
@@ -178,6 +186,9 @@
     "laughReactionTooltipContent": "Laugh",
     "applauseReactionTooltipContent": "Applause",
     "surprisedReactionTooltipContent": "Surprised"
+  },
+  "rtt": {
+    "isTypingText": "RTT typing"
   },
   "messageThread": {
     "yesterday": "Yesterday",
@@ -525,6 +536,7 @@
   },
   "videoTile": {
     "participantStateRinging": "Calling...",
+    "participantReconnecting": "Reconnecting...",
     "participantStateHold": "On hold",
     "moreOptionsButtonAriaLabel": "More Options {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "muted",
@@ -671,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Decline",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video",
     "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "bannerLinkLabel": "Learn more"
   }
 }

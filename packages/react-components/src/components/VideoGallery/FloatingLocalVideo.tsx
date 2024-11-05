@@ -89,9 +89,13 @@ export const FloatingLocalVideo = (props: FloatingLocalVideoProps): JSX.Element 
       layerProps={layerProps}
       maxDragPosition={modalMaxDragPosition}
       minDragPosition={modalMinDragPosition}
-      data-ui-id="floating-local-video-host"
+      dataUiId="floating-local-video-host"
     >
-      <Stack aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel} tabIndex={0}>
+      <Stack
+        aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel}
+        tabIndex={0}
+        role={'dialog'}
+      >
         {localVideoComponent}
       </Stack>
     </_ModalClone>

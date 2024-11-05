@@ -50,6 +50,7 @@ const getStartLocalSpotlightWithPromptCallback = (
       text: strings.spotlightPrompt.startSpotlightOnSelfText,
       confirmButtonLabel: strings.spotlightPrompt.startSpotlightConfirmButtonLabel,
       cancelButtonLabel: strings.spotlightPrompt.startSpotlightCancelButtonLabel,
+      closeButtonLabel: strings.spotlightPrompt.closeSpotlightPromptButtonLabel,
       onConfirm: () => {
         onStartSpotlight();
         setIsPromptOpen(false);
@@ -129,6 +130,7 @@ const getStartRemoteSpotlightWithPromptCallback = (
       text: strings.spotlightPrompt.startSpotlightText,
       confirmButtonLabel: strings.spotlightPrompt.startSpotlightConfirmButtonLabel,
       cancelButtonLabel: strings.spotlightPrompt.startSpotlightCancelButtonLabel,
+      closeButtonLabel: strings.spotlightPrompt.closeSpotlightPromptButtonLabel,
       onConfirm: () => {
         onStartSpotlight(userIds);
         setIsPromptOpen(false);
@@ -155,6 +157,7 @@ const getStopRemoteSpotlightWithPromptCallback = (
       text: strings.spotlightPrompt.stopSpotlightText,
       confirmButtonLabel: strings.spotlightPrompt.stopSpotlightConfirmButtonLabel,
       cancelButtonLabel: strings.spotlightPrompt.stopSpotlightCancelButtonLabel,
+      closeButtonLabel: strings.spotlightPrompt.closeSpotlightPromptButtonLabel,
       onConfirm: () => {
         onStopSpotlight(userIds);
         setIsPromptOpen(false);
@@ -203,6 +206,7 @@ const getStopAllSpotlightCallbackWithPromptCallback = (
       text: strings.spotlightPrompt.stopAllSpotlightText,
       confirmButtonLabel: strings.spotlightPrompt.stopSpotlightConfirmButtonLabel,
       cancelButtonLabel: strings.spotlightPrompt.stopSpotlightCancelButtonLabel,
+      closeButtonLabel: strings.spotlightPrompt.closeSpotlightPromptButtonLabel,
       onConfirm: () => {
         stopAllSpotlight();
         setIsPromptOpen(false);
