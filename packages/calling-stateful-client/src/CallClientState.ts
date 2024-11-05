@@ -485,6 +485,7 @@ export interface VideoStreamRendererViewState {
 /* @conditional-compile-remove(media-access) */
 /**
  * Media access state
+ * @alpha
  */
 export interface MediaAccessState {
   /**
