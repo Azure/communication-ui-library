@@ -2,7 +2,7 @@
   "type": "patch",
   "area": "fix",
   "workstream": "",
-  "comment": "Expose environmentInfo in callClient state and callAdapter state",
+  "comment": "Add High Contrast borders around video tiles, side pane, and side pane close button in Call Composites",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"

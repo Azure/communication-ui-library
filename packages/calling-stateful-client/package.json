@@ -1,6 +1,6 @@
 {
   "name": "@internal/calling-stateful-client",
-  "version": "1.21.0-beta.0",
+  "version": "1.21.0-beta.1",
   "description": "Stateful proxy over the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -9,6 +9,7 @@
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:esm": "npm run _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
+    "build:minify": "rollup -c rollup.config.mjs",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
     "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
@@ -31,21 +32,21 @@
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
     "@azure/logger": "^1.0.4",
-    "@internal/acs-ui-common": "1.21.0-beta.0",
+    "@internal/acs-ui-common": "1.21.0-beta.1",
     "@types/events": "^3.0.3",
     "events": "^3.3.0",
     "immer": "10.1.1"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.30.1-beta.2 || ^1.29.1"
+    "@azure/communication-calling": "1.31.1-beta.1 || ^1.30.2"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.30.1-beta.2 || ^1.29.1",
+    "@azure/communication-calling": "1.31.1-beta.1 || ^1.30.2",
     "@azure/core-auth": "^1.7.2",
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
-    "@types/jest": "^29.5.11",
-    "@types/react": "18.3.3",
+    "@types/jest": "^29.5.14",
+    "@types/react": "18.3.12",
     "@typescript-eslint/eslint-plugin": "^7.14.1",
     "@typescript-eslint/parser": "^7.14.1",
     "copyfiles": "^2.4.1",

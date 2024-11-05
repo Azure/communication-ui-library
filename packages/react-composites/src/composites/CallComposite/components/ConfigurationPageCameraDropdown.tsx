@@ -24,6 +24,7 @@ export interface ConfigurationPageCameraDropdownProps {
   /* @conditional-compile-remove(call-readiness) */
   dropdownProps: Partial<_DevicePermissionDropdownProps>;
   onClickEnableDevicePermission?: () => void;
+  ariaLabelledby?: string;
 }
 
 /**
@@ -49,6 +50,7 @@ export const ConfigurationPageCameraDropdown = (props: ConfigurationPageCameraDr
         <CallCompositeIcon iconName="ControlButtonCameraOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />
       }
       onClick={props.onClickEnableDevicePermission}
+      ariaLabelledby={props.ariaLabelledby}
     />
   );
 

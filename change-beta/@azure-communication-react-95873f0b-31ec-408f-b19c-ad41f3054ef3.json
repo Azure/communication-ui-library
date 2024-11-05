@@ -2,8 +2,8 @@
   "type": "patch",
   "area": "fix",
   "workstream": "",
-  "comment": "Fix video dispose problem for multiple video stream",
+  "comment": "Fix troubleshooting links color in high contrast modes",
   "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"
 }
