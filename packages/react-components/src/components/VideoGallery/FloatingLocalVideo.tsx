@@ -91,7 +91,11 @@ export const FloatingLocalVideo = (props: FloatingLocalVideoProps): JSX.Element 
       minDragPosition={modalMinDragPosition}
       dataUiId="floating-local-video-host"
     >
-      <Stack aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel} tabIndex={0}>
+      <Stack
+        aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel}
+        tabIndex={0}
+        role={'dialog'}
+      >
         {localVideoComponent}
       </Stack>
     </_ModalClone>
