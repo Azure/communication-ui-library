@@ -140,9 +140,15 @@ export class BreakoutRoomsSubscriber {
 
   private onBreakoutRoomSettingsUpdated = (breakoutRoomSettings: BreakoutRoomsSettings): void => {
     // If the roomEndTime is available, set a timeout to show a notification before the room closes.
-    if (breakoutRoomSettings.roomEndTime && !Number.isNaN(Date.parse(breakoutRoomSettings.roomEndTime.toString()))) {
+    console.log('DEBUG breakoutRoomSettings:', breakoutRoomSettings);
+    const attemptTimestamp =
+      breakoutRoomSettings.roomEndTime && 'attemptTimestamp' in breakoutRoomSettings.roomEndTime
+        ? breakoutRoomSettings.roomEndTime.attemptTimestamp
+        : undefined;
+    console.log('DEBUG attemptTimestamp:', attemptTimestamp);
+    if (breakoutRoomSettings.roomEndTime && attemptTimestamp) {
       const now = new Date(Date.now());
-      const roomClosingTime = new Date(breakoutRoomSettings.roomEndTime.toString()).getTime();
+      const roomClosingTime = new Date(attemptTimestamp).getTime();
       const timeBeforeClosing = roomClosingTime - now.getTime();
       const timeBeforeSendingClosingSoonNotification = Math.max(
         timeBeforeClosing - MILLSECONDS_BEFORE_END_TIME_TO_SHOW_CLOSING_NOTIFICATION,

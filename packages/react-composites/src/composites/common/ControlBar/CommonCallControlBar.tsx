@@ -583,11 +583,15 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
         )}
         {
           /* @conditional-compile-remove(breakout-rooms) */
-          breakoutRoomSettings?.roomEndTime && !props.mobileView && !isOutOfSpace && (
-            <Stack.Item>
-              <Timer timeStampInfo={breakoutRoomSettings?.roomEndTime.toString()} />
-            </Stack.Item>
-          )
+          breakoutRoomSettings?.roomEndTime &&
+            'attemptTimestamp' in breakoutRoomSettings.roomEndTime &&
+            Number.isInteger(breakoutRoomSettings?.roomEndTime.attemptTimestamp) &&
+            !props.mobileView &&
+            !isOutOfSpace && (
+              <Stack.Item>
+                <Timer timeStampInfo={breakoutRoomSettings?.roomEndTime.attemptTimestamp} />
+              </Stack.Item>
+            )
         }
       </Stack>
     </div>

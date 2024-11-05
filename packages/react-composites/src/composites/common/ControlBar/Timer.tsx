@@ -11,7 +11,7 @@ import { getReadableTime } from '../../CallComposite/utils/timerUtils';
  * @private
  */
 export interface TimerProps {
-  timeStampInfo: string;
+  timeStampInfo: number;
 }
 
 /**
