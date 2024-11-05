@@ -25,9 +25,6 @@ import { createResolver, createTimeout } from '@skype/waimea-util/promise';
 let audioContext: AudioContext | undefined;
 
 const wbOrigin = 'https://alphasandbox.dev.waimeabae.com';
-// const connectionStatus = assertNotNull(document.getElementById('connectionStatus'));
-
-// const audioRenderers = assertNotNull(document.getElementById('audio'));
 const audioInputDevice = DeviceMediaTrackProvider.createAudio();
 
 let activeSession: ISession | undefined;
@@ -76,8 +73,10 @@ async function setActivationProfile(
   });
 }
 
+let disconnectPromise: Promise<void> | undefined = undefined;
+
 // Handles creating a session and monitoring for the session being ended.
-function connect() {
+function connect(): Promise<void> {
   if (activeSession) {
     try {
       (activeSession as any).dispose();
@@ -100,12 +99,12 @@ function connect() {
   createAudioHandler(feedView, audioInputDevice);
 
   roomUpdated();
-  void session.onConnect.then(() => {
+  const connectPromise = session.onConnect.then(() => {
     if (activeSession === session) {
       console.log(`Connected (${(performance.now() - start) | 0}ms)`);
     }
   });
-  void session.onDisconnect.finally(() => {
+  disconnectPromise = session.onDisconnect.finally(() => {
     if (activeSession === session) {
       activeSession = undefined;
       console.log('Not Connected');
@@ -113,11 +112,12 @@ function connect() {
     }
   });
   console.log('Connecting...');
+  return connectPromise;
 }
 
 // Disconnects the session, most of the actual work is in the connect() function
 // where it watches for onDisconnect to cleanup state.
-function disconnect() {
+function disconnect(): Promise<void> | undefined {
   if (activeSession) {
     try {
       (activeSession as any).dispose();
@@ -125,6 +125,8 @@ function disconnect() {
       console.error('Could not call session.dipose', e);
     }
   }
+
+  return disconnectPromise;
 }
 
 function resetObjects() {
@@ -318,4 +320,4 @@ class AudioRenderer extends AbstractRenderer<HTMLCanvasElement> {
 (window as any).connect = connect;
 (window as any).disconnect = disconnect;
 
-export { connect };
+export { connect, disconnect };
