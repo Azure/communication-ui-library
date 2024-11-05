@@ -377,6 +377,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
         <RichTextInputBoxComponent
           placeholderText={strings.editBoxPlaceholderText}
           onChange={onChangeHandler}
+          onEnterKeyDown={onSubmitHandler}
           editorComponentRef={editTextFieldRef}
           initialContent={initialContent}
           strings={richTextLocaleStrings}
