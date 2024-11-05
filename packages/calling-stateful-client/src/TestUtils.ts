@@ -20,6 +20,7 @@ import {
   CallFeature
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
+import { MediaAccessCallFeature, MediaAccessChangedListener, MediaAccess } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 
 import { VideoEffectsFeature } from '@azure/communication-calling';
@@ -163,6 +164,66 @@ export class MockRaiseHandCallFeatureImpl implements RaiseHandCallFeature {
   off(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
+  dispose(): void {
+    /* No state to clean up */
+  }
+}
+
+/**
+ * @private
+ */
+export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
+  private mediaAccesses: MediaAccess[] = [];
+  public name = 'MediaAccess';
+  public emitter = new EventEmitter();
+
+  constructor() {
+    this.mediaAccesses = [];
+  }
+  permitAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  permitVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  permitRemoteParticipantsAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidRemoteParticipantsAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  permitRemoteParticipantsVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidRemoteParticipantsVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  getRemoteParticipantsMediaAccess(): MediaAccess[] {
+    return this.mediaAccesses;
+  }
+
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
+    this.emitter.on(event, listener);
+  }
+
+  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
+    this.emitter.off(event, listener);
+  }
+
   dispose(): void {
     /* No state to clean up */
   }

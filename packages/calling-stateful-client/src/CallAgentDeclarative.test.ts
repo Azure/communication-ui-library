@@ -18,7 +18,8 @@ import {
   RoomLocator,
   TeamsMeetingIdLocator,
   ConnectionStateChangedEvent,
-  ConnectionState
+  ConnectionState,
+  MediaAccessCallFeature
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import {
@@ -42,6 +43,7 @@ import {
   createStatefulCallClientWithAgent,
   MockCall,
   MockIncomingCall,
+  MockMediaAccessCallFeatureImpl,
   mockoutObjectFreeze,
   MockRecordingCallFeatureImpl,
   MockTranscriptionCallFeatureImpl,
@@ -64,6 +66,9 @@ jest.mock('@azure/communication-calling', () => {
       },
       get Diagnostics(): CallFeatureFactory<UserFacingDiagnosticsFeature> {
         return { callApiCtor: StubDiagnosticsCallFeatureImpl };
+      },
+      get MediaAccess(): CallFeatureFactory<MediaAccessCallFeature> {
+        return { callApiCtor: MockMediaAccessCallFeatureImpl };
       }
     }
   };
