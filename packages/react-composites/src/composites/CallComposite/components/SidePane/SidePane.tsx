@@ -9,10 +9,16 @@ import {
   scrollableContainer,
   scrollableContainerContents
 } from '../../../common/styles/ParticipantContainer.styles';
-import { availableSpaceStyles, sidePaneStyles, sidePaneTokens } from '../../../common/styles/Pane.styles';
+import {
+  availableSpaceStyles,
+  paneHighContrastStyles,
+  sidePaneStyles,
+  sidePaneTokens
+} from '../../../common/styles/Pane.styles';
 import { SidePaneRenderer, useSidePaneContext } from './SidePaneProvider';
 import { PeopleAndChatHeader } from '../../../common/TabHeader';
 import { hiddenStyles } from '../../../common/styles/Pane.styles';
+import { useTheme } from '@internal/react-components';
 
 /** @private */
 export interface SidePaneProps {
@@ -94,6 +100,8 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
       ? overrideSidePane.renderer.contentRenderer
       : undefined;
 
+  const theme = useTheme();
+
   if (!ContentRenderer && !OverrideContentRenderer) {
     return <EmptyElement />;
   }
@@ -111,6 +119,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
       tokens={
         props.mobileView || (!props.showAddPeopleButton && sidePaneRenderer?.id === 'people') ? {} : sidePaneTokens
       }
+      className={paneHighContrastStyles(theme)}
     >
       {HeaderToRender}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>
