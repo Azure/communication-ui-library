@@ -77,23 +77,25 @@ describe('datetime tests', () => {
   });
 
   test('datetime.formatTimestampForChatMessage should format date from yesterday properly', () => {
+    const messageDate = createMockDate({ year: 2000, month: 10, day: 9, hour: 4, min: 0 });
     expect(
       formatTimestampForChatMessage(
-        createMockDate({ year: 2000, month: 10, day: 9, hour: 4, min: 0 }),
+        messageDate,
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
         COMPONENT_LOCALE_EN_US.strings.messageThread
       )
-    ).toEqual('Yesterday 4:00 AM');
+    ).toEqual(`Yesterday ${messageDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`);
   });
 
   test('datetime.formatTimestampForChatMessage should format date from same week properly', () => {
+    const messageDate = createMockDate({ year: 2000, month: 10, day: 8, hour: 4, min: 0 });
     expect(
       formatTimestampForChatMessage(
-        createMockDate({ year: 2000, month: 10, day: 8, hour: 4, min: 0 }),
+        messageDate,
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
         COMPONENT_LOCALE_EN_US.strings.messageThread
       )
-    ).toEqual('Wednesday 4:00 AM');
+    ).toEqual(`Wednesday ${messageDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`);
   });
 
   test('datetime.formatTimestampForChatMessage should format date from long time ago properly', () => {
@@ -104,6 +106,8 @@ describe('datetime tests', () => {
         createMockDate({ year: 2000, month: 10, day: 10, hour: 5, min: 0 }),
         COMPONENT_LOCALE_EN_US.strings.messageThread
       )
-    ).toEqual(`${messageDate.toLocaleDateString()} 4:00 AM`);
+    ).toEqual(
+      `${messageDate.toLocaleDateString()} ${messageDate.toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' })}`
+    );
   });
 });

@@ -21,10 +21,20 @@
       script.src = 'https://cdn.jsdelivr.net/npm/react-render-tracker';
       document.head.appendChild(script);
     </script>
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        height: auto;
+      }
+      #Root {
+        flex: 1;
+      }
+    </style>
   </head>
 
   <body>
-    <main id="root" class="Root"></main>
+    <div id="root" class="Root"></div>
     <script type="text/javascript">
       window.FabricConfig = {};
     </script>
