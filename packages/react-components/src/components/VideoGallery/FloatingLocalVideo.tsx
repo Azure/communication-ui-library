@@ -89,7 +89,7 @@ export const FloatingLocalVideo = (props: FloatingLocalVideoProps): JSX.Element 
       layerProps={layerProps}
       maxDragPosition={modalMaxDragPosition}
       minDragPosition={modalMinDragPosition}
-      data-ui-id="floating-local-video-host"
+      dataUiId="floating-local-video-host"
     >
       <Stack
         aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel}
