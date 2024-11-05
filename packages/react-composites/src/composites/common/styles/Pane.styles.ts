@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { concatStyleSets, IButtonStyles, IStackStyles, IStackTokens } from '@fluentui/react';
+import { concatStyleSets, IButtonStyles, IStackStyles, IStackTokens, ITheme, mergeStyles } from '@fluentui/react';
 import { CHAT_CONTAINER_MIN_WIDTH_REM } from '../constants';
 
 const SIDE_PANE_PADDING_LR_REM = 0.25;
@@ -103,3 +103,13 @@ export const availableSpaceStyles: IStackStyles = { root: { width: '100%', heigh
 export const sidePaneTokens: IStackTokens = {
   childrenGap: '0.5rem'
 };
+
+/** @private */
+export const paneHighContrastStyles = (theme: ITheme): string =>
+  mergeStyles({
+    '@media (forced-colors: active)': {
+      border: `0.125rem solid ${theme.palette.black}`,
+      borderRadius: theme.effects.roundedCorner4,
+      margin: '0.5rem 0.25rem 0.5rem 0rem'
+    }
+  });
