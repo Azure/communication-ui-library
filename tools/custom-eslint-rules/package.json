@@ -6,6 +6,7 @@
   "scripts": {
     "clean": "echo skip",
     "build": "echo skip",
+    "build:minify": "echo skip",
     "build:watch": "echo skip",
     "build:stable": "echo skip",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",

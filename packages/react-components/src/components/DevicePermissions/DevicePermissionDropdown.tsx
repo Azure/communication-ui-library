@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Dropdown, IDropdownOption, IDropdownStyles, Stack, Text } from '@fluentui/react';
+import { DefaultButton, Dropdown, IButtonStyles, IDropdownOption, IDropdownStyles, Stack, Text } from '@fluentui/react';
 import React from 'react';
 
 /**
@@ -86,7 +86,7 @@ export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps)
   };
 
   const onRenderCaretDown = (): JSX.Element => {
-    return <Text>{strings?.actionButtonContent}</Text>;
+    return <DefaultButton styles={actionButtonStyles}>{strings?.actionButtonContent}</DefaultButton>;
   };
 
   return (
@@ -117,4 +117,20 @@ export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps)
 export type _PermissionConstraints = {
   audio: boolean;
   video: boolean;
+};
+
+const actionButtonStyles: IButtonStyles = {
+  root: {
+    border: 'none',
+    height: '2rem',
+    padding: '0 0',
+    paddingTop: '0.1rem',
+    position: 'absolute',
+    right: '0',
+    lineHeight: '2rem',
+    minWidth: '3rem'
+  },
+  label: {
+    fontWeight: 400
+  }
 };
