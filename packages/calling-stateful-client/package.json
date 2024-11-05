@@ -9,6 +9,7 @@
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:esm": "npm run _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc)",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
+    "build:minify": "rollup -c rollup.config.mjs",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
     "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
@@ -37,10 +38,10 @@
     "immer": "10.1.1"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.30.1-beta.2 || ^1.29.1"
+    "@azure/communication-calling": "1.31.1-beta.1 || ^1.30.2"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.30.1-beta.2 || ^1.29.1",
+    "@azure/communication-calling": "1.31.1-beta.1 || ^1.30.2",
     "@azure/core-auth": "^1.7.2",
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",

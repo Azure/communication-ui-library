@@ -13,6 +13,7 @@
     "build": "rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:esm": "copyfiles -u 1 src/**/assets/**/* dist/dist-esm && npm run _if-preprocess && rushx preprocess && tsc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tsc) ",
     "build:cjs": "rollup -c --silent --failAfterWarnings",
+    "build:minify": "rollup -c rollup.config.mjs",
     "build:watch": "rushx build",
     "clean": "rimraf dist && rimraf preprocessed",
     "tsc:e2e": "tsc -project tests/tsconfig.json",
@@ -72,7 +73,7 @@
     "nanoid": "3.3.6"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.30.1-beta.2 || ^1.29.1",
+    "@azure/communication-calling": "1.31.1-beta.1 || ^1.30.2",
     "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.1",
     "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.4",
     "@types/react": ">=16.8.0 <19.0.0",
