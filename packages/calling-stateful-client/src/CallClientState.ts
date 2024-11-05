@@ -539,6 +539,10 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#Call.MediaAccessCallFeature.MediaAccess}.
    */
   mediaAccess?: MediaAccessState;
+  /* @conditional-compile-remove(remote-ufd) */
+  /**
+   * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
+   */
   diagnostics?: Partial<Record<RemoteDiagnosticType, RemoteDiagnosticState>>;
 }
 
