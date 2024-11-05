@@ -108,7 +108,9 @@ const App = (): JSX.Element => {
               displayName: callDetails.displayName,
               locator: callLocator
             });
-            adapter.startCall(['stub-mri']);
+            const callObj = adapter.startCall(['8:echo123']);
+            (window as any).jaburnsiAdapter = adapter;
+            (window as any).jaburnsiActiveCall = callObj;
             setAdapter(adapter);
 
             setPage('call');

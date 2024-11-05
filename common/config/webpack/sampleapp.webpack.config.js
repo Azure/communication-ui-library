@@ -26,6 +26,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
     mode: env.production ? 'production' : 'development',
     ...(env.production || !env.development ? {} : { devtool: 'eval-source-map' }),
     resolve:  {
+      fullySpecified: false,
       extensions: ['.ts', '.tsx', '.js'],
       alias: env.production ? {
         // read dist folder from package to simulate production environment

@@ -7,6 +7,11 @@ import './index.css';
 import App from './app/App';
 import { SwitchableFluentThemeProvider } from './app/theming/SwitchableFluentThemeProvider';
 import { ShakeToSendLogs } from './app/utils/ShakeToSendLogs';
+import * as something from './wb-init';
+
+console.log(something);
+
+// connect();
 
 const domNode = document.getElementById('root');
 if (!domNode) {
