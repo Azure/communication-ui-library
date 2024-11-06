@@ -55,7 +55,7 @@
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.30.1-beta.2 || ^1.29.1",
+    "@azure/communication-calling": "1.31.1-beta.1 || ^1.30.2",
     "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.1",
     "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.4",
     "@types/react": ">=16.8.0 <19.0.0",
@@ -84,6 +84,7 @@
     "build": "rushx check-deps && rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:cjs": "rollup -c --silent",
     "build:esm": "npm run _if-preprocess && rushx copy-original && rushx preprocess && rushx copy-preprocess  && tspc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tspc)",
+    "build:minify": "rollup -c rollup.config.mjs",
     "build:watch": "",
     "build:api": "rushx _by-flavor \"rushx _api-extractor:complete:by-flavor\"",
     "clean": "rimraf dist && rimraf ../**/preprocessed && rimraf ../**/preprocess-dist",
@@ -110,7 +111,7 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.30.1-beta.2 || ^1.29.1",
+    "@azure/communication-calling": "1.31.1-beta.1 || ^1.30.2",
     "@azure/communication-calling-effects": "1.1.1-beta.1 || ^1.1.1",
     "@azure/core-auth": "^1.7.2",
     "@babel/cli": "^7.24.8",
