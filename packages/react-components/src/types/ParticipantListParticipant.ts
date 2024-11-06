@@ -98,7 +98,7 @@ export type ParticipantState =
 
 /* @conditional-compile-remove(media-access) */
 /**
- * Media access state with order
+ * Audio/Video Media access state
  *
  * @alpha
  */
