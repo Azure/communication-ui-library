@@ -2,6 +2,11 @@ name: 'Publish Chromatic'
 
 on:
   pull_request:
+    paths:
+      - packages/storybook8/**
+      - packages/react-components/**
+      - packages/react-composites/**
+      - packages/communication-react/**
   push:
     branches: [main]
   workflow_dispatch:
