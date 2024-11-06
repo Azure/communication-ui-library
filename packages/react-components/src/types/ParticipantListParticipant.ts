@@ -28,7 +28,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   /** Whether calling participant is spotlighted **/
   spotlight?: Spotlight;
   /* @conditional-compile-remove(media-access) */
-  /** Whether calling participant has media access **/
+  /** Whether calling participant has audio/video media access blocked **/
   mediaAccess?: MediaAccess;
 };
 
@@ -100,7 +100,7 @@ export type ParticipantState =
 /**
  * Media access state with order
  *
- * @public
+ * @alpha
  */
 export type MediaAccess = {
   isAudioPermitted: boolean;

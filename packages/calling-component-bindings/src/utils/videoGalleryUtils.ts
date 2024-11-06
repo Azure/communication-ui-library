@@ -233,6 +233,7 @@ export const memoizeLocalParticipant = memoizeOne(
     reaction,
     spotlight: localSpotlight,
     capabilities,
+    /* @conditional-compile-remove(media-access) */
     mediaAccess: {
       isAudioPermitted: capabilities?.unmuteMic.isPresent,
       isVideoPermitted: capabilities?.turnVideoOn.isPresent
