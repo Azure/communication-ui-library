@@ -10,8 +10,7 @@ import {
   TranscriptionCallFeature,
   VideoStreamRendererView,
   CallFeatureFactory,
-  CallFeature,
-  MediaAccessCallFeature
+  CallFeature
 } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -40,8 +39,7 @@ import {
   StateChangeListener,
   stubCommunicationTokenCredential,
   StubDiagnosticsCallFeatureImpl,
-  waitWithBreakCondition,
-  MockMediaAccessCallFeatureImpl
+  waitWithBreakCondition
 } from './TestUtils';
 
 jest.mock('@azure/communication-calling', () => {
@@ -65,9 +63,6 @@ jest.mock('@azure/communication-calling', () => {
       },
       get Diagnostics(): CallFeatureFactory<UserFacingDiagnosticsFeature> {
         return { callApiCtor: StubDiagnosticsCallFeatureImpl };
-      },
-      get MediaAccess(): CallFeatureFactory<MediaAccessCallFeature> {
-        return { callApiCtor: MockMediaAccessCallFeatureImpl };
       }
     }
   };
