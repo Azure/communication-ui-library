@@ -3575,6 +3575,12 @@ export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrien
 // @public
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
+// @alpha
+export interface MediaAccessState {
+    isAudioPermitted: boolean;
+    isVideoPermitted: boolean;
+}
+
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';
@@ -4391,6 +4397,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    mediaAccess?: MediaAccessState;
     raisedHand?: RaisedHandState;
     reactionState?: ReactionState;
     role?: ParticipantRole;

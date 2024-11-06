@@ -10,6 +10,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccess } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
@@ -1415,6 +1417,26 @@ export class CallContext {
 
     this.modifyState((draft: CallClientState) => {
       delete draft.latestNotifications[notificationTarget];
+    });
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public setMediaAccesses(callId: string, mediaAccesses: MediaAccess[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (!call) {
+        return;
+      }
+
+      mediaAccesses.forEach((participantMediaAccess) => {
+        const participant = call.remoteParticipants[toFlatCommunicationIdentifier(participantMediaAccess.participant)];
+        if (participant) {
+          participant.mediaAccess = {
+            isAudioPermitted: participantMediaAccess.isAudioPermitted,
+            isVideoPermitted: participantMediaAccess.isVideoPermitted
+          };
+        }
+      });
     });
   }
 }
