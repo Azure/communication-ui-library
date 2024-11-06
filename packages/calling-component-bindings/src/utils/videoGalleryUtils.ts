@@ -9,7 +9,8 @@ import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/callin
 import {
   VideoGalleryRemoteParticipant,
   VideoGalleryStream,
-  /* @conditional-compile-remove(media-access) */ MediaAccess
+  /* @conditional-compile-remove(media-access) */
+  MediaAccess
 } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _convertParticipantState, ParticipantConnectionState } from './callUtils';
