@@ -2,6 +2,235 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 28 Oct 2024 22:53:26 GMT",
+      "version": "1.21.0-beta.1",
+      "tag": "@azure/communication-react_v1.21.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "64e4a48caae65c2e0289f4069955a2fe9f6ad7f4",
+            "area": "feature",
+            "workstream": "",
+            "comment": "Update the reconnecting RemoteUFD according to figma"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "775335fa63734b651e4d55aa084931684caeeb55",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "RTT Modal Component"
+          },
+          {
+            "author": "nwankwojustin93@gmail.com",
+            "package": "@azure/communication-react",
+            "commit": "3175367fe3592693b2a76a6c456040219e0a2d86",
+            "area": "feature",
+            "workstream": "Together Mode",
+            "comment": "Together mode client state and subscriber implementation"
+          },
+          {
+            "author": "nwankwojustin93@gmail.com",
+            "package": "@azure/communication-react",
+            "commit": "3175367fe3592693b2a76a6c456040219e0a2d86",
+            "area": "feature",
+            "workstream": "Together Mode",
+            "comment": "Together mode client state and subscriber implementation"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "cf6ea5431def9b697b8656fa04d7dc09c8e93381",
+            "area": "feature",
+            "workstream": "",
+            "comment": "Add Remote UFD new types to state"
+          },
+          {
+            "author": "nwankwojustin93@gmail.com",
+            "package": "@azure/communication-react",
+            "commit": "3175367fe3592693b2a76a6c456040219e0a2d86",
+            "area": "feature",
+            "workstream": "Together Mode",
+            "comment": "Together mode client state and subscriber implementation"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "17d42f1ce3b9ea739c5111ac9acb63b63b177534",
+            "area": "feature",
+            "workstream": "DNS",
+            "comment": "We are excited to announce that the Azure Communication Services Web UI Library now supports Deep Noise Suppression. This feature enables noise suppression algorithms to filter out background noise, ensuring that only the speaker's voice is heard clearly. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite). "
+          },
+          {
+            "author": "nwankwojustin93@gmail.com",
+            "package": "@azure/communication-react",
+            "commit": "3175367fe3592693b2a76a6c456040219e0a2d86",
+            "area": "feature",
+            "workstream": "Together Mode",
+            "comment": "Together mode client state and subscriber implementation"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7d02120982203ed419b8f20b195de2c7389d3169",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "RTT component for single line of RTT"
+          },
+          {
+            "author": "nwankwojustin93@gmail.com",
+            "package": "@azure/communication-react",
+            "commit": "3175367fe3592693b2a76a6c456040219e0a2d86",
+            "area": "feature",
+            "workstream": "Together Mode",
+            "comment": "This PR contains implementation of together mode client state changes and the event listener for together mode stream updates"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9a24fdae2b937cb1502a179d43a52eeacb07ff37",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "RTT Disclosure Banner"
+          },
+          {
+            "author": "nwankwojustin93@gmail.com",
+            "package": "@azure/communication-react",
+            "commit": "3175367fe3592693b2a76a6c456040219e0a2d86",
+            "area": "feature",
+            "workstream": "TogetherMode",
+            "comment": "Together mode client state and subscriber implementation"
+          }
+        ],
+        "minor": [
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "24ec3d5c6e8c50c529e04c494f6ce584267f446c",
+            "area": "improvement",
+            "workstream": "Dependency Update",
+            "comment": "Updated Chat SDK and Signaling to Latest Stable Release"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "734c9053e27d48c3450b5679a5db3a1320cf956e",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "add new strings to better announce the state of the participant"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "738558c6495d7e03492e45eec2c71e254ffabc7b",
+            "area": "feature",
+            "workstream": "js-loaders",
+            "comment": "Update API to allow for better identity control"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "aee254aaee6429333971fb713d823121a8dd3849",
+            "area": "feature",
+            "workstream": "JavsScript Loaders",
+            "comment": "Stabilize Javascript Loaders from a sub export of communication react"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a1b1540c386fd6eb19f8501c3c6916c2f05b17b5",
+            "area": "improvement",
+            "workstream": "Localization",
+            "comment": "Add Welsh component and composite locales"
+          }
+        ],
+        "patch": [
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "25a4b5f918cf5d856bd653c39b5a0c211a8bd3fb",
+            "area": "improvement",
+            "workstream": "Accessibility",
+            "comment": "Add accessible name to video effects pane"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "df82c4594a1bc1ead3065d2ae1e5081f51a6947b",
+            "area": "fix",
+            "workstream": "Breakout rooms",
+            "comment": "Fix BreakoutRoomsBanner component to return null instead of undefined when there is no breakout room state"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "c6ef712b84ecf4ebc96225c4f889e2c3ffb8ee81",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix video dispose problem for multiple video stream"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "5812214c048af242432b9a3d6e40e80be54fad2c",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix call not found error when gets removed"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "e847e04cef892094232f07f1ef3b1711f4173709",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Focus will move into the menu directly when menu open"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7127a16314bf8cca5e7160292b33f6ce08933663",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Expose environmentInfo in callClient state and callAdapter state"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4486a8515a197e04fe9cea6b54f2c1206d696403",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Increase Start Call Button height on the Configuration Page to 52px on mobile form factor"
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "06854ad863672e84d1cc59f831d0be965d92c890",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve issue where rich text editor tool bar would not focus when shown. Also fixed issue where editor component would remount when showing/hiding toolbar."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7127a16314bf8cca5e7160292b33f6ce08933663",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "On safari, do not show speaker dropdown"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "66ce808eca6e17a57151347e2f26a209a754ad37",
+            "area": "improvement",
+            "workstream": "Calling dependency",
+            "comment": "Upgrade calling stable version to 1.29.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 15 Oct 2024 20:24:24 GMT",
       "version": "1.20.0",
       "tag": "@azure/communication-react_v1.20.0",

@@ -2,8 +2,8 @@
   "type": "patch",
   "area": "fix",
   "workstream": "",
-  "comment": "Fix call not found error when gets removed",
+  "comment": "Add enter key support for rich text edit box",
   "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
+  "email": "73612854+palatter@users.noreply.github.com",
   "dependentChangeType": "patch"
 }

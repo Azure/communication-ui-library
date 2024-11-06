@@ -2,7 +2,7 @@
   "type": "patch",
   "area": "fix",
   "workstream": "",
-  "comment": "Expose environmentInfo in callClient state and callAdapter state",
+  "comment": "Fix the A11y role of the local video tile in the VideoGallery depending on if it is draggable or not",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"

@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "improvement",
+  "area": "fix",
   "workstream": "",
-  "comment": "On safari, do not show speaker dropdown",
+  "comment": "Add High Contrast borders around video tiles, side pane, and side pane close button in Call Composites",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"

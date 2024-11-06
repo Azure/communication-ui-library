@@ -9,6 +9,9 @@ import {
   IncomingCall,
   IncomingCallCommon
 } from '@azure/communication-calling';
+
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeVideoStream as SdkTogetherModeVideoStream } from '@azure/communication-calling';
 import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
@@ -26,6 +29,8 @@ import {
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
   CallInfoState
 } from './CallClientState';
+/* @conditional-compile-remove(calling-beta-sdk) */
+import { CallFeatureStreamState as DeclarativeCallFeatureVideoStream, CallFeatureStreamName } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
 import { _isTeamsIncomingCall } from './TypeGuards';
@@ -64,6 +69,25 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
   stream: SdkRemoteVideoStream
 ): DeclarativeRemoteVideoStream {
   return {
+    id: stream.id,
+    mediaStreamType: stream.mediaStreamType,
+    isAvailable: stream.isAvailable,
+    isReceiving: stream.isReceiving,
+    view: undefined,
+    streamSize: stream.size
+  };
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ */
+export function convertSdkCallFeatureStreamToDeclarativeCallFeatureStream(
+  stream: SdkTogetherModeVideoStream,
+  featureName: CallFeatureStreamName
+): DeclarativeCallFeatureVideoStream {
+  return {
+    feature: featureName,
     id: stream.id,
     mediaStreamType: stream.mediaStreamType,
     isAvailable: stream.isAvailable,
@@ -152,7 +176,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     pptLive: { isActive: false },
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(together-mode) */
-    togetherMode: { stream: [] },
+    togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,

@@ -42,6 +42,12 @@ jobs:
       - name: Install Rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
 
+      - name: Inject AAD signout html for sample App
+        run: |
+          node ./common/scripts/inject-signout-html.mjs Calling
+          node ./common/scripts/inject-signout-html.mjs Chat
+          node ./common/scripts/inject-signout-html.mjs CallWithChat
+
       - name: Set commit SHA as environment variable
         run: echo "REACT_APP_COMMIT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
 

@@ -131,6 +131,7 @@ export class CallSubscriber {
     this._togetherModeSubscriber = new TogetherModeSubscriber(
       this._callIdRef,
       this._context,
+      this._internalContext,
       this._call.feature(Features.TogetherMode)
     );
 

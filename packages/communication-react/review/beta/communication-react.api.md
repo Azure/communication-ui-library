@@ -1037,6 +1037,15 @@ export type CallErrors = {
 // @public
 export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll' | 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
 
+// @beta (undocumented)
+export type CallFeatureStreamName = 'togetherMode';
+
+// @beta (undocumented)
+export interface CallFeatureStreamState extends RemoteVideoStreamState {
+    // (undocumented)
+    feature?: CallFeatureStreamName;
+}
+
 // @public
 export type CallIdChangedListener = (event: {
     callId: string;
@@ -1170,6 +1179,7 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
+    // @beta
     togetherMode: TogetherModeCallFeature;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
@@ -3558,6 +3568,12 @@ export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrien
 // @public
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
+// @alpha
+export interface MediaAccessState {
+    isAudioPermitted: boolean;
+    isVideoPermitted: boolean;
+}
+
 // @public
 export type MediaAccess = {
     isAudioPermitted: boolean;
@@ -4796,8 +4812,12 @@ export type StartTeamsCallIdentifier = MicrosoftTeamsUserIdentifier | PhoneNumbe
 export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
-    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState | /* @conditional-compile-remove(together-mode) */ TogetherModeStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
+    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
+    // @beta
+    createView(callId: string, stream: CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
+    // @beta
+    disposeView(callId: string, stream: CallFeatureStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
@@ -4982,22 +5002,33 @@ export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
-// @alpha
+// @beta
 export interface TogetherModeCallFeature {
-    stream: TogetherModeStreamState[];
+    // (undocumented)
+    isActive: boolean;
+    seatingPositions: TogetherModeParticipantSeatingState;
+    streams: TogetherModeStreamsState;
 }
 
-// @alpha
-export interface TogetherModeStreamState {
-    id: number;
-    // @public
-    isReceiving: boolean;
-    mediaStreamType: MediaStreamType;
-    streamSize?: {
-        width: number;
-        height: number;
-    };
-    view?: VideoStreamRendererViewState;
+// @beta
+export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
+
+// @beta
+export interface TogetherModeSeatingPositionState {
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    left: number;
+    // (undocumented)
+    top: number;
+    // (undocumented)
+    width: number;
+}
+
+// @beta
+export interface TogetherModeStreamsState {
+    // (undocumented)
+    mainVideoStream?: CallFeatureStreamState;
 }
 
 // @public
