@@ -2196,13 +2196,13 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // (undocumented)
-    onForbidAllAttendeesAudio?: () => Promise<void>;
-    // (undocumented)
-    onForbidAllAttendeesVideo?: () => Promise<void>;
-    // (undocumented)
     onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onForbidRemoteParticipantsAudio?: () => Promise<void>;
+    // (undocumented)
+    onForbidRemoteParticipantsVideo?: () => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -2212,13 +2212,13 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onMuteParticipant: (userId: string) => Promise<void>;
     // (undocumented)
-    onPermitAllAttendeesAudio?: () => Promise<void>;
-    // (undocumented)
-    onPermitAllAttendeesVideo?: () => Promise<void>;
-    // (undocumented)
     onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onPermitRemoteParticipantsAudio?: () => Promise<void>;
+    // (undocumented)
+    onPermitRemoteParticipantsVideo?: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)

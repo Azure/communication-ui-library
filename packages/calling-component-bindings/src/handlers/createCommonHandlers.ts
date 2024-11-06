@@ -108,18 +108,18 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(media-access) */
   onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onForbidAllAttendeesAudio?: () => Promise<void>;
+  onForbidRemoteParticipantsAudio?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onPermitAllAttendeesAudio?: () => Promise<void>;
+  onPermitRemoteParticipantsAudio?: () => Promise<void>;
 
   /* @conditional-compile-remove(media-access) */
   onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onForbidAllAttendeesVideo?: () => Promise<void>;
+  onForbidRemoteParticipantsVideo?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onPermitAllAttendeesVideo?: () => Promise<void>;
+  onPermitRemoteParticipantsVideo?: () => Promise<void>;
 }
 
 /**
@@ -740,11 +740,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await call?.feature(Features.MediaAccess).permitAudio(participants);
     };
     /* @conditional-compile-remove(media-access) */
-    const onForbidAllAttendeesAudio = async (): Promise<void> => {
+    const onForbidRemoteParticipantsAudio = async (): Promise<void> => {
       await call?.feature(Features.MediaAccess).forbidRemoteParticipantsAudio();
     };
     /* @conditional-compile-remove(media-access) */
-    const onPermitAllAttendeesAudio = async (): Promise<void> => {
+    const onPermitRemoteParticipantsAudio = async (): Promise<void> => {
       await call?.feature(Features.MediaAccess).permitRemoteParticipantsAudio();
     };
 
@@ -759,11 +759,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await call?.feature(Features.MediaAccess).permitVideo(participants);
     };
     /* @conditional-compile-remove(media-access) */
-    const onForbidAllAttendeesVideo = async (): Promise<void> => {
+    const onForbidRemoteParticipantsVideo = async (): Promise<void> => {
       await call?.feature(Features.MediaAccess).forbidRemoteParticipantsVideo();
     };
     /* @conditional-compile-remove(media-access) */
-    const onPermitAllAttendeesVideo = async (): Promise<void> => {
+    const onPermitRemoteParticipantsVideo = async (): Promise<void> => {
       await call?.feature(Features.MediaAccess).permitRemoteParticipantsVideo();
     };
 
@@ -822,17 +822,17 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(media-access) */
       onPermitParticipantAudio,
       /* @conditional-compile-remove(media-access) */
-      onForbidAllAttendeesAudio,
+      onForbidRemoteParticipantsAudio,
       /* @conditional-compile-remove(media-access) */
-      onPermitAllAttendeesAudio,
+      onPermitRemoteParticipantsAudio,
       /* @conditional-compile-remove(media-access) */
       onForbidParticipantVideo,
       /* @conditional-compile-remove(media-access) */
       onPermitParticipantVideo,
       /* @conditional-compile-remove(media-access) */
-      onForbidAllAttendeesVideo,
+      onForbidRemoteParticipantsVideo,
       /* @conditional-compile-remove(media-access) */
-      onPermitAllAttendeesVideo
+      onPermitRemoteParticipantsVideo
     };
   }
 );
