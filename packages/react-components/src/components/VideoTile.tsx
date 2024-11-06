@@ -30,7 +30,8 @@ import {
   rootStyles,
   videoContainerStyles,
   tileInfoContainerStyle,
-  participantStateStringStyles
+  participantStateStringStyles,
+  videoTileHighContrastStyles
 } from './styles/VideoTile.styles';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
@@ -438,17 +439,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           background: theme.palette.neutralLighter,
           borderRadius: theme.effects.roundedCorner4
         },
-        (isSpeaking || raisedHand) && {
-          '&::after': {
-            content: `''`,
-            position: 'absolute',
-            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : raisedHandBackgroundColor}`,
-            borderRadius: theme.effects.roundedCorner4,
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'none'
-          }
-        },
+        isSpeaking || raisedHand
+          ? {
+              '&::after': {
+                content: `''`,
+                position: 'absolute',
+                border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : raisedHandBackgroundColor}`,
+                borderRadius: theme.effects.roundedCorner4,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none'
+              }
+            }
+          : {},
+        videoTileHighContrastStyles(theme),
         styles?.root
       )}
       {...longPressHandlers}

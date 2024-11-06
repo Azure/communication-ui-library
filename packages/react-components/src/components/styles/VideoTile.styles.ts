@@ -15,6 +15,13 @@ export const rootStyles: IStyle = {
   width: '100%'
 };
 
+/** @private */
+export const videoTileHighContrastStyles = (theme: ITheme): IStyle => ({
+  '@media (forced-colors: active)': {
+    border: `0.125rem solid ${theme.palette.black}`
+  }
+});
+
 /**
  * @private
  */
