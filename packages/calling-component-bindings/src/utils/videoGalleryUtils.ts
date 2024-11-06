@@ -98,8 +98,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
     spotlight?: Spotlight,
-    /* @conditional-compile-remove(media-access) */
-    mediaAccess?: MediaAccess
+    mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -130,8 +129,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   contentSharingStream?: HTMLElement,
   reaction?: Reaction,
   spotlight?: Spotlight,
-  /* @conditional-compile-remove(media-access) */
-  mediaAccess?: MediaAccess
+  mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;

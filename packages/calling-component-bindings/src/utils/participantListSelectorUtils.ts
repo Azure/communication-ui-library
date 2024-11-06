@@ -26,8 +26,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
   localUserCanRemoveOthers: boolean,
   reaction: undefined | Reaction,
   spotlight: undefined | Spotlight,
-  /* @conditional-compile-remove(media-access) */
-  mediaAccess: MediaAccess | undefined
+  mediaAccess: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
   return {
@@ -66,8 +65,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     localUserCanRemoveOthers: boolean,
     reaction: undefined | Reaction,
     spotlight: undefined | Spotlight,
-    /* @conditional-compile-remove(media-access) */
-    mediaAccess: MediaAccess | undefined
+    mediaAccess: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
       userId,
