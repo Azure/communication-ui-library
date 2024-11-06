@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import { CreateVideoStreamViewResult } from './VideoGalleryParticipant';
+import { CreateVideoStreamViewResult, ViewScalingMode } from './VideoGalleryParticipant';
 
 /* @conditional-compile-remove(together-mode) */
 /**
@@ -18,17 +18,27 @@ export interface TogetherModeStreamViewResult {
  * Represents a video stream in Together Mode.
  * @beta
  */
-export interface TogetherModeVideoStream {
+export interface TogetherModeStream {
+  /**
+   * Flag indicating whether the video stream is available for rendering
+   */
   isAvailable?: boolean;
+  /**
+   * Flag indicating whether the together mode stream is packets are being received.
+   */
+  isReceiving?: boolean;
   /**
    * The HTML element used to render the video stream.
    *
    */
   renderElement?: HTMLElement;
-
+  /**
+   * Scaling mode of the video stream
+   */
+  scalingMode?: ViewScalingMode;
   /**
    * The size of the video stream.
-   * @optional
+   *
    */
   streamSize?: { width: number; height: number };
 }
@@ -38,18 +48,23 @@ export interface TogetherModeVideoStream {
  * Interface representing the streams in Together Mode.
  * @beta
  */
-export interface TogetherModeStreams {
-  mainVideoStream?: TogetherModeVideoStream;
+export interface VideoGalleryTogetherModeStreams {
+  mainVideoStream?: TogetherModeStream;
 }
 
+/* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the seating information in Together Mode.
  * @beta
  */
-export interface TogetherModeSeatingInfo {
+export interface VideoGalleryTogetherModeSeatingInfo {
+  /* The top left offset from the top of the together mode view.*/
   top: number;
+  /* The left offset position from the left of the together mode view. */
   left: number;
+  /*  The width of the seating area */
   width: number;
+  /* The height of the seating area. */
   height: number;
 }
 
@@ -58,4 +73,4 @@ export interface TogetherModeSeatingInfo {
  * Interface representing the position of a participant in Together Mode.
  * @beta
  */
-export type TogetherModeParticipantPosition = Record<string, TogetherModeSeatingInfo>;
+export type VideoGalleryTogetherModeParticipantPosition = Record<string, VideoGalleryTogetherModeSeatingInfo>;
