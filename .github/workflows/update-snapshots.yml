@@ -122,7 +122,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload test results on failure
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: samples/tests/test-results
@@ -218,7 +218,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: samples/tests/test-results
@@ -315,7 +315,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-call-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -411,7 +411,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-chat-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -507,7 +507,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-call-with-chat-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -600,7 +600,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-components-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-components/tests/temp/
