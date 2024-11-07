@@ -43,6 +43,7 @@ export type VideoGalleryParticipant = {
   isScreenSharingOn?: boolean;
   /** Whether participant is spotlighted **/
   spotlight?: Spotlight;
+  /* @conditional-compile-remove(remote-ufd) */
   /** Signal strength of the participant, range from 1 to 3, lower means better connection **/
   signalStrength?: number;
 };

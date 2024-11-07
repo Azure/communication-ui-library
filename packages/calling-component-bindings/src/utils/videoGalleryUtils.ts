@@ -73,6 +73,7 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.contentSharingStream,
             remoteParticipantReaction,
             spotlight,
+            /* @conditional-compile-remove(remote-ufd) */
             Math.max(
               (participant.diagnostics?.networkReceiveQuality?.value ?? 0) as number,
               (participant.diagnostics?.networkSendQuality?.value ?? 0) as number
@@ -95,6 +96,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
     spotlight?: Spotlight,
+    /* @conditional-compile-remove(remote-ufd) */
     signalStrength?: number
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -108,6 +110,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       contentSharingStream,
       reaction,
       spotlight,
+      /* @conditional-compile-remove(remote-ufd) */
       signalStrength
     );
   }
@@ -125,6 +128,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   contentSharingStream?: HTMLElement,
   reaction?: Reaction,
   spotlight?: Spotlight,
+  /* @conditional-compile-remove(remote-ufd) */
   signalStrength?: number
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
@@ -169,6 +173,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     raisedHand,
     reaction,
     spotlight,
+    /* @conditional-compile-remove(remote-ufd) */
     signalStrength
   };
 };
