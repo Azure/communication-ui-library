@@ -709,12 +709,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.permitParticipantAudio(userIds);
   }
   /* @conditional-compile-remove(media-access) */
-  public async forbidAllAttendeesAudio(): Promise<void> {
-    return this.callAdapter.forbidAllAttendeesAudio();
+  public async forbidRemoteParticipantsAudio(): Promise<void> {
+    return this.callAdapter.forbidRemoteParticipantsAudio();
   }
   /* @conditional-compile-remove(media-access) */
-  public async permitAllAttendeesAudio(): Promise<void> {
-    return this.callAdapter.permitAllAttendeesAudio();
+  public async permitRemoteParticipantsAudio(): Promise<void> {
+    return this.callAdapter.permitRemoteParticipantsAudio();
   }
 
   /* @conditional-compile-remove(media-access) */
@@ -726,12 +726,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.permitParticipantVideo(userIds);
   }
   /* @conditional-compile-remove(media-access) */
-  public async forbidAllAttendeesVideo(): Promise<void> {
-    return this.callAdapter.forbidAllAttendeesVideo();
+  public async forbidRemoteParticipantsVideo(): Promise<void> {
+    return this.callAdapter.forbidRemoteParticipantsVideo();
   }
   /* @conditional-compile-remove(media-access) */
-  public async permitAllAttendeesVideo(): Promise<void> {
-    return this.callAdapter.permitAllAttendeesVideo();
+  public async permitRemoteParticipantsVideo(): Promise<void> {
+    return this.callAdapter.permitRemoteParticipantsVideo();
   }
 
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;

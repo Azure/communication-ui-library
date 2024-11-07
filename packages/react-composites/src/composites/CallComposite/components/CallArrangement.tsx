@@ -356,11 +356,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onPermitParticipantAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? onPermitParticipantAudio
         : undefined,
-      onForbidAllAttendeesAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onForbidAllAttendeesAudio
+      onForbidRemoteParticipantsAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onForbidRemoteParticipantsAudio
         : undefined,
-      onPermitAllAttendeesAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onPermitAllAttendeesAudio
+      onPermitRemoteParticipantsAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onPermitRemoteParticipantsAudio
         : undefined,
       onForbidParticipantVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? onForbidParticipantVideo
@@ -368,21 +368,21 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onPermitParticipantVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? onPermitParticipantVideo
         : undefined,
-      onForbidAllAttendeesVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onForbidAllAttendeesVideo
+      onForbidRemoteParticipantsVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onForbidRemoteParticipantsVideo
         : undefined,
-      onPermitAllAttendeesVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onPermitAllAttendeesVideo
+      onPermitRemoteParticipantsVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onPermitRemoteParticipantsVideo
         : undefined
     };
   }, [
     role,
     onForbidParticipantAudio,
     onPermitParticipantAudio,
-    muteAllHandlers.onForbidAllAttendeesAudio,
-    muteAllHandlers.onPermitAllAttendeesAudio,
-    muteAllHandlers.onForbidAllAttendeesVideo,
-    muteAllHandlers.onPermitAllAttendeesVideo,
+    muteAllHandlers.onForbidRemoteParticipantsAudio,
+    muteAllHandlers.onPermitRemoteParticipantsAudio,
+    muteAllHandlers.onForbidRemoteParticipantsVideo,
+    muteAllHandlers.onPermitRemoteParticipantsVideo,
     onForbidParticipantVideo,
     onPermitParticipantVideo
   ]);

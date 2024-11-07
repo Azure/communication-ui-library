@@ -763,17 +763,17 @@ export interface CallAdapterCallOperations {
   /* @conditional-compile-remove(media-access) */
   permitParticipantAudio(userIds: string[]): Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  forbidAllAttendeesAudio(): Promise<void>;
+  forbidRemoteParticipantsAudio(): Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  permitAllAttendeesAudio(): Promise<void>;
+  permitRemoteParticipantsAudio(): Promise<void>;
   /* @conditional-compile-remove(media-access) */
   forbidParticipantVideo(userIds: string[]): Promise<void>;
   /* @conditional-compile-remove(media-access) */
   permitParticipantVideo(userIds: string[]): Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  forbidAllAttendeesVideo(): Promise<void>;
+  forbidRemoteParticipantsVideo(): Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  permitAllAttendeesVideo(): Promise<void>;
+  permitRemoteParticipantsVideo(): Promise<void>;
 }
 
 /**

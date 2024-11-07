@@ -623,10 +623,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.stopAllSpotlight.bind(this);
     this.muteParticipant.bind(this);
     this.muteAllRemoteParticipants.bind(this);
-    this.forbidAllAttendeesAudio.bind(this);
-    this.permitAllAttendeesAudio.bind(this);
-    this.forbidAllAttendeesAudio.bind(this);
-    this.permitAllAttendeesAudio.bind(this);
+    this.forbidRemoteParticipantsAudio.bind(this);
+    this.permitRemoteParticipantsAudio.bind(this);
+    this.forbidRemoteParticipantsAudio.bind(this);
+    this.permitRemoteParticipantsAudio.bind(this);
   }
 
   public dispose(): void {
@@ -1146,12 +1146,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onPermitParticipantAudio?.(userIds);
   }
   /* @conditional-compile-remove(media-access) */
-  public async forbidAllAttendeesAudio(): Promise<void> {
-    this.handlers.onForbidAllAttendeesAudio?.();
+  public async forbidRemoteParticipantsAudio(): Promise<void> {
+    this.handlers.onForbidRemoteParticipantsAudio?.();
   }
   /* @conditional-compile-remove(media-access) */
-  public async permitAllAttendeesAudio(): Promise<void> {
-    this.handlers.onPermitAllAttendeesAudio?.();
+  public async permitRemoteParticipantsAudio(): Promise<void> {
+    this.handlers.onPermitRemoteParticipantsAudio?.();
   }
 
   /* @conditional-compile-remove(media-access) */
@@ -1163,12 +1163,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onPermitParticipantVideo?.(userIds);
   }
   /* @conditional-compile-remove(media-access) */
-  public async forbidAllAttendeesVideo(): Promise<void> {
-    this.handlers.onForbidAllAttendeesVideo?.();
+  public async forbidRemoteParticipantsVideo(): Promise<void> {
+    this.handlers.onForbidRemoteParticipantsVideo?.();
   }
   /* @conditional-compile-remove(media-access) */
-  public async permitAllAttendeesVideo(): Promise<void> {
-    this.handlers.onPermitAllAttendeesVideo?.();
+  public async permitRemoteParticipantsVideo(): Promise<void> {
+    this.handlers.onPermitRemoteParticipantsVideo?.();
   }
 
   /* @conditional-compile-remove(breakout-rooms) */

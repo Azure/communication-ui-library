@@ -249,12 +249,12 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('permitParticipantAudio not implemented');
   }
   /* @conditional-compile-remove(media-access) */
-  forbidAllAttendeesAudio(): Promise<void> {
-    throw Error('forbidAllAttendeesAudio not implemented');
+  forbidRemoteParticipantsAudio(): Promise<void> {
+    throw Error('forbidRemoteParticipantsAudio not implemented');
   }
   /* @conditional-compile-remove(media-access) */
-  permitAllAttendeesAudio(): Promise<void> {
-    throw Error('permitAllAttendeesAudio not implemented');
+  permitRemoteParticipantsAudio(): Promise<void> {
+    throw Error('permitRemoteParticipantsAudio not implemented');
   }
   /* @conditional-compile-remove(media-access) */
   forbidParticipantVideo(userIds: string[]): Promise<void> {
@@ -265,12 +265,12 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('permitParticipantAudio not implemented');
   }
   /* @conditional-compile-remove(media-access) */
-  forbidAllAttendeesVideo(): Promise<void> {
-    throw Error('forbidAllAttendeesAudio not implemented');
+  forbidRemoteParticipantsVideo(): Promise<void> {
+    throw Error('forbidRemoteParticipantsAudio not implemented');
   }
   /* @conditional-compile-remove(media-access) */
-  permitAllAttendeesVideo(): Promise<void> {
-    throw Error('permitAllAttendeesAudio not implemented');
+  permitRemoteParticipantsVideo(): Promise<void> {
+    throw Error('permitRemoteParticipantsAudio not implemented');
   }
 }
 
