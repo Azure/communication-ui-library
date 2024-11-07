@@ -1121,6 +1121,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     spotlight?: Spotlight;
+    mediaAccess?: MediaAccess;
 };
 
 // @beta
@@ -2195,6 +2196,14 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // (undocumented)
+    onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onForbidRemoteParticipantsAudio?: () => Promise<void>;
+    // (undocumented)
+    onForbidRemoteParticipantsVideo?: () => Promise<void>;
+    // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
     onLowerHand: () => Promise<void>;
@@ -2202,6 +2211,14 @@ export interface CommonCallingHandlers {
     onMuteAllRemoteParticipants: () => Promise<void>;
     // (undocumented)
     onMuteParticipant: (userId: string) => Promise<void>;
+    // (undocumented)
+    onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onPermitRemoteParticipantsAudio?: () => Promise<void>;
+    // (undocumented)
+    onPermitRemoteParticipantsVideo?: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
@@ -3551,6 +3568,18 @@ export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrien
 // @public
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
+// @alpha
+export type MediaAccess = {
+    isAudioPermitted: boolean;
+    isVideoPermitted: boolean;
+};
+
+// @alpha
+export interface MediaAccessState {
+    isAudioPermitted: boolean;
+    isVideoPermitted: boolean;
+}
+
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';
@@ -4367,6 +4396,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    mediaAccess?: MediaAccessState;
     raisedHand?: RaisedHandState;
     reactionState?: ReactionState;
     role?: ParticipantRole;
@@ -5232,6 +5262,7 @@ export type VideoGalleryParticipant = {
     isScreenSharingOn?: boolean;
     spotlight?: Spotlight;
     signalStrength?: number;
+    mediaAccess?: MediaAccess;
 };
 
 // @public
@@ -5279,6 +5310,8 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    // (undocumented)
+    mediaAccess?: MediaAccess;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;

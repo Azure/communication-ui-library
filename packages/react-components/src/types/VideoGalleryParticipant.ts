@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ParticipantState } from './ParticipantListParticipant';
+import {
+  ParticipantState,
+  /* @conditional-compile-remove(media-access) */
+  MediaAccess
+} from './ParticipantListParticipant';
 
 import { RaisedHand } from './ParticipantListParticipant';
 import { Reaction } from './ParticipantListParticipant';
@@ -46,6 +50,9 @@ export type VideoGalleryParticipant = {
   /* @conditional-compile-remove(remote-ufd) */
   /** Signal strength of the participant, range from 1 to 3, lower means better connection **/
   signalStrength?: number;
+  /* @conditional-compile-remove(media-access) */
+  /** audio video access states **/
+  mediaAccess?: MediaAccess;
 };
 
 /**
@@ -129,4 +136,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * @public
    * */
   reaction?: Reaction;
+  /* @conditional-compile-remove(media-access) */
+  mediaAccess?: MediaAccess;
 }

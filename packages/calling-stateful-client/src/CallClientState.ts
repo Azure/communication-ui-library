@@ -482,6 +482,22 @@ export interface VideoStreamRendererViewState {
   target: HTMLElement;
 }
 
+/* @conditional-compile-remove(media-access) */
+/**
+ * Media access state
+ * @alpha
+ */
+export interface MediaAccessState {
+  /**
+   * Whether the audio is forcibly muted
+   */
+  isAudioPermitted: boolean;
+  /**
+   * Whether the video is forcibly muted
+   */
+  isVideoPermitted: boolean;
+}
+
 /**
  * State only version of {@link @azure/communication-calling#RemoteParticipant}. {@link StatefulCallClient} will
  * automatically retrieve RemoteParticipants and add their state to the state exposed by {@link StatefulCallClient}.
@@ -543,6 +559,11 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
   spotlight?: SpotlightState;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.MediaAccessCallFeature.MediaAccess}.
+   */
+  mediaAccess?: MediaAccessState;
   /* @conditional-compile-remove(remote-ufd) */
   /**
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.

@@ -6,7 +6,12 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
-import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
+import {
+  VideoGalleryRemoteParticipant,
+  VideoGalleryStream,
+  /* @conditional-compile-remove(media-access) */
+  MediaAccess
+} from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _convertParticipantState, ParticipantConnectionState } from './callUtils';
 import { maskDisplayNameWithRole } from './callUtils';
@@ -77,7 +82,9 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             Math.max(
               (participant.diagnostics?.networkReceiveQuality?.value ?? 0) as number,
               (participant.diagnostics?.networkSendQuality?.value ?? 0) as number
-            )
+            ),
+            /* @conditional-compile-remove(media-access) */
+            participant.mediaAccess
           );
         })
     );
@@ -97,7 +104,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     reaction?: Reaction,
     spotlight?: Spotlight,
     /* @conditional-compile-remove(remote-ufd) */
-    signalStrength?: number
+    signalStrength?: number,
+    mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -111,7 +119,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       reaction,
       spotlight,
       /* @conditional-compile-remove(remote-ufd) */
-      signalStrength
+      signalStrength,
+      /* @conditional-compile-remove(media-access) */
+      mediaAccess
     );
   }
 );
@@ -130,6 +140,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   spotlight?: Spotlight,
   /* @conditional-compile-remove(remote-ufd) */
   signalStrength?: number
+  mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -174,7 +185,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     reaction,
     spotlight,
     /* @conditional-compile-remove(remote-ufd) */
-    signalStrength
+    signalStrength,
+    /* @conditional-compile-remove(media-access) */
+    mediaAccess
   };
 };
 
@@ -231,7 +244,12 @@ export const memoizeLocalParticipant = memoizeOne(
     raisedHand: raisedHand,
     reaction,
     spotlight: localSpotlight,
-    capabilities
+    capabilities,
+    /* @conditional-compile-remove(media-access) */
+    mediaAccess: {
+      isAudioPermitted: capabilities?.unmuteMic.isPresent,
+      isVideoPermitted: capabilities?.turnVideoOn.isPresent
+    }
   })
 );
 
