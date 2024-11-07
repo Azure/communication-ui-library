@@ -2862,6 +2862,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: React_2.JSX.Element;
     SendBoxSendHovered: React_2.JSX.Element;
     VideoTileMicOff: React_2.JSX.Element;
+    ControlButtonCameraProhibitedSmall: React_2.JSX.Element;
+    ControlButtonMicProhibitedSmall: React_2.JSX.Element;
     VideoTileCameraOff: React_2.JSX.Element;
     DialpadBackspace: React_2.JSX.Element;
     SitePermissionsSparkle: React_2.JSX.Element;
@@ -2947,9 +2949,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element | undefined;
-    ControlButtonCameraProhibitedSmall?: JSX.Element | undefined;
+    ControlButtonCameraProhibitedSmall: JSX.Element;
     ControlButtonMicProhibited?: JSX.Element | undefined;
-    ControlButtonMicProhibitedSmall?: JSX.Element | undefined;
+    ControlButtonMicProhibitedSmall: JSX.Element;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
     ControlButtonExitSpotlight?: JSX.Element | undefined;

@@ -18,9 +18,7 @@ import {
   Video20Filled,
   VideoOff20Filled,
   WifiWarning20Filled,
-  Circle20Regular,
-  VideoProhibited16Filled,
-  MicProhibited16Filled
+  Circle20Regular
 } from '@fluentui/react-icons';
 import { PersonCall20Regular, Clock20Filled } from '@fluentui/react-icons';
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
@@ -66,10 +64,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   ControlBarChatButtonInactive: <Chat20Regular />,
 
   ControlButtonCameraProhibited: <VideoProhibited20Filled />,
-  ControlButtonCameraProhibitedSmall: <VideoProhibited16Filled />,
-
   ControlButtonMicProhibited: <MicProhibited20Filled />,
-  ControlButtonMicProhibitedSmall: <MicProhibited16Filled />,
   ControlButtonExitSpotlight: <VideoPersonStarOff20Filled />,
   ControlBarPeopleButton: <People20Regular />,
   MoreDrawerMicrophones: <Mic20Regular />,

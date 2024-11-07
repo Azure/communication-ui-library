@@ -271,6 +271,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
   ControlButtonRaiseHand: <ControlButtonRaiseHandIcon />,
   ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
+  ControlButtonMicProhibitedSmall: <MicProhibited16Filled />,
+  ControlButtonCameraProhibitedSmall: <VideoProhibited16Filled />,
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   ReactionButtonIcon: <Emoji20Regular />,
