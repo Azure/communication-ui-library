@@ -53,13 +53,13 @@ jobs:
         run: rushx package
         working-directory: ./samples/Calling
       - name: Log in with Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy Calling
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: acs-ui-dev-web-call-hero-beta-validation2
           package: ./samples/Calling/dist
@@ -101,13 +101,13 @@ jobs:
         run: rushx package
         working-directory: ./samples/Chat
       - name: Log in with Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy Chat
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: acs-ui-dev-web-chat-hero-beta-validation2
           package: ./samples/Chat/dist
@@ -149,13 +149,13 @@ jobs:
         run: rushx package
         working-directory: ./samples/CallWithChat
       - name: Log in with Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
       - name: Deploy CallWithChat
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: acs-ui-dev-web-meeting-hero-beta-validation2
           package: ./samples/CallWithChat/dist
