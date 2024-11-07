@@ -45,7 +45,8 @@ const convertRemoteParticipantToParticipantListParticipant = (
       localUserCanRemoveOthers,
     reaction,
     spotlight,
-    /* @conditional-compile-remove(media-access) */ mediaAccess
+    /* @conditional-compile-remove(media-access) */
+    mediaAccess
   };
 };
 
@@ -77,7 +78,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
       localUserCanRemoveOthers,
       reaction,
       spotlight,
-      /* @conditional-compile-remove(media-access) */ mediaAccess
+      mediaAccess
     );
   }
 );
