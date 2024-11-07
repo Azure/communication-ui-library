@@ -121,13 +121,6 @@ export interface CommonCallingHandlers {
   onStartTogetherMode: () => Promise<void>;
   /* @conditional-compile-remove(together-mode) */
   /**
-   * Call set together mode scene size
-   *
-   * @beta
-   */
-  onSetTogetherModeSceneSize: (width: number, height: number) => void;
-  /* @conditional-compile-remove(together-mode) */
-  /**
    * Call back to dispose together mode views
    *
    * @beta
@@ -804,13 +797,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         callClient.disposeView(call.id, togetherModeStreams.mainVideoStream);
       }
     };
-    /* @conditional-compile-remove(together-mode) */
-    const onSetTogetherModeSceneSize = (width: number, height: number): void => {
-      const togetherModeFeature = call?.feature(Features.TogetherMode);
-      if (togetherModeFeature) {
-        togetherModeFeature.sceneSize = { width, height };
-      }
-    };
     /* @conditional-compile-remove(media-access) */
     const onForbidParticipantAudio = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
@@ -903,8 +889,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onCreateTogetherModeStreamView,
       /* @conditional-compile-remove(together-mode) */
       onStartTogetherMode: notImplemented,
-      /* @conditional-compile-remove(together-mode) */
-      onSetTogetherModeSceneSize,
       /* @conditional-compile-remove(together-mode) */
       onDisposeTogetherModeStreamViews,
       /* @conditional-compile-remove(media-access) */

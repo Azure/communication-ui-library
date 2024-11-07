@@ -531,10 +531,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return await this.callAdapter.startTogetherMode();
   }
   /* @conditional-compile-remove(together-mode) */
-  public setTogetherModeSceneSize(width: number, height: number): void {
-    return this.callAdapter.setTogetherModeSceneSize(width, height);
-  }
-  /* @conditional-compile-remove(together-mode) */
   public async disposeTogetherModeStreamViews(): Promise<void> {
     await this.callAdapter.disposeTogetherModeStreamViews();
   }

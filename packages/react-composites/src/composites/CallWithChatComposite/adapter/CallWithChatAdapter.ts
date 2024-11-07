@@ -230,7 +230,7 @@ export interface CallWithChatAdapterManagement {
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
   /* @conditional-compile-remove(together-mode) */
   /**
-   * Create the html view for a stream.
+   * Create the html view for a togethermode stream.
    *
    * @remarks
    * This method is implemented for composite
@@ -241,24 +241,19 @@ export interface CallWithChatAdapterManagement {
    */
   createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
-  startTogetherMode(): Promise<void>;
-  /* @conditional-compile-remove(together-mode) */
   /**
-   * Recalculate the seating positions for together mode.
+   * Start together mode.
    *
    * @remarks
    * This method is implemented for composite
    *
-   * @param width - Width of the container
-   * @param height - Height of the container
    *
    * @beta
    */
-  setTogetherModeSceneSize(width: number, height: number): void;
-
+  startTogetherMode(): Promise<void>;
   /* @conditional-compile-remove(together-mode) */
   /**
-   * Dispose the html view for a stream.
+   * Dispose the html view for a togethermode stream.
    *
    * @remarks
    * This method is implemented for composite

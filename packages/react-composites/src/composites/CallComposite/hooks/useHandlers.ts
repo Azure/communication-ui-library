@@ -238,10 +238,6 @@ const createCompositeHandlers = memoizeOne(
         return await adapter.startTogetherMode();
       },
       /* @conditional-compile-remove(together-mode) */
-      onSetTogetherModeSceneSize: (width: number, height: number) => {
-        return adapter.setTogetherModeSceneSize(width, height);
-      },
-      /* @conditional-compile-remove(together-mode) */
       onDisposeTogetherModeStreamViews: async () => {
         return await adapter.disposeTogetherModeStreamViews();
       }

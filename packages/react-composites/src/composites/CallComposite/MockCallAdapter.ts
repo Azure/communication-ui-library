@@ -118,10 +118,6 @@ export class _MockCallAdapter implements CallAdapter {
   startTogetherMode(): Promise<void> {
     throw Error('startTogetherMode not implemented');
   }
-  /* @conditional-compile-remove(together-mode) */
-  setTogetherModeSceneSize(width: number, height: number): void {
-    throw Error(`Setting Together Mode scene to width ${width} and height ${height} is not implemented`);
-  }
   disposeStreamView(): Promise<void> {
     return Promise.resolve();
   }
