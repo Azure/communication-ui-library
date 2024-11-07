@@ -205,7 +205,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     if (!cameraOn) {
       setAnnouncerString(strings.tooltipVideoLoadingContent);
     }
-  }, [announcerString, cameraOn, strings.tooltipVideoLoadingContent]);
+  }, [setAnnouncerString, cameraOn, strings.tooltipVideoLoadingContent]);
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
