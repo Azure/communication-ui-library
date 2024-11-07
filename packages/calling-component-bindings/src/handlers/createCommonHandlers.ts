@@ -833,7 +833,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onPermitRemoteParticipantsVideo = async (): Promise<void> => {
       await call?.feature(Features.MediaAccess).permitRemoteParticipantsVideo();
     };
-
     return {
       onHangUp,
       onToggleHold,
