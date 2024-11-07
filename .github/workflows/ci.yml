@@ -114,7 +114,7 @@ jobs:
         run: rush ensure-consistent-versions
       # Upload azure-communication api.md files for easy access
       - name: Upload communication-react api files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: communication-react.${{ matrix.flavor }}.api.json
           path: |
@@ -164,7 +164,7 @@ jobs:
         run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
       # Upload coverage report to review the merged report locally
       - name: Upload detailed and summary jest coverage reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jest-coverage-report-${{ matrix.flavor }}
           path: temp/jest/current/merge/
@@ -182,7 +182,7 @@ jobs:
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
       - name: Find Comment
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        uses: peter-evans/find-comment@v2
+        uses: peter-evans/find-comment@v3
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -190,7 +190,7 @@ jobs:
           body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
       - name: Create or update comment
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v4
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -260,7 +260,7 @@ jobs:
       # Upload azure-communication api.md files for easy access
       - name: Upload communication-react api files
         if: ${{ matrix.flavor == 'beta-release'}}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: communication-react.beta-release.api.json
           path: |
@@ -308,7 +308,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-call.json
@@ -316,17 +316,17 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -375,7 +375,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
@@ -383,17 +383,17 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -442,7 +442,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-callwithchat.json
@@ -450,17 +450,17 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -505,17 +505,17 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Components-snapshots
           path: packages/react-components/tests/temp
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -579,7 +579,7 @@ jobs:
       - name: Tests
         run: rush test -o calling
       # upload bundle stats.json which will be consumed later
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ matrix.flavor == 'beta'}}
         with:
           name: Calling-report
@@ -611,7 +611,7 @@ jobs:
       - name: Tests
         run: rush test -o chat
       # upload bundle stats.json which will be consumed later
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ matrix.flavor == 'beta'}}
         with:
           name: Chat-report
@@ -643,7 +643,7 @@ jobs:
       - name: Tests
         run: rush test -o callwithchat
       # upload bundle stats.json which will be consumed later
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ matrix.flavor == 'beta'}}
         with:
           name: CallWithChat-report
@@ -708,17 +708,17 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -758,17 +758,17 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -796,7 +796,7 @@ jobs:
       # checkout base bundle stats
       - name: Get bundle stats of main from gist
         run: curl -o base/report.json "${{ matrix.gist }}/raw/${{ matrix.app }}-report.json" --create-dirs -L
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           path: current
           name: ${{ matrix.app }}-report
@@ -811,7 +811,7 @@ jobs:
           echo "change=${change}" >> $GITHUB_OUTPUT
           echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
       - name: Find Comment
-        uses: peter-evans/find-comment@v2
+        uses: peter-evans/find-comment@v3
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -820,24 +820,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
       - name: Delete existing comment
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const commentId = '${{ steps.fc.outputs.comment-id }}'
             if (commentId) {
-              await github.issues.deleteComment({
+              await github.rest.issues.deleteComment({
                 owner: context.repo.owner,
                 repo: context.repo.repo,
                 comment_id: commentId
               })
             }
       - name: Post new comment
-        uses: actions/github-script@v4
+        uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            await github.issues.createComment({
+            await github.rest.issues.createComment({
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
@@ -873,7 +873,7 @@ jobs:
           - app: CallWithChat
             gist_id: 72a7fca0af8a3c5b37f966bb6d4bcd11
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.app }}-report
       - name: Upload bundle report to gist
