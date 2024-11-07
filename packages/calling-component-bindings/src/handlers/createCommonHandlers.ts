@@ -788,7 +788,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
 
       const togetherModeStreams = callState.togetherMode.streams;
-
       if (!togetherModeStreams.mainVideoStream) {
         return;
       }
