@@ -139,7 +139,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   reaction?: Reaction,
   spotlight?: Spotlight,
   /* @conditional-compile-remove(remote-ufd) */
-  signalStrength?: number
+  signalStrength?: number,
   mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
