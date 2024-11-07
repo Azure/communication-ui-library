@@ -9,6 +9,7 @@ import {
   getIsScreenSharingOn,
   getIsMuted,
   CallingBaseSelectorProps,
+  /* @conditional-compile-remove(media-access) */
   getCapabilities
 } from './baseSelectors';
 import { getRole } from './baseSelectors';

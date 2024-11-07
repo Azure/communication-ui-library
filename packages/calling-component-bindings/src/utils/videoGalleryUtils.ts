@@ -9,7 +9,8 @@ import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/callin
 import {
   VideoGalleryRemoteParticipant,
   VideoGalleryStream,
-  /* @conditional-compile-remove(media-access) */ MediaAccess
+  /* @conditional-compile-remove(media-access) */
+  MediaAccess
 } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _convertParticipantState, ParticipantConnectionState } from './callUtils';
@@ -99,10 +100,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
     spotlight?: Spotlight,
-    /* @conditional-compile-remove(media-access) */
-    mediaAccess?: MediaAccess,
-    /* @conditional-compile-remove(media-access) */
-    role?: ParticipantRole
+    mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess,
+    role?: undefined | /* @conditional-compile-remove(media-access) */ ParticipantRole
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -115,9 +114,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       contentSharingStream,
       reaction,
       spotlight,
-      /* @conditional-compile-remove(media-access) */
       mediaAccess,
-      /* @conditional-compile-remove(media-access) */
       role
     );
   }
@@ -135,10 +132,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   contentSharingStream?: HTMLElement,
   reaction?: Reaction,
   spotlight?: Spotlight,
-  /* @conditional-compile-remove(media-access) */
-  mediaAccess?: MediaAccess,
-  /* @conditional-compile-remove(media-access) */
-  role?: ParticipantRole
+  mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess,
+  role?: undefined | /* @conditional-compile-remove(media-access) */ ParticipantRole
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -182,9 +177,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     raisedHand,
     reaction,
     spotlight,
-    /* @conditional-compile-remove(media-access) */
     mediaAccess,
-    /* @conditional-compile-remove(media-access) */
     role
   };
 };
@@ -243,6 +236,7 @@ export const memoizeLocalParticipant = memoizeOne(
     reaction,
     spotlight: localSpotlight,
     capabilities,
+    /* @conditional-compile-remove(media-access) */
     mediaAccess: {
       isAudioPermitted: capabilities?.unmuteMic.isPresent,
       isVideoPermitted: capabilities?.turnVideoOn.isPresent
