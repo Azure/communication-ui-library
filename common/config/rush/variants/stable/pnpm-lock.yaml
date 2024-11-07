@@ -16894,8 +16894,8 @@ packages:
       typescript: 5.4.5
     dev: false
 
-  /typescript@4.7.2:
-    resolution: {integrity: sha512-Mamb1iX2FDUpcTRzltPxgWMKy3fhg0TN378ylbktPGPK/99KbDtMQ4W1hwgsbPAsG3a0xKa1vmw4VKZQbkvz5A==}
+  /typescript@4.8.4:
+    resolution: {integrity: sha512-QCh+85mCy+h0IGff8r5XWzOVSbBO+KfeYrMQh7NJ58QujwcE22u+NUSmUxqF+un70P9GXKxa2HCNiTTMJknyjQ==}
     engines: {node: '>=4.2.0'}
     hasBin: true
     dev: false
@@ -18748,7 +18748,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-whCw8xYk1Pf7nBCvy843s9Ctn75JkJEWsR6BPHdsuEXULO6DN5z9t5+Y0G/fYzyoRGMEKmffyztAuTPT3yycrw==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-o8Gs6+lkkOin8ZN9kzhY6xJwkU2H/0/6k1ckp6Wo8O+VadRxPwu9/Z+MAw171CBjn20eWOax4sv0DNSt2nH27A==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -18759,7 +18759,7 @@ packages:
       eslint-plugin-prettier: 5.1.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       prettier: 3.3.2
       rimraf: 2.7.1
-      typescript: 4.7.2
+      typescript: 4.8.4
     transitivePeerDependencies:
       - '@types/eslint'
       - supports-color
