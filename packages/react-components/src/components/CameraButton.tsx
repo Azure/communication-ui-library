@@ -201,6 +201,12 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     [strings.cameraActionTurnedOffAnnouncement, strings.cameraActionTurnedOnAnnouncement]
   );
 
+  const onVideoIsLoadingAnnouncementCallback = useCallback(() => {
+    if (!cameraOn) {
+      setAnnouncerString(strings.tooltipVideoLoadingContent);
+    }
+  }, [announcerString, cameraOn, strings.tooltipVideoLoadingContent]);
+
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
     if (onToggleCamera) {
@@ -214,6 +220,11 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       }
     }
   }, [cameraOn, localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
+
+  const onToggleClickCallback = useCallback(() => {
+    onVideoIsLoadingAnnouncementCallback();
+    onToggleClick();
+  }, [onVideoIsLoadingAnnouncementCallback, onToggleClick]);
 
   const onChangeCameraClick = useCallback(
     async (device: OptionsDevice) => {
@@ -282,7 +293,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       <ControlBarButton
         {...props}
         disabled={disabled}
-        onClick={onToggleCamera ? onToggleClick : props.onClick}
+        onClick={onToggleCamera ? onToggleClickCallback : props.onClick}
         onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}
         strings={strings}

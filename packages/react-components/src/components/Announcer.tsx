@@ -20,7 +20,7 @@ export type AnnouncerProps = {
 export const Announcer = (props: AnnouncerProps): JSX.Element => {
   const { announcementString, ariaLive } = props;
 
-  return <Stack aria-label={announcementString} aria-live={ariaLive} role="status" styles={announcerStyles}></Stack>;
+  return <Stack aria-label={announcementString} aria-live={ariaLive} role="status" aria-atomic={true} styles={announcerStyles}></Stack>;
 };
 
 /**
