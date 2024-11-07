@@ -66,7 +66,7 @@
       "5.3.3",
 
       // Typescript check project's dependency -- this is our minimum supported typescript version of our npm package.
-      "4.6.3"
+      "4.7.2"
     ]
   }
 }
