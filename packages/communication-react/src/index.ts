@@ -453,3 +453,5 @@ export { RTTDisclosureBanner } from '../../react-components/src';
 export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
 /* @conditional-compile-remove(rtt) */
 export { RealTimeText } from '../../react-components/src/components/RealTimeText';
+/* @conditional-compile-remove(media-access) */
+export type { MediaAccess } from '../../react-components/src';
