@@ -128,8 +128,7 @@ export const controlButtonStyles: IButtonStyles = {
     border: 'none'
   },
   flexContainer: {
-    flexFlow: 'column',
-    display: 'contents'
+    display: 'unset'
   },
   label: {
     fontSize: '0.625rem',
