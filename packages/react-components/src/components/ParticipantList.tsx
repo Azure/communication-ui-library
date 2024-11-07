@@ -181,12 +181,11 @@ const onRenderParticipantDefault = (
                 ariaLabel={strings.sharingIconLabel}
               />
             )}
+            {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
+            {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
             {getParticipantItemCameraProhibitedTrampoline(callingParticipant)}
             {getControlButtonMicProhibitedTrampoline(callingParticipant)}
             {getParticipantItemMicOffTrampoline(callingParticipant)}
-            {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
-
-            {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
           </Stack>
         )
       : () => null;

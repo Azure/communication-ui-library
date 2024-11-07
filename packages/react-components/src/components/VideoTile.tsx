@@ -188,7 +188,9 @@ export interface VideoTileProps {
    * Reactions resources' url and metadata.
    */
   reactionResources?: ReactionResources;
-
+  /**
+   * Media access state of the participant.
+   */
   mediaAccess?: MediaAccess;
 }
 
