@@ -78,6 +78,11 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.contentSharingStream,
             remoteParticipantReaction,
             spotlight,
+            /* @conditional-compile-remove(remote-ufd) */
+            Math.max(
+              (participant.diagnostics?.networkReceiveQuality?.value ?? 0) as number,
+              (participant.diagnostics?.networkSendQuality?.value ?? 0) as number
+            ),
             /* @conditional-compile-remove(media-access) */
             participant.mediaAccess
           );
@@ -98,6 +103,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
     spotlight?: Spotlight,
+    /* @conditional-compile-remove(remote-ufd) */
+    signalStrength?: number,
     mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -111,6 +118,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       contentSharingStream,
       reaction,
       spotlight,
+      /* @conditional-compile-remove(remote-ufd) */
+      signalStrength,
       /* @conditional-compile-remove(media-access) */
       mediaAccess
     );
@@ -129,6 +138,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   contentSharingStream?: HTMLElement,
   reaction?: Reaction,
   spotlight?: Spotlight,
+  /* @conditional-compile-remove(remote-ufd) */
+  signalStrength?: number,
   mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
@@ -173,6 +184,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     raisedHand,
     reaction,
     spotlight,
+    /* @conditional-compile-remove(remote-ufd) */
+    signalStrength,
     /* @conditional-compile-remove(media-access) */
     mediaAccess
   };
