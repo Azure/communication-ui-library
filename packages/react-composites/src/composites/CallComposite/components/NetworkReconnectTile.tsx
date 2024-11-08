@@ -73,7 +73,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
             verticalFill
             horizontalAlign="center"
             verticalAlign="center"
-            className={mergeStyles(containerStyle)}
+            className={mergeStyles({ gap: `1.5rem` })}
           >
             <Stack horizontal className={mergeStyles(titleContainerStyle)}>
               <CallCompositeIcon
