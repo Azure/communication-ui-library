@@ -14,7 +14,7 @@ export const themedCaptionsSettingsModalStyle = (theme: Theme): Partial<IModalSt
     padding: _pxToRem(24),
     width: _pxToRem(440),
     height: 'fit-content',
-    overflowY: 'scroll'
+    overflowY: 'auto'
   }
 });
 
