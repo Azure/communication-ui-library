@@ -68,18 +68,24 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
           className={mergeStyles(containerStyle)}
           aria-atomic
         >
-          <Stack horizontal className={mergeStyles(titleContainerStyle)}>
-            <CallCompositeIcon
-              iconName="NetworkReconnectIcon"
-              className={mergeStyles(titleStyle(palette, isVideoReady))}
-            />
-            <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live={'assertive'}>
-              {strings.networkReconnectTitle}
+          <Stack
+            role="alert"
+            verticalFill
+            horizontalAlign="center"
+            verticalAlign="center"
+            className={mergeStyles(containerStyle)}
+          >
+            <Stack horizontal className={mergeStyles(titleContainerStyle)}>
+              <CallCompositeIcon
+                iconName="NetworkReconnectIcon"
+                className={mergeStyles(titleStyle(palette, isVideoReady))}
+              />
+              <Text className={mergeStyles(titleStyle(palette, isVideoReady))}>{strings.networkReconnectTitle}</Text>
+            </Stack>
+            <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))}>
+              {strings.networkReconnectMoreDetails}
             </Text>
           </Stack>
-          <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))} aria-live={'assertive'}>
-            {strings.networkReconnectMoreDetails}
-          </Text>
           {isTeamsMeeting && meetingCoordinates && meetingCoordinates[0] && (
             <Stack>
               <Stack horizontal horizontalAlign="center" verticalAlign="center" className={titleContainerClassName}>
