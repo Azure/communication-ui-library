@@ -604,6 +604,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     /* @conditional-compile-remove(together-mode) */
     this.startTogetherMode.bind(this);
     /* @conditional-compile-remove(together-mode) */
+    this.setTogetherModeSceneSize.bind(this);
+    /* @conditional-compile-remove(together-mode) */
     this.disposeTogetherModeStreamViews.bind(this);
     this.disposeScreenShareStreamView.bind(this);
     this.disposeRemoteVideoStreamView.bind(this);
@@ -813,6 +815,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   public async startTogetherMode(): Promise<void> {
     return await this.handlers.onStartTogetherMode();
   }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSceneSize(width: number, height: number): void {
+    return this.handlers.onSetTogetherModeSceneSize(width, height);
+  }
+
   /* @conditional-compile-remove(together-mode) */
   public async disposeTogetherModeStreamViews(): Promise<void> {
     return await this.handlers.onDisposeTogetherModeStreamViews();

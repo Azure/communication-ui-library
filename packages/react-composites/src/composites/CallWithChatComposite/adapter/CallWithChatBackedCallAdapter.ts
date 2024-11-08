@@ -144,6 +144,9 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.createTogetherModeStreamViews(options);
   /* @conditional-compile-remove(together-mode) */
   public startTogetherMode = async (): Promise<void> => await this.callWithChatAdapter.startTogetherMode();
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSceneSize = (width: number, height: number): void =>
+    this.callWithChatAdapter.setTogetherModeSceneSize(width, height);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
   public disposeScreenShareStreamView(remoteUserId: string): Promise<void> {

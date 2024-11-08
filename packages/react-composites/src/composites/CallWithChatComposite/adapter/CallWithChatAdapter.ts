@@ -253,6 +253,20 @@ export interface CallWithChatAdapterManagement {
   startTogetherMode(): Promise<void>;
   /* @conditional-compile-remove(together-mode) */
   /**
+   * Recalculate the seating positions for together mode.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   * @param width - Width of the container
+   * @param height - Height of the container
+   *
+   * @beta
+   */
+  setTogetherModeSceneSize(width: number, height: number): void;
+
+  /* @conditional-compile-remove(together-mode) */
+  /**
    * Dispose the html view for a togethermode stream.
    *
    * @remarks
