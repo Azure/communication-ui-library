@@ -10,6 +10,7 @@ import { Icon } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import {
   containerStyle,
+  headerContainerStyle,
   moreDetailsStyle,
   titleContainerStyle,
   titleStyle
@@ -73,7 +74,7 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
             verticalFill
             horizontalAlign="center"
             verticalAlign="center"
-            className={mergeStyles({ gap: `1.5rem` })}
+            className={mergeStyles(headerContainerStyle)}
           >
             <Stack horizontal className={mergeStyles(titleContainerStyle)}>
               <CallCompositeIcon
