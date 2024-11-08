@@ -187,7 +187,7 @@ export { RaiseHandButton } from './RaiseHandButton';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
 export { ReactionButton } from './ReactionButton';
-export type { ReactionButtonProps, ReactionButtonStrings } from './ReactionButton';
+export type { ReactionButtonProps, ReactionButtonStrings, ReactionButtonReaction } from './ReactionButton';
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, VideoTileStrings } from './VideoTile';
 
