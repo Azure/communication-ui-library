@@ -1,6 +1,5 @@
 import { Stack } from '@fluentui/react';
 import { Meta, Source } from '@storybook/addon-docs';
-import QuickstartCompositeAdapter from '!!raw-loader!./snippets/QuickstartCompositeAdapter.snippet.tsx';
 import QuickstartCompositeComplete from '!!raw-loader!./snippets/QuickstartCompositeComplete.snippet.tsx';
 
 <Meta title="Composites/Get Started" />
@@ -103,7 +102,8 @@ The following classes and interfaces handle some of the major features of the Az
 
 ## Set Up Adapters
 
-Before we initialize the actual composite components, we need to set up the adapters that will power them.
+In our quickstart, we will be using the `CallAdapter` and `ChatAdapter` to power the `CallComposite` and `ChatComposite` respectively.
+Before we initialize the actual composite components, we need to set up the adapters that will power them first.
 These adapters take care of the entire state of the composites truly making them a turn-key solution.
 To setup the adapters, developers needs to pass information on the call or chat they want to join.
 
@@ -117,19 +117,6 @@ If the token hasn't been joined to the thread ID, then the Group Chat composite 
 For more information on chat, see: [Getting Started with Chat](https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp)
 
 Go to the `src` folder inside of `ui-library-quickstart-composites` and look for the file `App.tsx`.
-
-`App.tsx`
-
-<Source code={QuickstartCompositeAdapter} />
-
-Next we will initialize the composite components with the adapters.
-
-## Initialize Composites
-
-Go to the `src` folder inside of `ui-library-quickstart-composites` and look for the file `App.tsx`.
-Here we'll drop the following code to initialize our Composite Components for Chat and Calling using the adapters we set up above.
-You can choose which one to use depending on the type of communication experience you're building.
-If needed, you can use both at the same time.
 
 `App.tsx`
 
