@@ -359,7 +359,15 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(breakout-rooms) */
   breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
   /* @conditional-compile-remove(breakout-rooms) */
-  breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon'
+  breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon',
+  /* @conditional-compile-remove(media-access) */
+  capabilityTurnVideoOnPresent: 'ControlButtonCameraOff',
+  /* @conditional-compile-remove(media-access) */
+  capabilityTurnVideoOnAbsent: 'ControlButtonCameraOff',
+  /* @conditional-compile-remove(media-access) */
+  capabilityUnmuteMicPresent: 'ControlButtonCameraOff',
+  /* @conditional-compile-remove(media-access) */
+  capabilityUnmuteMicAbsent: 'ControlButtonCameraOff'
 };
 
 /**

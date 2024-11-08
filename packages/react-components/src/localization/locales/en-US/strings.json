@@ -494,6 +494,26 @@
       "title": "Room time limit about to expire.",
       "message": "This room will close in 30 seconds",
       "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Your camera has been enabled",
+      "message": "Turn it on if you'd like to share video.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Your camera has been disabled",
+      "message": "You can no longer share video.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Your mic has been enabled",
+      "message": "Unmute if you'd like to speak.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Your mic has been disabled",
+      "message": "You can no longer unmute.",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {

@@ -257,6 +257,39 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         timestamp: latestNotifications['breakoutRoomClosingSoon'].timestamp
       });
     }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityTurnVideoOnPresent']) {
+      activeNotifications.push({
+        type: 'capabilityTurnVideoOnPresent',
+        timestamp: latestNotifications['capabilityTurnVideoOnPresent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityTurnVideoOnAbsent']) {
+      activeNotifications.push({
+        type: 'capabilityTurnVideoOnAbsent',
+        timestamp: latestNotifications['capabilityTurnVideoOnAbsent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityUnmuteMicPresent']) {
+      activeNotifications.push({
+        type: 'capabilityUnmuteMicPresent',
+        timestamp: latestNotifications['capabilityUnmuteMicPresent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityUnmuteMicAbsent']) {
+      activeNotifications.push({
+        type: 'capabilityUnmuteMicAbsent',
+        timestamp: latestNotifications['capabilityUnmuteMicAbsent'].timestamp
+      });
+    }
+
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );

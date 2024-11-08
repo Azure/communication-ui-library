@@ -36,5 +36,63 @@ export class CapabilitiesSubscriber {
     if (data.oldValue.viewAttendeeNames !== data.newValue.viewAttendeeNames) {
       this._context.setHideAttendeeNames(this._callIdRef.callId, data);
     }
+    if (data.oldValue.turnVideoOn?.isPresent !== data.newValue.turnVideoOn?.isPresent) {
+      if (data.oldValue.turnVideoOn?.isPresent === false && data.newValue.turnVideoOn?.isPresent) {
+        const capabilityTurnVideoOnAbsent = this._context.getState().latestNotifications.capabilityTurnVideoOnAbsent;
+        if (capabilityTurnVideoOnAbsent) {
+          this._context.deleteLatestNotification(this._callIdRef.callId, 'capabilityTurnVideoOnAbsent');
+        }
+        const capabilityTurnVideoOnPresent = this._context.getState().latestNotifications.capabilityTurnVideoOnPresent;
+        if (!capabilityTurnVideoOnPresent) {
+          this._context.setLatestNotification(this._callIdRef.callId, {
+            target: 'capabilityTurnVideoOnPresent',
+            timestamp: new Date(Date.now())
+          });
+        }
+      }
+
+      if (data.newValue.turnVideoOn?.isPresent === false) {
+        const capabilityTurnVideoOnPresent = this._context.getState().latestNotifications.capabilityTurnVideoOnPresent;
+        if (capabilityTurnVideoOnPresent) {
+          this._context.deleteLatestNotification(this._callIdRef.callId, 'capabilityTurnVideoOnPresent');
+        }
+        const capabilityTurnVideoOnAbsent = this._context.getState().latestNotifications.capabilityTurnVideoOnAbsent;
+        if (!capabilityTurnVideoOnAbsent) {
+          this._context.setLatestNotification(this._callIdRef.callId, {
+            target: 'capabilityTurnVideoOnAbsent',
+            timestamp: new Date(Date.now())
+          });
+        }
+      }
+    }
+    if (data.oldValue.unmuteMic?.isPresent !== data.newValue.unmuteMic?.isPresent) {
+      if (data.oldValue.unmuteMic?.isPresent === false && data.newValue.unmuteMic?.isPresent) {
+        const capabilityUnmuteMicAbsent = this._context.getState().latestNotifications.capabilityUnmuteMicAbsent;
+        if (capabilityUnmuteMicAbsent) {
+          this._context.deleteLatestNotification(this._callIdRef.callId, 'capabilityUnmuteMicAbsent');
+        }
+        const capabilityUnmuteMicPresent = this._context.getState().latestNotifications.capabilityUnmuteMicPresent;
+        if (!capabilityUnmuteMicPresent) {
+          this._context.setLatestNotification(this._callIdRef.callId, {
+            target: 'capabilityUnmuteMicPresent',
+            timestamp: new Date(Date.now())
+          });
+        }
+      }
+
+      if (data.newValue.unmuteMic?.isPresent === false) {
+        const capabilityUnmuteMicPresent = this._context.getState().latestNotifications.capabilityUnmuteMicPresent;
+        if (capabilityUnmuteMicPresent) {
+          this._context.deleteLatestNotification(this._callIdRef.callId, 'capabilityUnmuteMicPresent');
+        }
+        const capabilityUnmuteMicAbsent = this._context.getState().latestNotifications.capabilityUnmuteMicAbsent;
+        if (!capabilityUnmuteMicAbsent) {
+          this._context.setLatestNotification(this._callIdRef.callId, {
+            target: 'capabilityUnmuteMicAbsent',
+            timestamp: new Date(Date.now())
+          });
+        }
+      }
+    }
   };
 }
