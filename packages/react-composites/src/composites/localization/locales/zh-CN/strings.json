@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "将不再对会议中的每个人突出显示该视频。",
       "stopSpotlightConfirmButtonLabel": "停止聚焦",
       "stopSpotlightOnSelfConfirmButtonLabel": "退出聚焦",
-      "stopSpotlightCancelButtonLabel": "取消"
+      "stopSpotlightCancelButtonLabel": "取消",
+      "closeSpotlightPromptButtonLabel": "关闭"
     },
     "exitSpotlightButtonLabel": "退出聚焦",
     "exitSpotlightButtonTooltip": "退出聚焦",

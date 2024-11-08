@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "Usuń kolumnę",
     "richTextDeleteRowMenu": "Usuń wiersz",
     "richTextDeleteTableMenu": "Usuń tabelę",
+    "richTextToolbarAriaLabel": "Pasek narzędzi formatowania wiadomości",
     "richTextToolbarMoreButtonAriaLabel": "Więcej opcji",
     "attachmentMoreMenu": "Więcej opcji",
     "richTextNewBulletedListItemAnnouncement": "Punktor, nowy wiersz",
     "richTextNewNumberedListItemAnnouncement": "{0}, nowy wiersz",
     "richTextBulletedListAppliedAnnouncement": "Zastosowano listę punktowaną",
     "richTextNumberedListAppliedAnnouncement": "Zastosowano listę numerowaną"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "Włącz modalne okno dialogowe pisania w czasie rzeczywistym",
+    "rttModalTitle": "Włączyć pisanie w czasie rzeczywistym?",
+    "rttModalText": "Tekst w czasie rzeczywistym zostanie włączony dla wszystkich uczestników spotkania.",
+    "rttConfirmButtonLabel": "Włącz",
+    "rttCancelButtonLabel": "Anuluj",
+    "rttCloseModalButtonAriaLabel": "Zamknij modalne okno dialogowe pisania w czasie rzeczywistym"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "Śmiech",
     "applauseReactionTooltipContent": "Aplauz",
     "surprisedReactionTooltipContent": "Niespodzianka"
+  },
+  "rtt": {
+    "isTypingText": "Pisanie w czasie rzeczywistym"
   },
   "messageThread": {
     "yesterday": "Wczoraj",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "Trwa łączenie…",
+    "participantReconnecting": "Trwa ponowne łączenie...",
     "participantStateHold": "Zawieszony",
-    "moreOptionsButtonAriaLabel": "Więcej opcji"
+    "moreOptionsButtonAriaLabel": "Więcej opcji {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "wyciszony",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "wyciszenie wyłączone",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Podniesiona ręka",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Mówi"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Zezwalaj {appName} na używanie kamery i mikrofonu",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "poprzednia strona",
-    "rightNavButtonAriaLabel": "następna strona"
+    "leftNavButtonAriaLabel": "poprzednia strona {current} z {total}",
+    "rightNavButtonAriaLabel": "następna strona {current} z {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Dołącz do połączenia z Twojego telefonu",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Odrzuć",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Odbierz jako połączenie wideo",
     "incomingCallNotificationDismissButtonAriaLabel": "Odrzuć"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "Pisanie w czasie rzeczywistym",
+    "bannerContent": "Funkcja RTT (tekst w czasie rzeczywistym) jest włączona dla wszystkich uczestników przez cały czas trwania spotkania.",
+    "bannerLinkLabel": "Dowiedz się więcej"
   }
 }

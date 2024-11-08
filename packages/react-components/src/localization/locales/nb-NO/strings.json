@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "Slett kolonne",
     "richTextDeleteRowMenu": "Slett rad",
     "richTextDeleteTableMenu": "Slett tabell",
+    "richTextToolbarAriaLabel": "Verktøylinje for meldingsformatering",
     "richTextToolbarMoreButtonAriaLabel": "Flere alternativer",
     "attachmentMoreMenu": "Flere alternativer",
     "richTextNewBulletedListItemAnnouncement": "Punkt, ny linje",
     "richTextNewNumberedListItemAnnouncement": "{0}, ny linje",
     "richTextBulletedListAppliedAnnouncement": "Punktliste er brukt",
     "richTextNumberedListAppliedAnnouncement": "Nummerert liste brukes"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "Aktiver RTT-modal",
+    "rttModalTitle": "Aktivere RTT?",
+    "rttModalText": "Sanntidstekst (RTT) aktiveres for alle i møtet.",
+    "rttConfirmButtonLabel": "Aktiver",
+    "rttCancelButtonLabel": "Avslutt",
+    "rttCloseModalButtonAriaLabel": "Lukk RTT-modal"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "Latter",
     "applauseReactionTooltipContent": "Applaus",
     "surprisedReactionTooltipContent": "Overrasket"
+  },
+  "rtt": {
+    "isTypingText": "RTT-skriving"
   },
   "messageThread": {
     "yesterday": "I går",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "Ringer ...",
+    "participantReconnecting": "Kobler til på nytt ...",
     "participantStateHold": "På vent",
-    "moreOptionsButtonAriaLabel": "Flere alternativer"
+    "moreOptionsButtonAriaLabel": "Flere alternativer {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "varsler er deaktivert",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "opphevet demping",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Hånd rakt opp",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Snakke"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Tillat {appName} å bruke kameraet og mikrofonen",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "forrige side",
-    "rightNavButtonAriaLabel": "neste side"
+    "leftNavButtonAriaLabel": "forrige side {current} av {total}",
+    "rightNavButtonAriaLabel": "neste side {current} av {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Bli med i samtalen fra telefonen",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Avslå",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Svar med video",
     "incomingCallNotificationDismissButtonAriaLabel": "Lukk"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (sanntidstekst) er aktivert for alle deltakere hele varigheten for møtet.",
+    "bannerLinkLabel": "Finn ut mer"
   }
 }

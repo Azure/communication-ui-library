@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "Spalte löschen",
     "richTextDeleteRowMenu": "Zeile löschen",
     "richTextDeleteTableMenu": "Tabelle löschen",
+    "richTextToolbarAriaLabel": "Symbolleiste für die Nachrichtenformatierung",
     "richTextToolbarMoreButtonAriaLabel": "Weitere Optionen",
     "attachmentMoreMenu": "Mehr Optionen",
     "richTextNewBulletedListItemAnnouncement": "Aufzählungszeichen, neue Zeile",
     "richTextNewNumberedListItemAnnouncement": "{0}, neue Zeile",
     "richTextBulletedListAppliedAnnouncement": "Aufzählung angewendet",
     "richTextNumberedListAppliedAnnouncement": "\"Nummerierte Liste\" angewendet."
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "RTT Modal aktivieren",
+    "rttModalTitle": "RTT aktivieren?",
+    "rttModalText": "Echtzeittext (RTT) wird für alle Teilnehmer der Besprechung aktiviert.",
+    "rttConfirmButtonLabel": "Aktivieren",
+    "rttCancelButtonLabel": "Abbrechen",
+    "rttCloseModalButtonAriaLabel": "RTT Modal schließen"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "Lachen",
     "applauseReactionTooltipContent": "Applaus",
     "surprisedReactionTooltipContent": "Überrascht"
+  },
+  "rtt": {
+    "isTypingText": "RTT-Eingabe"
   },
   "messageThread": {
     "yesterday": "Gestern",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "Anrufen...",
+    "participantReconnecting": "Verbindung wird wiederhergestellt...",
     "participantStateHold": "In der Warteschleife",
-    "moreOptionsButtonAriaLabel": "Weitere Optionen"
+    "moreOptionsButtonAriaLabel": "Weitere Optionen {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "stummgeschaltet",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "Stummschaltung aufgehoben",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Hand erhoben",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Sprechen"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Zulassen, dass {appName} Ihre Kamera und Ihr Mikrofon verwendet",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "Vorherige Seite",
-    "rightNavButtonAriaLabel": "Nächste Seite"
+    "leftNavButtonAriaLabel": "vorherige Seite {current} von {total}",
+    "rightNavButtonAriaLabel": "nächste Seite {current} von {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Von Ihrem Telefon aus an Anruf teilnehmen",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Ablehnen",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Mit Video annehmen",
     "incomingCallNotificationDismissButtonAriaLabel": "Verwerfen"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (Echtzeittext) ist für alle Teilnehmer für die gesamte Dauer der Besprechung aktiviert.",
+    "bannerLinkLabel": "Mehr erfahren"
   }
 }

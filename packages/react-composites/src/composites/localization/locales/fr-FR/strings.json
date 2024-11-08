@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Les vidéo n’apparaissent plus en surbrillance pour tous les participants à la réunion.",
       "stopSpotlightConfirmButtonLabel": "Arrêter la mise en évidence",
       "stopSpotlightOnSelfConfirmButtonLabel": "Quitter la mise en évidence",
-      "stopSpotlightCancelButtonLabel": "Annuler"
+      "stopSpotlightCancelButtonLabel": "Annuler",
+      "closeSpotlightPromptButtonLabel": "Fermez"
     },
     "exitSpotlightButtonLabel": "Quitter la mise en évidence",
     "exitSpotlightButtonTooltip": "Quitter la mise en évidence",
