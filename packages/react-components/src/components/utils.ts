@@ -363,11 +363,11 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(media-access) */
   capabilityTurnVideoOnPresent: 'ControlButtonCameraOff',
   /* @conditional-compile-remove(media-access) */
-  capabilityTurnVideoOnAbsent: 'ControlButtonCameraOff',
+  capabilityTurnVideoOnAbsent: 'ControlButtonCameraProhibited',
   /* @conditional-compile-remove(media-access) */
-  capabilityUnmuteMicPresent: 'ControlButtonCameraOff',
+  capabilityUnmuteMicPresent: 'ControlButtonMicOff',
   /* @conditional-compile-remove(media-access) */
-  capabilityUnmuteMicAbsent: 'ControlButtonCameraOff'
+  capabilityUnmuteMicAbsent: 'ControlButtonMicProhibited'
 };
 
 /**
