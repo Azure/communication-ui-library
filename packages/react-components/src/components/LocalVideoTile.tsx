@@ -199,6 +199,7 @@ export const _LocalVideoTile = React.memo(
               <Spinner
                 label={strings?.waitingScreenText}
                 ariaLive="assertive"
+                role="alert"
                 labelPosition="bottom"
                 styles={loadSpinnerStyles(theme, true)}
               />
@@ -233,6 +234,7 @@ export const _LocalVideoTile = React.memo(
             label={strings?.waitingScreenText}
             ariaLive="assertive"
             labelPosition="bottom"
+            role="alert"
             styles={loadSpinnerStyles(theme, false)}
           />
         </Stack>
