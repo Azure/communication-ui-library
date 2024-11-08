@@ -15,6 +15,14 @@ export const containerStyle: IStyle = {
 /**
  * @private
  */
+export const headerContainerStyle: IStyle = {
+  gap: `1.5rem`,
+  height: `auto`
+};
+
+/**
+ * @private
+ */
 export const titleContainerStyle: IStyle = {
   gap: `1rem`
 };
