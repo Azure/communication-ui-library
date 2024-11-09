@@ -26,7 +26,7 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
-import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+import { CreateVideoStreamViewResult, VideoStreamOptions, ReactionButtonReaction } from '@internal/react-components';
 import {
   disposeAllLocalPreviewViews,
   _isInCall,
@@ -370,7 +370,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    const onReactionClick = async (reaction: Reaction): Promise<void> => {
+    const onReactionClick = async (reaction: ReactionButtonReaction): Promise<void> => {
       if (
         reaction === 'like' ||
         reaction === 'applause' ||
@@ -869,7 +869,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onRaiseHand,
       onLowerHand,
       onToggleRaiseHand,
-      onReactionClick: onReactionClick,
+      onReactionClick,
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
       onStartCall: notImplemented,

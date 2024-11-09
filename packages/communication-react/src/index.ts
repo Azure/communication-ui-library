@@ -320,8 +320,11 @@ export type {
   Reaction,
   ReactionButtonProps,
   ReactionResources,
-  ReactionSprite
+  ReactionSprite,
+  ReactionButtonReaction
 } from '../../react-components/src';
+
+export { ReactionButton } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
 export { RichTextSendBox } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
