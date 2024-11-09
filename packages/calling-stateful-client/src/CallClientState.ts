@@ -272,12 +272,15 @@ export interface RaiseHandCallFeatureState {
 
 /* @conditional-compile-remove(together-mode) */
 /**
+ * Represents the name of the call feature stream
  * @beta
  */
 export type CallFeatureStreamName = 'togetherMode';
 
 /* @conditional-compile-remove(together-mode) */
 /**
+ * State only version of {@link @azure/communication-calling#CallFeatureStream}.
+ * Represents call feature stream state.
  * @beta
  */
 export interface CallFeatureStreamState extends RemoteVideoStreamState {
@@ -292,13 +295,13 @@ export interface CallFeatureStreamState extends RemoteVideoStreamState {
  * Represents the seating position of a participant in Together Mode.
  */
 export interface TogetherModeSeatingPositionState {
-  // The top left offset from the top of the together mode view.
+  /* The top left offset from the top of the together mode view.*/
   top: number;
-  // The left offset position from the left of the together mode view.
+  /* The left offset position from the left of the together mode view. */
   left: number;
-  //  The width of the seating area
+  /*  The width of the seating area */
   width: number;
-  // The height of the seating area.
+  /* The height of the seating area. */
   height: number;
 }
 
@@ -312,7 +315,7 @@ export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSea
 
 /* @conditional-compile-remove(together-mode) */
 /**
- * Interface representing the streams in Together Mode.
+ * Represents the streams in Together Mode.
  *
  * @beta
  */
@@ -322,8 +325,8 @@ export interface TogetherModeStreamsState {
 
 /* @conditional-compile-remove(together-mode) */
 /**
- * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient} will
- * automatically listen for raised hands on the call and update the state exposed by {@link StatefulCallClient} accordingly.
+ * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient}.
+ * Represents the state of the Together Mode feature.
  * @beta
  */
 export interface TogetherModeCallFeatureState {

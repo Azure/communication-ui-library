@@ -15,3 +15,5 @@ export * from './SurveyIssuesHeadingStrings';
 export * from './CallSurveyImprovementSuggestions';
 export * from './ReactionTypes';
 export * from './Attachment';
+/* @conditional-compile-remove(together-mode) */
+export * from './TogetherModeTypes';
