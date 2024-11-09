@@ -172,6 +172,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     }
   ): CommonCallingHandlers & Partial<_ComponentCallingHandlers> => {
     const onStartLocalVideo = async (): Promise<void> => {
+      console.log('hi there on start local video');
       // Before the call object creates a stream, dispose of any local preview streams.
       // @TODO: is there any way to parent the unparented view to the call object instead
       // of disposing and creating a new stream?
@@ -205,7 +206,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
 
     const onToggleCamera = async (options?: VideoStreamOptions): Promise<void> => {
       const previewOn = _isPreviewOn(callClient.getState().deviceManager);
+      console.log('hi there onToggleCamera');
 
+      // during a call, user need canTurnVideoOn capability to operate camera
+      const canTurnVideoOn = call?.feature(Features.Capabilities).capabilities.turnVideoOn.isPresent;
+      console.log(canTurnVideoOn);
       // the disposal of the unparented views is to workaround: https://skype.visualstudio.com/SPOOL/_workitems/edit/3030558.
       // The root cause of the issue is caused by never transitioning the unparented view to the
       // call object when going from configuration page (disconnected call state) to connecting.
@@ -359,6 +364,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call || !(_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         throw new Error(`Please invoke onToggleMicrophone after call is started`);
       }
+      console.log('hi there onToggleMicrophone');
       return call.isMuted ? await call.unmute() : await call.mute();
     };
 
@@ -563,6 +569,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     const onDisposeLocalStreamView = async (): Promise<void> => {
+      console.log('hi there onDisposeLocalStreamView');
       // If the user is currently in a call, dispose of the local stream view attached to that call.
       const callState = call && callClient.getState().calls[call.id];
       const localStream = callState?.localVideoStreams.find((item) => item.mediaStreamType === 'Video');
@@ -698,6 +705,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
           // Using toFlatCommunicationIdentifier to convert the CommunicationIdentifier to string
           // as _toCommunicationIdentifier(userId) comparison to participant.identifier did not work for this case
           if (toFlatCommunicationIdentifier(participant.identifier) === userId) {
+            console.log('hi there onMuteParticipant');
             await participant.mute();
           }
         });

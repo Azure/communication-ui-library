@@ -1413,14 +1413,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (data.newValue.turnVideoOn?.isPresent === false) {
       // Only stop camera when the call state is not on hold. The Calling SDK does not allow us to stop camera when
       // the call state is on hold.
-      if (this.call?.state !== 'LocalHold' && this.call?.state !== 'RemoteHold') {
-        this.stopCamera();
-      }
+      // if (this.call?.state !== 'LocalHold' && this.call?.state !== 'RemoteHold') {
+      //   this.stopCamera();
+      // }
+      console.log('hi there capabilitiesChanged turnVideoOn false');
       this.disposeLocalVideoStreamView();
     }
-    if (data.newValue.unmuteMic?.isPresent === false) {
-      this.mute();
-    }
+    // if (data.newValue.unmuteMic?.isPresent === false) {
+    //   this.mute();
+    // }
     if (data.newValue.shareScreen?.isPresent === false) {
       this.stopScreenShare();
     }
