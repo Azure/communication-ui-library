@@ -19,7 +19,7 @@
     "lint:quiet": "rushx lint -- --quiet"
   },
   "dependencies": {
-    "@azure/communication-react": "1.21.0-beta.0"
+    "@azure/communication-react": "1.21.0-beta.1"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
@@ -29,6 +29,6 @@
     "eslint-plugin-import": "^2.31.0",
     "prettier": "3.3.2",
     "rimraf": "^2.6.2",
-    "typescript": "4.6.3"
+    "typescript": "4.8.4"
   }
 }

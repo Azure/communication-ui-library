@@ -178,7 +178,7 @@ jobs:
       # Upload non-react releases for public preview
       - name: Upload Public Preview Release
         if: ${{ github.event.inputs.release-flavor == 'beta' }}
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           name: PublicPreview ${{ steps.version.outputs.version }}
           tag_name: PublicPreview/${{ steps.version.outputs.version }}

@@ -1046,10 +1046,10 @@ export type CallErrors = {
 // @public
 export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll' | 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
 
-// @beta (undocumented)
+// @beta
 export type CallFeatureStreamName = 'togetherMode';
 
-// @beta (undocumented)
+// @beta
 export interface CallFeatureStreamState extends RemoteVideoStreamState {
     // (undocumented)
     feature?: CallFeatureStreamName;
@@ -1130,6 +1130,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     spotlight?: Spotlight;
+    mediaAccess?: MediaAccess;
 };
 
 // @beta
@@ -1267,7 +1268,7 @@ export interface CallWithChatAdapterManagement {
     startNoiseSuppressionEffect(): Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
-    // (undocumented)
+    // @beta
     startTogetherMode(): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopAllSpotlight(): Promise<void>;
@@ -2216,6 +2217,14 @@ export interface CommonCallingHandlers {
     // @beta
     onDisposeTogetherModeStreamViews: () => Promise<void>;
     // (undocumented)
+    onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onForbidRemoteParticipantsAudio?: () => Promise<void>;
+    // (undocumented)
+    onForbidRemoteParticipantsVideo?: () => Promise<void>;
+    // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
     onLowerHand: () => Promise<void>;
@@ -2223,6 +2232,14 @@ export interface CommonCallingHandlers {
     onMuteAllRemoteParticipants: () => Promise<void>;
     // (undocumented)
     onMuteParticipant: (userId: string) => Promise<void>;
+    // (undocumented)
+    onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    onPermitRemoteParticipantsAudio?: () => Promise<void>;
+    // (undocumented)
+    onPermitRemoteParticipantsVideo?: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
@@ -3256,7 +3273,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : AreEqual<Component, typeof ReactionButton> extends true ? EmptySelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -3575,6 +3592,18 @@ export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrien
 
 // @public
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
+
+// @alpha
+export type MediaAccess = {
+    isAudioPermitted: boolean;
+    isVideoPermitted: boolean;
+};
+
+// @alpha
+export interface MediaAccessState {
+    isAudioPermitted: boolean;
+    isVideoPermitted: boolean;
+}
 
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
@@ -4299,11 +4328,17 @@ export type Reaction = {
 };
 
 // @public
+export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
+
+// @public
 export interface ReactionButtonProps extends ControlBarButtonProps {
-    onReactionClick: (reaction: string) => Promise<void>;
+    onReactionClick: (reaction: ReactionButtonReaction) => Promise<void>;
     reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
+
+// @public
+export type ReactionButtonReaction = 'like' | 'heart' | 'applause' | 'laugh' | 'surprised';
 
 // @public
 export interface ReactionButtonStrings {
@@ -4392,6 +4427,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    mediaAccess?: MediaAccessState;
     raisedHand?: RaisedHandState;
     reactionState?: ReactionState;
     role?: ParticipantRole;
@@ -5000,22 +5036,7 @@ export interface TogetherModeCallFeature {
 }
 
 // @beta
-export type TogetherModeParticipantSeatingProp = Record<string, TogetherModeSeatingPositionProp>;
-
-// @beta
 export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
-
-// @beta
-export interface TogetherModeSeatingPositionProp {
-    // (undocumented)
-    height: number;
-    // (undocumented)
-    left: number;
-    // (undocumented)
-    top: number;
-    // (undocumented)
-    width: number;
-}
 
 // @beta
 export interface TogetherModeSeatingPositionState {
@@ -5030,12 +5051,6 @@ export interface TogetherModeSeatingPositionState {
 }
 
 // @beta
-export interface TogetherModeStreamsProp {
-    // (undocumented)
-    mainVideoStream?: TogetherModeVideoStreamProp;
-}
-
-// @beta
 export interface TogetherModeStreamsState {
     // (undocumented)
     mainVideoStream?: CallFeatureStreamState;
@@ -5045,17 +5060,6 @@ export interface TogetherModeStreamsState {
 export interface TogetherModeStreamViewResult {
     // (undocumented)
     mainVideoView?: CreateVideoStreamViewResult;
-}
-
-// @beta
-export interface TogetherModeVideoStreamProp {
-    // (undocumented)
-    isAvailable?: boolean;
-    renderElement?: HTMLElement;
-    streamSize?: {
-        width: number;
-        height: number;
-    };
 }
 
 // @public
@@ -5294,6 +5298,8 @@ export type VideoGalleryParticipant = {
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
     spotlight?: Spotlight;
+    signalStrength?: number;
+    mediaAccess?: MediaAccess;
 };
 
 // @public
@@ -5356,6 +5362,8 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    // (undocumented)
+    mediaAccess?: MediaAccess;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;

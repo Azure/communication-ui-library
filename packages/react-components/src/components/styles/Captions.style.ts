@@ -74,14 +74,23 @@ export const captionsContainerClassName = mergeStyles({
 export const captionContainerClassName = mergeStyles({
   marginTop: _pxToRem(6),
   marginBottom: _pxToRem(6),
+  textAlign: 'unset', // ensure RTL spoken language captions are appropriately aligned to the right
   overflowAnchor: 'auto'
 });
+
+/** Reset styling set by the `ul` element */
+const resetUlStyling = {
+  listStyleType: 'none',
+  padding: 0,
+  margin: 0
+};
 
 /**
  * @private
  */
 export const captionsBannerClassName = (formFactor: 'default' | 'compact'): string => {
   return mergeStyles({
+    ...resetUlStyling,
     overflowX: 'hidden',
     height: formFactor === 'compact' ? '4.5rem' : '8.75rem',
     overflowY: 'auto',
@@ -94,6 +103,7 @@ export const captionsBannerClassName = (formFactor: 'default' | 'compact'): stri
  */
 export const captionsBannerFullHeightClassName = (theme: ITheme): string => {
   return mergeStyles({
+    ...resetUlStyling,
     overflowX: 'hidden',
     overflowY: 'auto',
     height: '100%',

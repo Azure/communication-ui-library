@@ -70,6 +70,7 @@ export const LobbyTile = (props: LobbyTileProps): JSX.Element => {
               className={mergeStyles(titleStyle(palette, isVideoReady))}
               aria-live="assertive"
               data-ui-id="lobbyScreenTitle"
+              role="alert"
             >
               {props.overlayProps.title}
             </Text>

@@ -93,3 +93,9 @@ export type { SurveyIssues } from './types';
 export type { SurveyIssuesHeadingStrings } from './types';
 
 export type { CallSurveyImprovementSuggestions } from './types';
+
+/* @conditional-compile-remove(together-mode) */
+export type { TogetherModeStreamViewResult } from './types';
+
+/* @conditional-compile-remove(media-access) */
+export type { MediaAccess } from './types';

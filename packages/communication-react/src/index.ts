@@ -326,8 +326,11 @@ export type {
   Reaction,
   ReactionButtonProps,
   ReactionResources,
-  ReactionSprite
+  ReactionSprite,
+  ReactionButtonReaction
 } from '../../react-components/src';
+
+export { ReactionButton } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
 export { RichTextSendBox } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
@@ -459,3 +462,5 @@ export { RTTDisclosureBanner } from '../../react-components/src';
 export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
 /* @conditional-compile-remove(rtt) */
 export { RealTimeText } from '../../react-components/src/components/RealTimeText';
+/* @conditional-compile-remove(media-access) */
+export type { MediaAccess } from '../../react-components/src';
