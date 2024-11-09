@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { StartCallOptions } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import { Features } from '@azure/communication-calling';
 import { IncomingCallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support-beta) */
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -124,6 +126,20 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         );
         if (incomingCall) {
           await incomingCall.reject();
+        }
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onStartTogetherMode: async (): Promise<void> => {
+        if (!call) {
+          return;
+        }
+        const callState = callClient.getState().calls[call.id];
+        if (!callState) {
+          return;
+        }
+        if (!callState.togetherMode.isActive) {
+          const togetherModeFeature = call?.feature(Features.TogetherMode);
+          await togetherModeFeature?.start();
         }
       }
     };
