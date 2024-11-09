@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "刪除欄",
     "richTextDeleteRowMenu": "刪除列",
     "richTextDeleteTableMenu": "刪除表格",
+    "richTextToolbarAriaLabel": "訊息格式設定工具列",
     "richTextToolbarMoreButtonAriaLabel": "其他選項",
     "attachmentMoreMenu": "其他選項",
     "richTextNewBulletedListItemAnnouncement": "項目符號，新行",
     "richTextNewNumberedListItemAnnouncement": "{0}，新行",
     "richTextBulletedListAppliedAnnouncement": "已套用項目符號清單",
     "richTextNumberedListAppliedAnnouncement": "已套用編號清單"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "開啟 RTT 強制回應",
+    "rttModalTitle": "開啟 RTT?",
+    "rttModalText": "將為會議中的每個人開啟即時文字 (RTT)。",
+    "rttConfirmButtonLabel": "開啟",
+    "rttCancelButtonLabel": "取消",
+    "rttCloseModalButtonAriaLabel": "關閉 RTT 強制回應"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建議"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "大笑",
     "applauseReactionTooltipContent": "鼓掌",
     "surprisedReactionTooltipContent": "驚訝"
+  },
+  "rtt": {
+    "isTypingText": "RTT 輸入"
   },
   "messageThread": {
     "yesterday": "昨天",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "撥號中...",
+    "participantReconnecting": "正在重新連線...",
     "participantStateHold": "電話保留",
-    "moreOptionsButtonAriaLabel": "其他選項"
+    "moreOptionsButtonAriaLabel": "其他選項 {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "已靜音",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "已取消靜音",
+    "moreOptionsParticipantHandRaisedAriaLabel": "已舉手",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "說話"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允許 {appName} 使用您的相機和麥克風",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "上一頁",
-    "rightNavButtonAriaLabel": "下一頁"
+    "leftNavButtonAriaLabel": "上一頁 (第 {current} 頁，共 {total} 頁)",
+    "rightNavButtonAriaLabel": "下一頁 (第 {current} 頁，共 {total} 頁)"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "從您的電話加入通話",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "拒絕",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "接受並開啟視訊",
     "incomingCallNotificationDismissButtonAriaLabel": "關閉"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "即時輸入",
+    "bannerContent": "已為整個會議期間的所有參與者啟用 RTT (即時文字)。",
+    "bannerLinkLabel": "深入了解"
   }
 }
