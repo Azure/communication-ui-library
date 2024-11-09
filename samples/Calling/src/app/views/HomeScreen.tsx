@@ -38,6 +38,7 @@ import { Dialpad } from '@azure/communication-react';
 import { Backspace20Regular } from '@fluentui/react-icons';
 import { useIsMobile } from '../utils/useIsMobile';
 import { CallAdapterLocator } from '@azure/communication-react';
+import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
 export type CallOption =
   | 'ACSCall'
@@ -125,7 +126,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
   const teamsAdhocChosen: boolean = chosenCallOption.key === 'TeamsAdhoc';
 
-  const buttonEnabled =
+  let buttonEnabled =
     (displayName || teamsToken) &&
     (startGroupCall ||
       (teamsCallChosen && callLocator) ||
@@ -136,14 +137,20 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       (outboundParticipants && acsCallChosen) ||
       (teamsIdentityChosen && callLocator && teamsToken && teamsId));
 
+  const isCTEinUrl = getIsCTE();
+  if (isCTEinUrl) {
+    buttonEnabled = teamsToken && teamsId;
+  }
+
   registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
 
   const isMobileSession = useIsMobile();
 
   let showDisplayNameField = true;
 
-  showDisplayNameField = !teamsIdentityChosen;
+  showDisplayNameField = !teamsIdentityChosen && !isCTEinUrl;
 
+  const [teamsTokenError, setTeamsTokenErrorMessage] = useState<string>();
   const [teamsIdFormatError, setTeamsIdFormatError] = useState<boolean>(false);
 
   return (
@@ -224,7 +231,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 <b>And</b>
               </Text>
             )}
-            {(chosenCallOption.key === 'TeamsIdentity' || getIsCTE()) && (
+            {(chosenCallOption.key === 'TeamsIdentity' || isCTEinUrl) && (
               <Stack>
                 <TextField
                   className={teamsItemStyle}
@@ -232,10 +239,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   required
                   placeholder={'Enter a Teams Token'}
                   onChange={(_, newValue) => setTeamsToken(newValue)}
+                  errorMessage={teamsTokenError}
                 />
               </Stack>
             )}
-            {(chosenCallOption.key === 'TeamsIdentity' || getIsCTE()) && (
+            {(chosenCallOption.key === 'TeamsIdentity' || isCTEinUrl) && (
               <Stack>
                 <TextField
                   className={teamsItemStyle}
@@ -383,6 +391,19 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 const teamsParticipantsToCall = parseParticipants(outboundTeamsUsers);
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
+                if (teamsToken) {
+                  try {
+                    new AzureCommunicationTokenCredential(teamsToken);
+                  } catch (error) {
+                    let errorMessage = 'Teams Token is invalid';
+                    if (error instanceof Error) {
+                      errorMessage = error.message;
+                    }
+                    setTeamsTokenErrorMessage(errorMessage);
+                    return;
+                  }
+                }
+                setTeamsTokenErrorMessage(undefined);
                 props.startCallHandler({
                   //TODO: This needs to be updated after we change arg types of TeamsCall
                   displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
