@@ -114,6 +114,7 @@ export const _LocalVideoTile = React.memo(
         onDisposeLocalStreamView,
         renderElementExists: !!renderElement,
         scalingMode: localVideoViewOptions?.scalingMode,
+        /* @conditional-compile-remove(media-access) */
         isVideoPermitted: mediaAccess?.isVideoPermitted
       }),
       [
@@ -123,6 +124,7 @@ export const _LocalVideoTile = React.memo(
         onCreateLocalStreamView,
         onDisposeLocalStreamView,
         renderElement,
+        /* @conditional-compile-remove(media-access) */
         mediaAccess?.isVideoPermitted
       ]
     );

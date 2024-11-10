@@ -17,7 +17,12 @@ import { ActiveNotification, NotificationType } from '@internal/react-components
 
 import { createSelector } from 'reselect';
 
-import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
+import {
+  CallClientState,
+  CallErrors,
+  CallErrorTarget,
+  /* @conditional-compile-remove(media-access) */ CallNotifications
+} from '@internal/calling-stateful-client';
 
 import { DiagnosticQuality } from '@azure/communication-calling';
 
@@ -184,9 +189,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-    if (!latestNotifications['capabilityUnmuteMicAbsent'] && !latestNotifications['capabilityUnmuteMicPresent']) {
-      appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
-    }
+    appendMuteByOthersNotificationTrampoline(latestNotifications, activeErrorMessages, latestErrors);
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,
@@ -309,4 +312,19 @@ const appendActiveErrorIfDefined = (
     type: activeErrorType,
     timestamp: latestErrors[target].timestamp
   });
+};
+
+const appendMuteByOthersNotificationTrampoline = (
+  latestNotifications: CallNotifications,
+  activeErrorMessages: ActiveNotification[],
+  latestErrors: CallErrors
+): void => {
+  /* @conditional-compile-remove(media-access) */
+  if (!latestNotifications['capabilityUnmuteMicAbsent'] && !latestNotifications['capabilityUnmuteMicPresent']) {
+    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
+  }
+  /* @conditional-compile-remove(media-access) */
+  return;
+
+  appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
 };

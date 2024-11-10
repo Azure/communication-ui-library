@@ -89,7 +89,7 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
     const incapable =
       (capabilities?.turnVideoOn.isPresent === false && capabilities?.turnVideoOn.reason !== 'NotInitialized') ||
       role === 'Consumer';
-    console.log('hi there cameraButtonSelector', capabilities?.turnVideoOn);
+
     return {
       disabled:
         !deviceManager.selectedCamera ||
@@ -97,10 +97,7 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
         !deviceManager.cameras.length ||
         incapable ||
         callState === 'LocalHold',
-      checked:
-        !incapable && localVideoStreams !== undefined && localVideoStreams.length > 0
-          ? !!localVideoFromCall
-          : previewOn,
+      checked: localVideoStreams !== undefined && localVideoStreams.length > 0 ? !!localVideoFromCall : previewOn,
       cameras: deviceManager.cameras,
       selectedCamera: deviceManager.selectedCamera
     };

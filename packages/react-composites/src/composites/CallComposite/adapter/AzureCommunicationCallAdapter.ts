@@ -1442,19 +1442,37 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('transferAccepted', args);
   }
 
-  private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
+  private capabilitiesChangedturnVideoOnTrampoline(data: CapabilitiesChangeInfo): void {
+    /* @conditional-compile-remove(media-access) */
+    if (data.newValue.turnVideoOn?.isPresent === false) {
+      this.disposeLocalVideoStreamView();
+    }
+    /* @conditional-compile-remove(media-access) */
+    return;
+
     if (data.newValue.turnVideoOn?.isPresent === false) {
       // Only stop camera when the call state is not on hold. The Calling SDK does not allow us to stop camera when
       // the call state is on hold.
-      // if (this.call?.state !== 'LocalHold' && this.call?.state !== 'RemoteHold') {
-      //   this.stopCamera();
-      // }
-      console.log('hi there capabilitiesChanged turnVideoOn false');
+      if (this.call?.state !== 'LocalHold' && this.call?.state !== 'RemoteHold') {
+        this.stopCamera();
+      }
+
       this.disposeLocalVideoStreamView();
     }
-    // if (data.newValue.unmuteMic?.isPresent === false) {
-    //   this.mute();
-    // }
+  }
+
+  private capabilitiesChangedunmuteMicTrampoline(data: CapabilitiesChangeInfo): void {
+    /* @conditional-compile-remove(media-access) */
+    return;
+
+    if (data.newValue.unmuteMic?.isPresent === false) {
+      this.mute();
+    }
+  }
+
+  private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
+    this.capabilitiesChangedturnVideoOnTrampoline(data);
+    this.capabilitiesChangedunmuteMicTrampoline(data);
     if (data.newValue.shareScreen?.isPresent === false) {
       this.stopScreenShare();
     }

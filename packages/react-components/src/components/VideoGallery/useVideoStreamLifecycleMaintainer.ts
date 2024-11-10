@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
 import { callingComponentLogger } from '../utils/Logger';
 
@@ -51,17 +51,43 @@ const useVideoStreamLifecycleMaintainer = (
     renderElementExists,
     scalingMode,
     streamId,
+    /* @conditional-compile-remove(media-access) */
     isVideoPermitted
   } = props;
 
   const [videoStreamViewResult, setVideoStreamViewResult] = useState<CreateVideoStreamViewResult | undefined>();
 
+  const createStreamViewTrampoline = useCallback(
+    (
+      isStreamAvailable?: boolean,
+      renderElementExists?: boolean,
+      /* @conditional-compile-remove(media-access) */ isVideoPermitted?: boolean
+    ) => {
+      /* @conditional-compile-remove(media-access) */
+      if (isStreamAvailable && !renderElementExists && isVideoPermitted) {
+        onCreateStreamView?.({ isMirrored, scalingMode })?.then((result) => {
+          result && setVideoStreamViewResult(result);
+        });
+      }
+
+      /* @conditional-compile-remove(media-access) */
+      return;
+
+      if (isStreamAvailable && !renderElementExists) {
+        onCreateStreamView?.({ isMirrored, scalingMode })?.then((result) => {
+          result && setVideoStreamViewResult(result);
+        });
+      }
+    },
+    [isMirrored, onCreateStreamView, scalingMode]
+  );
+
   useEffect(() => {
-    if (isVideoPermitted && isStreamAvailable && !renderElementExists) {
-      onCreateStreamView?.({ isMirrored, scalingMode })?.then((result) => {
-        result && setVideoStreamViewResult(result);
-      });
-    }
+    createStreamViewTrampoline(
+      isStreamAvailable,
+      renderElementExists,
+      /* @conditional-compile-remove(media-access) */ isVideoPermitted
+    );
 
     // Always clean up element to make tile up to date and be able to dispose correctly
     return () => {
@@ -82,13 +108,9 @@ const useVideoStreamLifecycleMaintainer = (
     onDisposeStreamView,
     renderElementExists,
     scalingMode,
-    /**
-     * this is here in order to force a re-render when streamId changes
-     *  - this should not happen but to recover for the user we will make sure that we subscribe to the
-     * new stream by forcing a re-render.
-     */
     streamId,
-    isVideoPermitted
+    isVideoPermitted,
+    createStreamViewTrampoline
   ]);
 
   // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView
