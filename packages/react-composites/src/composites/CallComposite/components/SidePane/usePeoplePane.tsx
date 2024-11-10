@@ -12,6 +12,8 @@ import { IButton, IContextualMenuProps, IContextualMenuItem } from '@fluentui/re
 import { useSelector } from '../../hooks/useSelector';
 import { getAlternateCallerId, getRemoteParticipants, getRole } from '../../selectors/baseSelectors';
 import { Prompt } from '../Prompt';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccess } from '@internal/react-components';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
 
@@ -54,6 +56,8 @@ export const usePeoplePane = (props: {
   onForbidRemoteParticipantsVideo?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   onPermitRemoteParticipantsVideo?: () => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  mediaAccess?: MediaAccess;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -96,7 +100,9 @@ export const usePeoplePane = (props: {
     /* @conditional-compile-remove(media-access) */
     onForbidRemoteParticipantsVideo,
     /* @conditional-compile-remove(media-access) */
-    onPermitRemoteParticipantsVideo
+    onPermitRemoteParticipantsVideo,
+    /* @conditional-compile-remove(media-access) */
+    mediaAccess
   } = props;
 
   const closePane = useCallback(() => {
@@ -181,23 +187,30 @@ export const usePeoplePane = (props: {
     }
 
     /* @conditional-compile-remove(media-access) */
-    if (onForbidRemoteParticipantsAudio && remoteParticipants) {
-      let hasAttendee = false;
-      if (remoteParticipants) {
-        for (const participant of Object.values(remoteParticipants)) {
-          if (participant.role && participant.role === 'Attendee' && participant.mediaAccess?.isAudioPermitted) {
-            hasAttendee = true;
-            break;
-          }
+    let hasAttendee = false;
+    /* @conditional-compile-remove(media-access) */
+    if (remoteParticipants) {
+      for (const participant of Object.values(remoteParticipants)) {
+        if (participant.role && participant.role === 'Attendee') {
+          hasAttendee = true;
+          break;
         }
       }
+    }
+    /* @conditional-compile-remove(media-access) */
+    const isMeetingAudioPermitted = mediaAccess?.isAudioPermitted;
+    /* @conditional-compile-remove(media-access) */
+    const isMeetingVideoPermitted = mediaAccess?.isVideoPermitted;
+    /* @conditional-compile-remove(media-access) */
+    if (onForbidRemoteParticipantsAudio && remoteParticipants) {
       hasAttendee &&
+        isMeetingAudioPermitted &&
         menuItems.push({
           ['data-ui-id']: 'people-pane-forbid-all-attendees-audio',
           key: 'forbidRemoteParticipantsAudio',
           text: localeStrings.forbidRemoteParticipantsAudioMenuLabel,
           iconProps: {
-            iconName: 'ControlButtonMicProhibited', // ControlButtonMicProhibited
+            iconName: 'ControlButtonMicProhibited',
             styles: { root: { lineHeight: 0 } }
           },
           onClick: () => {
@@ -209,16 +222,8 @@ export const usePeoplePane = (props: {
     }
     /* @conditional-compile-remove(media-access) */
     if (onPermitRemoteParticipantsAudio && remoteParticipants) {
-      let hasAttendee = false;
-      if (remoteParticipants) {
-        for (const participant of Object.values(remoteParticipants)) {
-          if (participant.role && participant.role === 'Attendee' && !participant.mediaAccess?.isAudioPermitted) {
-            hasAttendee = true;
-            break;
-          }
-        }
-      }
       hasAttendee &&
+        !isMeetingAudioPermitted &&
         menuItems.push({
           ['data-ui-id']: 'people-pane-permit-all-attendees-audio',
           key: 'permitRemoteParticipantsAudio',
@@ -237,16 +242,8 @@ export const usePeoplePane = (props: {
 
     /* @conditional-compile-remove(media-access) */
     if (onForbidRemoteParticipantsVideo && remoteParticipants) {
-      let hasAttendee = false;
-      if (remoteParticipants) {
-        for (const participant of Object.values(remoteParticipants)) {
-          if (participant.role && participant.role === 'Attendee' && participant.mediaAccess?.isVideoPermitted) {
-            hasAttendee = true;
-            break;
-          }
-        }
-      }
       hasAttendee &&
+        isMeetingVideoPermitted &&
         menuItems.push({
           ['data-ui-id']: 'people-pane-forbid-all-attendees-video',
           key: 'forbidRemoteParticipantsVideo',
@@ -264,16 +261,8 @@ export const usePeoplePane = (props: {
     }
     /* @conditional-compile-remove(media-access) */
     if (onPermitRemoteParticipantsVideo && remoteParticipants) {
-      let hasAttendee = false;
-      if (remoteParticipants) {
-        for (const participant of Object.values(remoteParticipants)) {
-          if (participant.role && participant.role === 'Attendee' && !participant.mediaAccess?.isVideoPermitted) {
-            hasAttendee = true;
-            break;
-          }
-        }
-      }
       hasAttendee &&
+        !isMeetingVideoPermitted &&
         menuItems.push({
           ['data-ui-id']: 'people-pane-permit-all-attendees-video',
           key: 'permitRemoteParticipantsVideo',
@@ -307,6 +296,8 @@ export const usePeoplePane = (props: {
   }, [
     onMuteAllRemoteParticipants,
     remoteParticipants,
+    mediaAccess?.isAudioPermitted,
+    mediaAccess?.isVideoPermitted,
     onForbidRemoteParticipantsAudio,
     onPermitRemoteParticipantsAudio,
     onForbidRemoteParticipantsVideo,

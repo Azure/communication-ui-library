@@ -21,7 +21,13 @@ import {
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(media-access) */
-import { MediaAccessCallFeature, MediaAccessChangedListener, MediaAccess } from '@azure/communication-calling';
+import {
+  MediaAccessCallFeature,
+  MediaAccessChangedListener,
+  MediaAccess,
+  MeetingMediaAccessChangedListener,
+  MeetingMediaAccess
+} from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 
 import { VideoEffectsFeature } from '@azure/communication-calling';
@@ -181,6 +187,7 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
   constructor() {
     this.mediaAccesses = [];
   }
+
   permitAudio(): Promise<void> {
     return Promise.resolve();
   }
@@ -217,11 +224,19 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
     return this.mediaAccesses;
   }
 
-  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
+  getMeetingMediaAccess(): MeetingMediaAccess {
+    return { isMeetingAudioPermitted: true, isMeetingVideoPermitted: true };
+  }
+
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  on(event: string, listener: (...args: any[]) => void): void {
     this.emitter.on(event, listener);
   }
 
-  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
+  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  off(event: string, listener: (...args: any[]) => void): void {
     this.emitter.off(event, listener);
   }
 

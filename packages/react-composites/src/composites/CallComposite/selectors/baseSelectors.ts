@@ -42,6 +42,8 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { CaptionsKind } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccess } from '@internal/react-components';
 
 /**
  * @private
@@ -307,3 +309,7 @@ export const getIsRoomsCall = (state: CallAdapterState): boolean => state.isRoom
 /** @private */
 export const getVideoBackgroundImages = (state: CallAdapterState): VideoBackgroundImage[] | undefined =>
   state.videoBackgroundImages;
+
+/* @conditional-compile-remove(media-access) */
+/** @private */
+export const getMediaAccess = (state: CallAdapterState): MediaAccess | undefined => state.call?.mediaAccess;

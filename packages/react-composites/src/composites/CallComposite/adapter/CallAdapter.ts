@@ -41,6 +41,8 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamViewResult } from '@internal/react-components';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccess } from '@internal/react-components';
 /**
  * Major UI screens shown in the {@link CallComposite}.
  *
@@ -185,6 +187,11 @@ export type CallAdapterClientState = {
    * @public
    */
   reactions?: ReactionResources;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * State to track media access for this call.
+   */
+  mediaAccess?: MediaAccess;
 };
 
 /**

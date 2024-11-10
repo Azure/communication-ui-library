@@ -94,6 +94,8 @@ import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
+/* @conditional-compile-remove(media-access) */
+import { getMediaAccess } from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -348,6 +350,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(media-access) */
+  const mediaAccess = useSelector(getMediaAccess);
+  /* @conditional-compile-remove(media-access) */
   const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
     return {
       onForbidParticipantAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
@@ -373,7 +377,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
         : undefined,
       onPermitRemoteParticipantsVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? muteAllHandlers.onPermitRemoteParticipantsVideo
-        : undefined
+        : undefined,
+      mediaAccess
     };
   }, [
     role,
@@ -384,7 +389,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     muteAllHandlers.onForbidRemoteParticipantsVideo,
     muteAllHandlers.onPermitRemoteParticipantsVideo,
     onForbidParticipantVideo,
-    onPermitParticipantVideo
+    onPermitParticipantVideo,
+    mediaAccess
   ]);
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({

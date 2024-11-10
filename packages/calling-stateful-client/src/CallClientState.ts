@@ -758,6 +758,12 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#BreakoutRoomsFeature}.
    */
   breakoutRooms?: BreakoutRoomsState;
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Proxy of {@link @azure/communication-calling#MediaAccessFeature}.
+   */
+  mediaAccess?: MediaAccessState;
 }
 
 /**
