@@ -116,6 +116,9 @@ import {
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 import { CallingSounds } from './CallAdapter';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult } from '@internal/react-components';
+
 type CallTypeOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
 /**
@@ -596,6 +599,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
+    /* @conditional-compile-remove(together-mode) */
+    this.createTogetherModeStreamViews.bind(this);
+    /* @conditional-compile-remove(together-mode) */
+    this.startTogetherMode.bind(this);
+    /* @conditional-compile-remove(together-mode) */
+    this.setTogetherModeSceneSize.bind(this);
+    /* @conditional-compile-remove(together-mode) */
+    this.disposeTogetherModeStreamViews.bind(this);
     this.disposeScreenShareStreamView.bind(this);
     this.disposeRemoteVideoStreamView.bind(this);
     this.disposeLocalVideoStreamView.bind(this);
@@ -795,6 +806,28 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   public async disposeLocalVideoStreamView(): Promise<void> {
     await this.handlers.onDisposeLocalStreamView();
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public async createTogetherModeStreamViews(
+    options?: VideoStreamOptions
+  ): Promise<void | TogetherModeStreamViewResult> {
+    return await this.handlers.onCreateTogetherModeStreamView(options);
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public async startTogetherMode(): Promise<void> {
+    return await this.handlers.onStartTogetherMode();
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSceneSize(width: number, height: number): void {
+    return this.handlers.onSetTogetherModeSceneSize(width, height);
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public async disposeTogetherModeStreamViews(): Promise<void> {
+    return await this.handlers.onDisposeTogetherModeStreamViews();
   }
 
   public async leaveCall(forEveryone?: boolean): Promise<void> {

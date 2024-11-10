@@ -41,6 +41,8 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { UploadChatImageResult } from '@internal/acs-ui-common';
@@ -69,7 +71,6 @@ import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapte
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-
 /**
  * Functionality for managing the current call with chat.
  * @public
@@ -227,6 +228,53 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Create the html view for a togethermode stream.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
+   *
+   * @beta
+   */
+  createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Start together mode.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   *
+   * @beta
+   */
+  startTogetherMode(): Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Recalculate the seating positions for together mode.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   * @param width - Width of the container
+   * @param height - Height of the container
+   *
+   * @beta
+   */
+  setTogetherModeSceneSize(width: number, height: number): void;
+
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Dispose the html view for a togethermode stream.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   * @beta
+   */
+  disposeTogetherModeStreamViews(): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *

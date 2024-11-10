@@ -39,7 +39,8 @@ import {
 } from '@internal/calling-component-bindings';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
-
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult } from '@internal/react-components';
 /**
  * Major UI screens shown in the {@link CallComposite}.
  *
@@ -609,6 +610,54 @@ export interface CallAdapterCallOperations {
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Create the html view for a stream.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   * @param featureName - Name of feature to render
+   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
+   *
+   * @beta
+   */
+  createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Start Together mode.
+   *
+   * @beta
+   */
+  startTogetherMode(): Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Recalculate the seating positions for together mode.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   * @param width - Width of the container
+   * @param height - Height of the container
+   *
+   * @beta
+   */
+  setTogetherModeSceneSize(width: number, height: number): void;
+
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Dispose the html view for a stream.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   *
+   * @param featureName - Name of the feature to dispose
+   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
+   *
+   * @beta
+   */
+  disposeTogetherModeStreamViews(): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *

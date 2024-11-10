@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "Poista sarake",
     "richTextDeleteRowMenu": "Poista rivi",
     "richTextDeleteTableMenu": "Poista taulukko",
+    "richTextToolbarAriaLabel": "Viestin muotoilun työkalurivi",
     "richTextToolbarMoreButtonAriaLabel": "Lisää asetuksia",
     "attachmentMoreMenu": "Lisää asetuksia",
     "richTextNewBulletedListItemAnnouncement": "Luettelomerkki, uusi rivi",
     "richTextNewNumberedListItemAnnouncement": "{0}, uusi rivi",
     "richTextBulletedListAppliedAnnouncement": "Luettelomerkeillä varustettu luettelo käytössä",
     "richTextNumberedListAppliedAnnouncement": "Numeroitu luettelo käytössä"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "Ota RTT-modaalinen käyttöön",
+    "rttModalTitle": "Otetaanko RTT käyttöön?",
+    "rttModalText": "Reaaliaikainen teksti (RTT) otetaan käyttöön kaikille kokouksen osallistuville.",
+    "rttConfirmButtonLabel": "Ota käyttöön",
+    "rttCancelButtonLabel": "Peruuta",
+    "rttCloseModalButtonAriaLabel": "Sulje RTT-modaalinen"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "Naura",
     "applauseReactionTooltipContent": "Suosionosoitus",
     "surprisedReactionTooltipContent": "Yllättynyt"
+  },
+  "rtt": {
+    "isTypingText": "RTT-kirjoitus"
   },
   "messageThread": {
     "yesterday": "eilen",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "Soitetaan...",
+    "participantReconnecting": "Yhdistetään uudelleen...",
     "participantStateHold": "Pidossa",
-    "moreOptionsButtonAriaLabel": "Lisää asetuksia"
+    "moreOptionsButtonAriaLabel": "Lisää asetuksia {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "vaimennettu",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "vaimennus poistettu",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Käsi nostettuna",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Puhuminen"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Salli {appName} käyttää kameraa ja mikrofonia",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "edellinen sivu",
-    "rightNavButtonAriaLabel": "seuraava sivu"
+    "leftNavButtonAriaLabel": "edellinen sivu {current}/{total}",
+    "rightNavButtonAriaLabel": "seuraava sivu {current}/{total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Liity puheluun puhelimestasi",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Hylkää",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla",
     "incomingCallNotificationDismissButtonAriaLabel": "Hylkää"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "Reaaliaikainen kirjoitus",
+    "bannerContent": "RTT (reaaliaikainen teksti) on käytössä kaikille osallistujille koko kokouksen keston ajan.",
+    "bannerLinkLabel": "Lue lisää"
   }
 }

@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "列の削除",
     "richTextDeleteRowMenu": "行の削除",
     "richTextDeleteTableMenu": "表の削除",
+    "richTextToolbarAriaLabel": "メッセージの書式設定ツール バー",
     "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
     "attachmentMoreMenu": "その他のオプション",
     "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
     "richTextNewNumberedListItemAnnouncement": "{0}、改行",
     "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
     "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "RTT モーダルを有効にする",
+    "rttModalTitle": "RTT を有効にしますか?",
+    "rttModalText": "会議の全員に対してリアルタイム テキスト (RTT) が有効になります。",
+    "rttConfirmButtonLabel": "有効にする",
+    "rttCancelButtonLabel": "キャンセル",
+    "rttCloseModalButtonAriaLabel": "RTT モーダルを閉じる"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "笑い",
     "applauseReactionTooltipContent": "喝采",
     "surprisedReactionTooltipContent": "驚いた"
+  },
+  "rtt": {
+    "isTypingText": "RTT 入力"
   },
   "messageThread": {
     "yesterday": "昨日",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "呼び出し中...",
+    "participantReconnecting": "再接続中...",
     "participantStateHold": "保留中",
-    "moreOptionsButtonAriaLabel": "その他のオプション"
+    "moreOptionsButtonAriaLabel": "その他のオプション {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "ミュート中",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "ミュート解除",
+    "moreOptionsParticipantHandRaisedAriaLabel": "挙手しました",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "話し中"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName}にカメラとマイクの使用を許可する",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "前のページ",
-    "rightNavButtonAriaLabel": "次のページ"
+    "leftNavButtonAriaLabel": "前のページ {current}/{total}",
+    "rightNavButtonAriaLabel": "次のページ {current}/{total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "電話から通話に参加",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "拒否",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける",
     "incomingCallNotificationDismissButtonAriaLabel": "閉じる"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (リアルタイム テキスト) は、会議の全期間のすべての参加者に対して有効になっています。",
+    "bannerLinkLabel": "詳しく見る"
   }
 }

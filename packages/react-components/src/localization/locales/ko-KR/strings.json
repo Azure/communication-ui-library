@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "열 삭제",
     "richTextDeleteRowMenu": "행 삭제",
     "richTextDeleteTableMenu": "표 삭제",
+    "richTextToolbarAriaLabel": "메시지 서식 도구 모음",
     "richTextToolbarMoreButtonAriaLabel": "옵션 더 보기",
     "attachmentMoreMenu": "옵션 더 보기",
     "richTextNewBulletedListItemAnnouncement": "글머리 기호, 새 줄",
     "richTextNewNumberedListItemAnnouncement": "{0}, 새 줄",
     "richTextBulletedListAppliedAnnouncement": "글머리 기호 목록 적용됨",
     "richTextNumberedListAppliedAnnouncement": "번호 매기기 목록 적용됨"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "실시가 입력 모달 활성화",
+    "rttModalTitle": "실시간 입력을 활성화할까요?",
+    "rttModalText": "모임의 모든 사용자에 대해 RTT(실시간 텍스트)가 켜집니다.",
+    "rttConfirmButtonLabel": "활성화",
+    "rttCancelButtonLabel": "취소",
+    "rttCloseModalButtonAriaLabel": "실시간 입력 모달 닫기"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "크게 웃는 표정",
     "applauseReactionTooltipContent": "박수",
     "surprisedReactionTooltipContent": "놀란 표정"
+  },
+  "rtt": {
+    "isTypingText": "실시간 입력 입력 중"
   },
   "messageThread": {
     "yesterday": "어제",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "전화 거는 중...",
+    "participantReconnecting": "다시 연결하는 중...",
     "participantStateHold": "대기 중",
-    "moreOptionsButtonAriaLabel": "옵션 더 보기"
+    "moreOptionsButtonAriaLabel": "기타 옵션 {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "음소거됨",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "음소거 해제됨",
+    "moreOptionsParticipantHandRaisedAriaLabel": "손 들기",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "말하기"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName} 님이 카메라와 마이크를 사용하도록 허용",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "이전 페이지",
-    "rightNavButtonAriaLabel": "다음 페이지"
+    "leftNavButtonAriaLabel": "이전 페이지 {current}/{total}",
+    "rightNavButtonAriaLabel": "다음 페이지 {current}/{total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "내 전화에서 통화 참가",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "거절",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "영상 수락",
     "incomingCallNotificationDismissButtonAriaLabel": "해제"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "전체 모임 기간 동안 모든 참가자에 대해 RTT(실시간 텍스트)를 사용할 수 있습니다.",
+    "bannerLinkLabel": "자세히 알아보기"
   }
 }

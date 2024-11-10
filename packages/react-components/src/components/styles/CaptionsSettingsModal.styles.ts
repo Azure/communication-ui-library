@@ -14,7 +14,7 @@ export const themedCaptionsSettingsModalStyle = (theme: Theme): Partial<IModalSt
     padding: _pxToRem(24),
     width: _pxToRem(440),
     height: 'fit-content',
-    overflow: 'hidden'
+    overflowY: 'auto'
   }
 });
 
@@ -95,5 +95,9 @@ export const dropdownStyles: Partial<IDropdownStyles> = {
     height: _pxToRem(300),
     overflow: 'auto',
     ...scrollbarStyles
+  },
+  dropdownOptionText: {
+    textWrap: 'auto',
+    overflow: 'unset'
   }
 };

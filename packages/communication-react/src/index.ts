@@ -144,8 +144,10 @@ export {
   COMPONENT_LOCALE_CY_GB,
   COMPONENT_LOCALE_DE_DE,
   COMPONENT_LOCALE_ES_ES,
+  COMPONENT_LOCALE_ES_MX,
   COMPONENT_LOCALE_FI_FI,
   COMPONENT_LOCALE_FR_FR,
+  COMPONENT_LOCALE_FR_CA,
   COMPONENT_LOCALE_HE_IL,
   COMPONENT_LOCALE_IT_IT,
   COMPONENT_LOCALE_JA_JP,
@@ -311,14 +313,20 @@ export type {
   VideoTilesOptions
 } from '../../react-components/src';
 
+/* @conditional-compile-remove(together-mode) */
+export type { TogetherModeStreamViewResult } from '../../react-components/src';
+
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
 export type {
   ReactionButtonStrings,
   Reaction,
   ReactionButtonProps,
   ReactionResources,
-  ReactionSprite
+  ReactionSprite,
+  ReactionButtonReaction
 } from '../../react-components/src';
+
+export { ReactionButton } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
 export { RichTextSendBox } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */

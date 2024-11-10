@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "不會再向會議中的每個人醒目提示此影片。",
       "stopSpotlightConfirmButtonLabel": "停止選為精選",
       "stopSpotlightOnSelfConfirmButtonLabel": "結束精選",
-      "stopSpotlightCancelButtonLabel": "取消"
+      "stopSpotlightCancelButtonLabel": "取消",
+      "closeSpotlightPromptButtonLabel": "關閉"
     },
     "exitSpotlightButtonLabel": "結束精選",
     "exitSpotlightButtonTooltip": "結束精選",

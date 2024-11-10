@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Videorna kommer inte längre att markeras för alla i mötet.",
       "stopSpotlightConfirmButtonLabel": "Sluta uppmärksamma",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight",
-      "stopSpotlightCancelButtonLabel": "Avbryt"
+      "stopSpotlightCancelButtonLabel": "Avbryt",
+      "closeSpotlightPromptButtonLabel": "Stäng"
     },
     "exitSpotlightButtonLabel": "Spotlight",
     "exitSpotlightButtonTooltip": "Spotlight",

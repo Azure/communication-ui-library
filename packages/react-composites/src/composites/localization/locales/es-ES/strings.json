@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "El vídeo ya no se pondrá en primer plano para todos los participantes de la reunión.",
       "stopSpotlightConfirmButtonLabel": "Dejar de poner en primer plano",
       "stopSpotlightOnSelfConfirmButtonLabel": "Salir del primer plano",
-      "stopSpotlightCancelButtonLabel": "Cancelar"
+      "stopSpotlightCancelButtonLabel": "Cancelar",
+      "closeSpotlightPromptButtonLabel": "Cerrar"
     },
     "exitSpotlightButtonLabel": "Salir del primer plano",
     "exitSpotlightButtonTooltip": "Salir del primer plano",

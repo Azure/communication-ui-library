@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "ビデオは、会議の全員に対して強調表示されなくなります。",
       "stopSpotlightConfirmButtonLabel": "スポットライトの設定を解除",
       "stopSpotlightOnSelfConfirmButtonLabel": "スポットライトを終了",
-      "stopSpotlightCancelButtonLabel": "キャンセル"
+      "stopSpotlightCancelButtonLabel": "キャンセル",
+      "closeSpotlightPromptButtonLabel": "閉じる"
     },
     "exitSpotlightButtonLabel": "スポットライトを終了",
     "exitSpotlightButtonTooltip": "スポットライトを終了",

@@ -116,6 +116,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.contentSharingStream,
             undefined,
             screenShareRemoteParticipant.spotlight,
+            undefined,
             screenShareRemoteParticipant.mediaAccess,
             role
           )

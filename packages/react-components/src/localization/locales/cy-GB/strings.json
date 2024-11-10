@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "Dileu'r golofn",
     "richTextDeleteRowMenu": "Dileu'r rhes",
     "richTextDeleteTableMenu": "Dileu'r tabl",
+    "richTextToolbarAriaLabel": "Bar Offer Fformatio Negeseuon",
     "richTextToolbarMoreButtonAriaLabel": "Mwy o ddewisiadau",
     "attachmentMoreMenu": "Mwy o Ddewisiadau",
     "richTextNewBulletedListItemAnnouncement": "Bwled, llinell newydd",
     "richTextNewNumberedListItemAnnouncement": "{0}, llinell newydd",
     "richTextBulletedListAppliedAnnouncement": "Wedi defnyddio'r rhestr bwledi",
     "richTextNumberedListAppliedAnnouncement": "Wedi defnyddio rhestr wedi'i rhifo"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "Galluogi’r Moddol RTT",
+    "rttModalTitle": "Galluogi RTT?",
+    "rttModalText": "Bydd teipio mewn amser real (RTT) yn cael ei alluogi ar gyfer pawb yn y cyfarfod.",
+    "rttConfirmButtonLabel": "Galluogi",
+    "rttCancelButtonLabel": "Canslo",
+    "rttCloseModalButtonAriaLabel": "Cau'r Moddol RTT"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Awgrymiadau"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "Chwerthin",
     "applauseReactionTooltipContent": "Curo Dwylo",
     "surprisedReactionTooltipContent": "Wedi synnu"
+  },
+  "rtt": {
+    "isTypingText": "Teipio RTT"
   },
   "messageThread": {
     "yesterday": "Ddoe",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "Wrthi'n galw...",
+    "participantReconnecting": "Wrthi'n ailgysylltu...",
     "participantStateHold": "Galwad yn aros",
-    "moreOptionsButtonAriaLabel": "Mwy o Ddewisiadau"
+    "moreOptionsButtonAriaLabel": "Mwy o Ddewisiadau {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "wedi tewi",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "wedi dad-dewi",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Llaw wedi’i chodi",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Siarad"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Caniatáu i {appName} ddefnyddio eich camera a'ch meicroffon",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "y dudalen flaenorol",
-    "rightNavButtonAriaLabel": "y dudalen nesaf"
+    "leftNavButtonAriaLabel": "tudalen flaenorol {current} o {total}",
+    "rightNavButtonAriaLabel": "tudalen nesaf {current} o {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Ymuno â galwad o'ch ffôn",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Gwrthod",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Derbyn gyda Fideo",
     "incomingCallNotificationDismissButtonAriaLabel": "Diystyru"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "Mae RTT (testun amser real) wedi'i alluogi ar gyfer yr holl gyfranogwyr ar gyfer cyfnod cyfan y cyfarfod.",
+    "bannerLinkLabel": "Dysgu mwy"
   }
 }

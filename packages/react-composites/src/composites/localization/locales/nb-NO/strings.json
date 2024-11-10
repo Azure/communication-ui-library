@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Videoene vil ikke lenger være uthevet for alle i møtet.",
       "stopSpotlightConfirmButtonLabel": "Fjern fra rampelyset",
       "stopSpotlightOnSelfConfirmButtonLabel": "Rampelys av",
-      "stopSpotlightCancelButtonLabel": "Avbryt"
+      "stopSpotlightCancelButtonLabel": "Avbryt",
+      "closeSpotlightPromptButtonLabel": "Lukk"
     },
     "exitSpotlightButtonLabel": "Rampelys av",
     "exitSpotlightButtonTooltip": "Rampelys av",

@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Účastníkům schůzky se už videa nebudou zvýrazňovat.",
       "stopSpotlightConfirmButtonLabel": "Zastavit přidávání do hlavního výběru",
       "stopSpotlightOnSelfConfirmButtonLabel": "Ukončit hlavní výběr",
-      "stopSpotlightCancelButtonLabel": "Zrušit"
+      "stopSpotlightCancelButtonLabel": "Zrušit",
+      "closeSpotlightPromptButtonLabel": "Zavřít"
     },
     "exitSpotlightButtonLabel": "Ukončit hlavní výběr",
     "exitSpotlightButtonTooltip": "Ukončit hlavní výběr",

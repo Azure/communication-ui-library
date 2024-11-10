@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Ni fydd y fideos bellach yn cael eu hamlygu i bawb yn y cyfarfod.",
       "stopSpotlightConfirmButtonLabel": "Diffodd y sbotolau",
       "stopSpotlightOnSelfConfirmButtonLabel": "Gadael y sbotolau",
-      "stopSpotlightCancelButtonLabel": "Canslo"
+      "stopSpotlightCancelButtonLabel": "Canslo",
+      "closeSpotlightPromptButtonLabel": "Cau"
     },
     "exitSpotlightButtonLabel": "Gadael y sbotolau",
     "exitSpotlightButtonTooltip": "Gadael y sbotolau",

@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Klipy wideo nie będą już wyróżniane dla wszystkich osób na spotkaniu.",
       "stopSpotlightConfirmButtonLabel": "Zatrzymaj wyróżnianie",
       "stopSpotlightOnSelfConfirmButtonLabel": "Zakończ wyróżnienie",
-      "stopSpotlightCancelButtonLabel": "Anuluj"
+      "stopSpotlightCancelButtonLabel": "Anuluj",
+      "closeSpotlightPromptButtonLabel": "Zamknij"
     },
     "exitSpotlightButtonLabel": "Wyjdź z ważnych informacji",
     "exitSpotlightButtonTooltip": "Wyjdź z ważnych informacji",

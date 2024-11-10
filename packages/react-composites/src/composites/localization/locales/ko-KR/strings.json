@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "해당 비디오는 모임에 참석한 모든 사용자에 대해 더 이상 강조되지 않습니다.",
       "stopSpotlightConfirmButtonLabel": "스포트라이트 중지",
       "stopSpotlightOnSelfConfirmButtonLabel": "스포트라이트 종료",
-      "stopSpotlightCancelButtonLabel": "취소"
+      "stopSpotlightCancelButtonLabel": "취소",
+      "closeSpotlightPromptButtonLabel": "닫기"
     },
     "exitSpotlightButtonLabel": "스포트라이트 종료",
     "exitSpotlightButtonTooltip": "스포트라이트 종료",

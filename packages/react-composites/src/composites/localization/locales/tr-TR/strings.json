@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Artık videolar toplantıdaki herkes için öne çıkarılmayacak.",
       "stopSpotlightConfirmButtonLabel": "Öne çıkarmayı durdur",
       "stopSpotlightOnSelfConfirmButtonLabel": "Öne çıkarmadan çık",
-      "stopSpotlightCancelButtonLabel": "İptal"
+      "stopSpotlightCancelButtonLabel": "İptal",
+      "closeSpotlightPromptButtonLabel": "Kapat"
     },
     "exitSpotlightButtonLabel": "Öne çıkarmadan çık",
     "exitSpotlightButtonTooltip": "Öne çıkarmadan çık",

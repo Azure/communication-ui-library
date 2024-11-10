@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "I video non saranno più in evidenza per tutti i partecipanti della riunione.",
       "stopSpotlightConfirmButtonLabel": "Smetti di mettere in evidenza",
       "stopSpotlightOnSelfConfirmButtonLabel": "Esci da visualizzazione in evidenza",
-      "stopSpotlightCancelButtonLabel": "Annulla"
+      "stopSpotlightCancelButtonLabel": "Annulla",
+      "closeSpotlightPromptButtonLabel": "Chiudi"
     },
     "exitSpotlightButtonLabel": "Esci da visualizzazione in evidenza",
     "exitSpotlightButtonTooltip": "Esci da visualizzazione in evidenza",

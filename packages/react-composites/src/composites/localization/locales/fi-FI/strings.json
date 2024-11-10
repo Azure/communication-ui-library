@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Videoita ei enää korosteta kaikille kokouksen osallistujille.",
       "stopSpotlightConfirmButtonLabel": "Poista valokeilasta",
       "stopSpotlightOnSelfConfirmButtonLabel": "Valokeila",
-      "stopSpotlightCancelButtonLabel": "Peruuta"
+      "stopSpotlightCancelButtonLabel": "Peruuta",
+      "closeSpotlightPromptButtonLabel": "Sulje"
     },
     "exitSpotlightButtonLabel": "Poistu valokeilasta",
     "exitSpotlightButtonTooltip": "Poistu valokeilasta",
