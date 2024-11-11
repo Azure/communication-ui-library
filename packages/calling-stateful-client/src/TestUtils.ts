@@ -225,7 +225,7 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
   }
 
   getMeetingMediaAccess(): MeetingMediaAccess {
-    return { isMeetingAudioPermitted: true, isMeetingVideoPermitted: true };
+    return { isAudioPermitted: true, isVideoPermitted: true };
   }
 
   on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;

@@ -1450,8 +1450,8 @@ export class CallContext {
 
       if (meetingMediaAccess) {
         call.mediaAccess = {
-          isAudioPermitted: meetingMediaAccess.isMeetingAudioPermitted,
-          isVideoPermitted: meetingMediaAccess.isMeetingVideoPermitted
+          isAudioPermitted: meetingMediaAccess.isAudioPermitted,
+          isVideoPermitted: meetingMediaAccess.isVideoPermitted
         };
       }
     });
