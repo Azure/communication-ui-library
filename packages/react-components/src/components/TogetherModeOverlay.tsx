@@ -7,7 +7,7 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import {
   Reaction,
   ReactionResources,
-  TogetherModeParticipantSeatingProp,
+  VideoGalleryTogetherModeParticipantPosition,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant
 } from '../types';
@@ -82,7 +82,7 @@ export const TogetherModeOverlay = React.memo(
     reactionResources: ReactionResources;
     localParticipant?: VideoGalleryLocalParticipant;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    participantsSeatingArrangement?: TogetherModeParticipantSeatingProp;
+    participantsSeatingArrangement?: VideoGalleryTogetherModeParticipantPosition;
   }) => {
     const locale = useLocale();
     const { reactionResources, remoteParticipants, localParticipant, participantsSeatingArrangement } = props;

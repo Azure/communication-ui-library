@@ -314,10 +314,10 @@ export type {
 /* @conditional-compile-remove(together-mode) */
 export type {
   TogetherModeStreamViewResult,
-  TogetherModeStreamsProp,
-  TogetherModeParticipantSeatingProp,
-  TogetherModeVideoStreamProp,
-  TogetherModeSeatingPositionProp
+  VideoGalleryTogetherModeStreams,
+  VideoGalleryTogetherModeParticipantPosition,
+  VideoGalleryTogetherModeSeatingInfo,
+  TogetherModeStream
 } from '../../react-components/src';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';

@@ -423,9 +423,16 @@ export const createStatefulCallClientWithDeps = (
     value: async (
       callId: string | undefined,
       participantId: CommunicationIdentifier | undefined,
-      stream: LocalVideoStreamState | RemoteVideoStreamState,
+      stream:
+        | LocalVideoStreamState
+        | RemoteVideoStreamState
+        | /* @conditional-compile-remove(together-mode) */ CallFeatureStreamState,
       options?: CreateViewOptions
     ): Promise<CreateViewResult | undefined> => {
+      /* @conditional-compile-remove(together-mode) */
+      if ('feature' in stream) {
+        return await createCallFeatureView(context, internalContext, callId, stream, options);
+      }
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
       const result = await createView(context, internalContext, callId, participantIdKind, stream, options);
       // We only need to declaratify the VideoStreamRendererView object for remote participants. Because the updateScalingMode only needs to be called on remote participant stream views.
@@ -436,34 +443,22 @@ export const createStatefulCallClientWithDeps = (
       return result;
     }
   });
-  /* @conditional-compile-remove(together-mode) */
-  Object.defineProperty(callClient, 'createCallFeatureView', {
-    configurable: false,
-    value: async (
-      callId: string | undefined,
-      stream: CallFeatureStreamState,
-      options?: CreateViewOptions
-    ): Promise<CreateViewResult | undefined> => {
-      const result = await createCallFeatureView(context, internalContext, callId, stream, options);
-      return result;
-    }
-  });
   Object.defineProperty(callClient, 'disposeView', {
     configurable: false,
     value: (
       callId: string | undefined,
       participantId: CommunicationIdentifier | undefined,
-      stream: LocalVideoStreamState | RemoteVideoStreamState
+      stream:
+        | LocalVideoStreamState
+        | RemoteVideoStreamState
+        | /* @conditional-compile-remove(together-mode) */ CallFeatureStreamState
     ): void => {
+      /* @conditional-compile-remove(together-mode) */
+      if ('feature' in stream) {
+        disposeCallFeatureView(context, internalContext, callId, stream);
+      }
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
       disposeView(context, internalContext, callId, participantIdKind, stream);
-    }
-  });
-  /* @conditional-compile-remove(together-mode) */
-  Object.defineProperty(callClient, 'disposeCallFeatureView', {
-    configurable: false,
-    value: (callId: string | undefined, stream: CallFeatureStreamState): void => {
-      disposeCallFeatureView(context, internalContext, callId, stream);
     }
   });
 

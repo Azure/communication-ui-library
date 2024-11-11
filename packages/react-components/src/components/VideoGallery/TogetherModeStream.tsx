@@ -8,8 +8,8 @@ import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(together-mode) */
 import {
   ReactionResources,
-  TogetherModeParticipantSeatingProp,
-  TogetherModeStreamsProp,
+  VideoGalleryTogetherModeParticipantPosition,
+  VideoGalleryTogetherModeStreams,
   TogetherModeStreamViewResult,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
@@ -36,8 +36,8 @@ export const TogetherModeStream = React.memo(
     onStartTogetherMode?: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     onDisposeTogetherModeStreamViews?: () => Promise<void>;
     onSetTogetherModeSceneSize?: (width: number, height: number) => void;
-    togetherModeStreams?: TogetherModeStreamsProp;
-    seatingCoordinates?: TogetherModeParticipantSeatingProp;
+    togetherModeStreams?: VideoGalleryTogetherModeStreams;
+    seatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
     reactionResources?: ReactionResources;
     localParticipant?: VideoGalleryLocalParticipant;
     remoteParticipants?: VideoGalleryRemoteParticipant[];

@@ -774,13 +774,13 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
 
       const mainVideoStream = togetherModeStreams.mainVideoStream;
       if (mainVideoStream && mainVideoStream.isAvailable && !mainVideoStream.view) {
-        const createViewResult = await callClient.createView(call.id, mainVideoStream, options);
+        // const createViewResult = await callClient.createView(call.id, mainVideoStream, options);
+        const createViewResult = await callClient.createView(call.id, undefined, mainVideoStream, options);
         // SDK currently only supports 1 Video media stream type
         togetherModeCreateViewResult.mainVideoView = createViewResult?.view
           ? { view: createViewResult?.view }
           : undefined;
       }
-
       return togetherModeCreateViewResult;
     };
 

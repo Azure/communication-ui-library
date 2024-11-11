@@ -9,7 +9,7 @@ import {
   VideoGalleryRemoteParticipant
 } from '../types';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeParticipantSeatingProp } from '../types';
+import { VideoGalleryTogetherModeParticipantPosition } from '../types';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { ParticipantVideoTileOverlay } from './VideoGallery/ParticipantVideoTileOverlay';
 import { RemoteContentShareReactionOverlay } from './VideoGallery/RemoteContentShareReactionOverlay';
@@ -46,7 +46,7 @@ export interface MeetingReactionOverlayProps {
   remoteParticipants?: VideoGalleryRemoteParticipant[];
 
   /* @conditional-compile-remove(together-mode) */
-  seatingCoordinates?: TogetherModeParticipantSeatingProp;
+  seatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 }
 
 /**

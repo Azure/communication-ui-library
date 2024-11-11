@@ -11,10 +11,5 @@ import { TogetherModeLayoutProps } from './Layout';
  * https://reactjs.org/docs/react-api.html#reactmemo
  */
 export const TogetherModeLayout = (props: TogetherModeLayoutProps): JSX.Element => {
-  return (
-    <>
-      {props.togetherModeStreamComponent}
-      {/* <h1>Chuk in together mode layout</h1> */}
-    </>
-  );
+  return <>{props.togetherModeStreamComponent}</>;
 };

@@ -18,8 +18,8 @@ import {
 } from '../types';
 /* @conditional-compile-remove(together-mode) */
 import {
-  TogetherModeParticipantSeatingProp,
-  TogetherModeStreamsProp,
+  VideoGalleryTogetherModeParticipantPosition,
+  VideoGalleryTogetherModeStreams,
   TogetherModeStreamViewResult
 } from '../types/TogetherModeTypes';
 import { ViewScalingMode } from '../types';
@@ -339,9 +339,9 @@ export interface VideoGalleryProps {
   /* @conditional-compile-remove(together-mode) */
   onSetTogetherModeSceneSize?: (width: number, height: number) => void;
   /* @conditional-compile-remove(together-mode) */
-  togetherModeStreams?: TogetherModeStreamsProp;
+  togetherModeStreams?: VideoGalleryTogetherModeStreams;
   /* @conditional-compile-remove(together-mode) */
-  togetherModeSeatingCoordinates?: TogetherModeParticipantSeatingProp;
+  togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
   /* @conditional-compile-remove(together-mode) */
   onDisposeTogetherModeStreamViews?: () => Promise<void>;
 }

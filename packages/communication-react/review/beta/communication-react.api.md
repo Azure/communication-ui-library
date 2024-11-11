@@ -5051,6 +5051,18 @@ export interface TogetherModeSeatingPositionState {
 }
 
 // @beta
+export interface TogetherModeStream {
+    isAvailable?: boolean;
+    isReceiving?: boolean;
+    renderElement?: HTMLElement;
+    scalingMode?: ViewScalingMode;
+    streamSize?: {
+        width: number;
+        height: number;
+    };
+}
+
+// @beta
 export interface TogetherModeStreamsState {
     // (undocumented)
     mainVideoStream?: CallFeatureStreamState;
@@ -5353,9 +5365,9 @@ export interface VideoGalleryProps {
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
     // (undocumented)
-    togetherModeSeatingCoordinates?: TogetherModeParticipantSeatingProp;
+    togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
     // (undocumented)
-    togetherModeStreams?: TogetherModeStreamsProp;
+    togetherModeStreams?: VideoGalleryTogetherModeStreams;
     videoTilesOptions?: VideoTilesOptions;
 }
 
@@ -5434,6 +5446,27 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     horizontalGallery?: HorizontalGalleryStyles;
     localVideo?: IStyle;
     verticalGallery?: VerticalGalleryStyles;
+}
+
+// @beta
+export type VideoGalleryTogetherModeParticipantPosition = Record<string, VideoGalleryTogetherModeSeatingInfo>;
+
+// @beta
+export interface VideoGalleryTogetherModeSeatingInfo {
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    left: number;
+    // (undocumented)
+    top: number;
+    // (undocumented)
+    width: number;
+}
+
+// @beta
+export interface VideoGalleryTogetherModeStreams {
+    // (undocumented)
+    mainVideoStream?: TogetherModeStream;
 }
 
 // @public

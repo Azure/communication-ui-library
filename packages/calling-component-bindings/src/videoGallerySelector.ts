@@ -7,7 +7,7 @@ import { CallClientState, RemoteParticipantState } from '@internal/calling-state
 import { TogetherModeParticipantSeatingState, TogetherModeStreamsState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamsProp } from '@internal/react-components';
+import { VideoGalleryTogetherModeStreams } from '@internal/react-components';
 import { createSelector } from 'reselect';
 import {
   CallingBaseSelectorProps,
@@ -121,7 +121,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
     const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
     /* @conditional-compile-remove(together-mode) */
-    const togetherModeStreamsMap: TogetherModeStreamsProp = {
+    const togetherModeStreamsMap: VideoGalleryTogetherModeStreams = {
       mainVideoStream: {
         isAvailable: togetherModeCallFeature?.streams?.mainVideoStream?.isAvailable,
         renderElement: togetherModeCallFeature?.streams?.mainVideoStream?.view?.target,

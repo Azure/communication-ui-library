@@ -235,7 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Gallery view",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focus on content",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Large Gallery",
-    "moreButtonGalleryTogetherModeLayoutLabel": "Together mode",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Your camera has been disabled. You can no longer share video.",
