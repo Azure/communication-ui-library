@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "Os vídeos não serão mais destacados para todos na reunião.",
       "stopSpotlightConfirmButtonLabel": "Parar de destacar",
       "stopSpotlightOnSelfConfirmButtonLabel": "Sair do destaque",
-      "stopSpotlightCancelButtonLabel": "Cancelar"
+      "stopSpotlightCancelButtonLabel": "Cancelar",
+      "closeSpotlightPromptButtonLabel": "Fechar"
     },
     "exitSpotlightButtonLabel": "Sair do destaque",
     "exitSpotlightButtonTooltip": "Sair do destaque",

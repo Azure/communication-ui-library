@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "删除列",
     "richTextDeleteRowMenu": "删除行",
     "richTextDeleteTableMenu": "删除表格",
+    "richTextToolbarAriaLabel": "消息格式设置工具栏",
     "richTextToolbarMoreButtonAriaLabel": "更多选项",
     "attachmentMoreMenu": "更多选项",
     "richTextNewBulletedListItemAnnouncement": "项目符号，新行",
     "richTextNewNumberedListItemAnnouncement": "{0}，新行",
     "richTextBulletedListAppliedAnnouncement": "已应用项目符号列表",
     "richTextNumberedListAppliedAnnouncement": "已应用编号列表"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "打开 RTT 模式",
+    "rttModalTitle": "是否启用 RTT?",
+    "rttModalText": "将为会议中的每个人启用实时文本 (RTT)。",
+    "rttConfirmButtonLabel": "启用",
+    "rttCancelButtonLabel": "取消",
+    "rttCloseModalButtonAriaLabel": "关闭 RTT 模式"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "大笑",
     "applauseReactionTooltipContent": "鼓掌",
     "surprisedReactionTooltipContent": "惊讶"
+  },
+  "rtt": {
+    "isTypingText": "RTT 键入"
   },
   "messageThread": {
     "yesterday": "昨天",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "正在呼叫...",
+    "participantReconnecting": "正在重新连接...",
     "participantStateHold": "保留",
-    "moreOptionsButtonAriaLabel": "更多选项"
+    "moreOptionsButtonAriaLabel": "更多选项 {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "已静音",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "已取消静音",
+    "moreOptionsParticipantHandRaisedAriaLabel": "已举手",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "讲话"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允许{appName}使用你的相机和麦克风",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "上一页",
-    "rightNavButtonAriaLabel": "下一页"
+    "leftNavButtonAriaLabel": "上一页 {current} (共 {total} 页)",
+    "rightNavButtonAriaLabel": "下一页 {current} (共 {total} 页)"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "从手机加入呼叫",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "拒绝",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "使用视频接受",
     "incomingCallNotificationDismissButtonAriaLabel": "关闭"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (在会议的整个持续时间内为所有参与者启用实时文本)。",
+    "bannerLinkLabel": "了解详细信息"
   }
 }
