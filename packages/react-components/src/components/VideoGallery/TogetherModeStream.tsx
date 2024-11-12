@@ -49,7 +49,6 @@ export const TogetherModeStream = React.memo(
       isTogetherModeActive,
       onCreateTogetherModeStreamView,
       onStartTogetherMode,
-      onDisposeTogetherModeStreamViews,
       onSetTogetherModeSceneSize,
       togetherModeStreams,
       seatingCoordinates,
@@ -75,15 +74,8 @@ export const TogetherModeStream = React.memo(
         onSetTogetherModeSceneSize(containerWidth, containerHeight);
     }, [onSetTogetherModeSceneSize, containerWidth, containerHeight]);
 
-    useEffect(() => {
-      return () => {
-        !togetherModeStreams?.mainVideoStream?.isAvailable &&
-          onDisposeTogetherModeStreamViews &&
-          onDisposeTogetherModeStreamViews();
-      };
-    }, [onDisposeTogetherModeStreamViews, togetherModeStreams]);
     const stream = togetherModeStreams?.mainVideoStream;
-    const showLoadingIndicator = stream && !(stream.isAvailable && stream.isReceiving);
+    const showLoadingIndicator = stream && stream.isAvailable && stream.isReceiving;
 
     return (
       <>

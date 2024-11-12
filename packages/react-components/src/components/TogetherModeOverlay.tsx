@@ -2,26 +2,28 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(together-mode) */
 import {
   Reaction,
   ReactionResources,
   VideoGalleryTogetherModeParticipantPosition,
   VideoGalleryLocalParticipant,
-  VideoGalleryRemoteParticipant
+  VideoGalleryRemoteParticipant,
+  VideoGalleryTogetherModeSeatingInfo
 } from '../types';
 /* @conditional-compile-remove(together-mode) */
 import {
   getReactionStyleBucket,
   IReactionStyleBucket,
   ITogetherModeReactionStyleBucket,
-  opacityAnimationStyles,
+  moveAnimationStyles,
+  // opacityAnimationStyles,
   spriteAnimationStyles
 } from './styles/ReactionOverlay.style';
 /* @conditional-compile-remove(together-mode) */
 import {
-  getCombinedKey,
+  // getCombinedKey,
   REACTION_NUMBER_OF_ANIMATION_FRAMES,
   REACTION_START_DISPLAY_SIZE
 } from './VideoGallery/utils/reactionUtils';
@@ -45,31 +47,21 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
  * @internal
  */
 type VisibleTogetherModeReaction = {
-  reaction: Reaction;
-  id: string;
-  styleBucket: ITogetherModeReactionStyleBucket;
+  reaction?: Reaction;
+  isHandRaised?: boolean;
+  isSpotlighted?: boolean;
+  isMuted?: boolean;
+  id?: string;
+  styleBucket?: ITogetherModeReactionStyleBucket;
   displayName?: string;
+  showDisplayName?: boolean;
 };
-
-// /**
-//  * Reaction overlay component props
-//  *
-//  * Can be used with {@link VideoTile}.
-//  *
-//  * @internal
-//  */
-// type VisibleSignaling = {
-//   isHandRaised?: boolean;
-//   isSpotlighted?: boolean;
-//   styleBucket: ITogetherModeReactionStyleBucket;
-//   displayName?: string;
-// };
 
 /* @conditional-compile-remove(together-mode) */
-type ReceivedReaction = {
-  id: string;
-  status: 'animating' | 'completedAnimating' | 'ignored';
-};
+// type ReceivedReaction = {
+//   id: string;
+//   status: 'animating' | 'completedAnimating' | 'ignored';
+// };
 
 /* @conditional-compile-remove(together-mode) */
 /**
@@ -88,66 +80,81 @@ export const TogetherModeOverlay = React.memo(
     const locale = useLocale();
     const { reactionResources, remoteParticipants, localParticipant, participantsSeatingArrangement } = props;
     // Reactions that are currently being animated
-    const [visibleReactions, setVisibleReactions] = useState<VisibleTogetherModeReaction[]>([]);
-    // const [pinDisplayName, setPinDisplayName] = useState<Record<string, boolean>>({});
+    // const [visibleReactions, setVisibleReactions] = useState<VisibleTogetherModeReaction[]>([]);
+    const [visibleSignals, setVisibleSignals] = useState<Record<string, VisibleTogetherModeReaction>>({});
 
     // Dictionary of userId to a reaction status. This is used to track the latest received reaction
     // per user to avoid animating the same reaction multiple times and to limit the number of
     // active reactions of a certain type.
-    const latestReceivedReaction = useRef<Record<string, ReceivedReaction>>({});
+    // const latestReceivedReaction = useRef<Record<string, ReceivedReaction>>({});
 
-    const particpantsReactions: Reaction[] = useMemo(() => {
-      const reactions =
-        remoteParticipants
-          ?.map((remoteParticipant) => remoteParticipant.reaction)
-          .filter((reaction): reaction is Reaction => !!reaction) ?? [];
-      if (localParticipant?.reaction) {
-        reactions.push(localParticipant.reaction);
+    const participantsSignals: Record<string, VisibleTogetherModeReaction> = useMemo(() => {
+      const signals: Record<string, VisibleTogetherModeReaction> = {};
+      remoteParticipants?.map((particpant) => {
+        const participantID = particpant.userId;
+        const togetherModeSeatStyle: ITogetherModeReactionStyleBucket = {
+          sizeScale: 0.9,
+          opacityMax: 0.9,
+          width: participantsSeatingArrangement?.[participantID]?.width ?? 0,
+          height: participantsSeatingArrangement?.[participantID]?.height ?? 0,
+          left: participantsSeatingArrangement?.[participantID]?.left ?? 0,
+          top: participantsSeatingArrangement?.[participantID]?.top ?? 0
+        };
+        signals[participantID] = {
+          id: participantID,
+          reaction: particpant.reaction,
+          isHandRaised: !!particpant.raisedHand,
+          isSpotlighted: !!particpant.spotlight,
+          isMuted: particpant.isMuted,
+          displayName: !particpant?.displayName
+            ? locale.strings.videoGallery.displayNamePlaceholder
+            : particpant?.displayName,
+          styleBucket: togetherModeSeatStyle
+        };
+      });
+      if (localParticipant) {
+        const togetherModeSeatStyle: ITogetherModeReactionStyleBucket = {
+          sizeScale: 0.9,
+          opacityMax: 0.9,
+          width: participantsSeatingArrangement?.[localParticipant.userId]?.width ?? 0,
+          height: participantsSeatingArrangement?.[localParticipant.userId]?.height ?? 0,
+          left: participantsSeatingArrangement?.[localParticipant.userId]?.left ?? 0,
+          top: participantsSeatingArrangement?.[localParticipant.userId]?.top ?? 0
+        };
+        signals[localParticipant.userId] = {
+          id: localParticipant.userId,
+          reaction: localParticipant.reaction,
+          isHandRaised: !!localParticipant.raisedHand,
+          isSpotlighted: !!localParticipant.spotlight,
+          isMuted: localParticipant.isMuted,
+          displayName: !localParticipant?.displayName
+            ? locale.strings.videoGallery.displayNamePlaceholder
+            : localParticipant?.displayName,
+          styleBucket: togetherModeSeatStyle
+        };
       }
-      return reactions;
-    }, [remoteParticipants, localParticipant]);
+      return signals;
+    }, [
+      remoteParticipants,
+      localParticipant,
+      locale.strings.videoGallery.displayNamePlaceholder,
+      participantsSeatingArrangement
+    ]);
 
-    // const participantsRaiseHand: Record<string, boolean> = useMemo(() => {
-    //   const raiseHandParticipants: Record<string, boolean> = {};
-    //   remoteParticipants?.forEach((participant) => {
-    //     if (participant.raisedHand) {
-    //       raiseHandParticipants[participant.userId] = true;
-    //     }
-    //   });
-    //   if (localParticipant?.raisedHand) {
-    //     raiseHandParticipants[localParticipant.userId] = true;
-    //   }
-    //   return raiseHandParticipants;
-    // }, [localParticipant, remoteParticipants]);
-
-    // const participantsSpotlight: Record<string, boolean> = useMemo(() => {
-    //   const spotlightParticipants: Record<string, boolean> = {};
-    //   remoteParticipants?.forEach((participant) => {
-    //     if (participant.spotlight) {
-    //       spotlightParticipants[participant.userId] = true;
-    //     }
-    //   });
-    //   if (localParticipant?.spotlight) {
-    //     spotlightParticipants[localParticipant.userId] = true;
-    //   }
-    //   return spotlightParticipants;
-    // }, [localParticipant, remoteParticipants]);
-
-    const updateVisibleReactions = useCallback(
+    const updateTogetherModeSeatingUI = useCallback(
       (
-        reaction: Reaction,
-        userId: string,
-        displayName: string,
-        seatingPosition: { width: number; height: number; top: number; left: number }
+        participant: VideoGalleryLocalParticipant | VideoGalleryRemoteParticipant,
+        seatingPosition: VideoGalleryTogetherModeSeatingInfo
       ): void => {
-        const combinedKey = getCombinedKey(userId, reaction.reactionType, reaction.receivedOn);
+        // const combinedKey = getCombinedKey(userId, reaction.reactionType, reaction.receivedOn);
 
-        const alreadyHandled = latestReceivedReaction.current[userId]?.id === combinedKey;
-        if (alreadyHandled) {
-          return;
-        }
+        // const alreadyHandled = latestReceivedReaction.current[userId]?.id === combinedKey;
+        // if (alreadyHandled) {
+        //   return;
+        // }
 
-        const reactionStyle: ITogetherModeReactionStyleBucket = {
+        const participantID = participant.userId;
+        const togetherModeSeatStyle: ITogetherModeReactionStyleBucket = {
           sizeScale: 0.9,
           opacityMax: 0.9,
           width: seatingPosition.width,
@@ -156,62 +163,52 @@ export const TogetherModeOverlay = React.memo(
           top: seatingPosition.top
         };
 
-        latestReceivedReaction.current[userId] = {
-          id: combinedKey,
-          status: 'animating'
-        };
-
-        setVisibleReactions([
-          ...visibleReactions,
-          {
-            reaction: reaction,
-            id: combinedKey,
-            displayName: displayName,
-            styleBucket: reactionStyle
+        // removeVisibleSignalinDiv(participantID);
+        setVisibleSignals((prevVisibleSignals) => ({
+          ...prevVisibleSignals,
+          [participant.userId]: {
+            id: participantID,
+            reaction: participant.reaction,
+            isHandRaised: !!participant.raisedHand,
+            isSpotlighted: !!participant.spotlight,
+            isMuted: participant.isMuted,
+            displayName: participant.displayName || locale.strings.videoGallery.displayNamePlaceholder,
+            showDisplayName: !!(
+              participant.isMuted ||
+              participant.spotlight ||
+              participant.raisedHand ||
+              participant.reaction
+            ),
+            styleBucket: togetherModeSeatStyle
           }
-        ]);
+        }));
         return;
       },
-      [visibleReactions]
+      [locale.strings.videoGallery.displayNamePlaceholder]
     );
 
-    const removeVisibleReaction = (reactionType: string, id: string): void => {
-      setVisibleReactions(visibleReactions.filter((reaction) => reaction.id !== id));
-      Object.entries(latestReceivedReaction.current).forEach(([userId, reaction]) => {
-        const userLastReaction = latestReceivedReaction.current[userId];
-        if (reaction.id === id && userLastReaction) {
-          userLastReaction.status = 'completedAnimating';
-        }
-      });
-    };
+    // const removeVisibleSignalinDiv = (id: string): void => {
+    //   document.getElementById(id)?.remove();
+    // };
 
     // Update visible reactions when remote participants send a reaction
     useEffect(() => {
       remoteParticipants?.map((participant) => {
-        if (participant?.reaction && participant.videoStream?.isAvailable) {
+        if (participant.videoStream?.isAvailable) {
           const seatingPosition = participantsSeatingArrangement?.[participant.userId];
-          const displayName = !participant?.displayName
-            ? locale.strings.videoGallery.displayNamePlaceholder
-            : participant?.displayName;
-          seatingPosition &&
-            updateVisibleReactions(participant.reaction, participant.userId, displayName, seatingPosition);
+          seatingPosition && updateTogetherModeSeatingUI(participant, seatingPosition);
         }
       });
-      if (localParticipant?.reaction && localParticipant.videoStream?.isAvailable) {
+      if (localParticipant && localParticipant.videoStream?.isAvailable) {
         const seatingPosition = participantsSeatingArrangement?.[localParticipant.userId];
-        const displayName = !localParticipant?.displayName
-          ? locale.strings.videoGallery.displayNamePlaceholder
-          : localParticipant?.displayName;
-        seatingPosition &&
-          updateVisibleReactions(localParticipant.reaction, localParticipant.userId, displayName, seatingPosition);
+        seatingPosition && updateTogetherModeSeatingUI(localParticipant, seatingPosition);
       }
     }, [
-      locale.strings.videoGallery.displayNamePlaceholder,
-      particpantsReactions,
       remoteParticipants,
       localParticipant,
-      updateVisibleReactions,
-      participantsSeatingArrangement
+      participantsSeatingArrangement,
+      updateTogetherModeSeatingUI,
+      participantsSignals
     ]);
 
     const styleBucket = (): IReactionStyleBucket => getReactionStyleBucket();
@@ -222,15 +219,15 @@ export const TogetherModeOverlay = React.memo(
           backgroundColor: 'transparent'
         })}
       >
-        {visibleReactions.map((reaction) => (
+        {Object.values(visibleSignals).map((participantSignal) => (
           <div
-            key={reaction.id}
+            key={participantSignal.id}
             style={{
               position: 'absolute',
-              width: `${reaction.styleBucket.width}px`,
-              height: `${reaction.styleBucket.height}px`,
-              top: `${reaction.styleBucket.top}px`,
-              left: `${reaction.styleBucket.left}px`
+              width: `${participantSignal.styleBucket?.width ?? 0}px`,
+              height: `${participantSignal.styleBucket?.height ?? 0}px`,
+              top: `${participantSignal.styleBucket?.top ?? 0}px`,
+              left: `${participantSignal.styleBucket?.left ?? 0}px`
             }}
           >
             <div className="reaction-item">
@@ -242,33 +239,49 @@ export const TogetherModeOverlay = React.memo(
                 // Fourth div - Play Animation as the other animation applies on the base play animation for the sprite
                 <div style={{ position: 'absolute', left: '50%', top: '50%' }}>
                   <div
-                    onAnimationEnd={() => {
-                      removeVisibleReaction(reaction.reaction.reactionType, reaction.id);
-                    }}
-                    style={opacityAnimationStyles(reaction.styleBucket.opacityMax)}
+                    style={moveAnimationStyles(
+                      (participantSignal.styleBucket?.height ?? 0) / 2, // dividing by two because reactionOverlayStyle height is set to 50%
+                      ((participantSignal.styleBucket?.height ?? 0) / 2) * (1 - 0.7 * 0.95)
+                    )}
                   >
                     <div>
                       <div
                         style={spriteAnimationStyles(
                           REACTION_NUMBER_OF_ANIMATION_FRAMES,
                           displaySizePx(),
-                          getEmojiResource(reaction?.reaction.reactionType, reactionResources) ?? ''
+                          (participantSignal.reaction &&
+                            getEmojiResource(participantSignal?.reaction.reactionType, reactionResources)) ??
+                            ''
                         )}
                       />
                     </div>
                   </div>
                 </div>
               }
-              {/* <div style={{ border: `1px solid black`, color: `white`, textAlign: 'center', backgroundColor: 'black' }}>
-                <div>
-                  <_HighContrastAwareIcon disabled={false} iconName="ControlButtonRaiseHand" />
+              <div
+                style={{
+                  color: `white`,
+                  textAlign: 'center',
+                  backgroundColor: 'black',
+                  display: 'inline-block',
+                  position: 'absolute',
+                  bottom: '0px',
+                  marginLeft: '50%'
+                }}
+              >
+                <div style={{ marginRight: `2px` }}>
+                  <div>
+                    {participantSignal.isHandRaised && (
+                      <_HighContrastAwareIcon disabled={true} iconName="ControlButtonRaiseHand" />
+                    )}
+                    {participantSignal.showDisplayName && participantSignal.displayName}
+                    {participantSignal.isMuted && <_HighContrastAwareIcon disabled={true} iconName={'Muted'} />}
+                    {participantSignal.isSpotlighted && (
+                      <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonExitSpotlight'} />
+                    )}
+                  </div>
                 </div>
-                <div>{reaction.displayName}</div>
-                <div>
-                  <_HighContrastAwareIcon iconName={'Muted'} />
-                  <_HighContrastAwareIcon iconName={'ControlButtonExitSpotlight'} />
-                </div>
-              </div> */}
+              </div>
             </div>
           </div>
         ))}

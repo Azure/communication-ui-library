@@ -82,12 +82,12 @@ export class TogetherModeSubscriber {
   ): void => {
     for (const stream of removedStreams) {
       this._togetherModeVideoStreamSubscribers.get(stream.id)?.unsubscribe();
-      disposeView(
-        this._context,
-        this._internalContext,
-        this._callIdRef.callId,
-        convertSdkCallFeatureStreamToDeclarativeCallFeatureStream(stream, this._featureName)
-      );
+      // disposeView(
+      //   this._context,
+      //   this._internalContext,
+      //   this._callIdRef.callId,
+      //   convertSdkCallFeatureStreamToDeclarativeCallFeatureStream(stream, this._featureName)
+      // );
       this._internalContext.deleteCallFeatureRenderInfo(
         this._callIdRef.callId,
         this._featureName,
