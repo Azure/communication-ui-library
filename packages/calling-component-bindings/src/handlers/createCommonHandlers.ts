@@ -801,7 +801,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
 
       if (togetherModeStreams.mainVideoStream.view) {
-        callClient.disposeView(call.id, togetherModeStreams.mainVideoStream);
+        callClient.disposeView(call.id, undefined, togetherModeStreams.mainVideoStream);
       }
     };
     /* @conditional-compile-remove(together-mode) */

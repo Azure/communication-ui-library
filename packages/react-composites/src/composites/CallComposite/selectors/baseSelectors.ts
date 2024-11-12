@@ -42,7 +42,8 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { CaptionsKind } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
-
+/* @conditional-compile-remove(together-mode) */
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 /**
  * @private
  */
@@ -317,3 +318,12 @@ export const getVideoBackgroundImages = (state: CallAdapterState): VideoBackgrou
  */
 export const getIsTogetherModeActive = (state: CallAdapterState): boolean | undefined =>
   state.call?.togetherMode.isActive;
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ * Gets the together mode streams state.
+ * @param state - The current state of the call adapter.
+ * @returns The together mode streams state or undefined.
+ */
+export const getLocalUserId = (state: CallAdapterState): CommunicationIdentifierKind | undefined => state.userId;

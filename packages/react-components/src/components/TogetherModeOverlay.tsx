@@ -79,6 +79,7 @@ type ReceivedReaction = {
  */
 export const TogetherModeOverlay = React.memo(
   (props: {
+    emojiSize?: number;
     reactionResources: ReactionResources;
     localParticipant?: VideoGalleryLocalParticipant;
     remoteParticipants?: VideoGalleryRemoteParticipant[];

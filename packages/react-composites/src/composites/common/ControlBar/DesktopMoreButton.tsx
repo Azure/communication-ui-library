@@ -27,7 +27,7 @@ import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(together-mode) */
-import { getIsTogetherModeActive, getLatestCapabilitiesChangedInfo } from '../../CallComposite/selectors/baseSelectors';
+import { getIsTogetherModeActive, getCapabilites, getLocalUserId } from '../../CallComposite/selectors/baseSelectors';
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 import { CallControlOptions } from '../../CallComposite';
 
@@ -77,7 +77,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /* @conditional-compile-remove(together-mode) */
   const isTogetherModeActive = useSelector(getIsTogetherModeActive);
   /* @conditional-compile-remove(together-mode) */
-  const latestCapabilities = useSelector(getLatestCapabilitiesChangedInfo);
+  const participantCapability = useSelector(getCapabilites);
+  /* @conditional-compile-remove(together-mode) */
+  const participantId = useSelector(getLocalUserId);
 
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
@@ -396,7 +398,11 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
     /* @conditional-compile-remove(together-mode) */
-    if (latestCapabilities?.newValue.startTogetherMode?.isPresent || isTogetherModeActive) {
+    if (
+      // Only Teams User should be able to start together mode
+      (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
+      isTogetherModeActive
+    ) {
       galleryOptions.subMenuProps?.items?.push(togetherModeOption);
     }
     if (props.callControls === true || (props.callControls as CallControlOptions)?.galleryControlsButton !== false) {

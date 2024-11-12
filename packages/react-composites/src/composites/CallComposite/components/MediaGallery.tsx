@@ -188,12 +188,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
 
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
-      /* @conditional-compile-remove(together-mode) */
-      if (videoGalleryProps?.isTogetherModeActive) {
-        return 'togetherMode';
-      } else {
-        return props.localVideoTileOptions ? layoutBasedOnTilePosition : props.userSetGalleryLayout;
-      }
+      return props.localVideoTileOptions ? layoutBasedOnTilePosition : props.userSetGalleryLayout;
       return layoutBasedOnTilePosition;
     };
 

@@ -82,6 +82,9 @@ export const TogetherModeStream = React.memo(
           onDisposeTogetherModeStreamViews();
       };
     }, [onDisposeTogetherModeStreamViews, togetherModeStreams]);
+    const stream = togetherModeStreams?.mainVideoStream;
+    const showLoadingIndicator = stream && !(stream.isAvailable && stream.isReceiving);
+
     return (
       <>
         {containerWidth && containerHeight && (
@@ -95,8 +98,9 @@ export const TogetherModeStream = React.memo(
           >
             <div data-ui-id="together-mode-video-tile">
               <StreamMedia
-                videoStreamElement={togetherModeStreams?.mainVideoStream?.renderElement || null}
+                videoStreamElement={stream?.renderElement || null}
                 isMirrored={true}
+                loadingState={showLoadingIndicator ? 'loading' : 'none'}
               />
               {reactionResources && (
                 <MeetingReactionOverlay

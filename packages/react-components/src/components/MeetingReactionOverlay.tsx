@@ -137,6 +137,7 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
     return (
       <div ref={videoTileRef} style={{ width: '100%', height: '100%', pointerEvents: 'none' }}>
         <TogetherModeOverlay
+          emojiSize={emojiSizePx}
           reactionResources={reactionResources}
           localParticipant={localParticipant}
           remoteParticipants={remoteParticipants}
