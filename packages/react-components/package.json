@@ -1,6 +1,6 @@
 {
   "name": "@internal/react-components",
-  "version": "1.21.0-beta.1",
+  "version": "1.21.0",
   "description": "React component library",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -45,7 +45,7 @@
     "@fluentui/react-window-provider": "^2.2.27",
     "@fluentui-contrib/react-chat": "0.1.10",
     "@griffel/react": "^1.5.25",
-    "@internal/acs-ui-common": "1.21.0-beta.1",
+    "@internal/acs-ui-common": "1.21.0",
     "copy-to-clipboard": "^3.3.1",
     "dompurify": "^3.1.7",
     "html-react-parser": "^5.1.18",
