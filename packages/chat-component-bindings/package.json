@@ -1,6 +1,6 @@
 {
   "name": "@internal/chat-component-bindings",
-  "version": "1.21.0",
+  "version": "1.22.0-beta.0",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Chat JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -32,9 +32,9 @@
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
     "@azure/core-paging": "^1.5.0",
-    "@internal/acs-ui-common": "1.21.0",
-    "@internal/chat-stateful-client": "1.21.0",
-    "@internal/react-components": "1.21.0",
+    "@internal/acs-ui-common": "1.22.0-beta.0",
+    "@internal/chat-stateful-client": "1.22.0-beta.0",
+    "@internal/react-components": "1.22.0-beta.0",
     "reselect": "^4.0.0",
     "memoize-one": "^5.2.1"
   },
