@@ -626,7 +626,7 @@ export interface CallCompositeStrings {
   moreButtonLargeGalleryDefaultLayoutLabel?: string;
   /* conditional-compile-remove(together-mode) */
   /**
-   * Label for the selection of the default (Gallery) layout
+   * Label for the selection of the Together Mode (Gallery) layout
    */
   moreButtonTogetherModeLayoutLabel?: string;
   /**
