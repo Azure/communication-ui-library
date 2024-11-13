@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "improvement",
+  "workstream": "",
+  "comment": "Update `@azure/communication-calling` to 1.31.2-beta.1 and `@azure/communication-calling-effects` to 1.1.2",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
