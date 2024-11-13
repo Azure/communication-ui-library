@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "togetherMode",
+  "comment": "localization string for together mode",
+  "packageName": "@azure/communication-react",
+  "email": "nwankwojustin93@gmail.com",
+  "dependentChangeType": "patch"
+}
