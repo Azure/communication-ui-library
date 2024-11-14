@@ -25,7 +25,7 @@ General improvements and bug fixes.
 - Introduce new aria strings to better announce the state of the participant in the video tile component ([PR #5345](https://github.com/azure/communication-ui-library/pull/5345) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Fix noUncheckedIndexedAccess for StatefulChatClient ([PR #5293](https://github.com/azure/communication-ui-library/pull/5293) by 2684369+JamesBurnside@users.noreply.github.com)
 - Remove unnecessary disabled prop from label ([PR #5365](https://github.com/azure/communication-ui-library/pull/5365) by edwardlee@microsoft.com)
-- Fix CallComposite captions to correctly be <li> items nested inside a <ul> ([PR #5375](https://github.com/azure/communication-ui-library/pull/5375) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix CallComposite captions to correctly be list items nested inside a unordered list ([PR #5375](https://github.com/azure/communication-ui-library/pull/5375) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix the A11y role of the local video tile in the VideoGallery depending on if it is draggable or not ([PR #5377](https://github.com/azure/communication-ui-library/pull/5377) by 2684369+JamesBurnside@users.noreply.github.com)
 - Update caption modal styles for 400% zoom scenario ([PR #5403](https://github.com/azure/communication-ui-library/pull/5403) by dmceachern@microsoft.com)
 - Fix video dispose problem for multiple video stream ([PR #5188](https://github.com/azure/communication-ui-library/pull/5188) by jiangnanhello@live.com)
