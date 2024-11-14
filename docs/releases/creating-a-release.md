@@ -185,7 +185,14 @@ This process has the following benefits:
 - The release branch never diverges off of `main`. In theory, it is possible to abandon the release branch at any point and create a new one off of `main` without losing work.
 - All PR reviews happen on `main`, and the cherry-pick PR simply requires a sign-off.
 
-### Step 2.2: Fetch, Merge and Cherry-pick Translated Strings
+### Step 2.2: Storybook Bug Bash
+We must ensure that our documentation is of high quality. To achieve this, we need to thoroughly test the Storybook pages:
+
+- Set up a bug bash with the team to shake out any issues. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/57179/WebUI-Setting-up-a-Storybook-bug-bash) for setting up a bug bash.
+- Triage bugs found via bug bash and manage merging of fixes into the release branch, as described in the section below.
+
+
+### Step 2.3: Fetch, Merge and Cherry-pick Translated Strings
 
 [Fetch translated strings](https://github.com/Azure/communication-ui-library/blob/main/docs/references/string-translations.md) again for main to make sure any other string updates that have occurred since the start of the release process are included. If there are any strings updated, cherry-pick the changes to the release branch.
 
