@@ -4,6 +4,5 @@
   "workstream": "togetherMode",
   "comment": "Fix conditional compile",
   "packageName": "@azure/communication-react",
-  "email": "nwankwojustin93@gmail.com",
   "dependentChangeType": "patch"
 }
