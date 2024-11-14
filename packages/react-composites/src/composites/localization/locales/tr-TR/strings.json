@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Galeri görünümü",
     "moreButtonGalleryFocusedContentLayoutLabel": "İçeriğe odaklı",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Büyük Galeri",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kameranız devre dışı bırakıldı. Artık video paylaşasınız.",

@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "תצוגת גלריה",
     "moreButtonGalleryFocusedContentLayoutLabel": "התמקדות בתוכן",
     "moreButtonLargeGalleryDefaultLayoutLabel": "גלריה גדולה",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "המצלמה שלך הפכה ללא זמינה. כבר אינך יכול לשתף וידאו.",

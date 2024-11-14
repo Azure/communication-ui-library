@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Gallerivy",
     "moreButtonGalleryFocusedContentLayoutLabel": "Fokusera på innehållet",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Stort galleri",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kameran har inaktiverats. Du kan inte längre dela video.",

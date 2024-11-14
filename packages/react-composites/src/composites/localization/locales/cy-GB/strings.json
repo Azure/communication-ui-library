@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Gwedd oriel",
     "moreButtonGalleryFocusedContentLayoutLabel": "Canolbwyntio ar y cynnwys",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Oriel Fawr",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Mae eich camera wedi'i analluogi. Does dim modd i chi rannu fideo mwyach.",

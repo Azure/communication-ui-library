@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "طريقة عرض المعرض",
     "moreButtonGalleryFocusedContentLayoutLabel": "التركيز على المحتوى",
     "moreButtonLargeGalleryDefaultLayoutLabel": "معرض كبير",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "تم تعطيل الكاميرا الخاصة بك. لم يعد بإمكانك مشاركة الفيديو.",

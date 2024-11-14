@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Visualizzazione raccolta",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focus sul contenuto",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Galleria estesa",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "La fotocamera è stata disattivata. Non è più possibile condividere video.",

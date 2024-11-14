@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Vista galería",
     "moreButtonGalleryFocusedContentLayoutLabel": "Centrarse en el contenido",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Galería de gran tamaño",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "La cámara se ha deshabilitado. Ya no puedes compartir vídeo.",

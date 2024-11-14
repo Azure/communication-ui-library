@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "圖庫檢視",
     "moreButtonGalleryFocusedContentLayoutLabel": "聚焦內容",
     "moreButtonLargeGalleryDefaultLayoutLabel": "大型圖庫",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "您的相機已停用。您無法再分享視訊。",

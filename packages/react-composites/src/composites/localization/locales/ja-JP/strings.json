@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "ギャラリー ビュー",
     "moreButtonGalleryFocusedContentLayoutLabel": "コンテンツにフォーカスを移動",
     "moreButtonLargeGalleryDefaultLayoutLabel": "ラージ ギャラリー",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "カメラが無効になっています。ビデオを共有できなくなりました。",

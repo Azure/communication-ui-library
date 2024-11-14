@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Представление галереи",
     "moreButtonGalleryFocusedContentLayoutLabel": "Фокусировка на содержимом",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Большая галерея",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Камера отключена. Вы больше не можете делиться видео.",

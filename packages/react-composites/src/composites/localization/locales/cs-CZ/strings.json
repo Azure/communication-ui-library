@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Zobrazení galerie",
     "moreButtonGalleryFocusedContentLayoutLabel": "Přenést hlavní pozornost na obsah",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Velká galerie",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Vaše kamera byla zakázána. Už nemůžete sdílet video.",

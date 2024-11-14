@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Galerieweergave",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focus op inhoud",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Grote galerie",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Uw camera is uitgeschakeld. U kunt geen video meer delen.",

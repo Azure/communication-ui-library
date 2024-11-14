@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Profilfotoansicht",
     "moreButtonGalleryFocusedContentLayoutLabel": "Fokus auf Inhalte",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Große Galerie",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Ihre Kamera wurde deaktiviert. Sie können kein Video mehr freigeben.",

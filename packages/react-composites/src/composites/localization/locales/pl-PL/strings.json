@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Widok galerii",
     "moreButtonGalleryFocusedContentLayoutLabel": "Skoncentruj się na zawartości",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Duża galeria",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kamera została wyłączona. Nie możesz już udostępniać wideo.",

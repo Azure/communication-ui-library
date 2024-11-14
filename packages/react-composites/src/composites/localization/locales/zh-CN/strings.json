@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "库视图",
     "moreButtonGalleryFocusedContentLayoutLabel": "关注内容",
     "moreButtonLargeGalleryDefaultLayoutLabel": "大型画廊模式",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "你的照相机已禁用。你无法再共享视频。",

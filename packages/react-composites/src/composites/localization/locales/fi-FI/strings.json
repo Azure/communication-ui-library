@@ -235,6 +235,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Valikoimanäkymä",
     "moreButtonGalleryFocusedContentLayoutLabel": "Huomio sisältöön",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Suuri galleria",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kamerasi on poistettu käytöstä. Et voi enää jakaa videota.",
