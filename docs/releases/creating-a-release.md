@@ -37,7 +37,8 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 #### Tuesday / Wednesday
 
 - [Step 2.1: Bug Bash](#step-21-bug-bash)
-- [Step 2.2: Fetch, Merge and Cherry-pick Translated Strings](#step-22-fetch-merge-and-cherry-pick-translated-strings)
+- [Step 2.2: Storybook Bug Bash](#step-22-storybook-bug-bash)
+- [Step 2.3: Fetch, Merge and Cherry-pick Translated Strings](#step-23-fetch-merge-and-cherry-pick-translated-strings)
 
 #### Thursday
 
