@@ -29,7 +29,7 @@ import {
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
   CallInfoState
 } from './CallClientState';
-/* @conditional-compile-remove(calling-beta-sdk) */
+/* @conditional-compile-remove(together-mode) */
 import { CallFeatureStreamState as DeclarativeCallFeatureVideoStream, CallFeatureStreamName } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
