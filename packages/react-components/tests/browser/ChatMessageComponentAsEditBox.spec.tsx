@@ -4,7 +4,8 @@
 import React from 'react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
-import { COMPONENT_LOCALE_EN_US, ChatMessageComponentAsRichTextEditBox, Message } from '../../src';
+import { COMPONENT_LOCALE_EN_US, Message } from '../../src';
+import { ChatMessageComponentAsRichTextEditBox } from '../../src/components/ChatMessage/MyMessageComponents/ChatMessageComponentAsRichTextEditBox';
 import { MessageStatus } from '@internal/acs-ui-common';
 
 const formatButtonId = 'rich-text-input-box-format-button';
