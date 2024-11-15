@@ -4879,13 +4879,12 @@ packages:
       - vite
     dev: false
 
-  /@playwright/test@1.39.0:
-    resolution: {integrity: sha512-3u1iFqgzl7zr004bGPYiN/5EZpRUSFddQBra8Rqll5N0/vfpqlP9I9EXqAoGacuAbX6c9Ulg/Cjqglp5VkK6UQ==}
-    engines: {node: '>=16'}
-    deprecated: Please update to the latest version of Playwright to test up-to-date browsers.
+  /@playwright/test@1.48.2:
+    resolution: {integrity: sha512-54w1xCWfXuax7dz4W2M9uw0gDyh+ti/0K/MxcCUxChFh37kkdxPdfZDw5QBbuPUJHr1CiHJ1hXgSs+GgeQc5Zw==}
+    engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      playwright: 1.39.0
+      playwright: 1.48.2
     dev: false
 
   /@pmmmwh/react-refresh-webpack-plugin@0.5.15(react-refresh@0.14.2)(webpack@5.95.0):
@@ -7058,10 +7057,8 @@ packages:
       ajv: 8.13.0
     dev: false
 
-  /ajv-formats@2.1.1(ajv@8.17.1):
+  /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependencies:
-      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -14279,26 +14276,10 @@ packages:
       pathe: 1.1.2
     dev: false
 
-  /playwright-core@1.39.0:
-    resolution: {integrity: sha512-+k4pdZgs1qiM+OUkSjx96YiKsXsmb59evFoqv8SKO067qBA+Z2s/dCzJij/ZhdQcs2zlTAgRKfeiiLm8PQ2qvw==}
-    engines: {node: '>=16'}
-    hasBin: true
-    dev: false
-
   /playwright-core@1.48.2:
     resolution: {integrity: sha512-sjjw+qrLFlriJo64du+EK0kJgZzoQPsabGF4lBvsid+3CNIZIYLgnMj9V6JY5VhM2Peh20DJWIVpVljLLnlawA==}
     engines: {node: '>=18'}
     hasBin: true
-    dev: false
-
-  /playwright@1.39.0:
-    resolution: {integrity: sha512-naE5QT11uC/Oiq0BwZ50gDmy8c8WLPRTEWuSSFVG2egBka/1qMoSqYQcROMT9zLwJ86oPofcTH2jBY/5wWOgIw==}
-    engines: {node: '>=16'}
-    hasBin: true
-    dependencies:
-      playwright-core: 1.39.0
-    optionalDependencies:
-      fsevents: 2.3.2
     dev: false
 
   /playwright@1.48.2:
@@ -15362,7 +15343,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.17.1)
     dev: false
 
@@ -18784,13 +18765,13 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-TewWJc6Lj41nAchicIjY+rzzbt6iCVFSc/DItteXzyRdzQ/Z17Ht8sy5kNQnnlygt6jaLtn/zxWyflVV5HR5Xw==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-4fKAr9KsN+cA+xK5egIzMJFQtUNBh+SyybGlaG+0HicYUPuFrYWNXUqvFT90v71GhP5k9EzQzYplzY1RIscBPA==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
       '@actions/core': 1.11.1
       '@octokit/rest': 19.0.13
-      '@playwright/test': 1.39.0
+      '@playwright/test': 1.48.2
       '@rollup/plugin-commonjs': 25.0.8(rollup@4.24.4)
       '@rollup/plugin-json': 6.1.0(rollup@4.24.4)
       '@types/node': 22.9.0
@@ -18988,7 +18969,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-pnHzZggpi/FsZGHt6cZxR+3NBcQT1uWQ1nE8BGNh+sJBk6x8+3BEfZjf9d1xMX5thImdTC+548V+CsKTpa/KGQ==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-NOFWpjuipGTWrHPGf9nrhbOmSm8c2hpI6X/H8CrJ8+Lku8dCuXPsn8ODavlYMF8N4P22nQ04LbmIP14lDPVjqA==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -19009,7 +18990,7 @@ packages:
       '@fluentui/react-icons': 2.0.265(react@18.3.1)
       '@microsoft/api-documenter': 7.25.21(@types/node@22.9.0)
       '@microsoft/api-extractor': 7.47.11(@types/node@22.9.0)
-      '@playwright/test': 1.39.0
+      '@playwright/test': 1.48.2
       '@testing-library/jest-dom': 6.6.3
       '@testing-library/react': 16.0.1(@testing-library/dom@9.3.4)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@types/copy-webpack-plugin': 6.4.3
@@ -19107,7 +19088,7 @@ packages:
     dev: false
 
   file:projects/sample-automation-tests.tgz:
-    resolution: {integrity: sha512-k2NbUXCTMZ9G8Ig1cVhoDlHXI+kU14DTKye4ONp0XUz2m84pOWzi9z4mMax6X2z18C96I9xYBWSTeIl1N6bCog==, tarball: file:projects/sample-automation-tests.tgz}
+    resolution: {integrity: sha512-hZci9sKtgF1D8OGYevCp2k0aT/GMrbr++FndHmWuutrzrC4PBQY3P6dez0Z4xfn0fzKdpYa9esOB41qQW7hSMQ==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
@@ -19115,7 +19096,7 @@ packages:
       '@azure/communication-chat': 1.5.4
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
-      '@playwright/test': 1.39.0
+      '@playwright/test': 1.48.2
       '@types/node': 22.9.0
       cross-env: 7.0.3
       dotenv: 10.0.0
@@ -19131,7 +19112,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-DFQTW4a/qZppDIXZDx32yWhtzIPdVJT6EprzyPFCoJxbM7RioOHCD/9L0TydraH2eJQCUyZ3qYlRuHUQ9ecVcw==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-jdzJtFIKNJTeOGKpHdw66d3c8M84qrBPyd4MzMxDamk5UWoMv7i3cPxqQRzCTpni+7IhMUzV49eFCGufFuuA1w==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
@@ -19142,7 +19123,7 @@ packages:
       '@babel/cli': 7.25.9(@babel/core@7.26.0)
       '@babel/core': 7.26.0
       '@fluentui/react': 8.121.11(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
-      '@playwright/test': 1.39.0
+      '@playwright/test': 1.48.2
       '@types/copy-webpack-plugin': 6.4.3
       '@types/node': 22.9.0
       '@types/react': 18.3.12
