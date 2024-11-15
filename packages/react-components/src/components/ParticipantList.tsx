@@ -149,51 +149,64 @@ const onRenderParticipantDefault = (
 
   const isPinned = pinnedParticipants && pinnedParticipants?.includes(participant.userId);
 
-  const onRenderIcon =
-    callingParticipant?.isScreenSharing ||
-    callingParticipant?.isMuted ||
-    callingParticipant?.raisedHand ||
-    isPinned ||
-    !callingParticipant?.mediaAccess?.isAudioPermitted ||
-    !callingParticipant?.mediaAccess?.isVideoPermitted
-      ? () => (
-          <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-            {callingParticipant.raisedHand && (
-              <Stack
-                horizontal={true}
-                tokens={{ childrenGap: '0.2rem' }}
-                style={{
-                  alignItems: 'center',
-                  padding: '0.1rem 0.2rem',
-                  backgroundColor: theme?.palette.neutralLighter,
-                  borderRadius: '0.3rem'
-                }}
-              >
-                {callingParticipant.raisedHand.raisedHandOrderPosition && (
-                  <Stack.Item>
-                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
-                  </Stack.Item>
-                )}
+  const showRenderIconTrampoline = (): boolean => {
+    /* @conditional-compile-remove(media-access) */
+    return !!(
+      callingParticipant?.isScreenSharing ||
+      callingParticipant?.isMuted ||
+      callingParticipant?.raisedHand ||
+      isPinned ||
+      !callingParticipant?.mediaAccess?.isAudioPermitted ||
+      !callingParticipant?.mediaAccess?.isVideoPermitted
+    );
+
+    return !!(
+      callingParticipant?.isScreenSharing ||
+      callingParticipant?.isMuted ||
+      callingParticipant?.raisedHand ||
+      isPinned
+    );
+  };
+
+  const onRenderIcon = showRenderIconTrampoline()
+    ? () => (
+        <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+          {callingParticipant.raisedHand && (
+            <Stack
+              horizontal={true}
+              tokens={{ childrenGap: '0.2rem' }}
+              style={{
+                alignItems: 'center',
+                padding: '0.1rem 0.2rem',
+                backgroundColor: theme?.palette.neutralLighter,
+                borderRadius: '0.3rem'
+              }}
+            >
+              {callingParticipant.raisedHand.raisedHandOrderPosition && (
                 <Stack.Item>
-                  <RaisedHandIcon />
+                  <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
                 </Stack.Item>
-              </Stack>
-            )}
-            {callingParticipant.isScreenSharing && (
-              <Icon
-                iconName="ParticipantItemScreenShareStart"
-                className={iconStyles}
-                ariaLabel={strings.sharingIconLabel}
-              />
-            )}
-            {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
-            {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
-            {getParticipantItemCameraProhibitedTrampoline(callingParticipant)}
-            {getControlButtonMicProhibitedTrampoline(callingParticipant)}
-            {getParticipantItemMicOffTrampoline(callingParticipant)}
-          </Stack>
-        )
-      : () => null;
+              )}
+              <Stack.Item>
+                <RaisedHandIcon />
+              </Stack.Item>
+            </Stack>
+          )}
+          {callingParticipant.isScreenSharing && (
+            <Icon
+              iconName="ParticipantItemScreenShareStart"
+              className={iconStyles}
+              ariaLabel={strings.sharingIconLabel}
+            />
+          )}
+          {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
+          {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
+          {getParticipantItemCameraProhibitedTrampoline(callingParticipant)}
+          {getControlButtonMicProhibitedTrampoline(callingParticipant)}
+          {getParticipantItemMicOffTrampoline(callingParticipant)}
+        </Stack>
+      )
+    : () => null;
 
   const getControlButtonMicProhibitedTrampoline = (callingParticipant: CallParticipantListParticipant): JSX.Element => {
     /* @conditional-compile-remove(media-access) */
