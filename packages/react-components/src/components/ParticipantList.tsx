@@ -150,7 +150,12 @@ const onRenderParticipantDefault = (
   const isPinned = pinnedParticipants && pinnedParticipants?.includes(participant.userId);
 
   const onRenderIcon =
-    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand || isPinned
+    callingParticipant?.isScreenSharing ||
+    callingParticipant?.isMuted ||
+    callingParticipant?.raisedHand ||
+    isPinned ||
+    !callingParticipant?.mediaAccess?.isAudioPermitted ||
+    !callingParticipant?.mediaAccess?.isVideoPermitted
       ? () => (
           <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
             {callingParticipant.raisedHand && (
@@ -337,7 +342,6 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
 
   sortParticipants(displayedParticipants);
-
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];
