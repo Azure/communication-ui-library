@@ -6,7 +6,7 @@ import { concatStyleSets, IContextualMenuProps, Layer } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import React, { useMemo } from 'react';
 import { KeyboardEvent, useCallback } from 'react';
-import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult, MediaAccess } from '../types';
+import { OnRenderAvatarCallback, VideoStreamOptions, CreateVideoStreamViewResult } from '../types';
 import { Reaction } from '../types';
 import { LocalVideoCameraCycleButton, LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { StreamMedia } from './StreamMedia';
@@ -29,6 +29,8 @@ import {
   overlayStylesTransparent,
   loadSpinnerStyles
 } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccess } from '../types';
 
 /**
  * A memoized version of VideoTile for rendering local participant.
@@ -69,6 +71,7 @@ export const _LocalVideoTile = React.memo(
     reactionResources?: ReactionResources;
     participantsCount?: number;
     isScreenSharingOn?: boolean;
+    /* @conditional-compile-remove(media-access) */
     mediaAccess?: MediaAccess;
   }) => {
     const {
@@ -101,6 +104,7 @@ export const _LocalVideoTile = React.memo(
       strings,
       reactionResources,
       isScreenSharingOn,
+      /* @conditional-compile-remove(media-access) */
       mediaAccess
     } = props;
 

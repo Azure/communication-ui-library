@@ -36,6 +36,12 @@ export class CapabilitiesSubscriber {
     if (data.oldValue.viewAttendeeNames !== data.newValue.viewAttendeeNames) {
       this._context.setHideAttendeeNames(this._callIdRef.callId, data);
     }
+    /* @conditional-compile-remove(media-access) */
+    this.setUnmuteMicAndTurnVideoOnNotification(data);
+  };
+
+  /* @conditional-compile-remove(media-access) */
+  private setUnmuteMicAndTurnVideoOnNotification = (data: CapabilitiesChangeInfo): void => {
     if (data.oldValue.turnVideoOn?.isPresent !== data.newValue.turnVideoOn?.isPresent) {
       if (data.oldValue.turnVideoOn?.isPresent === false && data.newValue.turnVideoOn?.isPresent) {
         const capabilityTurnVideoOnAbsent = this._context.getState().latestNotifications.capabilityTurnVideoOnAbsent;
