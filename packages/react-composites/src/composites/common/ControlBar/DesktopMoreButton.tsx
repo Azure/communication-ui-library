@@ -361,6 +361,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
         setFocusedContentOn(false);
       },
+      disabled: !(
+        (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
+        isTogetherModeActive
+      ),
       iconProps: {
         iconName: 'LargeGalleryLayout',
         styles: { root: { lineHeight: 0 } }
@@ -398,13 +402,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
     /* @conditional-compile-remove(together-mode) */
-    if (
-      // Only Teams User should be able to start together mode
-      (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
-      isTogetherModeActive
-    ) {
-      galleryOptions.subMenuProps?.items?.push(togetherModeOption);
-    }
+    galleryOptions.subMenuProps?.items?.push(togetherModeOption);
     if (props.callControls === true || (props.callControls as CallControlOptions)?.galleryControlsButton !== false) {
       moreButtonContextualMenuItems.push(galleryOptions);
     }
