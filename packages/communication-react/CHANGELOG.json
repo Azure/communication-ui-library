@@ -2,6 +2,305 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 12 Nov 2024 17:20:46 GMT",
+      "version": "1.21.0",
+      "tag": "@azure/communication-react_v1.21.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "15b893aaa3a90fe285c019930e3637c7c02ece94",
+            "area": "improvement",
+            "workstream": "Localization",
+            "comment": "Add es-MX and fr-CA locales"
+          },
+          {
+            "author": "109105353+jpeng-ms@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "24ec3d5c6e8c50c529e04c494f6ce584267f446c",
+            "area": "improvement",
+            "workstream": "Dependency Update",
+            "comment": "Updated Chat SDK and Signaling to Latest Stable Release"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "734c9053e27d48c3450b5679a5db3a1320cf956e",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "add new strings to better announce the state of the participant"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "738558c6495d7e03492e45eec2c71e254ffabc7b",
+            "area": "feature",
+            "workstream": "js-loaders",
+            "comment": "Update API to allow for better identity control"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c22fdcd7abb09511234ac60bda3bd5c202372c9c",
+            "area": "improvement",
+            "workstream": "Reactions",
+            "comment": "Export reactions button to enhance our component experience."
+          }
+        ],
+        "patch": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f06345813086c4349bebacac26a18e45095a73fa",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Remove unnecessary disabled prop from label"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b2107ebda6a186a407a3e3c6904a391c8d8fca1b",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix CallComposite captions to correctly be <li> items nested inside a <ul>"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8364d25175cd8d70149ec1d64fb1c503c7c36817",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix the A11y role of the local video tile in the VideoGallery depending on if it is draggable or not"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "458786efbb0ebbd4dbca7a35ab3f02212eed9b4b",
+            "area": "improvement",
+            "workstream": "sample-app-aad",
+            "comment": "Add AAD sign out capability for sample app"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "727cea5057985f1dad3eb579ddeb634dd09a22c3",
+            "area": "improvement",
+            "workstream": "Update Dependency",
+            "comment": "Update comunication-calling stable version to 1.30.2 and beta to 1.31.1-beta.1"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "554164789c1fd196ff506e7b4908c0d443900285",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update caption modal styles for 400%"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "df82c4594a1bc1ead3065d2ae1e5081f51a6947b",
+            "area": "fix",
+            "workstream": "Breakout rooms",
+            "comment": "Fix BreakoutRoomsBanner component to return null instead of undefined when there is no breakout room state"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "c6ef712b84ecf4ebc96225c4f889e2c3ffb8ee81",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix video dispose problem for multiple video stream"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6fb5797419ef5daa215606470917b78c00b68ac3",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Add High Contrast borders around video tiles, side pane, and side pane close button in Call Composites"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "5812214c048af242432b9a3d6e40e80be54fad2c",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix call not found error when gets removed"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5c2a765beba09c0eb09075cec65394bf7c23b396",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix device permission comboboxes on Call Composite configuration page to be appropriately labelled"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "e847e04cef892094232f07f1ef3b1711f4173709",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Focus will move into the menu directly when menu open"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a1c39e149c4dc9e2f0d1f31ac90347296039d1bf",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Fix noUncheckedIndexedAccess for StatefulChatClient"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "edcce40312b69483a7741aa931e6fd1b3aae37ec",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update chat-component-bindings with noUncheckedIndexedAccess"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7127a16314bf8cca5e7160292b33f6ce08933663",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Expose environmentInfo in callClient state and callAdapter state"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c2cc8afa9c8675197fb125c65750cfe7331429da",
+            "area": "fix",
+            "workstream": "a11y",
+            "comment": "Add announcements to hold screen and attempting to reconnect screen"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "52bf1b8da977354123835299072154059a3530d8",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix CallComposite issue where the available devices are not updated when the permissions are changed via the browser lock button"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "4454b993467c401f0b37b996281ffed2ebab4e2d",
+            "area": "fix",
+            "workstream": "Ezra",
+            "comment": "update size to stop white border in safari"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "4486a8515a197e04fe9cea6b54f2c1206d696403",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Increase Start Call Button height on the Configuration Page to 52px on mobile form factor"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c29f20692cf75f693e5ea5db44d215aad3558d44",
+            "area": "fix",
+            "workstream": "",
+            "comment": "In configuration page of call composites, move focus to error bar when an error occurs"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "885f76c39380c75796fc4362bf70b74d6aab359f",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix troubleshooting links color in high contrast modes"
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "06854ad863672e84d1cc59f831d0be965d92c890",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve issue where rich text editor tool bar would not focus when shown. Also fixed issue where editor component would remount when showing/hiding toolbar."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "db134caa58c1466435619ea06c2b15132e35de71",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Add announcement strings for page status"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "afa3704f10e5810f59327c47562aaacee183168d",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve console errors for aria-hidden"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7127a16314bf8cca5e7160292b33f6ce08933663",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "On safari, do not show speaker dropdown"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a26f9224e9f65beedd0400e7af371090df27405d",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Update video effects picker to a radio group for better A11y control"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "66ce808eca6e17a57151347e2f26a209a754ad37",
+            "area": "improvement",
+            "workstream": "Calling dependency",
+            "comment": "Upgrade calling stable version to 1.29.1"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ae93b41827d433bdbff41af7cfe41799f51dde1b",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update configuration screen drop downs to have a button inside enabling users with keyboards to reprompt for the troubleshooting links"
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "05aab3752b2c6bb3d7bcb9b0bb95170b212b4a6f",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Add enter key support for rich text edit box"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ff7dee770476ec82535265f2271a61ac6deabf57",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix Start Call text color in Desert high contrast mode when a dark theme is applied"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "afa3704f10e5810f59327c47562aaacee183168d",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve console errors for aria-hidden"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 28 Oct 2024 22:53:26 GMT",
       "version": "1.21.0-beta.1",
       "tag": "@azure/communication-react_v1.21.0-beta.1",
