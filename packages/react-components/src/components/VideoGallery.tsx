@@ -418,9 +418,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     reactionResources,
     videoTilesOptions,
     onMuteParticipant,
+    /* @conditional-compile-remove(media-access) */
     onForbidParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
     onPermitParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
     onForbidParticipantVideo,
+    /* @conditional-compile-remove(media-access) */
     onPermitParticipantVideo
   } = props;
 

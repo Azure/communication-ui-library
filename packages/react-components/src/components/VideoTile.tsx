@@ -568,23 +568,17 @@ const getMediaAccessIconsTrampoline = (
         <Stack className={mergeStyles(iconContainerStyle)}>
           <Icon iconName="ControlButtonCameraProhibitedSmall" />
         </Stack>
-      ) : (
-        <></>
-      )}
+      ) : undefined}
       {mediaAccess?.isAudioPermitted && showMuteIndicator && isMuted ? (
         <Stack className={mergeStyles(iconContainerStyle)}>
           <Icon iconName="VideoTileMicOff" />
         </Stack>
-      ) : (
-        <> </>
-      )}
+      ) : undefined}
       {!mediaAccess?.isAudioPermitted && showMuteIndicator ? (
         <Stack className={mergeStyles(iconContainerStyle)}>
           <Icon iconName="ControlButtonMicProhibitedSmall" />
         </Stack>
-      ) : (
-        <></>
-      )}
+      ) : undefined}
     </>
   );
 
