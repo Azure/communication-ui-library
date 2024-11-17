@@ -28,13 +28,21 @@ export const useVideoTileContextualMenuProps = (props: {
     stopSpotlightOnSelfVideoTileMenuLabel?: string;
     spotlightLimitReachedMenuTitle?: string;
     muteParticipantMenuItemLabel?: string;
+    /* @conditional-compile-remove(media-access) */
     forbidParticipantAudio?: string;
+    /* @conditional-compile-remove(media-access) */
     permitParticipantAudio?: string;
+    /* @conditional-compile-remove(media-access) */
     forbidParticipantVideo?: string;
+    /* @conditional-compile-remove(media-access) */
     permitParticipantVideo?: string;
+    /* @conditional-compile-remove(media-access) */
     forbidParticipantAudioTileMenuLabel?: string;
+    /* @conditional-compile-remove(media-access) */
     permitParticipantAudioTileMenuLabel?: string;
+    /* @conditional-compile-remove(media-access) */
     forbidParticipantVideoTileMenuLabel?: string;
+    /* @conditional-compile-remove(media-access) */
     permitParticipantVideoTileMenuLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
@@ -51,9 +59,13 @@ export const useVideoTileContextualMenuProps = (props: {
   maxParticipantsToSpotlight?: number;
   myUserId?: string;
   onMuteParticipant?: (userId: string) => void;
+  /* @conditional-compile-remove(media-access) */
   onForbidParticipantAudio?: (userIds: string[]) => void;
+  /* @conditional-compile-remove(media-access) */
   onPermitParticipantAudio?: (userIds: string[]) => void;
+  /* @conditional-compile-remove(media-access) */
   onForbidParticipantVideo?: (userIds: string[]) => void;
+  /* @conditional-compile-remove(media-access) */
   onPermitParticipantVideo?: (userIds: string[]) => void;
 }): IContextualMenuProps | undefined => {
   const {
@@ -73,9 +85,13 @@ export const useVideoTileContextualMenuProps = (props: {
     maxParticipantsToSpotlight,
     myUserId,
     onMuteParticipant,
+    /* @conditional-compile-remove(media-access) */
     onForbidParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
     onPermitParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
     onForbidParticipantVideo,
+    /* @conditional-compile-remove(media-access) */
     onPermitParticipantVideo
   } = props;
   const scalingMode = useMemo(() => {
@@ -287,10 +303,6 @@ export const useVideoTileContextualMenuProps = (props: {
   }, [
     onMuteParticipant,
     strings?.muteParticipantMenuItemLabel,
-    strings?.permitParticipantAudioTileMenuLabel,
-    strings?.forbidParticipantAudioTileMenuLabel,
-    strings?.permitParticipantVideoTileMenuLabel,
-    strings?.forbidParticipantVideoTileMenuLabel,
     strings?.unpinParticipantForMe,
     strings?.pinParticipantForMe,
     strings?.unpinParticipantMenuItemAriaLabel,
@@ -303,16 +315,9 @@ export const useVideoTileContextualMenuProps = (props: {
     strings?.spotlightLimitReachedMenuTitle,
     strings?.fitRemoteParticipantToFrame,
     strings?.fillRemoteParticipantFrame,
-    participant.role,
-    participant.mediaAccess?.isAudioPermitted,
-    participant.mediaAccess?.isVideoPermitted,
     participant.isMuted,
     participant.userId,
     participant.displayName,
-    onPermitParticipantAudio,
-    onForbidParticipantAudio,
-    onPermitParticipantVideo,
-    onForbidParticipantVideo,
     isPinned,
     isSpotlighted,
     scalingMode,
@@ -326,7 +331,29 @@ export const useVideoTileContextualMenuProps = (props: {
     maxParticipantsToSpotlight,
     onStartSpotlight,
     onUpdateScalingMode,
-    view
+    view,
+    /* @conditional-compile-remove(media-access) */
+    strings?.permitParticipantAudioTileMenuLabel,
+    /* @conditional-compile-remove(media-access) */
+    strings?.forbidParticipantAudioTileMenuLabel,
+    /* @conditional-compile-remove(media-access) */
+    strings?.permitParticipantVideoTileMenuLabel,
+    /* @conditional-compile-remove(media-access) */
+    strings?.forbidParticipantVideoTileMenuLabel,
+    /* @conditional-compile-remove(media-access) */
+    participant.role,
+    /* @conditional-compile-remove(media-access) */
+    participant.mediaAccess?.isAudioPermitted,
+    /* @conditional-compile-remove(media-access) */
+    participant.mediaAccess?.isVideoPermitted,
+    /* @conditional-compile-remove(media-access) */
+    onPermitParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
+    onForbidParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
+    onPermitParticipantVideo,
+    /* @conditional-compile-remove(media-access) */
+    onForbidParticipantVideo
   ]);
 
   return contextualMenuProps;

@@ -759,7 +759,7 @@ export interface CallState {
    */
   breakoutRooms?: BreakoutRoomsState;
 
-  /* @conditional-compile-remove(breakout-rooms) */
+  /* @conditional-compile-remove(media-access) */
   /**
    * Proxy of {@link @azure/communication-calling#MediaAccessFeature}.
    */
@@ -1150,10 +1150,10 @@ export type NotificationTarget =
   | 'assignedBreakoutRoomChanged'
   | 'breakoutRoomJoined'
   | 'breakoutRoomClosingSoon'
-  | 'capabilityTurnVideoOnPresent'
-  | 'capabilityTurnVideoOnAbsent'
-  | 'capabilityUnmuteMicPresent'
-  | 'capabilityUnmuteMicAbsent';
+  | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

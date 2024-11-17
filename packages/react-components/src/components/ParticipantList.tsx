@@ -355,6 +355,7 @@ export const ParticipantList = (props: ParticipantListProps): JSX.Element => {
   }, [participants, excludeMe, myUserId, onRenderParticipant]);
 
   sortParticipants(displayedParticipants);
+
   const createParticipantMenuItems = useCallback(
     (participant: ParticipantListParticipant): IContextualMenuItem[] => {
       let menuItems: IContextualMenuItem[] = [];

@@ -102,6 +102,10 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
  * @private
  */
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
+  consentForRecording(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  public isConsentRequired = false;
   public name = 'Recording';
   public isRecordingActive = false;
   public recordings: RecordingInfo[] = [];
@@ -249,6 +253,10 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
  * @private
  */
 export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
+  public isConsentRequired = false;
+  consentForTranscription(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   public name = 'Transcription';
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();

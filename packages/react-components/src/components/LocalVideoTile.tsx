@@ -279,7 +279,7 @@ export const _LocalVideoTile = React.memo(
             )
           }
           overlay={videoTileOverlay}
-          mediaAccess={mediaAccess}
+          /* @conditional-compile-remove(media-access) */ mediaAccess={mediaAccess}
         >
           {drawerMenuItemProps.length > 0 && (
             <Layer hostId={props.drawerMenuHostId}>

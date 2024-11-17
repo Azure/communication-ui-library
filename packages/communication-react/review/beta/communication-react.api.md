@@ -2847,7 +2847,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonScreenShareStop: React_2.JSX.Element;
     ControlButtonRaiseHand: React_2.JSX.Element;
     ControlButtonLowerHand: React_2.JSX.Element;
+    ControlButtonMicProhibited: React_2.JSX.Element;
     ControlButtonMicProhibitedSmall: React_2.JSX.Element;
+    ControlButtonCameraProhibited: React_2.JSX.Element;
     ControlButtonCameraProhibitedSmall: React_2.JSX.Element;
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
@@ -2987,9 +2989,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
-    ControlButtonCameraProhibited?: JSX.Element | undefined;
+    ControlButtonCameraProhibited: JSX.Element;
     ControlButtonCameraProhibitedSmall: JSX.Element;
-    ControlButtonMicProhibited?: JSX.Element | undefined;
+    ControlButtonMicProhibited: JSX.Element;
     ControlButtonMicProhibitedSmall: JSX.Element;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
@@ -3104,13 +3106,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     PinParticipant: React_2.JSX.Element;
     UnpinParticipant: React_2.JSX.Element;
     SplitButtonPrimaryActionCameraOn: React_2.JSX.Element;
-    SplitButtonPrimaryActionCameraOff: React_2.JSX.Element; /**
-    * Icon wrapper to use when including customizable icons inside the CallWithChatComposite.
-    * This wrapper ensures the icon name is being type-checked helping ensure no typos
-    * and ensure that icon is customizable through the composite API.
-    *
-    * @private
-    */
+    SplitButtonPrimaryActionCameraOff: React_2.JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: React_2.JSX.Element;
     SplitButtonPrimaryActionMicMuted: React_2.JSX.Element;
     VerticalGalleryLeftButton: React_2.JSX.Element;
@@ -4158,7 +4154,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
@@ -5439,14 +5435,10 @@ export interface VideoGalleryProps {
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
-    // (undocumented)
     onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
     onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
     onMuteParticipant?: (userId: string) => Promise<void>;
-    // (undocumented)
     onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
     onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
     onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
@@ -5514,10 +5506,6 @@ export interface VideoGalleryStrings {
     displayNamePlaceholder: string;
     fillRemoteParticipantFrame: string;
     fitRemoteParticipantToFrame: string;
-    // (undocumented)
-    forbidParticipantAudio: string;
-    // (undocumented)
-    forbidParticipantVideo: string;
     localScreenShareLoadingMessage: string;
     localVideoCameraSwitcherLabel: string;
     localVideoLabel: string;
@@ -5525,10 +5513,6 @@ export interface VideoGalleryStrings {
     localVideoMovementLabel: string;
     localVideoSelectedDescription: string;
     muteParticipantMenuItemLabel: string;
-    // (undocumented)
-    permitParticipantAudio: string;
-    // (undocumented)
-    permitParticipantVideo: string;
     pinnedParticipantAnnouncementAriaLabel: string;
     pinParticipantForMe: string;
     pinParticipantMenuItemAriaLabel: string;

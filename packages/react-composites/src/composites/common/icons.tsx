@@ -64,6 +64,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   ControlBarChatButtonInactive: <Chat20Regular />,
 
   ControlButtonCameraProhibited: <VideoProhibited20Filled />,
+
   ControlButtonMicProhibited: <MicProhibited20Filled />,
   ControlButtonExitSpotlight: <VideoPersonStarOff20Filled />,
   ControlBarPeopleButton: <People20Regular />,
@@ -174,9 +175,11 @@ export type CallCompositeIcons = {
   ControlButtonScreenShareStop?: JSX.Element;
 
   ControlButtonCameraProhibited?: JSX.Element;
+  /* @conditional-compile-remove(media-access) */
   ControlButtonCameraProhibitedSmall?: JSX.Element;
 
   ControlButtonMicProhibited?: JSX.Element;
+  /* @conditional-compile-remove(media-access) */
   ControlButtonMicProhibitedSmall?: JSX.Element;
   ControlButtonRaiseHand?: JSX.Element;
   ControlButtonLowerHand?: JSX.Element;
@@ -287,12 +290,15 @@ export type CallWithChatCompositeIcons = {
   ControlButtonMicOn?: JSX.Element;
   ControlButtonOptions?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
+  /* @conditional-compile-remove(media-access) */
   ControlButtonScreenShareStop?: JSX.Element;
 
   ControlButtonCameraProhibited?: JSX.Element;
+  /* @conditional-compile-remove(media-access) */
   ControlButtonCameraProhibitedSmall?: JSX.Element;
 
   ControlButtonMicProhibited?: JSX.Element;
+  /* @conditional-compile-remove(media-access) */
   ControlButtonMicProhibitedSmall?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;

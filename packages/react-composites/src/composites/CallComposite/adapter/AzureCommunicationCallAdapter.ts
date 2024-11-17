@@ -634,9 +634,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.stopAllSpotlight.bind(this);
     this.muteParticipant.bind(this);
     this.muteAllRemoteParticipants.bind(this);
+    /* @conditional-compile-remove(media-access) */
     this.forbidRemoteParticipantsAudio.bind(this);
+    /* @conditional-compile-remove(media-access) */
     this.permitRemoteParticipantsAudio.bind(this);
+    /* @conditional-compile-remove(media-access) */
     this.forbidRemoteParticipantsAudio.bind(this);
+    /* @conditional-compile-remove(media-access) */
     this.permitRemoteParticipantsAudio.bind(this);
   }
 

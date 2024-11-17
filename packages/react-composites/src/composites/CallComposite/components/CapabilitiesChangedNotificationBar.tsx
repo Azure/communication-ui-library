@@ -89,19 +89,23 @@ const getCapabilityChangedNotificationString = (
 ): string | undefined => {
   switch (notification.capabilityName) {
     case 'turnVideoOn':
-      // if (notification.changedReason === 'MeetingOptionOrOrganizerPolicyChanged') {
-      //   return notification.isPresent
-      //     ? strings?.turnVideoOn?.grantedDueToMeetingOption
-      //     : strings?.turnVideoOn?.lostDueToMeetingOption;
-      // }
+      /* @conditional-compile-remove(media-access) */
       return undefined;
+      if (notification.changedReason === 'MeetingOptionOrOrganizerPolicyChanged') {
+        return notification.isPresent
+          ? strings?.turnVideoOn?.grantedDueToMeetingOption
+          : strings?.turnVideoOn?.lostDueToMeetingOption;
+      }
+      break;
     case 'unmuteMic':
-      // if (notification.changedReason === 'MeetingOptionOrOrganizerPolicyChanged') {
-      //   return notification.isPresent
-      //     ? strings?.unmuteMic?.grantedDueToMeetingOption
-      //     : strings?.unmuteMic?.lostDueToMeetingOption;
-      // }
+      /* @conditional-compile-remove(media-access) */
       return undefined;
+      if (notification.changedReason === 'MeetingOptionOrOrganizerPolicyChanged') {
+        return notification.isPresent
+          ? strings?.unmuteMic?.grantedDueToMeetingOption
+          : strings?.unmuteMic?.lostDueToMeetingOption;
+      }
+      break;
     case 'shareScreen':
       if (notification.isPresent && notification.changedReason === 'RoleChanged' && notification.role === 'Presenter') {
         return strings?.shareScreen?.grantedDueToRoleChangeToPresenter;

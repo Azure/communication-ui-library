@@ -89,7 +89,6 @@ export const cameraButtonSelector: CameraButtonSelector = reselect.createSelecto
     const incapable =
       (capabilities?.turnVideoOn.isPresent === false && capabilities?.turnVideoOn.reason !== 'NotInitialized') ||
       role === 'Consumer';
-
     return {
       disabled:
         !deviceManager.selectedCamera ||

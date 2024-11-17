@@ -232,9 +232,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     spotlightedParticipants,
     maxParticipantsToSpotlight,
     localParticipant,
+    /* @conditional-compile-remove(media-access) */
     onForbidParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
     onPermitParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
     onForbidParticipantVideo,
+    /* @conditional-compile-remove(media-access) */
     onPermitParticipantVideo
   } = videoGalleryProps;
 

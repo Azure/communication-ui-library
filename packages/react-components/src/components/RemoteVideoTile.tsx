@@ -71,9 +71,13 @@ export const _RemoteVideoTile = React.memo(
     toggleAnnouncerString?: (announcerString: string) => void;
     reactionResources?: ReactionResources;
     onLongTouch?: (() => void) | undefined;
+    /* @conditional-compile-remove(media-access) */
     onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+    /* @conditional-compile-remove(media-access) */
     onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+    /* @conditional-compile-remove(media-access) */
     onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+    /* @conditional-compile-remove(media-access) */
     onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
   }) => {
     const {
@@ -105,9 +109,13 @@ export const _RemoteVideoTile = React.memo(
       strings,
       reactionResources,
       streamId,
+      /* @conditional-compile-remove(media-access) */
       onForbidParticipantAudio,
+      /* @conditional-compile-remove(media-access) */
       onPermitParticipantAudio,
+      /* @conditional-compile-remove(media-access) */
       onForbidParticipantVideo,
+      /* @conditional-compile-remove(media-access) */
       onPermitParticipantVideo
     } = props;
 
