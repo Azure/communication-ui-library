@@ -114,7 +114,7 @@ export const useVideoTileContextualMenuProps = (props: {
         disabled: participant.isMuted
       });
     }
-
+    /* @conditional-compile-remove(media-access) */
     const isAttendee = participant.role === 'Attendee';
     /* @conditional-compile-remove(media-access) */
     if (isAttendee && !participant.mediaAccess?.isAudioPermitted && onPermitParticipantAudio) {

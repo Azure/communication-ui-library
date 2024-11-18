@@ -109,8 +109,9 @@ const useVideoStreamLifecycleMaintainer = (
     renderElementExists,
     scalingMode,
     streamId,
-    isVideoPermitted,
-    createStreamViewTrampoline
+    createStreamViewTrampoline,
+    /* @conditional-compile-remove(media-access) */
+    isVideoPermitted
   ]);
 
   // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView

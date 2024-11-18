@@ -509,7 +509,12 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
                 </Text>
               )}
-              {getMediaAccessIconsTrampoline(showMuteIndicator, isMuted, mediaAccess)}
+              {getMediaAccessIconsTrampoline(
+                showMuteIndicator,
+                isMuted,
+                /* @conditional-compile-remove(media-access) */
+                mediaAccess
+              )}
               {isSpotlighted && (
                 <Stack className={mergeStyles(iconContainerStyle)}>
                   <Icon iconName="VideoTileSpotlighted" />

@@ -275,7 +275,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonMicProhibited: <MicProhibited20Filled />,
   /* @conditional-compile-remove(media-access) */
   ControlButtonMicProhibitedSmall: <MicProhibited16Filled />,
+  /* @conditional-compile-remove(media-access) */
   ControlButtonCameraProhibited: <VideoProhibited20Filled />,
+  /* @conditional-compile-remove(media-access) */
   ControlButtonCameraProhibitedSmall: <VideoProhibited16Filled />,
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   LowerHandContextualMenuItem: <HandRightOff20Regular />,

@@ -277,6 +277,7 @@ export const _RemoteVideoTile = React.memo(
           }
           isSpotlighted={isSpotlighted}
           overlay={reactionOverlay}
+          /* @conditional-compile-remove(media-access) */
           mediaAccess={remoteParticipant.mediaAccess}
         />
         {drawerMenuItemProps.length > 0 && (
