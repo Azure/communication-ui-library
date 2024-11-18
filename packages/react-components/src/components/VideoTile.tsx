@@ -563,8 +563,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 const getMediaAccessIconsTrampoline = (
   showMuteIndicator: boolean,
   isMuted?: boolean,
-  /* @conditional-compile-remove(media-access) */
-  mediaAccess?: MediaAccess
+  mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
 ): JSX.Element | undefined => {
   /* @conditional-compile-remove(media-access) */
   return (
