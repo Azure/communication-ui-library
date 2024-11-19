@@ -1,21 +1,8 @@
 import { ChatMessage, FluentThemeProvider, MessageThread } from '@azure/communication-react';
 import React, { useCallback, useState } from 'react';
-import { GetHistoryHTMLChatMessages } from './placeholdermessages';
+import { GetHistoryHTMLChatMessages } from '../../snippets/placeholdermessages';
 
-const removeImageTags = (event: { content: DocumentFragment }): void => {
-  event.content.querySelectorAll('img').forEach((image) => {
-    // If the image is the only child of its parent, remove all the parents of this img element.
-    let parentNode: HTMLElement | null = image.parentElement;
-    let currentNode: HTMLElement = image;
-    while (parentNode?.childNodes.length === 1) {
-      currentNode = parentNode;
-      parentNode = parentNode.parentElement;
-    }
-    currentNode?.remove();
-  });
-};
-
-export const MessageThreadWithWithRichTextEditorOnPasteExample: () => JSX.Element = () => {
+export const MessageThreadWithRichTextEditorExample: () => JSX.Element = () => {
   const [messages, setMessages] = useState(GetHistoryHTMLChatMessages());
   const onUpdateMessage = useCallback(
     (messageId: string, content: string): Promise<void> => {
@@ -37,12 +24,7 @@ export const MessageThreadWithWithRichTextEditorOnPasteExample: () => JSX.Elemen
 
   return (
     <FluentThemeProvider>
-      <MessageThread
-        userId={'1'}
-        richTextEditorOptions={{ onPaste: removeImageTags }}
-        messages={messages}
-        onUpdateMessage={onUpdateMessage}
-      />
+      <MessageThread userId={'1'} richTextEditorOptions={{}} messages={messages} onUpdateMessage={onUpdateMessage} />
     </FluentThemeProvider>
   );
 };

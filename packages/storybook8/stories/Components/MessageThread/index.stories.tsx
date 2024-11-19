@@ -4,49 +4,14 @@
 import { MessageThread as MessageThreadComponent } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
 
-import { MessageThreadWithCustomBlockedMessageContainerExample } from './CustomizedBlockedMessage/snippets/CustomBlockedMessage.snippet';
-import { MessageThreadWithCustomChatContainerExample } from './CustomizedChatContainer/snippets/CustomChatContainer.snippet';
-import { MessageThreadWithCustomTimestampExample } from './CustomTimestamp/snippets/CustomTimestamp.snippet';
-import { MessageThreadWithMessageStatusIndicatorExample } from './DefaultMessageStatusIndicator/snippets/MessageStatusIndicator.snippet';
-import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
-import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
-import { MessageThreadWithRichTextEditorExample } from './snippets/WithRichTextEditor.snippet';
-import { MessageThreadWithRichTextEditorInlineImagesExample } from './snippets/WithRichTextEditorInlineImages.snippet';
-import { MessageThreadWithWithRichTextEditorOnPasteExample } from './snippets/WithRichTextEditorOnPaste.snippet';
+import { DefaultMessageThreadExample } from './snippets/Default.snippet';
 
 // Main story
 export { MessageThread } from './MessageThread.story';
 
 // Snippet wrapping to stories
-export const CustomBlockedMessageDocsOnly = {
-  render: MessageThreadWithCustomBlockedMessageContainerExample
-};
-export const CustomChatContainerDocsOnly = {
-  render: MessageThreadWithCustomChatContainerExample
-};
-export const CustomTimestampExampleDocsOnly = {
-  render: MessageThreadWithCustomTimestampExample
-};
-export const MessageStatusIndicatorDocsOnly = {
-  render: MessageThreadWithMessageStatusIndicatorExample
-};
-export const CustomMentionsDocsOnly = {
-  render: MessageWithCustomMentionRenderer
-};
-export const DateExampleDocsOnly = {
-  render: MessageThreadWithMessageDateExample
-};
-
-export const RichTextEditorTextDocsOnly = {
-  render: MessageThreadWithRichTextEditorExample
-};
-
-export const RichTextEditorInlineImagesTextDocsOnly = {
-  render: MessageThreadWithRichTextEditorInlineImagesExample
-};
-
-export const RichTextEditorOnPasteTextDocsOnly = {
-  render: MessageThreadWithWithRichTextEditorOnPasteExample
+export const DefaultMessageThreadDocsOnly = {
+  render: DefaultMessageThreadExample
 };
 
 // Main story meta export

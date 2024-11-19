@@ -6,8 +6,8 @@ import {
   RichTextEditBoxOptions
 } from '@azure/communication-react';
 import React, { useCallback, useMemo, useState } from 'react';
-import { _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../../../../../react-composites/src/composites/common/constants';
-import { GetHistoryHTMLChatMessages } from './placeholdermessages';
+import { _DEFAULT_INLINE_IMAGE_FILE_NAME } from '../../../../../../react-composites/src/composites/common/constants';
+import { GetHistoryHTMLChatMessages } from '../../snippets/placeholdermessages';
 
 export const MessageThreadWithRichTextEditorInlineImagesExample: () => JSX.Element = () => {
   const [messages, setMessages] = useState(GetHistoryHTMLChatMessages());
