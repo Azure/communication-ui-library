@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { MessageThread as MessageThreadComponent, MessageThreadProps } from '@azure/communication-react';
+import { MessageThread as MessageThreadComponent } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
 
 import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';

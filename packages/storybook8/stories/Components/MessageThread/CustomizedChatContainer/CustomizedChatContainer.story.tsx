@@ -3,7 +3,7 @@
 
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 import React from 'react';
-import { ArgsFrom, controlsToAdd } from '../../../controlsUtils';
+import { ArgsFrom } from '../../../controlsUtils';
 import { GetHistoryChatMessages } from '../snippets/placeholdermessages';
 
 const storyControls = {
