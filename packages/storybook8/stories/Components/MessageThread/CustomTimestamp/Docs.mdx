@@ -1,0 +1,17 @@
+import { Canvas, Meta, ArgTypes, Source } from '@storybook/blocks';
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
+import * as CustomTimestampStories from './index.stories';
+import MessageThreadWithCustomTimestampExampleText from '!!raw-loader!./snippets/CustomTimestamp.snippet.tsx';
+
+<Meta of={CustomTimestampStories} />
+
+# Custom Timestamp
+
+This example shows how to use `onDisplayDateTimeString` to customize your timestamp in a message thread.
+
+<SingleLineBetaBanner />
+<Canvas
+  of={CustomTimestampStories.CustomTimestampExampleDocsOnly}
+  source={{ code: MessageThreadWithCustomTimestampExampleText }}
+  layout="padded"
+/>

@@ -7,7 +7,7 @@ import { Meta } from '@storybook/react';
 import { MessageThreadWithCustomBlockedMessageContainerExample } from './CustomizedBlockedMessage/snippets/CustomBlockedMessage.snippet';
 import { MessageThreadWithCustomChatContainerExample } from './CustomizedChatContainer/snippets/CustomChatContainer.snippet';
 import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
-import { MessageThreadWithCustomTimestampExample } from './snippets/CustomTimestamp.snippet';
+import { MessageThreadWithCustomTimestampExample } from './CustomTimestamp/snippets/CustomTimestamp.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './DefaultMessageStatusIndicator/snippets/MessageStatusIndicator.snippet';
 import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
 import { MessageWithAttachmentFromTeams } from './snippets/MessageWithAttachmentFromTeams.snippet';
