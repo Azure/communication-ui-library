@@ -1,0 +1,17 @@
+import { Canvas, Meta, ArgTypes, Source } from '@storybook/blocks';
+import * as CustomAvatarStories from './index.stories';
+
+import MessageThreadWithCustomAvatarExampleText from '!!raw-loader!./snippets/CustomAvatar.snippet.tsx';
+
+<Meta of={CustomAvatarStories} />
+
+# Custom Avatar
+
+This example demonstrates how to customize the avatar in the MessageThread component. The avatar is a `Persona` component from Fluent UI. You can customize the avatar by passing a custom `Persona` component to the `onRenderAvatar` prop of the `MessageThread` component.
+You can view the details of the [Persona](https://developer.microsoft.com/fluentui#/controls/web/persona) component
+
+<Canvas
+  of={CustomAvatarStories.CustomAvatarDocsOnly}
+  source={{ code: MessageThreadWithCustomAvatarExampleText }}
+  layout="padded"
+/>

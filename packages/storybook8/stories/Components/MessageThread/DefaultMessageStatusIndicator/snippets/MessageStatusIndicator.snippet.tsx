@@ -1,6 +1,6 @@
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 import React from 'react';
-import { GetHistoryChatMessages } from './placeholdermessages';
+import { GetHistoryChatMessages } from '../../snippets/placeholdermessages';
 
 export const MessageThreadWithMessageStatusIndicatorExample: () => JSX.Element = () => {
   // Show the status of messages that I sent by setting 'showMessageStatus' prop to be true.

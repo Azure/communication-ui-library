@@ -1,6 +1,6 @@
 import { FluentThemeProvider, MessageThread, MessageThreadStyles } from '@azure/communication-react';
 import React from 'react';
-import { GetHistoryWithSystemMessages } from './placeholdermessages';
+import { GetHistoryWithSystemMessages } from '../../snippets/placeholdermessages';
 
 export const MessageThreadWithCustomMessageContainerExample: () => JSX.Element = () => {
   const messageThreadStyle: MessageThreadStyles = {

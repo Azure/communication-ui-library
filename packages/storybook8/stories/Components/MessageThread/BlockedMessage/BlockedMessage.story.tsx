@@ -1,15 +1,18 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import { FluentThemeProvider, MessageThread, Message } from '@azure/communication-react';
 import React from 'react';
-import { GetHistoryWithSystemMessages } from './placeholdermessages';
+import { GetHistoryWithSystemMessages } from './../snippets/placeholdermessages';
 
-export const MessageThreadWithBlockedMessagesExample: () => JSX.Element = () => {
+const BlockedMessageStory = (args: { displayName: string; link: string }): JSX.Element => {
   const messages: Message[] = [
     ...GetHistoryWithSystemMessages(),
     {
       messageType: 'blocked',
-      link: 'https://go.microsoft.com/fwlink/?LinkId=2132837',
+      link: args.link ? args.link : 'https://go.microsoft.com/fwlink/?LinkId=2132837',
       senderId: 'user2',
-      senderDisplayName: 'Robert Tolbert',
+      senderDisplayName: args.displayName ? args.displayName : 'Robert Tolbert',
       messageId: Math.random().toString(),
       createdOn: new Date('2019-04-13T00:00:00.000+08:09'),
       mine: false,
@@ -23,3 +26,5 @@ export const MessageThreadWithBlockedMessagesExample: () => JSX.Element = () => 
     </FluentThemeProvider>
   );
 };
+
+export const MessageThreadWithBlockedMessage = BlockedMessageStory.bind({});

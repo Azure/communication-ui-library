@@ -1,0 +1,21 @@
+import { Canvas, Meta, ArgTypes, Source } from '@storybook/blocks';
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
+import * as MessageThreadWithCustomBlockedMessageStories from './index.stories';
+
+import MessageThreadWithCustomBlockedMessageContainerExample from '!!raw-loader!./snippets/CustomBlockedMessage.snippet.tsx';
+
+<Meta of={MessageThreadWithCustomBlockedMessageStories} />
+
+# Messages with Customized Blocked Message Container
+
+<SingleLineBetaBanner />
+
+The example below shows how to render a `blocked` message with custom `warningText`, with
+`styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage`
+in `MessageThread`
+
+<Canvas
+  of={MessageThreadWithCustomBlockedMessageStories.CustomBlockedMessageDocsOnly}
+  source={{ code: MessageThreadWithCustomBlockedMessageContainerExample }}
+  layout="padded"
+/>

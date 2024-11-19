@@ -3,24 +3,14 @@ import { DetailedBetaBanner } from '../../BetaBanners/DetailedBetaBanner';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import * as MessageThreadStories from './index.stories';
 
-import MessageThreadWithBlockedMessagesExampleText from '!!raw-loader!./snippets/BlockedMessages.snippet.tsx';
-import MessageThreadWithCustomAvatarExampleText from '!!raw-loader!./snippets/CustomAvatar.snippet.tsx';
-import MessageThreadWithCustomBlockedMessageContainerExampleText from '!!raw-loader!./snippets/CustomBlockedMessage.snippet.tsx';
-import MessageThreadWithCustomChatContainerExampleText from '!!raw-loader!./snippets/CustomChatContainer.snippet.tsx';
-import MessageThreadWithCustomMessageContainerExampleText from '!!raw-loader!./snippets/CustomMessageContainer.snippet.tsx';
 import MessageThreadWithCustomMessagesExampleText from '!!raw-loader!./snippets/CustomMessages.snippet.tsx';
-import MessageThreadWithCustomMessageStatusIndicatorExampleText from '!!raw-loader!./snippets/CustomMessageStatusIndicator.snippet.tsx';
 import MessageThreadWithCustomTimestampExampleText from '!!raw-loader!./snippets/CustomTimestamp.snippet.tsx';
-import DefaultMessageThreadExampleText from '!!raw-loader!./snippets/Default.snippet.tsx';
-import MessageThreadWithMessageStatusIndicatorExampleText from '!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx';
 import MessageWithAttachmentText from '!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx';
 import MessageWithAttachmentFromTeamsText from '!!raw-loader!./snippets/MessageWithAttachmentFromTeams.snippet.tsx';
 import MessageWithCustomAttachmentText from '!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx';
 import MessageWithCustomMentionRendererText from '!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx';
 import ExampleImportantsText from '!!raw-loader!./snippets/placeholdermessages.ts';
-import MessageThreadWithSystemMessagesExampleText from '!!raw-loader!./snippets/SystemMessages.snippet.tsx';
 import MessageThreadWithInlineImageExampleText from '!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx';
-import MessageThreadWithMessageDateExampleText from '!!raw-loader!./snippets/WithMessageDate.snippet.tsx';
 import MessageThreadWithRichTextEditorExampleText from '!!raw-loader!./snippets/WithRichTextEditor.snippet.tsx';
 import MessageThreadWithRichTextEditorInlineImagesExampleText from '!!raw-loader!./snippets/WithRichTextEditorInlineImages.snippet.tsx';
 import MessageThreadWithRichTextEditorOnPasteExampleText from '!!raw-loader!./snippets/WithRichTextEditorOnPaste.snippet.tsx';
@@ -52,114 +42,6 @@ Create a `placeholdermessages.ts` file in the current folder you are working on.
 into that file.
 
 <Source code={ExampleImportantsText} />
-
-## Default MessageThread
-
-By default, MessageThread displays Chat messages with display name of only for other users and creation time
-of message when available.
-
-<Canvas
-  of={MessageThreadStories.DefaultMessageThreadDocsOnly}
-  source={{ code: DefaultMessageThreadExampleText }}
-  layout="padded"
-/>
-
-## MessageThread With Message Date
-
-<Canvas
-  of={MessageThreadStories.DateExampleDocsOnly}
-  source={{ code: MessageThreadWithMessageDateExampleText }}
-  layout="padded"
-/>
-
-## System Message
-
-The example below shows a message thread with a system message.
-
-<Canvas
-  of={MessageThreadStories.SystemMessageDocsOnly}
-  source={{ code: MessageThreadWithSystemMessagesExampleText }}
-  layout="padded"
-/>
-
-## Blocked Message
-
-<SingleLineBetaBanner />
-
-The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the hyperlink.
-
-<Canvas
-  of={MessageThreadStories.BlockedMessagesDocsOnly}
-  source={{ code: MessageThreadWithBlockedMessagesExampleText }}
-  layout="padded"
-/>
-
-## Custom Message
-
-he example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
-
-<Canvas
-  of={MessageThreadStories.CustomMessagesDocsOnly}
-  source={{ code: MessageThreadWithCustomMessagesExampleText }}
-  layout="padded"
-/>
-
-## Messages with Customized Chat Container
-
-The example below shows how to render a `custom` chat container with `styles.chatContainer` in `MessageThread`
-
-<Canvas
-  of={MessageThreadStories.CustomChatContainerDocsOnly}
-  source={{ code: MessageThreadWithCustomChatContainerExampleText }}
-  layout="padded"
-/>
-
-## Messages with Customized Message Container
-
-The example below shows how to render a `custom` message container with `styles.chatMessageContainer` or
-`styles.systemMessageContainer` in `MessageThread`
-
-Note: In the code example, all `%` characters were replaced by their unicode value `\u0025` due to URI
-malformed issue when loading the storybook snippets
-
-<Canvas
-  of={MessageThreadStories.CustomMessageContainerDocsOnly}
-  source={{ code: MessageThreadWithCustomMessageContainerExampleText }}
-  layout="padded"
-/>
-
-## Messages with Customized Blocked message Container
-
-<SingleLineBetaBanner />
-
-The example below shows how to render a `blocked` message with custom `warningText`, with
-`styles.blockedMessageContainer` for styling, and rendering your own JSX.Element with with `onRenderMessage`
-in `MessageThread`
-
-<Canvas
-  of={MessageThreadStories.CustomBlockedMessageDocsOnly}
-  source={{ code: MessageThreadWithCustomBlockedMessageContainerExampleText }}
-  layout="padded"
-/>
-
-## Default Message Status Indicator
-
-<Canvas
-  of={MessageThreadStories.MessageStatusIndicatorDocsOnly}
-  source={{ code: MessageThreadWithMessageStatusIndicatorExampleText }}
-  layout="padded"
-/>
-
-## Custom Message Status Indicator
-
-The example below shows how to render a `custom` message status indicator with `onRenderMessageStatus` in
-`MessageThread`
-
-<Canvas
-  of={MessageThreadStories.CustomStatusIndicatorDocsOnly}
-  source={{ code: MessageThreadWithCustomMessageStatusIndicatorExampleText }}
-  layout="padded"
-/>
 
 ## Custom Avatar
 

@@ -1,0 +1,16 @@
+import { Canvas, Meta, ArgTypes, Source } from '@storybook/blocks';
+import * as DefaultMessageStatusIndicatorStories from './index.stories';
+
+import MessageThreadWithMessageStatusIndicatorExampleText from '!!raw-loader!./snippets/MessageStatusIndicator.snippet.tsx';
+
+<Meta of={DefaultMessageStatusIndicatorStories} />
+
+# Default Message Status Indicator
+
+The example below shows how to render a status indicator.
+
+<Canvas
+  of={DefaultMessageStatusIndicatorStories.MessageStatusIndicatorDocsOnly}
+  source={{ code: MessageThreadWithMessageStatusIndicatorExampleText }}
+  layout="padded"
+/>

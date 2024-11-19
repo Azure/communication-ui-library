@@ -1,0 +1,16 @@
+import { Canvas, Meta, ArgTypes, Source } from '@storybook/blocks';
+import * as MessageThreadWithCustomMessage from './index.stories';
+
+import MessageThreadWithCustomMessagesExampleText from '!!raw-loader!./snippets/CustomMessageContainer.snippet.tsx';
+
+<Meta of={MessageThreadWithCustomMessage} />
+
+# Custom Message
+
+The example below shows how to render a `custom` message with `onRenderMessage` in `MessageThread`
+
+<Canvas
+  of={MessageThreadWithCustomMessage.CustomMessageContainerDocsOnly}
+  source={{ code: MessageThreadWithCustomMessagesExampleText }}
+  layout="padded"
+/>

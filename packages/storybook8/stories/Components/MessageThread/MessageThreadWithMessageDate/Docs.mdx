@@ -1,0 +1,16 @@
+import { Canvas, Meta, ArgTypes, Source } from '@storybook/blocks';
+import * as MessageThreadWithMessageDateStories from './index.stories';
+
+import MessageThreadWithMessageDateExampleText from '!!raw-loader!./snippets/WithMessageDate.snippet.tsx';
+
+<Meta of={MessageThreadWithMessageDateStories} />
+
+# MessageThread With Message Date
+
+The example below shows a message thread with the message date displayed.
+
+<Canvas
+  of={MessageThreadWithMessageDateStories.DateExampleDocsOnly}
+  source={{ code: MessageThreadWithMessageDateExampleText }}
+  layout="padded"
+/>

@@ -1,0 +1,15 @@
+import { Canvas, Meta, ArgTypes, Source } from '@storybook/blocks';
+import * as SystemMessagesStories from './index.stories';
+import MessageThreadWithSystemMessagesExampleText from '!!raw-loader!./snippets/SystemMessages.snippet.tsx';
+
+<Meta of={SystemMessagesStories} />
+
+# MessageThread With System Message
+
+The example below shows a message thread with a system message.
+
+<Canvas
+  of={SystemMessagesStories.SystemMessageDocsOnly}
+  source={{ code: MessageThreadWithSystemMessagesExampleText }}
+  layout="padded"
+/>

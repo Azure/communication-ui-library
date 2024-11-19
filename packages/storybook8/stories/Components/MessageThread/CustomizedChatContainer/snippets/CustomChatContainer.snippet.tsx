@@ -1,6 +1,6 @@
 import { FluentThemeProvider, MessageThread } from '@azure/communication-react';
 import React from 'react';
-import { GetHistoryChatMessages } from './placeholdermessages';
+import { GetHistoryChatMessages } from '../../snippets/placeholdermessages';
 
 export const MessageThreadWithCustomChatContainerExample: () => JSX.Element = () => {
   const messageThreadStyles = {
