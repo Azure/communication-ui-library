@@ -4,12 +4,8 @@ import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import * as MessageThreadStories from './index.stories';
 
 import MessageThreadWithCustomMessagesExampleText from '!!raw-loader!./snippets/CustomMessages.snippet.tsx';
-import MessageWithAttachmentText from '!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx';
-import MessageWithAttachmentFromTeamsText from '!!raw-loader!./snippets/MessageWithAttachmentFromTeams.snippet.tsx';
-import MessageWithCustomAttachmentText from '!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx';
 import MessageWithCustomMentionRendererText from '!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx';
 import ExampleImportantsText from '!!raw-loader!./snippets/placeholdermessages.ts';
-import MessageThreadWithInlineImageExampleText from '!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx';
 import MessageThreadWithRichTextEditorExampleText from '!!raw-loader!./snippets/WithRichTextEditor.snippet.tsx';
 import MessageThreadWithRichTextEditorInlineImagesExampleText from '!!raw-loader!./snippets/WithRichTextEditorInlineImages.snippet.tsx';
 import MessageThreadWithRichTextEditorOnPasteExampleText from '!!raw-loader!./snippets/WithRichTextEditorOnPaste.snippet.tsx';
@@ -41,64 +37,6 @@ Create a `placeholdermessages.ts` file in the current folder you are working on.
 into that file.
 
 <Source code={ExampleImportantsText} />
-
-## Custom Avatar
-
-<Canvas
-  of={MessageThreadStories.CustomAvatarDocsOnly}
-  source={{ code: MessageThreadWithCustomAvatarExampleText }}
-  layout="padded"
-/>
-
-Note: You can view the details of the
-[Persona](https://developer.microsoft.com/fluentui#/controls/web/persona) component
-
-## Tapping Inline Images on Messages
-
-<Canvas
-  of={MessageThreadStories.InlineImageDocsOnly}
-  source={{ code: MessageThreadWithInlineImageExampleText }}
-  layout="padded"
-/>
-
-## Display Messages with Attachments
-
-### Basic Usage: Default Attachment Rendering
-
-The MessageThread component renders message attachments without any additional configuration. Simply provide a
-list of `ChatMessages` with attachments of type `AttachmentMetadata` and the component will render the message
-content along with associated attachments.
-
-By default, the button associated with the attachment card will open the attachment in a new tab.
-Specifically, `window.open` method will be called for target `URL` defined in `AttachmentMetadata`.
-
-<Canvas of={MessageThreadStories.AttachmentsDocsOnly} source={{ code: MessageWithAttachmentText }} layout="padded" />
-
-If the identity of message sender is a Microsoft Teams user, the attachment will be rendered with an `open`
-icon shown below.
-
-<Canvas
-  of={MessageThreadStories.AttachmentFromTeamsDocsOnly}
-  source={{ code: MessageWithAttachmentFromTeamsText }}
-  layout="padded"
-/>
-
-### Advanced Usage: Customizing Attachment Rendering
-
-<DetailedBetaBanner />
-
-The MessageThread component also supports multiple ways to customize the rendering. You can leverage the
-`attachmentOptions.downloadOptions` props to provide a dynamic list of menu action buttons that will be based
-on properties of the attachment or the chat message associated with it. Moreover, you can also opt to provide
-a static list for all scenarios.
-
-For example, the following code snippet demonstrates how to customize the download options for attachments.
-
-<Canvas
-  of={MessageThreadStories.CustomAttachmentsDocsOnly}
-  source={{ code: MessageWithCustomAttachmentText }}
-  layout="padded"
-/>
 
 ## Mention of Users with a custom renderer within Message
 

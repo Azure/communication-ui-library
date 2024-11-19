@@ -6,14 +6,9 @@ import { Meta } from '@storybook/react';
 
 import { MessageThreadWithCustomBlockedMessageContainerExample } from './CustomizedBlockedMessage/snippets/CustomBlockedMessage.snippet';
 import { MessageThreadWithCustomChatContainerExample } from './CustomizedChatContainer/snippets/CustomChatContainer.snippet';
-import { MessageThreadWithCustomMessagesExample } from './snippets/CustomMessages.snippet';
 import { MessageThreadWithCustomTimestampExample } from './CustomTimestamp/snippets/CustomTimestamp.snippet';
 import { MessageThreadWithMessageStatusIndicatorExample } from './DefaultMessageStatusIndicator/snippets/MessageStatusIndicator.snippet';
-import { MessageWithAttachment } from './snippets/MessageWithAttachment.snippet';
-import { MessageWithAttachmentFromTeams } from './snippets/MessageWithAttachmentFromTeams.snippet';
-import { MessageWithCustomAttachment } from './snippets/MessageWithCustomAttachment.snippet';
 import { MessageWithCustomMentionRenderer } from './snippets/MessageWithCustomMentionRenderer.snippet';
-import { MessageThreadWithInlineImageExample } from './snippets/WithInlineImageMessage.snippet';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 import { MessageThreadWithRichTextEditorExample } from './snippets/WithRichTextEditor.snippet';
 import { MessageThreadWithRichTextEditorInlineImagesExample } from './snippets/WithRichTextEditorInlineImages.snippet';
@@ -29,29 +24,14 @@ export const CustomBlockedMessageDocsOnly = {
 export const CustomChatContainerDocsOnly = {
   render: MessageThreadWithCustomChatContainerExample
 };
-export const CustomMessagesDocsOnly = {
-  render: MessageThreadWithCustomMessagesExample
-};
 export const CustomTimestampExampleDocsOnly = {
   render: MessageThreadWithCustomTimestampExample
 };
 export const MessageStatusIndicatorDocsOnly = {
   render: MessageThreadWithMessageStatusIndicatorExample
 };
-export const AttachmentsDocsOnly = {
-  render: MessageWithAttachment
-};
-export const AttachmentFromTeamsDocsOnly = {
-  render: MessageWithAttachmentFromTeams
-};
-export const CustomAttachmentsDocsOnly = {
-  render: MessageWithCustomAttachment
-};
 export const CustomMentionsDocsOnly = {
   render: MessageWithCustomMentionRenderer
-};
-export const InlineImageDocsOnly = {
-  render: MessageThreadWithInlineImageExample
 };
 export const DateExampleDocsOnly = {
   render: MessageThreadWithMessageDateExample
