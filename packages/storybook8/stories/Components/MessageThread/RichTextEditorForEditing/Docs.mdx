@@ -16,6 +16,8 @@ The following examples show how to enable rich text editor for message editing b
 
 Enabling the rich text editor for message editing, without customizing its behavior, can be achieved by setting the richTextEditorOptions.
 
+## Editing Messages Example
+
 <Canvas
   of={MessageThreadWithRichTextEditorStories.RichTextEditorTextDocsOnly}
   source={{ code: MessageThreadWithRichTextEditorExampleText }}
@@ -46,6 +48,8 @@ always on a new line, you can set the display property to block for all image ta
 devices, pasting of a single image is only supported by long pressing on the rich text editor and choosing
 paste. Selecting from the clipboard view from keyboard may not be supported.
 
+## Editing Messages with Inline Images Example
+
 <Canvas
   of={MessageThreadWithRichTextEditorStories.RichTextEditorInlineImagesTextDocsOnly}
   source={{ code: MessageThreadWithRichTextEditorInlineImagesExampleText }}
@@ -57,6 +61,8 @@ paste. Selecting from the clipboard view from keyboard may not be supported.
 <SingleLineBetaBanner />
 
 `richTextEditorOptions` provides `onPaste` callback for custom processing of the pasted content before it's inserted into the rich text editor for message editing. This callback can be used to implement custom paste handling logic tailored to your application's needs. The example below shows how to remove images from pasted content.
+
+## Process content on paste Example
 
 <Canvas
   of={MessageThreadWithRichTextEditorStories.RichTextEditorOnPasteTextDocsOnly}
