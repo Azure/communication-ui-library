@@ -4,6 +4,7 @@
 import { MessageThread as MessageThreadComponent } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
 
+import { messageThreadExcludeArguments } from '../utils';
 import { MessageThreadWithMessageDateExample } from './snippets/WithMessageDate.snippet';
 
 // Main story
@@ -47,34 +48,7 @@ const meta: Meta<typeof MessageThreadComponent> = {
   },
   parameters: {
     controls: {
-      exclude: [
-        'userId',
-        'messages',
-        'participantCount',
-        'readReceiptsBySenderId',
-        'styles',
-        'disableJumpToNewMessageButton',
-        'numberOfChatMessagesToReload',
-        'onMessageSeen',
-        'onRenderMessageStatus',
-        'onRenderAvatar',
-        'onRenderJumpToNewMessageButton',
-        'onLoadPreviousChatMessages',
-        'onRenderMessage',
-        'onRenderAttachmentDownloads',
-        'onUpdateMessage',
-        'onCancelEditMessage',
-        'onDeleteMessage',
-        'onSendMessage',
-        'disableEditing',
-        'strings',
-        'attachmentOptions',
-        'onDisplayDateTimeString',
-        'mentionOptions',
-        'inlineImageOptions',
-        'richTextEditorOptions',
-        'showMessageStatus'
-      ]
+      exclude: messageThreadExcludeArguments.concat(['showMessageStatus'])
     }
   }
 };
