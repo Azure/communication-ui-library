@@ -55,6 +55,18 @@ export interface NotificationProps {
   showStackedEffect?: boolean;
 
   /**
+   * Role html property for the notification bar.
+   * @defaultValue alert
+   */
+  role?: string;
+
+  /**
+   * Aria-live property for the notification bar.
+   * @defaultValue assertive
+   */
+  ariaLive?: 'assertive' | 'off' | 'polite';
+
+  /**
    * Callback called when the primary button inside notification bar is clicked.
    */
   onClickPrimaryButton?: () => void;
@@ -157,6 +169,7 @@ export const Notification = (props: NotificationProps): JSX.Element => {
   const strings = props.notificationStrings;
   const theme = useTheme();
   const [show, setShow] = useState(true);
+  const { ariaLive = 'assertive', role = 'alert' } = props;
 
   if (props.autoDismiss) {
     setTimeout(() => {
@@ -171,7 +184,7 @@ export const Notification = (props: NotificationProps): JSX.Element => {
   }
 
   return (
-    <Stack horizontalAlign="center">
+    <Stack horizontalAlign="center" aria-live={ariaLive} role={role}>
       <Stack data-ui-id="notification-bar" styles={props.styles?.root ?? containerStyles(theme)}>
         <Stack horizontal horizontalAlign="space-between">
           <Stack horizontal>
