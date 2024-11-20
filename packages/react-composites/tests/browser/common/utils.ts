@@ -315,7 +315,7 @@ export const waitForPiPiPToHaveLoaded = async (
  * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
  */
 export const stubMessageTimestamps = async (page: Page): Promise<void> => {
-  const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
+  const messageTimestampId: string = dataTestId(IDS.messageTimestamp);
   await page.evaluate((messageTimestampId) => {
     Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.textContent = 'timestamp'));
   }, messageTimestampId);

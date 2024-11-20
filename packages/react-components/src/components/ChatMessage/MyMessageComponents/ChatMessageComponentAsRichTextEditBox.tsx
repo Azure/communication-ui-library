@@ -145,7 +145,13 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState = useMemo(() => {
-    return getMessageState(textValue, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []);
+    // get plain text content from the editor to check if the message is empty
+    // as the content may contain tags even when the content is empty
+    const plainTextContent = editTextFieldRef.current?.getPlainContent() ?? textValue;
+    return getMessageState(
+      plainTextContent,
+      /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []
+    );
   }, [/* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata, textValue]);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -278,7 +284,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
             onCancel && onCancel(message.messageId);
           }}
           id={'dismissIconWrapper'}
-          data-testId={strings.editBoxCancelButton}
+          data-testId={'chat-message-rich-text-edit-box-cancel-button'}
         />
         <InputBoxButton
           className={richTextActionButtonsStyle}
@@ -290,7 +296,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}
-          data-testId={strings.editBoxSubmitButton}
+          data-testId={'chat-message-rich-text-edit-box-submit-button'}
         />
       </Stack>
     );

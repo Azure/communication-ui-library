@@ -49,3 +49,49 @@ betaTest.describe('MessageThread inline image tests', () => {
     return messages;
   };
 });
+
+betaTest.describe('MessageThread rich text editor tests', () => {
+  betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
+
+  betaTest('Edit box should not allow to save empty text when attachments are deleted', async ({ mount, page }) => {
+    const component = await mount(<MessageThread userId={'1'} messages={getMessages()} />);
+    await component.evaluate(() => document.fonts.ready);
+
+    await expect(component.getByTestId('message-timestamp')).toBeVisible();
+    await component.getByTestId('message-timestamp').hover();
+
+    await component.getByTestId('chat-composite-message-action-icon').click();
+    await page.getByTestId('chat-composite-message-contextual-menu-edit-action').click();
+
+    await component.getByLabel('Remove file').click();
+    await component.getByTestId('chat-message-edit-box-submit-button').click();
+
+    await expect(component.getByTestId('chat-composite-message')).not.toBeVisible();
+
+    await expect(component).toHaveScreenshot('message-thread-edit-box-empty-message-without-attachment.png');
+  });
+
+  const getMessages = (): Message[] => {
+    const messages: Message[] = [
+      {
+        messageType: 'chat',
+        senderId: 'user2',
+        senderDisplayName: 'Test user 2',
+        messageId: Math.random().toString(),
+        content: '',
+        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+        mine: true,
+        attached: false,
+        contentType: 'text',
+        attachments: [
+          {
+            url: '',
+            name: 'image.png',
+            id: '1'
+          }
+        ]
+      }
+    ];
+    return messages;
+  };
+});
