@@ -9,7 +9,8 @@ import {
   DevicesButton,
   StreamMedia,
   useTheme,
-  VideoTile
+  VideoTile,
+  VideoStreamOptions
 } from '@internal/react-components';
 import React, { useCallback } from 'react';
 import { CallCompositeIcon } from '../../common/icons';
@@ -35,6 +36,8 @@ import {
 export interface LocalPreviewProps {
   mobileView: boolean;
   showDevicesButton: boolean;
+  onToggleCamera: (options?: VideoStreamOptions | undefined) => Promise<void>;
+  cameraLoading?: boolean;
 }
 
 /**
@@ -63,6 +66,10 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const hasCameras = devicesButtonProps.cameras.length > 0;
   const hasMicrophones = devicesButtonProps.microphones.length > 0;
 
+  const cameraLoadingString =
+    locale.strings.call.configurationPageCameraIsLoadingLabel ?? locale.strings.call.cameraTurnedOff;
+  const previewCameraString = props.cameraLoading ? cameraLoadingString : locale.strings.call.cameraTurnedOff;
+
   const theme = useTheme();
   const onRenderPlaceholder = useCallback((): JSX.Element => {
     return (
@@ -85,12 +92,12 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
         </Stack.Item>
         <Stack.Item align="center">
           <Text className={mergeStyles(cameraOffLabelStyle, { color: theme.palette.neutralSecondary })}>
-            {locale.strings.call.cameraTurnedOff}
+            {previewCameraString}
           </Text>
         </Stack.Item>
       </Stack>
     );
-  }, [theme, locale.strings.call.cameraTurnedOff]);
+  }, [theme, previewCameraString]);
 
   const devicesButtonStyles = props.mobileView
     ? {
@@ -130,8 +137,9 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
           <CameraButton
             data-ui-id="call-composite-local-device-settings-camera-button"
             {...cameraButtonProps}
+            onToggleCamera={props.onToggleCamera}
             showLabel={true}
-            disabled={!cameraPermissionGranted || !hasCameras}
+            disabled={!cameraPermissionGranted || !hasCameras || props.cameraLoading}
             // disable tooltip as it obscures list of devices on mobile
             strings={
               props.mobileView
