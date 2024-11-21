@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Fix call readiness modal being not dismissable by keyboard",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
