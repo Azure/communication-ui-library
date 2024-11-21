@@ -369,6 +369,11 @@ export interface CallCompositeStrings {
   /**
    * Label for the button to open effects
    */
+  configurationPageCameraIsLoadingLabel?: string;
+
+  /**
+   * Label for the button to open effects
+   */
   configurationPageVideoEffectsButtonLabel?: string;
 
   /**
