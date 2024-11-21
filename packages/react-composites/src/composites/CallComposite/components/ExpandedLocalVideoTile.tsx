@@ -7,7 +7,6 @@ import {
   StreamMedia,
   VideoGalleryStream,
   VideoTile,
-  useTheme,
   VideoStreamOptions,
   CreateVideoStreamViewResult
 } from '@internal/react-components';
@@ -41,7 +40,6 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
   const videoStream = props.localParticipantVideoStream;
   const isVideoReady = videoStream?.isAvailable ?? false;
   const renderElement = videoStream?.renderElement;
-  const palette = useTheme().palette;
 
   useEffect(() => {
     if (videoStream && isVideoReady) {
@@ -58,7 +56,7 @@ export const ExpandedLocalVideoTile = (props: ExpandedLocalVideoTileProps): JSX.
       >
         {props.overlayContent && (
           <>
-            <Stack className={mergeStyles(overlayBackgroundStyles(palette, isVideoReady))} />
+            <Stack className={mergeStyles(overlayBackgroundStyles(isVideoReady))} />
             <Stack horizontalAlign="center" verticalAlign="center" className={mergeStyles(overlayContentStyles)}>
               {props.overlayContent}
             </Stack>

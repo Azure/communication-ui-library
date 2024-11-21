@@ -44,7 +44,7 @@ test.describe('JS Bundle Test', () => {
     }
 
     await page.addScriptTag({
-      content: `document.querySelector('[data-ui-id=message-timestamp]').innerText='timestamp';`
+      content: `document.querySelector('[data-testid=message-timestamp]').innerText='timestamp';`
     });
 
     expect(await page.screenshot()).toMatchSnapshot('chatCompositeHtmlCheck.png');

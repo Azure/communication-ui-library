@@ -190,7 +190,15 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   }
 
   const cameraOn = props.checked;
-  const splitButtonAriaString = cameraOn ? strings.onSplitButtonAriaLabel : strings.offSplitButtonAriaLabel;
+  const cameraTurningOn = waitForCamera && !cameraOn;
+  // Ensure Aria-label by default reflects the loading state of the camera
+  const ariaLabel = props.ariaLabel ?? cameraTurningOn ? strings.tooltipVideoLoadingContent : undefined;
+
+  const splitButtonAriaString = cameraTurningOn
+    ? strings.tooltipVideoLoadingContent
+    : cameraOn
+      ? strings.onSplitButtonAriaLabel
+      : strings.offSplitButtonAriaLabel;
 
   const toggleAnnouncerString = useCallback(
     (isCameraOn: boolean) => {
@@ -312,6 +320,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         split={props.split ?? props.enableDeviceSelectionMenu}
         aria-description={strings.cameraButtonAriaDescription}
         aria-roledescription={props.enableDeviceSelectionMenu ? strings.cameraButtonSplitRoleDescription : undefined}
+        ariaLabel={ariaLabel}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         splitButtonMenuProps={splitButtonMenuProps}
       />

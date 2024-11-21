@@ -57,8 +57,6 @@ module.exports = {
     "unsupported-browser",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
     "total-participant-count",
-    // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
-    "calling-environment-info",
     // conditional-compile for new signaling beta
     "signaling-beta",
     // Image overlay theme

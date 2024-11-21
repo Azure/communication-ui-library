@@ -58,6 +58,7 @@ export const SidePaneHeader = (props: {
           styles={sidePaneCloseButtonStyles}
           iconProps={{ iconName: 'cancel' }}
           onClick={props.onClose}
+          autoFocus
         />
       </Stack.Item>
     </Stack>

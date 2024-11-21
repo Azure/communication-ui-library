@@ -174,12 +174,17 @@ const VideoEffectsPaneTrampoline = (
   return (
     <Stack tokens={{ childrenGap: '0.75rem' }} className={mergeStyles({ paddingLeft: '0.5rem' })}>
       {activeVideoEffectError && isCameraOn && (
-        <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(activeVideoEffectError)}>
+        <MessageBar
+          messageBarType={MessageBarType.error}
+          onDismiss={() => onDismissError(activeVideoEffectError)}
+          role="alert"
+          aria-live="assertive"
+        >
           {locale.strings.call.unableToStartVideoEffect}
         </MessageBar>
       )}
       {showWarning && (
-        <MessageBar messageBarType={MessageBarType.warning}>
+        <MessageBar messageBarType={MessageBarType.warning} role="alert" aria-live="assertive">
           {locale.strings.call.cameraOffBackgroundEffectWarningText}
         </MessageBar>
       )}
