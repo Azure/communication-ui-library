@@ -3433,7 +3433,7 @@ export interface NotificationProps {
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
-    role?: string;
+    role?: 'alert' | 'status' | 'presentation' | 'none';
     showStackedEffect?: boolean;
     styles?: NotificationStyles;
 }

@@ -58,7 +58,7 @@ export interface NotificationProps {
    * Role html property for the notification bar.
    * @defaultValue alert
    */
-  role?: string;
+  role?: 'alert' | 'status' | 'presentation' | 'none';
 
   /**
    * Aria-live property for the notification bar.
