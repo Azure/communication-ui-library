@@ -145,6 +145,7 @@ export const AddPeopleDropdown = (props: AddPeopleDropdownProps): JSX.Element =>
         {defaultMenuProps.items.length > 0 && (
           <Stack.Item styles={copyLinkButtonContainerStyles}>
             <PrimaryButton
+              autoFocus
               id={calloutButtonId}
               onClick={setDrawerMenuItemsForAddPeople}
               styles={copyLinkButtonStylesThemed}

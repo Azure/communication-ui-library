@@ -5,9 +5,12 @@
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
     "mutedIconLabel": "Muted",
+    "handRaisedIconLabel": "Hand raised - Position {position}",
     "displayNamePlaceholder": "Unnamed participant",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, More Options",
     "attendeeRole": "Attendee"
   },
   "ParticipantList": {
