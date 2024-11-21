@@ -148,7 +148,6 @@ export const ChatMessageComponentAsRichTextEditBox = (
     // get plain text content from the editor to check if the message is empty
     // as the content may contain tags even when the content is empty
     const plainTextContent = editTextFieldRef.current?.getPlainContent() ?? contentValue;
-    console.log(plainTextContent);
     return getMessageState(
       plainTextContent,
       /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []
