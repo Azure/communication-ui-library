@@ -11,7 +11,7 @@ import {
 import { COMPONENT_LOCALE_EN_US, MessageContentType } from '../../src';
 import { Locator, Page } from 'playwright-core';
 
-betaTest.describe('ChatMyMessageComponent rich text editor tests', () => {
+betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
   const localeStrings = COMPONENT_LOCALE_EN_US.strings;
 
@@ -97,7 +97,9 @@ betaTest.describe('ChatMyMessageComponent rich text editor tests', () => {
   );
 });
 
-betaTest.describe('ChatMyMessageComponent text editor tests', () => {
+betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
+  betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
+
   const localeStrings = COMPONENT_LOCALE_EN_US.strings;
 
   const props = (content: string, contentType: MessageContentType): ChatMyMessageComponentProps => {
