@@ -4,21 +4,24 @@
 import { MessageThread as MessageThreadComponent } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
 
-import { DefaultMessageThreadExample } from './snippets/Default.snippet';
+import { messageThreadExcludeArguments } from '../utils';
+import { MessageThreadWithBlockedMessagesExample } from './snippets/BlockedMessages.snippet';
 
 // Main story
-export { MessageThread } from './MessageThread.story';
+export { MessageThreadWithBlockedMessage } from './BlockedMessage.story';
 
 // Snippet wrapping to stories
-export const DefaultMessageThreadDocsOnly = {
-  render: DefaultMessageThreadExample
+export const BlockedMessagesDocsOnly = {
+  render: MessageThreadWithBlockedMessagesExample
 };
 
 // Main story meta export
 const meta: Meta<typeof MessageThreadComponent> = {
-  title: 'Components/Message Thread',
+  title: 'Components/Message Thread/Message Thread With Blocked Message',
   component: MessageThreadComponent,
   argTypes: {
+    displayName: { control: 'text', name: 'displayName' },
+    link: { control: 'text', name: 'link' },
     messages: {
       table: {
         type: {
@@ -64,41 +67,14 @@ const meta: Meta<typeof MessageThreadComponent> = {
       }
     }
   },
-  args: {
-    richTextEditor: false,
-    showMessageDate: true,
-    showMessageStatus: true,
-    enableJumpToNewMessageButton: false
-  },
   parameters: {
     controls: {
-      exclude: [
-        'userId',
-        'messages',
-        'participantCount',
-        'readReceiptsBySenderId',
-        'styles',
-        'disableJumpToNewMessageButton',
-        'numberOfChatMessagesToReload',
-        'onMessageSeen',
-        'onRenderMessageStatus',
-        'onRenderAvatar',
-        'onRenderJumpToNewMessageButton',
-        'onLoadPreviousChatMessages',
-        'onRenderMessage',
-        'onRenderAttachmentDownloads',
-        'onUpdateMessage',
-        'onCancelEditMessage',
-        'onDeleteMessage',
-        'onSendMessage',
-        'disableEditing',
-        'strings',
-        'attachmentOptions',
-        'onDisplayDateTimeString',
-        'mentionOptions',
-        'inlineImageOptions',
-        'richTextEditorOptions'
-      ]
+      exclude: messageThreadExcludeArguments.concat([
+        'richTextEditor',
+        'showMessageDate',
+        'showMessageStatus',
+        'enableJumpToNewMessageButton'
+      ])
     }
   }
 };
