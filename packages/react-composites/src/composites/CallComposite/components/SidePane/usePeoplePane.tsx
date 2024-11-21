@@ -229,7 +229,7 @@ export const usePeoplePane = (props: {
           key: 'permitRemoteParticipantsAudio',
           text: localeStrings.permitRemoteParticipantsAudioMenuLabel,
           iconProps: {
-            iconName: 'ContextualMenuMicMutedIcon',
+            iconName: 'ControlButtonMicOn',
             styles: { root: { lineHeight: 0 } }
           },
           onClick: () => {
@@ -268,7 +268,7 @@ export const usePeoplePane = (props: {
           key: 'permitRemoteParticipantsVideo',
           text: localeStrings.permitRemoteParticipantsVideoMenuLabel,
           iconProps: {
-            iconName: 'ControlButtonCameraOff',
+            iconName: 'ControlButtonCameraOn',
             styles: { root: { lineHeight: 0 } }
           },
           onClick: () => {
@@ -362,7 +362,7 @@ export const usePeoplePane = (props: {
           key: 'permit-audio',
           text: localeStrings.permitParticipantAudioMenuLabel,
           iconProps: {
-            iconName: 'ContextualMenuMicMutedIcon',
+            iconName: 'ControlButtonMicOn',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => {
@@ -402,7 +402,7 @@ export const usePeoplePane = (props: {
           key: 'permit-video',
           text: localeStrings.permitParticipantVideoMenuLabel,
           iconProps: {
-            iconName: 'ControlButtonCameraOff',
+            iconName: 'ControlButtonCameraOn',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
           },
           onClick: () => {

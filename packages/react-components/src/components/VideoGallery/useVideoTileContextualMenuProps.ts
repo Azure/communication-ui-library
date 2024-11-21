@@ -122,12 +122,12 @@ export const useVideoTileContextualMenuProps = (props: {
         key: 'permitParticipantAudio',
         text: strings?.permitParticipantAudioTileMenuLabel,
         iconProps: {
-          iconName: 'Microphone',
+          iconName: 'ControlButtonMicOn',
           styles: { root: { lineHeight: 0 } }
         },
         onClick: () => onPermitParticipantAudio([participant.userId]),
-        'data-ui-id': 'audio-tile-unblock-microphone',
-        ariaLabel: 'Unblock microphone'
+        'data-ui-id': 'audio-tile-permit-audio',
+        ariaLabel: strings?.permitParticipantAudioTileMenuLabel
       });
     }
     /* @conditional-compile-remove(media-access) */
@@ -140,8 +140,8 @@ export const useVideoTileContextualMenuProps = (props: {
           styles: { root: { lineHeight: 0 } }
         },
         onClick: () => onForbidParticipantAudio([participant.userId]),
-        'data-ui-id': 'audio-tile-block-microphone',
-        ariaLabel: 'Block microphone'
+        'data-ui-id': 'audio-tile-forbid-audio',
+        ariaLabel: strings?.forbidParticipantAudioTileMenuLabel
       });
     }
 
@@ -151,12 +151,12 @@ export const useVideoTileContextualMenuProps = (props: {
         key: 'permitParticipantVideo',
         text: strings?.permitParticipantVideoTileMenuLabel,
         iconProps: {
-          iconName: 'Camera',
+          iconName: 'ControlButtonCameraOn',
           styles: { root: { lineHeight: 0 } }
         },
         onClick: () => onPermitParticipantVideo([participant.userId]),
-        'data-ui-id': 'video-tile-permit-camera',
-        ariaLabel: 'Permit camera'
+        'data-ui-id': 'video-tile-permit-video',
+        ariaLabel: strings?.permitParticipantVideoTileMenuLabel
       });
     }
     /* @conditional-compile-remove(media-access) */
@@ -169,8 +169,8 @@ export const useVideoTileContextualMenuProps = (props: {
           styles: { root: { lineHeight: 0 } }
         },
         onClick: () => onForbidParticipantVideo([participant.userId]),
-        'data-ui-id': 'video-tile-block-microphone',
-        ariaLabel: 'Block microphone'
+        'data-ui-id': 'video-tile-forbid-video',
+        ariaLabel: strings?.forbidParticipantVideoTileMenuLabel
       });
     }
 
