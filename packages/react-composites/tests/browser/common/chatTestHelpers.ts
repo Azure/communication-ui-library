@@ -4,6 +4,7 @@
 import { IDS } from './constants';
 import {
   dataUiId,
+  dataTestId,
   stubMessageTimestamps,
   waitForChatCompositeToLoad,
   buildUrl,
@@ -125,7 +126,7 @@ export const waitForAndHideTypingIndicator = async (page: Page, rootSelector = '
  * Only select messages under the targeted root node. By default, this means anywhere in the <body>.
  */
 export const waitForNMessages = async (page: Page, n: number, rootSelector = 'body'): Promise<void> => {
-  return waitForNOf(page, n, rootSelector, dataUiId(IDS.messageTimestamp));
+  return waitForNOf(page, n, rootSelector, dataTestId(IDS.messageTimestamp));
 };
 
 const waitForNOf = async (page: Page, n: number, rootSelector: string, selector: string): Promise<void> => {
