@@ -121,6 +121,8 @@ export const SitePermissionsContainer = (props: SitePermissionsContainerProps): 
   const { appName, onTroubleshootingClick, onPrimaryButtonClick, strings } = props;
   const theme = useTheme();
 
+  const showPrimaryButton = onPrimaryButtonClick && isValidString(strings?.primaryButtonText);
+
   return (
     <Stack style={{ padding: '2rem', maxWidth: '25.375rem', alignSelf: 'center' }} aria-label={strings?.ariaLabel}>
       <Stack styles={iconBannerContainerStyles} horizontal horizontalAlign={'center'} verticalFill tokens={tokens}>
@@ -142,7 +144,7 @@ export const SitePermissionsContainer = (props: SitePermissionsContainerProps): 
       </Stack>
       <Stack styles={textContainerStyles}>
         {strings && isValidString(strings?.primaryText) && (
-          <Text styles={primaryTextStyles}>
+          <Text styles={primaryTextStyles} role="alert" aria-live="assertive">
             {appName ? _formatString(strings.primaryText, { appName: appName }) : strings.primaryText}
           </Text>
         )}
@@ -150,17 +152,19 @@ export const SitePermissionsContainer = (props: SitePermissionsContainerProps): 
           <Text styles={secondaryTextStyles}>{strings?.secondaryText}</Text>
         )}
 
-        {onPrimaryButtonClick && isValidString(strings?.primaryButtonText) && (
+        {showPrimaryButton && (
           <PrimaryButton
             styles={mergeStyleSets(primaryButtonStyles, props.styles?.primaryButton)}
             text={strings?.primaryButtonText}
             onClick={onPrimaryButtonClick}
+            autoFocus
           />
         )}
         {onTroubleshootingClick && isValidString(strings?.linkText) && (
           <Link
             styles={mergeStyleSets(linkTextStyles, props.styles?.troubleshootingLink)}
             onClick={onTroubleshootingClick}
+            autoFocus={!showPrimaryButton}
           >
             {strings?.linkText}
           </Link>
