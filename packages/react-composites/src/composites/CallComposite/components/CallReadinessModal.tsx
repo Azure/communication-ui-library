@@ -214,6 +214,15 @@ export const CallReadinessModal = (props: {
           setIsPermissionsModalDismissed(false);
         }}
         overlay={{ styles: { root: { background: 'rgba(0,0,0,0.4)' } } }}
+        forceFocusInsideTrap={true}
+        focusTrapZoneProps={{
+          disabled: false,
+          onKeyDown: (ev: React.KeyboardEvent<HTMLElement>) => {
+            if (ev.key === 'Escape') {
+              setIsPermissionsModalDismissed(false);
+            }
+          }
+        }}
       >
         {modal()}
       </_ModalClone>
