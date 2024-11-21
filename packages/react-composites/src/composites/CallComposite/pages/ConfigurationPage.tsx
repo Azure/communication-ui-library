@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import React, { useCallback, useMemo } from 'react';
-/* @conditional-compile-remove(call-readiness) */
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
 import { useHandlers } from '../hooks/useHandlers';
@@ -10,7 +9,14 @@ import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
 import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
-import { ActiveErrorMessage, DevicesButton, ErrorBar, useTheme } from '@internal/react-components';
+import {
+  ActiveErrorMessage,
+  CameraButton,
+  DevicesButton,
+  ErrorBar,
+  VideoStreamOptions,
+  useTheme
+} from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
 import { Image, Panel, PanelType, Stack } from '@fluentui/react';
 import {
@@ -64,6 +70,7 @@ import { getMicrophones, getRole } from '../selectors/baseSelectors';
 import { getEnvironmentInfo } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(call-readiness) */
 import { getCameras } from '../selectors/baseSelectors';
+import { VideoDeviceInfo } from '@azure/communication-calling';
 
 /**
  * @private
@@ -130,6 +137,32 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const role = useSelector(getRole);
 
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
+  const [cameraLoading, setCameraLoading] = useState(false);
+  const switchCamera = useCallback(
+    async (device: VideoDeviceInfo, options?: VideoStreamOptions) => {
+      // Only set camera to be loading if we are switching source while the camera is on
+      setCameraLoading(isCameraOn);
+      try {
+        await localDeviceSettingsHandlers.onSelectCamera(device, options);
+      } finally {
+        setCameraLoading(false);
+      }
+    },
+    [localDeviceSettingsHandlers, isCameraOn]
+  );
+  const { onToggleCamera } = usePropsFor(CameraButton);
+  const toggleCamera = useCallback(
+    async (options?: VideoStreamOptions | undefined) => {
+      // Only set camera to loading if we are turning on the camera (i.e. the camera was off)
+      setCameraLoading(!isCameraOn);
+      try {
+        await onToggleCamera(options);
+      } finally {
+        setCameraLoading(false);
+      }
+    },
+    [isCameraOn, onToggleCamera]
+  );
 
   let filteredLatestErrors: ActiveErrorMessage[] = props.latestErrors;
 
@@ -340,13 +373,21 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             verticalFill={mobileWithPreview}
             tokens={deviceConfigurationStackTokens}
           >
-            {localPreviewTrampoline(mobileWithPreview, !!(role === 'Consumer'))}
+            {role !== 'Consumer' && (
+              <LocalPreview
+                mobileView={mobileWithPreview}
+                showDevicesButton={mobileView}
+                onToggleCamera={toggleCamera}
+                cameraLoading={cameraLoading && !isCameraOn}
+              />
+            )}
             <Stack styles={mobileView ? undefined : configurationSectionStyle}>
               {!mobileWithPreview && (
                 <Stack className={mobileView ? undefined : selectionContainerStyle(theme, _isSafari(environmentInfo))}>
                   <LocalDeviceSettings
                     {...options}
                     {...localDeviceSettingsHandlers}
+                    onSelectCamera={switchCamera}
                     cameraPermissionGranted={cameraPermissionGrantedTrampoline(
                       cameraPermissionGranted,
                       /* @conditional-compile-remove(call-readiness) */ videoState
@@ -399,13 +440,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       </Stack>
     </Stack>
   );
-};
-
-const localPreviewTrampoline = (mobileView: boolean, doNotShow?: boolean): JSX.Element | undefined => {
-  if (doNotShow) {
-    return undefined;
-  }
-  return <LocalPreview mobileView={mobileView} showDevicesButton={mobileView} />;
 };
 
 const cameraPermissionGrantedTrampoline = (

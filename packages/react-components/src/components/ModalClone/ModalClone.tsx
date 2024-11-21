@@ -448,6 +448,7 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
         onBlur={internalState.isInKeyboardMoveMode ? handleExitKeyboardMoveMode : undefined}
         data-ui-id={dataUiId}
         // enableAriaHiddenSiblings is handled by the Popup
+        {...(props.focusTrapZoneProps ?? {})}
       >
         {dragOptions && internalState.isInKeyboardMoveMode && (
           <div className={classNames.keyboardMoveIconContainer}>
