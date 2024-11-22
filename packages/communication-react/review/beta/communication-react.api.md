@@ -454,13 +454,13 @@ export interface CallAdapterCallOperations {
     // @beta
     disposeTogetherModeStreamViews(): Promise<void>;
     // (undocumented)
+    forbidOthersAudio(): Promise<void>;
+    // (undocumented)
+    forbidOthersVideo(): Promise<void>;
+    // (undocumented)
     forbidParticipantAudio(userIds: string[]): Promise<void>;
     // (undocumented)
     forbidParticipantVideo(userIds: string[]): Promise<void>;
-    // (undocumented)
-    forbidRemoteParticipantsAudio(): Promise<void>;
-    // (undocumented)
-    forbidRemoteParticipantsVideo(): Promise<void>;
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
@@ -469,13 +469,13 @@ export interface CallAdapterCallOperations {
     muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
     // (undocumented)
+    permitOthersAudio(): Promise<void>;
+    // (undocumented)
+    permitOthersVideo(): Promise<void>;
+    // (undocumented)
     permitParticipantAudio(userIds: string[]): Promise<void>;
     // (undocumented)
     permitParticipantVideo(userIds: string[]): Promise<void>;
-    // (undocumented)
-    permitRemoteParticipantsAudio(): Promise<void>;
-    // (undocumented)
-    permitRemoteParticipantsVideo(): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
@@ -893,29 +893,29 @@ export interface CallCompositeStrings {
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
     // (undocumented)
+    forbidOthersAudioCancelButtonLabel: string;
+    // (undocumented)
+    forbidOthersAudioConfirmButtonLabel: string;
+    // (undocumented)
+    forbidOthersAudioDialogContent: string;
+    // (undocumented)
+    forbidOthersAudioDialogTitle: string;
+    // (undocumented)
+    forbidOthersAudioMenuLabel: string;
+    // (undocumented)
+    forbidOthersVideoCancelButtonLabel: string;
+    // (undocumented)
+    forbidOthersVideoConfirmButtonLabel: string;
+    // (undocumented)
+    forbidOthersVideoDialogContent: string;
+    // (undocumented)
+    forbidOthersVideoDialogTitle: string;
+    // (undocumented)
+    forbidOthersVideoMenuLabel: string;
+    // (undocumented)
     forbidParticipantAudioMenuLabel: string;
     // (undocumented)
     forbidParticipantVideoMenuLabel: string;
-    // (undocumented)
-    forbidRemoteParticipantsAudioCancelButtonLabel: string;
-    // (undocumented)
-    forbidRemoteParticipantsAudioConfirmButtonLabel: string;
-    // (undocumented)
-    forbidRemoteParticipantsAudioDialogContent: string;
-    // (undocumented)
-    forbidRemoteParticipantsAudioDialogTitle: string;
-    // (undocumented)
-    forbidRemoteParticipantsAudioMenuLabel: string;
-    // (undocumented)
-    forbidRemoteParticipantsVideoCancelButtonLabel: string;
-    // (undocumented)
-    forbidRemoteParticipantsVideoConfirmButtonLabel: string;
-    // (undocumented)
-    forbidRemoteParticipantsVideoDialogContent: string;
-    // (undocumented)
-    forbidRemoteParticipantsVideoDialogTitle: string;
-    // (undocumented)
-    forbidRemoteParticipantsVideoMenuLabel: string;
     hangUpCancelButtonLabel?: string;
     holdScreenLabel?: string;
     invalidMeetingIdentifier: string;
@@ -984,29 +984,29 @@ export interface CallCompositeStrings {
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
     permissionToReachTargetParticipantNotAllowedTitle?: string;
     // (undocumented)
+    permitOthersAudioCancelButtonLabel: string;
+    // (undocumented)
+    permitOthersAudioConfirmButtonLabel: string;
+    // (undocumented)
+    permitOthersAudioDialogContent: string;
+    // (undocumented)
+    permitOthersAudioDialogTitle: string;
+    // (undocumented)
+    permitOthersAudioMenuLabel: string;
+    // (undocumented)
+    permitOthersVideoCancelButtonLabel: string;
+    // (undocumented)
+    permitOthersVideoConfirmButtonLabel: string;
+    // (undocumented)
+    permitOthersVideoDialogContent: string;
+    // (undocumented)
+    permitOthersVideoDialogTitle: string;
+    // (undocumented)
+    permitOthersVideoMenuLabel: string;
+    // (undocumented)
     permitParticipantAudioMenuLabel: string;
     // (undocumented)
     permitParticipantVideoMenuLabel: string;
-    // (undocumented)
-    permitRemoteParticipantsAudioCancelButtonLabel: string;
-    // (undocumented)
-    permitRemoteParticipantsAudioConfirmButtonLabel: string;
-    // (undocumented)
-    permitRemoteParticipantsAudioDialogContent: string;
-    // (undocumented)
-    permitRemoteParticipantsAudioDialogTitle: string;
-    // (undocumented)
-    permitRemoteParticipantsAudioMenuLabel: string;
-    // (undocumented)
-    permitRemoteParticipantsVideoCancelButtonLabel: string;
-    // (undocumented)
-    permitRemoteParticipantsVideoConfirmButtonLabel: string;
-    // (undocumented)
-    permitRemoteParticipantsVideoDialogContent: string;
-    // (undocumented)
-    permitRemoteParticipantsVideoDialogTitle: string;
-    // (undocumented)
-    permitRemoteParticipantsVideoMenuLabel: string;
     phoneCallMoreButtonLabel: string;
     pinParticipantLimitReachedMenuLabel: string;
     pinParticipantMenuItemAriaLabel: string;
@@ -1300,13 +1300,13 @@ export interface CallWithChatAdapterManagement {
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
     // (undocumented)
+    forbidOthersAudio: () => Promise<void>;
+    // (undocumented)
+    forbidOthersVideo: () => Promise<void>;
+    // (undocumented)
     forbidParticipantAudio: (userIds: string[]) => Promise<void>;
     // (undocumented)
     forbidParticipantVideo: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    forbidRemoteParticipantsAudio: () => Promise<void>;
-    // (undocumented)
-    forbidRemoteParticipantsVideo: () => Promise<void>;
     holdCall(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -1319,13 +1319,13 @@ export interface CallWithChatAdapterManagement {
     muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
     // (undocumented)
+    permitOthersAudio: () => Promise<void>;
+    // (undocumented)
+    permitOthersVideo: () => Promise<void>;
+    // (undocumented)
     permitParticipantAudio: (userIds: string[]) => Promise<void>;
     // (undocumented)
     permitParticipantVideo: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    permitRemoteParticipantsAudio: () => Promise<void>;
-    // (undocumented)
-    permitRemoteParticipantsVideo: () => Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -2305,13 +2305,13 @@ export interface CommonCallingHandlers {
     // @beta
     onDisposeTogetherModeStreamViews: () => Promise<void>;
     // (undocumented)
+    onForbidOthersAudio?: () => Promise<void>;
+    // (undocumented)
+    onForbidOthersVideo?: () => Promise<void>;
+    // (undocumented)
     onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onForbidRemoteParticipantsAudio?: () => Promise<void>;
-    // (undocumented)
-    onForbidRemoteParticipantsVideo?: () => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -2321,13 +2321,13 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onMuteParticipant: (userId: string) => Promise<void>;
     // (undocumented)
+    onPermitOthersAudio?: () => Promise<void>;
+    // (undocumented)
+    onPermitOthersVideo?: () => Promise<void>;
+    // (undocumented)
     onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onPermitRemoteParticipantsAudio?: () => Promise<void>;
-    // (undocumented)
-    onPermitRemoteParticipantsVideo?: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)

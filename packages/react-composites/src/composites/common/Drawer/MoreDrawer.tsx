@@ -153,13 +153,13 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onClickMeetingPhoneInfo?: () => void;
   onMuteAllRemoteParticipants?: () => void;
   /* @conditional-compile-remove(media-access) */
-  onForbidRemoteParticipantsAudio?: () => void;
+  onForbidOthersAudio?: () => void;
   /* @conditional-compile-remove(media-access) */
-  onPermitRemoteParticipantsAudio?: () => void;
+  onPermitOthersAudio?: () => void;
   /* @conditional-compile-remove(media-access) */
-  onForbidRemoteParticipantsVideo?: () => void;
+  onForbidOthersVideo?: () => void;
   /* @conditional-compile-remove(media-access) */
-  onPermitRemoteParticipantsVideo?: () => void;
+  onPermitOthersVideo?: () => void;
 }
 
 const inferCallWithChatControlOptions = (

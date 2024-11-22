@@ -138,18 +138,18 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(media-access) */
   onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onForbidRemoteParticipantsAudio?: () => Promise<void>;
+  onForbidOthersAudio?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onPermitRemoteParticipantsAudio?: () => Promise<void>;
+  onPermitOthersAudio?: () => Promise<void>;
 
   /* @conditional-compile-remove(media-access) */
   onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onForbidRemoteParticipantsVideo?: () => Promise<void>;
+  onForbidOthersVideo?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onPermitRemoteParticipantsVideo?: () => Promise<void>;
+  onPermitOthersVideo?: () => Promise<void>;
 }
 
 /**
@@ -821,12 +821,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await call?.feature(Features.MediaAccess).permitAudio(participants);
     };
     /* @conditional-compile-remove(media-access) */
-    const onForbidRemoteParticipantsAudio = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).forbidRemoteParticipantsAudio();
+    const onForbidOthersAudio = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).forbidOthersAudio();
     };
     /* @conditional-compile-remove(media-access) */
-    const onPermitRemoteParticipantsAudio = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).permitRemoteParticipantsAudio();
+    const onPermitOthersAudio = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).permitOthersAudio();
     };
 
     /* @conditional-compile-remove(media-access) */
@@ -840,12 +840,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       await call?.feature(Features.MediaAccess).permitVideo(participants);
     };
     /* @conditional-compile-remove(media-access) */
-    const onForbidRemoteParticipantsVideo = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).forbidRemoteParticipantsVideo();
+    const onForbidOthersVideo = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).forbidOthersVideo();
     };
     /* @conditional-compile-remove(media-access) */
-    const onPermitRemoteParticipantsVideo = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).permitRemoteParticipantsVideo();
+    const onPermitOthersVideo = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).permitOthersVideo();
     };
     return {
       onHangUp,
@@ -910,17 +910,17 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(media-access) */
       onPermitParticipantAudio,
       /* @conditional-compile-remove(media-access) */
-      onForbidRemoteParticipantsAudio,
+      onForbidOthersAudio,
       /* @conditional-compile-remove(media-access) */
-      onPermitRemoteParticipantsAudio,
+      onPermitOthersAudio,
       /* @conditional-compile-remove(media-access) */
       onForbidParticipantVideo,
       /* @conditional-compile-remove(media-access) */
       onPermitParticipantVideo,
       /* @conditional-compile-remove(media-access) */
-      onForbidRemoteParticipantsVideo,
+      onForbidOthersVideo,
       /* @conditional-compile-remove(media-access) */
-      onPermitRemoteParticipantsVideo
+      onPermitOthersVideo
     };
   }
 );

@@ -269,13 +269,13 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(media-access) */
-  public async forbidRemoteParticipantsAudio(): Promise<void> {
-    return this.callWithChatAdapter.forbidRemoteParticipantsAudio();
+  public async forbidOthersAudio(): Promise<void> {
+    return this.callWithChatAdapter.forbidOthersAudio();
   }
 
   /* @conditional-compile-remove(media-access) */
-  public async permitRemoteParticipantsAudio(): Promise<void> {
-    return this.callWithChatAdapter.permitRemoteParticipantsAudio();
+  public async permitOthersAudio(): Promise<void> {
+    return this.callWithChatAdapter.permitOthersAudio();
   }
 
   /* @conditional-compile-remove(media-access) */
@@ -289,13 +289,13 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(media-access) */
-  public async forbidRemoteParticipantsVideo(): Promise<void> {
-    return this.callWithChatAdapter.forbidRemoteParticipantsAudio();
+  public async forbidOthersVideo(): Promise<void> {
+    return this.callWithChatAdapter.forbidOthersAudio();
   }
 
   /* @conditional-compile-remove(media-access) */
-  public async permitRemoteParticipantsVideo(): Promise<void> {
-    return this.callWithChatAdapter.permitRemoteParticipantsAudio();
+  public async permitOthersVideo(): Promise<void> {
+    return this.callWithChatAdapter.permitOthersAudio();
   }
 }
 

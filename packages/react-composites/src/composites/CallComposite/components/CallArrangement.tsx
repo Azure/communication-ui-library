@@ -364,11 +364,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onPermitParticipantAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? onPermitParticipantAudio
         : undefined,
-      onForbidRemoteParticipantsAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onForbidRemoteParticipantsAudio
+      onForbidOthersAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onForbidOthersAudio
         : undefined,
-      onPermitRemoteParticipantsAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onPermitRemoteParticipantsAudio
+      onPermitOthersAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onPermitOthersAudio
         : undefined,
       onForbidParticipantVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? onForbidParticipantVideo
@@ -376,11 +376,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onPermitParticipantVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? onPermitParticipantVideo
         : undefined,
-      onForbidRemoteParticipantsVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onForbidRemoteParticipantsVideo
+      onForbidOthersVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onForbidOthersVideo
         : undefined,
-      onPermitRemoteParticipantsVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onPermitRemoteParticipantsVideo
+      onPermitOthersVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onPermitOthersVideo
         : undefined,
       mediaAccess
     };
@@ -388,10 +388,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     role,
     onForbidParticipantAudio,
     onPermitParticipantAudio,
-    muteAllHandlers.onForbidRemoteParticipantsAudio,
-    muteAllHandlers.onPermitRemoteParticipantsAudio,
-    muteAllHandlers.onForbidRemoteParticipantsVideo,
-    muteAllHandlers.onPermitRemoteParticipantsVideo,
+    muteAllHandlers.onForbidOthersAudio,
+    muteAllHandlers.onPermitOthersAudio,
+    muteAllHandlers.onForbidOthersVideo,
+    muteAllHandlers.onPermitOthersVideo,
     onForbidParticipantVideo,
     onPermitParticipantVideo,
     mediaAccess

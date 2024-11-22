@@ -102,7 +102,7 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
  * @private
  */
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
-  consentForRecording(): Promise<void> {
+  consentToBeingRecordedAndTranscribed(): Promise<void> {
     throw new Error('Method not implemented.');
   }
   public isConsentRequired = false;
@@ -208,23 +208,23 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
     return Promise.resolve();
   }
 
-  permitRemoteParticipantsAudio(): Promise<void> {
+  permitOthersAudio(): Promise<void> {
     return Promise.resolve();
   }
 
-  forbidRemoteParticipantsAudio(): Promise<void> {
+  forbidOthersAudio(): Promise<void> {
     return Promise.resolve();
   }
 
-  permitRemoteParticipantsVideo(): Promise<void> {
+  permitOthersVideo(): Promise<void> {
     return Promise.resolve();
   }
 
-  forbidRemoteParticipantsVideo(): Promise<void> {
+  forbidOthersVideo(): Promise<void> {
     return Promise.resolve();
   }
 
-  getRemoteParticipantsMediaAccess(): MediaAccess[] {
+  getAllOthersMediaAccess(): MediaAccess[] {
     return this.mediaAccesses;
   }
 
@@ -253,6 +253,9 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
  * @private
  */
 export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
+  consentToBeingRecordedAndTranscribed(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   public isConsentRequired = false;
   consentForTranscription(): Promise<void> {
     throw new Error('Method not implemented.');
@@ -484,7 +487,7 @@ export function createMockApiFeatures(
       isRecordingActive: false,
       isTranscriptionActive: false,
       /* @conditional-compile-remove(media-access) */
-      getRemoteParticipantsMediaAccess: () => [],
+      getAllOthersMediaAccess: () => [],
       /* @conditional-compile-remove(media-access) */
       getMeetingMediaAccess: () => ({ isAudioPermitted: true, isVideoPermitted: true })
     });

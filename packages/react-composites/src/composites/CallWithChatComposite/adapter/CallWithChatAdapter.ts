@@ -562,17 +562,17 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(media-access) */
   permitParticipantAudio: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  forbidRemoteParticipantsAudio: () => Promise<void>;
+  forbidOthersAudio: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  permitRemoteParticipantsAudio: () => Promise<void>;
+  permitOthersAudio: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   forbidParticipantVideo: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   permitParticipantVideo: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  forbidRemoteParticipantsVideo: () => Promise<void>;
+  forbidOthersVideo: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  permitRemoteParticipantsVideo: () => Promise<void>;
+  permitOthersVideo: () => Promise<void>;
 }
 
 /**

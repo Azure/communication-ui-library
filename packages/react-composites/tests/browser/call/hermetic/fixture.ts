@@ -399,12 +399,12 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsAudio: {
+  forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsVideo: {
+  forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -461,12 +461,12 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsAudio: {
+  forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsVideo: {
+  forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -523,12 +523,12 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsAudio: {
+  forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsVideo: {
+  forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -585,12 +585,12 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsAudio: {
+  forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsVideo: {
+  forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }

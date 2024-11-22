@@ -26,7 +26,7 @@ export class MediaAccessSubscriber {
     this._context = context;
     this._mediaAccessCallFeature = mediaAccessCallFeature;
 
-    const mediaAccesses = this._mediaAccessCallFeature.getRemoteParticipantsMediaAccess();
+    const mediaAccesses = this._mediaAccessCallFeature.getAllOthersMediaAccess();
     const meetingMediaAccess = this._mediaAccessCallFeature.getMeetingMediaAccess();
 
     this._context.setMediaAccesses(this._callIdRef.callId, mediaAccesses);
