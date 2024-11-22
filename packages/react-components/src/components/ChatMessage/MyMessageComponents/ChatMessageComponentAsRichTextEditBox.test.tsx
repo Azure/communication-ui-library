@@ -19,8 +19,6 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
   const messageId = '1';
 
   const localeStrings = COMPONENT_LOCALE_EN_US.strings;
-  const cancelButtonTitle = localeStrings.messageThread.editBoxCancelButton;
-  const submitButtonTitle = localeStrings.messageThread.editBoxSubmitButton;
 
   const props: ChatMessageComponentAsRichTextEditBoxProps = {
     onCancel: onCancelMock,
@@ -43,8 +41,8 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
   test('renders the component correctly', () => {
     render(<ChatMessageComponentAsRichTextEditBox {...props} />);
 
-    const cancelButton = screen.queryByTestId(cancelButtonTitle);
-    const submitButton = screen.queryByTestId(submitButtonTitle);
+    const cancelButton = screen.queryByTestId('chat-message-rich-text-edit-box-cancel-button');
+    const submitButton = screen.queryByTestId('chat-message-rich-text-edit-box-submit-button');
     const formatButton = screen.queryByTestId('rich-text-input-box-format-button');
     const contentComponent = screen.queryByText(text);
 
@@ -57,7 +55,7 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
   test('calls onCancel when cancel button is clicked', async () => {
     render(<ChatMessageComponentAsRichTextEditBox {...props} />);
 
-    const cancelButton = screen.queryByTestId(cancelButtonTitle);
+    const cancelButton = screen.queryByTestId('chat-message-rich-text-edit-box-cancel-button');
     if (cancelButton === null) {
       throw new Error('Cancel button not found');
     }
@@ -80,7 +78,7 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
       await userEvent.keyboard(' Test');
     });
 
-    const submitButton = screen.queryByTestId(submitButtonTitle);
+    const submitButton = screen.queryByTestId('chat-message-rich-text-edit-box-submit-button');
     if (submitButton === null) {
       throw new Error('Submit button not found');
     }

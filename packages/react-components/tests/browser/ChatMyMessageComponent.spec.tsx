@@ -8,87 +8,195 @@ import {
   ChatMyMessageComponent,
   ChatMyMessageComponentProps
 } from '../../src/components/ChatMessage/MyMessageComponents/ChatMyMessageComponent';
-import { COMPONENT_LOCALE_EN_US } from '../../src';
+import { COMPONENT_LOCALE_EN_US, MessageContentType } from '../../src';
 import { Locator, Page } from 'playwright-core';
 
-betaTest.describe('ChatMyMessageComponent keyboard navigation tests', () => {
+betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', () => {
+  betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
   const localeStrings = COMPONENT_LOCALE_EN_US.strings;
 
-  const props: ChatMyMessageComponentProps = {
-    shouldOverlapAvatarAndMessage: false,
-    onActionButtonClick: () => {},
-    strings: localeStrings.messageThread,
-    message: {
-      content: 'Hello World!',
-      messageId: '1',
-      attached: true,
-      messageType: 'chat',
-      contentType: 'html',
-      createdOn: new Date(),
-      mine: true
-    },
-    userId: '1'
+  const props = (content: string, contentType: MessageContentType): ChatMyMessageComponentProps => {
+    return {
+      shouldOverlapAvatarAndMessage: false,
+      onActionButtonClick: () => {},
+      strings: localeStrings.messageThread,
+      message: {
+        messageType: 'chat',
+        senderId: 'user2',
+        senderDisplayName: 'Test user 2',
+        messageId: Math.random().toString(),
+        content: content,
+        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+        mine: true,
+        attached: false,
+        contentType: contentType,
+        attachments: [
+          {
+            url: '',
+            name: 'image.png',
+            id: '1'
+          }
+        ]
+      },
+      userId: '1'
+    };
   };
 
-  betaTest('User can navigate to message using keyboard', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props} />);
-    await showMoreMenuButton(component, page);
+  betaTest('Edit box should not allow to save empty text when attachments are deleted', async ({ mount, page }) => {
+    const component = await mount(<ChatMyMessageComponent {...props('', 'text')} isRichTextEditorEnabled={true} />);
+
+    await startMessageEditing(component, page);
+    await removeAttachmentAndSubmit(component, true);
+
+    await expect(component.getByTestId('chat-composite-message')).not.toBeVisible();
+
+    // make screenshot consistent
+    component.getByTestId('rooster-rich-text-editor').click();
+
+    await expect(component).toHaveScreenshot(
+      'chat-my-message-component-rich-text-edit-box-empty-content-without-attachment.png'
+    );
   });
 
-  betaTest('Users can start editing messages using keyboard', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props} />);
-    await showMoreMenuButton(component, page);
+  betaTest(
+    'Edit box should not allow to save empty html text when attachments are deleted',
+    async ({ mount, page }) => {
+      const component = await mount(
+        <ChatMyMessageComponent {...props('<div><br></div>', 'html')} isRichTextEditorEnabled={true} />
+      );
 
-    await openMoreMenu(component, page);
+      await startMessageEditing(component, page);
+      await removeAttachmentAndSubmit(component, true);
 
-    // start editing
-    await page.keyboard.press('Enter');
-    await expect(component.getByTestId('chat-message-edit-box-cancel-button')).toBeVisible();
-    await expect(component.getByTestId('chat-message-edit-box-submit-button')).toBeVisible();
-  });
+      await expect(component.getByTestId('chat-composite-message')).not.toBeVisible();
 
-  betaTest('Users can select delete option for a message using keyboard', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props} />);
-    await showMoreMenuButton(component, page);
+      // make screenshot consistent
+      component.getByTestId('rooster-rich-text-editor').click();
 
-    await openMoreMenu(component, page);
+      await expect(component).toHaveScreenshot(
+        'chat-my-message-component-rich-text-edit-box-empty-html-content-without-attachment.png'
+      );
+    }
+  );
 
-    const removeButton = page.getByTestId('chat-composite-message-contextual-menu-remove-action');
+  betaTest(
+    'Edit box should allow to save the message when content exists but attachments are deleted',
+    async ({ mount, page }) => {
+      const component = await await mount(
+        <ChatMyMessageComponent {...props('test', 'text')} isRichTextEditorEnabled={true} />
+      );
+      await startMessageEditing(component, page);
+      await removeAttachmentAndSubmit(component, true);
 
-    //navigate to delete button
-    await page.keyboard.press('ArrowDown');
-    await expect(removeButton).toBeFocused();
+      await expect(component.getByTestId('chat-composite-message')).toBeVisible();
 
-    // select delete
-    await page.keyboard.press('Enter');
-    await expect(removeButton).not.toBeFocused();
-    // more menu isn't open
-    expect(removeButton).not.toBeVisible();
-  });
+      await expect(component).toHaveScreenshot(
+        'chat-my-message-component-rich-text-edit-box-not-empty-message-content-without-attachment.png'
+      );
+    }
+  );
 });
 
-const showMoreMenuButton = async (component: Locator, page: Page): Promise<void> => {
+betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
+  betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
+
+  const localeStrings = COMPONENT_LOCALE_EN_US.strings;
+
+  const props = (content: string, contentType: MessageContentType): ChatMyMessageComponentProps => {
+    return {
+      shouldOverlapAvatarAndMessage: false,
+      onActionButtonClick: () => {},
+      strings: localeStrings.messageThread,
+      message: {
+        messageType: 'chat',
+        senderId: 'user2',
+        senderDisplayName: 'Test user 2',
+        messageId: Math.random().toString(),
+        content: content,
+        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
+        mine: true,
+        attached: false,
+        contentType: contentType,
+        attachments: [
+          {
+            url: '',
+            name: 'image.png',
+            id: '1'
+          }
+        ]
+      },
+      userId: '1'
+    };
+  };
+
+  betaTest('Edit box should not allow to save empty text when attachments are deleted', async ({ mount, page }) => {
+    const component = await mount(<ChatMyMessageComponent {...props('', 'text')} isRichTextEditorEnabled={false} />);
+
+    await startMessageEditing(component, page);
+    await removeAttachmentAndSubmit(component, false);
+
+    await expect(component.getByTestId('chat-composite-message')).not.toBeVisible();
+
+    // make screenshot consistent
+    component.getByRole('textbox').click();
+
+    await expect(component).toHaveScreenshot('chat-my-message-component-edit-box-empty-content-without-attachment.png');
+  });
+
+  betaTest(
+    'Edit box should not allow to save empty html text when attachments are deleted',
+    async ({ mount, page }) => {
+      const component = await mount(
+        <ChatMyMessageComponent {...props('<div><br></div>', 'html')} isRichTextEditorEnabled={false} />
+      );
+
+      await startMessageEditing(component, page);
+      await removeAttachmentAndSubmit(component, false);
+
+      // the plain edit box is not empty
+      await expect(component.getByTestId('chat-composite-message')).toBeVisible();
+
+      await expect(component).toHaveScreenshot(
+        'chat-my-message-component-edit-box-empty-html-content-without-attachment.png'
+      );
+    }
+  );
+
+  betaTest(
+    'Edit box should allow to save the message when content exists but attachments are deleted',
+    async ({ mount, page }) => {
+      const component = await await mount(
+        <ChatMyMessageComponent {...props('test', 'text')} isRichTextEditorEnabled={false} />
+      );
+      await startMessageEditing(component, page);
+      await removeAttachmentAndSubmit(component, false);
+
+      await expect(component.getByTestId('chat-composite-message')).toBeVisible();
+
+      await expect(component).toHaveScreenshot(
+        'chat-my-message-component-edit-box-not-empty-message-content-without-attachment.png'
+      );
+    }
+  );
+});
+
+const startMessageEditing = async (component: Locator, page: Page): Promise<void> => {
   await component.evaluate(() => document.fonts.ready);
   const messageBody = component.getByTestId('chat-composite-message');
   await expect(messageBody).toBeVisible();
-  await page.keyboard.press('Tab');
-
-  await expect(messageBody).toBeFocused();
+  await expect(component.getByTestId('message-timestamp')).toBeVisible();
+  await component.getByTestId('message-timestamp').hover();
 
   await expect(component.getByTestId('chat-composite-message-action-icon')).toBeVisible();
+
+  await component.getByTestId('chat-composite-message-action-icon').click();
+  await page.getByTestId('chat-composite-message-contextual-menu-edit-action').click();
 };
 
-const openMoreMenu = async (component: Locator, page: Page): Promise<void> => {
-  // navigate to message menu
-  await page.keyboard.press('Tab');
-  await expect(component.getByTestId('chat-composite-message-action-icon')).toBeFocused();
-
-  // open message menu
-  await page.keyboard.press('Enter');
-
-  // page is used here as more menu is not part of the component
-  const editButton = page.getByTestId('chat-composite-message-contextual-menu-edit-action');
-  await expect(editButton).toBeVisible();
-  await expect(page.getByTestId('chat-composite-message-contextual-menu-remove-action')).toBeVisible();
-  await expect(editButton).toBeFocused();
+const removeAttachmentAndSubmit = async (component: Locator, isRichTexEditor: boolean): Promise<void> => {
+  await component.getByLabel('Remove file').click();
+  const submitButtonTestId = isRichTexEditor
+    ? 'chat-message-rich-text-edit-box-submit-button'
+    : 'chat-message-edit-box-submit-button';
+  await component.getByTestId(submitButtonTestId).click();
 };

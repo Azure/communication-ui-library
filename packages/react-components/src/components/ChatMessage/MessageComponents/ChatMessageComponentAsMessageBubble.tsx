@@ -178,7 +178,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
               className={
                 props.message.status === 'failed' ? chatMessageDateFailedStyle(theme) : chatMessageDateStyle(theme)
               }
-              data-ui-id={ids.messageTimestamp}
+              data-testid={ids.messageTimestamp}
             >
               {formattedTimestamp}
             </Text>

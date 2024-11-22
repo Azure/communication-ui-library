@@ -14,13 +14,11 @@
     <script type="text/javascript">
       const urlParams = new URLSearchParams(window.location.search);
       const isEnabled = urlParams.get('rrt');
-      if (isEnabled !== 'true') {
-        return;
+      if (isEnabled === 'true') {
+        const script = document.createElement('script');
+        script.src = 'https://cdn.jsdelivr.net/npm/react-render-tracker';
+        document.head.appendChild(script);
       }
-
-      const script = document.createElement('script');
-      script.src = 'https://cdn.jsdelivr.net/npm/react-render-tracker';
-      document.head.appendChild(script);
     </script>
     <style>
       body {

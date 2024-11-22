@@ -326,6 +326,12 @@ export interface ActiveNotification {
    * by the user.
    */
   timestamp?: Date;
+
+  /**
+   * Aria-live property for the notification.
+   * @defaultValue polite
+   */
+  ariaLive?: 'assertive' | 'off' | 'polite';
 }
 
 /**
@@ -404,6 +410,7 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
                   index === maxNotificationsToShow - 1 && activeNotifications.length > maxNotificationsToShow
                 }
                 autoDismiss={notification.autoDismiss}
+                ariaLive={notification.ariaLive}
               />
             </div>
           );

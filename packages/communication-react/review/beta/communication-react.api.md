@@ -134,6 +134,7 @@ export interface ActiveErrorMessage {
 
 // @public
 export interface ActiveNotification {
+    ariaLive?: 'assertive' | 'off' | 'polite';
     autoDismiss?: boolean;
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
@@ -862,6 +863,7 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStarted: string;
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
+    configurationPageCameraIsLoadingLabel?: string;
     configurationPageTitle: string;
     configurationPageVideoEffectsButtonLabel?: string;
     copyInviteLinkActionedAriaLabel: string;
@@ -4047,6 +4049,7 @@ export { Notification_2 as Notification }
 
 // @public
 export interface NotificationProps {
+    ariaLive?: 'assertive' | 'off' | 'polite';
     autoDismiss?: boolean;
     notificationIconProps?: IIconProps;
     notificationStrings?: NotificationStrings;
@@ -4054,6 +4057,7 @@ export interface NotificationProps {
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
+    role?: 'alert' | 'status' | 'presentation' | 'none';
     showStackedEffect?: boolean;
     styles?: NotificationStyles;
 }
@@ -4235,9 +4239,12 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     attendeeRole: string;
     displayNamePlaceholder?: string;
+    handRaisedIconLabel?: string;
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
+    participantItemAriaLabel?: string;
+    participantItemWithMoreOptionsAriaLabel?: string;
     participantStateHold?: string;
     participantStateRinging?: string;
     removeButtonLabel: string;
