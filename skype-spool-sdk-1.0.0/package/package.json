@@ -1,0 +1,24 @@
+{
+  "name": "@azure/communication-calling",
+  "version": "1.0.0",
+  "description": "Azure Communication Services Calling Web SDK",
+  "private": false,
+  "main": "dist/sdk.bundle.js",
+  "browser": "dist/sdk.bundle.js",
+  "module": "dist-esm/sdk.bundle.js",
+  "types": "types/communication-calling-alpha.d.ts",
+  "author": "Microsoft Corp.",
+  "license": "Microsoft Software License Terms for the Azure Communications Services, Azure CPaaS, ACS Software Development Kit SDK, see LICENSE file",
+  "dependencies": {
+    "@azure/communication-common": "^2.3.0",
+    "@azure/logger": "^1.0.3"
+  },
+  "overrides": {
+    "axios": {
+      "follow-redirects": "1.15.6"
+    },
+    "@powerpoint-webcomponents/stateservice-proxy": {
+      "axios": "$axios"
+    }
+  }
+}
