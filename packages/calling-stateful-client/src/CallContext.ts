@@ -11,7 +11,7 @@ import {
   VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(media-access) */
-import { MediaAccess } from '@azure/communication-calling';
+import { MediaAccess, MeetingMediaAccess } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
@@ -1437,6 +1437,23 @@ export class CallContext {
           };
         }
       });
+    });
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public setMeetingMediaAccess(callId: string, meetingMediaAccess: MeetingMediaAccess): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (!call) {
+        return;
+      }
+
+      if (meetingMediaAccess) {
+        call.mediaAccess = {
+          isAudioPermitted: meetingMediaAccess.isAudioPermitted,
+          isVideoPermitted: meetingMediaAccess.isVideoPermitted
+        };
+      }
     });
   }
 }

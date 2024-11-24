@@ -758,6 +758,12 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#BreakoutRoomsFeature}.
    */
   breakoutRooms?: BreakoutRoomsState;
+
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Proxy of {@link @azure/communication-calling#MediaAccessFeature}.
+   */
+  mediaAccess?: MediaAccessState;
 }
 
 /**
@@ -1143,7 +1149,11 @@ export type NotificationTarget =
   | 'assignedBreakoutRoomOpenedPromptJoin'
   | 'assignedBreakoutRoomChanged'
   | 'breakoutRoomJoined'
-  | 'breakoutRoomClosingSoon';
+  | 'breakoutRoomClosingSoon'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
