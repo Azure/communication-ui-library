@@ -80,3 +80,7 @@ export type { SpotlightChangedListener } from './CallAdapter';
 export type { TeamsCallAdapter } from './CallAdapter';
 
 export type { CallingSounds, SoundEffect } from './CallAdapter';
+/* @conditional-compile-remove(media-access) */
+export type { MediaAccessChangedListener } from './CallAdapter';
+/* @conditional-compile-remove(media-access) */
+export type { MeetingMediaAccessChangedListener } from './CallAdapter';

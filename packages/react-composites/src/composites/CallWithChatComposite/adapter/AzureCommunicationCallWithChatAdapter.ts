@@ -109,6 +109,8 @@ import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { busyWait } from '../../common/utils';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccessChangedListener, MeetingMediaAccessChangedListener } from '../../CallComposite/adapter/CallAdapter';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
@@ -782,6 +784,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(breakout-rooms) */
   on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
   on(event: 'chatInitialized', listener: ChatInitializedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -885,6 +891,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'breakoutRoomsUpdated':
         this.callAdapter.on('breakoutRoomsUpdated', listener);
         break;
+      /* @conditional-compile-remove(media-access) */
+      case 'mediaAccessChanged':
+        this.callAdapter.on('mediaAccessChanged', listener);
+        break;
+      /* @conditional-compile-remove(media-access) */
+      case 'meetingMediaAccessChanged':
+        this.callAdapter.on('meetingMediaAccessChanged', listener);
+        break;
       default:
         throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;
     }
@@ -918,7 +932,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'chatInitialized', listener: ChatInitializedListener): void;
   /* @conditional-compile-remove(breakout-rooms) */
   off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
-
+  /* @conditional-compile-remove(media-access) */
+  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {
     switch (event as unknown) {
@@ -1019,6 +1036,14 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       /* @conditional-compile-remove(breakout-rooms) */
       case 'breakoutRoomsUpdated':
         this.callAdapter.off('breakoutRoomsUpdated', listener);
+        break;
+      /* @conditional-compile-remove(media-access) */
+      case 'mediaAccessChanged':
+        this.callAdapter.off('mediaAccessChanged', listener);
+        break;
+      /* @conditional-compile-remove(media-access) */
+      case 'meetingMediaAccessChanged':
+        this.callAdapter.off('meetingMediaAccessChanged', listener);
         break;
       default:
         throw `Unknown AzureCommunicationCallWithChatAdapter Event: ${event}`;
