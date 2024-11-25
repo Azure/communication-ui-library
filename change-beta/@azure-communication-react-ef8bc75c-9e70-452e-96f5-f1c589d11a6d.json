@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "A11y",
+  "comment": "Update configuration screen drop downs to have a button inside enabling users with keyboards to reprompt for the troubleshooting links",
+  "packageName": "@azure/communication-react",
+  "email": "dmceachern@microsoft.com",
+  "dependentChangeType": "patch"
+}

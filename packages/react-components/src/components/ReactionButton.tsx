@@ -29,6 +29,12 @@ import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
+ * Reactions types for the Reaction button
+ * @public
+ */
+export type ReactionButtonReaction = 'like' | 'heart' | 'applause' | 'laugh' | 'surprised';
+
+/**
  * Props for {@link ReactionButton}.
  *
  * @public
@@ -41,7 +47,7 @@ export interface ReactionButtonProps extends ControlBarButtonProps {
   /**
    * Click event to send reaction to meeting
    */
-  onReactionClick: (reaction: string) => Promise<void>;
+  onReactionClick: (reaction: ReactionButtonReaction) => Promise<void>;
   /**
    * Reaction resource locator and parameters
    */
@@ -90,7 +96,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     <_HighContrastAwareIcon disabled={props.disabled} iconName="ReactionButtonIcon" />
   );
 
-  const emojis = ['like', 'heart', 'applause', 'laugh', 'surprised'];
+  const emojis: ReactionButtonReaction[] = ['like', 'heart', 'applause', 'laugh', 'surprised'];
   const emojiButtonTooltip: Map<string, string | undefined> = new Map([
     ['like', strings.likeReactionTooltipContent],
     ['heart', strings.heartReactionTooltipContent],
@@ -158,6 +164,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                       className={classname}
                       styles={reactionItemButtonStyles}
                       aria-label={emojiButtonTooltip.get(emoji)}
+                      aria-description={strings.tooltipContent}
                     ></DefaultButton>
                   </TooltipHost>
                 );

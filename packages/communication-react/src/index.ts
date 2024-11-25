@@ -39,10 +39,11 @@ export type {
   CommonCallingHandlers
 } from '../../calling-component-bindings/src';
 
-export type { VideoBackgroundEffectsDependency, CallingHandlersOptions } from '../../calling-component-bindings/src';
-
-/* @conditional-compile-remove(DNS) */
-export type { DeepNoiseSuppressionEffectDependency } from '../../calling-component-bindings/src';
+export type {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency,
+  CallingHandlersOptions
+} from '../../calling-component-bindings/src';
 
 export type { CaptionsOptions } from '../../calling-component-bindings/src';
 
@@ -71,14 +72,12 @@ export {
   createDefaultCallingHandlers
 } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export {
   useTeamsCallAgent,
   useTeamsCall,
   createDefaultTeamsCallingHandlers
 } from '../../calling-component-bindings/src';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallingHandlers } from '../../calling-component-bindings/src';
 
 export type {
@@ -145,8 +144,10 @@ export {
   COMPONENT_LOCALE_CY_GB,
   COMPONENT_LOCALE_DE_DE,
   COMPONENT_LOCALE_ES_ES,
+  COMPONENT_LOCALE_ES_MX,
   COMPONENT_LOCALE_FI_FI,
   COMPONENT_LOCALE_FR_FR,
+  COMPONENT_LOCALE_FR_CA,
   COMPONENT_LOCALE_HE_IL,
   COMPONENT_LOCALE_IT_IT,
   COMPONENT_LOCALE_JA_JP,
@@ -312,14 +313,20 @@ export type {
   VideoTilesOptions
 } from '../../react-components/src';
 
+/* @conditional-compile-remove(together-mode) */
+export type { TogetherModeStreamViewResult } from '../../react-components/src';
+
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
 export type {
   ReactionButtonStrings,
   Reaction,
   ReactionButtonProps,
   ReactionResources,
-  ReactionSprite
+  ReactionSprite,
+  ReactionButtonReaction
 } from '../../react-components/src';
+
+export { ReactionButton } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
 export { RichTextSendBox } from '../../react-components/src';
 /* @conditional-compile-remove(rich-text-editor) */
@@ -351,7 +358,6 @@ export type {
   AttachmentUploadOptions,
   AttachmentUploadTask
 } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentMetadata } from '../../acs-ui-common/src';
 
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -435,6 +441,22 @@ export type {
   NotificationStrings,
   NotificationStackStrings,
   NotificationType,
-  ActiveNotification
+  ActiveNotification,
+  NotificationStyles
 } from '../../react-components/src';
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';
+/* @conditional-compile-remove(rtt) */
+export type { RTTModalStrings, RTTModalProps } from '../../react-components/src';
+/* @conditional-compile-remove(rtt) */
+export { RTTModal } from '../../react-components/src';
+
+/* @conditional-compile-remove(rtt) */
+export type { RTTDisclosureBannerProps, RTTDisclosureBannerStrings } from '../../react-components/src';
+/* @conditional-compile-remove(rtt) */
+export { RTTDisclosureBanner } from '../../react-components/src';
+/* @conditional-compile-remove(rtt) */
+export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
+/* @conditional-compile-remove(rtt) */
+export { RealTimeText } from '../../react-components/src/components/RealTimeText';
+/* @conditional-compile-remove(media-access) */
+export type { MediaAccess } from '../../react-components/src';

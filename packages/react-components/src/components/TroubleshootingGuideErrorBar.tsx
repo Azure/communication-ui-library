@@ -14,6 +14,7 @@ import {
   messageBarIconProps,
   messageBarType
 } from './utils';
+import { messageBarLinkStyles } from './styles/MessageBarLink.styles';
 
 /**
  * Strings for {@link _TroubleshootingGuideErrorBar}.
@@ -109,7 +110,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
 
   return (
     <Stack data-ui-id="notifications-stack">
-      {toShow.map((error) => {
+      {toShow.map((error, i) => {
         const devicePermissionErrorBar = (
           <div>
             {strings[error.type]}{' '}
@@ -118,9 +119,8 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
                 onClick={() => {
                   onPermissionsTroubleshootingClick(permissionsState);
                 }}
-                underline
               >
-                <span style={{ color: theme.palette.themeDarkAlt }}>
+                <span className={messageBarLinkStyles(theme, true)}>
                   {troubleshootingGuideStrings.devicePermissionLinkText}
                 </span>
               </Link>
@@ -133,7 +133,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
             {strings[error.type]}{' '}
             {onNetworkingTroubleshootingClick && (
               <Link onClick={onNetworkingTroubleshootingClick} underline>
-                <span style={{ color: theme.palette.themeDarkAlt }}>
+                <span className={messageBarLinkStyles(theme, true)}>
                   {troubleshootingGuideStrings.networkTroubleshootingLinkText}
                 </span>
               </Link>
@@ -145,7 +145,7 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
           <MessageBar
             {...props}
             styles={messageBarStyle(theme, messageBarType(error.type))}
-            key={error.type}
+            key={`${error.type} ${i}`}
             messageBarType={messageBarType(error.type)}
             messageBarIconProps={messageBarIconProps(error.type)}
             actions={
@@ -159,6 +159,8 @@ export const _TroubleshootingGuideErrorBar = (props: _TroubleshootingGuideErrorB
               />
             }
             isMultiline={false}
+            aria-role="alert"
+            aria-live="assertive"
           >
             {showErrorBar(error.type, devicePermissionErrorBar, networkErrorBar)}
           </MessageBar>

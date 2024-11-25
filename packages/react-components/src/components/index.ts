@@ -187,7 +187,7 @@ export { RaiseHandButton } from './RaiseHandButton';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings } from './RaiseHandButton';
 export { ReactionButton } from './ReactionButton';
-export type { ReactionButtonProps, ReactionButtonStrings } from './ReactionButton';
+export type { ReactionButtonProps, ReactionButtonStrings, ReactionButtonReaction } from './ReactionButton';
 export { VideoTile } from './VideoTile';
 export type { VideoTileProps, VideoTileStylesProps, VideoTileStrings } from './VideoTile';
 
@@ -296,6 +296,9 @@ export * from './StartCaptionsButton';
 
 export * from './CaptionsSettingsModal';
 
+/* @conditional-compile-remove(rtt) */
+export * from './RTTModal';
+
 export * from './MeetingConferencePhoneInfo';
 export { _formatPhoneNumber } from './utils/formatPhoneNumber';
 
@@ -307,3 +310,8 @@ export * from './NotificationStack';
 
 export * from './IncomingCallNotification';
 export * from './IncomingCallStack';
+
+/* @conditional-compile-remove(rtt) */
+export * from './RTTDisclosureBanner';
+/* @conditional-compile-remove(rtt) */
+export * from './RealTimeText';

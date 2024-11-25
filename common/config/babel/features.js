@@ -24,7 +24,11 @@ module.exports = {
     // Feature for showing dtmp dialer by default
     "dtmf-dialer-on-by-default",
     // Feature for together mode
-    "together-mode"
+    "together-mode",
+    // Feature for forbid/permit remote participants audio/video access
+    "media-access",
+    // Feature for RTT
+    "rtt"
   ],
   beta: [
     "call-readiness",
@@ -53,8 +57,6 @@ module.exports = {
     "unsupported-browser",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
     "total-participant-count",
-    // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
-    "calling-environment-info",
     // conditional-compile for new signaling beta
     "signaling-beta",
     // Image overlay theme
@@ -80,21 +82,5 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Joining calls using teams token
-    "teams-identity-support",
-    // Feature for end call options 
-    'end-call-options',
-    // Feature to support file sharing in Teams interoperability chats
-    "file-sharing-teams-interop",
-    // Feature for showing notifications
-    "notifications",
-    // Feature for tracking beta start call identifier
-    'start-call-beta',
-    // feature for adding JS helpers to the UI library API
-    "composite-js-helpers",
-    // Deep Noise Suppression feature
-    "DNS",
-    // Soft Mute feature for ACS calls and Interop calls
-    "soft-mute"
   ]
 }

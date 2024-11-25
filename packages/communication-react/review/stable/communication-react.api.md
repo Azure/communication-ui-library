@@ -43,6 +43,7 @@ import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { DtmfTone as DtmfTone_2 } from '@azure/communication-calling';
+import { EnvironmentInfo } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
@@ -51,6 +52,7 @@ import { IContextualMenuItemStyles } from '@fluentui/react';
 import { IContextualMenuProps } from '@fluentui/react';
 import { IContextualMenuStyles } from '@fluentui/react';
 import { IIconProps } from '@fluentui/react';
+import { IIconStyles } from '@fluentui/react';
 import { IMessageBarProps } from '@fluentui/react';
 import { IncomingCall } from '@azure/communication-calling';
 import { IncomingCallKind } from '@azure/communication-calling';
@@ -119,6 +121,7 @@ export interface ActiveErrorMessage {
 
 // @public
 export interface ActiveNotification {
+    ariaLive?: 'assertive' | 'off' | 'polite';
     autoDismiss?: boolean;
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
@@ -322,6 +325,7 @@ export type CallAdapterClientState = {
     isRoomsCall: boolean;
     latestErrors: AdapterErrors;
     alternateCallerId?: string;
+    environmentInfo?: EnvironmentInfo;
     cameraStatus?: 'On' | 'Off';
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
@@ -448,6 +452,7 @@ export interface CallClientState {
         [key: string]: CallState;
     };
     deviceManager: DeviceManagerState;
+    environmentInfo?: EnvironmentInfo;
     incomingCalls: {
         [key: string]: IncomingCallState | TeamsIncomingCallState;
     };
@@ -547,8 +552,8 @@ export type CallCompositeIcons = {
 
 // @public
 export type CallCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: CommunicationTokenCredential;
     displayName: string;
     locator: CallAdapterLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
@@ -647,6 +652,7 @@ export interface CallCompositeStrings {
     complianceBannerTranscriptionStarted: string;
     complianceBannerTranscriptionStopped: string;
     configurationPageCallDetails?: string;
+    configurationPageCameraIsLoadingLabel?: string;
     configurationPageTitle: string;
     configurationPageVideoEffectsButtonLabel?: string;
     copyInviteLinkActionedAriaLabel: string;
@@ -706,6 +712,7 @@ export interface CallCompositeStrings {
     moreButtonGalleryPositionToggleLabel?: string;
     moreButtonGallerySpeakerLayoutLabel?: string;
     moreButtonLargeGalleryDefaultLayoutLabel?: string;
+    moreButtonTogetherModeLayoutLabel?: string;
     muteAllCancelButtonLabel: string;
     muteAllConfirmButtonLabel: string;
     muteAllDialogContent: string;
@@ -840,7 +847,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -1162,6 +1169,7 @@ export interface CallWithChatClientState {
     deepNoiseSuppressionOnByDefault?: boolean;
     devices: DeviceManagerState;
     displayName: string | undefined;
+    environmentInfo?: EnvironmentInfo;
     hideAttendeeNames?: boolean;
     hideDeepNoiseSuppressionButton?: boolean;
     isTeamsCall: boolean;
@@ -1258,8 +1266,8 @@ export type CallWithChatCompositeIcons = {
 
 // @public
 export type CallWithChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: CommunicationTokenCredential;
     displayName: string;
     endpoint: string;
     locator: CallAndChatLocator;
@@ -1653,8 +1661,8 @@ export type ChatCompositeIcons = {
 
 // @public
 export type ChatCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: CommunicationTokenCredential;
     displayName?: string;
     endpoint: string;
     threadId: string;
@@ -1998,7 +2006,13 @@ export const COMPONENT_LOCALE_EN_US: ComponentLocale;
 export const COMPONENT_LOCALE_ES_ES: ComponentLocale;
 
 // @public
+export const COMPONENT_LOCALE_ES_MX: ComponentLocale;
+
+// @public
 export const COMPONENT_LOCALE_FI_FI: ComponentLocale;
+
+// @public
+export const COMPONENT_LOCALE_FR_CA: ComponentLocale;
 
 // @public
 export const COMPONENT_LOCALE_FR_FR: ComponentLocale;
@@ -2106,7 +2120,13 @@ export const COMPOSITE_LOCALE_EN_US: CompositeLocale;
 export const COMPOSITE_LOCALE_ES_ES: CompositeLocale;
 
 // @public
+export const COMPOSITE_LOCALE_ES_MX: CompositeLocale;
+
+// @public
 export const COMPOSITE_LOCALE_FI_FI: CompositeLocale;
+
+// @public
+export const COMPOSITE_LOCALE_FR_CA: CompositeLocale;
 
 // @public
 export const COMPOSITE_LOCALE_FR_FR: CompositeLocale;
@@ -2826,7 +2846,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : AreEqual<Component, typeof ReactionButton> extends true ? EmptySelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -3406,13 +3426,17 @@ export { Notification_2 as Notification }
 
 // @public
 export interface NotificationProps {
+    ariaLive?: 'assertive' | 'off' | 'polite';
     autoDismiss?: boolean;
     notificationIconProps?: IIconProps;
     notificationStrings?: NotificationStrings;
+    onClickLink?: () => void;
     onClickPrimaryButton?: () => void;
     onClickSecondaryButton?: () => void;
     onDismiss?: () => void;
+    role?: 'alert' | 'status' | 'presentation' | 'none';
     showStackedEffect?: boolean;
+    styles?: NotificationStyles;
 }
 
 // @public
@@ -3478,11 +3502,23 @@ export interface NotificationStackStrings {
 
 // @public
 export interface NotificationStrings {
-    dismissButtonAriaLabel: string;
+    dismissButtonAriaLabel?: string;
+    linkLabel?: string;
     message?: string;
     primaryButtonLabel?: string;
     secondaryButtonLabel?: string;
     title: string;
+}
+
+// @public
+export interface NotificationStyles {
+    content?: IStackStyles;
+    icon?: IIconStyles;
+    link?: IStackStyles;
+    primaryButton?: IButtonStyles;
+    root?: IStackStyles;
+    secondaryButton?: IButtonStyles;
+    title?: IStackStyles;
 }
 
 // @public
@@ -3521,8 +3557,8 @@ export interface OptionsDevice {
 
 // @public
 export type OutboundCallCompositeLoaderProps = {
-    userId: string;
-    token: string;
+    userId: CommunicationUserIdentifier;
+    credential: CommunicationTokenCredential;
     displayName: string;
     targetCallees: string[] | StartCallIdentifier[];
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
@@ -3564,9 +3600,12 @@ export interface ParticipantItemProps {
 export interface ParticipantItemStrings {
     attendeeRole: string;
     displayNamePlaceholder?: string;
+    handRaisedIconLabel?: string;
     isMeText: string;
     menuTitle: string;
     mutedIconLabel: string;
+    participantItemAriaLabel?: string;
+    participantItemWithMoreOptionsAriaLabel?: string;
     participantStateHold?: string;
     participantStateRinging?: string;
     removeButtonLabel: string;
@@ -3763,11 +3802,17 @@ export type Reaction = {
 };
 
 // @public
+export const ReactionButton: (props: ReactionButtonProps) => JSX.Element;
+
+// @public
 export interface ReactionButtonProps extends ControlBarButtonProps {
-    onReactionClick: (reaction: string) => Promise<void>;
+    onReactionClick: (reaction: ReactionButtonReaction) => Promise<void>;
     reactionResources: ReactionResources;
     strings?: Partial<ReactionButtonStrings>;
 }
+
+// @public
+export type ReactionButtonReaction = 'like' | 'heart' | 'applause' | 'laugh' | 'surprised';
 
 // @public
 export interface ReactionButtonStrings {
@@ -4042,6 +4087,7 @@ export type SpotlightChangedListener = (args: {
 
 // @public
 export interface SpotlightPromptStrings {
+    closeSpotlightPromptButtonLabel: string;
     startSpotlightCancelButtonLabel: string;
     startSpotlightConfirmButtonLabel: string;
     startSpotlightHeading: string;
@@ -4064,7 +4110,7 @@ export interface SpotlightState {
 }
 
 // @public
-export type StartCallIdentifier = (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier) | CommunicationIdentifier;
+export type StartCallIdentifier = CommunicationIdentifier;
 
 // @public
 export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
@@ -4614,6 +4660,10 @@ export interface VideoTilesOptions {
 // @public
 export interface VideoTileStrings {
     moreOptionsButtonAriaLabel: string;
+    moreOptionsParticipantHandRaisedAriaLabel: string;
+    moreOptionsParticipantIsSpeakingAriaLabel: string;
+    moreOptionsParticipantMutedStateMutedAriaLabel: string;
+    moreOptionsParticipantMutedStateUnmutedAriaLabel: string;
     participantStateHold: string;
     participantStateRinging: string;
 }

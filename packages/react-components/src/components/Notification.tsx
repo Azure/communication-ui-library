@@ -2,14 +2,28 @@
 // Licensed under the MIT License.
 
 import React, { useState } from 'react';
-import { Icon, IconButton, PrimaryButton, Stack, useTheme, Text, IIconProps, DefaultButton } from '@fluentui/react';
+import {
+  Icon,
+  IconButton,
+  PrimaryButton,
+  Stack,
+  useTheme,
+  Text,
+  IIconProps,
+  DefaultButton,
+  Link,
+  IStackStyles,
+  IButtonStyles,
+  IIconStyles
+} from '@fluentui/react';
 import { cancelIcon } from './styles/ImageOverlay.style';
 import {
   containerStyles,
   hiddenContainerStyles,
-  messageTextStyle,
-  notificationIconClassName,
-  titleTextClassName
+  messageTextStyles,
+  notificationIconStyles,
+  notificationLinkStyles,
+  titleTextStyles
 } from './styles/Notification.styles';
 
 /**
@@ -41,6 +55,18 @@ export interface NotificationProps {
   showStackedEffect?: boolean;
 
   /**
+   * Role html property for the notification bar.
+   * @defaultValue alert
+   */
+  role?: 'alert' | 'status' | 'presentation' | 'none';
+
+  /**
+   * Aria-live property for the notification bar.
+   * @defaultValue assertive
+   */
+  ariaLive?: 'assertive' | 'off' | 'polite';
+
+  /**
    * Callback called when the primary button inside notification bar is clicked.
    */
   onClickPrimaryButton?: () => void;
@@ -54,6 +80,16 @@ export interface NotificationProps {
    * Callback called when the notification is dismissed.
    */
   onDismiss?: () => void;
+
+  /**
+   * Optional callback to supply users with further troubleshooting steps or more information for the notification.
+   */
+  onClickLink?: () => void;
+
+  /**
+   * Styles for the incoming call notifications.
+   */
+  styles?: NotificationStyles;
 }
 
 /**
@@ -69,7 +105,7 @@ export interface NotificationStrings {
   /**
    * Notification bar dismiss button aria label
    */
-  dismissButtonAriaLabel: string;
+  dismissButtonAriaLabel?: string;
   /**
    * Notification bar message.
    */
@@ -82,6 +118,46 @@ export interface NotificationStrings {
    * Notification bar secondary button label
    */
   secondaryButtonLabel?: string;
+  /**
+   * Notification bar link label
+   */
+  linkLabel?: string;
+}
+
+/**
+ * Styles for the notification component.
+ *
+ * @public
+ */
+export interface NotificationStyles {
+  /**
+   * Styles for the primary button.
+   */
+  primaryButton?: IButtonStyles;
+  /**
+   * Styles for the secondary button.
+   */
+  secondaryButton?: IButtonStyles;
+  /**
+   * Styles for the root container.
+   */
+  root?: IStackStyles;
+  /**
+   * Styles for the notification title.
+   */
+  title?: IStackStyles;
+  /**
+   * Styles for the notification icon.
+   */
+  icon?: IIconStyles;
+  /**
+   * Styles for the notification content.
+   */
+  content?: IStackStyles;
+  /**
+   * Styles for the notification hyperlink.
+   */
+  link?: IStackStyles;
 }
 
 /**
@@ -93,6 +169,7 @@ export const Notification = (props: NotificationProps): JSX.Element => {
   const strings = props.notificationStrings;
   const theme = useTheme();
   const [show, setShow] = useState(true);
+  const { ariaLive = 'assertive', role = 'alert' } = props;
 
   if (props.autoDismiss) {
     setTimeout(() => {
@@ -107,36 +184,48 @@ export const Notification = (props: NotificationProps): JSX.Element => {
   }
 
   return (
-    <Stack horizontalAlign="center">
-      <Stack data-ui-id="notification-bar" className={containerStyles(theme)}>
+    <Stack horizontalAlign="center" aria-live={ariaLive} role={role}>
+      <Stack data-ui-id="notification-bar" styles={props.styles?.root ?? containerStyles(theme)}>
         <Stack horizontal horizontalAlign="space-between">
           <Stack horizontal>
             <Icon
-              className={notificationIconClassName}
+              styles={props.styles?.icon ?? notificationIconStyles()}
               iconName={props.notificationIconProps?.iconName ?? 'ErrorBadge'}
               {...props.notificationIconProps}
             />
-            <Text className={titleTextClassName}>{strings?.title}</Text>
+            <Text styles={props.styles?.title ?? titleTextStyles()}>{strings?.title}</Text>
           </Stack>
-
-          <IconButton
-            iconProps={cancelIcon}
-            ariaLabel={strings?.dismissButtonAriaLabel}
-            aria-live={'polite'}
-            onClick={props.onDismiss}
-          />
+          {props.onDismiss && (
+            <IconButton
+              iconProps={cancelIcon}
+              ariaLabel={strings?.dismissButtonAriaLabel}
+              aria-live={'polite'}
+              onClick={props.onDismiss}
+            />
+          )}
         </Stack>
-        <Text className={messageTextStyle(theme)} style={{ marginTop: '0.25rem' }}>
-          {strings?.message}
-        </Text>
+        <span>
+          <Text styles={props.styles?.content ?? messageTextStyles(theme)}> {strings?.message}</Text>
+          {props.onClickLink && strings?.linkLabel && (
+            <Link styles={props.styles?.link ?? notificationLinkStyles(theme)} onClick={props.onClickLink}>
+              {strings?.linkLabel}
+            </Link>
+          )}
+        </span>
         <Stack horizontal horizontalAlign="space-evenly">
           {strings?.secondaryButtonLabel && (
-            <DefaultButton onClick={props.onClickSecondaryButton} style={{ marginTop: '1rem' }}>
+            <DefaultButton
+              onClick={props.onClickSecondaryButton}
+              styles={props.styles?.secondaryButton ?? { root: { marginTop: '1rem' } }}
+            >
               {strings?.secondaryButtonLabel}
             </DefaultButton>
           )}
           {strings?.primaryButtonLabel && (
-            <PrimaryButton onClick={props.onClickPrimaryButton} style={{ marginTop: '1rem' }}>
+            <PrimaryButton
+              onClick={props.onClickPrimaryButton}
+              styles={props.styles?.primaryButton ?? { root: { marginTop: '1rem' } }}
+            >
               {strings?.primaryButtonLabel}
             </PrimaryButton>
           )}

@@ -26,6 +26,8 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 import { MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(breakout-rooms) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -353,11 +355,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.off.bind(this);
     this.downloadResourceToCache = this.downloadResourceToCache.bind(this);
     this.removeResourceFromCache = this.removeResourceFromCache.bind(this);
-
     this.holdCall.bind(this);
-
     this.resumeCall.bind(this);
-
     this.addParticipant.bind(this);
     this.sendDtmfTone.bind(this);
     /* @conditional-compile-remove(unsupported-browser) */
@@ -367,13 +366,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.setSpokenLanguage.bind(this);
     this.setCaptionLanguage.bind(this);
     this.startVideoBackgroundEffect.bind(this);
-
     this.stopVideoBackgroundEffects.bind(this);
-
     this.updateBackgroundPickerImages.bind(this);
-    /* @conditional-compile-remove(DNS) */
     this.startNoiseSuppressionEffect.bind(this);
-    /* @conditional-compile-remove(DNS) */
     this.stopNoiseSuppressionEffect.bind(this);
   }
 
@@ -525,6 +520,24 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async disposeLocalVideoStreamView(): Promise<void> {
     await this.callAdapter.disposeLocalVideoStreamView();
   }
+  /* @conditional-compile-remove(together-mode) */
+  public async createTogetherModeStreamViews(
+    options?: VideoStreamOptions
+  ): Promise<void | TogetherModeStreamViewResult> {
+    return await this.callAdapter.createTogetherModeStreamViews(options);
+  }
+  /* @conditional-compile-remove(together-mode) */
+  public async startTogetherMode(): Promise<void> {
+    return await this.callAdapter.startTogetherMode();
+  }
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSceneSize(width: number, height: number): void {
+    return this.callAdapter.setTogetherModeSceneSize(width, height);
+  }
+  /* @conditional-compile-remove(together-mode) */
+  public async disposeTogetherModeStreamViews(): Promise<void> {
+    await this.callAdapter.disposeTogetherModeStreamViews();
+  }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {
     return await this.executeWithResolvedChatAdapter((adapter) => {
@@ -659,12 +672,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async startNoiseSuppressionEffect(): Promise<void> {
     return await this.callAdapter.startNoiseSuppressionEffect();
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async stopNoiseSuppressionEffect(): Promise<void> {
     return await this.callAdapter.stopNoiseSuppressionEffect();
   }
@@ -685,12 +696,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.stopAllSpotlight();
   }
 
-  /* @conditional-compile-remove(soft-mute) */
   public async muteParticipant(userId: string): Promise<void> {
     return this.callAdapter.muteParticipant(userId);
   }
 
-  /* @conditional-compile-remove(soft-mute) */
   public async muteAllRemoteParticipants(): Promise<void> {
     return this.callAdapter.muteAllRemoteParticipants();
   }

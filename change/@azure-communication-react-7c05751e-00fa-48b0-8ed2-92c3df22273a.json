@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Ezra",
-  "comment": "update size to stop white border in safari",
-  "packageName": "@azure/communication-react",
-  "email": "dmceachern@microsoft.com",
-  "dependentChangeType": "patch"
-}

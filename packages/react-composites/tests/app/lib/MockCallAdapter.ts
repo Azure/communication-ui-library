@@ -91,6 +91,22 @@ export class MockCallAdapter implements CallAdapter {
   disposeStreamView(): Promise<void> {
     throw Error('disposeStreamView not implemented');
   }
+  /* @conditional-compile-remove(together-mode) */
+  createTogetherModeStreamViews(): Promise<void> {
+    throw Error('createTogetherModeStreamViews not implemented');
+  }
+  /* @conditional-compile-remove(together-mode) */
+  startTogetherMode(): Promise<void> {
+    throw Error('startTogetherMode not implemented');
+  }
+  /* @conditional-compile-remove(together-mode) */
+  setTogetherModeSceneSize(width: number, height: number): void {
+    throw Error(`Setting Together Mode width ${width} and height: ${height} not implemented`);
+  }
+  /* @conditional-compile-remove(together-mode) */
+  disposeTogetherModeStreamViews(): Promise<void> {
+    throw Error('disposeFeatureStreamView not implemented');
+  }
   disposeScreenShareStreamView(): Promise<void> {
     return Promise.resolve();
   }
@@ -148,11 +164,9 @@ export class MockCallAdapter implements CallAdapter {
   stopAllSpotlight(): Promise<void> {
     throw Error('stopAllSpotlight not implemented');
   }
-  /* @conditional-compile-remove(soft-mute) */
   muteParticipant(): Promise<void> {
     throw Error('muteParticipant not implemented');
   }
-  /* @conditional-compile-remove(soft-mute) */
   muteAllRemoteParticipants(): Promise<void> {
     throw Error('muteAllRemoteParticipants not implemented');
   }

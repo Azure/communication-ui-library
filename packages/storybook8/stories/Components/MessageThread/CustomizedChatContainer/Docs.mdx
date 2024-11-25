@@ -1,0 +1,18 @@
+import { Canvas, Meta } from '@storybook/blocks';
+import * as MessageThreadWithCustomizedChatContainer from './index.stories';
+
+import MessageThreadWithCustomChatContainerExampleText from '!!raw-loader!./snippets/CustomChatContainer.snippet.tsx';
+
+<Meta of={MessageThreadWithCustomizedChatContainer} />
+
+## Messages with Customized Chat Container
+
+The example below shows how to render a `custom` chat container with `styles.chatContainer` in `MessageThread`
+
+## Example
+
+<Canvas
+  of={MessageThreadWithCustomizedChatContainer.CustomChatContainerDocsOnly}
+  source={{ code: MessageThreadWithCustomChatContainerExampleText }}
+  layout="padded"
+/>

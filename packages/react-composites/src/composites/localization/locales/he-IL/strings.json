@@ -327,7 +327,8 @@
       "stopAllSpotlightText": "סרטוני הווידאו לא יסומנו עוד עבור כל האנשים בפגישה.",
       "stopSpotlightConfirmButtonLabel": "הפסק להציב זרקור",
       "stopSpotlightOnSelfConfirmButtonLabel": "צא מזרקור",
-      "stopSpotlightCancelButtonLabel": "ביטול"
+      "stopSpotlightCancelButtonLabel": "ביטול",
+      "closeSpotlightPromptButtonLabel": "סגור"
     },
     "exitSpotlightButtonLabel": "צא מהזרקור",
     "exitSpotlightButtonTooltip": "צא מהזרקור",

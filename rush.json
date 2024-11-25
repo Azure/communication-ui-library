@@ -1,8 +1,8 @@
 {
   "$schema": "https://developer.microsoft.com/json-schemas/rush/v5/rush.schema.json",
-  "rushVersion": "5.136.0",
+  "rushVersion": "5.140.1",
   "pnpmVersion": "8.11.0",
-  "nodeSupportedVersionRange": ">=16.19.0 <21.0.0",
+  "nodeSupportedVersionRange": ">=16.19.0 <23.0.0",
   "ensureConsistentVersions": true,
   "gitPolicy": {
     "versionBumpCommitMessage": "Applying package updates. [skip-ci]",
@@ -81,7 +81,7 @@
       "reviewCategory": "sample"
     },
     {
-      "packageName": "@internal/callingstateful",
+      "packageName": "@internal/calling-stateful-samples",
       "projectFolder": "samples/CallingStateful",
       "reviewCategory": "sample"
     },

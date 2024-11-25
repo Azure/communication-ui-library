@@ -25,7 +25,6 @@ export const groupCallLeaveButtonStyle = {
   root: {
     border: '0.125rem',
     borderRadius: 2,
-    height: '2.1875rem',
     width: '6.5625rem'
   },
   flexContainer: {

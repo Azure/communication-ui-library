@@ -30,13 +30,15 @@ import {
   rootStyles,
   videoContainerStyles,
   tileInfoContainerStyle,
-  participantStateStringStyles
+  participantStateStringStyles,
+  videoTileHighContrastStyles
 } from './styles/VideoTile.styles';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 import { ReactionResources } from '../types/ReactionTypes';
+import { formatMoreButtonAriaDescription } from './utils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -49,6 +51,17 @@ export interface VideoTileStrings {
   participantStateRinging: string;
   /** String for displaying the Hold state of the remote participant */
   participantStateHold: string;
+  /* @conditional-compile-remove(remote-ufd) */
+  /** String for displaying the reconnecting state of the remote participant */
+  participantReconnecting?: string;
+  /** String for the announcement of the muted state of the participant when muted */
+  moreOptionsParticipantMutedStateMutedAriaLabel: string;
+  /** String for the announcement of the unmuted state of the participant when unmuted */
+  moreOptionsParticipantMutedStateUnmutedAriaLabel: string;
+  /** String for the announcement of the participant has their hand raised */
+  moreOptionsParticipantHandRaisedAriaLabel: string;
+  /** String for the announcement of whether the participant is speaking or not */
+  moreOptionsParticipantIsSpeakingAriaLabel: string;
 }
 
 /**
@@ -213,23 +226,56 @@ const videoTileMoreMenuProps = {
 };
 const VideoTileMoreOptionsButton = (props: {
   contextualMenu?: IContextualMenuProps;
+  participantDisplayName: string | undefined;
+  participantState: string | undefined;
+  participantHandRaised: boolean;
+  participantIsSpeaking: boolean | undefined;
+  participantIsMuted: boolean | undefined;
   canShowContextMenuButton: boolean;
 }): JSX.Element => {
-  const locale = useLocale();
+  const locale = useLocale().strings.videoTile;
   const theme = useTheme();
-  const strings = { ...locale.strings.videoTile };
 
-  const { contextualMenu, canShowContextMenuButton } = props;
+  const {
+    contextualMenu,
+    canShowContextMenuButton,
+    participantDisplayName,
+    participantHandRaised,
+    participantIsSpeaking,
+    participantState,
+    participantIsMuted
+  } = props;
+  const [moreButtonAiraDescription, setMoreButtonAriaDescription] = useState<string>('');
+
+  useEffect(() => {
+    setMoreButtonAriaDescription(
+      formatMoreButtonAriaDescription(
+        participantDisplayName,
+        participantIsMuted,
+        participantHandRaised,
+        participantState,
+        participantIsSpeaking,
+        locale
+      )
+    );
+  }, [
+    participantDisplayName,
+    participantHandRaised,
+    participantIsMuted,
+    participantIsSpeaking,
+    participantState,
+    locale
+  ]);
+
   if (!contextualMenu) {
     return <></>;
   }
 
   const optionsIcon = canShowContextMenuButton ? 'VideoTileMoreOptions' : undefined;
-
   return (
     <IconButton
       data-ui-id="video-tile-more-options-button"
-      ariaLabel={strings?.moreOptionsButtonAriaLabel}
+      ariaLabel={moreButtonAiraDescription}
       styles={moreButtonStyles(theme)}
       menuIconProps={videoTileMoreMenuIconProps}
       menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
@@ -393,17 +439,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           background: theme.palette.neutralLighter,
           borderRadius: theme.effects.roundedCorner4
         },
-        (isSpeaking || raisedHand) && {
-          '&::after': {
-            content: `''`,
-            position: 'absolute',
-            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : raisedHandBackgroundColor}`,
-            borderRadius: theme.effects.roundedCorner4,
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'none'
-          }
-        },
+        isSpeaking || raisedHand
+          ? {
+              '&::after': {
+                content: `''`,
+                position: 'absolute',
+                border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : raisedHandBackgroundColor}`,
+                borderRadius: theme.effects.roundedCorner4,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none'
+              }
+            }
+          : {},
+        videoTileHighContrastStyles(theme),
         styles?.root
       )}
       {...longPressHandlers}
@@ -468,6 +517,11 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
               )}
               <VideoTileMoreOptionsButton
                 contextualMenu={contextualMenu}
+                participantDisplayName={displayName}
+                participantHandRaised={!!raisedHand}
+                participantIsMuted={isMuted}
+                participantState={participantStateString}
+                participantIsSpeaking={isSpeaking}
                 canShowContextMenuButton={canShowContextMenuButton}
               />
             </Stack>

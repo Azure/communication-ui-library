@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "Kolom verwijderen",
     "richTextDeleteRowMenu": "Rij verwijderen",
     "richTextDeleteTableMenu": "Tabel verwijderen",
+    "richTextToolbarAriaLabel": "Werkbalk Berichtopmaak",
     "richTextToolbarMoreButtonAriaLabel": "Meer opties",
     "attachmentMoreMenu": "Meer opties",
     "richTextNewBulletedListItemAnnouncement": "Opsommingsteken, nieuwe regel",
     "richTextNewNumberedListItemAnnouncement": "{0}, nieuwe regel",
     "richTextBulletedListAppliedAnnouncement": "Lijst met opsommingstekens toegepast",
     "richTextNumberedListAppliedAnnouncement": "Genummerde lijst is toegepast"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "RTT Modal inschakelen",
+    "rttModalTitle": "RTT inschakelen?",
+    "rttModalText": "Tekst in realtime (RTT) wordt ingeschakeld voor iedereen in de vergadering.",
+    "rttConfirmButtonLabel": "Inschakelen",
+    "rttCancelButtonLabel": "Annuleren",
+    "rttCloseModalButtonAriaLabel": "RTT Modaal sluiten"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "Lachen",
     "applauseReactionTooltipContent": "Applaus",
     "surprisedReactionTooltipContent": "Verrast"
+  },
+  "rtt": {
+    "isTypingText": "RTT typen"
   },
   "messageThread": {
     "yesterday": "Gisteren",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "Bellen...",
+    "participantReconnecting": "Opnieuw verbinding maken...",
     "participantStateHold": "In de wacht",
-    "moreOptionsButtonAriaLabel": "Meer opties"
+    "moreOptionsButtonAriaLabel": "Meer opties {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "gedempt",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "niet gedempt",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Opgestoken hand",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Spreken"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Toestaan dat {appName} uw camera en microfoon gebruikt",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "vorige pagina",
-    "rightNavButtonAriaLabel": "volgende pagina"
+    "leftNavButtonAriaLabel": "vorige pagina {current} van {total}",
+    "rightNavButtonAriaLabel": "volgende pagina {current} van {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Deelnemen aan gesprek vanaf uw telefoon",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Weigeren",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepteren met video",
     "incomingCallNotificationDismissButtonAriaLabel": "Sluiten"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (realtime-tekst) is ingeschakeld voor alle deelnemers gedurende de hele duur van de vergadering.",
+    "bannerLinkLabel": "Meer informatie"
   }
 }

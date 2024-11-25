@@ -10,7 +10,6 @@ import {
   PermissionConstraints,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
@@ -111,8 +110,17 @@ export class _MockCallAdapter implements CallAdapter {
   createStreamView(): Promise<void> {
     throw Error('createStreamView not implemented');
   }
+  /* @conditional-compile-remove(together-mode) */
+  createTogetherModeStreamViews(): Promise<void> {
+    throw Error('createTogetherModeStreamViews not implemented');
+  }
+  /* @conditional-compile-remove(together-mode) */
   startTogetherMode(): Promise<void> {
     throw Error('startTogetherMode not implemented');
+  }
+  /* @conditional-compile-remove(together-mode) */
+  setTogetherModeSceneSize(width: number, height: number): void {
+    throw Error(`Setting Together Mode scene to width ${width} and height ${height} is not implemented`);
   }
   disposeStreamView(): Promise<void> {
     return Promise.resolve();
@@ -124,6 +132,10 @@ export class _MockCallAdapter implements CallAdapter {
     return Promise.resolve();
   }
   disposeRemoteVideoStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
+  /* @conditional-compile-remove(together-mode) */
+  disposeTogetherModeStreamViews(): Promise<void> {
     return Promise.resolve();
   }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -221,7 +233,6 @@ export class _MockCallAdapter implements CallAdapter {
   muteParticipant(userId: string): Promise<void> {
     throw Error('muteParticipant not implemented');
   }
-  /* @conditional-compile-remove(soft-mute) */
   muteAllRemoteParticipants(): Promise<void> {
     throw Error('muteAllRemoteParticipants not implemented');
   }
@@ -241,7 +252,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
     page: 'call',
     call: {
       id: 'call1',
-      /* @conditional-compile-remove(teams-identity-support) */
       kind: CallKind.Call,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
@@ -260,7 +270,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(together-mode) */
-      togetherMode: { stream: [] },
+      togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
       pptLive: { isActive: false },
       localParticipantReaction: undefined,
       role,

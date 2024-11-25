@@ -30,13 +30,17 @@ export const SidePaneHeader = (props: {
         minWidth: '1.5rem',
         padding: '0.5rem 0.25rem',
         marginRight: '0.25rem',
-        backgroundColor: theme.semanticColors.bodyBackground
+        backgroundColor: theme.semanticColors.bodyBackground,
+        '@media (forced-colors: active)': {
+          border: `0.1rem solid ${theme.palette.neutralSecondary}`,
+          borderRadius: theme.effects.roundedCorner4
+        }
       },
       icon: { color: theme.palette.neutralSecondary },
       iconHovered: { color: theme.palette.neutralSecondary },
       iconPressed: { color: theme.palette.neutralSecondary }
     }),
-    [theme.palette.neutralSecondary, theme.semanticColors.bodyBackground]
+    [theme.palette.neutralSecondary, theme.semanticColors.bodyBackground, theme.effects.roundedCorner4]
   );
 
   if (props.mobileView) {
@@ -54,6 +58,7 @@ export const SidePaneHeader = (props: {
           styles={sidePaneCloseButtonStyles}
           iconProps={{ iconName: 'cancel' }}
           onClick={props.onClose}
+          autoFocus
         />
       </Stack.Item>
     </Stack>

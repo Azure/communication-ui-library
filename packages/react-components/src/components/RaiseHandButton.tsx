@@ -73,6 +73,8 @@ export const RaiseHandButton = (props: RaiseHandButtonProps): JSX.Element => {
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderRaiseHandIcon}
       strings={strings}
       labelKey={props.labelKey ?? 'raiseHandButtonLabel'}
+      aria-label={props.checked ? strings.onLabel : strings.offLabel}
+      aria-description={props.checked ? strings.tooltipOnContent : strings.tooltipOffContent}
       disabled={props.disabled}
     />
   );

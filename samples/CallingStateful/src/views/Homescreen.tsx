@@ -60,7 +60,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
         <PrimaryButton
           onClick={() => {
             console.log('targetParticipants', targetParticipants);
-            if (targetParticipants && targetParticipants.length > 0) {
+            if (targetParticipants && targetParticipants[0]) {
               if (isPhoneNumberIdentifier(targetParticipants[0]) && alternateCallerId) {
                 (callAgent as CallAgent).startCall(targetParticipants as PhoneNumberIdentifier[], {
                   alternateCallerId: { phoneNumber: alternateCallerId }

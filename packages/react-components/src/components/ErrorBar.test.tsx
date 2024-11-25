@@ -2,18 +2,10 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { registerIcons } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorBar, ErrorBarProps } from './ErrorBar';
 import { fireEvent, render, screen } from '@testing-library/react';
 
 const ONE_DAY_MILLISECONDS = 24 * 3600 * 1000;
-
-registerIcons({
-  icons: {
-    errorbarclear: <></>,
-    errorbadge: <></>
-  }
-});
 
 describe('ErrorBar self-clearing error', () => {
   test('error bar is hidden when an error with timestamp is cleared', () => {

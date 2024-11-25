@@ -8,14 +8,13 @@ const reactVersion = React.version;
 parseReactVersion(reactVersion);
 
 import { createRoot } from 'react-dom/client';
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   ChatAdapter,
   ChatComposite,
   ChatCompositeOptions,
   createAzureCommunicationChatAdapter
 } from '@internal/react-composites';
-import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { initializeIcons } from '@fluentui/react';
 
 /**
@@ -24,8 +23,8 @@ import { initializeIcons } from '@fluentui/react';
  * @public
  */
 export type ChatCompositeLoaderProps = {
-  userId: string;
-  token: string;
+  userId: CommunicationUserIdentifier;
+  credential: CommunicationTokenCredential;
   displayName?: string;
   endpoint: string;
   threadId: string;
@@ -44,12 +43,12 @@ export const loadChatComposite = async function (
   htmlElement: HTMLElement
 ): Promise<ChatAdapter | undefined> {
   initializeIcons();
-  const { userId, token, endpoint, threadId, displayName, chatCompositeOptions } = loaderArgs;
+  const { userId, credential, endpoint, threadId, displayName, chatCompositeOptions } = loaderArgs;
   const adapter = await createAzureCommunicationChatAdapter({
     endpoint,
-    userId: fromFlatCommunicationIdentifier(userId) as CommunicationUserIdentifier,
+    userId,
     displayName: displayName ?? 'anonymous',
-    credential: new AzureCommunicationTokenCredential(token),
+    credential,
     threadId
   });
 

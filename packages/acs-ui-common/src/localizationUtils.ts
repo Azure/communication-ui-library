@@ -32,5 +32,8 @@ export const _formatString = (str: string, vars: _IObjectMap<string>): string =>
 
   // regex to search for the pattern "\{\}"
   const placeholdersRegex = /{(\w+)}/g;
-  return str.replace(placeholdersRegex, (_: string, k: string) => vars[k] || `{${k}}`);
+  return str.replace(placeholdersRegex, (_: string, k: string) => {
+    const replaceValue = vars[k];
+    return replaceValue === undefined ? `{${k}}` : replaceValue;
+  });
 };

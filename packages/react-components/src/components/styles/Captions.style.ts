@@ -21,6 +21,33 @@ export const displayNameClassName = mergeStyles({
   lineHeight: _pxToRem(16)
 });
 
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
+export const isTypingClassName = (theme: ITheme): string => {
+  return mergeStyles({
+    backgroundColor: theme.palette.themeLighter,
+    color: theme.palette.themeDarker,
+    borderRadius: _pxToRem(4),
+    marginLeft: _pxToRem(4),
+    fontWeight: 400,
+    paddingLeft: _pxToRem(4),
+    paddingRight: _pxToRem(4),
+    fontSize: _pxToRem(11),
+    lineHeight: _pxToRem(16)
+  });
+};
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
+export const rttContainerClassName = (theme: ITheme, isTyping: boolean): string => {
+  return mergeStyles({
+    borderLeft: isTyping ? `2px solid ${theme.palette.themeLighter}` : 'none'
+  });
+};
+
 /**
  * @private
  */
@@ -47,14 +74,23 @@ export const captionsContainerClassName = mergeStyles({
 export const captionContainerClassName = mergeStyles({
   marginTop: _pxToRem(6),
   marginBottom: _pxToRem(6),
+  textAlign: 'unset', // ensure RTL spoken language captions are appropriately aligned to the right
   overflowAnchor: 'auto'
 });
+
+/** Reset styling set by the `ul` element */
+const resetUlStyling = {
+  listStyleType: 'none',
+  padding: 0,
+  margin: 0
+};
 
 /**
  * @private
  */
 export const captionsBannerClassName = (formFactor: 'default' | 'compact'): string => {
   return mergeStyles({
+    ...resetUlStyling,
     overflowX: 'hidden',
     height: formFactor === 'compact' ? '4.5rem' : '8.75rem',
     overflowY: 'auto',
@@ -67,6 +103,7 @@ export const captionsBannerClassName = (formFactor: 'default' | 'compact'): stri
  */
 export const captionsBannerFullHeightClassName = (theme: ITheme): string => {
   return mergeStyles({
+    ...resetUlStyling,
     overflowX: 'hidden',
     overflowY: 'auto',
     height: '100%',

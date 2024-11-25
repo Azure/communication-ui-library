@@ -4,19 +4,9 @@
 import React from 'react';
 import { CameraButton } from './CameraButton';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
-import { registerIcons } from '@fluentui/react';
 import { screen } from '@testing-library/react';
 
 describe('CameraButton strings should be localizable and overridable', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        controlbuttoncameraoff: <></>,
-        chevrondown: <></>,
-        controlbuttoncameraon: <></>
-      }
-    });
-  });
   test('Should localize button label ', async () => {
     const testLocale = createTestLocale({
       cameraButton: { offLabel: Math.random().toString(), onLabel: Math.random().toString() }
