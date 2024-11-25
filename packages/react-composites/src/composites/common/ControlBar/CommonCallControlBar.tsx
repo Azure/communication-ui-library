@@ -124,6 +124,8 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
     const [hiddenFocusStartElementKey, setHiddenFocusStartElementKey] = useState(0);
     useImperativeHandle<FocusableElement, FocusableElement>(commonCallControlBarRef, () => ({
       focus: () => {
+        // To move focus to the hidden element, we increment the key to force a re-mount of the HiddenFocusStartPoint component
+        // which relies on focusOnMount to move focus to the next interact-able element.
         setHiddenFocusStartElementKey((prevKey) => prevKey + 1);
       }
     }));
