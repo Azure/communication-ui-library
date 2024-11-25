@@ -17,6 +17,7 @@ import {
   getRole
 } from '../../selectors/baseSelectors';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
+import { IButton } from '@fluentui/react';
 
 /**
  * @private
@@ -30,6 +31,7 @@ export const Microphone = (props: {
   isDeepNoiseSuppressionOn?: boolean;
   onClickNoiseSuppression?: () => void;
   showNoiseSuppressionButton?: boolean;
+  componentRef?: React.RefObject<IButton>;
 }): JSX.Element => {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   const callStatus = useSelector(getCallStatus);
@@ -66,6 +68,7 @@ export const Microphone = (props: {
           ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonMicProhibited'} />
           : undefined
       }
+      componentRef={props.componentRef}
     />
   );
 };

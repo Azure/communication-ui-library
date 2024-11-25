@@ -161,6 +161,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const peopleButtonRef = useRef<IButton>(null);
   const cameraButtonRef = useRef<IButton>(null);
+  const micButtonRef = useRef<IButton>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -540,6 +541,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   dtmfDialerPresent={props.dtmfDialerPresent}
                   peopleButtonRef={peopleButtonRef}
                   cameraButtonRef={cameraButtonRef}
+                  micButtonRef={micButtonRef}
                   onStopLocalSpotlight={
                     !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }
@@ -611,6 +613,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       isMobile={props.mobileView}
                       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
                       useTeamsCaptions={useTeamsCaptions}
+                      returnFocusRef={micButtonRef}
                     />
                   )}
                 </Stack>

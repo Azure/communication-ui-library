@@ -79,6 +79,7 @@ export interface CommonCallControlBarProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   peopleButtonRef?: React.RefObject<IButton>;
   cameraButtonRef?: React.RefObject<IButton>;
+  micButtonRef?: React.RefObject<IButton>;
   videoBackgroundPickerRef?: React.RefObject<IButton>;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
@@ -412,6 +413,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onClickNoiseSuppression={onClickNoiseSuppression}
                         isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
                         showNoiseSuppressionButton={showNoiseSuppressionButton}
+                        componentRef={props.micButtonRef}
                       />
                     )}
                     {cameraButtonIsEnabled && (
