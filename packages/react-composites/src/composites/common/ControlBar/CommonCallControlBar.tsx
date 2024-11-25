@@ -124,7 +124,6 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
     const [hiddenFocusStartElementKey, setHiddenFocusStartElementKey] = useState(0);
     useImperativeHandle<FocusableElement, FocusableElement>(commonCallControlBarRef, () => ({
       focus: () => {
-        console.log('[jaburnsi] focus called!');
         setHiddenFocusStartElementKey((prevKey) => prevKey + 1);
       }
     }));
