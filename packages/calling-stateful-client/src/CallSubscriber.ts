@@ -34,6 +34,7 @@ import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
 /* @conditional-compile-remove(media-access) */
 import { MediaAccessSubscriber } from './MediaAccessSubscriber';
+import { _isTeamsMeeting } from './TypeGuards';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -301,7 +302,7 @@ export class CallSubscriber {
   };
 
   private initTeamsMeetingConference = (): void => {
-    if (this._call.state === 'Connected') {
+    if (this._call.state === 'Connected' && _isTeamsMeeting(this._call)) {
       this._call
         .feature(Features.TeamsMeetingAudioConferencing)
         .getTeamsMeetingAudioConferencingDetails()
