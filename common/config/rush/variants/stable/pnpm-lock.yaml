@@ -18618,7 +18618,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-vT19sXxmyhNshyNyAsfIyGE/6pZZBe+rwDI7fhwu340VPQH81e5DjE4ifVa0shj//c+DcTEQM0wQaE79V8e4Iw==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-k7R31Lsh0ZVeY9/Hzy+qRnIBKBieIVv/PmOq8arE9mQndZH5zLuOUvNO0HACigP4yqYR8xwf8xRF3iuqUGZ4uw==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -18627,6 +18627,7 @@ packages:
       '@azure/core-paging': 1.6.2
       '@babel/cli': 7.25.9(@babel/core@7.26.0)
       '@babel/core': 7.26.0
+      '@testing-library/react': 16.0.1(@testing-library/dom@9.3.4)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
       copyfiles: 2.4.1
@@ -18649,10 +18650,13 @@ packages:
       rollup: 4.27.2
       typescript: 5.4.5
     transitivePeerDependencies:
+      - '@testing-library/dom'
       - '@types/eslint'
       - '@types/node'
+      - '@types/react-dom'
       - babel-plugin-macros
       - node-notifier
+      - react-dom
       - supports-color
       - ts-node
     dev: false

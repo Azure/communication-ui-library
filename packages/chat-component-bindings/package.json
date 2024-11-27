@@ -46,6 +46,7 @@
   "devDependencies": {
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
+    "@testing-library/react": "^16.0.0",
     "@types/jest": "^29.5.14",
     "@types/react": "18.3.12",
     "copyfiles": "^2.4.1",
