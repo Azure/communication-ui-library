@@ -19,7 +19,6 @@ export const RaiseHand = (props: {
   disabled?: boolean;
 }): JSX.Element => {
   const raiseHandButtonProps = usePropsFor(RaiseHandButton);
-  console.log('DEBUG raiseHandButtonProps: ', raiseHandButtonProps);
   const callStatus = useSelector(getCallStatus);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
 
