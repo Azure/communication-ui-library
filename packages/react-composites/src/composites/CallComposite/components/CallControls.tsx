@@ -24,7 +24,7 @@ import { useAdapter } from '../adapter/CallAdapterProvider';
 import { isDisabled } from '../utils';
 import { callControlsContainerStyles } from '../styles/CallPage.styles';
 import { RaiseHand } from './buttons/RaiseHand';
-import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
+import { RaiseHandButton } from '@internal/react-components';
 import { _generateDefaultDeviceMenuProps } from '@internal/react-components';
 import {
   CUSTOM_BUTTON_OPTIONS,
@@ -150,7 +150,7 @@ export const CallControls = (props: CallControlsProps & ContainerRectProps): JSX
 
   const holdButtonProps = usePropsFor(HoldButton);
 
-  const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
+  const raiseHandButtonProps = usePropsFor(RaiseHandButton);
 
   const capabilitiesSelector = useSelector(capabilitySelector);
   const callState = useSelector(callStatusSelector);
