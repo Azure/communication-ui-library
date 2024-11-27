@@ -168,10 +168,10 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
               : ''
           : 'deniedOrUnknown'
       }
-      onChange={(event, option, index) => {
+      onChange={async (event, option, index) => {
         const camera = props.cameras[index ?? 0];
         if (camera) {
-          props.onSelectCamera(camera, localVideoViewOptions);
+          await props.onSelectCamera(camera, localVideoViewOptions);
         } else {
           console.error('No cameras available');
         }

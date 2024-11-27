@@ -677,7 +677,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         if (isNoiseSuppressionSupported) {
           return await audioEffectsFeature.startEffects(audioEffects);
         } else {
-          throw new Error('Deep Noise Suppression is not supported on this platform.');
+          console.warn('Deep Noise Suppression is not supported on this platform.');
         }
       }
     };
