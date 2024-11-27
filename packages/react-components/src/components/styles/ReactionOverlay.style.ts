@@ -137,19 +137,6 @@ export interface IReactionStyleBucket {
 }
 
 /**
- * @private
- * Interface for defining the style bucket for reactions in Together Mode.
- */
-export interface ITogetherModeReactionStyleBucket {
-  sizeScale: number;
-  opacityMax: number;
-  height: number;
-  width?: number;
-  left?: number;
-  top?: number;
-}
-
-/**
  * Return a style bucket based on the number of active sprites.
  * For example, the first three reactions should appear at maximum
  * height, width, and opacity.

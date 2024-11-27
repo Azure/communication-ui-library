@@ -19,8 +19,8 @@ import {
 import { StreamMedia } from '../StreamMedia';
 /* @conditional-compile-remove(together-mode) */
 import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
-/* @conditional-compile-remove(together-mode) */
-import { Stack } from '@fluentui/react';
+import { mergeStyles, Stack } from '@fluentui/react';
+import { togetherModeRootStyle } from '../styles/TogetherMode.styles'; // Ensure this is an object, not a string
 
 /* @conditional-compile-remove(together-mode) */
 /**
@@ -30,36 +30,33 @@ import { Stack } from '@fluentui/react';
  */
 export const TogetherModeStream = React.memo(
   (props: {
-    canStartTogetherMode?: boolean;
+    startTogetherModeEnabled?: boolean;
     isTogetherModeActive?: boolean;
     onCreateTogetherModeStreamView?: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     onStartTogetherMode?: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
-    onDisposeTogetherModeStreamViews?: () => Promise<void>;
+    onDisposeTogetherModeStreamView?: () => Promise<void>;
     onSetTogetherModeSceneSize?: (width: number, height: number) => void;
     togetherModeStreams?: VideoGalleryTogetherModeStreams;
     seatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
     reactionResources?: ReactionResources;
     localParticipant?: VideoGalleryLocalParticipant;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
+    screenShareComponent?: JSX.Element;
     containerWidth?: number;
     containerHeight?: number;
   }): React.ReactNode => {
     const {
-      canStartTogetherMode,
+      startTogetherModeEnabled,
       isTogetherModeActive,
       onCreateTogetherModeStreamView,
       onStartTogetherMode,
       onSetTogetherModeSceneSize,
       togetherModeStreams,
-      seatingCoordinates,
-      reactionResources,
-      localParticipant,
-      remoteParticipants,
       containerWidth,
       containerHeight
     } = props;
 
-    if (canStartTogetherMode && !isTogetherModeActive) {
+    if (startTogetherModeEnabled && !isTogetherModeActive) {
       onStartTogetherMode && onStartTogetherMode();
     }
 
@@ -74,39 +71,43 @@ export const TogetherModeStream = React.memo(
         onSetTogetherModeSceneSize(containerWidth, containerHeight);
     }, [onSetTogetherModeSceneSize, containerWidth, containerHeight]);
 
-    const stream = togetherModeStreams?.mainVideoStream;
-    const showLoadingIndicator = stream && stream.isAvailable && stream.isReceiving;
-
-    return (
-      <>
-        {containerWidth && containerHeight && (
-          <Stack
-            style={{
-              width: `${_pxToRem(containerWidth)}rem`,
-              height: `${_pxToRem(containerHeight)}rem`,
-              position: 'relative',
-              pointerEvents: 'none'
-            }}
-          >
-            <div data-ui-id="together-mode-video-tile">
-              <StreamMedia
-                videoStreamElement={stream?.renderElement || null}
-                isMirrored={true}
-                loadingState={showLoadingIndicator ? 'loading' : 'none'}
-              />
-              {reactionResources && (
-                <MeetingReactionOverlay
-                  reactionResources={reactionResources}
-                  localParticipant={localParticipant}
-                  remoteParticipants={remoteParticipants}
-                  seatingCoordinates={seatingCoordinates}
-                  overlayMode="together-mode"
-                />
-              )}
-            </div>
-          </Stack>
-        )}
-      </>
-    );
+    const layout = getTogetherModeMainVideoLayout(props);
+    return layout;
   }
 );
+
+/* @conditional-compile-remove(together-mode) */
+const getTogetherModeMainVideoLayout = (props: {
+  togetherModeStreams?: VideoGalleryTogetherModeStreams;
+  containerWidth?: number;
+  containerHeight?: number;
+  reactionResources?: ReactionResources;
+  localParticipant?: VideoGalleryLocalParticipant;
+  remoteParticipants?: VideoGalleryRemoteParticipant[];
+  seatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
+}): JSX.Element | null => {
+  const stream = props.togetherModeStreams?.mainVideoStream;
+  const showLoadingIndicator = stream && stream.isAvailable && stream.isReceiving;
+
+  return props.containerWidth && props.containerHeight ? (
+    <Stack>
+      <div data-ui-id="together-mode-video-tile">
+        <StreamMedia
+          videoStreamElement={stream?.renderElement || null}
+          isMirrored={true}
+          loadingState={showLoadingIndicator ? 'loading' : 'none'}
+          styles={togetherModeRootStyle(props.containerWidth, props.containerHeight)}
+        />
+        {props.reactionResources && (
+          <MeetingReactionOverlay
+            reactionResources={props.reactionResources}
+            localParticipant={props.localParticipant}
+            remoteParticipants={props.remoteParticipants}
+            seatingCoordinates={props.seatingCoordinates}
+            overlayMode="together-mode"
+          />
+        )}
+      </div>
+    </Stack>
+  ) : null;
+};

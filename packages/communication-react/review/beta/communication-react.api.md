@@ -444,14 +444,14 @@ export interface CallAdapterCallOperations {
     allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     // @beta
-    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+    createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
-    disposeTogetherModeStreamViews(): Promise<void>;
+    disposeTogetherModeStreamView(): Promise<void>;
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
@@ -1216,7 +1216,7 @@ export interface CallWithChatAdapterManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     // @beta
-    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+    createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
     // @beta
     deleteImage(imageId: string): Promise<void>;
     deleteMessage(messageId: string): Promise<void>;
@@ -1225,7 +1225,7 @@ export interface CallWithChatAdapterManagement {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
-    disposeTogetherModeStreamViews(): Promise<void>;
+    disposeTogetherModeStreamView(): Promise<void>;
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
@@ -2203,7 +2203,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // @beta
-    onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
+    onCreateTogetherModeStreamView: (options?: TogetherModeStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     // (undocumented)
     onDisposeLocalScreenShareStreamView: () => Promise<void>;
     // (undocumented)
@@ -2215,7 +2215,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // @beta
-    onDisposeTogetherModeStreamViews: () => Promise<void>;
+    onDisposeTogetherModeStreamView: () => Promise<void>;
     // (undocumented)
     onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
     // (undocumented)
@@ -5071,6 +5071,12 @@ export interface TogetherModeStream {
 }
 
 // @beta
+export interface TogetherModeStreamOptions extends VideoStreamOptions {
+    // (undocumented)
+    viewKind?: 'main' | 'panoramic';
+}
+
+// @beta
 export interface TogetherModeStreamsState {
     // (undocumented)
     mainVideoStream?: CallFeatureStreamState;
@@ -5324,8 +5330,6 @@ export type VideoGalleryParticipant = {
 
 // @public
 export interface VideoGalleryProps {
-    // (undocumented)
-    canStartTogetherMode?: boolean;
     dominantSpeakers?: string[];
     // (undocumented)
     isTogetherModeActive?: boolean;
@@ -5347,7 +5351,7 @@ export interface VideoGalleryProps {
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
     // (undocumented)
-    onDisposeTogetherModeStreamViews?: () => Promise<void>;
+    onDisposeTogetherModeStreamView?: () => Promise<void>;
     onMuteParticipant?: (userId: string) => Promise<void>;
     onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
@@ -5370,6 +5374,8 @@ export interface VideoGalleryProps {
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
     spotlightedParticipants?: string[];
+    // (undocumented)
+    startTogetherModeEnabled?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
     // (undocumented)
@@ -5400,7 +5406,7 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     spotlightedParticipants?: string[];
     maxParticipantsToSpotlight?: number;
     isTogetherModeActive?: boolean;
-    canStartTogetherMode?: boolean;
+    startTogetherModeEnabled?: boolean;
     togetherModeStreamsMap?: TogetherModeStreamsState;
     togetherModeSeatingCoordinates?: TogetherModeParticipantSeatingState;
 };

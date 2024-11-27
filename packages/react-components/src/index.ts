@@ -70,7 +70,8 @@ export type {
   TogetherModeStream,
   VideoGalleryTogetherModeParticipantPosition,
   VideoGalleryTogetherModeSeatingInfo,
-  VideoGalleryTogetherModeStreams
+  VideoGalleryTogetherModeStreams,
+  TogetherModeStreamOptions
 } from './types';
 
 export type { RaisedHand } from './types';

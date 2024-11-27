@@ -7,7 +7,7 @@ import { CallAdapter, CallAdapterState } from '../../CallComposite';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamViewResult } from '@internal/react-components';
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 import {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -138,10 +138,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   ): Promise<void | CreateVideoStreamViewResult> =>
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   /* @conditional-compile-remove(together-mode) */
-  public createTogetherModeStreamViews = async (
-    options?: VideoStreamOptions
+  public createTogetherModeStreamView = async (
+    options?: TogetherModeStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> =>
-    await this.callWithChatAdapter.createTogetherModeStreamViews(options);
+    await this.callWithChatAdapter.createTogetherModeStreamView(options);
   /* @conditional-compile-remove(together-mode) */
   public startTogetherMode = async (): Promise<void> => await this.callWithChatAdapter.startTogetherMode();
   /* @conditional-compile-remove(together-mode) */
@@ -159,8 +159,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.disposeLocalVideoStreamView();
   }
   /* @conditional-compile-remove(together-mode) */
-  public disposeTogetherModeStreamViews = async (): Promise<void> =>
-    await this.callWithChatAdapter.disposeTogetherModeStreamViews();
+  public disposeTogetherModeStreamView = async (): Promise<void> =>
+    await this.callWithChatAdapter.disposeTogetherModeStreamView();
   public holdCall = async (): Promise<void> => {
     await this.callWithChatAdapter.holdCall();
   };

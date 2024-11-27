@@ -176,7 +176,8 @@ export const renderTiles = (
   maxRemoteVideoStreams: number,
   indexesToRender: number[],
   overflowGalleryParticipants: VideoGalleryParticipant[],
-  dominantSpeakers?: string[]
+  dominantSpeakers?: string[],
+  togetherModeComponent?: JSX.Element
 ): { gridTiles: JSX.Element[]; overflowGalleryTiles: JSX.Element[] } => {
   const _dominantSpeakers = dominantSpeakers ?? [];
   let streamsLeftToRender = maxRemoteVideoStreams;
@@ -212,7 +213,7 @@ export const renderTiles = (
         (p.videoStream?.isAvailable && streamsLeftToRender-- > 0)
     );
   });
-
+  togetherModeComponent && overflowGalleryTiles.push(togetherModeComponent);
   return { gridTiles, overflowGalleryTiles };
 };
 

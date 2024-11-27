@@ -58,7 +58,7 @@ export type VideoGallerySelector = (
   /* @conditional-compile-remove(together-mode) */
   isTogetherModeActive?: boolean;
   /* @conditional-compile-remove(together-mode) */
-  canStartTogetherMode?: boolean;
+  startTogetherModeEnabled?: boolean;
   /* @conditional-compile-remove(together-mode) */
   togetherModeStreamsMap?: TogetherModeStreamsState;
   /* @conditional-compile-remove(together-mode) */
@@ -172,7 +172,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       /* @conditional-compile-remove(together-mode) */
       isTogetherModeActive: togetherModeCallFeature?.isActive,
       /* @conditional-compile-remove(together-mode) */
-      canStartTogetherMode: capabilities?.startTogetherMode.isPresent
+      startTogetherModeEnabled: capabilities?.startTogetherMode.isPresent
     };
   }
 );

@@ -2,8 +2,16 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import { CreateVideoStreamViewResult, ViewScalingMode } from './VideoGalleryParticipant';
+import { CreateVideoStreamViewResult, VideoStreamOptions, ViewScalingMode } from './VideoGalleryParticipant';
 
+/* @conditional-compile-remove(together-mode) */
+/**
+ * Interface representing the result of a Together Mode stream view.
+ * @beta
+ */
+export interface TogetherModeStreamOptions extends VideoStreamOptions {
+  viewKind?: 'main' | 'panoramic';
+}
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the result of a Together Mode stream view.

@@ -319,7 +319,8 @@ export type {
   VideoGalleryTogetherModeStreams,
   VideoGalleryTogetherModeParticipantPosition,
   VideoGalleryTogetherModeSeatingInfo,
-  TogetherModeStream
+  TogetherModeStream,
+  TogetherModeStreamOptions
 } from '../../react-components/src';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';

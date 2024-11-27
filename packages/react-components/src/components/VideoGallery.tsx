@@ -46,8 +46,6 @@ import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
 
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeLayout } from './VideoGallery/TogetherModeLayout';
-/* @conditional-compile-remove(together-mode) */
-import { TogetherModeLayoutProps } from './VideoGallery/Layout';
 import { LayoutProps } from './VideoGallery/Layout';
 import { ReactionResources } from '../types/ReactionTypes';
 /* @conditional-compile-remove(together-mode) */
@@ -328,7 +326,7 @@ export interface VideoGalleryProps {
    */
   onMuteParticipant?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(together-mode) */
-  canStartTogetherMode?: boolean;
+  startTogetherModeEnabled?: boolean;
   /* @conditional-compile-remove(together-mode) */
   isTogetherModeActive?: boolean;
   /* @conditional-compile-remove(together-mode) */
@@ -343,7 +341,7 @@ export interface VideoGalleryProps {
   /* @conditional-compile-remove(together-mode) */
   togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
   /* @conditional-compile-remove(together-mode) */
-  onDisposeTogetherModeStreamViews?: () => Promise<void>;
+  onDisposeTogetherModeStreamView?: () => Promise<void>;
 }
 
 /**
@@ -430,7 +428,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     videoTilesOptions,
     onMuteParticipant,
     /* @conditional-compile-remove(together-mode) */
-    canStartTogetherMode,
+    startTogetherModeEnabled,
     /* @conditional-compile-remove(together-mode) */
     isTogetherModeActive,
     /* @conditional-compile-remove(together-mode) */
@@ -444,7 +442,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(together-mode) */
     togetherModeSeatingCoordinates,
     /* @conditional-compile-remove(together-mode) */
-    onDisposeTogetherModeStreamViews
+    onDisposeTogetherModeStreamView
   } = props;
 
   const ids = useIdentifiers();
@@ -755,6 +753,43 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       ? localScreenShareStreamComponent
       : undefined;
 
+  /* @conditional-compile-remove(together-mode) */
+  const togetherModeStreamComponent = useMemo(
+    () => (
+      <TogetherModeStream
+        startTogetherModeEnabled={startTogetherModeEnabled}
+        isTogetherModeActive={isTogetherModeActive}
+        onCreateTogetherModeStreamView={onCreateTogetherModeStreamView}
+        onStartTogetherMode={onStartTogetherMode}
+        onDisposeTogetherModeStreamView={onDisposeTogetherModeStreamView}
+        onSetTogetherModeSceneSize={onSetTogetherModeSceneSize}
+        togetherModeStreams={togetherModeStreams}
+        seatingCoordinates={togetherModeSeatingCoordinates}
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+        reactionResources={reactionResources}
+        screenShareComponent={screenShareComponent}
+        containerWidth={containerWidth}
+        containerHeight={containerHeight}
+      />
+    ),
+    [
+      startTogetherModeEnabled,
+      isTogetherModeActive,
+      onCreateTogetherModeStreamView,
+      onStartTogetherMode,
+      onSetTogetherModeSceneSize,
+      togetherModeStreams,
+      togetherModeSeatingCoordinates,
+      onDisposeTogetherModeStreamView,
+      localParticipant,
+      remoteParticipants,
+      reactionResources,
+      screenShareComponent,
+      containerWidth,
+      containerHeight
+    ]
+  );
   const layoutProps = useMemo<LayoutProps>(
     () => ({
       remoteParticipants,
@@ -771,7 +806,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       pinnedParticipantUserIds: pinnedParticipants,
       overflowGalleryPosition,
       localVideoTileSize,
-      spotlightedParticipantUserIds: spotlightedParticipants
+      spotlightedParticipantUserIds: spotlightedParticipants,
+      /* @conditional-compile-remove(together-mode) */
+      togetherModeStreamComponent
     }),
     [
       remoteParticipants,
@@ -789,52 +826,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       pinnedParticipants,
       overflowGalleryPosition,
       localVideoTileSize,
-      spotlightedParticipants
-    ]
-  );
-
-  /* @conditional-compile-remove(together-mode) */
-  const togetherModeStreamComponent = useMemo(
-    () => (
-      <TogetherModeStream
-        canStartTogetherMode={canStartTogetherMode}
-        isTogetherModeActive={isTogetherModeActive}
-        onCreateTogetherModeStreamView={onCreateTogetherModeStreamView}
-        onStartTogetherMode={onStartTogetherMode}
-        onDisposeTogetherModeStreamViews={onDisposeTogetherModeStreamViews}
-        onSetTogetherModeSceneSize={onSetTogetherModeSceneSize}
-        togetherModeStreams={togetherModeStreams}
-        seatingCoordinates={togetherModeSeatingCoordinates}
-        localParticipant={localParticipant}
-        remoteParticipants={remoteParticipants}
-        reactionResources={reactionResources}
-        containerWidth={containerWidth}
-        containerHeight={containerHeight}
-      />
-    ),
-    [
-      canStartTogetherMode,
-      isTogetherModeActive,
-      onCreateTogetherModeStreamView,
-      onStartTogetherMode,
-      onSetTogetherModeSceneSize,
-      togetherModeStreams,
-      togetherModeSeatingCoordinates,
-      onDisposeTogetherModeStreamViews,
-      localParticipant,
-      remoteParticipants,
-      reactionResources,
-      containerWidth,
-      containerHeight
-    ]
-  );
-
-  /* @conditional-compile-remove(together-mode) */
-  const togetherModeLayoutProps = useMemo<TogetherModeLayoutProps>(() => {
-    return {
+      spotlightedParticipants,
+      /* @conditional-compile-remove(together-mode) */
       togetherModeStreamComponent
-    };
-  }, [togetherModeStreamComponent]);
+    ]
+  );
 
   const videoGalleryLayout = useMemo(() => {
     if (screenShareParticipant && layout === 'focusedContent') {
@@ -853,15 +849,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     }
     /* @conditional-compile-remove(together-mode) */
     if (layout === 'togetherMode') {
-      return <TogetherModeLayout {...togetherModeLayoutProps} />;
+      return <TogetherModeLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [
-    layout,
-    layoutProps,
-    /* @conditional-compile-remove(together-mode) */ togetherModeLayoutProps,
-    screenShareParticipant
-  ]);
+  }, [layout, layoutProps, screenShareParticipant]);
 
   return (
     <div

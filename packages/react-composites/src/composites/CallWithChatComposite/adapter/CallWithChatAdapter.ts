@@ -42,7 +42,7 @@ import { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamViewResult } from '@internal/react-components';
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { UploadChatImageResult } from '@internal/acs-ui-common';
@@ -239,7 +239,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+  createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
   /**
    * Start together mode.
@@ -274,7 +274,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  disposeTogetherModeStreamViews(): Promise<void>;
+  disposeTogetherModeStreamView(): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *
