@@ -18608,7 +18608,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-k7R31Lsh0ZVeY9/Hzy+qRnIBKBieIVv/PmOq8arE9mQndZH5zLuOUvNO0HACigP4yqYR8xwf8xRF3iuqUGZ4uw==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-OJM2an93GfW/WW2ikU1gdxa/QjTHit000EpWkvwczNU+gY2+oXmsW+HvbjAyIWksq8ynYDB2Sj0P5lr0HIt4tg==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -18620,6 +18620,7 @@ packages:
       '@testing-library/react': 16.0.1(@testing-library/dom@9.3.4)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
+      '@types/uuid': 9.0.8
       copyfiles: 2.4.1
       cpy-cli: 5.0.0
       cross-env: 7.0.3
@@ -18639,6 +18640,7 @@ packages:
       rimraf: 2.7.1
       rollup: 4.27.3
       typescript: 5.4.5
+      uuid: 9.0.1
     transitivePeerDependencies:
       - '@testing-library/dom'
       - '@types/eslint'
