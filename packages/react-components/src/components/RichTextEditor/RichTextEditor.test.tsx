@@ -4,28 +4,9 @@
 import React from 'react';
 import { RichTextEditor } from './RichTextEditor';
 import { render, screen, waitFor } from '@testing-library/react';
-import { registerIcons } from '@fluentui/react';
 import userEvent from '@testing-library/user-event';
 
 describe('RichTextEditor should be shown correctly', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        richtextboldbuttonicon: <></>,
-        richtextitalicbuttonicon: <></>,
-        richtextunderlinebuttonicon: <></>,
-        richtextbulletlistbuttonicon: <></>,
-        richtextnumberlistbuttonicon: <></>,
-        richtextindentdecreasebuttonicon: <></>,
-        richtextindentincreasebuttonicon: <></>,
-        richtextdividericon: <></>,
-        chevrondown: <></>,
-        richtextinserttableregularicon: <></>,
-        richtextinserttablefilledicon: <></>
-      }
-    });
-  });
-
   test('Format bar should not be shown when showRichTextEditorFormatting is false', async () => {
     render(
       <RichTextEditor
@@ -106,7 +87,7 @@ describe('RichTextEditor should be shown correctly', () => {
     // fix for an issue when contentEditable is not set to RoosterJS for tests
     editorDiv?.setAttribute('contentEditable', 'true');
     if (editorDiv === null) {
-      fail('Editor div not found');
+      throw new Error('Editor div not found');
     }
     await userEvent.click(editorDiv);
     await waitFor(async () => {

@@ -190,7 +190,15 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   }
 
   const cameraOn = props.checked;
-  const splitButtonAriaString = cameraOn ? strings.onSplitButtonAriaLabel : strings.offSplitButtonAriaLabel;
+  const cameraTurningOn = waitForCamera && !cameraOn;
+  // Ensure Aria-label by default reflects the loading state of the camera
+  const ariaLabel = props.ariaLabel ?? cameraTurningOn ? strings.tooltipVideoLoadingContent : undefined;
+
+  const splitButtonAriaString = cameraTurningOn
+    ? strings.tooltipVideoLoadingContent
+    : cameraOn
+      ? strings.onSplitButtonAriaLabel
+      : strings.offSplitButtonAriaLabel;
 
   const toggleAnnouncerString = useCallback(
     (isCameraOn: boolean) => {
@@ -200,6 +208,12 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
     },
     [strings.cameraActionTurnedOffAnnouncement, strings.cameraActionTurnedOnAnnouncement]
   );
+
+  const onVideoIsLoadingAnnouncementCallback = useCallback(() => {
+    if (!cameraOn) {
+      setAnnouncerString(strings.tooltipVideoLoadingContent);
+    }
+  }, [setAnnouncerString, cameraOn, strings.tooltipVideoLoadingContent]);
 
   const onToggleClick = useCallback(async () => {
     // Throttle click on camera, need to await onToggleCamera then allow another click
@@ -214,6 +228,11 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       }
     }
   }, [cameraOn, localVideoViewOptions, onToggleCamera, toggleAnnouncerString]);
+
+  const onToggleClickCallback = useCallback(() => {
+    onVideoIsLoadingAnnouncementCallback();
+    onToggleClick();
+  }, [onVideoIsLoadingAnnouncementCallback, onToggleClick]);
 
   const onChangeCameraClick = useCallback(
     async (device: OptionsDevice) => {
@@ -282,7 +301,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
       <ControlBarButton
         {...props}
         disabled={disabled}
-        onClick={onToggleCamera ? onToggleClick : props.onClick}
+        onClick={onToggleCamera ? onToggleClickCallback : props.onClick}
         onRenderOnIcon={props.onRenderOnIcon ?? onRenderCameraOnIcon}
         onRenderOffIcon={props.onRenderOffIcon ?? onRenderCameraOffIcon}
         strings={strings}
@@ -301,6 +320,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         split={props.split ?? props.enableDeviceSelectionMenu}
         aria-description={strings.cameraButtonAriaDescription}
         aria-roledescription={props.enableDeviceSelectionMenu ? strings.cameraButtonSplitRoleDescription : undefined}
+        ariaLabel={ariaLabel}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         splitButtonMenuProps={splitButtonMenuProps}
       />

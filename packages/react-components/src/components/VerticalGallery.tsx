@@ -16,6 +16,7 @@ import {
   rootStyle
 } from './styles/VerticalGallery.styles';
 import { bucketize } from './utils/overFlowGalleriesUtils';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * Styles for the VerticalGallery component
@@ -108,7 +109,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
 
   useEffect(() => {
     if (onFetchTilesToRender && indexesArray) {
-      onFetchTilesToRender(indexesArray[page - 1]);
+      onFetchTilesToRender(indexesArray[page - 1] ?? []);
     }
   }, [indexesArray, onFetchTilesToRender, page]);
 
@@ -116,7 +117,7 @@ export const VerticalGallery = (props: VerticalGalleryProps): JSX.Element => {
   const clippedPage = firstIndexOfCurrentPage < numberOfChildren - 1 ? page : lastPage;
   const childrenOnCurrentPage = useMemo(() => {
     if (indexesArray[0] !== undefined) {
-      return indexesArray[clippedPage - 1].map((index) => {
+      return indexesArray[clippedPage - 1]?.map((index) => {
         return React.Children.toArray(children)[index];
       });
     }
@@ -210,13 +211,21 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
 
   const controlBarSpacing = { childrenGap: '0.5rem' };
 
+  const previousButtonAriaLabel = strings.leftNavButtonAriaLabel
+    ? _formatString(strings.leftNavButtonAriaLabel, { current: `${currentPage}`, total: `${totalPages}` })
+    : undefined;
+
+  const nextButtonAriaLabel = strings.rightNavButtonAriaLabel
+    ? _formatString(strings.rightNavButtonAriaLabel, { current: `${currentPage}`, total: `${totalPages}` })
+    : undefined;
+
   return (
     <Stack horizontalAlign="center" tokens={controlBarSpacing} horizontal className={pageCounterContainerStyles}>
       <DefaultButton
         className={previousButtonSyles}
         onClick={onPreviousButtonClick}
         disabled={buttonsDisabled?.previous}
-        ariaLabel={strings.leftNavButtonAriaLabel}
+        ariaLabel={previousButtonAriaLabel}
         data-ui-id={ids.overflowGalleryLeftNavButton}
       >
         <Icon iconName="VerticalGalleryLeftButton" styles={navIconStyles} />
@@ -229,7 +238,7 @@ const VerticalGalleryControlBar = (props: VerticalGalleryControlBarProps): JSX.E
         className={nextButtonsStyles}
         onClick={onNextButtonClick}
         disabled={buttonsDisabled?.next}
-        ariaLabel={strings.rightNavButtonAriaLabel}
+        ariaLabel={nextButtonAriaLabel}
         data-ui-id={ids.overflowGalleryRightNavButton}
       >
         <Icon iconName="VerticalGalleryRightButton" styles={navIconStyles} />

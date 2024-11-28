@@ -9,10 +9,13 @@ export * from './CallWithChatComposite';
 export { COMPOSITE_LOCALE_EN_GB } from './localization/locales/en-GB/CompositeLocale';
 export { COMPOSITE_LOCALE_AR_SA } from './localization/locales/ar-SA/CompositeLocale';
 export { COMPOSITE_LOCALE_CS_CZ } from './localization/locales/cs-CZ/CompositeLocale';
+export { COMPOSITE_LOCALE_CY_GB } from './localization/locales/cy-GB/CompositeLocale';
 export { COMPOSITE_LOCALE_DE_DE } from './localization/locales/de-DE/CompositeLocale';
 export { COMPOSITE_LOCALE_ES_ES } from './localization/locales/es-ES/CompositeLocale';
+export { COMPOSITE_LOCALE_ES_MX } from './localization/locales/es-MX/CompositeLocale';
 export { COMPOSITE_LOCALE_FI_FI } from './localization/locales/fi-FI/CompositeLocale';
 export { COMPOSITE_LOCALE_FR_FR } from './localization/locales/fr-FR/CompositeLocale';
+export { COMPOSITE_LOCALE_FR_CA } from './localization/locales/fr-CA/CompositeLocale';
 export { COMPOSITE_LOCALE_HE_IL } from './localization/locales/he-IL/CompositeLocale';
 export { COMPOSITE_LOCALE_IT_IT } from './localization/locales/it-IT/CompositeLocale';
 export { COMPOSITE_LOCALE_JA_JP } from './localization/locales/ja-JP/CompositeLocale';
@@ -53,7 +56,5 @@ export type {
 export { onResolveVideoEffectDependencyLazy } from './common/resolveVideoEffectDependencyLazy';
 
 export { onResolveVideoEffectDependency } from './common/resolveVideoEffectDependency';
-/* @conditional-compile-remove(DNS) */
 export { onResolveDeepNoiseSuppressionDependencyLazy } from './common/resolveDeepNoiseSuppressionDependencyLazy';
-/* @conditional-compile-remove(DNS) */
 export { onResolveDeepNoiseSuppressionDependency } from './common/resolveDeepNoiseSuppressionDependency';

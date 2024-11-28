@@ -1,0 +1,692 @@
+{
+  "participantItem": {
+    "isMeText": "(chi)",
+    "menuTitle": "Mwy o Ddewisiadau",
+    "removeButtonLabel": "Tynnu",
+    "sharingIconLabel": "Rhannu",
+    "mutedIconLabel": "Wedi tewi",
+    "displayNamePlaceholder": "Cyfranogwr dienw",
+    "participantStateRinging": "Wrthi'n galw...",
+    "participantStateHold": "Galwad yn aros",
+    "attendeeRole": "Mynychwr"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} arall"
+  },
+  "typingIndicator": {
+    "singleUser": "Mae {user} yn teipio ...",
+    "multipleUsers": "Mae {users} yn teipio ...",
+    "multipleUsersAbbreviateOne": "Mae {users} ac 1 arall yn teipio ...",
+    "multipleUsersAbbreviateMany": "Mae {users} a {numOthers} arall yn teipio ...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Rhowch neges",
+    "textTooLong": "Mae hyd eich neges yn fwy na'r terfyn uchaf.",
+    "sendButtonAriaLabel": "Anfon neges",
+    "attachmentUploadsPendingError": "Wrthi'n llwytho'r ffeil i fyny, arhoswch funud.",
+    "removeAttachment": "Tynnu’r ffeil",
+    "uploading": "Wrthi'n llwytho i fyny",
+    "uploadCompleted": "Wedi gorffen llwytho i fyny",
+    "attachmentMoreMenu": "Mwy o Ddewisiadau"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Rhowch neges",
+    "textTooLong": "Mae hyd eich neges yn fwy na'r terfyn uchaf.",
+    "sendButtonAriaLabel": "Anfon neges",
+    "attachmentUploadsPendingError": "Wrthi'n lanlwytho'r ffeil, arhoswch funud.",
+    "imageUploadsPendingError": "Wrthi'n lanlwytho'r ddelwedd, arhoswch funud.",
+    "removeAttachment": "Tynnu'r ffeil",
+    "uploading": "Wrthi'n lanlwytho",
+    "uploadCompleted": "Wedi gorffen lanlwytho",
+    "richTextBoldTooltip": "Trwm",
+    "richTextItalicTooltip": "Italig",
+    "richTextUnderlineTooltip": "Tanlinellu",
+    "richTextBulletListTooltip": "Rhestr bwledi",
+    "richTextNumberListTooltip": "Rhestr wedi’i rhifo",
+    "richTextIncreaseIndentTooltip": "Cynyddu'r mewnoliad",
+    "richTextDecreaseIndentTooltip": "Lleihau'r mewnoliad",
+    "richTextInsertTableTooltip": "Mewnosod tabl",
+    "richTextFormatButtonTooltip": "Fformat",
+    "richTextInsertRowOrColumnMenu": "Mewnosod",
+    "richTextInsertTableMenuTitle": "Mewnosod tabl {row} x {column}",
+    "richTextInsertRowAboveMenu": "Mewnosod uwchben",
+    "richTextInsertRowBelowMenu": "Mewnosod isod",
+    "richTextInsertColumnLeftMenu": "Mewnosod i'r chwith",
+    "richTextInsertColumnRightMenu": "Mewnosod i'r dde",
+    "richTextDeleteRowOrColumnMenu": "Dileu",
+    "richTextDeleteColumnMenu": "Dileu'r golofn",
+    "richTextDeleteRowMenu": "Dileu'r rhes",
+    "richTextDeleteTableMenu": "Dileu'r tabl",
+    "richTextToolbarAriaLabel": "Bar Offer Fformatio Negeseuon",
+    "richTextToolbarMoreButtonAriaLabel": "Mwy o ddewisiadau",
+    "attachmentMoreMenu": "Mwy o Ddewisiadau",
+    "richTextNewBulletedListItemAnnouncement": "Bwled, llinell newydd",
+    "richTextNewNumberedListItemAnnouncement": "{0}, llinell newydd",
+    "richTextBulletedListAppliedAnnouncement": "Wedi defnyddio'r rhestr bwledi",
+    "richTextNumberedListAppliedAnnouncement": "Wedi defnyddio rhestr wedi'i rhifo"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "Galluogi’r Moddol RTT",
+    "rttModalTitle": "Galluogi RTT?",
+    "rttModalText": "Bydd teipio mewn amser real (RTT) yn cael ei alluogi ar gyfer pawb yn y cyfarfod.",
+    "rttConfirmButtonLabel": "Galluogi",
+    "rttCancelButtonLabel": "Canslo",
+    "rttCloseModalButtonAriaLabel": "Cau'r Moddol RTT"
+  },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Awgrymiadau"
+  },
+  "imageOverlay": {
+    "downloadButtonLabel": "Lawrlwytho",
+    "dismissButtonAriaLabel": "Cau"
+  },
+  "messageStatusIndicator": {
+    "deliveredAriaLabel": "Wedi anfon y neges",
+    "deliveredTooltipText": "Anfonwyd",
+    "seenAriaLabel": "Neges wedi ei gweld gan bobl eraill",
+    "seenTooltipText": "Gwelwyd",
+    "readByTooltipText": "Wedi'i darllen gan {messageThreadReadCount} o {remoteParticipantsCount}",
+    "sendingAriaLabel": "Wrthi'n anfon y neges",
+    "sendingTooltipText": "Wrthi'n anfon",
+    "failedToSendAriaLabel": "Wedi methu anfon y neges",
+    "failedToSendTooltipText": "Wedi methu anfon"
+  },
+  "endCallButton": {
+    "label": "Gadael",
+    "tooltipContent": "Gadael yr alwad",
+    "leaveOption": "Gadael",
+    "endCallOption": "Dod â'r alwad i ben ar gyfer pawb"
+  },
+  "cameraButton": {
+    "onLabel": "Camera",
+    "offLabel": "Camera",
+    "tooltipDisabledContent": "Mae’r camera wedi'i analluogi",
+    "tooltipOnContent": "Diffodd y camera",
+    "tooltipOffContent": "Rhoi'r camera ar waith",
+    "tooltipVideoLoadingContent": "Wrthi'n llwytho'r fideo",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Dewis camera",
+    "cameraButtonSplitRoleDescription": "Botwm Hollti",
+    "onSplitButtonAriaLabel": "Diffodd y camera",
+    "offSplitButtonAriaLabel": "Rhoi'r camera ar waith",
+    "cameraActionTurnedOnAnnouncement": "Mae eich camera wedi'i roi ar waith",
+    "cameraActionTurnedOffAnnouncement": "Mae eich camera wedi'i ddiffodd",
+    "onSplitButtonPrimaryActionCamera": "Diffodd y camera",
+    "offSplitButtonPrimaryActionCamera": "Rhoi'r camera ar waith",
+    "cameraPrimaryActionSplitButtonTitle": "Defnyddio camera",
+    "videoEffectsMenuItemTitle": "Effeithiau",
+    "cameraButtonAriaDescription": "dewisiadau camera"
+  },
+  "microphoneButton": {
+    "onLabel": "Meicroffon",
+    "offLabel": "Meicroffon",
+    "tooltipDisabledContent": "Mae'r meicroffon wedi'i analluogi",
+    "tooltipOnContent": "Tewi’r meicroffon",
+    "tooltipOffContent": "Dad-dewi’r meicroffon",
+    "microphoneMenuTitle": "Meicroffon",
+    "microphoneMenuTooltip": "Dewis meicroffon",
+    "speakerMenuTitle": "Seinydd",
+    "speakerMenuTooltip": "Dewis seinydd",
+    "microphoneButtonSplitRoleDescription": "Botwm Hollti",
+    "onSplitButtonAriaLabel": "Tewi'r meic",
+    "offSplitButtonAriaLabel": "Dad-dewi'r meic",
+    "microphoneActionTurnedOnAnnouncement": "Mae eich meicroffon wedi'i roi ar waith",
+    "microphoneActionTurnedOffAnnouncement": "Mae eich meicroffon wedi'i ddiffodd",
+    "offSplitButtonMicrophonePrimaryAction": "Dad-dewi’r meic",
+    "onSplitButtonMicrophonePrimaryAction": "Tewi'r meic",
+    "microphonePrimaryActionSplitButtonTitle": "Defnyddio'r meicroffon",
+    "microphoneAriaDescription": "Dewisiadau sain",
+    "deepNoiseSuppressionTitle": "Atal sŵn",
+    "deepNoiseSuppressionOnAnnouncement": "Mae atal sŵn dwfn wedi'i roi ar waith",
+    "deepNoiseSuppressionOffAnnouncement": "Mae atal sŵn dwfn wedi'i ddiffodd"
+  },
+  "devicesButton": {
+    "label": "Dyfeisiau",
+    "tooltipContent": "Rheoli dyfeisiau",
+    "cameraMenuTitle": "Camera",
+    "cameraMenuTooltip": "Dewis camera",
+    "audioDeviceMenuTitle": "Dyfais Sain",
+    "audioDeviceMenuTooltip": "Dewis dyfais sain",
+    "microphoneMenuTitle": "Meicroffon",
+    "microphoneMenuTooltip": "Dewis meicroffon",
+    "speakerMenuTitle": "Siaradwr",
+    "speakerMenuTooltip": "Dewis seinydd"
+  },
+  "participantsButton": {
+    "label": "Pobl",
+    "tooltipContent": "Dangos cyfranogwyr",
+    "menuHeader": "Yn yr alwad hon",
+    "participantsListButtonLabel": "{numParticipants} o bobl",
+    "muteAllButtonLabel": "Tewi’r cyfan",
+    "copyInviteLinkButtonLabel": "Copïo dolen y gwahoddiad",
+    "copyInviteLinkActionedAriaLabel": "Wedi copïo dolen y gwahoddiad"
+  },
+  "screenShareButton": {
+    "onLabel": "Stopio cyflwyno",
+    "offLabel": "Presennol",
+    "tooltipDisabledContent": "Mae cyflwyno wedi'i analluogi",
+    "tooltipOnContent": "Wrthi'n cyflwyno eich sgrin",
+    "tooltipOffContent": "Cyflwyno eich sgrin"
+  },
+  "raiseHandButton": {
+    "offLabel": "Codi",
+    "onLabel": "Gostwng",
+    "tooltipDisabledContent": "Mae'r weithred Codi Llaw wedi'i hanalluogi",
+    "tooltipOnContent": "Gostwng Llaw",
+    "tooltipOffContent": "Codi Llaw"
+  },
+  "reactionButton": {
+    "label": "Ymateb",
+    "ariaLabel": "Botwm Ymateb, Anfon ymateb",
+    "tooltipDisabledContent": "Mae'r weithred ymateb wedi'i hanalluogi",
+    "tooltipContent": "Anfon ymateb",
+    "likeReactionTooltipContent": "Hoffi",
+    "heartReactionTooltipContent": "Caru",
+    "laughReactionTooltipContent": "Chwerthin",
+    "applauseReactionTooltipContent": "Curo Dwylo",
+    "surprisedReactionTooltipContent": "Wedi synnu"
+  },
+  "rtt": {
+    "isTypingText": "Teipio RTT"
+  },
+  "messageThread": {
+    "yesterday": "Ddoe",
+    "sunday": "Dydd Sul",
+    "monday": "Dydd Llun",
+    "tuesday": "Dydd Mawrth",
+    "wednesday": "Dydd Mercher",
+    "thursday": "Dydd Iau",
+    "friday": "Dydd Gwener",
+    "saturday": "Dydd Sadwrn",
+    "participantJoined": "wedi ymuno â'r sgwrs.",
+    "participantLeft": "wedi gadael y sgwrs.",
+    "editMessage": "Golygu",
+    "removeMessage": "Dileu",
+    "resendMessage": "Rhowch gynnig arall ar anfon",
+    "failToSendTag": "Wedi methu â'i hanfon",
+    "editedTag": "Golygwyd",
+    "liveAuthorIntro": "Mae {author} yn dweud",
+    "messageContentAriaText": "{status} Dywedodd {author} {message}",
+    "messageContentMineAriaText": "{status} Dywedoch chi {message}",
+    "editBoxTextLimit": "Mae eich neges dros y terfyn o {limitNumber} nodau",
+    "editBoxPlaceholderText": "Golygu eich neges",
+    "newMessagesIndicator": "Negeseuon newydd",
+    "noDisplayNameSub": "Dim enw",
+    "editBoxCancelButton": "Canslo",
+    "editBoxSubmitButton": "Wedi gorffen",
+    "messageReadCount": "Wedi'i darllen gan {messageReadByCount} o {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "Mwy o Ddewisiadau",
+    "downloadAttachment": "Llwytho'r ffeil i lawr",
+    "openAttachment": "Agor ffeil",
+    "blockedWarningText": "Mae'r neges hon wedi'i dileu oherwydd polisi sefydliadol.",
+    "blockedWarningLinkText": "Manylion",
+    "attachmentCardGroupMessage": "Mae gan y neges {attachmentCount} atodiad",
+    "messageDeletedAnnouncementAriaLabel": "Mae'r neges wedi cael ei dileu",
+    "richTextBoldTooltip": "Trwm",
+    "richTextItalicTooltip": "Italig",
+    "richTextUnderlineTooltip": "Tanlinellu",
+    "richTextBulletListTooltip": "Rhestr bwledi",
+    "richTextNumberListTooltip": "Rhestr wedi'i rhifo",
+    "richTextIncreaseIndentTooltip": "Cynyddu’r mewnoliad",
+    "richTextDecreaseIndentTooltip": "Lleihau’r mewnoliad",
+    "richTextInsertTableTooltip": "Mewnosod tabl",
+    "richTextFormatButtonTooltip": "Fformat",
+    "richTextInsertRowOrColumnMenu": "Mewnosod",
+    "richTextInsertTableMenuTitle": "Mewnosod tabl {row} x {column}",
+    "richTextInsertRowAboveMenu": "Mewnosod uwchben",
+    "richTextInsertRowBelowMenu": "Mewnosod isod",
+    "richTextInsertColumnLeftMenu": "Mewnosod i'r chwith",
+    "richTextInsertColumnRightMenu": "Mewnosod i'r dde",
+    "richTextDeleteRowOrColumnMenu": "Dileu",
+    "richTextDeleteColumnMenu": "Dileu'r golofn",
+    "richTextDeleteRowMenu": "Dileu'r rhes",
+    "richTextDeleteTableMenu": "Dileu'r tabl",
+    "richTextToolbarMoreButtonAriaLabel": "Mwy o ddewisiadau",
+    "attachmentUploadsPendingError": "Wrthi'n lanlwytho'r ffeil, arhoswch funud.",
+    "imageUploadsPendingError": "Wrthi'n lanlwytho'r ddelwedd, arhoswch funud.",
+    "richTextNewBulletedListItemAnnouncement": "Bwled, llinell newydd",
+    "richTextNewNumberedListItemAnnouncement": "{0}, llinell newydd",
+    "richTextBulletedListAppliedAnnouncement": "Wedi defnyddio'r rhestr bwledi",
+    "richTextNumberedListAppliedAnnouncement": "Wedi defnyddio rhestr wedi'i rhifo"
+  },
+  "errorBar": {
+    "unableToReachChatService": "Rydych chi all-lein",
+    "accessDenied": "Does dim modd cael gafael ar wasanaethau sgwrsio - gwiriwch fanylion adnabod y defnyddiwr a roddwyd",
+    "userNotInChatThread": "Nid ydych yn yr edefyn sgwrsio hwn mwyach",
+    "sendMessageNotInChatThread": "Wedi methu anfon neges oherwydd dydych chi ddim yn y trywydd sgwrsio hwn mwyach",
+    "sendMessageGeneric": "Wedi methu anfon neges",
+    "callingNetworkFailure": "problem wrth gysylltu galwad - mae’n ymddangos eich bod all-lein",
+    "startVideoGeneric": "Wedi methu cychwyn y fideo",
+    "stopVideoGeneric": "Wedi methu stopio'r fideo",
+    "muteGeneric": "Wedi methu tewi'r meicroffon",
+    "unmuteGeneric": "Wedi methu dad-dewi'r meicroffon",
+    "speakingWhileMuted": "Mae eich meicroffon wedi tewi",
+    "startScreenShareGeneric": "Roedd problem wrth ddechrau rhannu sgrin.",
+    "stopScreenShareGeneric": "Wedi methu rhoi'r gorau i rannu sgrin",
+    "callNetworkQualityLow": "Mae ansawdd y rhwydwaith yn isel.",
+    "teamsMeetingCallNetworkQualityLow": "Mae ansawdd y rhwydwaith yn isel.",
+    "callNoSpeakerFound": "Heb ddod o hyd i seinyddion na clustffonau. Cysylltu dyfais sain i glywed yr alwad.",
+    "callNoMicrophoneFound": "Heb ganfod meicroffonau. Cysylltu dyfais mewnbwn sain.",
+    "callMicrophoneAccessDenied": "Does dim modd cael mynediad at y meicroffon. Cliciwch y clo yn y bar cyfeiriad i roi caniatâd i'r dudalen we hon.",
+    "callMicrophoneAccessDeniedSafari": "Nid oes modd cael mynediad at y meicroffon. Adnewyddwch y dudalen i ganiatáu hawliau, neu gwiriwch osodiadau'r porwr hwn a dilysu hawliau wedi'u galluogi ar gyfer y wefan hon.",
+    "callMicrophoneMutedBySystem": "Rydych chi wedi'ch tewi gan eich system.",
+    "callMicrophoneUnmutedBySystem": "Mae eich meicroffon wedi'i adfer a chawsoch chi eich dad-dewi gan eich system.",
+    "callMacOsMicrophoneAccessDenied": "Does dim modd cael mynediad at y meicroffon. Rhoi caniatâd meicroffon yn eich gosodiadau preifatrwydd macOS.",
+    "callLocalVideoFreeze": "Mae lled band y rhwydwaith yn wael. Efallai y bydd eich fideo wedi'i oedi ar gyfer eraill ar yr alwad.",
+    "callCameraAccessDenied": "Does dim modd cael mynediad at y camera. Cliciwch y clo yn y bar cyfeiriad i roi caniatâd i'r dudalen we hon.",
+    "callCameraAccessDeniedSafari": "Nid oes modd cael mynediad at y camera. Adnewyddwch y dudalen i ganiatáu hawliau, neu gwiriwch osodiadau'r porwr hwn a dilysu hawliau wedi'u galluogi ar gyfer y wefan hon.",
+    "callCameraAlreadyInUse": "Nid oes modd cael mynediad at y camera. Mae'n bosib bod rhaglen arall yn ei ddefnyddio'n barod.",
+    "callVideoStoppedBySystem": "Mae eich fideo wedi cael ei stopio gan eich system.",
+    "callVideoRecoveredBySystem": "Mae eich fideo wedi ailddechrau.",
+    "callMacOsCameraAccessDenied": "Mae MacOS yn rhwystro mynediad at eich camera. Diweddarwch eich gosodiadau preifatrwydd i ganiatáu i'r porwr hwn gael mynediad at eich camera.",
+    "callMacOsScreenShareAccessDenied": "Mae MacOS yn rhwystro rhannu sgrin. Diweddarwch eich gosodiadau preifatrwydd i ganiatáu i'r porwr hwn recordio eich sgrin.",
+    "dismissButtonAriaLabel": "Cau",
+    "failedToJoinCallGeneric": "Wedi methu ag ymuno â'r alwad.",
+    "failedToJoinCallInvalidMeetingLink": "Does dim modd ymuno â'r Cyfarfod. Dolen Annilys.",
+    "cameraFrozenForRemoteParticipants": "Mae defnyddwyr yn yr alwad yn cael trafferth gweld eich fideo. Tarwch olwg ar eich dyfeisiau a'ch rhwydwaith.",
+    "unableToStartVideoEffect": "Nid oes modd defnyddio'r effaith fideo.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Nid oes modd dechrau sbotolau ar gyfranogwr/cyfranogwyr oherwydd bod y nifer fwyaf o gyfranogwyr a ganiateir eisoes wedi'u hamlygu.",
+    "mutedByRemoteParticipant": "Rydych chi wedi cael eich tewi gan gyfranogwr arall."
+  },
+  "notificationStack": {
+    "callingNetworkFailure": {
+      "title": "Mae problem wrth gysylltu'r alwad",
+      "message": "Mae’n ymddangos eich bod chi all-lein. Gwnewch yn siŵr eich bod chi wedi cysylltu â'r rhwydwaith a rhoi cynnig arall arni.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "startVideoGeneric": {
+      "title": "Wedi methu â dechrau'r fideo.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "stopVideoGeneric": {
+      "title": "Wedi methu â stopio'r fideo.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "muteGeneric": {
+      "title": "Wedi methu â thewi'r meicroffon.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "unmuteGeneric": {
+      "title": "Wedi methu â dad-dewi'r meicroffon.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "speakingWhileMuted": {
+      "title": "Rydych chi wedi'ch tewi.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "startScreenShareGeneric": {
+      "title": "Roedd problem wrth ddechrau rhannu sgrin.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "stopScreenShareGeneric": {
+      "title": "Wedi methu â stopio rhannu sgrin.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callNetworkQualityLow": {
+      "title": "Mae ansawdd y rhwydwaith yn isel.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
+      "title": "Mae ansawdd y rhwydwaith yn isel.",
+      "dismissButtonAriaLabel": "Cau",
+      "message": "Ymuno â'r alwad hon o'ch ffôn i gael sain gwell. Gallwch barhau i weld y cyfarfod ar y ddyfais hon.",
+      "primaryButtonLabel": "Ymuno dros y Ffôn"
+    },
+    "callNoSpeakerFound": {
+      "title": "Heb ganfod seinyddion na chlustffonau",
+      "message": "Cysylltu dyfais sain i glywed yr alwad.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callNoMicrophoneFound": {
+      "title": "Heb ganfod meicroffonau",
+      "message": "Cysylltwch ddyfais mewnbynnu sain.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "Does dim modd cael mynediad i'r meicroffon",
+      "message": "Cliciwch y clo yn y bar cyfeiriad i roi caniatâd i'r dudalen we hon.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "Does dim modd cael mynediad i'r meicroffon",
+      "message": "Adnewyddwch y dudalen i ganiatáu caniatâd, neu gwiriwch osodiadau'r porwr hwn a dilysu bod y caniatâd wedi'u galluogi ar gyfer y wefan hon.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "Rydych chi wedi cael eich tewi gan eich system.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "Mae eich meicroffon wedi'i adfer a chawsoch chi eich dad-dewi gan eich system.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "Does dim modd cael mynediad i'r meicroffon",
+      "message": "Rhoi caniatâd meicroffon yn eich gosodiadau preifatrwydd macOS.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callLocalVideoFreeze": {
+      "title": "Mae lled band y rhwydwaith yn wael",
+      "message": "Efallai y bydd eich fideo wedi'i oedi ar gyfer eraill ar yr alwad.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callCameraAccessDenied": {
+      "title": "Does dim modd cael mynediad i'r camera",
+      "message": "Cliciwch y clo yn y bar cyfeiriad i roi caniatâd i'r dudalen we hon.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "Does dim modd cael mynediad i'r camera",
+      "message": "Adnewyddwch y dudalen i ganiatáu caniatâd, neu gwiriwch osodiadau'r porwr hwn a dilysu bod y caniatâd wedi'u galluogi ar gyfer y wefan hon.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "Does dim modd cael mynediad i'r camera",
+      "message": "Mae'n bosib bod rhaglen arall yn ei ddefnyddio'n barod.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "Mae eich fideo wedi cael ei stopio gan eich system.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "Mae eich fideo wedi ailddechrau.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "Mae MacOS yn rhwystro mynediad i'ch camera",
+      "message": "Diweddarwch eich gosodiadau preifatrwydd i ganiatáu i'r porwr hwn gael mynediad at eich camera.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "Mae MacOS yn rhwystro rhannu sgrin",
+      "message": "Diweddarwch eich gosodiadau preifatrwydd i ganiatáu i'r porwr hwn recordio eich sgrin.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "Wedi methu ag ymuno â'r alwad.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "Does dim modd ymuno â'r Cyfarfod. Dolen Annilys.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "Mae defnyddwyr yn yr alwad yn cael trafferth gweld eich fideo",
+      "message": "Gwiriwch eich dyfeisiau a'ch rhwydwaith.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "unableToStartVideoEffect": {
+      "title": "Does dim modd defnyddio'r effaith fideo.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "Nid oes modd dechrau'r sbotolau ar y cyfranogwr/cyfranogwyr",
+      "message": "Mae'r sbotolau eisoes ar y nifer fwyaf o gyfranogwyr.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "mutedByRemoteParticipant": {
+      "title": "Rydych chi wedi cael eich tewi gan gyfranogwr arall.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "recordingStarted": {
+      "title": "Wedi dechrau recordio.",
+      "message": "Drwy ymuno, rydych yn cydsynio i drawsgrifio'r cyfarfod hwn.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "transcriptionStarted": {
+      "title": "Wedi dechrau trawsgrifio.",
+      "message": "Drwy ymuno, rydych yn cydsynio i drawsgrifio'r cyfarfod hwn.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "recordingStopped": {
+      "title": "Mae recordiad yn cael ei gadw.",
+      "message": "Wedi stopio recordio.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "transcriptionStopped": {
+      "title": "Mae trawsgrifiad yn cael ei gadw.",
+      "message": "Wedi stopio trawsgrifio.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "recordingAndTranscriptionStarted": {
+      "title": "Wedi dechrau recordio a thrawsgrifio.",
+      "message": "Drwy ymuno, rydych yn cydsynio i drawsgrifio'r cyfarfod hwn.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "recordingAndTranscriptionStopped": {
+      "title": "Mae recordiad a thrawsgrifiad yn cael eu cadw.",
+      "message": "Wedi stopio recordio a thrawsgrifio.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "recordingStoppedStillTranscribing": {
+      "title": "Wedi stopio recordio.",
+      "message": "Rydych yn awr yn trawsgrifio'r cyfarfod hwn yn unig.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "transcriptionStoppedStillRecording": {
+      "title": "Wedi stopio trawsgrifio.",
+      "message": "Rydych chi dim ond yn recordio'r cyfarfod hwn bellach.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Byddwn yn eich symud i'ch ystafell wedi'i neilltuo mewn 5 eiliad.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "Mae ystafell eich cyfarfod ymylol wedi newid",
+      "message": "Byddwn yn eich symud i'ch ystafell wedi'i neilltuo mewn 5 eiliad.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "Ymuno â chyfarfod ymylol?",
+      "message": "Rydych chi wedi cael eich neilltuo i gyfarfod ymylol.",
+      "dismissButtonAriaLabel": "Cau",
+      "primaryButtonLabel": "Ymuno â’r ystafell",
+      "secondaryButtonLabel": "Yn nes ymlaen"
+    },
+    "breakoutRoomJoined": {
+      "title": "Rydych chi wedi ymuno â chyfarfod ymylol.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "Mae terfyn amser yr ystafell ar fin dod i ben.",
+      "message": "Bydd yr ystafell hon yn cau mewn 30 eiliad",
+      "dismissButtonAriaLabel": "Cau"
+    }
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Rydych chi'n rhannu eich sgrin",
+    "screenShareLoadingMessage": "Wrthi'n llwytho sgrin {participant}",
+    "localScreenShareLoadingMessage": "Wrthi'n llwytho eich sgrin",
+    "localVideoLabel": "Chi",
+    "localVideoCameraSwitcherLabel": "Newid camera",
+    "localVideoMovementLabel": "Teilsen Fideo Lleol Symudol",
+    "localVideoMovementAriaLabel": "Teilsen Fideo Lleol Symudol",
+    "localVideoSelectedDescription": "Wedi dewis {cameraName}",
+    "displayNamePlaceholder": "Cyfranogwr dienw",
+    "fitRemoteParticipantToFrame": "Ffitio i'r ffrâm",
+    "fillRemoteParticipantFrame": "Llenwi'r ffrâm",
+    "pinParticipantForMe": "Pinio ar fy nghyfer i",
+    "pinParticipantForMeLimitReached": "Pinio (wedi cyrraedd y terfyn)",
+    "unpinParticipantForMe": "Dadbinio",
+    "pinParticipantMenuItemAriaLabel": "Pinio {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "Dadbinio {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "Wedi pinio {participantName}",
+    "unpinnedParticipantAnnouncementAriaLabel": "Wedi dadbinio {participantName}",
+    "startSpotlightVideoTileMenuLabel": "Sbotolau i bawb",
+    "addSpotlightVideoTileMenuLabel": "Ychwanegu sbotolau",
+    "spotlightLimitReachedMenuTitle": "Wedi cyrraedd y terfyn sbotolau",
+    "stopSpotlightVideoTileMenuLabel": "Diffodd y sbotolau",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Gadael y sbotolau",
+    "attendeeRole": "Mynychwr",
+    "muteParticipantMenuItemLabel": "Tewi",
+    "waitingScreenText": "Yn aros i bobl eraill ymuno"
+  },
+  "dialpad": {
+    "placeholderText": "Rhowch rif ffôn",
+    "deleteButtonAriaLabel": "Dileu"
+  },
+  "holdButton": {
+    "onLabel": "Parhau",
+    "offLabel": "Rhoi i aros",
+    "tooltipOnContent": "Parhau â'r alwad",
+    "tooltipOffContent": "Rhoi'r alwad i Aros"
+  },
+  "videoTile": {
+    "participantStateRinging": "Wrthi'n galw...",
+    "participantReconnecting": "Wrthi'n ailgysylltu...",
+    "participantStateHold": "Galwad yn aros",
+    "moreOptionsButtonAriaLabel": "Mwy o Ddewisiadau {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "wedi tewi",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "wedi dad-dewi",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Llaw wedi’i chodi",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Siarad"
+  },
+  "CameraAndMicrophoneSitePermissionsRequest": {
+    "primaryText": "Caniatáu i {appName} ddefnyddio eich camera a'ch meicroffon",
+    "secondaryText": "Mae hyn er mwyn i gyfranogwyr allu eich gweld a'ch clywed chi.",
+    "linkText": "Angen cymorth? Cael cymorth i ddatrys problemau",
+    "primaryButtonText": "Bwrw ymlaen heb y camera a'r meicroffon",
+    "ariaLabel": "Caniatáu mynediad i'r camera a'r meicroffon"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "Caniatáu i {appName} ddefnyddio eich camera",
+    "secondaryText": "Mae hyn er mwyn i gyfranogwyr allu eich gweld chi.",
+    "linkText": "Angen help? Cael cymorth i ddatrys problemau",
+    "primaryButtonText": "Bwrw ymlaen heb y camera",
+    "ariaLabel": "Caniatáu mynediad i'r camera"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "Caniatáu i {appName} ddefnyddio eich meicroffon",
+    "secondaryText": "Mae hyn er mwyn i gyfranogwyr allu eich clywed chi.",
+    "linkText": "Angen cymorth? Cael cymorth i ddatrys problemau",
+    "primaryButtonText": "Bwrw ymlaen heb feicroffon",
+    "ariaLabel": "Caniatáu mynediad i'r meicroffon"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "Wrthi'n chwilio am fynediad i'r camera a'r meicroffon",
+    "secondaryText": "Caniatáu mynediad os gofynnir i chi wneud hynny. Mae hyn er mwyn i gyfranogwyr allu eich gweld a'ch clywed chi.",
+    "linkText": "Angen help? Cael cymorth i ddatrys problemau",
+    "primaryButtonText": "Bwrw ymlaen heb y camera a'r meicroffon",
+    "ariaLabel": "Wrthi'n chwilio am fynediad i'r camera a'r meicroffon. Caniatáu mynediad os gofynnir i chi wneud hynny."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "Wrthi'n chwilio am fynediad i'r camera",
+    "secondaryText": "Caniatáu mynediad os gofynnir i chi wneud hynny. Mae hyn er mwyn i gyfranogwyr eich gweld.",
+    "linkText": "Angen cymorth? Cael cymorth i ddatrys problemau",
+    "primaryButtonText": "Bwrw ymlaen heb y camera",
+    "ariaLabel": "Wrthi'n chwilio am fynediad i'r camera. Caniatáu mynediad os gofynnir i chi wneud hynny."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "Wrthi'n chwilio am fynediad i’r meicroffon",
+    "secondaryText": "Caniatáu mynediad os gofynnir i chi wneud hynny. Mae hyn fel y gall cyfranogwyr eich clywed.",
+    "linkText": "Angen cymorth? Cael cymorth i ddatrys problemau",
+    "primaryButtonText": "Bwrw ymlaen heb feicroffon",
+    "ariaLabel": "Wrthi'n chwilio am fynediad i'r meicroffon. Caniatáu mynediad os gofynnir i chi wneud hynny."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "Nid oes modd cael mynediad at y camera a'r meicroffon",
+    "secondaryText": "Cliciwch yr eicon clo yn y bar cyfeiriad i roi hawliau i'r meicroffon i'r dudalen we hon. Efallai bydd angen adnewyddu tudalen.",
+    "primaryButtonText": "Bwrw ymlaen heb y camera a'r meicroffon",
+    "linkText": "Angen help? Cael cymorth i ddatrys problemau"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Does dim modd cael mynediad i'r camera a'r meicroffon",
+    "secondaryText": "Adnewyddwch y dudalen i ganiatáu hawliau, neu gwiriwch osodiadau'r porwr hwn a dilysu hawliau wedi'u galluogi ar gyfer y wefan hon.",
+    "primaryButtonText": "Bwrw ymlaen heb y camera a'r meicroffon",
+    "linkText": "Angen cymorth? Cael cymorth i ddatrys problemau"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "Nid oes modd cael mynediad at y camera",
+    "secondaryText": "Cliciwch ar yr eicon clo yn y bar cyfeiriad i roi caniatâd camera i'r dudalen we hon. Efallai y bydd angen adnewyddu'r dudalen.",
+    "primaryButtonText": "Bwrw ymlaen heb y camera",
+    "linkText": "Angen help? Cael cymorth i ddatrys problemau"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "Does dim modd cael mynediad i'r meicroffon",
+    "secondaryText": "Cliciwch yr eicon clo yn y bar cyfeiriad i roi hawliau i'r meicroffon i'r dudalen we hon. Efallai bydd angen adnewyddu tudalen.",
+    "primaryButtonText": "Bwrw ymlaen heb feicroffon",
+    "linkText": "Angen help? Cael cymorth i ddatrys problemau"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "Does dim modd cael mynediad i'r camera",
+    "secondaryText": "Adnewyddwch y dudalen i ganiatáu hawliau, neu gwiriwch osodiadau'r porwr hwn a dilysu hawliau wedi'u galluogi ar gyfer y wefan hon.",
+    "primaryButtonText": "Bwrw ymlaen heb y camera",
+    "linkText": "Angen help? Cael cymorth i ddatrys problemau"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "Nid oes modd cael mynediad at y meicroffon",
+    "secondaryText": "Adnewyddwch y dudalen i ganiatáu hawliau, neu gwiriwch osodiadau'r porwr hwn a dilysu hawliau wedi'u galluogi ar gyfer y wefan hon.",
+    "primaryButtonText": "Bwrw ymlaen heb feicroffon",
+    "linkText": "Angen cymorth? Cael cymorth i ddatrys problemau"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Does dim modd delio â'r porwr",
+    "secondaryText": "Ymunwch â'r alwad hon gan ddefnyddio porwr cydnaws.",
+    "moreHelpLinkText": "Gweld gofynion cydnawsedd"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Mae angen diweddaru'r porwr",
+    "secondaryText": "Er mwyn sicrhau’r alwad orau posibl, diweddarwch eich porwr a rhoi cynnig arall ar ymuno â'r alwad.",
+    "moreHelpLinkText": "Gweld gofynion cydnawsedd",
+    "continueAnywayButtonText": "Dechrau galwad heb ddiweddaru"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "Ni chefnogir system gweithredu",
+    "secondaryText": "Ymunwch â'r alwad hon gan ddefnyddio dyfais sydd â system weithredu gydnaws.",
+    "moreHelpLinkText": "Gweld gofynion cydnawsedd"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "Does dim modd defnyddio eich camera neu feicroffon",
+    "secondaryText": "Efallai nad oes gan eich porwr fynediad i'ch camera neu'ch meicroffon. I drwsio hyn, agorwch Dewisiadau'r System.",
+    "primaryButtonText": "Rhowch gynnig arall arni",
+    "linkText": "Angen help? Cael cymorth i ddatrys problemau"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Caniatewch fynediad i'r meicroffon i barhau",
+    "secondaryText": "Er mwyn i gyfranogwyr allu eich clywed chi.",
+    "primaryButtonText": "Rhowch gynnig arall arni",
+    "imageAltText": "Lleoliad caniatâd meicroffon a dyfais camera ar gyfer iOS",
+    "linkText": "Angen help? Cael cymorth i ddatrys problemau",
+    "step1Text": "Ewch i'r ap Gosodiadau.",
+    "step2Text": "Sgroliwch i lawr i'r gosodiadau ar gyfer y porwr hwn",
+    "step3Text": "Rhowch y Meicroffon ar waith (Camera'n ddewisol)",
+    "step4Text": "Rhowch gynnig arall ar ymuno â'r alwad",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
+  },
+  "verticalGallery": {
+    "leftNavButtonAriaLabel": "tudalen flaenorol {current} o {total}",
+    "rightNavButtonAriaLabel": "tudalen nesaf {current} o {total}"
+  },
+  "meetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Ymuno â galwad o'ch ffôn",
+    "meetingConferencePhoneInfoModalDialIn": "Deialu rhif",
+    "meetingConferencePhoneInfoModalMeetingId": "Rhowch ID y cyfarfod",
+    "meetingConferencePhoneInfoModalWait": "Aros i'r trefnydd roi mynediad",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "Dim ffôn ar gael",
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
+    "meetingConferencePhoneInfoModalTollFree": "(Di-doll)",
+    "meetingConferencePhoneInfoModalToll": "(Toll)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "Defnyddiwr Anhysbys",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} yn galw",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "Derbyn gyda sain",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "Derbyn gyda fideo",
+    "incomingCallNoticicationRejectAriaLabel": "Gwrthod",
+    "incomingCallNotificationAcceptButtonLabel": "Derbyn",
+    "incomingCallNotificationRejectButtonLabel": "Gwrthod",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Derbyn gyda Fideo",
+    "incomingCallNotificationDismissButtonAriaLabel": "Diystyru"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "Mae RTT (testun amser real) wedi'i alluogi ar gyfer yr holl gyfranogwyr ar gyfer cyfnod cyfan y cyfarfod.",
+    "bannerLinkLabel": "Dysgu mwy"
+  }
+}

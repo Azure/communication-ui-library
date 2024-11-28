@@ -10,6 +10,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccess } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
@@ -19,10 +21,11 @@ import { convertConferencePhoneInfo } from './Converter';
 
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeVideoStream, TogetherModeSeatingMap } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { EventEmitter } from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -55,7 +58,7 @@ import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { convertFromSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToRaisedHandState } from './Converter';
 import { ReactionMessage } from '@azure/communication-calling';
@@ -64,6 +67,8 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { LocalRecordingInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(local-recording-notification) */
 import { RecordingInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import { CallFeatureStreamState, TogetherModeSeatingPositionState } from './CallClientState';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -108,7 +113,7 @@ export class CallContext {
       },
       callAgent: undefined,
       userId: userId,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
+      environmentInfo: undefined,
       latestErrors: {} as CallErrors,
       /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: {} as CallNotifications
     };
@@ -217,7 +222,10 @@ export class CallContext {
         // Performance note: This loop should run only once because the number of entries
         // is never allowed to exceed MAX_CALL_HISTORY_LENGTH. A loop is used for correctness.
         while (Object.keys(draft.callsEnded).length >= MAX_CALL_HISTORY_LENGTH) {
-          delete draft.callsEnded[findOldestCallEnded(draft.callsEnded)];
+          const oldestCall = findOldestCallEnded(draft.callsEnded);
+          if (oldestCall) {
+            delete draft.callsEnded[oldestCall];
+          }
         }
         draft.callsEnded[latestCallId] = call;
       }
@@ -252,7 +260,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(unsupported-browser) */
   public setEnvironmentInfo(envInfo: EnvironmentInfo): void {
     this.modifyState((draft: CallClientState) => {
       draft.environmentInfo = envInfo;
@@ -451,6 +458,112 @@ export class CallContext {
     });
   }
 
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreams(
+    callId: string,
+    addedStreams: CallFeatureStreamState[],
+    removedStreams: CallFeatureStreamState[]
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        for (const stream of removedStreams) {
+          if (stream.mediaStreamType === 'Video') {
+            call.togetherMode.streams.mainVideoStream = undefined;
+            call.togetherMode.isActive = false;
+            call.togetherMode.seatingPositions = {};
+          }
+        }
+
+        for (const newStream of addedStreams) {
+          // This should only be called by the subscriber and some properties are add by other components so if the
+          // stream already exists, only update the values that subscriber knows about.
+          const mainVideoStream = call.togetherMode.streams.mainVideoStream;
+          if (mainVideoStream && mainVideoStream.id === newStream.id) {
+            mainVideoStream.mediaStreamType = newStream.mediaStreamType;
+            mainVideoStream.isAvailable = newStream.isAvailable;
+            mainVideoStream.isReceiving = newStream.isReceiving;
+          } else {
+            call.togetherMode.streams.mainVideoStream = newStream;
+          }
+          call.togetherMode.isActive = true;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamIsAvailable(callId: string, streamId: number, isAvailable: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.isReceiving = isAvailable;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamIsReceiving(callId: string, streamId: number, isReceiving: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.isReceiving = isReceiving;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamSize(
+    callId: string,
+    streamId: number,
+    size: { width: number; height: number }
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.streamSize = size;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public removeTogetherModeVideoStream(callId: string, removedStream: TogetherModeVideoStream[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        for (const stream of removedStream) {
+          if (stream.mediaStreamType === 'Video') {
+            call.togetherMode.streams.mainVideoStream = undefined;
+            call.togetherMode.isActive = false;
+          }
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSeatingCoordinates(callId: string, seatingMap: TogetherModeSeatingMap): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const seatingPositions: Record<string, TogetherModeSeatingPositionState> = {};
+        for (const [userId, seatingPosition] of seatingMap.entries()) {
+          seatingPositions[userId] = seatingPosition;
+        }
+        call.togetherMode.seatingPositions = seatingPositions;
+      }
+    });
+  }
+
   public setCallRaisedHands(callId: string, raisedHands: RaisedHand[]): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -504,6 +617,11 @@ export class CallContext {
 
       if (participantKey === toFlatCommunicationIdentifier(this._state.userId)) {
         call.localParticipantReaction = newReactionState;
+      } else if (!participant) {
+        // Warn if we can't find the participant in the call but we are trying to set their reaction state to a new reaction.
+        if (reactionMessage !== null) {
+          console.warn(`Participant ${participantKey} not found in call ${callId}. Cannot set reaction state.`);
+        }
       } else {
         participant.reactionState = newReactionState;
       }
@@ -550,7 +668,7 @@ export class CallContext {
           viewAttendeeNames.reason === 'MeetingRestricted'
         ) {
           call.hideAttendeeNames = true;
-        } else {
+        } else if (call) {
           call.hideAttendeeNames = false;
         }
       }
@@ -680,6 +798,25 @@ export class CallContext {
         );
         if (localVideoStream) {
           localVideoStream.view = view;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamRendererView(
+    callId: string,
+    togetherModeStreamType: string,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        if (togetherModeStreamType === 'Video') {
+          const togetherModeStream = call.togetherMode.streams.mainVideoStream;
+          if (togetherModeStream) {
+            togetherModeStream.view = view;
+          }
         }
       }
     });
@@ -934,7 +1071,10 @@ export class CallContext {
         // Performance note: This loop should run only once because the number of entries
         // is never allowed to exceed MAX_CALL_HISTORY_LENGTH. A loop is used for correctness.
         while (Object.keys(draft.incomingCallsEnded).length >= MAX_CALL_HISTORY_LENGTH) {
-          delete draft.incomingCallsEnded[findOldestCallEnded(draft.incomingCallsEnded)];
+          const oldestCall = findOldestCallEnded(draft.incomingCallsEnded);
+          if (oldestCall) {
+            delete draft.incomingCallsEnded[oldestCall];
+          }
         }
         draft.incomingCallsEnded[callId] = call;
       }
@@ -1026,11 +1166,11 @@ export class CallContext {
     videoEffects: LocalVideoStreamVideoEffectsState
   ): void {
     this.modifyState((draft: CallClientState) => {
-      const foundIndex = draft.deviceManager.unparentedViews.findIndex(
+      const view = draft.deviceManager.unparentedViews.find(
         (stream) => stream.mediaStreamType === localVideoStream.mediaStreamType
       );
-      if (foundIndex !== -1) {
-        draft.deviceManager.unparentedViews[foundIndex].videoEffects = videoEffects;
+      if (view) {
+        view.videoEffects = videoEffects;
       }
     });
   }
@@ -1049,23 +1189,27 @@ export class CallContext {
       captions.push(newCaption);
     }
     // if the last caption is final, then push the new one in
-    else if (captions[captions.length - 1].resultType === 'Final') {
+    else if (captions[captions.length - 1]?.resultType === 'Final') {
       captions.push(newCaption);
     }
     // if the last caption is Partial, then check if the speaker is the same as the new caption, if so, update the last caption
     else {
+      const lastCaption = captions[captions.length - 1];
+
       if (
-        toFlatCommunicationIdentifier(
-          captions[captions.length - 1].speaker.identifier as CommunicationIdentifierKind
-        ) === toFlatCommunicationIdentifier(newCaption.speaker.identifier as CommunicationIdentifierKind)
+        lastCaption &&
+        lastCaption.speaker.identifier &&
+        newCaption.speaker.identifier &&
+        toFlatCommunicationIdentifier(lastCaption.speaker.identifier) ===
+          toFlatCommunicationIdentifier(newCaption.speaker.identifier)
       ) {
         captions[captions.length - 1] = newCaption;
       }
       // if different speaker, ignore the interjector until the current speaker finishes
       // edge case: if we dont receive the final caption from the current speaker for 5 secs, we turn the current speaker caption to final and push in the new interjector
-      else {
-        if (Date.now() - captions[captions.length - 1].timestamp.getTime() > 5000) {
-          captions[captions.length - 1].resultType = 'Final';
+      else if (lastCaption) {
+        if (Date.now() - lastCaption.timestamp.getTime() > 5000) {
+          lastCaption.resultType = 'Final';
           captions.push(newCaption);
         }
       }
@@ -1093,7 +1237,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   public addCaption(callId: string, caption: AcsCaptionsInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1103,7 +1246,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   public setCaptionsKind(callId: string, kind: CaptionsKind): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1277,6 +1419,26 @@ export class CallContext {
       delete draft.latestNotifications[notificationTarget];
     });
   }
+
+  /* @conditional-compile-remove(media-access) */
+  public setMediaAccesses(callId: string, mediaAccesses: MediaAccess[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (!call) {
+        return;
+      }
+
+      mediaAccesses.forEach((participantMediaAccess) => {
+        const participant = call.remoteParticipants[toFlatCommunicationIdentifier(participantMediaAccess.participant)];
+        if (participant) {
+          participant.mediaAccess = {
+            isAudioPermitted: participantMediaAccess.isAudioPermitted,
+            isVideoPermitted: participantMediaAccess.isVideoPermitted
+          };
+        }
+      });
+    });
+  }
 }
 
 const toCallError = (target: CallErrorTarget, error: unknown): CallError => {
@@ -1286,12 +1448,19 @@ const toCallError = (target: CallErrorTarget, error: unknown): CallError => {
   return new CallError(target, new Error(error as string));
 };
 
-const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): string => {
+const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): string | undefined => {
   const callEntries = Object.entries(calls);
-  let [oldestCallId, oldestCall] = callEntries[0];
+  const firstCallEntry = callEntries[0];
+
+  if (!firstCallEntry) {
+    return undefined; // no calls exist
+  }
+
+  let [oldestCallId, oldestCall] = firstCallEntry;
   if (oldestCall.endTime === undefined) {
     return oldestCallId;
   }
+
   for (const [callId, call] of callEntries.slice(1)) {
     if (call.endTime === undefined) {
       return callId;

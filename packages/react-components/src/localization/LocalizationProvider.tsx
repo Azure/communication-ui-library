@@ -46,6 +46,12 @@ import { ReactionButtonStrings } from '../components';
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
+/* @conditional-compile-remove(rtt) */
+import { RTTDisclosureBannerStrings } from '../components/RTTDisclosureBanner';
+/* @conditional-compile-remove(rtt) */
+import { RTTModalStrings } from '../components/RTTModal';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextStrings } from '../components/RealTimeText';
 
 /**
  * Locale information for all components exported from this library.
@@ -169,7 +175,6 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(call-readiness) */
   /** Strings for BrowserPemissionDeniedIOS */
   BrowserPermissionDeniedIOS: BrowserPermissionDeniedIOSStrings;
-
   /**
    * Strings for the VerticalGallery.
    */
@@ -179,8 +184,16 @@ export interface ComponentStrings {
   ParticipantList: ParticipantListStrings;
   /** Strings for the MeetingConferencePhoneInfoModal */
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
-
   IncomingCallNotification: IncomingCallNotificationStrings;
+  /* @conditional-compile-remove(rtt) */
+  /** Strings for the RTT Disclosure Banner */
+  rttDisclosureBanner: RTTDisclosureBannerStrings;
+  /* @conditional-compile-remove(rtt) */
+  /** Strings for the RTTModal */
+  rttModal: RTTModalStrings;
+  /* @conditional-compile-remove(rtt) */
+  /** Strings for RealTimeText */
+  rtt: RealTimeTextStrings;
 }
 
 /**

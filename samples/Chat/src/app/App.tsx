@@ -34,7 +34,7 @@ export default (): JSX.Element => {
   const [threadId, setThreadId] = useState('');
   const [endpointUrl, setEndpointUrl] = useState('');
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
-  const [isRichTextEditorEnabled, setIsRichTextEditorEnabled] = useState(false);
+  const [isRichTextEditorEnabled, setIsRichTextEditorEnabled] = useState(true);
 
   const renderPage = (): JSX.Element => {
     switch (page) {

@@ -40,6 +40,7 @@ export const VideoEffectsPaneContent = (props: {
   updateFocusHandle: React.RefObject<{
     focus: () => void;
   }>;
+  backgroundImages: VideoBackgroundImage[] | undefined;
 }): JSX.Element => {
   const { onDismissError, activeVideoEffectError, activeVideoEffectChange } = props;
 
@@ -74,10 +75,9 @@ export const VideoEffectsPaneContent = (props: {
         }
       }
     ];
-    const videoEffectImages = adapter.getState().videoBackgroundImages;
 
-    if (videoEffectImages) {
-      videoEffectImages.forEach((img: VideoBackgroundImage) => {
+    if (props.backgroundImages) {
+      props.backgroundImages.forEach((img: VideoBackgroundImage) => {
         videoEffects.push({
           itemKey: img.key,
           backgroundProps: {
@@ -90,7 +90,13 @@ export const VideoEffectsPaneContent = (props: {
       });
     }
     return videoEffects;
-  }, [strings, adapter]);
+  }, [
+    strings.removeBackgroundEffectButtonLabel,
+    strings.removeBackgroundTooltip,
+    strings.blurBackgroundEffectButtonLabel,
+    strings.blurBackgroundTooltip,
+    props.backgroundImages
+  ]);
 
   const onEffectChange = useCallback(
     async (effectKey: string) => {
@@ -168,12 +174,17 @@ const VideoEffectsPaneTrampoline = (
   return (
     <Stack tokens={{ childrenGap: '0.75rem' }} className={mergeStyles({ paddingLeft: '0.5rem' })}>
       {activeVideoEffectError && isCameraOn && (
-        <MessageBar messageBarType={MessageBarType.error} onDismiss={() => onDismissError(activeVideoEffectError)}>
+        <MessageBar
+          messageBarType={MessageBarType.error}
+          onDismiss={() => onDismissError(activeVideoEffectError)}
+          role="alert"
+          aria-live="assertive"
+        >
           {locale.strings.call.unableToStartVideoEffect}
         </MessageBar>
       )}
       {showWarning && (
-        <MessageBar messageBarType={MessageBarType.warning}>
+        <MessageBar messageBarType={MessageBarType.warning} role="alert" aria-live="assertive">
           {locale.strings.call.cameraOffBackgroundEffectWarningText}
         </MessageBar>
       )}

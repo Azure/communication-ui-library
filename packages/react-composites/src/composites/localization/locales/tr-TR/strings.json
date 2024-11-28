@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Kapat",
     "videoEffectsPaneTitle": "Efektler",
     "videoEffectsPaneBackgroundSelectionTitle": "Arka plan",
+    "videoEffectsPaneAriaLabel": "Video efektleri paneli",
     "configurationPageVideoEffectsButtonLabel": "Efektler",
     "unableToStartVideoEffect": "Video efekti uygulanamıyor.",
     "blurBackgroundEffectButtonLabel": "Bulanıklaştır",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "Artık videolar toplantıdaki herkes için öne çıkarılmayacak.",
       "stopSpotlightConfirmButtonLabel": "Öne çıkarmayı durdur",
       "stopSpotlightOnSelfConfirmButtonLabel": "Öne çıkarmadan çık",
-      "stopSpotlightCancelButtonLabel": "İptal"
+      "stopSpotlightCancelButtonLabel": "İptal",
+      "closeSpotlightPromptButtonLabel": "Kapat"
     },
     "exitSpotlightButtonLabel": "Öne çıkarmadan çık",
     "exitSpotlightButtonTooltip": "Öne çıkarmadan çık",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "Benim için sabitle",
     "pinParticipantLimitReachedMenuLabel": "Sabitleme (sınıra ulaşıldı)",
     "unpinParticipantMenuLabel": "Sabitlemeyi kaldır",
-    "pinParticipantMenuItemAriaLabel": "Sabitle",
+    "pinParticipantMenuItemAriaLabel": "Benim için sabitle",
     "unpinParticipantMenuItemAriaLabel": "Sabitlemeyi kaldır",
     "muteAllMenuLabel": "Tümünü sessize al",
     "muteAllDialogTitle": "Herkesi sessize almak mı istiyorsunuz?",
@@ -406,6 +408,6 @@
     "openDtmfDialpadLabel": "Tuş takımını göster",
     "dtmfDialpadPlaceholderText": "Numara girin",
     "breakoutRoomChatPaneTitle": "Tartışma Odası Sohbeti",
-    "chatContentSpinnerLabel": "Loading..."
+    "chatContentSpinnerLabel": "Yükleniyor..."
   }
 }

@@ -1,11 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { DominantSpeakersInfo } from '@azure/communication-calling';
+import { CallState, DominantSpeakersInfo, EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -21,7 +19,7 @@ import {
 import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { CaptionsKind } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
@@ -189,18 +187,14 @@ export const getDiagnostics = (
 /**
  * @private
  */
-export const getCallState = (state: CallClientState, props: CallingBaseSelectorProps): string =>
+export const getCallState = (state: CallClientState, props: CallingBaseSelectorProps): CallState | undefined =>
   state.calls[props.callId]?.state;
 
 /**
  * @private
  */
-export const getEnvironmentInfo = (
-  state: CallClientState
-): undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo => {
-  /* @conditional-compile-remove(unsupported-browser) */
+export const getEnvironmentInfo = (state: CallClientState): undefined | EnvironmentInfo => {
   return state.environmentInfo;
-  return undefined;
 };
 
 /** @private */
@@ -210,9 +204,8 @@ export const getParticipantCount = (state: CallClientState, props: CallingBaseSe
   return undefined;
 };
 
-/* @conditional-compile-remove(acs-close-captions) */
 /** @private */
-export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsKind => {
+export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsKind | undefined => {
   return state.calls[props.callId]?.captionsFeature.captionsKind;
 };
 

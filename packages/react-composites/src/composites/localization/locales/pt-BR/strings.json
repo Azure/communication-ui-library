@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Fechar",
     "videoEffectsPaneTitle": "Efeitos",
     "videoEffectsPaneBackgroundSelectionTitle": "Tela de fundo",
+    "videoEffectsPaneAriaLabel": "Painel de efeitos de vídeo",
     "configurationPageVideoEffectsButtonLabel": "Efeitos",
     "unableToStartVideoEffect": "Não é possível aplicar o efeito de vídeo.",
     "blurBackgroundEffectButtonLabel": "Desfoque",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "Os vídeos não serão mais destacados para todos na reunião.",
       "stopSpotlightConfirmButtonLabel": "Parar de destacar",
       "stopSpotlightOnSelfConfirmButtonLabel": "Sair do destaque",
-      "stopSpotlightCancelButtonLabel": "Cancelar"
+      "stopSpotlightCancelButtonLabel": "Cancelar",
+      "closeSpotlightPromptButtonLabel": "Fechar"
     },
     "exitSpotlightButtonLabel": "Sair do destaque",
     "exitSpotlightButtonTooltip": "Sair do destaque",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "Fixar para mim",
     "pinParticipantLimitReachedMenuLabel": "Fixar (limite alcançado)",
     "unpinParticipantMenuLabel": "Desafixar",
-    "pinParticipantMenuItemAriaLabel": "Fixar",
+    "pinParticipantMenuItemAriaLabel": "Fixar para mim",
     "unpinParticipantMenuItemAriaLabel": "Desafixar",
     "muteAllMenuLabel": "Ativar mudo de todos",
     "muteAllDialogTitle": "Ativar mudo para todos?",

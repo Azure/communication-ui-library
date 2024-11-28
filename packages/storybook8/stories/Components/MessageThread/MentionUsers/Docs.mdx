@@ -1,0 +1,29 @@
+import { Canvas, Meta } from '@storybook/blocks';
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
+import * as MentionUsersStories from './index.stories';
+
+import MessageWithCustomMentionRendererText from '!!raw-loader!./snippets/MessageWithCustomMentionRenderer.snippet.tsx';
+
+<Meta of={MentionUsersStories} />
+
+## Mention of Users with a custom renderer within Message
+
+<SingleLineBetaBanner version={'1.7.0-beta.1'} />
+
+When a user is mentioned in a message, a custom HTML tag is used to represent the element in the
+MessageThread. This element can be styled using the standard methods and the renderer can be overridden for
+further customization. The HTML Tag is defined:
+
+```ts
+<msft-mention id="<id>">Displayable Text</msft-mention>
+```
+
+The MessageThread component also supports mentioning users when editing a message if the `lookupOptions` under the `mentionOptions` property is provided. However, if the `richTextEditorOptions` property is set, the `lookupOptions` will be ignored.
+
+## Example
+
+<Canvas
+  of={MentionUsersStories.CustomMentionsDocsOnly}
+  source={{ code: MessageWithCustomMentionRendererText }}
+  layout="padded"
+/>

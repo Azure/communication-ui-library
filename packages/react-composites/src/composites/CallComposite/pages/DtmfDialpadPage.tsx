@@ -7,15 +7,14 @@ import { CallCompositeOptions } from '../CallComposite';
 import { SidePaneRenderer } from '../components/SidePane/SidePaneProvider';
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 import React, { useEffect, useMemo, useState } from 'react';
-import { useAdapter } from '../adapter/CallAdapterProvider';
-import { CommonCallAdapter } from '../adapter';
 import { Stack, Text, useTheme } from '@fluentui/react';
 import { getReadableTime } from '../utils/timerUtils';
 import { DtmfDialpadContentTimerStyles } from '../styles/DtmfDialpadPage.styles';
 import { RemoteParticipantState } from '@internal/calling-stateful-client';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { useSelector } from '../hooks/useSelector';
-import { getStartTime } from '../selectors/baseSelectors';
+import { getRemoteParticipants, getStartTime, getTargetCallees } from '../selectors/baseSelectors';
+import { useAdapter } from '../adapter/CallAdapterProvider';
 
 /**
  * @internal
@@ -37,17 +36,15 @@ export interface DialpadPageProps {
 
 interface DialpadPageContentProps {
   mobileView: boolean;
-  adapter: CommonCallAdapter;
   compositeAudioContext?: AudioContext;
 }
 
 const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => {
-  const { adapter } = props;
-  const adapterState = adapter.getState();
   const theme = useTheme();
+  const targetCallees = useSelector(getTargetCallees);
+  const remoteParticipants = useSelector(getRemoteParticipants);
 
-  const calleeId = adapterState.targetCallees?.[0];
-  const remoteParticipants = adapterState.call?.remoteParticipants;
+  const calleeId = targetCallees?.[0];
   let calleeName;
 
   if (remoteParticipants) {
@@ -59,6 +56,7 @@ const DtmfDialpadPageContent = (props: DialpadPageContentProps): JSX.Element => 
     }
   }
 
+  const adapter = useAdapter();
   return (
     <Stack style={{ height: '100%', width: '100%', background: theme.palette.white }}>
       <Stack verticalAlign={'center'} style={{ margin: 'auto' }}>
@@ -103,7 +101,5 @@ const DtmfDialerContentTimer = (): JSX.Element => {
  * @internal
  */
 export const DtmfDialpadPage = (props: DialpadPageProps): JSX.Element => {
-  const adapter = useAdapter();
-
-  return <DtmfDialpadPageContent adapter={adapter} {...props} mobileView={props.mobileView} />;
+  return <DtmfDialpadPageContent {...props} mobileView={props.mobileView} />;
 };

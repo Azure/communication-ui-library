@@ -9,34 +9,9 @@ import {
 } from './ChatMessageComponentAsRichTextEditBox';
 import { COMPONENT_LOCALE_EN_US } from '../../../localization/locales';
 import userEvent from '@testing-library/user-event';
-import { registerIcons } from '@fluentui/react';
 import { modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 
-const icons: {
-  [key: string]: string | JSX.Element;
-} = {
-  editboxsubmit: <></>,
-  editboxcancel: <></>,
-  richtextboldbuttonicon: <></>,
-  richtextitalicbuttonicon: <></>,
-  richtextunderlinebuttonicon: <></>,
-  richtextbulletlistbuttonicon: <></>,
-  richtextnumberlistbuttonicon: <></>,
-  richtextindentdecreasebuttonicon: <></>,
-  richtextindentincreasebuttonicon: <></>,
-  richtextdividericon: <></>,
-  richtexteditorbuttonicon: <></>,
-  richtextinserttableregularicon: <></>,
-  richtextinserttablefilledicon: <></>
-};
-
 describe('ChatMessageComponentAsRichTextEditBox tests', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: icons
-    });
-  });
-
   const onCancelMock = jest.fn();
   const onSubmitMock = jest.fn();
   const text = 'Hello World!';
@@ -44,8 +19,6 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
   const messageId = '1';
 
   const localeStrings = COMPONENT_LOCALE_EN_US.strings;
-  const cancelButtonTitle = localeStrings.messageThread.editBoxCancelButton;
-  const submitButtonTitle = localeStrings.messageThread.editBoxSubmitButton;
 
   const props: ChatMessageComponentAsRichTextEditBoxProps = {
     onCancel: onCancelMock,
@@ -68,8 +41,8 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
   test('renders the component correctly', () => {
     render(<ChatMessageComponentAsRichTextEditBox {...props} />);
 
-    const cancelButton = screen.queryByTestId(cancelButtonTitle);
-    const submitButton = screen.queryByTestId(submitButtonTitle);
+    const cancelButton = screen.queryByTestId('chat-message-rich-text-edit-box-cancel-button');
+    const submitButton = screen.queryByTestId('chat-message-rich-text-edit-box-submit-button');
     const formatButton = screen.queryByTestId('rich-text-input-box-format-button');
     const contentComponent = screen.queryByText(text);
 
@@ -82,9 +55,9 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
   test('calls onCancel when cancel button is clicked', async () => {
     render(<ChatMessageComponentAsRichTextEditBox {...props} />);
 
-    const cancelButton = screen.queryByTestId(cancelButtonTitle);
+    const cancelButton = screen.queryByTestId('chat-message-rich-text-edit-box-cancel-button');
     if (cancelButton === null) {
-      fail('Cancel button not found');
+      throw new Error('Cancel button not found');
     }
     await userEvent.click(cancelButton);
 
@@ -97,7 +70,7 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
     // fix for an issue when contentEditable is not set to RoosterJS for tests
     editorDiv?.setAttribute('contentEditable', 'true');
     if (editorDiv === null) {
-      fail('Editor div not found');
+      throw new Error('Editor div not found');
     }
     await userEvent.click(editorDiv);
     await waitFor(async () => {
@@ -105,9 +78,9 @@ describe('ChatMessageComponentAsRichTextEditBox tests', () => {
       await userEvent.keyboard(' Test');
     });
 
-    const submitButton = screen.queryByTestId(submitButtonTitle);
+    const submitButton = screen.queryByTestId('chat-message-rich-text-edit-box-submit-button');
     if (submitButton === null) {
-      fail('Submit button not found');
+      throw new Error('Submit button not found');
     }
     fireEvent.click(submitButton);
     await modifyInlineImagesInContentString('<div>Hello World! Test</div>', []);

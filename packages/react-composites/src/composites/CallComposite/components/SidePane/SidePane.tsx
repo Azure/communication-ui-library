@@ -9,10 +9,16 @@ import {
   scrollableContainer,
   scrollableContainerContents
 } from '../../../common/styles/ParticipantContainer.styles';
-import { availableSpaceStyles, sidePaneStyles, sidePaneTokens } from '../../../common/styles/Pane.styles';
+import {
+  availableSpaceStyles,
+  paneHighContrastStyles,
+  sidePaneStyles,
+  sidePaneTokens
+} from '../../../common/styles/Pane.styles';
 import { SidePaneRenderer, useSidePaneContext } from './SidePaneProvider';
 import { PeopleAndChatHeader } from '../../../common/TabHeader';
 import { hiddenStyles } from '../../../common/styles/Pane.styles';
+import { useTheme } from '@internal/react-components';
 
 /** @private */
 export interface SidePaneProps {
@@ -20,6 +26,7 @@ export interface SidePaneProps {
   mobileView?: boolean;
   maxWidth?: string;
   minWidth?: string;
+  ariaLabel?: string;
 
   // legacy arguments to be removed in breaking change
   disablePeopleButton?: boolean;
@@ -93,12 +100,18 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
       ? overrideSidePane.renderer.contentRenderer
       : undefined;
 
+  const theme = useTheme();
+
   if (!ContentRenderer && !OverrideContentRenderer) {
     return <EmptyElement />;
   }
 
   return (
     <Stack
+      aria-label={props.ariaLabel}
+      data-is-focusable={!!props.ariaLabel}
+      role={props.ariaLabel ? 'navigation' : undefined}
+      tabIndex={props.ariaLabel ? 0 : undefined}
       verticalFill
       grow
       styles={paneStyles}
@@ -106,6 +119,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
       tokens={
         props.mobileView || (!props.showAddPeopleButton && sidePaneRenderer?.id === 'people') ? {} : sidePaneTokens
       }
+      className={paneHighContrastStyles(theme)}
     >
       {HeaderToRender}
       <Stack.Item verticalFill grow styles={paneBodyContainer}>

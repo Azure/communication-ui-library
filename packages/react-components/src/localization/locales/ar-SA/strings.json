@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "حذف العمود",
     "richTextDeleteRowMenu": "حذف الصف",
     "richTextDeleteTableMenu": "حذف الجدول",
+    "richTextToolbarAriaLabel": "شريط أدوات تنسيق الرسائل",
     "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
     "attachmentMoreMenu": "خيارات إضافية",
     "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
     "richTextNewNumberedListItemAnnouncement": "{0}، سطر جديد",
     "richTextBulletedListAppliedAnnouncement": "تم تطبيق قائمة نقطية",
     "richTextNumberedListAppliedAnnouncement": "تطبيق قائمة ذات تعداد رقمي"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "تشغيل مربع حوار عرض الكتابة في الوقت الحقيقي المشروط",
+    "rttModalTitle": "هل تريد تشغيل عرض الكتابة في الوقت الحقيقي؟",
+    "rttModalText": "سيتم تشغيل النص في الوقت الحقيقي (RTT) لكل شخص في الاجتماع.",
+    "rttConfirmButtonLabel": "تشغيل",
+    "rttCancelButtonLabel": "إلغاء الأمر",
+    "rttCloseModalButtonAriaLabel": "إغلاق مربع حوار عرض الكتابة في الوقت الحقيقي المشروط"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "ضحك",
     "applauseReactionTooltipContent": "تصفيق",
     "surprisedReactionTooltipContent": "مندهش"
+  },
+  "rtt": {
+    "isTypingText": "يكتب في عرض الكتابة في الوقت الحقيقي"
   },
   "messageThread": {
     "yesterday": "أمس",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "يتم الآن الاتصال...",
+    "participantReconnecting": "يتم الآن إعادة الاتصال...",
     "participantStateHold": "قيد الانتظار",
-    "moreOptionsButtonAriaLabel": "خيارات إضافية"
+    "moreOptionsButtonAriaLabel": "خيارات إضافية {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "مكتوم الصوت",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "غير مكتوم الصوت",
+    "moreOptionsParticipantHandRaisedAriaLabel": "يد مرفوعة",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "يتحدث"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "السماح {appName} باستخدام الكاميرا والميكروفون لديك",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "الصفحة السابقة",
-    "rightNavButtonAriaLabel": "الصفحة التالية"
+    "leftNavButtonAriaLabel": "الصفحة السابقة {current} من {total}",
+    "rightNavButtonAriaLabel": "الصفحة التالية {current} من {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "الانضمام إلى مكالمة من هاتفك",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "رفض",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "قبول مع الفيديو",
     "incomingCallNotificationDismissButtonAriaLabel": "تجاهل"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "عرض الكتابة في الوقت الحقيقي (RTT)",
+    "bannerContent": "تم تمكين RTT (نص الوقت الحقيقي) لجميع المشاركين طوال مدة الاجتماع.",
+    "bannerLinkLabel": "تعرّف على المزيد"
   }
 }

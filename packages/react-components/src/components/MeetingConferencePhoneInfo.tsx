@@ -99,7 +99,9 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
         styles={PhoneInfoModalStyle}
       >
         <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-          <Text className={titleClassName}>{strings?.meetingConferencePhoneInfoModalTitle}</Text>
+          <Text role="heading" aria-level={2} className={titleClassName}>
+            {strings?.meetingConferencePhoneInfoModalTitle}
+          </Text>
           <IconButton
             iconProps={{ iconName: 'Cancel' }}
             ariaLabel={strings?.meetingConferencePhoneInfoModalTitle}
@@ -162,7 +164,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
                   </Stack.Item>
                 </Stack>
               </Stack.Item>
-              <Text className={phoneInfoTextStyle}>{formatMeetingId(conferencePhoneInfoList[0].conferenceId)}</Text>
+              <Text className={phoneInfoTextStyle}>{formatMeetingId(conferencePhoneInfoList[0]?.conferenceId)}</Text>
             </Stack>
             <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
               <Stack horizontal>

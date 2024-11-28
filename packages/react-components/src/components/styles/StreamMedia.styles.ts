@@ -37,24 +37,10 @@ export const reconnectingContainer = (): string =>
     bottom: '0',
     left: '0',
     right: '0',
-    background: 'rgba(0, 0, 0, 0.5)',
+    background: 'rgba(0, 0, 0, 0.55)',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center'
-  });
-
-/**
- * @private
- */
-export const reconnectingText = (theme: Theme): string =>
-  mergeStyles({
-    // Position centrally on top of content. Parent must have position: relative.
-    height: '3rem',
-    lineHeight: '3rem',
-    justifyContent: 'center',
-    alignItems: 'center',
-    color: theme.palette.themeLight,
-    fontSize: theme.fonts.large.fontSize
   });
 
 /**
@@ -72,6 +58,21 @@ export const loadSpinnerStyles: ISpinnerStyles = {
     borderWidth: '0.25em'
   }
 };
+
+/**
+ * @private
+ */
+export const reconnectSpinnerStyles = (): ISpinnerStyles => ({
+  ...loadSpinnerStyles,
+  label: {
+    color: 'white'
+  },
+  circle: {
+    ...(loadSpinnerStyles.circle as object),
+    maxHeight: '2rem',
+    borderWidth: 'unset'
+  }
+});
 
 /**
  * @private

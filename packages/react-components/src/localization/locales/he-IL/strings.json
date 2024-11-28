@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "מחק עמודה",
     "richTextDeleteRowMenu": "מחק שורה",
     "richTextDeleteTableMenu": "מחק טבלה",
+    "richTextToolbarAriaLabel": "סרגל כלים של עיצוב הודעה",
     "richTextToolbarMoreButtonAriaLabel": "אפשרויות נוספות",
     "attachmentMoreMenu": "אפשרויות נוספות",
     "richTextNewBulletedListItemAnnouncement": "תבליט, שורה חדשה",
     "richTextNewNumberedListItemAnnouncement": "{0}, שורה חדשה",
     "richTextBulletedListAppliedAnnouncement": "הוחלה רשימה עם תבליטים",
     "richTextNumberedListAppliedAnnouncement": "רשימה ממוספרת הוחלה"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "הפעל תיבת דו-שיח מודאלית של RTT",
+    "rttModalTitle": "להפעיל RTT?",
+    "rttModalText": "טקסט בזמן אמת (RTT) יופעל עבור כל האנשים בפגישה.",
+    "rttConfirmButtonLabel": "הפעל",
+    "rttCancelButtonLabel": "ביטול",
+    "rttCloseModalButtonAriaLabel": "סגור תיבת דו-שיח מודאלית של RTT"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "צחוק",
     "applauseReactionTooltipContent": "תשואות",
     "surprisedReactionTooltipContent": "מופתע"
+  },
+  "rtt": {
+    "isTypingText": "הקלדת RTT"
   },
   "messageThread": {
     "yesterday": "אתמול",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "מתקשר...",
+    "participantReconnecting": "מתחבר מחדש...",
     "participantStateHold": "בהמתנה",
-    "moreOptionsButtonAriaLabel": "אפשרויות נוספות"
+    "moreOptionsButtonAriaLabel": "אפשרויות נוספות {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "מושתק",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "לא מושתק",
+    "moreOptionsParticipantHandRaisedAriaLabel": "‫כף יד מורמת",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "מדבר"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "אפשר {appName} להשתמש במצלמה ובמיקרופון שלך",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "הדף הקודם",
-    "rightNavButtonAriaLabel": "הדף הבא"
+    "leftNavButtonAriaLabel": "העמוד הקודם {current} מתוך {total}",
+    "rightNavButtonAriaLabel": "העמוד הבא {current} מתוך {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "הצטרף לשיחה מהטלפון שלך",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "דחה",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "קבל עם וידאו",
     "incomingCallNotificationDismissButtonAriaLabel": "בטל"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (טקסט בזמן אמת) זמין עבור כל המשתתפים למשך הזמן כולו של הפגישה.",
+    "bannerLinkLabel": "מידע נוסף"
   }
 }

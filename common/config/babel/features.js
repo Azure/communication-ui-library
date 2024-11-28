@@ -19,16 +19,16 @@ module.exports = {
     "hide-attendee-name",
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
-    // feature for adding JS helpers to the UI library API
-    "composite-js-helpers",
     // Feature for remote UFD
     "remote-ufd",
     // Feature for showing dtmp dialer by default
     "dtmf-dialer-on-by-default",
-    // Deep Noise Suppression feature
-    "DNS",
     // Feature for together mode
-    "together-mode"
+    "together-mode",
+    // Feature for forbid/permit remote participants audio/video access
+    "media-access",
+    // Feature for RTT
+    "rtt"
   ],
   beta: [
     "call-readiness",
@@ -57,8 +57,6 @@ module.exports = {
     "unsupported-browser",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
     "total-participant-count",
-    // feature for tracking environment info API different than unsupported browser. stable use of environment info affects other components possibly sooner
-    "calling-environment-info",
     // conditional-compile for new signaling beta
     "signaling-beta",
     // Image overlay theme
@@ -75,28 +73,14 @@ module.exports = {
     "file-sharing-acs",
     // Beta feature for joining calls using teams token
     "teams-identity-support-beta",
-    // Soft Mute feature for ACS calls and Interop calls
-    "soft-mute",
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
     // feature for breakout rooms
-    "breakout-rooms"
+    "breakout-rooms",
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Joining calls using teams token
-    "teams-identity-support",
-    // Feature for end call options 
-    'end-call-options',
-    // Feature to support file sharing in Teams interoperability chats
-    "file-sharing-teams-interop",
-    // Close captions feature for ACS calls
-    "acs-close-captions",
-    // Feature for showing notifications
-    "notifications",
-    // Feature for tracking beta start call identifier
-    'start-call-beta'
   ]
 }

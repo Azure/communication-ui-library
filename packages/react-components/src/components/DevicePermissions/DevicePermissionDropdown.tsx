@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { Dropdown, IDropdownOption, IDropdownStyles, Stack, Text } from '@fluentui/react';
+import { Dropdown, IDropdownOption, IDropdownStyles, Stack, Text, mergeStyleSets } from '@fluentui/react';
 import React from 'react';
 
 /**
@@ -62,6 +62,10 @@ export interface _DevicePermissionDropdownProps {
    * Styles for devicepermissiondropdown
    */
   styles?: Partial<IDropdownStyles>;
+  /**
+   * Aria-labelledby for the dropdown
+   */
+  ariaLabelledby?: string;
 }
 
 /**
@@ -70,34 +74,76 @@ export interface _DevicePermissionDropdownProps {
  * @internal
  */
 export const _DevicePermissionDropdown = (props: _DevicePermissionDropdownProps): JSX.Element => {
-  const { icon, askDevicePermission, onClick, constrain, strings, options, styles } = props;
+  const { icon, askDevicePermission, onClick, constrain, strings, options } = props;
 
   const onRenderPlaceholder = (): JSX.Element => {
     return (
-      <Stack horizontal verticalAlign="center">
+      <Stack horizontal verticalAlign="center" horizontalAlign="space-between">
         {icon}
-        <Text>{strings?.placeHolderText}</Text>
+        <Stack.Item
+          styles={{
+            root: {
+              overflow: 'hidden',
+              whiteSpace: 'nowrap',
+              textOverflow: 'ellipsis',
+              flex: 1
+            }
+          }}
+        >
+          <Text>{strings?.placeHolderText}</Text>
+        </Stack.Item>
+        <Stack.Item
+          shrink={0}
+          styles={{
+            root: {
+              paddingLeft: '0.5rem'
+            }
+          }}
+        >
+          <Text>{strings?.actionButtonContent}</Text>
+        </Stack.Item>
       </Stack>
     );
   };
 
-  const onRenderCaretDown = (): JSX.Element => {
-    return <Text>{strings?.actionButtonContent}</Text>;
+  const showAsAllowPrompt = !options && !!askDevicePermission;
+  const styles = mergeStyleSets(
+    showAsAllowPrompt
+      ? {
+          title: {
+            paddingRight: '0.625rem'
+          }
+        }
+      : {},
+    props.styles
+  );
+
+  const click = (): void => {
+    if (askDevicePermission) {
+      void askDevicePermission(constrain ?? { video: true, audio: true });
+    }
+    onClick?.();
   };
 
   return (
     <Dropdown
+      role={showAsAllowPrompt ? 'button' : undefined}
       data-ui-id={'permission-dropdown'}
       placeholder={strings?.placeHolderText}
       label={strings?.label}
+      aria-labelledby={props.ariaLabelledby}
       onRenderPlaceholder={onRenderPlaceholder}
-      onRenderCaretDown={onRenderCaretDown}
-      onClick={() => {
-        if (askDevicePermission) {
-          askDevicePermission(constrain ?? { video: true, audio: true });
-        }
-        onClick?.();
-      }}
+      onRenderCaretDown={showAsAllowPrompt ? () => <></> : undefined}
+      onClick={showAsAllowPrompt ? click : undefined}
+      onKeyDown={
+        showAsAllowPrompt
+          ? (e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                click();
+              }
+            }
+          : undefined
+      }
       options={options ?? []}
       styles={styles}
     />

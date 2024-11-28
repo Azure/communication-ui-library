@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 module.exports = {
   env: {
     browser: true,
@@ -14,7 +15,7 @@ module.exports = {
     'plugin:react-hooks/recommended'
   ],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'header', 'jsdoc'],
+  plugins: ['@typescript-eslint', 'header', 'jsdoc', '@internal/custom-rules'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -23,6 +24,7 @@ module.exports = {
     sourceType: 'module'
   },
   rules: {
+    '@internal/custom-rules/no-getstate': 'error',
     '@typescript-eslint/explicit-function-return-type': [
       'warn',
       {
@@ -31,6 +33,7 @@ module.exports = {
       }
     ],
     eqeqeq: 'warn',
+    '@typescript-eslint/no-non-null-assertion': 'error',
     'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT License.'],
     'react/display-name': 'off',
     '@typescript-eslint/no-explicit-any': 'error',
@@ -104,6 +107,20 @@ module.exports = {
       files: ['tests/**/*.ts'],
       rules: {
         'jsdoc/require-jsdoc': 'off'
+      }
+    },
+    {
+      files: [
+        'tests/**/*',
+        '*.test.ts',
+        'AzureCommunicationCallAdapter.ts',
+        'AzureCommunicationCallWithChatAdapter.ts',
+        'AzureCommunicationChatAdapter.ts',
+        'useAdaptedSelector.ts',
+        'useHandlers.ts'
+      ],
+      rules: {
+        '@internal/custom-rules/no-getstate': 'off'
       }
     }
   ]

@@ -122,7 +122,9 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
                           ? NotificationStackSelector
                           : AreEqual<Component, typeof IncomingCallStack> extends true
                             ? IncomingCallStackSelector
-                            : undefined;
+                            : AreEqual<Component, typeof ReactionButton> extends true
+                              ? EmptySelector
+                              : undefined;
 
 /**
  * Get the selector for a specified component.

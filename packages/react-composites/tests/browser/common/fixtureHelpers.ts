@@ -2,8 +2,8 @@
 // Licensed under the MIT License.
 
 import { ChatClient } from '@azure/communication-chat';
-import { CommunicationIdentityClient, CommunicationUserToken } from '@azure/communication-identity';
-import { AzureCommunicationTokenCredential } from '@azure/communication-common';
+import { CommunicationIdentityClient } from '@azure/communication-identity';
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import { Browser, ConsoleMessage, Page, PlaywrightWorkerArgs } from '@playwright/test';
 import { v1 } from 'uuid';
 import { CHAT_TOPIC_NAME } from './constants';
@@ -76,29 +76,46 @@ export const usePagePerParticipantWithCallPermissions = async (
 };
 
 export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
-  const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
+  const endpoint = CONNECTION_STRING.replace('endpoint=', '').split(';')[0];
+  if (!endpoint) {
+    throw new Error('Endpoint URL not found in connection string');
+  }
+  const endpointUrl = new URL(endpoint).toString();
   const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
-  const userAndTokens: CommunicationUserToken[] = [];
-  for (let i = 0; i < displayNames.length; i++) {
-    userAndTokens.push(await tokenClient.createUserAndToken(['chat']));
+  const userData: {
+    userId: CommunicationUserIdentifier;
+    token: string;
+    displayName: string;
+  }[] = [];
+  for (const displayName of displayNames) {
+    const userAndToken = await tokenClient.createUserAndToken(['chat']);
+    userData.push({
+      userId: userAndToken.user,
+      token: userAndToken.token,
+      displayName: displayName
+    });
   }
 
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
+  if (!userData[0]) {
+    throw new Error('Failed to create user and token');
+  }
+
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userData[0].token));
   const threadId =
     (
       await chatClient.createChatThread(
         { topic: CHAT_TOPIC_NAME },
         {
-          participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
+          participants: userData.map((item) => ({ id: item.userId, displayName: item.displayName }))
         }
       )
     ).chatThread?.id ?? '';
 
-  return displayNames.map((displayName, i) => ({
-    userId: userAndTokens[i].user.communicationUserId,
-    token: userAndTokens[i].token,
+  return userData.map((data) => ({
+    userId: data.userId.communicationUserId,
+    token: data.token,
     endpointUrl,
-    displayName,
+    displayName: data.displayName,
     threadId,
     topic: CHAT_TOPIC_NAME
   }));
@@ -148,29 +165,46 @@ export const createCallWithChatObjectsAndUsers = async (
   displayNames: string[]
 ): Promise<Array<CallWithChatUserType>> => {
   const callId = v1();
-  const endpointUrl = new URL(CONNECTION_STRING.replace('endpoint=', '').split(';')[0]).toString();
+  const endpoint = CONNECTION_STRING.replace('endpoint=', '').split(';')[0];
+  if (!endpoint) {
+    throw new Error('Endpoint URL not found in connection string');
+  }
+  const endpointUrl = new URL(endpoint).toString();
   const tokenClient = new CommunicationIdentityClient(CONNECTION_STRING);
-  const userAndTokens: CommunicationUserToken[] = [];
-  for (let i = 0; i < displayNames.length; i++) {
-    userAndTokens.push(await tokenClient.createUserAndToken(['chat', 'voip']));
+  const userData: {
+    userId: CommunicationUserIdentifier;
+    token: string;
+    displayName: string;
+  }[] = [];
+  for (const displayName of displayNames) {
+    const userAndToken = await tokenClient.createUserAndToken(['chat', 'voip']);
+    userData.push({
+      userId: userAndToken.user,
+      token: userAndToken.token,
+      displayName: displayName
+    });
   }
 
-  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userAndTokens[0].token));
+  if (!userData[0]) {
+    throw new Error('Failed to create user and token');
+  }
+
+  const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userData[0].token));
   const threadId =
     (
       await chatClient.createChatThread(
         { topic: CHAT_TOPIC_NAME },
         {
-          participants: displayNames.map((displayName, i) => ({ id: userAndTokens[i].user, displayName: displayName }))
+          participants: userData.map((data) => ({ id: data.userId, displayName: data.displayName }))
         }
       )
     ).chatThread?.id ?? '';
 
-  return displayNames.map((displayName, i) => ({
-    userId: userAndTokens[i].user.communicationUserId,
-    token: userAndTokens[i].token,
+  return userData.map((data) => ({
+    userId: data.userId.communicationUserId,
+    token: data.token,
     endpointUrl,
-    displayName,
+    displayName: data.displayName,
     threadId,
     topic: CHAT_TOPIC_NAME,
     groupId: callId

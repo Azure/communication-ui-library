@@ -8,6 +8,8 @@ dotenv.config({ path: path.join(__dirname, '..', '.env') });
 const SERVER_BASE_URL = 'http://localhost:8080/';
 const PARTICIPANTS = ['Jack'];
 
+const isBetaBuild = process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta';
+
 test.describe('JS Bundle Test', () => {
   test.beforeEach(async ({ page }) => {
     await page.addStyleTag({ content: getTestCSS() });
@@ -32,10 +34,17 @@ test.describe('JS Bundle Test', () => {
     await page.goto(getTestUrl('chatComposite.html'));
 
     expect(await page.waitForSelector('text=Hello to you')).toBeTruthy();
+
     // Wait for message to finish sending
-    await page.waitForTimeout(1000);
+    await page.waitForSelector('[data-ui-id=chat-composite-message-status-icon][aria-label="Message sent"]');
+
+    // Flakey test fix: wait for participant list to have finished loading
+    if (isBetaBuild) {
+      await page.waitForSelector('[data-ui-id=participant-item]');
+    }
+
     await page.addScriptTag({
-      content: `document.querySelector('[data-ui-id=message-timestamp]').innerText='timestamp';`
+      content: `document.querySelector('[data-testid=message-timestamp]').innerText='timestamp';`
     });
 
     expect(await page.screenshot()).toMatchSnapshot('chatCompositeHtmlCheck.png');

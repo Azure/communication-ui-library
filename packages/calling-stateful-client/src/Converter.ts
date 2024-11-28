@@ -9,11 +9,12 @@ import {
   IncomingCall,
   IncomingCallCommon
 } from '@azure/communication-calling';
+
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeVideoStream as SdkTogetherModeVideoStream } from '@azure/communication-calling';
 import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
@@ -28,18 +29,16 @@ import {
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
   CallInfoState
 } from './CallClientState';
+/* @conditional-compile-remove(together-mode) */
+import { CallFeatureStreamState as DeclarativeCallFeatureVideoStream, CallFeatureStreamName } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
 import { _isTeamsIncomingCall } from './TypeGuards';
 import { _isACSCall } from './TypeGuards';
-/* @conditional-compile-remove(acs-close-captions) */
 import { _isTeamsCall } from './TypeGuards';
 import { CallCommon } from './BetaToStableTypes';
-
 import { Features } from '@azure/communication-calling';
-
 import { VideoEffectName } from '@azure/communication-calling';
-
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { RaisedHand } from '@azure/communication-calling';
 import { RaisedHandState } from './CallClientState';
@@ -79,6 +78,25 @@ export function convertSdkRemoteStreamToDeclarativeRemoteStream(
   };
 }
 
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ */
+export function convertSdkCallFeatureStreamToDeclarativeCallFeatureStream(
+  stream: SdkTogetherModeVideoStream,
+  featureName: CallFeatureStreamName
+): DeclarativeCallFeatureVideoStream {
+  return {
+    feature: featureName,
+    id: stream.id,
+    mediaStreamType: stream.mediaStreamType,
+    isAvailable: stream.isAvailable,
+    isReceiving: stream.isReceiving,
+    view: undefined,
+    streamSize: stream.size
+  };
+}
+
 /**
  * @private
  */
@@ -99,7 +117,8 @@ export function convertSdkParticipantToDeclarativeParticipant(
     isSpeaking: participant.isSpeaking,
     raisedHand: undefined,
     role: participant.role,
-    spotlight: undefined
+    spotlight: undefined,
+    /* @conditional-compile-remove(media-access) */ mediaAccess: undefined
   };
 }
 
@@ -132,7 +151,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
 
   return {
     id: call.id,
-    /* @conditional-compile-remove(teams-identity-support) */
+
     kind: _isACSCall(call) ? ('Call' as CallKind) : ('TeamsCall' as CallKind),
     callerInfo: call.callerInfo,
     state: call.state,
@@ -156,6 +175,8 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     localRecording: { isLocalRecordingActive: false },
     pptLive: { isActive: false },
     raiseHand: { raisedHands: [] },
+    /* @conditional-compile-remove(together-mode) */
+    togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
@@ -170,7 +191,7 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false,
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsKind: _isTeamsCall(call) ? 'TeamsCaptions' : 'Captions'
     },
     transfer: {
@@ -242,7 +263,6 @@ export function convertFromTeamsSDKToCaptionInfoState(caption: TeamsCaptionsInfo
   };
 }
 
-/* @conditional-compile-remove(acs-close-captions) */
 /**
  * @private
  */

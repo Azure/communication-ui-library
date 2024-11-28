@@ -1,10 +1,10 @@
-import { Image, Stack, MessageBar } from '@fluentui/react';
+import { Image, Stack } from '@fluentui/react';
 import { Meta, Source } from '@storybook/addon-docs';
-import { useEffect, useRef } from 'react';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import { overviewPageImagesStackStyle } from '../../constants';
+import { Note } from '../../utils/Note';
 import containerText from '!!raw-loader!./snippets/CallWithChat.snippet.tsx';
 import serverText from '!!raw-loader!./snippets/Server.snippet.tsx';
-import { overviewPageImagesStackStyle } from '../../constants';
 
 <Meta title="Composites/CallWithChatComposite" />
 
@@ -50,9 +50,10 @@ to be optimized for a mobile device.
 <Stack horizontalAlign="center">
   <Image src="images/call-with-chat-composite-mobile-hero.png" alt="Call with chat composite mobile preview image" />
 </Stack>
-<MessageBar>
-  Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
-</MessageBar>
+<Note>
+  {' '}
+  Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.{' '}
+</Note>
 You can try out the form factor property in the [CallWithChatComposite Basic
 Example](./?path=/story/composites-call-with-chat-basicexample-basic-example--basic-example).
 
@@ -113,13 +114,21 @@ to learn more.
 ### Inline Image In Teams Interop Meeting Chat Thread
 
 <SingleLineBetaBanner />
-The Azure Communication Services end user can receive images shared by the Teams user without any additional setup when
-using the `CallWithChat` Composite in a Teams interop scenario,. Azure Communication Services end user would need to
-join the Teams meeting first, as soon as the Teams user sends a file from the Teams client, the Azure Communication
-Services end user will be see the image in the chat thread. Please check out the tutorial for [Enable inline image using
-UI Library in Teams Interoperability
-Chat](https://learn.microsoft.com/en-us/azure/communication-services/tutorials/inline-image-tutorial-interop-chat) for
-details.
+
+The Azure Communication Services end user can receive images shared by the Teams user without any additional
+setup when using the `CallWithChat` Composite in a Teams interop scenario. An Azure Communication Services end
+user would need to join the Teams meeting first, as soon as the Teams user sends an image from the Teams
+client, the Azure Communication Services end user will see it in the chat thread.
+
+<Stack horizontalAlign="center">
+  <Image src="images/call-with-chat-inline-image.png" alt="Call with chat composite with inline image" width="85%" />
+</Stack>
+
+### Known Limitations
+
+- Support for sending an image from an ACS end user to a Teams user requires using [Rich Text Editor](./?path=/docs/composites-chatcomposite--docs#rich-text-editor-support).
+- Certain GIF images may not be supported at this time and the user will receive a static image instead.
+- No support for Clips (short videos) sent by the Teams users at this time.
 
 ## Adding file sharing
 
@@ -171,14 +180,36 @@ options={{
 ### File Sharing In Teams Interop Meeting Chat Thread
 
 When using the `CallWithChat` Composite in a Teams interop scenario, the Azure Communication Services end user
-can recieve file attachments from Teams user without any additional setup. Simply join the Teams meeting as an
+can receive file attachments from Teams user without any additional setup. Simply join the Teams meeting as an
 Azure Communication Services end user, as soon as the Teams user sends a file from the Teams client, the Azure
 Communication Services end user will be able to see shared files in the chat thread.
+
+#### Permissions
+
+When a file is shared from a Teams client, the Teams user has options to set the file permissions to be:
+
+- "Anyone"
+- "People in your organization"
+- "People currently in this chat"
+- "People with existing access"
+- "People you choose"
+
+Specifically, the UI library currently only supports "Anyone" and "People you choose" (with email address) and
+all other permissions aren't supported. If Teams user sent a file with unsupported permissions, the Azure
+Communication Services end user might be prompted to a login page or denied access when they click on the file
+attachment in the chat thread.
+
+<Stack horizontalAlign="center">
+  <Image src="images/call-with-chat-file-sharing-permissions.png" alt="File sharing permissions" />
+</Stack>
+
+Moreover, the Teams user's tenant admin might impose restrictions on file sharing, including disabling some file permissions or disabling file sharing option all together.
 
 ## PSTN and 1:N Calling
 
 <SingleLineBetaBanner />
-<MessageBar>Note: see CallComposite for detailed implementation description</MessageBar>
+
+<Note> Note: see CallComposite for detailed implementation description </Note>
 
 The CallWithChatComposite supports the PSTN Calling modality as well. With CallWithChat you will need to still
 provide a chat thread Id for instances where you will add a Azure Communications user to the call. If you are
@@ -189,7 +220,7 @@ buttons](./?path=/story/composites-call-with-chat-basicexample-basic-example--ba
 ## Rich Text Editor Support
 
 <SingleLineBetaBanner />
-<MessageBar>Note: see ChatComposite for detailed implementation description</MessageBar>
+<Note> Note: see ChatComposite for detailed implementation description </Note>
 
 The CallWithChatComposite supports options to enable a rich text editor functionality in chat similar to
 ChatComposite. Check out [Rich Text Editor Support for

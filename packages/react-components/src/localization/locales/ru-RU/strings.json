@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "Удалить столбец",
     "richTextDeleteRowMenu": "Удалить строку",
     "richTextDeleteTableMenu": "Удалить таблицу",
+    "richTextToolbarAriaLabel": "Панель инструментов форматирования сообщения",
     "richTextToolbarMoreButtonAriaLabel": "Дополнительные параметры",
     "attachmentMoreMenu": "Дополнительные параметры",
     "richTextNewBulletedListItemAnnouncement": "Маркер, новая строка",
     "richTextNewNumberedListItemAnnouncement": "{0}, новая строка",
     "richTextBulletedListAppliedAnnouncement": "Применен маркированный список",
     "richTextNumberedListAppliedAnnouncement": "Применен нумерованный список"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "Модальное окно включения ввода в режиме реального времени",
+    "rttModalTitle": "Включить ввод в режиме реального времени?",
+    "rttModalText": "Текст в режиме реального времени (RTT) будет включен для всех участников собрания.",
+    "rttConfirmButtonLabel": "Включить",
+    "rttCancelButtonLabel": "Отмена",
+    "rttCloseModalButtonAriaLabel": "Закрыть модальное окно ввода в режиме реального времени"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "Смеюсь",
     "applauseReactionTooltipContent": "Аплодисменты",
     "surprisedReactionTooltipContent": "Удивляюсь"
+  },
+  "rtt": {
+    "isTypingText": "Ввод в режиме реального времени"
   },
   "messageThread": {
     "yesterday": "Вчера",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "Выполняется вызов...",
+    "participantReconnecting": "Повторное подключение...",
     "participantStateHold": "На удержании",
-    "moreOptionsButtonAriaLabel": "Дополнительные параметры"
+    "moreOptionsButtonAriaLabel": "Дополнительные параметры {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "звук отключен",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "звук включен",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Поднята рука",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Говорит"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Разрешить {appName} использовать камеру и микрофон",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "предыдущая страница",
-    "rightNavButtonAriaLabel": "следующая страница"
+    "leftNavButtonAriaLabel": "предыдущая страница {current} из {total}",
+    "rightNavButtonAriaLabel": "следующая страница {current} из {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Присоединиться к вызову с телефона",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Отклонить",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Ответить с видео",
     "incomingCallNotificationDismissButtonAriaLabel": "Закрыть"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "Ввод в режиме реального времени",
+    "bannerContent": "Ввод в режиме реального времени включен для всех участников в течение всего собрания.",
+    "bannerLinkLabel": "Подробнее"
   }
 }

@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Закрыть",
     "videoEffectsPaneTitle": "Эффекты",
     "videoEffectsPaneBackgroundSelectionTitle": "Фон",
+    "videoEffectsPaneAriaLabel": "Панель видеоэффектов",
     "configurationPageVideoEffectsButtonLabel": "Эффекты",
     "unableToStartVideoEffect": "Не удалось применить эффект видео.",
     "blurBackgroundEffectButtonLabel": "Размытие",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "Видео больше не будут выделены для всех участников собрания.",
       "stopSpotlightConfirmButtonLabel": "Больше не помечать важное",
       "stopSpotlightOnSelfConfirmButtonLabel": "Выйти из важного",
-      "stopSpotlightCancelButtonLabel": "Отмена"
+      "stopSpotlightCancelButtonLabel": "Отмена",
+      "closeSpotlightPromptButtonLabel": "Закрыть"
     },
     "exitSpotlightButtonLabel": "Выйти из важного",
     "exitSpotlightButtonTooltip": "Выйти из важного",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "Закрепить для меня",
     "pinParticipantLimitReachedMenuLabel": "Закрепить (достигнуто ограничение)",
     "unpinParticipantMenuLabel": "Открепить",
-    "pinParticipantMenuItemAriaLabel": "Закрепить",
+    "pinParticipantMenuItemAriaLabel": "Закрепить для меня",
     "unpinParticipantMenuItemAriaLabel": "Открепить",
     "muteAllMenuLabel": "Отключить все микрофоны",
     "muteAllDialogTitle": "Отключить микрофоны всех участников?",

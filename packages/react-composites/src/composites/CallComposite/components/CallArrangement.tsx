@@ -45,7 +45,14 @@ import { useSelector } from '../hooks/useSelector';
 import { callStatusSelector } from '../selectors/callStatusSelector';
 import { CallControlOptions } from '../types/CallControlOptions';
 import { PreparedMoreDrawer } from '../../common/Drawer/PreparedMoreDrawer';
-import { getIsTeamsMeeting, getRemoteParticipants } from '../selectors/baseSelectors';
+import {
+  getCapabilites,
+  getIsTeamsMeeting,
+  getReactionResources,
+  getRemoteParticipants,
+  getRole,
+  getVideoEffectsDependency
+} from '../selectors/baseSelectors';
 import { getPage } from '../selectors/baseSelectors';
 import { getCallStatus, getCaptionsStatus } from '../selectors/baseSelectors';
 import { drawerContainerStyles } from '../styles/CallComposite.styles';
@@ -79,16 +86,15 @@ import {
   useRemoteSpotlightCallbacksWithPrompt,
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(soft-mute) */
 import { useHandlers } from '../hooks/useHandlers';
-/* @conditional-compile-remove(soft-mute) */
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 /* @conditional-compile-remove(breakout-rooms) */
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
+import { FocusableElement } from '../../common/types/FocusableElement';
 
 /**
  * @private
@@ -154,6 +160,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     [theme.palette.neutralLighterAlt]
   );
 
+  const controlBarRef = useRef<FocusableElement>(null);
   const peopleButtonRef = useRef<IButton>(null);
   const cameraButtonRef = useRef<IButton>(null);
 
@@ -165,6 +172,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const { updateSidePaneRenderer } = props;
   const isInLocalHold = useSelector(getPage) === 'hold';
+
+  const capabilities = useSelector(getCapabilites);
 
   const adapter = useAdapter();
 
@@ -210,9 +219,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   const locale = useLocale();
-  const role = adapter.getState().call?.role;
+  const role = useSelector(getRole);
   const videoGalleryProps = usePropsFor(VideoGallery);
-  /* @conditional-compile-remove(soft-mute) */
   const muteAllHandlers = useHandlers(MoreDrawer);
   const { setPromptProps, setIsPromptOpen, hideSpotlightButtons } = props;
   const {
@@ -220,7 +228,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onStopLocalSpotlight,
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
-    /* @conditional-compile-remove(soft-mute) */
     onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
@@ -294,8 +301,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     setPromptProps
   );
 
-  const canRemoveSpotlight =
-    adapter.getState().call?.capabilitiesFeature?.capabilities.removeParticipantsSpotlight.isPresent;
+  const canRemoveSpotlight = capabilities?.removeParticipantsSpotlight.isPresent;
   const stopAllSpotlight = useMemo(
     () => (canRemoveSpotlight ? () => adapter.stopAllSpotlight() : undefined),
     [canRemoveSpotlight, adapter]
@@ -308,21 +314,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   const onMuteParticipantPeoplePaneProps = useMemo(() => {
-    /* @conditional-compile-remove(soft-mute) */
     return {
-      onMuteParticipant: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? onMuteParticipant
-        : undefined,
-      onMuteAllRemoteParticipants: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onMuteAllRemoteParticipants
-        : undefined
+      onMuteParticipant: capabilities?.muteOthers?.isPresent || role === 'Unknown' ? onMuteParticipant : undefined,
+      onMuteAllRemoteParticipants:
+        capabilities?.muteOthers?.isPresent || role === 'Unknown'
+          ? muteAllHandlers.onMuteAllRemoteParticipants
+          : undefined
     };
-    return {};
-  }, [
-    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
-    /* @conditional-compile-remove(soft-mute) */ role,
-    /* @conditional-compile-remove(soft-mute) */ muteAllHandlers.onMuteAllRemoteParticipants
-  ]);
+  }, [onMuteParticipant, role, capabilities?.muteOthers, muteAllHandlers.onMuteAllRemoteParticipants]);
 
   const spotlightPeoplePaneProps = useMemo(() => {
     return {
@@ -393,9 +392,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }, [isMobileWithActivePane, props.mobileView]);
 
-  const onResolveVideoEffectDependency = adapter.getState().onResolveVideoEffectDependency;
+  const onResolveVideoEffectDependency = useSelector(getVideoEffectsDependency);
 
-  const { openVideoEffectsPane } = useVideoEffectsPane(
+  const { openVideoEffectsPane, isVideoEffectsPaneOpen } = useVideoEffectsPane(
     props.updateSidePaneRenderer,
     props.mobileView,
     props.latestErrors as ActiveErrorMessage[],
@@ -443,15 +442,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     );
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
   const isTeamsMeeting = useSelector(getIsTeamsMeeting);
-  /* @conditional-compile-remove(acs-close-captions) */
+
   const isTeamsCall = useSelector(getIsTeamsCall);
-  const useTeamsCaptions =
-    isTeamsMeeting ||
-    /* @conditional-compile-remove(acs-close-captions) */ isTeamsCall ||
-    /* @conditional-compile-remove(acs-close-captions) */ isTeamsCaptions;
+  const useTeamsCaptions = isTeamsMeeting || isTeamsCall || isTeamsCaptions;
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
   const isCaptionsOn = useSelector(getCaptionsStatus);
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
@@ -495,6 +490,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     ? (latestNotifications ?? []).filter((notification) => notification.type !== 'assignedBreakoutRoomOpenedPromptJoin')
     : latestNotifications;
 
+  const reactionResources = useSelector(getReactionResources);
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -525,6 +522,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               ) : (
                 <CommonCallControlBar
                   {...props.callControlProps}
+                  ref={controlBarRef}
                   callControls={props.callControlProps.options}
                   callAdapter={adapter as CallAdapter}
                   mobileView={props.mobileView}
@@ -533,10 +531,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   peopleButtonChecked={isPeoplePaneOpen}
                   onPeopleButtonClicked={togglePeoplePane}
                   onMoreButtonClicked={onMoreButtonClicked}
-                  isCaptionsSupported={
-                    (useTeamsCaptions && hasJoinedCall) ||
-                    /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
-                  }
+                  isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
                   useTeamsCaptions={useTeamsCaptions}
                   isCaptionsOn={isCaptionsOn}
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
@@ -564,16 +559,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onLightDismiss={closeDrawer}
                 onPeopleButtonClicked={onMoreDrawerPeopleClicked}
                 disableButtonsForHoldScreen={isInLocalHold}
-                isCaptionsSupported={
-                  (useTeamsCaptions && hasJoinedCall) ||
-                  /* @conditional-compile-remove(acs-close-captions) */ hasJoinedCall
-                }
+                isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
                 useTeamsCaptions={useTeamsCaptions}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 userSetGalleryLayout={props.userSetGalleryLayout}
                 onSetDialpadPage={props.onSetDialpadPage}
                 dtmfDialerPresent={props.dtmfDialerPresent}
-                reactionResources={adapter.getState().reactions}
+                reactionResources={reactionResources}
                 onClickMeetingPhoneInfo={onMeetingPhoneInfoClicked}
               />
             </Stack>
@@ -622,6 +614,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       isMobile={props.mobileView}
                       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
                       useTeamsCaptions={useTeamsCaptions}
+                      returnFocusRef={controlBarRef}
                     />
                   )}
                 </Stack>
@@ -644,6 +637,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               onChatButtonClicked={props.mobileChatTabHeader?.onClick}
               disableChatButton={props.mobileChatTabHeader?.disabled}
               showAddPeopleButton={!!props.callControlProps.callInvitationURL}
+              ariaLabel={isVideoEffectsPaneOpen ? locale.strings.call.videoEffectsPaneAriaLabel : undefined}
             />
             {props.mobileView && (
               <ModalLocalAndRemotePIP

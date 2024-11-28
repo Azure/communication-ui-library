@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "improvement",
+  "workstream": "Dependency updates",
+  "comment": "Update minimum supported typescript version for node 22 support.",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

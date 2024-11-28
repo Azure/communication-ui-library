@@ -10,6 +10,7 @@ import { Icon } from '@fluentui/react';
 import { useLocale } from '../../localization';
 import {
   containerStyle,
+  headerContainerStyle,
   moreDetailsStyle,
   titleContainerStyle,
   titleStyle
@@ -68,19 +69,25 @@ export const NetworkReconnectTile = (props: NetworkReconnectTileProps): JSX.Elem
           className={mergeStyles(containerStyle)}
           aria-atomic
         >
-          <Stack horizontal className={mergeStyles(titleContainerStyle)}>
-            <CallCompositeIcon
-              iconName="NetworkReconnectIcon"
-              className={mergeStyles(titleStyle(palette, isVideoReady))}
-            />
-            <Text className={mergeStyles(titleStyle(palette, isVideoReady))} aria-live={'assertive'}>
-              {strings.networkReconnectTitle}
+          <Stack
+            role="alert"
+            verticalFill
+            horizontalAlign="center"
+            verticalAlign="center"
+            className={mergeStyles(headerContainerStyle)}
+          >
+            <Stack horizontal className={mergeStyles(titleContainerStyle)}>
+              <CallCompositeIcon
+                iconName="NetworkReconnectIcon"
+                className={mergeStyles(titleStyle(palette, isVideoReady))}
+              />
+              <Text className={mergeStyles(titleStyle(palette, isVideoReady))}>{strings.networkReconnectTitle}</Text>
+            </Stack>
+            <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))}>
+              {strings.networkReconnectMoreDetails}
             </Text>
           </Stack>
-          <Text className={mergeStyles(moreDetailsStyle(palette, isVideoReady))} aria-live={'assertive'}>
-            {strings.networkReconnectMoreDetails}
-          </Text>
-          {isTeamsMeeting && meetingCoordinates && meetingCoordinates.length > 0 && (
+          {isTeamsMeeting && meetingCoordinates && meetingCoordinates[0] && (
             <Stack>
               <Stack horizontal horizontalAlign="center" verticalAlign="center" className={titleContainerClassName}>
                 <Text className={titleClassName}>{localeStrings.meetingConferencePhoneInfoModalTitle}</Text>

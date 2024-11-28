@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Lukk",
     "videoEffectsPaneTitle": "Effekter",
     "videoEffectsPaneBackgroundSelectionTitle": "Bakgrunn",
+    "videoEffectsPaneAriaLabel": "Videoeffekter-ruten",
     "configurationPageVideoEffectsButtonLabel": "Effekter",
     "unableToStartVideoEffect": "Kan ikke bruke videoeffekt.",
     "blurBackgroundEffectButtonLabel": "Uskarp bakgrunn",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "Videoene vil ikke lenger være uthevet for alle i møtet.",
       "stopSpotlightConfirmButtonLabel": "Fjern fra rampelyset",
       "stopSpotlightOnSelfConfirmButtonLabel": "Rampelys av",
-      "stopSpotlightCancelButtonLabel": "Avbryt"
+      "stopSpotlightCancelButtonLabel": "Avbryt",
+      "closeSpotlightPromptButtonLabel": "Lukk"
     },
     "exitSpotlightButtonLabel": "Rampelys av",
     "exitSpotlightButtonTooltip": "Rampelys av",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "Fest for meg",
     "pinParticipantLimitReachedMenuLabel": "Fest (grensen er nådd)",
     "unpinParticipantMenuLabel": "Løsne",
-    "pinParticipantMenuItemAriaLabel": "Fest",
+    "pinParticipantMenuItemAriaLabel": "Fest for meg",
     "unpinParticipantMenuItemAriaLabel": "Løsne",
     "muteAllMenuLabel": "Demp alle",
     "muteAllDialogTitle": "Vil du dempe alle?",

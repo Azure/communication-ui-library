@@ -3,20 +3,12 @@
 
 import React from 'react';
 import { ParticipantList } from './ParticipantList';
-import { registerIcons } from '@fluentui/react';
 import { render } from '@testing-library/react';
 
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-empty-function
 const dummyOnRemoveParticipantCallback = () => {};
 
 describe('ParticipantList tests for different roles', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        participantitemoptions: <></>
-      }
-    });
-  });
   test('ParticipantList should have remove item', async () => {
     render(
       <ParticipantList

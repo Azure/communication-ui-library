@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "Odstranit sloupec",
     "richTextDeleteRowMenu": "Odstranit řádek",
     "richTextDeleteTableMenu": "Odstranit tabulku",
+    "richTextToolbarAriaLabel": "Panel nástrojů Formátování zpráv",
     "richTextToolbarMoreButtonAriaLabel": "Další možnosti",
     "attachmentMoreMenu": "Další možnosti",
     "richTextNewBulletedListItemAnnouncement": "Odrážka, nový řádek",
     "richTextNewNumberedListItemAnnouncement": "{0}, nový řádek",
     "richTextBulletedListAppliedAnnouncement": "Byl použit seznam s odrážkami",
     "richTextNumberedListAppliedAnnouncement": "Použil se číslovaný seznam."
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "Zapnout modální okno RTT",
+    "rttModalTitle": "Zapnout RTT?",
+    "rttModalText": "Text v reálném čase (RTT) se zapne pro všechny účastníky schůzky.",
+    "rttConfirmButtonLabel": "Zapnout",
+    "rttCancelButtonLabel": "Zrušit",
+    "rttCloseModalButtonAriaLabel": "Zavřít modální okno RTT"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "Smích",
     "applauseReactionTooltipContent": "Aplaus",
     "surprisedReactionTooltipContent": "Překvapení"
+  },
+  "rtt": {
+    "isTypingText": "Psaní textu v reálném čase"
   },
   "messageThread": {
     "yesterday": "Včera",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "Volání…",
+    "participantReconnecting": "Obnovuje se připojení...",
     "participantStateHold": "Pozastavený hovor",
-    "moreOptionsButtonAriaLabel": "Další možnosti"
+    "moreOptionsButtonAriaLabel": "Další možnosti {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "ztlumeno",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "ztlumení zrušeno",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Zvednutá ruka",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Mluví"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Povolit aplikaci {appName} používat kameru a mikrofon",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "předchozí stránka",
-    "rightNavButtonAriaLabel": "další stránka"
+    "leftNavButtonAriaLabel": "předchozí stránka {current} z(e) {total}",
+    "rightNavButtonAriaLabel": "další stránka {current} z(e) {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Připojit se k hovoru z vašeho telefonu",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Odmítnout",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Přijmout s videem",
     "incomingCallNotificationDismissButtonAriaLabel": "Zavřít"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (psaní v reálném čase) je povolené pro všechny účastníky po celou dobu trvání schůzky.",
+    "bannerLinkLabel": "Další informace"
   }
 }

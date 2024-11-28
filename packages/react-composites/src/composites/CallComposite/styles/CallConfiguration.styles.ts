@@ -153,6 +153,10 @@ const configurationPageTextDecoration = (theme: ITheme): IStyle => {
   return {
     textShadow: `0px 0px 8px ${theme.palette.whiteTranslucent40}`,
     fill: theme.semanticColors.bodyText,
+    svg: {
+      // Fix SVGs not displaying the correct color in Desert high contrast mode
+      fill: 'currentColor'
+    },
     stroke: theme.palette.whiteTranslucent40,
     paintOrder: 'stroke fill',
     strokeWidth: _pxToRem(1.5),
@@ -160,8 +164,6 @@ const configurationPageTextDecoration = (theme: ITheme): IStyle => {
       letterSpacing: '-0.02rem' // cope with extra width due to stroke width
     },
     '@media (forced-colors: active)': {
-      forcedColorAdjust: 'auto',
-      fill: theme.palette.neutralQuaternaryAlt,
       textShadow: 'none',
       stroke: 'none'
     }
@@ -224,7 +226,8 @@ export const startCallButtonContainerStyleMobile: IStackStyles = {
 export const startCallButtonStyleMobile = mergeStyles({
   width: '100%',
   maxWidth: 'unset',
-  borderRadius: '0.25rem'
+  borderRadius: '0.25rem',
+  height: '3.25rem'
 });
 
 /**

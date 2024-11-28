@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "Ta bort kolumn",
     "richTextDeleteRowMenu": "Ta bort rad",
     "richTextDeleteTableMenu": "Ta bort tabell",
+    "richTextToolbarAriaLabel": "Verktygsfältet Meddelandeformatering",
     "richTextToolbarMoreButtonAriaLabel": "Fler alternativ",
     "attachmentMoreMenu": "Fler alternativ",
     "richTextNewBulletedListItemAnnouncement": "Punkt, ny rad",
     "richTextNewNumberedListItemAnnouncement": "{0}, ny rad",
     "richTextBulletedListAppliedAnnouncement": "Punktlista tillämpad",
     "richTextNumberedListAppliedAnnouncement": "Numrerad tillämpad"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "Aktivera RTT-modal",
+    "rttModalTitle": "Aktivera RTT?",
+    "rttModalText": "Realtidstext (RTT) aktiveras för alla i mötet.",
+    "rttConfirmButtonLabel": "Aktivera",
+    "rttCancelButtonLabel": "Avbryt",
+    "rttCloseModalButtonAriaLabel": "Stäng RTT-modal"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "Skrattar",
     "applauseReactionTooltipContent": "Applåd",
     "surprisedReactionTooltipContent": "Förvånad"
+  },
+  "rtt": {
+    "isTypingText": "RTT-inmatning"
   },
   "messageThread": {
     "yesterday": "I går",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "Ringer...",
+    "participantReconnecting": "Ansluter igen...",
     "participantStateHold": "Parkerat",
-    "moreOptionsButtonAriaLabel": "Fler alternativ"
+    "moreOptionsButtonAriaLabel": "Fler alternativ {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "ljud av",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "ljud på",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Uppräckt hand",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Talar"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Tillåt {appName} använda kameran och mikrofonen",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "föregående sida",
-    "rightNavButtonAriaLabel": "nästa sida"
+    "leftNavButtonAriaLabel": "föregående sida {current} av {total}",
+    "rightNavButtonAriaLabel": "nästa sida {current} av {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Anslut till samtal från din telefon",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Avböj",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Acceptera med video",
     "incomingCallNotificationDismissButtonAriaLabel": "Stäng"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (realtidstext) är aktiverat för alla deltagare under hela mötets varaktighet.",
+    "bannerLinkLabel": "Mer information"
   }
 }

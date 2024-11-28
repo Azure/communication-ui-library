@@ -13,7 +13,7 @@ concurrency:
 jobs:
   precondition:
     name: Determine if this workflow is applicable
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       pull-requests: write
     outputs:
@@ -45,7 +45,7 @@ jobs:
     name: Set CI flavors
     needs: precondition
     if: needs.precondition.outputs.met
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
@@ -64,7 +64,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update component examples snapshots
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -122,7 +122,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload test results on failure
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: samples/tests/test-results
@@ -160,7 +160,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update embed html bundle snapshots
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -218,7 +218,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.updatesnapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: samples/tests/test-results
@@ -256,7 +256,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites CallComposite browser test snapshots
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -315,7 +315,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-call-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -352,7 +352,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites ChatComposite browser test snapshots
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -411,7 +411,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-chat-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -448,7 +448,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites CallWithChatComposite browser test snapshots
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -507,7 +507,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-call-with-chat-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
@@ -544,7 +544,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-components browser test snapshots
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -600,7 +600,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.update-components-snapshots.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-components/tests/temp/
@@ -637,7 +637,7 @@ jobs:
     needs: [component_examples, html_bundle, call_composite, chat_composite, callwithchat_composite]
     if: needs.precondition.outputs.met
     name: Push all updated snapshots to branch
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     steps:
       - uses: actions/checkout@v4

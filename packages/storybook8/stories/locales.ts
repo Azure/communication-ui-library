@@ -7,10 +7,13 @@ import {
   COMPONENT_LOCALE_EN_GB,
   COMPONENT_LOCALE_AR_SA,
   COMPONENT_LOCALE_CS_CZ,
+  COMPONENT_LOCALE_CY_GB,
   COMPONENT_LOCALE_DE_DE,
   COMPONENT_LOCALE_ES_ES,
+  COMPONENT_LOCALE_ES_MX,
   COMPONENT_LOCALE_FI_FI,
   COMPONENT_LOCALE_FR_FR,
+  COMPONENT_LOCALE_FR_CA,
   COMPONENT_LOCALE_HE_IL,
   COMPONENT_LOCALE_IT_IT,
   COMPONENT_LOCALE_JA_JP,
@@ -34,7 +37,7 @@ export const LOCALES: Record<string, { locale: ComponentLocale; englishName: str
   },
   en_GB: {
     locale: COMPONENT_LOCALE_EN_GB,
-    englishName: 'English (British)'
+    englishName: 'English (GB)'
   },
   ar_SA: {
     locale: COMPONENT_LOCALE_AR_SA,
@@ -44,6 +47,10 @@ export const LOCALES: Record<string, { locale: ComponentLocale; englishName: str
     locale: COMPONENT_LOCALE_CS_CZ,
     englishName: 'Czech (Czech Republic)'
   },
+  cy_GB: {
+    locale: COMPONENT_LOCALE_CY_GB,
+    englishName: 'Welsh (GB)'
+  },
   de_DE: {
     locale: COMPONENT_LOCALE_DE_DE,
     englishName: 'German (Germany)'
@@ -52,6 +59,10 @@ export const LOCALES: Record<string, { locale: ComponentLocale; englishName: str
     locale: COMPONENT_LOCALE_ES_ES,
     englishName: 'Spanish (Spain)'
   },
+  es_MX: {
+    locale: COMPONENT_LOCALE_ES_MX,
+    englishName: 'Spanish (Mexico)'
+  },
   fi_FI: {
     locale: COMPONENT_LOCALE_FI_FI,
     englishName: 'Finnish (Finland)'
@@ -59,6 +70,10 @@ export const LOCALES: Record<string, { locale: ComponentLocale; englishName: str
   fr_FR: {
     locale: COMPONENT_LOCALE_FR_FR,
     englishName: 'French (France)'
+  },
+  fr_CA: {
+    locale: COMPONENT_LOCALE_FR_CA,
+    englishName: 'French (Canada)'
   },
   he_IL: {
     locale: COMPONENT_LOCALE_HE_IL,

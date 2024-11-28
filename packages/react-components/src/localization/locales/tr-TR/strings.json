@@ -58,12 +58,21 @@
     "richTextDeleteColumnMenu": "Sütunu sil",
     "richTextDeleteRowMenu": "Satırı sil",
     "richTextDeleteTableMenu": "Tabloyu sil",
+    "richTextToolbarAriaLabel": "İleti Biçimlendirme Araç Çubuğu",
     "richTextToolbarMoreButtonAriaLabel": "Diğer seçenekler",
     "attachmentMoreMenu": "Diğer Seçenekler",
     "richTextNewBulletedListItemAnnouncement": "Madde işareti, yeni satır",
     "richTextNewNumberedListItemAnnouncement": "{0}, yeni satır",
     "richTextBulletedListAppliedAnnouncement": "Madde işaretli liste uygulandı",
     "richTextNumberedListAppliedAnnouncement": "Numaralandırılmış liste uygulandı"
+  },
+  "rttModal": {
+    "rttModalAriaLabel": "RTT Kalıcı İletişim Kutusunu Aç",
+    "rttModalTitle": "RTT açılsın mı?",
+    "rttModalText": "Gerçek zamanlı metin (RTT) toplantıdaki herkes için açılır.",
+    "rttConfirmButtonLabel": "Aç",
+    "rttCancelButtonLabel": "İptal",
+    "rttCloseModalButtonAriaLabel": "RTT Kalıcı İletişim Kutusunu Kapat"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
@@ -177,6 +186,9 @@
     "laughReactionTooltipContent": "Kahkaha",
     "applauseReactionTooltipContent": "Alkış",
     "surprisedReactionTooltipContent": "Şaşırmış"
+  },
+  "rtt": {
+    "isTypingText": "RTT yazma"
   },
   "messageThread": {
     "yesterday": "Dün",
@@ -524,8 +536,13 @@
   },
   "videoTile": {
     "participantStateRinging": "Aranıyor...",
+    "participantReconnecting": "Yeniden bağlanıyor...",
     "participantStateHold": "Beklemede",
-    "moreOptionsButtonAriaLabel": "Diğer Seçenekler"
+    "moreOptionsButtonAriaLabel": "Diğer Seçenekler {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "sesi kapalı",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "sesi açık",
+    "moreOptionsParticipantHandRaisedAriaLabel": "El kaldırdı",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Konuşuyor"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName} uygulamasının kameranızı ve mikrofonunuzu kullanmasına izin verin",
@@ -643,8 +660,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "önceki sayfa",
-    "rightNavButtonAriaLabel": "sonraki sayfa"
+    "leftNavButtonAriaLabel": "önceki sayfa {current}/{total}",
+    "rightNavButtonAriaLabel": "sonraki sayfa {current}/{total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Telefonunuzdan aramaya katılın",
@@ -666,5 +683,10 @@
     "incomingCallNotificationRejectButtonLabel": "Reddet",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Görüntülü Kabul Et",
     "incomingCallNotificationDismissButtonAriaLabel": "Kapat"
+  },
+  "rttDisclosureBanner": {
+    "bannerTitle": "RTT",
+    "bannerContent": "RTT (gerçek zamanlı metin) toplantı süresi boyunca tüm katılımcılar için etkindir.",
+    "bannerLinkLabel": "Daha fazla bilgi edinin"
   }
 }
