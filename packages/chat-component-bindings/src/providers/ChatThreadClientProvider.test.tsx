@@ -10,14 +10,6 @@ jest.mock('@azure/communication-common', () => {
   };
 });
 
-// jest.mock('@internal/chat-stateful-client', () => {
-//   return {
-//     createStatefulChatClient: jest.fn().mockResolvedValue('mockStatefulChatClient'),
-//     StatefulChatClient: jest.fn().mockResolvedValue({
-//       getChatThreadClient: jest.fn().mockResolvedValue('mockChatThreadClient')
-//     })
-//   };
-// });
 jest.mock('@internal/chat-stateful-client', () => {
   return {
     createStatefulChatClient: jest.fn().mockReturnValue({
