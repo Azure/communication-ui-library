@@ -96,6 +96,7 @@ import { useCompositeStringsForNotificationStackStrings } from '../hooks/useComp
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
 /* @conditional-compile-remove(media-access) */
 import { getMediaAccess } from '../selectors/baseSelectors';
+import { FocusableElement } from '../../common/types/FocusableElement';
 
 /**
  * @private
@@ -161,6 +162,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     [theme.palette.neutralLighterAlt]
   );
 
+  const controlBarRef = useRef<FocusableElement>(null);
   const peopleButtonRef = useRef<IButton>(null);
   const cameraButtonRef = useRef<IButton>(null);
 
@@ -575,6 +577,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               ) : (
                 <CommonCallControlBar
                   {...props.callControlProps}
+                  ref={controlBarRef}
                   callControls={props.callControlProps.options}
                   callAdapter={adapter as CallAdapter}
                   mobileView={props.mobileView}
@@ -666,6 +669,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       isMobile={props.mobileView}
                       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
                       useTeamsCaptions={useTeamsCaptions}
+                      returnFocusRef={controlBarRef}
                     />
                   )}
                 </Stack>
