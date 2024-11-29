@@ -54,7 +54,26 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         callIdRef.current = state?.call?.id;
         console.log(`Call Id: ${callIdRef.current}`);
       }
+      if (state.selectedVideoBackgroundEffect) {
+        window.localStorage.setItem('background-effect', state.selectedVideoBackgroundEffect?.effectName.toString());
+        if ('key' in state.selectedVideoBackgroundEffect && state.selectedVideoBackgroundEffect.key) {
+          window.localStorage.setItem('background-effect-key', state.selectedVideoBackgroundEffect.key);
+        }
+      }
     });
+    const backgroundEffect = window.localStorage.getItem('background-effect');
+    const backgroundEffectKey = window.localStorage.getItem('background-effect-key');
+    if (backgroundEffect) {
+      if (backgroundEffect === 'blur') {
+        adapter.updateSelectedVideoBackgroundEffect({ effectName: 'blur' });
+      } else if (backgroundEffect === 'replacement' && backgroundEffectKey) {
+        adapter.updateSelectedVideoBackgroundEffect({
+          effectName: 'replacement',
+          key: backgroundEffectKey,
+          backgroundImageUrl: videoBackgroundImages.find((image) => image.key === backgroundEffectKey)?.url ?? ''
+        });
+      }
+    }
     adapter.on('transferAccepted', (e) => {
       console.log('Call being transferred to: ' + e);
     });
