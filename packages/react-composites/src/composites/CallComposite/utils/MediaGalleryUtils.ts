@@ -180,10 +180,9 @@ export const showDtmfDialer = (
 ): boolean => {
   let showDtmfDialerAuto = false;
   if (typeof dialerOptions === 'object' && 'dialerBehavior' in dialerOptions) {
-    const hideDtmfDialerAlways =
-      dialerOptions.dialerBehavior && (dialerOptions as DtmfDialPadOptions).dialerBehavior === 'alwaysHide';
-    const showDtmfDialerAlways = (dialerOptions as DtmfDialPadOptions).dialerBehavior === 'alwaysShow';
-    showDtmfDialerAuto = (dialerOptions as DtmfDialPadOptions).dialerBehavior === 'autoShow' ? true : false;
+    const hideDtmfDialerAlways = dialerOptions.dialerBehavior && dialerOptions.dialerBehavior === 'alwaysHide';
+    const showDtmfDialerAlways = dialerOptions.dialerBehavior === 'alwaysShow';
+    showDtmfDialerAuto = dialerOptions.dialerBehavior === 'autoShow' ? true : false;
     if (showDtmfDialerAlways) {
       return true;
     }
