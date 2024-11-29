@@ -14,10 +14,14 @@ import { useLocale } from '../localization';
 import { MoreButton } from './MoreButton';
 import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
+import { FocusableElement } from './types/FocusableElement';
 
 /** @private */
 export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
   onCaptionsSettingsClick?: () => void;
+
+  /** Element to return focus to when the Captions Banner is closed */
+  returnFocusRef?: React.RefObject<FocusableElement>;
 }
 
 /**
@@ -44,6 +48,11 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
     });
   }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
 
+  const stopCaptions = useCallback(async () => {
+    await startCaptionsButtonHandlers.onStopCaptions();
+    props.returnFocusRef?.current?.focus();
+  }, [startCaptionsButtonHandlers, props.returnFocusRef]);
+
   moreButtonContextualMenuItems.push({
     key: 'ToggleCaptionsKey',
     text: startCaptionsButtonProps.checked
@@ -51,7 +60,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
     onClick: () => {
       startCaptionsButtonProps.checked
-        ? startCaptionsButtonHandlers.onStopCaptions()
+        ? stopCaptions()
         : startCaptionsButtonProps.currentSpokenLanguage !== ''
           ? startCaptions()
           : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();

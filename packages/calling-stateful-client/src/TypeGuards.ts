@@ -45,3 +45,10 @@ export const _isTeamsIncomingCall = (call: IncomingCallCommon): boolean => {
 export const _isACSIncomingCall = (call: IncomingCallCommon): boolean => {
   return call.kind === 'IncomingCall';
 };
+
+/**
+ * @internal
+ */
+export const _isTeamsMeeting = (call: CallCommon): boolean => {
+  return 'info' in call && !!call.info.threadId;
+};
