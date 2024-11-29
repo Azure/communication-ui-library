@@ -312,4 +312,5 @@ export const getVideoBackgroundImages = (state: CallAdapterState): VideoBackgrou
 
 /* @conditional-compile-remove(media-access) */
 /** @private */
-export const getMediaAccess = (state: CallAdapterState): MediaAccess | undefined => state.call?.mediaAccess;
+export const getMediaAccessSetting = (state: CallAdapterState): MediaAccess | undefined =>
+  state.call?.mediaAccessSetting;

@@ -95,7 +95,7 @@ import { useCompositeStringsForNotificationStackStrings } from '../hooks/useComp
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
 /* @conditional-compile-remove(media-access) */
-import { getMediaAccess } from '../selectors/baseSelectors';
+import { getMediaAccessSetting } from '../selectors/baseSelectors';
 import { FocusableElement } from '../../common/types/FocusableElement';
 
 /**
@@ -356,7 +356,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(media-access) */
-  const mediaAccess = useSelector(getMediaAccess);
+  const mediaAccessSetting = useSelector(getMediaAccessSetting);
   /* @conditional-compile-remove(media-access) */
   const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
     return {
@@ -384,7 +384,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onPermitOthersVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? muteAllHandlers.onPermitOthersVideo
         : undefined,
-      mediaAccess
+      mediaAccessSetting
     };
   }, [
     role,
@@ -396,7 +396,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     muteAllHandlers.onPermitOthersVideo,
     onForbidParticipantVideo,
     onPermitParticipantVideo,
-    mediaAccess
+    mediaAccessSetting
   ]);
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
