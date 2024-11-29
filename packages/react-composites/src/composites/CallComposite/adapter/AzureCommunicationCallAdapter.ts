@@ -104,8 +104,7 @@ import {
   MicrosoftTeamsUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
   MicrosoftTeamsAppIdentifier,
-  UnknownIdentifier,
-  isMicrosoftTeamsAppIdentifier
+  UnknownIdentifier
 } from '@azure/communication-common';
 import { isCommunicationUserIdentifier } from '@azure/communication-common';
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';

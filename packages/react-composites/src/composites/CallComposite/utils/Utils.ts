@@ -16,7 +16,7 @@ import { AdapterStateModifier, CallAdapterLocator } from '../adapter/AzureCommun
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
-import { CallCommon, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import { EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
 
 import { Call, VideoEffectProcessor } from '@azure/communication-calling';
 import { CompositeLocale } from '../../localization';
