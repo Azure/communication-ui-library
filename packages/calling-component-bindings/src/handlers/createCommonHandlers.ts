@@ -134,18 +134,18 @@ export interface CommonCallingHandlers {
    */
   onDisposeTogetherModeStreamViews: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onForbidAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onPermitAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   onForbidOthersAudio?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   onPermitOthersAudio?: () => Promise<void>;
 
   /* @conditional-compile-remove(media-access) */
-  onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+  onForbidVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
+  onPermitVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   onForbidOthersVideo?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
@@ -811,12 +811,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
     /* @conditional-compile-remove(media-access) */
-    const onForbidParticipantAudio = async (userIds: string[]): Promise<void> => {
+    const onForbidAudio = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).forbidAudio(participants);
     };
     /* @conditional-compile-remove(media-access) */
-    const onPermitParticipantAudio = async (userIds: string[]): Promise<void> => {
+    const onPermitAudio = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).permitAudio(participants);
     };
@@ -830,12 +830,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(media-access) */
-    const onForbidParticipantVideo = async (userIds: string[]): Promise<void> => {
+    const onForbidVideo = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).forbidVideo(participants);
     };
     /* @conditional-compile-remove(media-access) */
-    const onPermitParticipantVideo = async (userIds: string[]): Promise<void> => {
+    const onPermitVideo = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).permitVideo(participants);
     };
@@ -906,17 +906,17 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(together-mode) */
       onSetTogetherModeSceneSize,
       /* @conditional-compile-remove(media-access) */
-      onForbidParticipantAudio,
+      onForbidAudio,
       /* @conditional-compile-remove(media-access) */
-      onPermitParticipantAudio,
+      onPermitAudio,
       /* @conditional-compile-remove(media-access) */
       onForbidOthersAudio,
       /* @conditional-compile-remove(media-access) */
       onPermitOthersAudio,
       /* @conditional-compile-remove(media-access) */
-      onForbidParticipantVideo,
+      onForbidVideo,
       /* @conditional-compile-remove(media-access) */
-      onPermitParticipantVideo,
+      onPermitVideo,
       /* @conditional-compile-remove(media-access) */
       onForbidOthersVideo,
       /* @conditional-compile-remove(media-access) */

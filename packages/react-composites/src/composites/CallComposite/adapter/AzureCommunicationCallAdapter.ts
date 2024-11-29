@@ -1175,12 +1175,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   /* @conditional-compile-remove(media-access) */
-  public async forbidParticipantAudio(userIds: string[]): Promise<void> {
-    this.handlers.onForbidParticipantAudio?.(userIds);
+  public async forbidAudio(userIds: string[]): Promise<void> {
+    this.handlers.onForbidAudio?.(userIds);
   }
   /* @conditional-compile-remove(media-access) */
-  public async permitParticipantAudio(userIds: string[]): Promise<void> {
-    this.handlers.onPermitParticipantAudio?.(userIds);
+  public async permitAudio(userIds: string[]): Promise<void> {
+    this.handlers.onPermitAudio?.(userIds);
   }
   /* @conditional-compile-remove(media-access) */
   public async forbidOthersAudio(): Promise<void> {
@@ -1192,12 +1192,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   /* @conditional-compile-remove(media-access) */
-  public async forbidParticipantVideo(userIds: string[]): Promise<void> {
-    this.handlers.onForbidParticipantVideo?.(userIds);
+  public async forbidVideo(userIds: string[]): Promise<void> {
+    this.handlers.onForbidVideo?.(userIds);
   }
   /* @conditional-compile-remove(media-access) */
-  public async permitParticipantVideo(userIds: string[]): Promise<void> {
-    this.handlers.onPermitParticipantVideo?.(userIds);
+  public async permitVideo(userIds: string[]): Promise<void> {
+    this.handlers.onPermitVideo?.(userIds);
   }
   /* @conditional-compile-remove(media-access) */
   public async forbidOthersVideo(): Promise<void> {

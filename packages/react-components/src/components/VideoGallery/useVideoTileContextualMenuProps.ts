@@ -29,21 +29,21 @@ export const useVideoTileContextualMenuProps = (props: {
     spotlightLimitReachedMenuTitle?: string;
     muteParticipantMenuItemLabel?: string;
     /* @conditional-compile-remove(media-access) */
-    forbidParticipantAudio?: string;
+    forbidAudio?: string;
     /* @conditional-compile-remove(media-access) */
-    permitParticipantAudio?: string;
+    permitAudio?: string;
     /* @conditional-compile-remove(media-access) */
-    forbidParticipantVideo?: string;
+    forbidVideo?: string;
     /* @conditional-compile-remove(media-access) */
-    permitParticipantVideo?: string;
+    permitVideo?: string;
     /* @conditional-compile-remove(media-access) */
-    forbidParticipantAudioTileMenuLabel?: string;
+    forbidAudioTileMenuLabel?: string;
     /* @conditional-compile-remove(media-access) */
-    permitParticipantAudioTileMenuLabel?: string;
+    permitAudioTileMenuLabel?: string;
     /* @conditional-compile-remove(media-access) */
-    forbidParticipantVideoTileMenuLabel?: string;
+    forbidVideoTileMenuLabel?: string;
     /* @conditional-compile-remove(media-access) */
-    permitParticipantVideoTileMenuLabel?: string;
+    permitVideoTileMenuLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;
@@ -60,13 +60,13 @@ export const useVideoTileContextualMenuProps = (props: {
   myUserId?: string;
   onMuteParticipant?: (userId: string) => void;
   /* @conditional-compile-remove(media-access) */
-  onForbidParticipantAudio?: (userIds: string[]) => void;
+  onForbidAudio?: (userIds: string[]) => void;
   /* @conditional-compile-remove(media-access) */
-  onPermitParticipantAudio?: (userIds: string[]) => void;
+  onPermitAudio?: (userIds: string[]) => void;
   /* @conditional-compile-remove(media-access) */
-  onForbidParticipantVideo?: (userIds: string[]) => void;
+  onForbidVideo?: (userIds: string[]) => void;
   /* @conditional-compile-remove(media-access) */
-  onPermitParticipantVideo?: (userIds: string[]) => void;
+  onPermitVideo?: (userIds: string[]) => void;
 }): IContextualMenuProps | undefined => {
   const {
     participant,
@@ -86,13 +86,13 @@ export const useVideoTileContextualMenuProps = (props: {
     myUserId,
     onMuteParticipant,
     /* @conditional-compile-remove(media-access) */
-    onForbidParticipantAudio,
+    onForbidAudio,
     /* @conditional-compile-remove(media-access) */
-    onPermitParticipantAudio,
+    onPermitAudio,
     /* @conditional-compile-remove(media-access) */
-    onForbidParticipantVideo,
+    onForbidVideo,
     /* @conditional-compile-remove(media-access) */
-    onPermitParticipantVideo
+    onPermitVideo
   } = props;
   const scalingMode = useMemo(() => {
     return props.participant.videoStream?.scalingMode;
@@ -117,60 +117,60 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(media-access) */
     const isAttendee = participant.role === 'Attendee';
     /* @conditional-compile-remove(media-access) */
-    if (isAttendee && !participant.mediaAccess?.isAudioPermitted && onPermitParticipantAudio) {
+    if (isAttendee && !participant.mediaAccess?.isAudioPermitted && onPermitAudio) {
       items.push({
-        key: 'permitParticipantAudio',
-        text: strings?.permitParticipantAudioTileMenuLabel,
+        key: 'permitAudio',
+        text: strings?.permitAudioTileMenuLabel,
         iconProps: {
           iconName: 'ControlButtonMicOn',
           styles: { root: { lineHeight: 0 } }
         },
-        onClick: () => onPermitParticipantAudio([participant.userId]),
+        onClick: () => onPermitAudio([participant.userId]),
         'data-ui-id': 'audio-tile-permit-audio',
-        ariaLabel: strings?.permitParticipantAudioTileMenuLabel
+        ariaLabel: strings?.permitAudioTileMenuLabel
       });
     }
     /* @conditional-compile-remove(media-access) */
-    if (isAttendee && participant.mediaAccess?.isAudioPermitted && onForbidParticipantAudio) {
+    if (isAttendee && participant.mediaAccess?.isAudioPermitted && onForbidAudio) {
       items.push({
-        key: 'forbidParticipantAudio',
-        text: strings?.forbidParticipantAudioTileMenuLabel,
+        key: 'forbidAudio',
+        text: strings?.forbidAudioTileMenuLabel,
         iconProps: {
           iconName: 'ControlButtonMicProhibited',
           styles: { root: { lineHeight: 0 } }
         },
-        onClick: () => onForbidParticipantAudio([participant.userId]),
+        onClick: () => onForbidAudio([participant.userId]),
         'data-ui-id': 'audio-tile-forbid-audio',
-        ariaLabel: strings?.forbidParticipantAudioTileMenuLabel
+        ariaLabel: strings?.forbidAudioTileMenuLabel
       });
     }
 
     /* @conditional-compile-remove(media-access) */
-    if (isAttendee && !participant.mediaAccess?.isVideoPermitted && onPermitParticipantVideo) {
+    if (isAttendee && !participant.mediaAccess?.isVideoPermitted && onPermitVideo) {
       items.push({
-        key: 'permitParticipantVideo',
-        text: strings?.permitParticipantVideoTileMenuLabel,
+        key: 'permitVideo',
+        text: strings?.permitVideoTileMenuLabel,
         iconProps: {
           iconName: 'ControlButtonCameraOn',
           styles: { root: { lineHeight: 0 } }
         },
-        onClick: () => onPermitParticipantVideo([participant.userId]),
+        onClick: () => onPermitVideo([participant.userId]),
         'data-ui-id': 'video-tile-permit-video',
-        ariaLabel: strings?.permitParticipantVideoTileMenuLabel
+        ariaLabel: strings?.permitVideoTileMenuLabel
       });
     }
     /* @conditional-compile-remove(media-access) */
-    if (isAttendee && participant.mediaAccess?.isVideoPermitted && onForbidParticipantVideo) {
+    if (isAttendee && participant.mediaAccess?.isVideoPermitted && onForbidVideo) {
       items.push({
-        key: 'forbidParticipantVideo',
-        text: strings?.forbidParticipantVideoTileMenuLabel,
+        key: 'forbidVideo',
+        text: strings?.forbidVideoTileMenuLabel,
         iconProps: {
           iconName: 'ControlButtonCameraProhibited',
           styles: { root: { lineHeight: 0 } }
         },
-        onClick: () => onForbidParticipantVideo([participant.userId]),
+        onClick: () => onForbidVideo([participant.userId]),
         'data-ui-id': 'video-tile-forbid-video',
-        ariaLabel: strings?.forbidParticipantVideoTileMenuLabel
+        ariaLabel: strings?.forbidVideoTileMenuLabel
       });
     }
 
@@ -333,13 +333,13 @@ export const useVideoTileContextualMenuProps = (props: {
     onUpdateScalingMode,
     view,
     /* @conditional-compile-remove(media-access) */
-    strings?.permitParticipantAudioTileMenuLabel,
+    strings?.permitAudioTileMenuLabel,
     /* @conditional-compile-remove(media-access) */
-    strings?.forbidParticipantAudioTileMenuLabel,
+    strings?.forbidAudioTileMenuLabel,
     /* @conditional-compile-remove(media-access) */
-    strings?.permitParticipantVideoTileMenuLabel,
+    strings?.permitVideoTileMenuLabel,
     /* @conditional-compile-remove(media-access) */
-    strings?.forbidParticipantVideoTileMenuLabel,
+    strings?.forbidVideoTileMenuLabel,
     /* @conditional-compile-remove(media-access) */
     participant.role,
     /* @conditional-compile-remove(media-access) */
@@ -347,13 +347,13 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(media-access) */
     participant.mediaAccess?.isVideoPermitted,
     /* @conditional-compile-remove(media-access) */
-    onPermitParticipantAudio,
+    onPermitAudio,
     /* @conditional-compile-remove(media-access) */
-    onForbidParticipantAudio,
+    onForbidAudio,
     /* @conditional-compile-remove(media-access) */
-    onPermitParticipantVideo,
+    onPermitVideo,
     /* @conditional-compile-remove(media-access) */
-    onForbidParticipantVideo
+    onForbidVideo
   ]);
 
   return contextualMenuProps;

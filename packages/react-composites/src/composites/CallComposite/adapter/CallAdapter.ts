@@ -808,17 +808,17 @@ export interface CallAdapterCallOperations {
    */
   returnFromBreakoutRoom(): Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  forbidParticipantAudio(userIds: string[]): Promise<void>;
+  forbidAudio(userIds: string[]): Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  permitParticipantAudio(userIds: string[]): Promise<void>;
+  permitAudio(userIds: string[]): Promise<void>;
   /* @conditional-compile-remove(media-access) */
   forbidOthersAudio(): Promise<void>;
   /* @conditional-compile-remove(media-access) */
   permitOthersAudio(): Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  forbidParticipantVideo(userIds: string[]): Promise<void>;
+  forbidVideo(userIds: string[]): Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  permitParticipantVideo(userIds: string[]): Promise<void>;
+  permitVideo(userIds: string[]): Promise<void>;
   /* @conditional-compile-remove(media-access) */
   forbidOthersVideo(): Promise<void>;
   /* @conditional-compile-remove(media-access) */

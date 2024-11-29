@@ -317,22 +317,22 @@ export interface VideoGalleryProps {
   /**
    * This callback is to forbid audio for a remote participant
    */
-  onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onForbidAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
    * This callback is to permit audio for a remote participant
    */
-  onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+  onPermitAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
    * This callback is to forbid video for a remote participant
    */
-  onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+  onForbidVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
    * This callback is to permit video for a remote participant
    */
-  onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
+  onPermitVideo?: (userIds: string[]) => Promise<void>;
 }
 
 /**
@@ -419,13 +419,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     videoTilesOptions,
     onMuteParticipant,
     /* @conditional-compile-remove(media-access) */
-    onForbidParticipantAudio,
+    onForbidAudio,
     /* @conditional-compile-remove(media-access) */
-    onPermitParticipantAudio,
+    onPermitAudio,
     /* @conditional-compile-remove(media-access) */
-    onForbidParticipantVideo,
+    onForbidVideo,
     /* @conditional-compile-remove(media-access) */
-    onPermitParticipantVideo
+    onPermitVideo
   } = props;
 
   const ids = useIdentifiers();
@@ -678,13 +678,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           reactionResources={reactionResources}
           onMuteParticipant={onMuteParticipant}
           /* @conditional-compile-remove(media-access) */
-          onForbidParticipantAudio={onForbidParticipantAudio}
+          onForbidAudio={onForbidAudio}
           /* @conditional-compile-remove(media-access) */
-          onPermitParticipantAudio={onPermitParticipantAudio}
+          onPermitAudio={onPermitAudio}
           /* @conditional-compile-remove(media-access) */
-          onForbidParticipantVideo={onForbidParticipantVideo}
+          onForbidVideo={onForbidVideo}
           /* @conditional-compile-remove(media-access) */
-          onPermitParticipantVideo={onPermitParticipantVideo}
+          onPermitVideo={onPermitVideo}
         />
       );
     },
@@ -711,13 +711,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       reactionResources,
       onMuteParticipant,
       /* @conditional-compile-remove(media-access) */
-      onForbidParticipantAudio,
+      onForbidAudio,
       /* @conditional-compile-remove(media-access) */
-      onPermitParticipantAudio,
+      onPermitAudio,
       /* @conditional-compile-remove(media-access) */
-      onForbidParticipantVideo,
+      onForbidVideo,
       /* @conditional-compile-remove(media-access) */
-      onPermitParticipantVideo,
+      onPermitVideo,
       remoteVideoViewOptions
     ]
   );

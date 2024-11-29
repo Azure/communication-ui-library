@@ -72,13 +72,13 @@ export const _RemoteVideoTile = React.memo(
     reactionResources?: ReactionResources;
     onLongTouch?: (() => void) | undefined;
     /* @conditional-compile-remove(media-access) */
-    onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+    onForbidAudio?: (userIds: string[]) => Promise<void>;
     /* @conditional-compile-remove(media-access) */
-    onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+    onPermitAudio?: (userIds: string[]) => Promise<void>;
     /* @conditional-compile-remove(media-access) */
-    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+    onForbidVideo?: (userIds: string[]) => Promise<void>;
     /* @conditional-compile-remove(media-access) */
-    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
+    onPermitVideo?: (userIds: string[]) => Promise<void>;
   }) => {
     const {
       isAvailable,
@@ -110,13 +110,13 @@ export const _RemoteVideoTile = React.memo(
       reactionResources,
       streamId,
       /* @conditional-compile-remove(media-access) */
-      onForbidParticipantAudio,
+      onForbidAudio,
       /* @conditional-compile-remove(media-access) */
-      onPermitParticipantAudio,
+      onPermitAudio,
       /* @conditional-compile-remove(media-access) */
-      onForbidParticipantVideo,
+      onForbidVideo,
       /* @conditional-compile-remove(media-access) */
-      onPermitParticipantVideo
+      onPermitVideo
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -168,10 +168,10 @@ export const _RemoteVideoTile = React.memo(
       onStopSpotlight,
       maxParticipantsToSpotlight,
       onMuteParticipant,
-      /* @conditional-compile-remove(media-access) */ onForbidParticipantAudio,
-      /* @conditional-compile-remove(media-access) */ onPermitParticipantAudio,
-      /* @conditional-compile-remove(media-access) */ onForbidParticipantVideo,
-      /* @conditional-compile-remove(media-access) */ onPermitParticipantVideo
+      /* @conditional-compile-remove(media-access) */ onForbidAudio,
+      /* @conditional-compile-remove(media-access) */ onPermitAudio,
+      /* @conditional-compile-remove(media-access) */ onForbidVideo,
+      /* @conditional-compile-remove(media-access) */ onPermitVideo
     });
 
     const videoTileContextualMenuProps = useMemo(() => {

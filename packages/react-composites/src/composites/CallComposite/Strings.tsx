@@ -893,9 +893,9 @@ export interface CallCompositeStrings {
    */
   returnFromBreakoutRoomBannerButtonLabel: string;
   /* @conditional-compile-remove(media-access) */
-  forbidParticipantAudioMenuLabel: string;
+  forbidAudioMenuLabel: string;
   /* @conditional-compile-remove(media-access) */
-  permitParticipantAudioMenuLabel: string;
+  permitAudioMenuLabel: string;
   /* @conditional-compile-remove(media-access) */
   forbidOthersAudioDialogTitle: string;
   /* @conditional-compile-remove(media-access) */
@@ -918,9 +918,9 @@ export interface CallCompositeStrings {
   permitOthersAudioMenuLabel: string;
 
   /* @conditional-compile-remove(media-access) */
-  forbidParticipantVideoMenuLabel: string;
+  forbidVideoMenuLabel: string;
   /* @conditional-compile-remove(media-access) */
-  permitParticipantVideoMenuLabel: string;
+  permitVideoMenuLabel: string;
   /* @conditional-compile-remove(media-access) */
   forbidOthersVideoDialogTitle: string;
   /* @conditional-compile-remove(media-access) */

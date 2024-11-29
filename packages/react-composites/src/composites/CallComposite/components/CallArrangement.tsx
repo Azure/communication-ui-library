@@ -235,13 +235,13 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     maxParticipantsToSpotlight,
     localParticipant,
     /* @conditional-compile-remove(media-access) */
-    onForbidParticipantAudio,
+    onForbidAudio,
     /* @conditional-compile-remove(media-access) */
-    onPermitParticipantAudio,
+    onPermitAudio,
     /* @conditional-compile-remove(media-access) */
-    onForbidParticipantVideo,
+    onForbidVideo,
     /* @conditional-compile-remove(media-access) */
-    onPermitParticipantVideo
+    onPermitVideo
   } = videoGalleryProps;
 
   const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
@@ -360,11 +360,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(media-access) */
   const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
     return {
-      onForbidParticipantAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? onForbidParticipantAudio
+      onForbidAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onForbidAudio
         : undefined,
-      onPermitParticipantAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? onPermitParticipantAudio
+      onPermitAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onPermitAudio
         : undefined,
       onForbidOthersAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? muteAllHandlers.onForbidOthersAudio
@@ -372,11 +372,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onPermitOthersAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? muteAllHandlers.onPermitOthersAudio
         : undefined,
-      onForbidParticipantVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? onForbidParticipantVideo
+      onForbidVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onForbidVideo
         : undefined,
-      onPermitParticipantVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? onPermitParticipantVideo
+      onPermitVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onPermitVideo
         : undefined,
       onForbidOthersVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? muteAllHandlers.onForbidOthersVideo
@@ -388,14 +388,14 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     };
   }, [
     role,
-    onForbidParticipantAudio,
-    onPermitParticipantAudio,
+    onForbidAudio,
+    onPermitAudio,
     muteAllHandlers.onForbidOthersAudio,
     muteAllHandlers.onPermitOthersAudio,
     muteAllHandlers.onForbidOthersVideo,
     muteAllHandlers.onPermitOthersVideo,
-    onForbidParticipantVideo,
-    onPermitParticipantVideo,
+    onForbidVideo,
+    onPermitVideo,
     meetingMediaAccess
   ]);
 

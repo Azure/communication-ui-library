@@ -259,13 +259,13 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(media-access) */
-  public async forbidParticipantAudio(userIds: string[]): Promise<void> {
-    return this.callWithChatAdapter.forbidParticipantAudio(userIds);
+  public async forbidAudio(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.forbidAudio(userIds);
   }
 
   /* @conditional-compile-remove(media-access) */
-  public async permitParticipantAudio(userIds: string[]): Promise<void> {
-    return this.callWithChatAdapter.permitParticipantAudio(userIds);
+  public async permitAudio(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.permitAudio(userIds);
   }
 
   /* @conditional-compile-remove(media-access) */
@@ -279,13 +279,13 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   }
 
   /* @conditional-compile-remove(media-access) */
-  public async forbidParticipantVideo(userIds: string[]): Promise<void> {
-    return this.callWithChatAdapter.forbidParticipantAudio(userIds);
+  public async forbidVideo(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.forbidAudio(userIds);
   }
 
   /* @conditional-compile-remove(media-access) */
-  public async permitParticipantVideo(userIds: string[]): Promise<void> {
-    return this.callWithChatAdapter.permitParticipantAudio(userIds);
+  public async permitVideo(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.permitAudio(userIds);
   }
 
   /* @conditional-compile-remove(media-access) */
