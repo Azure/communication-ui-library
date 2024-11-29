@@ -89,6 +89,8 @@ const getCapabilityChangedNotificationString = (
 ): string | undefined => {
   switch (notification.capabilityName) {
     case 'turnVideoOn':
+      /* @conditional-compile-remove(media-access) */
+      return undefined;
       if (notification.changedReason === 'MeetingOptionOrOrganizerPolicyChanged') {
         return notification.isPresent
           ? strings?.turnVideoOn?.grantedDueToMeetingOption
@@ -96,6 +98,8 @@ const getCapabilityChangedNotificationString = (
       }
       break;
     case 'unmuteMic':
+      /* @conditional-compile-remove(media-access) */
+      return undefined;
       if (notification.changedReason === 'MeetingOptionOrOrganizerPolicyChanged') {
         return notification.isPresent
           ? strings?.unmuteMic?.grantedDueToMeetingOption

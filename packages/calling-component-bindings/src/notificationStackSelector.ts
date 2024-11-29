@@ -18,6 +18,8 @@ import { ActiveNotification, NotificationType } from '@internal/react-components
 import { createSelector } from 'reselect';
 
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(media-access) */
+import { CallNotifications } from '@internal/calling-stateful-client';
 
 import { DiagnosticQuality } from '@azure/communication-calling';
 
@@ -180,7 +182,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
+    appendMuteByOthersNotificationTrampoline(latestNotifications, activeErrorMessages, latestErrors);
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,
@@ -258,6 +260,39 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         timestamp: latestNotifications['breakoutRoomClosingSoon'].timestamp
       });
     }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityTurnVideoOnPresent']) {
+      activeNotifications.push({
+        type: 'capabilityTurnVideoOnPresent',
+        timestamp: latestNotifications['capabilityTurnVideoOnPresent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityTurnVideoOnAbsent']) {
+      activeNotifications.push({
+        type: 'capabilityTurnVideoOnAbsent',
+        timestamp: latestNotifications['capabilityTurnVideoOnAbsent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityUnmuteMicPresent']) {
+      activeNotifications.push({
+        type: 'capabilityUnmuteMicPresent',
+        timestamp: latestNotifications['capabilityUnmuteMicPresent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityUnmuteMicAbsent']) {
+      activeNotifications.push({
+        type: 'capabilityUnmuteMicAbsent',
+        timestamp: latestNotifications['capabilityUnmuteMicAbsent'].timestamp
+      });
+    }
+
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );
@@ -275,4 +310,19 @@ const appendActiveErrorIfDefined = (
     type: activeErrorType,
     timestamp: latestErrors[target].timestamp
   });
+};
+
+const appendMuteByOthersNotificationTrampoline = (
+  latestNotifications: CallNotifications,
+  activeErrorMessages: ActiveNotification[],
+  latestErrors: CallErrors
+): void => {
+  /* @conditional-compile-remove(media-access) */
+  if (!latestNotifications['capabilityUnmuteMicAbsent'] && !latestNotifications['capabilityUnmuteMicPresent']) {
+    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
+  }
+  /* @conditional-compile-remove(media-access) */
+  return;
+
+  appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
 };
