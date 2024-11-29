@@ -22,7 +22,8 @@ describe('compareMessages', () => {
     const firstMessage: Message = {
       createdOn: new Date('2023-01-02T00:00:00Z'),
       messageId: '1',
-      messageType: 'blocked'
+      messageType: 'chat',
+      contentType: 'html'
     };
     const secondMessage: Message = {
       createdOn: new Date('2023-01-01T00:00:00Z'),

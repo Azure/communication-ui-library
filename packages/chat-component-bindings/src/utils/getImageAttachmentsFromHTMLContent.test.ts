@@ -1,5 +1,12 @@
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { getImageAttachmentsFromHTMLContent } from './getImageAttachmentsFromHTMLContent';
 
+// Remove when rich-text-editor-image-upload is GA
+describe('getImageAttachmentsFromHTMLContent Empty Test', () => {
+  test.skip('Empty test for Conditional Compile case where no tests are included', (done) => done());
+});
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
 describe('getImageAttachmentsFromHTMLContent', () => {
   test('should return undefined if content is empty', () => {
     const result = getImageAttachmentsFromHTMLContent('');

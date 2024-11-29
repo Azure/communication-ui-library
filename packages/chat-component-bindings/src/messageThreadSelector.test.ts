@@ -16,6 +16,7 @@ import {
   TypingIndicatorReceivedEvent
 } from '@azure/communication-chat';
 import { ChatBaseSelectorProps } from './baseSelectors';
+/* @conditional-compile-remove(data-loss-prevention) */
 import { DEFAULT_DATA_LOSS_PREVENTION_POLICY_URL } from './utils/constants';
 import { v4 as uuidv4 } from 'uuid';
 
