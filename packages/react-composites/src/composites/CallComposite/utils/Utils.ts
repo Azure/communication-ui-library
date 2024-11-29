@@ -4,14 +4,19 @@
 import { CallAdapterState, CallCompositePage, END_CALL_PAGES, StartCallIdentifier } from '../adapter/CallAdapter';
 import { _isInCall, _isPreviewOn, _isInLobbyOrConnecting } from '@internal/calling-component-bindings';
 import { CallControlOptions } from '../types/CallControlOptions';
-import { CallState, RemoteParticipantState } from '@internal/calling-stateful-client';
-import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { CallState, RemoteParticipantState, _isTeamsMeeting } from '@internal/calling-stateful-client';
+import {
+  CommunicationIdentifier,
+  isMicrosoftTeamsAppIdentifier,
+  isMicrosoftTeamsUserIdentifier,
+  isPhoneNumberIdentifier
+} from '@azure/communication-common';
 import { AdapterStateModifier, CallAdapterLocator } from '../adapter/AzureCommunicationCallAdapter';
 
 import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
 
 import { VideoBackgroundEffect } from '../adapter/CallAdapter';
-import { EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
+import { CallCommon, EnvironmentInfo, VideoDeviceInfo } from '@azure/communication-calling';
 
 import { Call, VideoEffectProcessor } from '@azure/communication-calling';
 import { CompositeLocale } from '../../localization';
@@ -251,6 +256,38 @@ export const getEndedCallPageProps = (
       break;
   }
   return { title, moreDetails, disableStartCallButton, iconName };
+};
+
+/** @private */
+export const isDetectedAsTeamsMeeting = (
+  locator: CallAdapterLocator | undefined,
+  call: CallState | undefined
+): boolean => {
+  const locatorIsTeamsMeeting = locator && ('meetingLink' in locator || 'meetingId' in locator);
+  const callIsTeamsMeeting = call && _isTeamsMeeting(call);
+  return !!locatorIsTeamsMeeting || !!callIsTeamsMeeting;
+};
+
+/** @private */
+export const isDetectedAsRoomsCall = (
+  locator: CallAdapterLocator | undefined,
+  call: CallState | undefined
+): boolean => {
+  return !!(locator && 'roomId' in locator) || !!(call?.info && 'roomId' in call.info);
+};
+
+/** @private */
+export const isDetectedAsTeamsCallKind = (
+  targetCallees: CommunicationIdentifier[] | undefined,
+  call?: CallState | undefined
+): boolean => {
+  let isTeamsCall: boolean = call?.kind === 'TeamsCall';
+  targetCallees?.forEach((callee) => {
+    if (isMicrosoftTeamsUserIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee)) {
+      isTeamsCall = true;
+    }
+  });
+  return isTeamsCall;
 };
 
 /**

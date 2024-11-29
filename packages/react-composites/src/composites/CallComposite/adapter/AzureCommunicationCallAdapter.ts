@@ -11,8 +11,7 @@ import {
   StatefulCallClient,
   StatefulDeviceManager,
   TeamsCall,
-  _isACSCall,
-  _isTeamsCall
+  _isACSCall
 } from '@internal/calling-stateful-client';
 import { AcceptedTransfer } from '@internal/calling-stateful-client';
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
@@ -86,7 +85,16 @@ import {
   VideoBackgroundReplacementEffect
 } from './CallAdapter';
 import { TeamsCallAdapter } from './CallAdapter';
-import { getCallCompositePage, isCall, IsCallEndedPage, isCameraOn, isTargetCallees } from '../utils';
+import {
+  getCallCompositePage,
+  isCall,
+  IsCallEndedPage,
+  isCameraOn,
+  isDetectedAsRoomsCall,
+  isDetectedAsTeamsCallKind,
+  isDetectedAsTeamsMeeting,
+  isTargetCallees
+} from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIdentifier } from '@internal/acs-ui-common';
 import {
@@ -139,13 +147,12 @@ class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallContextState;
   private callId: string | undefined;
+  private locator: CallAdapterLocator | undefined;
   private displayNameModifier: AdapterStateModifier | undefined;
 
   constructor(
     clientState: CallClientState,
-    isTeamsCall: boolean,
-    isTeamsMeeting: boolean,
-    isRoomsCall: boolean,
+    locator: CallAdapterLocator | undefined,
     options?: {
       maxListeners?: number;
       onFetchProfile?: OnFetchProfileCallback;
@@ -164,19 +171,20 @@ class CallContext {
     },
     targetCallees?: StartCallIdentifier[]
   ) {
+    this.locator = locator;
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       devices: clientState.deviceManager,
       call: undefined,
+      isTeamsMeeting: isDetectedAsTeamsMeeting(locator, undefined),
+      isTeamsCall: isDetectedAsTeamsCallKind(targetCallees, undefined),
+      isRoomsCall: isDetectedAsRoomsCall(locator, undefined),
       targetCallees: targetCallees as CommunicationIdentifier[],
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: clientState.latestNotifications,
-      isTeamsCall,
-      isTeamsMeeting,
-      isRoomsCall,
       alternateCallerId: options?.alternateCallerId,
       environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
@@ -269,6 +277,7 @@ class CallContext {
       environmentInfo: this.state.environmentInfo,
       unsupportedBrowserVersionOptedIn: this.state.unsupportedBrowserVersionsAllowed
     };
+    const targetCallees = this.state.targetCallees;
 
     const latestAcceptedTransfer = call?.transfer.acceptedTransfers
       ? findLatestAcceptedTransfer(call.transfer.acceptedTransfers)
@@ -313,7 +322,10 @@ class CallContext {
           clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
             ? 'On'
             : 'Off',
-        acceptedTransferCallState: transferCall
+        acceptedTransferCallState: transferCall,
+        isTeamsMeeting: isDetectedAsTeamsMeeting(this.locator, call),
+        isTeamsCall: isDetectedAsTeamsCallKind(targetCallees, call),
+        isRoomsCall: isDetectedAsRoomsCall(this.locator, call)
       });
     }
   }
@@ -447,34 +459,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     this.deviceManager = deviceManager;
 
-    const isTeamsMeeting = this.locator
-      ? 'meetingLink' in this.locator || 'meetingId' in this.locator
-      : !!overloadedParamAsCall?.info.threadId;
-    let isTeamsCall: boolean | undefined;
-    this.targetCallees?.forEach((callee) => {
-      if (isMicrosoftTeamsUserIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee)) {
-        isTeamsCall = true;
-      }
-    });
-
-    const isOverloadedParamARoomsCallTrampoline = (): boolean => {
-      /* @conditional-compile-remove(calling-beta-sdk) */
-      return !!overloadedParamAsCall?.info.roomId;
-      return false;
-    };
-    const isRoomsCall = this.locator ? 'roomId' in this.locator : isOverloadedParamARoomsCallTrampoline();
-
     this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency;
     this.onResolveDeepNoiseSuppressionDependency = options?.deepNoiseSuppressionOptions?.onResolveDependency;
 
-    this.context = new CallContext(
-      callClient.getState(),
-      !!isTeamsCall,
-      isTeamsMeeting,
-      isRoomsCall,
-      options,
-      this.targetCallees
-    );
+    this.context = new CallContext(callClient.getState(), this.locator, options, this.targetCallees);
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
