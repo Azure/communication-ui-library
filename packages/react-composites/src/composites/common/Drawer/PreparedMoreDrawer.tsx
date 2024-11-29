@@ -41,7 +41,6 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
       captionsMenuTitle: strings.moreDrawerCaptionsMenuTitle,
       spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle,
       captionLanguageMenuTitle: strings.moreDrawerCaptionLanguageMenuTitle,
-
       galleryOptionsMenuTitle: strings.moreDrawerGalleryOptionsMenuTitle
     }),
     [strings]
