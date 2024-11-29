@@ -763,7 +763,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#MediaAccessFeature}.
    */
-  mediaAccessSetting?: MediaAccessState;
+  meetingMediaAccess?: MediaAccessState;
 }
 
 /**

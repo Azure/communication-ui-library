@@ -356,7 +356,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   ]);
 
   /* @conditional-compile-remove(media-access) */
-  const mediaAccessSetting = useSelector(getMediaAccessSetting);
+  const meetingMediaAccess = useSelector(getMediaAccessSetting);
   /* @conditional-compile-remove(media-access) */
   const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
     return {
@@ -384,7 +384,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onPermitOthersVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
         ? muteAllHandlers.onPermitOthersVideo
         : undefined,
-      mediaAccessSetting
+      meetingMediaAccess
     };
   }, [
     role,
@@ -396,7 +396,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     muteAllHandlers.onPermitOthersVideo,
     onForbidParticipantVideo,
     onPermitParticipantVideo,
-    mediaAccessSetting
+    meetingMediaAccess
   ]);
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({

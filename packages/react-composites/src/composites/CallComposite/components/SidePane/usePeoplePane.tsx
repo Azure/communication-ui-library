@@ -57,7 +57,7 @@ export const usePeoplePane = (props: {
   /* @conditional-compile-remove(media-access) */
   onPermitOthersVideo?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  mediaAccessSetting?: MediaAccess;
+  meetingMediaAccess?: MediaAccess;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -102,7 +102,7 @@ export const usePeoplePane = (props: {
     /* @conditional-compile-remove(media-access) */
     onPermitOthersVideo,
     /* @conditional-compile-remove(media-access) */
-    mediaAccessSetting
+    meetingMediaAccess
   } = props;
 
   const closePane = useCallback(() => {
@@ -198,9 +198,9 @@ export const usePeoplePane = (props: {
       }
     }
     /* @conditional-compile-remove(media-access) */
-    const isMeetingAudioPermitted = mediaAccessSetting?.isAudioPermitted;
+    const isMeetingAudioPermitted = meetingMediaAccess?.isAudioPermitted;
     /* @conditional-compile-remove(media-access) */
-    const isMeetingVideoPermitted = mediaAccessSetting?.isVideoPermitted;
+    const isMeetingVideoPermitted = meetingMediaAccess?.isVideoPermitted;
     /* @conditional-compile-remove(media-access) */
     if (onForbidOthersAudio && remoteParticipants) {
       hasAttendee &&
@@ -296,8 +296,8 @@ export const usePeoplePane = (props: {
   }, [
     onMuteAllRemoteParticipants,
     remoteParticipants,
-    mediaAccessSetting?.isAudioPermitted,
-    mediaAccessSetting?.isVideoPermitted,
+    meetingMediaAccess?.isAudioPermitted,
+    meetingMediaAccess?.isVideoPermitted,
     onForbidOthersAudio,
     onPermitOthersAudio,
     onForbidOthersVideo,
