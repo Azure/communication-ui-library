@@ -94,7 +94,3 @@ export type { SpotlightChangedListener } from './adapter';
 export type { CallingSounds, SoundEffect } from './adapter';
 
 export type { SpotlightPromptStrings } from './components/Prompt';
-/* @conditional-compile-remove(media-access) */
-export type { MediaAccessChangedListener } from './adapter';
-/* @conditional-compile-remove(media-access) */
-export type { MeetingMediaAccessChangedListener } from './adapter';

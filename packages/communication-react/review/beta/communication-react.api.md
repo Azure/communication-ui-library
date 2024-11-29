@@ -76,11 +76,9 @@ import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { LocalRecordingInfo } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
-import type { MediaAccessChangedEvent } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import type { MediaDiagnosticType } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
-import type { MeetingMediaAccessChangedEvent } from '@azure/communication-calling';
 import { MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
@@ -535,7 +533,6 @@ export type CallAdapterClientState = {
     hideAttendeeNames?: boolean;
     sounds?: CallingSounds;
     reactions?: ReactionResources;
-    mediaAccess?: MediaAccess;
 };
 
 // @public
@@ -579,8 +576,6 @@ export interface CallAdapterSubscribers {
     off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
     off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
-    off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
-    off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -603,8 +598,6 @@ export interface CallAdapterSubscribers {
     on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
     on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
-    on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
-    on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
 }
 
 // @public
@@ -1422,10 +1415,6 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
     // (undocumented)
-    off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
-    // (undocumented)
-    off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
-    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageEdited', listener: MessageEditedListener): void;
@@ -1479,10 +1468,6 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     // (undocumented)
     on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
-    // (undocumented)
-    on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
-    // (undocumented)
-    on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
     // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
@@ -1730,7 +1715,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated' | /* @conditional-compile-remove(media-access) */ 'mediaAccessChanged' | /* @conditional-compile-remove(media-access) */ 'meetingMediaAccessChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -3721,9 +3706,6 @@ export type MediaAccess = {
     isVideoPermitted: boolean;
 };
 
-// @beta
-export type MediaAccessChangedListener = (data: MediaAccessChangedEvent) => void;
-
 // @alpha
 export interface MediaAccessState {
     isAudioPermitted: boolean;
@@ -3752,9 +3734,6 @@ export interface MeetingConferencePhoneInfoModalStrings {
     meetingConferencePhoneInfoModalTollGeoData: string;
     meetingConferencePhoneInfoModalWait: string;
 }
-
-// @beta
-export type MeetingMediaAccessChangedListener = (data: MeetingMediaAccessChangedEvent) => void;
 
 // @beta
 export interface Mention {

@@ -67,8 +67,6 @@ import {
 
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
-/* @conditional-compile-remove(media-access) */
-import { MeetingMediaAccessChangedListener, MediaAccessChangedListener } from '../../CallComposite';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
@@ -601,10 +599,6 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(breakout-rooms) */
   on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
-  /* @conditional-compile-remove(media-access) */
-  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
-  /* @conditional-compile-remove(media-access) */
-  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
   off(event: 'callIdChanged', listener: CallIdChangedListener): void;
@@ -624,10 +618,6 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(breakout-rooms) */
   off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
-  /* @conditional-compile-remove(media-access) */
-  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
-  /* @conditional-compile-remove(media-access) */
-  off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
 
   // Chat subscriptions
   on(event: 'messageReceived', listener: MessageReceivedListener): void;
@@ -696,8 +686,6 @@ export type CallWithChatEvent =
   | 'capabilitiesChanged'
   | 'spotlightChanged'
   | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated'
-  | /* @conditional-compile-remove(media-access) */ 'mediaAccessChanged'
-  | /* @conditional-compile-remove(media-access) */ 'meetingMediaAccessChanged'
   | 'messageReceived'
   | 'messageEdited'
   | 'messageDeleted'
