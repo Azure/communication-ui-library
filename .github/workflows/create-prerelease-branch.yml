@@ -31,7 +31,7 @@ jobs:
   # create pre-release branch for beta releases
   create_pre-release:
     name: Bump versions and make changelog for release
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     steps:
       # Check-out repo
