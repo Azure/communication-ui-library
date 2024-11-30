@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import { chatParticipantListSelector } from './chatParticipantListSelector';
 import { ChatClientState, ChatErrors } from '@internal/chat-stateful-client';
 import { ChatParticipant } from '@azure/communication-chat';

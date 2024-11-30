@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import { sendBoxSelector } from './sendBoxSelector';
 import { ChatClientState, ChatErrors } from '@internal/chat-stateful-client';
 import { ChatBaseSelectorProps } from './baseSelectors';

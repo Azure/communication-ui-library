@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import { compareMessages } from './compareMessages';
 import { Message } from '@internal/react-components';
 

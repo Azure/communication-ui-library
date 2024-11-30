@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { getImageAttachmentsFromHTMLContent } from './getImageAttachmentsFromHTMLContent';
 

@@ -1,15 +1,19 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { ChatClientProvider, useChatClient } from './ChatClientProvider';
 import { createStatefulChatClient } from '@internal/chat-stateful-client';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 jest.mock('@azure/communication-common', () => {
   return {
     AzureCommunicationTokenCredential: jest.fn()
   };
 });
 
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 jest.mock('@internal/chat-stateful-client', () => {
   return {
     createStatefulChatClient: jest.fn().mockResolvedValue('mockStatefulChatClient')
@@ -24,7 +28,7 @@ describe('ChatClientProvider', () => {
       endpoint: 'endpointUrl',
       credential: new AzureCommunicationTokenCredential('token')
     });
-    const ChildComponent = () => {
+    const ChildComponent = (): JSX.Element => {
       const chatClient = useChatClient();
       expect(chatClient).toBe(statefulChatClient);
       return <div>Child Component</div>;
@@ -39,7 +43,7 @@ describe('ChatClientProvider', () => {
   });
 
   test('should throw an error if useChatClient is called outside of ChatClientProvider', () => {
-    const ChildComponent = () => {
+    const ChildComponent = (): JSX.Element | null => {
       expect(() => useChatClient()).toThrow(
         'Please wrap components with ChatClientProvider and initialize a chat client before calling the hook!'
       );

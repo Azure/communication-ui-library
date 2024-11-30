@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 import { errorBarSelector } from './errorBarSelector';
 import { ChatClientState, ChatError, ChatErrors, ChatErrorTarget } from '@internal/chat-stateful-client';
 import { ChatBaseSelectorProps } from './baseSelectors';
@@ -141,7 +144,7 @@ const createChatError = (
   message: ''
 });
 
-const userNotInChatThreadTest = (statusCode: number) => {
+const userNotInChatThreadTest = (statusCode: number): void => {
   const latestErrors: ChatErrors = {
     'ChatThreadClient.listMessages': createChatError('', statusCode, 1, 'ChatThreadClient.listMessages')
   } as ChatErrors;
