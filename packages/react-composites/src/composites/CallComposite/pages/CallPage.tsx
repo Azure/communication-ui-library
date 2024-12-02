@@ -211,6 +211,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         /* @conditional-compile-remove(call-readiness) */
         doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
         captionsOptions={options?.captionsBanner}
+        dtmfDialerOptions={disableAutoShowDtmfDialer}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>
