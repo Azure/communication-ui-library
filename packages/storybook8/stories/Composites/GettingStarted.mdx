@@ -1,6 +1,5 @@
 import { Stack } from '@fluentui/react';
 import { Meta, Source } from '@storybook/addon-docs';
-import QuickstartCompositeAdapter from '!!raw-loader!./snippets/QuickstartCompositeAdapter.snippet.tsx';
 import QuickstartCompositeComplete from '!!raw-loader!./snippets/QuickstartCompositeComplete.snippet.tsx';
 
 <Meta title="Composites/Get Started" />
@@ -16,7 +15,7 @@ UI Library components come in two flavors: UI and Composite.
 
 ## Download the code
 
-You can find the completed code for this quickstart here: [Get started with Composites](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-quickstart-composites)
+You can find the completed code for this quickstart here [ui-library-quickstart-composites](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-quickstart-composites).
 
 ## Prerequisites
 
@@ -103,7 +102,8 @@ The following classes and interfaces handle some of the major features of the Az
 
 ## Set Up Adapters
 
-Before we initialize the actual composite components, we need to set up the adapters that will power them.
+In our quickstart, we will be using the `CallAdapter` and `ChatAdapter` to power the `CallComposite` and `ChatComposite` respectively.
+Before we initialize the actual composite components, we need to set up the adapters that will power them first.
 These adapters take care of the entire state of the composites truly making them a turn-key solution.
 To setup the adapters, developers needs to pass information on the call or chat they want to join.
 
@@ -111,25 +111,12 @@ The adapters require access tokens, group IDs, or thread IDs to be setup.
 For this quickstart, the access tokens required need to have both `chat` and `VoIP` scopes.
 For more information on access tokens see: [Identity Model](https://docs.microsoft.com/azure/communication-services/concepts/identity-model#access-tokens)
 These elements come from services that go through the proper steps to generate these IDs and pass them to the client application.
-For more information, see: [Client Server Architecture](https://docs.microsoft.com/azure/communication-services/concepts/client-and-server-architecture).
+For more information, see: [Client Server Architecture](https://learn.microsoft.com/en-us/azure/communication-services/concepts/ui-library/ui-library-use-cases?pivots=platform-web#recommended-architecture).
 For Example: The Group Chat composite expects that the `userId` associated to the `token` being used to initialize it has already been joined to the `threadId` being provided.
 If the token hasn't been joined to the thread ID, then the Group Chat composite will fail.
 For more information on chat, see: [Getting Started with Chat](https://docs.microsoft.com/azure/communication-services/quickstarts/chat/get-started?pivots=programming-language-csharp)
 
-Go to the `src` folder inside of `ui-library-quickstart-composites` and look for the file `App.tsx`.
-
-`App.tsx`
-
-<Source code={QuickstartCompositeAdapter} />
-
-Next we will initialize the composite components with the adapters.
-
-## Initialize Composites
-
-Go to the `src` folder inside of `ui-library-quickstart-composites` and look for the file `App.tsx`.
-Here we'll drop the following code to initialize our Composite Components for Chat and Calling using the adapters we set up above.
-You can choose which one to use depending on the type of communication experience you're building.
-If needed, you can use both at the same time.
+Go to the `src` folder inside of [ui-library-quickstart-composites](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-quickstart-composites) and look for the file `App.tsx`.
 
 `App.tsx`
 

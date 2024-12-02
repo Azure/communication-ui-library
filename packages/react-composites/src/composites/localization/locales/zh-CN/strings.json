@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "关闭",
     "videoEffectsPaneTitle": "效果",
     "videoEffectsPaneBackgroundSelectionTitle": "背景",
+    "videoEffectsPaneAriaLabel": "视频效果窗格",
     "configurationPageVideoEffectsButtonLabel": "效果",
     "unableToStartVideoEffect": "无法应用视频效果。",
     "blurBackgroundEffectButtonLabel": "模糊",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "将不再对会议中的每个人突出显示该视频。",
       "stopSpotlightConfirmButtonLabel": "停止聚焦",
       "stopSpotlightOnSelfConfirmButtonLabel": "退出聚焦",
-      "stopSpotlightCancelButtonLabel": "取消"
+      "stopSpotlightCancelButtonLabel": "取消",
+      "closeSpotlightPromptButtonLabel": "关闭"
     },
     "exitSpotlightButtonLabel": "退出聚焦",
     "exitSpotlightButtonTooltip": "退出聚焦",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "为我固定",
     "pinParticipantLimitReachedMenuLabel": "固定(已达到上限)",
     "unpinParticipantMenuLabel": "取消固定",
-    "pinParticipantMenuItemAriaLabel": "固定",
+    "pinParticipantMenuItemAriaLabel": "为我固定",
     "unpinParticipantMenuItemAriaLabel": "取消固定",
     "muteAllMenuLabel": "全部静音",
     "muteAllDialogTitle": "对所有人静音?",

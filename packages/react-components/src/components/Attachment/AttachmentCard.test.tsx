@@ -4,19 +4,9 @@
 import React from 'react';
 import { _AttachmentCard, _AttachmentCardProps } from './AttachmentCard';
 import { render, screen } from '@testing-library/react';
-import { Icon, registerIcons } from '@fluentui/react';
+import { Icon } from '@fluentui/react';
 
 describe('AttachmentCard should be rendered properly', () => {
-  beforeEach(() => {
-    registerIcons({
-      icons: {
-        docx24_svg: <></>,
-        cancelattachmentupload: <></>,
-        genericfile24_svg: <></>
-      }
-    });
-  });
-
   it('should render the component', () => {
     renderAttachmentCardWithDefaults();
     expect(screen.queryByTestId('attachment-card')).toBeDefined();
@@ -50,15 +40,6 @@ describe('AttachmentCard should be rendered properly', () => {
 });
 
 describe('AttachmentCard action handler should be called', () => {
-  beforeEach(() => {
-    registerIcons({
-      icons: {
-        docx24_svg: <></>,
-        cancelattachmentupload: <></>
-      }
-    });
-  });
-
   it('should call the action handler when action icon is clicked', () => {
     const actionHandler = jest.fn();
     renderAttachmentCardWithDefaults({
@@ -72,7 +53,7 @@ describe('AttachmentCard action handler should be called', () => {
     });
 
     const button = screen.getAllByRole('button')[0];
-    button.click();
+    button?.click();
     expect(actionHandler).toHaveBeenCalledTimes(1);
   });
 });

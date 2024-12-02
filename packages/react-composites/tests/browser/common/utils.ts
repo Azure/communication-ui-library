@@ -315,7 +315,7 @@ export const waitForPiPiPToHaveLoaded = async (
  * Stub out timestamps on the page to avoid spurious diffs in snapshot tests.
  */
 export const stubMessageTimestamps = async (page: Page): Promise<void> => {
-  const messageTimestampId: string = dataUiId(IDS.messageTimestamp);
+  const messageTimestampId: string = dataTestId(IDS.messageTimestamp);
   await page.evaluate((messageTimestampId) => {
     Array.from(document.querySelectorAll(messageTimestampId)).forEach((i) => (i.textContent = 'timestamp'));
   }, messageTimestampId);
@@ -379,8 +379,8 @@ export const waitForParticipants = async (page: Page, numParticipants: number): 
 
 export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
-  for (const key in qArgs) {
-    qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(qArgs[key]));
+  for (const [key, value] of Object.entries(qArgs || {})) {
+    qs.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
   }
   return qs.join('&');
 };

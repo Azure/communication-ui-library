@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Zavřít",
     "videoEffectsPaneTitle": "Efekty",
     "videoEffectsPaneBackgroundSelectionTitle": "Pozadí",
+    "videoEffectsPaneAriaLabel": "Podokno video efektů",
     "configurationPageVideoEffectsButtonLabel": "Efekty",
     "unableToStartVideoEffect": "Nelze použít efekt videa.",
     "blurBackgroundEffectButtonLabel": "Rozostření",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "Účastníkům schůzky se už videa nebudou zvýrazňovat.",
       "stopSpotlightConfirmButtonLabel": "Zastavit přidávání do hlavního výběru",
       "stopSpotlightOnSelfConfirmButtonLabel": "Ukončit hlavní výběr",
-      "stopSpotlightCancelButtonLabel": "Zrušit"
+      "stopSpotlightCancelButtonLabel": "Zrušit",
+      "closeSpotlightPromptButtonLabel": "Zavřít"
     },
     "exitSpotlightButtonLabel": "Ukončit hlavní výběr",
     "exitSpotlightButtonTooltip": "Ukončit hlavní výběr",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "Připnout pro mě",
     "pinParticipantLimitReachedMenuLabel": "Připnout (dosáhlo se limitu)",
     "unpinParticipantMenuLabel": "Odepnout",
-    "pinParticipantMenuItemAriaLabel": "Připnout",
+    "pinParticipantMenuItemAriaLabel": "Připnout pro mě",
     "unpinParticipantMenuItemAriaLabel": "Odepnout",
     "muteAllMenuLabel": "Ztlumit všechny",
     "muteAllDialogTitle": "Chcete všechny ztlumit?",

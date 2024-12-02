@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "סגור",
     "videoEffectsPaneTitle": "אפקטים",
     "videoEffectsPaneBackgroundSelectionTitle": "רקע",
+    "videoEffectsPaneAriaLabel": "חלונית אפקטי וידאו",
     "configurationPageVideoEffectsButtonLabel": "אפקטים",
     "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו.",
     "blurBackgroundEffectButtonLabel": "טשטוש",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "סרטוני הווידאו לא יסומנו עוד עבור כל האנשים בפגישה.",
       "stopSpotlightConfirmButtonLabel": "הפסק להציב זרקור",
       "stopSpotlightOnSelfConfirmButtonLabel": "צא מזרקור",
-      "stopSpotlightCancelButtonLabel": "ביטול"
+      "stopSpotlightCancelButtonLabel": "ביטול",
+      "closeSpotlightPromptButtonLabel": "סגור"
     },
     "exitSpotlightButtonLabel": "צא מהזרקור",
     "exitSpotlightButtonTooltip": "צא מהזרקור",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "הצמד עבורי",
     "pinParticipantLimitReachedMenuLabel": "הצמדה (הגעת למגבלה)",
     "unpinParticipantMenuLabel": "בטל הצמדה",
-    "pinParticipantMenuItemAriaLabel": "הצמד",
+    "pinParticipantMenuItemAriaLabel": "הצמד עבורי",
     "unpinParticipantMenuItemAriaLabel": "בטל הצמדה",
     "muteAllMenuLabel": "השתק הכל",
     "muteAllDialogTitle": "האם להשתיק את כולם?",

@@ -28,7 +28,7 @@ import {
   participantItemContainerStyle,
   participantStateStringStyles
 } from './styles/ParticipantItem.styles';
-import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
+import { _formatString, _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 import { ParticipantState } from '../types';
 import { useId } from '@fluentui/react-hooks';
 
@@ -64,12 +64,18 @@ export interface ParticipantItemStrings {
   sharingIconLabel: string;
   /** Label for the muted icon in participant state stack  */
   mutedIconLabel: string;
+  /** Label for the raised hand icon in participant state stack  */
+  handRaisedIconLabel?: string;
   /** placeholder text for participants who does not have a display name*/
   displayNamePlaceholder?: string;
   /** String shown when `participantState` is `Ringing` */
   participantStateRinging?: string;
   /** String shown when `participantState` is `Hold` */
   participantStateHold?: string;
+  /** Aria Label applied to the base element of the `participantItem` */
+  participantItemAriaLabel?: string;
+  /** Aria Label applied to the base element of the `participantItem` when there are more options present */
+  participantItemWithMoreOptionsAriaLabel?: string;
   /** String for the attendee role */
   attendeeRole: string;
 }
@@ -153,11 +159,15 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const theme = useTheme();
   const localeStrings = useLocale().strings.participantItem;
   const ids = useIdentifiers();
-  const uniqueId = useId();
+  const participantItemId = useId();
+  const participantItemFlyoutId = useId();
+  const hasFlyout = !!(menuItems && menuItems?.length > 0);
+  const flyoutShowing = hasFlyout && menuHidden;
 
   const strings = { ...localeStrings, ...props.strings };
-  const participantStateString = participantStateStringTrampoline(props, strings);
-  const showMenuIcon = !participantStateString && (itemHovered || !menuHidden) && menuItems && menuItems?.length > 0;
+  const participantStateString = formatParticipantStateString(props, strings);
+
+  const showMenuIcon = !participantStateString && (itemHovered || !menuHidden) && hasFlyout;
 
   // For 'me' show empty name so avatar will get 'Person' icon, when there is no name
   const meAvatarText = displayName?.trim() || '';
@@ -231,13 +241,19 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
     <div
       ref={containerRef}
       role={'menuitem'}
-      aria-disabled={(menuItems && menuItems.length > 0) || props.onClick ? false : true}
-      data-is-focusable={true}
+      id={participantItemId}
+      aria-label={
+        (hasFlyout ? props.strings?.participantItemWithMoreOptionsAriaLabel : undefined) ??
+        props.strings?.participantItemAriaLabel
+      }
+      aria-labelledby={`${props.ariaLabelledBy} ${participantItemId}`}
+      aria-expanded={flyoutShowing}
+      aria-disabled={hasFlyout || props.onClick ? false : true}
+      aria-haspopup={hasFlyout ? true : undefined}
+      aria-controls={participantItemFlyoutId}
+      data-is-focusable={hasFlyout}
       data-ui-id="participant-item"
-      className={mergeStyles(
-        participantItemContainerStyle({ clickable: !!menuItems && menuItems.length > 0 }, theme),
-        styles?.root
-      )}
+      className={mergeStyles(participantItemContainerStyle({ clickable: hasFlyout }, theme), styles?.root)}
       onMouseEnter={() => setItemHovered(true)}
       onMouseLeave={() => setItemHovered(false)}
       onClick={() => {
@@ -250,7 +266,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           onDismissMenu();
         }
       }}
-      tabIndex={0}
+      tabIndex={hasFlyout ? 0 : undefined}
     >
       <Stack
         horizontal
@@ -259,8 +275,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           maxWidth: '100%',
           alignItems: 'center'
         })}
-        id={uniqueId}
-        aria-labelledby={`${props.ariaLabelledBy} ${uniqueId}`}
       >
         {avatar}
         {me && <Text className={meTextStyle}>{strings.isMeText}</Text>}
@@ -273,10 +287,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
             </Text>
           ) : (
             <>
-              {menuItems && menuItems.length > 0 && (
+              {hasFlyout && (
                 <>
                   {menuButton}
                   <ContextualMenu
+                    id={participantItemFlyoutId}
                     items={menuItems}
                     hidden={menuHidden}
                     target={containerRef}
@@ -298,7 +313,8 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   );
 };
 
-const participantStateStringTrampoline = (
+/** @private */
+export const formatParticipantStateString = (
   props: ParticipantItemProps,
   strings: ParticipantItemStrings
 ): string | undefined => {
@@ -307,6 +323,4 @@ const participantStateStringTrampoline = (
     : props.participantState === 'Hold'
       ? strings?.participantStateHold
       : undefined;
-
-  return undefined;
 };

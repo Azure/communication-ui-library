@@ -31,15 +31,11 @@ import type {
 } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
-
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
-
 import { CaptionsKind } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ReactionMessage } from '@azure/communication-calling';
@@ -276,45 +272,73 @@ export interface RaiseHandCallFeatureState {
 
 /* @conditional-compile-remove(together-mode) */
 /**
- * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient} will
- * automatically listen for raised hands on the call and update the state exposed by {@link StatefulCallClient} accordingly.
- * @alpha
+ * Represents the name of the call feature stream
+ * @beta
  */
-export interface TogetherModeCallFeatureState {
-  /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
-   */
-  stream: TogetherModeStreamState[];
+export type CallFeatureStreamName = 'togetherMode';
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * State only version of {@link @azure/communication-calling#CallFeatureStream}.
+ * Represents call feature stream state.
+ * @beta
+ */
+export interface CallFeatureStreamState extends RemoteVideoStreamState {
+  feature?: CallFeatureStreamName;
 }
 
 /* @conditional-compile-remove(together-mode) */
 /**
- * State only version of {@link @azure/communication-calling#TogetherModeVideoStream}.
- * @alpha
+ * State only version of {@link @azure/communication-calling#TogetherModeSeatingMap}.
+ * @beta
+ *
+ * Represents the seating position of a participant in Together Mode.
  */
-export interface TogetherModeStreamState {
+export interface TogetherModeSeatingPositionState {
+  /* The top left offset from the top of the together mode view.*/
+  top: number;
+  /* The left offset position from the left of the together mode view. */
+  left: number;
+  /*  The width of the seating area */
+  width: number;
+  /* The height of the seating area. */
+  height: number;
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * Represents the seating positions of participants in Together Mode.
+ *
+ * @beta
+ */
+export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * Represents the streams in Together Mode.
+ *
+ * @beta
+ */
+export interface TogetherModeStreamsState {
+  mainVideoStream?: CallFeatureStreamState;
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient}.
+ * Represents the state of the Together Mode feature.
+ * @beta
+ */
+export interface TogetherModeCallFeatureState {
+  isActive: boolean;
   /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.id}.
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
    */
-  id: number;
+  streams: TogetherModeStreamsState;
   /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.mediaStreamType}.
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.TogetherModeSeatingMap}.
    */
-  mediaStreamType: MediaStreamType;
-  /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.isReceiving}.
-   * @public
-   */
-  isReceiving: boolean;
-  /**
-   * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
-   * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
-   */
-  view?: VideoStreamRendererViewState;
-  /**
-   * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
-   */
-  streamSize?: { width: number; height: number };
+  seatingPositions: TogetherModeParticipantSeatingState;
 }
 
 /**
@@ -461,6 +485,22 @@ export interface VideoStreamRendererViewState {
   target: HTMLElement;
 }
 
+/* @conditional-compile-remove(media-access) */
+/**
+ * Media access state
+ * @alpha
+ */
+export interface MediaAccessState {
+  /**
+   * Whether the audio is forcibly muted
+   */
+  isAudioPermitted: boolean;
+  /**
+   * Whether the video is forcibly muted
+   */
+  isVideoPermitted: boolean;
+}
+
 /**
  * State only version of {@link @azure/communication-calling#RemoteParticipant}. {@link StatefulCallClient} will
  * automatically retrieve RemoteParticipants and add their state to the state exposed by {@link StatefulCallClient}.
@@ -522,11 +562,16 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
   spotlight?: SpotlightState;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.MediaAccessCallFeature.MediaAccess}.
+   */
+  mediaAccess?: MediaAccessState;
   /* @conditional-compile-remove(remote-ufd) */
   /**
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
    */
-  diagnostics?: Record<string, RemoteDiagnosticState>;
+  diagnostics?: Partial<Record<RemoteDiagnosticType, RemoteDiagnosticState>>;
 }
 
 /**
@@ -540,7 +585,7 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.id}.
    */
   id: string;
-  /* @conditional-compile-remove(teams-identity-support) */
+
   /**
    * Type of the call.
    */
@@ -625,6 +670,7 @@ export interface CallState {
   /* @conditional-compile-remove(together-mode) */
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature}.
+   * @beta
    */
   togetherMode: TogetherModeCallFeatureState;
   /**
@@ -962,7 +1008,6 @@ export interface CallClientState {
    * be used as the caller id in the PSTN call.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
   /**
    * state to track the environment that the stateful client was made in is supported
    */
@@ -1052,7 +1097,7 @@ export type CallErrorTarget =
   | 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
+  | 'CallClient.getEnvironmentInfo'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'
@@ -1063,13 +1108,13 @@ export type CallErrorTarget =
   | 'DeviceManager.selectSpeaker'
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
+  | 'TeamsCall.addParticipant'
   | 'VideoEffectsFeature.startEffects'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
-  | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers'
+  | 'Call.mutedByOthers'
   | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 
@@ -1119,12 +1164,20 @@ export interface DiagnosticsCallFeatureState {
 
 /* @conditional-compile-remove(remote-ufd) */
 /**
+ * All type names for {@link @azure/communication-calling#RemoteDiagnosticState}.
+ *
+ * @beta
+ */
+export type RemoteDiagnosticType = NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+
+/* @conditional-compile-remove(remote-ufd) */
+/**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
  *
  * @beta
  */
 export declare type RemoteDiagnosticState = {
-  readonly diagnostic: NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+  readonly diagnostic: RemoteDiagnosticType;
   readonly value: DiagnosticQuality | DiagnosticFlag;
   readonly valueType: DiagnosticValueType;
 };

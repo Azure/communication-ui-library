@@ -150,7 +150,7 @@ const createCompositeHandlers = memoizeOne(
       },
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission: async (constrain) => {
-        return adapter.askDevicePermission(constrain);
+        await adapter.askDevicePermission(constrain);
       },
 
       onRemoveVideoBackgroundEffects: async () => {
@@ -173,11 +173,10 @@ const createCompositeHandlers = memoizeOne(
         return await adapter.startVideoBackgroundEffect(replacementConfig);
       },
 
-      /* @conditional-compile-remove(DNS) */
       onStartNoiseSuppressionEffect: async () => {
         return await adapter.startNoiseSuppressionEffect();
       },
-      /* @conditional-compile-remove(DNS) */
+
       onStopNoiseSuppressionEffect: async () => {
         return await adapter.stopNoiseSuppressionEffect();
       },
@@ -224,13 +223,27 @@ const createCompositeHandlers = memoizeOne(
             await adapter.stopSpotlight(userIds);
           }
         : undefined,
-      /* @conditional-compile-remove(soft-mute) */
       onMuteParticipant: async (userId: string): Promise<void> => {
         await adapter.muteParticipant(userId);
       },
-      /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants: async (): Promise<void> => {
         await adapter.muteAllRemoteParticipants();
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onCreateTogetherModeStreamView: async (options) => {
+        return await adapter.createTogetherModeStreamViews(options);
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onStartTogetherMode: async () => {
+        return await adapter.startTogetherMode();
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onSetTogetherModeSceneSize: (width: number, height: number) => {
+        return adapter.setTogetherModeSceneSize(width, height);
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onDisposeTogetherModeStreamViews: async () => {
+        return await adapter.disposeTogetherModeStreamViews();
       }
     };
   }

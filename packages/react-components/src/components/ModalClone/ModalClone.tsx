@@ -47,6 +47,7 @@ import { useWindow } from '@fluentui/react-window-provider';
 export interface _ExtendedIModalProps extends IModalProps {
   minDragPosition?: _ICoordinates;
   maxDragPosition?: _ICoordinates;
+  dataUiId?: string;
 }
 
 const animationDuration = AnimationVariables.durationValue2;
@@ -142,7 +143,8 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
       dragOptions,
       onDismissed,
       minDragPosition,
-      maxDragPosition
+      maxDragPosition,
+      dataUiId
     } = props;
 
     const rootRef = React.useRef<HTMLDivElement>(null);
@@ -444,8 +446,9 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
         firstFocusableSelector={firstFocusableSelector}
         focusPreviouslyFocusedInnerElement
         onBlur={internalState.isInKeyboardMoveMode ? handleExitKeyboardMoveMode : undefined}
-        data-ui-id={props['data-ui-id' as keyof _ExtendedIModalProps]}
+        data-ui-id={dataUiId}
         // enableAriaHiddenSiblings is handled by the Popup
+        {...(props.focusTrapZoneProps ?? {})}
       >
         {dragOptions && internalState.isInKeyboardMoveMode && (
           <div className={classNames.keyboardMoveIconContainer}>
@@ -872,7 +875,7 @@ class DraggableZone extends React.Component<IDraggableZoneProps, IDraggableZoneS
     }
 
     for (let i = 0; i < touchList.length; i++) {
-      if (touchList[i].identifier === this._touchId) {
+      if (touchList[i]?.identifier === this._touchId) {
         return touchList[i];
       }
     }

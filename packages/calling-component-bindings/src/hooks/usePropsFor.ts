@@ -18,7 +18,7 @@ import { Dialpad } from '@internal/react-components';
 
 import { HoldButton } from '@internal/react-components';
 import { RaiseHandButton } from '@internal/react-components';
-import { raiseHandButtonSelector } from '../callControlSelectors';
+import { RaiseHandButtonSelector, raiseHandButtonSelector } from '../callControlSelectors';
 import {
   CameraButtonSelector,
   cameraButtonSelector,
@@ -122,7 +122,11 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
                           ? NotificationStackSelector
                           : AreEqual<Component, typeof IncomingCallStack> extends true
                             ? IncomingCallStackSelector
-                            : undefined;
+                            : AreEqual<Component, typeof ReactionButton> extends true
+                              ? RaiseHandButtonSelector
+                              : AreEqual<Component, typeof RaiseHandButton> extends true
+                                ? EmptySelector
+                                : undefined;
 
 /**
  * Get the selector for a specified component.

@@ -4,18 +4,8 @@
 import React from 'react';
 import { _AttachmentUploadCards, AttachmentUploadCardsProps } from './AttachmentUploadCards';
 import { render, screen } from '@testing-library/react';
-import { registerIcons } from '@fluentui/react';
 
 describe('AttachmentUploadCards should be rendered properly', () => {
-  beforeEach(() => {
-    registerIcons({
-      icons: {
-        cancelattachmentupload: <></>,
-        genericfile24_svg: <></>
-      }
-    });
-  });
-
   it('should render the component', async () => {
     const props = {
       attachments: [

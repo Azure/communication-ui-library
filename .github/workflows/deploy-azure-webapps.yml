@@ -20,7 +20,7 @@ permissions: read-all
 jobs:
   build-and-deploy-samples:
     name: Build and Deploy samples
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       # Needed for Azure login
       id-token: write
@@ -42,6 +42,12 @@ jobs:
       - name: Install Rush
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
 
+      - name: Inject AAD signout html for sample App
+        run: |
+          node ./common/scripts/inject-signout-html.mjs Calling
+          node ./common/scripts/inject-signout-html.mjs Chat
+          node ./common/scripts/inject-signout-html.mjs CallWithChat
+
       - name: Set commit SHA as environment variable
         run: echo "REACT_APP_COMMIT_SHA=${GITHUB_SHA::7}" >> $GITHUB_ENV
 
@@ -52,7 +58,7 @@ jobs:
         run: rush build
 
       - name: Log in with Azure
-        uses: azure/login@v1
+        uses: azure/login@v2
         with:
           client-id: ${{ secrets.AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.AZURE_TENANT_ID }}
@@ -63,7 +69,7 @@ jobs:
         working-directory: ./samples/Calling
 
       - name: 'Deploy Calling Sample WebApp'
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: acs-ui-dev-web-calling-hero
           package: ./samples/Calling/dist
@@ -73,7 +79,7 @@ jobs:
         working-directory: ./samples/Chat
 
       - name: 'Deploy Chat Sample WebApp'
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: acs-ui-dev-web-chat-hero
           package: ./samples/Chat/dist
@@ -83,13 +89,13 @@ jobs:
         working-directory: ./samples/CallWithChat
 
       - name: 'Deploy CallWithChat Sample WebApp'
-        uses: azure/webapps-deploy@v2
+        uses: azure/webapps-deploy@v3
         with:
           app-name: acs-ui-dev-web-meeting-hero
           package: ./samples/CallWithChat/dist
 
   check_failure:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       issues: write
     needs: [build-and-deploy-samples]

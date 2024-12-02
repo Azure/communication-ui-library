@@ -73,7 +73,7 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
     formFactor = 'default',
     captionsOptions
   } = props;
-  const captionsScrollDivRef = useRef<HTMLDivElement>(null);
+  const captionsScrollDivRef = useRef<HTMLUListElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const theme = useTheme();
 
@@ -113,9 +113,9 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
   return (
     <>
       {startCaptionsInProgress && (
-        <FocusZone as="ul" className={captionsContainerClassName} data-ui-id="captions-banner">
+        <FocusZone className={captionsContainerClassName} data-ui-id="captions-banner">
           {isCaptionsOn && (
-            <div
+            <ul
               ref={captionsScrollDivRef}
               className={
                 captionsOptions?.height === 'full'
@@ -126,12 +126,12 @@ export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
             >
               {captions.map((caption) => {
                 return (
-                  <div key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
+                  <li key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
                     <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
-                  </div>
+                  </li>
                 );
               })}
-            </div>
+            </ul>
           )}
           {!isCaptionsOn && (
             <Stack

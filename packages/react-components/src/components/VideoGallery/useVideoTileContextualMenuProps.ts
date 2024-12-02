@@ -27,7 +27,6 @@ export const useVideoTileContextualMenuProps = (props: {
     stopSpotlightVideoTileMenuLabel?: string;
     stopSpotlightOnSelfVideoTileMenuLabel?: string;
     spotlightLimitReachedMenuTitle?: string;
-    /* @conditional-compile-remove(soft-mute) */
     muteParticipantMenuItemLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
@@ -43,7 +42,6 @@ export const useVideoTileContextualMenuProps = (props: {
   onStopSpotlight?: (userIds: string[]) => void;
   maxParticipantsToSpotlight?: number;
   myUserId?: string;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteParticipant?: (userId: string) => void;
 }): IContextualMenuProps | undefined => {
   const {
@@ -62,7 +60,7 @@ export const useVideoTileContextualMenuProps = (props: {
     onStopSpotlight,
     maxParticipantsToSpotlight,
     myUserId,
-    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant
+    onMuteParticipant
   } = props;
   const scalingMode = useMemo(() => {
     return props.participant.videoStream?.scalingMode;
@@ -70,7 +68,6 @@ export const useVideoTileContextualMenuProps = (props: {
 
   const contextualMenuProps: IContextualMenuProps | undefined = useMemo(() => {
     const items: IContextualMenuItem[] = [];
-    /* @conditional-compile-remove(soft-mute) */
     if (onMuteParticipant && strings?.muteParticipantMenuItemLabel) {
       items.push({
         key: 'mute',
@@ -210,7 +207,7 @@ export const useVideoTileContextualMenuProps = (props: {
       return undefined;
     }
 
-    return { items, styles: {}, calloutProps: { preventDismissOnEvent } };
+    return { items, styles: {}, calloutProps: { preventDismissOnEvent }, shouldFocusOnContainer: false };
   }, [
     scalingMode,
     strings,
@@ -229,8 +226,8 @@ export const useVideoTileContextualMenuProps = (props: {
     onStopSpotlight,
     maxParticipantsToSpotlight,
     myUserId,
-    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
-    /* @conditional-compile-remove(soft-mute) */ participant.isMuted
+    onMuteParticipant,
+    participant.isMuted
   ]);
 
   return contextualMenuProps;

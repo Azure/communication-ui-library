@@ -12,11 +12,8 @@ import type {
   MockRemoteParticipantState,
   MockVideoStreamRendererViewState
 } from '../../../common';
-/* @conditional-compile-remove(teams-identity-support) */
 import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
-
 import type { ParticipantCapabilities } from '@azure/communication-calling';
-
 import { CallState, CapabilitiesFeatureState } from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';
@@ -76,7 +73,7 @@ export function defaultMockCallAdapterState(
     page: callEndReasonSubCode ? 'leftCall' : 'call',
     call: {
       id: 'call1',
-      /* @conditional-compile-remove(teams-identity-support) */
+
       kind: 'Call' as CallKind,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
@@ -95,7 +92,7 @@ export function defaultMockCallAdapterState(
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(together-mode) */
-      togetherMode: { stream: [] },
+      togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
       pptLive: { isActive: false },
       role: role ?? 'Unknown',
       dominantSpeakers: dominantSpeakers,
@@ -238,7 +235,7 @@ export function addVideoStream(
   scalingMode?: 'Stretch' | 'Crop' | 'Fit'
 ): void {
   const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType === 'Video');
-  if (streams.length !== 1) {
+  if (streams.length !== 1 || !streams[0]) {
     throw new Error(`Expected 1 video stream for ${participant.displayName}, got ${streams.length}`);
   }
   addDummyView(streams[0], isReceiving, scalingMode);
@@ -255,7 +252,7 @@ export function addScreenshareStream(
   scalingMode?: 'Stretch' | 'Crop' | 'Fit'
 ): void {
   const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType === 'ScreenSharing');
-  if (streams.length !== 1) {
+  if (streams.length !== 1 || !streams[0]) {
     throw new Error(`Expected 1 screenshare stream for ${participant.displayName}, got ${streams.length}`);
   }
   addDummyView(streams[0], isReceiving, scalingMode);
@@ -390,7 +387,27 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(calling-beta-sdk) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
-  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' }
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  ipAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  ipVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidRemoteParticipantsAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidRemoteParticipantsVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  }
 };
 
 const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
@@ -432,7 +449,27 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(calling-beta-sdk) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
-  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' }
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  ipAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  ipVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidRemoteParticipantsAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidRemoteParticipantsVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  }
 };
 
 const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
@@ -474,7 +511,27 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(calling-beta-sdk) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
-  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' }
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  ipAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  ipVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidRemoteParticipantsAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidRemoteParticipantsVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  }
 };
 
 const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
@@ -516,12 +573,32 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(calling-beta-sdk) */
   startTogetherMode: { isPresent: true, reason: 'Capable' },
   /* @conditional-compile-remove(breakout-rooms) */
-  joinBreakoutRooms: { isPresent: true, reason: 'Capable' }
+  joinBreakoutRooms: { isPresent: true, reason: 'Capable' },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  ipAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  ipVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidRemoteParticipantsAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidRemoteParticipantsVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  }
 };
 
 const defaultEndedCallState: CallState = {
   id: 'call0',
-  /* @conditional-compile-remove(teams-identity-support) */
+
   kind: 'Call' as CallKind,
   callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
   direction: 'Incoming',
@@ -540,7 +617,7 @@ const defaultEndedCallState: CallState = {
   remoteParticipantsEnded: {},
   raiseHand: { raisedHands: [] },
   /* @conditional-compile-remove(together-mode) */
-  togetherMode: { stream: [] },
+  togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
   pptLive: { isActive: false },
   captionsFeature: {
     captions: [],

@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "關閉",
     "videoEffectsPaneTitle": "效果",
     "videoEffectsPaneBackgroundSelectionTitle": "背景",
+    "videoEffectsPaneAriaLabel": "視訊效果​​窗格",
     "configurationPageVideoEffectsButtonLabel": "效果",
     "unableToStartVideoEffect": "無法套用視訊效果。",
     "blurBackgroundEffectButtonLabel": "模糊",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "不會再向會議中的每個人醒目提示此影片。",
       "stopSpotlightConfirmButtonLabel": "停止選為精選",
       "stopSpotlightOnSelfConfirmButtonLabel": "結束精選",
-      "stopSpotlightCancelButtonLabel": "取消"
+      "stopSpotlightCancelButtonLabel": "取消",
+      "closeSpotlightPromptButtonLabel": "關閉"
     },
     "exitSpotlightButtonLabel": "結束精選",
     "exitSpotlightButtonTooltip": "結束精選",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "為我釘選",
     "pinParticipantLimitReachedMenuLabel": "釘選 (已達到限制)",
     "unpinParticipantMenuLabel": "取消釘選",
-    "pinParticipantMenuItemAriaLabel": "釘選",
+    "pinParticipantMenuItemAriaLabel": "為我釘選",
     "unpinParticipantMenuItemAriaLabel": "取消釘選",
     "muteAllMenuLabel": "將所有人設為靜音",
     "muteAllDialogTitle": "將所有人設為靜音?",

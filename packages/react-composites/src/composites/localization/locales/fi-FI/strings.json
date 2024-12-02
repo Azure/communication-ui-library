@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Sulje",
     "videoEffectsPaneTitle": "Tehosteet",
     "videoEffectsPaneBackgroundSelectionTitle": "Tausta",
+    "videoEffectsPaneAriaLabel": "Videotehosteet-ruutu",
     "configurationPageVideoEffectsButtonLabel": "Tehosteet",
     "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu.",
     "blurBackgroundEffectButtonLabel": "Sumenna",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "Videoita ei enää korosteta kaikille kokouksen osallistujille.",
       "stopSpotlightConfirmButtonLabel": "Poista valokeilasta",
       "stopSpotlightOnSelfConfirmButtonLabel": "Valokeila",
-      "stopSpotlightCancelButtonLabel": "Peruuta"
+      "stopSpotlightCancelButtonLabel": "Peruuta",
+      "closeSpotlightPromptButtonLabel": "Sulje"
     },
     "exitSpotlightButtonLabel": "Poistu valokeilasta",
     "exitSpotlightButtonTooltip": "Poistu valokeilasta",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "Kiinnitä minulle",
     "pinParticipantLimitReachedMenuLabel": "Kiinnitä (enimmäisraja saavutettu)",
     "unpinParticipantMenuLabel": "Poista kiinnitys",
-    "pinParticipantMenuItemAriaLabel": "Kiinnitä",
+    "pinParticipantMenuItemAriaLabel": "Kiinnitä minulle",
     "unpinParticipantMenuItemAriaLabel": "Poista kiinnitys",
     "muteAllMenuLabel": "Mykistä kaikki",
     "muteAllDialogTitle": "Mykistetäänkö kaikki?",

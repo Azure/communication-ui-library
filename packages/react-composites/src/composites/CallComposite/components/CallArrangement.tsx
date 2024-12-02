@@ -88,14 +88,13 @@ import {
 } from '../utils/spotlightUtils';
 
 import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(soft-mute) */
 import { useHandlers } from '../hooks/useHandlers';
-/* @conditional-compile-remove(soft-mute) */
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 /* @conditional-compile-remove(breakout-rooms) */
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
+import { FocusableElement } from '../../common/types/FocusableElement';
 
 /**
  * @private
@@ -161,6 +160,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     [theme.palette.neutralLighterAlt]
   );
 
+  const controlBarRef = useRef<FocusableElement>(null);
   const peopleButtonRef = useRef<IButton>(null);
   const cameraButtonRef = useRef<IButton>(null);
 
@@ -221,7 +221,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const locale = useLocale();
   const role = useSelector(getRole);
   const videoGalleryProps = usePropsFor(VideoGallery);
-  /* @conditional-compile-remove(soft-mute) */
   const muteAllHandlers = useHandlers(MoreDrawer);
   const { setPromptProps, setIsPromptOpen, hideSpotlightButtons } = props;
   const {
@@ -229,7 +228,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onStopLocalSpotlight,
     onStartRemoteSpotlight,
     onStopRemoteSpotlight,
-    /* @conditional-compile-remove(soft-mute) */
     onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
@@ -316,7 +314,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   const onMuteParticipantPeoplePaneProps = useMemo(() => {
-    /* @conditional-compile-remove(soft-mute) */
     return {
       onMuteParticipant: capabilities?.muteOthers?.isPresent || role === 'Unknown' ? onMuteParticipant : undefined,
       onMuteAllRemoteParticipants:
@@ -324,13 +321,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           ? muteAllHandlers.onMuteAllRemoteParticipants
           : undefined
     };
-    return {};
-  }, [
-    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
-    /* @conditional-compile-remove(soft-mute) */ role,
-    /* @conditional-compile-remove(soft-mute) */ capabilities?.muteOthers,
-    /* @conditional-compile-remove(soft-mute) */ muteAllHandlers.onMuteAllRemoteParticipants
-  ]);
+  }, [onMuteParticipant, role, capabilities?.muteOthers, muteAllHandlers.onMuteAllRemoteParticipants]);
 
   const spotlightPeoplePaneProps = useMemo(() => {
     return {
@@ -531,6 +522,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               ) : (
                 <CommonCallControlBar
                   {...props.callControlProps}
+                  ref={controlBarRef}
                   callControls={props.callControlProps.options}
                   callAdapter={adapter as CallAdapter}
                   mobileView={props.mobileView}
@@ -622,6 +614,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       isMobile={props.mobileView}
                       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
                       useTeamsCaptions={useTeamsCaptions}
+                      returnFocusRef={controlBarRef}
                     />
                   )}
                 </Stack>

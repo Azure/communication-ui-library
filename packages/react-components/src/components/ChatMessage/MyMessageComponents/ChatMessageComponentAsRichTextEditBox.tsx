@@ -128,7 +128,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return message.content;
   }, [message]);
 
-  const [textValue, setTextValue] = useState<string>(initialContent || '');
+  const [contentValue, setContentValue] = useState<string>(initialContent || '');
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const [contentValueWithInlineImagesOverflow, setContentValueWithInlineImagesOverflow] = useState(false);
 
@@ -145,8 +145,14 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState = useMemo(() => {
-    return getMessageState(textValue, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []);
-  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata, textValue]);
+    // get plain text content from the editor to check if the message is empty
+    // as the content may contain tags even when the content is empty
+    const plainTextContent = editTextFieldRef.current?.getPlainContent() ?? contentValue;
+    return getMessageState(
+      plainTextContent,
+      /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []
+    );
+  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata, contentValue]);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const imageUploadErrorMessage = useMemo(() => {
@@ -159,8 +165,8 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const chatMyMessageStyles = useChatMyMessageStyles();
   const locale = useLocale().strings;
 
-  const setText = useCallback((newValue?: string): void => {
-    setTextValue(newValue ?? '');
+  const setContent = useCallback((newValue?: string): void => {
+    setContentValue(newValue ?? '');
   }, []);
 
   useEffect(() => {
@@ -212,7 +218,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     if (inlineImagesWithProgress && inlineImagesWithProgress.length > 0) {
       const contentWithUpdatedInlineImagesInfo = getContentWithUpdatedInlineImagesInfo(
-        textValue,
+        contentValue,
         inlineImagesWithProgress
       );
       const messageTooLong = isMessageTooLong(contentWithUpdatedInlineImagesInfo.length);
@@ -239,7 +245,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       return;
     }
 
-    let content = textValue;
+    let content = contentValue;
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     content = removeBrokenImageContentAndClearImageSizeStyles(content);
     let initInlineImages: Record<string, string>[] = [];
@@ -258,7 +264,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     inlineImagesWithProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     initialInlineImages,
-    textValue,
+    contentValue,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     strings.imageUploadsPendingError,
     onSubmit,
@@ -278,7 +284,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
             onCancel && onCancel(message.messageId);
           }}
           id={'dismissIconWrapper'}
-          data-testId={strings.editBoxCancelButton}
+          data-testId={'chat-message-rich-text-edit-box-cancel-button'}
         />
         <InputBoxButton
           className={richTextActionButtonsStyle}
@@ -290,7 +296,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
             e.stopPropagation();
           }}
           id={'submitIconWrapper'}
-          data-testId={strings.editBoxSubmitButton}
+          data-testId={'chat-message-rich-text-edit-box-submit-button'}
         />
       </Stack>
     );
@@ -345,10 +351,10 @@ export const ChatMessageComponentAsRichTextEditBox = (
       removedInlineImages?.forEach((removedInlineImage: Record<string, string>) => {
         onRemoveInlineImage && onRemoveInlineImage(removedInlineImage, message.messageId);
       });
-      setText(content);
+      setContent(content);
     },
     [
-      setText,
+      setContent,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ onRemoveInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ message.messageId
     ]
@@ -377,6 +383,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
         <RichTextInputBoxComponent
           placeholderText={strings.editBoxPlaceholderText}
           onChange={onChangeHandler}
+          onEnterKeyDown={onSubmitHandler}
           editorComponentRef={editTextFieldRef}
           initialContent={initialContent}
           strings={richTextLocaleStrings}
