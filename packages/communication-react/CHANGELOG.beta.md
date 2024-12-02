@@ -1,8 +1,47 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 28 Oct 2024 22:53:26 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 02 Dec 2024 20:48:59 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.23.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.23.0-beta.1)
+
+Mon, 02 Dec 2024 20:48:59 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0...1.23.0-beta.1)
+
+### Features
+- TogetherMode APIs Update ([PR #5385](https://github.com/azure/communication-ui-library/pull/5385) by undefined)
+- Included a common util method that set call features renderer info ([PR #5362](https://github.com/azure/communication-ui-library/pull/5362) by nwankwojustin93@gmail.com)
+- Hard mute feature part1 - stateful client changes ([PR #5347](https://github.com/azure/communication-ui-library/pull/5347) by fuyan@microsoft.com)
+- Hard mute part 2 - component binding ([PR #5383](https://github.com/azure/communication-ui-library/pull/5383) by fuyan@microsoft.com)
+- Stream utils implementation for call feature streams. This also included the client state for together mode feature ([PR #5362](https://github.com/azure/communication-ui-library/pull/5362) by undefined)
+- localization string for together mode ([PR #5415](https://github.com/azure/communication-ui-library/pull/5415) by nwankwojustin93@gmail.com)
+- Fix conditional compile ([PR #5419](https://github.com/azure/communication-ui-library/pull/5419) by undefined)
+- Add network signal to selector ([PR #5378](https://github.com/azure/communication-ui-library/pull/5378) by jiangnanhello@live.com)
+- Together Mode APIs ([PR #5385](https://github.com/azure/communication-ui-library/pull/5385) by undefined)
+### Improvements
+- Update `@azure/communication-calling` to 1.31.2-beta.1 and `@azure/communication-calling-effects` to 1.1.2 ([PR #5407](https://github.com/azure/communication-ui-library/pull/5407) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update minimum supported typescript version for node 22 support. ([PR #5399](https://github.com/azure/communication-ui-library/pull/5399) by edwardlee@microsoft.com)
+- Add AAD sign out capability for sample app ([PR #5310](https://github.com/azure/communication-ui-library/pull/5310) by 77021369+jimchou-dev@users.noreply.github.com)
+- Update `@azure/communication-calling-effects` to 1.1.2 ([PR #5407](https://github.com/azure/communication-ui-library/pull/5407) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update @azure/communication-calling to 1.31.2-beta.2 ([PR #5440](https://github.com/azure/communication-ui-library/pull/5440) by 79475487+mgamis-msft@users.noreply.github.com)
+### Bug Fixes
+- Fix configuration page dropdown properties when permissions have been blocked ([PR #5425](https://github.com/azure/communication-ui-library/pull/5425) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix call readiness modal being not dismissable by keyboard ([PR #5421](https://github.com/azure/communication-ui-library/pull/5421) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add Close aria label for spotlight prompt ([PR #5366](https://github.com/azure/communication-ui-library/pull/5366) by edwardlee@microsoft.com)
+- Add Close aria label for spotlight prompt ([PR #5366](https://github.com/azure/communication-ui-library/pull/5366) by edwardlee@microsoft.com)
+- Fix an issue where edited message could be saved without the content and attachments when rich text editor is enabled ([PR #5434](https://github.com/azure/communication-ui-library/pull/5434) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix screenshare tab outline color when presenting ([PR #5431](https://github.com/azure/communication-ui-library/pull/5431) by 2684369+JamesBurnside@users.noreply.github.com)
+- In CallCompsite, return focus to control bar when captions is closed from the captions settings button ([PR #5438](https://github.com/azure/communication-ui-library/pull/5438) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update configuration page local preview to show 'Video is loading' while camera is switching on or switching source. Also disable camera button while swiching source. ([PR #5430](https://github.com/azure/communication-ui-library/pull/5430) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix regression that caused minor inconsistent padding between connecting and call pages in CallComposite ([PR #5423](https://github.com/azure/communication-ui-library/pull/5423) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix console error that requested teams conference details in unsupported calls ([PR #5444](https://github.com/azure/communication-ui-library/pull/5444) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix A11y Properties of Participant List More Options to have aria-expanded, aria-controls and aria-label. Correctly apply focus when the CallComposite people pane is opened when no one else has joined the call. ([PR #5427](https://github.com/azure/communication-ui-library/pull/5427) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update aria-live property of notifications in the notification stack. Update camera button aria-label to indicate loading status to match announcer. ([PR #5428](https://github.com/azure/communication-ui-library/pull/5428) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix bug so onfetchavatarpersonadata now allows returning undefined ([PR #5323](https://github.com/azure/communication-ui-library/pull/5323) by 96077406+carocao-msft@users.noreply.github.com)
+- add aria descriptions to reaction and raise buttons ([PR #5414](https://github.com/azure/communication-ui-library/pull/5414) by dmceachern@microsoft.com)
+- Fix string typo for captions dropdown info. Fix usePropsFor return type for RaiseHandButton. ([PR #5448](https://github.com/azure/communication-ui-library/pull/5448) by 79475487+mgamis-msft@users.noreply.github.com)
+
 
 ## [1.21.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.21.0-beta.1)
 
