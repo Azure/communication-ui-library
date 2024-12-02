@@ -19,7 +19,7 @@ import {
 import { StreamMedia } from '../StreamMedia';
 /* @conditional-compile-remove(together-mode) */
 import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
-import { mergeStyles, Stack } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
 import { togetherModeRootStyle } from '../styles/TogetherMode.styles'; // Ensure this is an object, not a string
 
 /* @conditional-compile-remove(together-mode) */
