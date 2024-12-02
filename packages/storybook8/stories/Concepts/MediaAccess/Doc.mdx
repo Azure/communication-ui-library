@@ -1,0 +1,74 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+import MediaAccessMicCameraCapabilitiesText from '!!raw-loader!./snippets/MediaAccessMicCameraCapabilities.snippet.tsx';
+import MediaAccessRemoteParticipantsText from '!!raw-loader!./snippets/MediaAccessRemoteParticipants.snippet.tsx';
+import CustomMediaAccessCompositeText from '!!raw-loader!./snippets/MediaAccessComposite.snippet.tsx';
+
+<Meta title="Concepts/MediaAccess" />
+
+# Media access
+
+The media access feature in Teams meetings allows the Organizer, Co-organizer, and Presenter to control whether attendees can enable their mic or camera.
+This can be managed through the Teams meeting options “Allow mic/camera for attendees” or on a per-participant basis with the options “Disable mic/camera” and “Enable mic/camera.”
+
+Teams meeting attendees can check their own media access state using the capabilities unMuteMic and turnVideoOn, or view the media states for remote participants.
+
+ACS users must have the Organizer, Co-organizer, or Presenter role to use the media access feature.
+
+The supported scenarios for the media access feature are:
+
+- Teams Interop Meetings
+- Teams Interop Meetings as a Teams user
+- Teams ad-hoc call
+
+Participants can disable/enable audio/video using the contextual menu button on their video gallery tile like shown below:
+
+<img
+  style={{ width: 'auto', height: 'auto' }}
+  src="images/media-access/media-access-disable-mic-camera-video-tile.png"
+/>
+
+Participants can also disable/enable audio/video using the contextual menu button on their participant item in the people pane like
+shown below:
+
+<img
+  style={{ width: 'auto', height: 'auto' }}
+  src="images/media-access/media-access-disable-mic-camera-people-pane.png"
+/>
+
+A local participant with audio or video disabled will see a mic or camera disabled icon on the control bar, notifications that mic and camera have been disabled and will not be able to unmute or turn the video on, as shown below:
+
+<img
+  style={{ width: 'auto', height: 'auto' }}
+  src="images/media-access/media-access-local-participant-mic-camera-disabled.png"
+/>
+
+The concept of the media access feature is the same in Microsoft Teams which you can read
+more about here -
+[Manage attendee audio and video permissions in Microsoft Teams meetings](https://support.microsoft.com/en-us/office/manage-attendee-audio-and-video-permissions-in-microsoft-teams-meetings-f9db15e1-f46f-46da-95c6-34f9f39e671a).
+
+## Listening to local participant unmuteMic and turnVideoOn capabilities changes
+
+You can listen to 'capabilitiesChanged' events on the CallAdapter or CallWithChatAdapter by defining your own
+`capabilitiesChangedListener` callback. The following code snippet shows an example of listening to 'capabilitiesChanged'
+events on the CallAdapter to log the added and removed participants to the browser console. But you can choose to
+do more if you wish.
+
+<Source code={MediaAccessMicCameraCapabilitiesText} />
+
+Note: Assigning a `capabilitiesChangedListener` callback to listen for 'capabilitiesChanged' events will not override the
+behavior of CallComposite and CallWithChatComposite which places spotlighted participants in the main view of
+VideoGallery.
+
+## Get remote participant(s) media access states
+
+<Source code={MediaAccessRemoteParticipantsText} />
+
+## Programatic media access for participants
+
+The CallAdapter and CallWithChatAdapter can also be used to programatically change media access one or more participants using
+the functions `forbidAudio`, `permitAudio`, `forbidVideo`, `permitVideo`, `forbidOthersAudio`, `permitOthersAudio`, `forbidOthersVideo` and `permitOthersVideo`.
+The example below shows a code snippet where a button is added to invoke the `forbidAudio` and `permitAudio` function to change media access state
+for remote participants from an added dropdown that is populated by remote participants in the call.
+
+<Source code={CustomMediaAccessCompositeText} />
