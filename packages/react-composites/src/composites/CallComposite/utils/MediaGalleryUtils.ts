@@ -210,8 +210,6 @@ export const showDtmfDialer = (
         }
       });
     }
-    /* @conditional-compile-remove(dtmf-dialer-on-by-default) */
-    return showDtmfDialer;
   }
   return showDtmfDialer;
 };
