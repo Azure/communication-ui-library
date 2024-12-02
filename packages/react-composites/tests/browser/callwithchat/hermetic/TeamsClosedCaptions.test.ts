@@ -20,7 +20,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: true
       };
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -33,7 +33,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -46,7 +46,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureStateArabic;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -62,7 +62,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -79,7 +79,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false
       };
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -95,7 +95,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await loadCallPage(page, serverUrl, initialState);
@@ -112,7 +112,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
 
@@ -131,7 +131,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
 

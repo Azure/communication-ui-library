@@ -10,10 +10,7 @@ import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/re
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 import { IButton, IContextualMenuProps, IContextualMenuItem } from '@fluentui/react';
 import { useSelector } from '../../hooks/useSelector';
-import { getAlternateCallerId, getRole } from '../../selectors/baseSelectors';
-/* @conditional-compile-remove(soft-mute) */
-import { getRemoteParticipants } from '../../selectors/baseSelectors';
-/* @conditional-compile-remove(soft-mute) */
+import { getAlternateCallerId, getRemoteParticipants, getRole } from '../../selectors/baseSelectors';
 import { Prompt } from '../Prompt';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
@@ -35,9 +32,7 @@ export const usePeoplePane = (props: {
   onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   onStopAllSpotlight?: () => Promise<void>;
   maxParticipantsToSpotlight?: number;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteParticipant?: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants?: () => Promise<void>;
   pinnedParticipants?: string[];
   onPinParticipant?: (userId: string) => void;
@@ -64,13 +59,11 @@ export const usePeoplePane = (props: {
     onStopRemoteSpotlight,
     onStopAllSpotlight,
     maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(soft-mute) */
     onMuteParticipant,
     pinnedParticipants,
     onPinParticipant,
     onUnpinParticipant,
     disablePinMenuItem,
-    /* @conditional-compile-remove(soft-mute) */
     onMuteAllRemoteParticipants
   } = props;
 
@@ -80,11 +73,8 @@ export const usePeoplePane = (props: {
   }, [peopleButtonRef, updateSidePaneRenderer]);
 
   const localeStrings = useLocale().strings.call;
-  /* @conditional-compile-remove(soft-mute) */
   const remoteParticipants = useSelector(getRemoteParticipants);
-  /* @conditional-compile-remove(soft-mute) */
   const [showMuteAllPrompt, setShowMuteAllPrompt] = React.useState(false);
-  /* @conditional-compile-remove(soft-mute) */
   const muteAllPromptLabels = useMemo(
     () => ({
       confirmButtonLabel: localeStrings.muteAllConfirmButtonLabel,
@@ -100,7 +90,6 @@ export const usePeoplePane = (props: {
     ]
   );
 
-  /* @conditional-compile-remove(soft-mute) */
   const onMuteAllPromptConfirm = useCallback(() => {
     onMuteAllRemoteParticipants && onMuteAllRemoteParticipants();
     setShowMuteAllPrompt(false);
@@ -108,7 +97,6 @@ export const usePeoplePane = (props: {
 
   const sidePaneHeaderMenuProps: IContextualMenuProps = useMemo(() => {
     const menuItems: IContextualMenuItem[] = [];
-    /* @conditional-compile-remove(soft-mute) */
     if (onMuteAllRemoteParticipants && remoteParticipants) {
       let isAllMuted = true;
       if (remoteParticipants) {
@@ -152,10 +140,10 @@ export const usePeoplePane = (props: {
     onStopAllSpotlight,
     spotlightedParticipantUserIds,
     localeStrings.stopAllSpotlightMenuLabel,
-    /* @conditional-compile-remove(soft-mute) */ localeStrings.muteAllMenuLabel,
-    /* @conditional-compile-remove(soft-mute) */ onMuteAllRemoteParticipants,
-    /* @conditional-compile-remove(soft-mute) */ setShowMuteAllPrompt,
-    /* @conditional-compile-remove(soft-mute) */ remoteParticipants
+    localeStrings.muteAllMenuLabel,
+    onMuteAllRemoteParticipants,
+    setShowMuteAllPrompt,
+    remoteParticipants
   ]);
 
   const onRenderHeader = useCallback(
@@ -177,10 +165,9 @@ export const usePeoplePane = (props: {
       const isSpotlighted = spotlightedParticipantUserIds?.includes(participantId);
       const isMe = myUserId === participantId;
       isPinned = isSpotlighted ? false : isPinned;
-      /* @conditional-compile-remove(soft-mute) */
       if (onMuteParticipant && !isMe && remoteParticipants && remoteParticipants[participantId]) {
         const participant = remoteParticipants[participantId];
-        const isMuted = participant.isMuted;
+        const isMuted = !!participant?.isMuted;
         _defaultMenuItems.push({
           key: 'mute',
           text: 'Mute',
@@ -300,9 +287,7 @@ export const usePeoplePane = (props: {
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       onFetchParticipantMenuItems,
-      /* @conditional-compile-remove(soft-mute) */
       onMuteParticipant,
-      /* @conditional-compile-remove(soft-mute) */
       remoteParticipants,
       localeStrings.stopSpotlightMenuLabel,
       localeStrings.stopSpotlightOnSelfMenuLabel,
@@ -329,7 +314,6 @@ export const usePeoplePane = (props: {
     return (
       <>
         {
-          /* @conditional-compile-remove(soft-mute) */
           <Prompt
             {...muteAllPromptLabels}
             styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
@@ -363,10 +347,10 @@ export const usePeoplePane = (props: {
     pinnedParticipants,
     role,
     alternateCallerId,
-    /* @conditional-compile-remove(soft-mute) */ showMuteAllPrompt,
-    /* @conditional-compile-remove(soft-mute) */ setShowMuteAllPrompt,
-    /* @conditional-compile-remove(soft-mute) */ muteAllPromptLabels,
-    /* @conditional-compile-remove(soft-mute) */ onMuteAllPromptConfirm
+    showMuteAllPrompt,
+    setShowMuteAllPrompt,
+    muteAllPromptLabels,
+    onMuteAllPromptConfirm
   ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(

@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Sluiten",
     "videoEffectsPaneTitle": "Effecten",
     "videoEffectsPaneBackgroundSelectionTitle": "Achtergrond",
+    "videoEffectsPaneAriaLabel": "Deelvenster video-effectenVideo",
     "configurationPageVideoEffectsButtonLabel": "Effecten",
     "unableToStartVideoEffect": "Kan video-effect niet toepassen.",
     "blurBackgroundEffectButtonLabel": "Vervagen",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "De video's worden niet meer gemarkeerd voor iedereen in de vergadering.",
       "stopSpotlightConfirmButtonLabel": "Spotlighten stoppen",
       "stopSpotlightOnSelfConfirmButtonLabel": "Spotlight afsluiten",
-      "stopSpotlightCancelButtonLabel": "Annuleren"
+      "stopSpotlightCancelButtonLabel": "Annuleren",
+      "closeSpotlightPromptButtonLabel": "Sluiten"
     },
     "exitSpotlightButtonLabel": "Spotlight afsluiten",
     "exitSpotlightButtonTooltip": "Spotlight afsluiten",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "Voor mij vastmaken",
     "pinParticipantLimitReachedMenuLabel": "Pin (limiet bereikt)",
     "unpinParticipantMenuLabel": "Losmaken",
-    "pinParticipantMenuItemAriaLabel": "Vastmaken",
+    "pinParticipantMenuItemAriaLabel": "Voor mij vastmaken",
     "unpinParticipantMenuItemAriaLabel": "Losmaken",
     "muteAllMenuLabel": "Allen dempen",
     "muteAllDialogTitle": "Iedereen dempen?",

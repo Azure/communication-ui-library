@@ -15,7 +15,6 @@ import {
   _isTeamsCall
 } from '@internal/calling-stateful-client';
 import { AcceptedTransfer } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(teams-identity-support) */
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
 import { CallCommon } from '@internal/calling-stateful-client';
 import { _TelemetryImplementationHint } from '@internal/acs-ui-common';
@@ -39,15 +38,11 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
 import { Captions, CaptionsInfo } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
-
-import type { BackgroundBlurConfig, BackgroundReplacementConfig } from '@azure/communication-calling';
-
+import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support)) */
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { Features } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -78,21 +73,18 @@ import { ReactionResources } from '@internal/react-components';
 import { TransferAcceptedListener } from './CallAdapter';
 import { CapabilitiesChangedListener } from './CallAdapter';
 import { SpotlightChangedListener } from './CallAdapter';
-
 import {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from './CallAdapter';
-
 import {
   VideoBackgroundImage,
   VideoBackgroundEffect,
   VideoBackgroundBlurEffect,
   VideoBackgroundReplacementEffect
 } from './CallAdapter';
-/* @conditional-compile-remove(teams-identity-support) */
 import { TeamsCallAdapter } from './CallAdapter';
 import { getCallCompositePage, getLocatorOrTargetCallees, IsCallEndedPage, isCameraOn } from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -107,7 +99,6 @@ import {
   UnknownIdentifier,
   isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
-/* @conditional-compile-remove(teams-identity-support) */
 import { isCommunicationUserIdentifier } from '@azure/communication-common';
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { ParticipantSubscriber } from './ParticipantSubcriber';
@@ -118,12 +109,16 @@ import { CallHandlersOf, createHandlers } from './createHandlers';
 import { createProfileStateModifier, OnFetchProfileCallback } from './OnFetchProfileCallback';
 import { getBackgroundEffectFromSelectedEffect } from '../utils';
 import { getSelectedCameraFromAdapterState } from '../utils';
-import { VideoBackgroundEffectsDependency } from '@internal/calling-component-bindings';
+import {
+  DeepNoiseSuppressionEffectDependency,
+  VideoBackgroundEffectsDependency
+} from '@internal/calling-component-bindings';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 import { CallingSounds } from './CallAdapter';
-/* @conditional-compile-remove(DNS) */
-import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult } from '@internal/react-components';
+
 type CallTypeOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
 /**
@@ -154,12 +149,10 @@ class CallContext {
     options?: {
       maxListeners?: number;
       onFetchProfile?: OnFetchProfileCallback;
-
       videoBackgroundOptions?: {
         videoBackgroundImages?: VideoBackgroundImage[];
         onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
       };
-      /* @conditional-compile-remove(DNS) */
       deepNoiseSuppressionOptions?: {
         onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
         deepNoiseSuppressionOnByDefault?: boolean;
@@ -167,7 +160,6 @@ class CallContext {
       };
       callingSounds?: CallingSounds;
       reactionResources?: ReactionResources;
-
       alternateCallerId?: string;
     },
     targetCallees?: StartCallIdentifier[]
@@ -186,16 +178,12 @@ class CallContext {
       isTeamsMeeting,
       isRoomsCall,
       alternateCallerId: options?.alternateCallerId,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: clientState.environmentInfo,
+      environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
       videoBackgroundImages: options?.videoBackgroundOptions?.videoBackgroundImages,
-
       onResolveVideoEffectDependency: options?.videoBackgroundOptions?.onResolveDependency,
-      /* @conditional-compile-remove(DNS) */
       onResolveDeepNoiseSuppressionDependency: options?.deepNoiseSuppressionOptions?.onResolveDependency,
-      /* @conditional-compile-remove(DNS) */
       deepNoiseSuppressionOnByDefault: options?.deepNoiseSuppressionOptions?.deepNoiseSuppressionOnByDefault ?? true,
-      /* @conditional-compile-remove(DNS) */
       hideDeepNoiseSuppressionButton: options?.deepNoiseSuppressionOptions?.hideDeepNoiseSuppressionButton ?? false,
       selectedVideoBackgroundEffect: undefined,
       cameraStatus: undefined,
@@ -355,7 +343,7 @@ const findLatestEndedCall = (calls: { [key: string]: CallState }): CallState | u
   }
   let latestCall = callStates[0];
   for (const call of callStates.slice(1)) {
-    if ((call.endTime?.getTime() ?? 0) > (latestCall.endTime?.getTime() ?? 0)) {
+    if ((call.endTime?.getTime() ?? 0) > (latestCall?.endTime?.getTime() ?? 0)) {
       latestCall = call;
     }
   }
@@ -371,7 +359,7 @@ const findLatestAcceptedTransfer = (acceptedTransfers: {
   }
   let latestAcceptedTransfer = acceptedTransferValues[0];
   for (const acceptedTransfer of acceptedTransferValues.slice(1)) {
-    if ((acceptedTransfer.timestamp?.getTime() ?? 0) > (latestAcceptedTransfer.timestamp?.getTime() ?? 0)) {
+    if ((acceptedTransfer.timestamp?.getTime() ?? 0) > (latestAcceptedTransfer?.timestamp?.getTime() ?? 0)) {
       latestAcceptedTransfer = acceptedTransfer;
     }
   }
@@ -405,9 +393,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private onClientStateChange: (clientState: CallClientState) => void;
   /* @conditional-compile-remove(breakout-rooms) */
   private originCall: CallCommon | undefined;
-
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-  /* @conditional-compile-remove(DNS) */
   private onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 
   private get call(): CallCommon | undefined {
@@ -462,7 +448,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
     this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency;
-    /* @conditional-compile-remove(DNS) */
     this.onResolveDeepNoiseSuppressionDependency = options?.deepNoiseSuppressionOptions?.onResolveDependency;
 
     this.context = new CallContext(
@@ -511,7 +496,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     this.handlers = createHandlers(callClient, callAgent, deviceManager, undefined, {
       onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency,
-      /* @conditional-compile-remove(DNS) */
       onResolveDeepNoiseSuppressionDependency: this.onResolveDeepNoiseSuppressionDependency
     });
 
@@ -523,36 +507,56 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     if (this.callAgent.kind === 'CallAgent') {
       const onCallsUpdated = (args: { added: Call[]; removed: Call[] }): void => {
-        if (this.call?.id) {
-          const removedCall = args.removed.find((call) => call.id === this.call?.id);
-          if (removedCall) {
-            const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
-            const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
-            const _callAgent = callAgent as CallAgent;
-            const transferCall = _callAgent.calls.find((call: Call) => call.id === latestAcceptedTransfer?.callId);
-            if (transferCall) {
-              this.processNewCall(transferCall);
-            }
-          }
+        if (!this.call?.id) {
+          return;
         }
+
+        const removedCall = args.removed.find((call) => call.id === this.call?.id);
+        if (!removedCall) {
+          return;
+        }
+
+        const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
+        if (!removedCallState) {
+          return;
+        }
+
+        const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
+        const _callAgent = callAgent as CallAgent;
+        const transferCall = _callAgent.calls.find((call: Call) => call.id === latestAcceptedTransfer?.callId);
+        if (!transferCall) {
+          return;
+        }
+
+        this.processNewCall(transferCall);
       };
       (this.callAgent as CallAgent).on('callsUpdated', onCallsUpdated);
     }
-    /* @conditional-compile-remove(teams-identity-support) */
+
     if (this.callAgent.kind === 'TeamsCallAgent') {
       const onTeamsCallsUpdated = (args: { added: TeamsCall[]; removed: TeamsCall[] }): void => {
-        if (this.call?.id) {
-          const removedCall = args.removed.find((call) => call.id === this.call?.id);
-          if (removedCall) {
-            const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
-            const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
-            const _callAgent = callAgent as TeamsCallAgent;
-            const transferCall = _callAgent.calls.find((call: TeamsCall) => call.id === latestAcceptedTransfer?.callId);
-            if (transferCall) {
-              this.processNewCall(transferCall);
-            }
-          }
+        if (!this.call?.id) {
+          return;
         }
+
+        const removedCall = args.removed.find((call) => call.id === this.call?.id);
+        if (!removedCall) {
+          return;
+        }
+
+        const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
+        if (!removedCallState) {
+          return;
+        }
+
+        const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
+        const _callAgent = callAgent as TeamsCallAgent;
+        const transferCall = _callAgent.calls.find((call: TeamsCall) => call.id === latestAcceptedTransfer?.callId);
+        if (!transferCall) {
+          return;
+        }
+
+        this.processNewCall(transferCall);
       };
       (this.callAgent as TeamsCallAgent).on('callsUpdated', onTeamsCallsUpdated);
     }
@@ -595,6 +599,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
+    /* @conditional-compile-remove(together-mode) */
+    this.createTogetherModeStreamViews.bind(this);
+    /* @conditional-compile-remove(together-mode) */
+    this.startTogetherMode.bind(this);
+    /* @conditional-compile-remove(together-mode) */
+    this.setTogetherModeSceneSize.bind(this);
+    /* @conditional-compile-remove(together-mode) */
+    this.disposeTogetherModeStreamViews.bind(this);
     this.disposeScreenShareStreamView.bind(this);
     this.disposeRemoteVideoStreamView.bind(this);
     this.disposeLocalVideoStreamView.bind(this);
@@ -614,17 +626,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.startVideoBackgroundEffect.bind(this);
     this.stopVideoBackgroundEffects.bind(this);
     this.updateBackgroundPickerImages.bind(this);
-    /* @conditional-compile-remove(DNS) */
     this.startNoiseSuppressionEffect.bind(this);
-    /* @conditional-compile-remove(DNS) */
     this.stopNoiseSuppressionEffect.bind(this);
     this.submitSurvey.bind(this);
     this.startSpotlight.bind(this);
     this.stopSpotlight.bind(this);
     this.stopAllSpotlight.bind(this);
-    /* @conditional-compile-remove(soft-mute) */
     this.muteParticipant.bind(this);
-    /* @conditional-compile-remove(soft-mute) */
     this.muteAllRemoteParticipants.bind(this);
   }
 
@@ -664,12 +672,13 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
   }
 
-  public async askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+  public async askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess> {
     const startTime = new Date().getTime();
     return await this.asyncTeeErrorToEventEmitter(async () => {
-      await this.deviceManager.askDevicePermission(constrain);
+      const result = await this.deviceManager.askDevicePermission(constrain);
       const endTime = new Date().getTime();
       compositeLogger.info('time to query askDevicePermissions', endTime - startTime, 'ms');
+      return result;
     });
   }
 
@@ -719,7 +728,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     const isTeamsMeetingId = this.locator ? 'meetingId' in this.locator : false;
     const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
 
-    /* @conditional-compile-remove(teams-identity-support) */
     if (_isTeamsCallAgent(this.callAgent)) {
       if (isTeamsMeeting) {
         return this.callAgent.join(this.locator as TeamsMeetingLinkLocator, {
@@ -796,6 +804,28 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     await this.handlers.onDisposeLocalStreamView();
   }
 
+  /* @conditional-compile-remove(together-mode) */
+  public async createTogetherModeStreamViews(
+    options?: VideoStreamOptions
+  ): Promise<void | TogetherModeStreamViewResult> {
+    return await this.handlers.onCreateTogetherModeStreamView(options);
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public async startTogetherMode(): Promise<void> {
+    return await this.handlers.onStartTogetherMode();
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSceneSize(width: number, height: number): void {
+    return this.handlers.onSetTogetherModeSceneSize(width, height);
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public async disposeTogetherModeStreamViews(): Promise<void> {
+    return await this.handlers.onDisposeTogetherModeStreamViews();
+  }
+
   public async leaveCall(forEveryone?: boolean): Promise<void> {
     if (this.getState().page === 'transferring') {
       const transferCall = this.callAgent.calls.filter(
@@ -807,7 +837,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.unsubscribeCallEvents();
     this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call, {
       onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency,
-      /* @conditional-compile-remove(DNS) */
       onResolveDeepNoiseSuppressionDependency: this.onResolveDeepNoiseSuppressionDependency
     });
     // We set the adapter.call object to undefined immediately when a call is ended.
@@ -952,12 +981,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.context.setSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async startNoiseSuppressionEffect(): Promise<void> {
     await this.handlers.onStartNoiseSuppressionEffect();
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async stopNoiseSuppressionEffect(): Promise<void> {
     await this.handlers.onStopNoiseSuppressionEffect();
   }
@@ -1026,7 +1053,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.context.updateClientState(this.callClient.getState());
     this.handlers = createHandlers(this.callClient, this.callAgent, this.deviceManager, this.call, {
       onResolveVideoBackgroundEffectsDependency: this.onResolveVideoBackgroundEffectsDependency,
-      /* @conditional-compile-remove(DNS) */
       onResolveDeepNoiseSuppressionDependency: this.onResolveDeepNoiseSuppressionDependency
     });
     this.subscribeCallEvents();
@@ -1120,12 +1146,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     return this.handlers.onSubmitSurvey(survey);
   }
 
-  /* @conditional-compile-remove(soft-mute) */
   public async muteParticipant(userId: string): Promise<void> {
     this.handlers.onMuteParticipant(userId);
   }
 
-  /* @conditional-compile-remove(soft-mute) */
   public async muteAllRemoteParticipants(): Promise<void> {
     this.handlers.onMuteAllRemoteParticipants();
   }
@@ -1193,7 +1217,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(soft-mute) */
   on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(breakout-rooms) */
   on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
@@ -1215,15 +1238,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       teamsCaptionsFeature.on('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
       teamsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
     } else {
-      /* @conditional-compile-remove(acs-close-captions) */
       const acsCaptionsFeature = captionsFeature?.captions as Captions;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('CaptionsReceived', this.captionsReceived.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.on('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsFeature?.on('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
@@ -1240,15 +1262,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       teamsCaptionsFeature.off('CaptionLanguageChanged', this.isCaptionLanguageChanged.bind(this));
       teamsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
     } else {
-      /* @conditional-compile-remove(acs-close-captions) */
       const acsCaptionsFeature = captionsFeature?.captions as Captions;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('CaptionsReceived', this.captionsReceived.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('CaptionsActiveChanged', this.isCaptionsActiveChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       acsCaptionsFeature.off('SpokenLanguageChanged', this.isSpokenLanguageChanged.bind(this));
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsFeature?.off('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
@@ -1309,7 +1330,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     });
   };
 
-  /* @conditional-compile-remove(acs-close-captions) */
   private captionsKindChanged(): void {
     const captionsFeature = this.call?.feature(Features.Captions);
     const teamsCaptionsFeature = captionsFeature?.captions as TeamsCaptions;
@@ -1355,24 +1375,19 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   private captionsReceived(captionsInfo: CaptionsInfo): void {
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
 
   private isCaptionsActiveChanged(): void {
-    const captionsFeature = this.call?.feature(Features.Captions).captions as
-      | TeamsCaptions
-      | /* @conditional-compile-remove(acs-close-captions) */ Captions;
+    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions | Captions;
     this.emitter.emit('isCaptionsActiveChanged', {
       isActive: captionsFeature.isCaptionsFeatureActive
     });
   }
 
   private isSpokenLanguageChanged(): void {
-    const captionsFeature = this.call?.feature(Features.Captions).captions as
-      | TeamsCaptions
-      | /* @conditional-compile-remove(acs-close-captions) */ Captions;
+    const captionsFeature = this.call?.feature(Features.Captions).captions as TeamsCaptions | Captions;
     this.emitter.emit('isSpokenLanguageChanged', {
       activeSpokenLanguage: captionsFeature.activeSpokenLanguage
     });
@@ -1451,7 +1466,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private hangupOtherBreakoutRoomCalls(currentBreakoutRoomCallId: string): void {
     // Get origin call id of breakout room call
     const breakoutRoomCallState = this.callClient.getState().calls[currentBreakoutRoomCallId];
-    const originCallId = breakoutRoomCallState.breakoutRooms?.breakoutRoomOriginCallId;
+    const originCallId = breakoutRoomCallState?.breakoutRooms?.breakoutRoomOriginCallId;
 
     // Get other breakout room calls with the same origin call
     const otherBreakoutRoomCallStates = Object.values(this.callClient.getState().calls).filter((callState) => {
@@ -1502,7 +1517,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(soft-mute) */
   off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(breakout-rooms) */
   off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
@@ -1578,10 +1592,8 @@ export type CommonCallAdapterOptions = {
     videoBackgroundImages?: VideoBackgroundImage[];
     onResolveDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   };
-  /* @conditional-compile-remove(DNS) */
   /**
    * `DeepNoiseSuppressionEffect` options to be used for noise suppression.
-   * @beta
    */
   deepNoiseSuppressionOptions?: {
     onResolveDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
@@ -1819,7 +1831,6 @@ export const _createAzureCommunicationCallAdapterInner = async ({
   return adapter;
 };
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * @public
  */
@@ -1864,7 +1875,7 @@ type PartialArgsOutboundType<Adapter> = Adapter extends CallAdapter
 
 type AdapterOf<AdapterKind extends 'AzureCommunication' | 'Teams'> = AdapterKind extends 'AzureCommunication'
   ? CallAdapter
-  : never | /* @conditional-compile-remove(teams-identity-support) */ TeamsCallAdapter;
+  : never | TeamsCallAdapter;
 
 /**
  * @private
@@ -1991,7 +2002,6 @@ function useAzureCommunicationCallAdapterGeneric<
               options
             })) as Adapter;
           } else {
-            /* @conditional-compile-remove(teams-identity-support) */
             newAdapter = (await createTeamsCallAdapter({
               credential,
               locator: locator as TeamsMeetingLinkLocator,
@@ -2086,7 +2096,6 @@ export const useAzureCommunicationCallAdapter = (
   return useAzureCommunicationCallAdapterGeneric(args, 'AzureCommunication', afterCreate, beforeDispose);
 };
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * A custom React hook to simplify the creation of {@link TeamsCallAdapter}.
  *
@@ -2174,8 +2183,6 @@ export async function createAzureCommunicationCallAdapterFromClient(
   if (deviceManager.isSpeakerSelectionAvailable) {
     await deviceManager.getSpeakers();
   }
-  /* @conditional-compile-remove(unsupported-browser) */
-  await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   if (getLocatorOrTargetCallees(locatorOrtargetCallees)) {
     return new AzureCommunicationCallAdapter(
       callClient,
@@ -2195,7 +2202,6 @@ export async function createAzureCommunicationCallAdapterFromClient(
   }
 }
 
-/* @conditional-compile-remove(teams-identity-support) */
 /**
  * Create a {@link TeamsCallAdapter} using the provided {@link StatefulCallClient}.
  *
@@ -2217,8 +2223,6 @@ export const createTeamsCallAdapterFromClient = async (
   if (deviceManager.isSpeakerSelectionAvailable) {
     await deviceManager.getSpeakers();
   }
-  /* @conditional-compile-remove(unsupported-browser) */
-  await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
   if (Array.isArray(locator)) {
     return new AzureCommunicationCallAdapter(callClient, locator, callAgent, deviceManager, options);
   } else {

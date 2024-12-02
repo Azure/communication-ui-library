@@ -20,6 +20,8 @@ import {
   CallFeature
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccessCallFeature, MediaAccessChangedListener, MediaAccess } from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 
 import { VideoEffectsFeature } from '@azure/communication-calling';
@@ -167,6 +169,66 @@ export class MockRaiseHandCallFeatureImpl implements RaiseHandCallFeature {
     /* No state to clean up */
   }
 }
+/* @conditional-compile-remove(media-access) */
+/**
+ * @private
+ */
+export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
+  private mediaAccesses: MediaAccess[] = [];
+  public name = 'MediaAccess';
+  public emitter = new EventEmitter();
+
+  constructor() {
+    this.mediaAccesses = [];
+  }
+  permitAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  permitVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  permitRemoteParticipantsAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidRemoteParticipantsAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  permitRemoteParticipantsVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidRemoteParticipantsVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  getRemoteParticipantsMediaAccess(): MediaAccess[] {
+    return this.mediaAccesses;
+  }
+
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
+    this.emitter.on(event, listener);
+  }
+
+  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
+    this.emitter.off(event, listener);
+  }
+
+  dispose(): void {
+    /* No state to clean up */
+  }
+}
 
 /**
  * @private
@@ -264,7 +326,7 @@ export interface MockCall extends Mutable<Call>, MockEmitter {
 export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
   return addMockEmitter({
     id: mockCallId,
-    /* @conditional-compile-remove(teams-identity-support) */
+
     kind: 'Call',
     info: {
       groupId: 'testGroupId'
@@ -397,7 +459,9 @@ export function createMockApiFeatures(
       ...new StubDiagnosticsCallFeatureImpl(),
       name: 'Default',
       isRecordingActive: false,
-      isTranscriptionActive: false
+      isTranscriptionActive: false,
+      /* @conditional-compile-remove(media-access) */
+      getRemoteParticipantsMediaAccess: () => []
     });
     return generic;
   };
@@ -446,7 +510,21 @@ export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: Devi
         throw new Error('callAgent not set');
       }
       return Promise.resolve(callAgent);
-    }
+    },
+    feature: () => ({
+      getEnvironmentInfo: () =>
+        Promise.resolve({
+          environment: {
+            platform: 'mockPlatform',
+            browser: 'mockBrowser',
+            browserVersion: 'mockBrowserVersion'
+          },
+          isSupportedPlatform: true,
+          isSupportedBrowser: true,
+          isSupportedBrowserVersion: true,
+          isSupportedEnvironment: true
+        })
+    })
   } as unknown as CallClient;
 };
 
@@ -468,7 +546,7 @@ export const createMockCallAgent = (displayName = 'defaultDisplayName'): MockCal
   return addMockEmitter({
     calls: [] as Call[],
     displayName: displayName,
-    /* @conditional-compile-remove(teams-identity-support) */
+
     kind: 'CallAgent',
 
     testHelperPushCall(call: Call): void {

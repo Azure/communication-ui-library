@@ -1,0 +1,17 @@
+import { Canvas, Meta } from '@storybook/blocks';
+import * as TappingInlineImagesStories from './index.stories';
+import MessageThreadWithInlineImageExampleText from '!!raw-loader!./snippets/WithInlineImageMessage.snippet.tsx';
+
+<Meta of={TappingInlineImagesStories} />
+
+## Tapping Inline Images on Messages
+
+This is an example of how to interact with inline images in a message thread.
+
+## Example
+
+<Canvas
+  of={TappingInlineImagesStories.InlineImageDocsOnly}
+  source={{ code: MessageThreadWithInlineImageExampleText }}
+  layout="padded"
+/>

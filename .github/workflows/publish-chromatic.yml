@@ -19,7 +19,7 @@ concurrency:
 jobs:
   chromatic_deployment:
     name: Publish Chromatic Storybook 8
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       packages: write
       pull-requests: write
@@ -47,7 +47,7 @@ jobs:
 
       - name: Publish Chromatic Storybook 8
         id: publish_chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action@v11
         with:
           workingDir: ./packages/storybook8
           buildScriptName: build:dev
@@ -67,11 +67,11 @@ jobs:
 
       - name: Add Storybook URL as Issue Comment
         if: github.event_name == 'pull_request'
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,

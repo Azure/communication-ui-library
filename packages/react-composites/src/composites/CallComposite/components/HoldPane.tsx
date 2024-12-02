@@ -60,7 +60,7 @@ export const HoldPane = (): JSX.Element => {
     <Stack styles={paneStyles}>
       <Stack horizontal styles={holdPaneContentStyles}>
         <Text styles={holdPaneTimerStyles}>{elapsedTime}</Text>
-        <Text styles={holdPaneLabelStyles} role="status" aria-live="assertive">
+        <Text styles={holdPaneLabelStyles} role="alert" aria-live="assertive">
           {strings.holdScreenLabel}
         </Text>
         <PrimaryButton

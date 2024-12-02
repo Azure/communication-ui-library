@@ -72,15 +72,11 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     const activeErrorMessages: ActiveNotification[] = [];
 
     const isSafari = (): boolean => {
-      /* @conditional-compile-remove(calling-environment-info) */
       return environmentInfo?.environment.browser === 'safari';
-      return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
     };
 
     const isMacOS = (): boolean => {
-      /* @conditional-compile-remove(calling-environment-info) */
       return environmentInfo?.environment.platform === 'mac';
-      return false;
     };
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
@@ -184,10 +180,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-
-    /* @conditional-compile-remove(soft-mute) */
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
-
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,
@@ -222,7 +215,12 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     //below is for active notifications
     const activeNotifications: ActiveNotification[] = [];
     if (diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value) {
-      activeNotifications.push({ type: 'speakingWhileMuted', timestamp: new Date(Date.now()), autoDismiss: true });
+      activeNotifications.push({
+        type: 'speakingWhileMuted',
+        timestamp: new Date(Date.now()),
+        autoDismiss: true,
+        ariaLive: 'off' // "You're muted" is too noisy, so we don't want to announce it.
+      });
     }
     /* @conditional-compile-remove(breakout-rooms) */
     if (latestNotifications['assignedBreakoutRoomOpened']) {

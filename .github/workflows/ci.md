@@ -2,7 +2,7 @@
 
 [ci.yml](./ci.yml) contains the [GitHub workflow](https://docs.github.com/en/get-started/getting-started-with-git/git-workflows) definition for presubmit tests in this repository.
 
-All Pull Requests in this repository must pass the checks in this workflow before being merged into the `main` branch. The checks are distributed across several jobs. Each job runs on a seprate build agent. Most of them can run concurrently.
+All Pull Requests in this repository must pass the checks in this workflow before being merged into the `main` branch. The checks are distributed across several jobs. Each job runs on a separate build agent. Most of them can run concurrently.
 
 Many of checks build and test the library code in both the [`beta` and `stable` build flavors](../../docs/references/beta-only-features.md). For such jobs, we use a [job matrix](https://docs.github.com/en/actions/using-jobs/using-a-matrix-for-your-jobs) to run an instance of the job for each build flavor. The following high-level description of the checks calls out which checks are build-flavor aware.
 
@@ -31,13 +31,13 @@ Many of checks build and test the library code in both the [`beta` and `stable` 
   - Run some Playwright smoke tests against the sample application. These tests only sanity test the sample application. They are not as extensive as the browser tests in the job above.
   - Upload any UI snapshot differences as GitHub workflow artifacts
 
-- `build_storybook`: Build and test [storybook](../../packages/storybook/). This job is *not* build flavor aware. Storybook is always built using the `beta` build flavor.
+- `build_storybook`: Build and test [storybook](../../packages/storybook8/). This job is *not* build flavor aware. Storybook is always built using the `beta` build flavor.
   - Run linting tool `eslint`
   - Build storybook using `webpack`.
   - Run unit-tests.
 
 - Informational jobs to track jest tests coverage (`compare_jest_tests_coverage`, `update_jest_coverage_report`): These jobs track the jest tests coverage (lines, functions, statements, branches) for `@azure/communication-react` built in the previous steps. Any differences in the coverage are reported as Pull Request comments, _but do not block Pull Request from being merged_. This jobs are build flavor aware.
 
-- Informational jobs to track sample bundle size (`compare_base_bundle_stats`, `update_base_bundle_report`): These jobs track the expected bundle size of the sample applications built in the previous steps. Any differences in the size are reported as Pull Request comments, _but do not block Pull Request from being merged_. This job is not build flavor aware.
+- Informational jobs to track sample bundle size (`compare_base_bundle_stats`, `update_base_bundle_report`): These jobs track the expected bundle size of the sample applications built in the previous steps. Any differences in the size are reported as Pull Request comments. If the differences are above a threshold, it will block the Pull Request from being merged. Pull Request owners can add a `significant bundle size change` tag to unblock the merge. This job is not build flavor aware.
 
 - `check_failure`: This is a meta-job that only applies to _post-submit_ workflow run (which re-uses the same `ci.yml` definition). It opens a new GitHub issue in the repository if any fundamental step in the jobs above fails on post-submit workflow run, because it indicates a problem with the CI infrastructure or a bug in the product on `main`. This job is not build flavor aware.

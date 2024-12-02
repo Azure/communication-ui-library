@@ -130,6 +130,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
+  const toolbarRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
   const previousThemeDirection = useRef(themeDirection(theme));
@@ -148,6 +149,16 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     // This effect should only run once when the component is unmounted, so we don't need to add any dependencies
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (editor.current) {
+      if (showRichTextEditorFormatting) {
+        toolbarRef.current?.focus();
+      } else {
+        editor.current?.focus();
+      }
+    }
+  }, [showRichTextEditorFormatting]);
 
   useImperativeHandle(ref, () => {
     return {
@@ -290,14 +301,19 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     if (onInsertInlineImage) {
       copyPastePlugin.onInsertInlineImage = (imageAttributes: Record<string, string>) => {
         const { id, src } = imageAttributes;
-        setInlineImageLocalBlobs({ ...inlineImageLocalBlobs, [id]: src });
+        setInlineImageLocalBlobs((prev) => {
+          if (!id || !src) {
+            return prev;
+          }
+          return { ...prev, [id]: src };
+        });
         onInsertInlineImage(imageAttributes);
       };
     } else {
       copyPastePlugin.onInsertInlineImage = undefined;
     }
     undoRedoPlugin.onInsertInlineImage = onInsertInlineImage;
-  }, [copyPastePlugin, inlineImageLocalBlobs, onInsertInlineImage, undoRedoPlugin]);
+  }, [copyPastePlugin, onInsertInlineImage, undoRedoPlugin]);
 
   useEffect(() => {
     undoRedoPlugin.onUpdateContent = () => {
@@ -455,7 +471,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
-      {showRichTextEditorFormatting && toolbar}
+      <div ref={toolbarRef}>{showRichTextEditorFormatting && toolbar}</div>
       <div className={richTextEditorWrapperStyle(theme)}>
         {/* div that is used by Rooster JS as a parent of the editor */}
         <div
@@ -506,7 +522,7 @@ const createEditorInitialModel = (
 
 const setSelectionAfterLastSegment = (model: ReadonlyContentModelBlockGroup, block: ContentModelParagraph): void => {
   //selection marker should have the same format as the last segment if any
-  const format = block.segments.length > 0 ? block.segments[block.segments.length - 1].format : undefined;
+  const format = block.segments.length > 0 ? block.segments[block.segments.length - 1]?.format : undefined;
   const marker = createSelectionMarker(format);
   block.segments.push(marker);
   setSelection(model, marker);

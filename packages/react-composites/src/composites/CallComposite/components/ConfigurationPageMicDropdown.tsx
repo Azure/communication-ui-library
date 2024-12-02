@@ -24,6 +24,7 @@ export interface ConfigurationPageMicDropdownProps {
   /* @conditional-compile-remove(call-readiness) */
   dropdownProps: Partial<_DevicePermissionDropdownProps>;
   onClickEnableDevicePermission?: () => void;
+  ariaLabelledby?: string;
 }
 
 /**
@@ -47,6 +48,7 @@ export const ConfigurationPageMicDropdown = (props: ConfigurationPageMicDropdown
       strings={devicePermissionDropdownStringsMicrophone}
       icon={<CallCompositeIcon iconName="ControlButtonMicOn" style={{ height: '1.25rem', marginRight: '0.625rem' }} />}
       onClick={props.onClickEnableDevicePermission}
+      ariaLabelledby={props.ariaLabelledby}
     />
   );
 

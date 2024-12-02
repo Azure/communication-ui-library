@@ -10,7 +10,6 @@ import {
   RemoteVideoStream as SdkRemoteVideoStream,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { CallState, LocalVideoStreamState, RemoteParticipantState, RemoteVideoStreamState } from './CallClientState';
@@ -66,7 +65,6 @@ interface TestData {
 
 function createMockCall(mockCallId: string): CallState {
   const call: CallState = {
-    /* @conditional-compile-remove(teams-identity-support) */
     kind: 'Call' as CallKind,
     id: mockCallId,
     callerInfo: {} as CallerInfo,
@@ -90,7 +88,7 @@ function createMockCall(mockCallId: string): CallState {
     localRecording: { isLocalRecordingActive: false },
     raiseHand: { raisedHands: [] },
     /* @conditional-compile-remove(together-mode) */
-    togetherMode: { stream: [] },
+    togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },
     screenShareRemoteParticipant: undefined,
@@ -105,7 +103,7 @@ function createMockCall(mockCallId: string): CallState {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false,
-      /* @conditional-compile-remove(acs-close-captions) */
+
       captionsKind: 'Captions'
     },
     transfer: {

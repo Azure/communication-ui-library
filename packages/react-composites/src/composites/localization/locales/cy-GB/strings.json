@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "Cau",
     "videoEffectsPaneTitle": "Effeithiau",
     "videoEffectsPaneBackgroundSelectionTitle": "Cefndir",
+    "videoEffectsPaneAriaLabel": "Cwarel effeithiau fideo",
     "configurationPageVideoEffectsButtonLabel": "Effeithiau",
     "unableToStartVideoEffect": "Does dim modd defnyddio'r effaith fideo.",
     "blurBackgroundEffectButtonLabel": "Pylu",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "Ni fydd y fideos bellach yn cael eu hamlygu i bawb yn y cyfarfod.",
       "stopSpotlightConfirmButtonLabel": "Diffodd y sbotolau",
       "stopSpotlightOnSelfConfirmButtonLabel": "Gadael y sbotolau",
-      "stopSpotlightCancelButtonLabel": "Canslo"
+      "stopSpotlightCancelButtonLabel": "Canslo",
+      "closeSpotlightPromptButtonLabel": "Cau"
     },
     "exitSpotlightButtonLabel": "Gadael y sbotolau",
     "exitSpotlightButtonTooltip": "Gadael y sbotolau",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "Pinio ar fy nghyfer i",
     "pinParticipantLimitReachedMenuLabel": "Pinio (wedi cyrraedd y terfyn)",
     "unpinParticipantMenuLabel": "Dadbinio",
-    "pinParticipantMenuItemAriaLabel": "Pinio",
+    "pinParticipantMenuItemAriaLabel": "Pinio ar fy nghyfer i",
     "unpinParticipantMenuItemAriaLabel": "Dadbinio",
     "muteAllMenuLabel": "Tewi pawb",
     "muteAllDialogTitle": "Tewi pawb?",

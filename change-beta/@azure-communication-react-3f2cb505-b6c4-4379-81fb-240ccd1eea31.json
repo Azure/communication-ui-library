@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "fix",
+  "workstream": "A11y",
+  "comment": "Add Close aria label for spotlight prompt",
+  "packageName": "@azure/communication-react",
+  "email": "edwardlee@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -195,7 +195,6 @@ export interface NotificationStackStrings {
    * Error string letting you know remote participants see a frozen stream for you.
    */
   cameraFrozenForRemoteParticipants?: NotificationStrings;
-
   /**
    * Unable to start effect
    */
@@ -204,7 +203,6 @@ export interface NotificationStackStrings {
    * An error message when starting spotlight while max participants are spotlighted
    */
   startSpotlightWhileMaxParticipantsAreSpotlighted?: NotificationStrings;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Muted by a remote participant message
    */
@@ -316,6 +314,12 @@ export interface ActiveNotification {
    * by the user.
    */
   timestamp?: Date;
+
+  /**
+   * Aria-live property for the notification.
+   * @defaultValue polite
+   */
+  ariaLive?: 'assertive' | 'off' | 'polite';
 }
 
 /**
@@ -394,6 +398,7 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
                   index === maxNotificationsToShow - 1 && activeNotifications.length > maxNotificationsToShow
                 }
                 autoDismiss={notification.autoDismiss}
+                ariaLive={notification.ariaLive}
               />
             </div>
           );

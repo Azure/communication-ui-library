@@ -13,7 +13,7 @@ permissions: read-all
 jobs:
   update_composite_snapshot:
     name: Update all API files
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     strategy:
       matrix:
         include:
@@ -37,10 +37,14 @@ jobs:
           git config user.name "github-actions[bot]"
       # If run from a PR, checkout PR branch and merge in latest changes from main branch
       - name: Checkout PR branch and merge main
+        id: checkout-pr-branch
         if: ${{ github.event_name != 'workflow_dispatch' }}
-        run: |
-          git checkout ${{ github.event.pull_request.head.ref }}
-          git merge origin/main
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+      - name: Merge main into PR branch
+        if: ${{ steps.checkout-pr-branch.outcome == 'success' }}
+        run: git merge origin/main
       # Ensure node version is great enough
       - name: Use Node.js
         uses: actions/setup-node@v4

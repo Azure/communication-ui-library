@@ -54,15 +54,11 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     const activeErrorMessages: ActiveErrorMessage[] = [];
 
     const isSafari = (): boolean => {
-      /* @conditional-compile-remove(calling-environment-info) */
       return environmentInfo?.environment.browser === 'safari';
-      return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
     };
 
     const isMacOS = (): boolean => {
-      /* @conditional-compile-remove(calling-environment-info) */
       return environmentInfo?.environment.platform === 'mac';
-      return false;
     };
 
     if (
@@ -156,10 +152,7 @@ export const errorBarSelector: ErrorBarSelector = createSelector(
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-
-    /* @conditional-compile-remove(soft-mute) */
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
-
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,

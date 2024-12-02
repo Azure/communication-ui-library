@@ -26,6 +26,7 @@
     "dismissSidePaneButtonLabel": "閉じる",
     "videoEffectsPaneTitle": "効果",
     "videoEffectsPaneBackgroundSelectionTitle": "バックグラウンド",
+    "videoEffectsPaneAriaLabel": "ビデオ効果ウィンドウ",
     "configurationPageVideoEffectsButtonLabel": "効果",
     "unableToStartVideoEffect": "ビデオ効果を適用できません。",
     "blurBackgroundEffectButtonLabel": "ぼかし",
@@ -326,7 +327,8 @@
       "stopAllSpotlightText": "ビデオは、会議の全員に対して強調表示されなくなります。",
       "stopSpotlightConfirmButtonLabel": "スポットライトの設定を解除",
       "stopSpotlightOnSelfConfirmButtonLabel": "スポットライトを終了",
-      "stopSpotlightCancelButtonLabel": "キャンセル"
+      "stopSpotlightCancelButtonLabel": "キャンセル",
+      "closeSpotlightPromptButtonLabel": "閉じる"
     },
     "exitSpotlightButtonLabel": "スポットライトを終了",
     "exitSpotlightButtonTooltip": "スポットライトを終了",
@@ -341,7 +343,7 @@
     "pinParticipantMenuLabel": "自分用にピン留め",
     "pinParticipantLimitReachedMenuLabel": "ピン留め (上限に達しました)",
     "unpinParticipantMenuLabel": "ピン留めを外す",
-    "pinParticipantMenuItemAriaLabel": "ピン留めします",
+    "pinParticipantMenuItemAriaLabel": "自分用にピン留め",
     "unpinParticipantMenuItemAriaLabel": "ピン留めを外す",
     "muteAllMenuLabel": "全員をミュート",
     "muteAllDialogTitle": "全員をミュートにしますか?",

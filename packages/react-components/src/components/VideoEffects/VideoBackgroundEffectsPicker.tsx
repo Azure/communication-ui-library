@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IStyle, Label, mergeStyles, Stack } from '@fluentui/react';
-import { useWarnings } from '@fluentui/react-hooks';
+import { FocusZone, IStyle, Label, mergeStyles, Stack } from '@fluentui/react';
+import { useId, useWarnings } from '@fluentui/react-hooks';
 import React from 'react';
 import { chunk } from '../utils';
 import { _VideoEffectsItem, _VideoEffectsItemProps } from './VideoEffectsItem';
@@ -128,44 +128,50 @@ export const _VideoBackgroundEffectsPicker = (props: _VideoBackgroundEffectsPick
   const optionsByRow = itemsPerRow === 'wrap' ? [convertedOptions] : chunk(convertedOptions, itemsPerRow);
 
   // If the final row is not full, fill it with hidden items to ensure layout.
-  const fillCount = itemsPerRow === 'wrap' ? 0 : itemsPerRow - optionsByRow[optionsByRow.length - 1].length;
+  const fillCount = itemsPerRow === 'wrap' ? 0 : itemsPerRow - (optionsByRow[optionsByRow.length - 1]?.length ?? 0);
 
+  const effectsLabelId = useId('effects-radio-label');
   return (
-    <Stack tokens={{ childrenGap: '0.5rem' }}>
-      <Label className={mergeStyles(props.styles?.label)}>{props.label}</Label>
-      {optionsByRow.map((options, rowIndex) => (
-        <Stack
-          className={mergeStyles(props.styles?.rowRoot)}
-          wrap={props.itemsPerRow === 'wrap'}
-          horizontal
-          key={rowIndex}
-          tokens={{ childrenGap: '0.5rem' }}
-          data-ui-id="video-effects-picker-row"
-        >
-          {options.map((option, i) => {
-            if (i === 0 && rowIndex === 0) {
-              return (
-                <_VideoEffectsItem
-                  {...option}
-                  itemKey={option.itemKey}
-                  key={option.itemKey}
-                  componentRef={props.componentRef}
+    <FocusZone>
+      <Stack tokens={{ childrenGap: '0.5rem' }} role="radiogroup" aria-labelledby={effectsLabelId}>
+        <Label id={effectsLabelId} className={mergeStyles(props.styles?.label)}>
+          {props.label}
+        </Label>
+
+        {optionsByRow.map((options, rowIndex) => (
+          <Stack
+            className={mergeStyles(props.styles?.rowRoot)}
+            wrap={props.itemsPerRow === 'wrap'}
+            horizontal
+            key={rowIndex}
+            tokens={{ childrenGap: '0.5rem' }}
+            data-ui-id="video-effects-picker-row"
+          >
+            {options.map((option, i) => {
+              if (i === 0 && rowIndex === 0) {
+                return (
+                  <_VideoEffectsItem
+                    {...option}
+                    itemKey={option.itemKey}
+                    key={option.itemKey}
+                    componentRef={props.componentRef}
+                  />
+                );
+              }
+              return <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} />;
+            })}
+            {fillCount > 0 &&
+              rowIndex === optionsByRow.length - 1 &&
+              Array.from({ length: fillCount }).map((_, index) => (
+                <Stack
+                  key={index}
+                  styles={hiddenVideoEffectsItemContainerStyles}
+                  data-ui-id="video-effects-hidden-item"
                 />
-              );
-            }
-            return <_VideoEffectsItem {...option} itemKey={option.itemKey} key={option.itemKey} />;
-          })}
-          {fillCount > 0 &&
-            rowIndex === optionsByRow.length - 1 &&
-            Array.from({ length: fillCount }).map((_, index) => (
-              <Stack
-                key={index}
-                styles={hiddenVideoEffectsItemContainerStyles}
-                data-ui-id="video-effects-hidden-item"
-              />
-            ))}
-        </Stack>
-      ))}
-    </Stack>
+              ))}
+          </Stack>
+        ))}
+      </Stack>
+    </FocusZone>
   );
 };

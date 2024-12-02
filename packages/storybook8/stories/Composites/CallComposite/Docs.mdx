@@ -1,7 +1,8 @@
-import { MessageBar, Stack, Text } from '@fluentui/react';
+import { Stack, Text } from '@fluentui/react';
 import { Meta, Source, ArgTypes } from '@storybook/blocks';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import { overviewPageImagesStackStyle } from '../../constants';
+import { Note } from '../../utils/Note';
 import * as CallCompositeStories from './index.stories';
 import containerText from '!!raw-loader!./snippets/Container.snippet.tsx';
 import customDataModelExampleContainerText from '!!raw-loader!./snippets/CustomDataModelExampleContainer.snippet.tsx';
@@ -116,9 +117,10 @@ mobile device.
 <CallComposite formFactor="mobile" />
 ```
 
-<MessageBar>
-  Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.
-</MessageBar>
+<Note>
+  {' '}
+  Note: Only Portrait mode is supported when the `formFactor` is set to "mobile". Landscape mode is not supported.{' '}
+</Note>
 
 You can try out the form factor property in the [CallComposite Basic Example](./?path=/story/composites-callcomposite--basic-example).
 
@@ -191,6 +193,84 @@ Typography](https://developer.microsoft.com/fluentui#/styles/web/typography).
 
 Custom icons can be applied to the Composite using `icons` prop exposed by the Composite. The `icons` prop
 accepts an object where you can provide a custom JSX element against an icon name key.
+
+## Handling Call Ended
+
+By default the `CallComposite` shows a `CallEnded` screen when the call ends. However, in your application you will likely want to take some action when the call ends.
+The `CallComposite` adapter emits a `callEnded` event when the call ends. You can listen to this event and
+take appropriate action. For example, you can present new UI or navigate to a different page when the call ends.
+
+```ts
+const handleCallEnded = () => {
+  // Take appropriate action when the call ends
+  window.location.href = '/call-ended';
+};
+
+adapter.on('callEnded', handleCallEnded);
+```
+
+The call may end successfully (e.g., by the user leaving the call) or by something undesired (e.g., being removed from the meeting).
+The `callEndReason` can be used to detect the reason for the call ending, and, if necessary in your application, take appropriate action.
+
+Here is an example of how you could show various UI based on the call end reason:
+
+```tsx
+// Call Ended Reasons the application will opt to handle
+enum CallEndReasons {
+  LEFT_CALL,
+  ACCESS_DENIED,
+  REMOVED_FROM_CALL,
+  BAD_REQUEST
+}
+
+// Convert from raw call end codes and subcodes to the application's CallEndReasons
+// For more details refer to: https://learn.microsoft.com/azure/communication-services/resources/troubleshooting/voice-video-calling/troubleshooting-codes?pivots=callend
+const convertCallEndReason = (callEndedData: CallEndReason | undefined): CallEndReasons => {
+  const ACCESS_DENIED_TEAMS_MEETING_SUB_CODE = 5854;
+  const REMOVED_FROM_CALL_SUB_CODES = [5000, 5300];
+
+  if (callEndedData?.subCode === ACCESS_DENIED_TEAMS_MEETING_SUB_CODE) {
+    return CallEndReasons.ACCESS_DENIED;
+  } else if (callEndedData?.subCode === 4000 && REMOVED_FROM_CALL_SUB_CODES.includes(callEndedData.subCode)) {
+    return CallEndReasons.REMOVED_FROM_CALL;
+  } else if (callEndedData?.code === 400) {
+    return CallEndReasons.BAD_REQUEST;
+  } else {
+    return CallEndReasons.LEFT_CALL;
+  }
+};
+
+const CallApp = (props: {adapter: CallAdapter}) => {
+  const { adapter } = props;
+  const [callEndReason, setCallEndReason] = useState<CallEndReasons | undefined>();
+
+  useEffect(() => {
+    const handleCallEnded = (): void => {
+      const callEndedData = adapter.getState().endedCall?.callEndReason;
+      setCallEndReason(convertCallEndReason(callEndedData));
+    };
+    adapter.on('callEnded', handleCallEnded);
+    return () => {
+      adapter.off('callEnded', handleCallEnded);
+    };
+  }, [adapter, getCallEndReason, setCallEndReason]);
+
+  if (callEndReason === CallEndReasons.ACCESS_DENIED) {
+    return <div>Access Denied</div>;
+  }
+  if (callEndReason === CallEndReasons.REMOVED_FROM_CALL) {
+    return <div>Removed from call</div>;
+  }
+  if (callEndReason === CallEndReasons.BAD_REQUEST) {
+    return <div>Bad Request</div>;
+  }
+  if (callEndReason === CallEndReasons.LEFT_CALL) {
+    return <div>Left call</div>;
+  }
+
+  return <CallComposite adapter={adapter}>
+}
+```
 
 ## Customize Call Controls
 

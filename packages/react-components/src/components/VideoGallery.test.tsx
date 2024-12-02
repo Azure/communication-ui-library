@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { registerIcons } from '@fluentui/react';
 import React from 'react';
 import { _ModalClone } from '.';
 import { VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../types';
@@ -17,21 +16,6 @@ jest.mock('@internal/acs-ui-common', () => {
     __esModule: true,
     ...jest.requireActual('@internal/acs-ui-common')
   };
-});
-
-registerIcons({
-  icons: {
-    horizontalgalleryleftbutton: <></>,
-    horizontalgalleryrightbutton: <></>,
-    videotilemoreoptions: <></>,
-    videotilepinned: <></>,
-    pinparticipant: <></>,
-    unpinparticipant: <></>,
-    videotilescalefit: <></>,
-    videotilescalefill: <></>,
-    verticalgalleryleftbutton: <></>,
-    verticalgalleryrightbutton: <></>
-  }
 });
 
 describe('VideoGallery default layout tests', () => {
@@ -336,14 +320,18 @@ describe('VideoGallery Speaker layout tests', () => {
       })
     );
 
-    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
-    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
+    remoteParticipants.forEach((participant, index) => {
+      participant.displayName = `${participant.displayName} ${index + 1}`;
+    });
+
+    const dominantSpeaker = remoteParticipants[0]?.userId;
+
     const { container } = render(
       <VideoGallery
         layout="speaker"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        dominantSpeakers={[remoteParticipants[0].userId]}
+        dominantSpeakers={dominantSpeaker ? [dominantSpeaker] : undefined}
       />
     );
 
@@ -351,7 +339,7 @@ describe('VideoGallery Speaker layout tests', () => {
     expect(tiles.length).toBe(1);
     expect(
       tiles.some((tile) => {
-        return getDisplayName(tile) === 'Remote Participant1';
+        return getDisplayName(tile) === 'Remote Participant 1';
       })
     ).toBe(true);
   });
@@ -367,14 +355,17 @@ describe('VideoGallery Speaker layout tests', () => {
       })
     );
 
-    remoteParticipants[0].displayName = remoteParticipants[0].displayName + '1';
-    remoteParticipants[1].displayName = remoteParticipants[1].displayName + '2';
+    remoteParticipants.forEach((participant, index) => {
+      participant.displayName = `${participant.displayName} ${index + 1}`;
+    });
+
+    const dominantSpeaker = remoteParticipants[1]?.userId;
     const { container } = render(
       <VideoGallery
         layout="speaker"
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
-        dominantSpeakers={[remoteParticipants[1].userId]}
+        dominantSpeakers={dominantSpeaker ? [dominantSpeaker] : undefined}
       />
     );
 
@@ -382,7 +373,7 @@ describe('VideoGallery Speaker layout tests', () => {
     expect(tiles.length).toBe(1);
     expect(
       tiles.some((tile) => {
-        return getDisplayName(tile) === 'Remote Participant2';
+        return getDisplayName(tile) === 'Remote Participant 2';
       })
     ).toBe(true);
   });
@@ -815,9 +806,9 @@ const getVerticalGallery = (root: Element | null): Element | null =>
 const getTiles = (root: Element | null): Element[] =>
   Array.from(root?.querySelectorAll('[data-ui-id="video-tile"]') ?? []);
 const getGridTiles = (root: Element | null): Element[] => Array.from(getTiles(getGridLayout(root)));
-const tileIsVideo = (tile: Element): boolean => !!tile.querySelector('video');
-const tileIsAudio = (tile: Element): boolean => !tile.querySelector('video');
-const getDisplayName = (root: Element): string | null | undefined => {
+const tileIsVideo = (tile: Element | undefined): boolean => !!tile?.querySelector('video');
+const tileIsAudio = (tile: Element | undefined): boolean => !!tile && !tile.querySelector('video');
+const getDisplayName = (root: Element | undefined): string | null | undefined => {
   return root?.querySelector('[data-ui-id="video-tile-display-name"]')?.textContent;
 };
 

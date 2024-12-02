@@ -24,7 +24,12 @@ import {
   ParticipantListParticipant
 } from '../types';
 import { CustomAvatarOptions } from '../types';
-import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
+import {
+  formatParticipantStateString,
+  ParticipantItem,
+  ParticipantItemStrings,
+  ParticipantItemStyles
+} from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
@@ -98,7 +103,6 @@ export type ParticipantListProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
-  /* @conditional-compile-remove(soft-mute) */
   /** Optional callback to render a context menu to mute a participant */
   onMuteParticipant?: (userId: string) => Promise<void>;
   styles?: ParticipantListStyles;
@@ -206,6 +210,22 @@ const onRenderParticipantDefault = (
           )
       : onRenderAvatar;
 
+  const ariaLabelTemplate =
+    (menuItems && menuItems.length > 0 ? strings?.participantItemWithMoreOptionsAriaLabel : undefined) ??
+    strings?.participantItemAriaLabel;
+  const ariaLabel = _formatString(ariaLabelTemplate ?? '', {
+    displayName: displayName ?? '',
+    connectionState: formatParticipantStateString(callingParticipant, strings) ?? '',
+    mutedState: (callingParticipant.isMuted ? strings?.mutedIconLabel : undefined) ?? '',
+    sharingState: (callingParticipant.isScreenSharing ? strings?.sharingIconLabel : undefined) ?? '',
+    handRaisedState:
+      (callingParticipant.raisedHand?.raisedHandOrderPosition
+        ? _formatString(strings?.handRaisedIconLabel ?? '', {
+            position: callingParticipant.raisedHand?.raisedHandOrderPosition?.toString() ?? ''
+          })
+        : undefined) ?? ''
+  });
+
   return (
     <ParticipantItem
       styles={styles}
@@ -221,6 +241,9 @@ const onRenderParticipantDefault = (
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       participantState={callingParticipant.state}
       ariaLabelledBy={participantAriaLabelledBy}
+      strings={{
+        participantItemAriaLabel: ariaLabel
+      }}
     />
   );
 };

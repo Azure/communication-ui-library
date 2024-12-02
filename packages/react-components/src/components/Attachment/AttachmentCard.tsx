@@ -180,7 +180,7 @@ const MappedMenuItems = (
 ): JSX.Element => {
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
 
-  if (menuActions.length === 0) {
+  if (!menuActions[0]) {
     return <></>;
   }
   return menuActions.length === 1 ? (
@@ -191,7 +191,7 @@ const MappedMenuItems = (
         icon={menuActions[0].icon}
         onClick={() => {
           try {
-            menuActions[0].onClick(attachment);
+            menuActions[0]?.onClick(attachment);
           } catch (e) {
             handleOnClickError?.((e as Error).message);
           }

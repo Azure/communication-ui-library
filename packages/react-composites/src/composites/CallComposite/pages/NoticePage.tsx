@@ -49,7 +49,7 @@ export function NoticePage(props: NoticePageProps): JSX.Element {
     >
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         {props.iconName && <CallCompositeIcon iconName={props.iconName} />}
-        <Text className={mergeStyles(titleStyles)} aria-live="assertive">
+        <Text className={mergeStyles(titleStyles)} aria-live="assertive" role="alert">
           {props.title}
         </Text>
         <Text className={mergeStyles(moreDetailsStyles)} aria-live="assertive">
