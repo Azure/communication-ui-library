@@ -1,19 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { _CaptionsBanner } from '@internal/react-components';
+import { CaptionsBanner } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
 import { hiddenControl } from '../../controlsUtils';
 
 export { CaptionsBanner } from './CaptionsBanner.story';
 
 const meta: Meta = {
-  title: 'Components/Internal/Captions Banner',
-  component: _CaptionsBanner,
+  title: 'Components/Captions Banner',
+  component: CaptionsBanner,
   argTypes: {
     captions: hiddenControl,
+    isCaptionsOn: hiddenControl,
+    startCaptionsInProgress: hiddenControl,
+    strings: hiddenControl,
     onRenderAvatar: hiddenControl,
-    isCaptionsOn: hiddenControl
+    formFactor: hiddenControl,
+    captionsOptions: hiddenControl
   }
 };
 

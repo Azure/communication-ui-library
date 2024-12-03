@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { PrimaryButton, Stack } from '@fluentui/react';
-import { _CaptionsInfo, _CaptionsBanner } from '@internal/react-components';
+import { CaptionsInformation, CaptionsBanner as CaptionsBannerComponent } from '@azure/communication-react';
 import React, { useState } from 'react';
 import {
   GenerateMockNewCaption,
@@ -12,7 +12,7 @@ import {
 } from './mockCaptions';
 
 const CaptionsBannerStory = (): JSX.Element => {
-  const [captions, setCaptions] = useState<_CaptionsInfo[]>(GenerateMockNewCaptions());
+  const [captions, setCaptions] = useState<CaptionsInformation[]>(GenerateMockNewCaptions());
 
   const addNewCaption = (): void => {
     setCaptions([...captions, GenerateMockNewCaption()]);
@@ -41,7 +41,7 @@ const CaptionsBannerStory = (): JSX.Element => {
     <Stack verticalFill tokens={{ childrenGap: '5rem' }} style={containerStyles} verticalAlign="space-between">
       <Stack style={{ border: 'solid grey 0.1rem' }} horizontalAlign="center">
         <Stack.Item style={{ width: '60%' }}>
-          <_CaptionsBanner captions={captions} isCaptionsOn startCaptionsInProgress />
+          <CaptionsBannerComponent captions={captions} isCaptionsOn startCaptionsInProgress />
         </Stack.Item>
       </Stack>
 
