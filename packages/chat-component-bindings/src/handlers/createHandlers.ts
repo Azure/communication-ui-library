@@ -84,7 +84,7 @@ export const createDefaultChatHandlers = memoizeOne(
           options.attachments[0] &&
           !(options.attachments[0] as ChatAttachment).attachmentType;
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
-        const hasImages = options && imageAttachments && imageAttachments.length > 0;
+        const hasImages = imageAttachments && imageAttachments.length > 0;
 
         /* @conditional-compile-remove(file-sharing-acs) */
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -96,11 +96,11 @@ export const createDefaultChatHandlers = memoizeOne(
             metadata: {
               ...options?.metadata,
               /* @conditional-compile-remove(file-sharing-acs) */
-              fileSharingMetadata: JSON.stringify(options.attachments)
+              fileSharingMetadata: JSON.stringify(options?.attachments)
             },
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
             attachments: imageAttachments,
-            type: options.type
+            type: options?.type
           };
           await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
           return;

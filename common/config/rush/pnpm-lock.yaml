@@ -7229,10 +7229,8 @@ packages:
       ajv: 8.13.0
     dev: false
 
-  /ajv-formats@2.1.1(ajv@8.17.1):
+  /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependencies:
-      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -15585,7 +15583,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.17.1)
     dev: false
 
@@ -18610,7 +18608,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-vT19sXxmyhNshyNyAsfIyGE/6pZZBe+rwDI7fhwu340VPQH81e5DjE4ifVa0shj//c+DcTEQM0wQaE79V8e4Iw==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-OJM2an93GfW/WW2ikU1gdxa/QjTHit000EpWkvwczNU+gY2+oXmsW+HvbjAyIWksq8ynYDB2Sj0P5lr0HIt4tg==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -18619,8 +18617,10 @@ packages:
       '@azure/core-paging': 1.6.2
       '@babel/cli': 7.25.9(@babel/core@7.26.0)
       '@babel/core': 7.26.0
+      '@testing-library/react': 16.0.1(@testing-library/dom@9.3.4)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
+      '@types/uuid': 9.0.8
       copyfiles: 2.4.1
       cpy-cli: 5.0.0
       cross-env: 7.0.3
@@ -18640,12 +18640,16 @@ packages:
       rimraf: 2.7.1
       rollup: 4.27.3
       typescript: 5.4.5
+      uuid: 9.0.1
     transitivePeerDependencies:
+      - '@testing-library/dom'
       - '@types/eslint'
       - '@types/node'
+      - '@types/react-dom'
       - babel-plugin-macros
       - encoding
       - node-notifier
+      - react-dom
       - supports-color
       - ts-node
     dev: false
