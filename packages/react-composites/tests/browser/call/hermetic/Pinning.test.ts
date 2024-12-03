@@ -30,7 +30,9 @@ const displayNames = [
 test.describe('PIN - Pinning tests', async () => {
   test('Pin and unpin remote participants via video tile', async ({ page, serverUrl }, testInfo) => {
     const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
-    addVideoStream(participants[1], true);
+    if (participants[1]) {
+      addVideoStream(participants[1], true);
+    }
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
@@ -80,7 +82,9 @@ test.describe('PIN - Pinning tests', async () => {
 
   test('Pin and unpin remote participants via participant item', async ({ page, serverUrl }, testInfo) => {
     const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
-    addVideoStream(participants[1], true);
+    if (participants[1]) {
+      addVideoStream(participants[1], true);
+    }
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
@@ -130,7 +134,9 @@ test.describe('PIN - Pinning tests', async () => {
 
   test('Pin max remote participants', async ({ page, serverUrl }, testInfo) => {
     const participants = displayNames.map((name) => defaultMockRemoteParticipant(name));
-    addVideoStream(participants[1], true);
+    if (participants[1]) {
+      addVideoStream(participants[1], true);
+    }
     const initialState = defaultMockCallAdapterState(participants);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));

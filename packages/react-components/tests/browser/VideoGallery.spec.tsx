@@ -52,11 +52,11 @@ test.describe('VGL - VideoGallery tests', () => {
       })
     );
     // Assign video stream to some participants
-    remoteParticipants.find((p) => p.userId === '2')!.videoStream = { isAvailable: true };
-    remoteParticipants.find((p) => p.userId === '3')!.videoStream = { isAvailable: true };
-    remoteParticipants.find((p) => p.userId === '5')!.videoStream = { isAvailable: true };
-    remoteParticipants.find((p) => p.userId === '7')!.videoStream = { isAvailable: true };
-    remoteParticipants.find((p) => p.userId === '9')!.videoStream = { isAvailable: true };
+    remoteParticipants[1].videoStream = { isAvailable: true };
+    remoteParticipants[2].videoStream = { isAvailable: true };
+    remoteParticipants[4].videoStream = { isAvailable: true };
+    remoteParticipants[6].videoStream = { isAvailable: true };
+    remoteParticipants[8].videoStream = { isAvailable: true };
 
     const component = await mount(
       <Stack styles={{ root: { width: '100vw', height: '100vh' } }}>
@@ -134,8 +134,7 @@ test.describe('VGL - VideoGallery tests', () => {
       </Stack>
     );
     await expect(component).toHaveScreenshot('VGL-4-1-videogallery-before-spotlight.png');
-
-    remoteParticipants.find((p) => p.userId === '8')!.spotlight = { spotlightedOrderPosition: 1 };
+    remoteParticipants[7].spotlight = { spotlightedOrderPosition: 1 };
     component.update(
       <Stack styles={{ root: { width: '100vw', height: '100vh' } }}>
         <VideoGallery
