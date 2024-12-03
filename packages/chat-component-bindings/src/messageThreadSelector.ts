@@ -171,7 +171,7 @@ const generateImageAttachmentImgHtml = (message: ChatMessageWithStatus, attachme
     const src = getResourceSourceUrl(resourceCache);
     // if in error state
     if (src === undefined) {
-      return `\r\n<p>${getBrokenImageViewNode()}</p>`;
+      return `\r\n<p>${getBrokenImageViewNode().outerHTML}</p>`;
     }
     // else in loading or success state
     return `\r\n<p><img alt="image" src="${src}" itemscope="${contentType}" id="${attachment.id}"></p>`;

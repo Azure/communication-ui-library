@@ -12,7 +12,7 @@ export const getImageAttachmentsFromHTMLContent = (content: string): ChatAttachm
   let imageAttachments: ChatAttachment[] | undefined;
   // get image attachments from content,
   // for the editing scenario, this includes the ones before editing and the newly added ones during editing.
-  const document = new DOMParser().parseFromString(content ?? '', 'text/html');
+  const document = new DOMParser().parseFromString(content, 'text/html');
   document.querySelectorAll('img').forEach((img) => {
     if (imageAttachments === undefined) {
       imageAttachments = [];

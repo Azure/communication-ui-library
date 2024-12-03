@@ -7,12 +7,6 @@ import { Message } from '@internal/react-components';
  * @private
  */
 export const compareMessages = (firstMessage: Message, secondMessage: Message): number => {
-  if (firstMessage.createdOn === undefined) {
-    return 1;
-  }
-  if (secondMessage.createdOn === undefined) {
-    return -1;
-  }
   const firstDate = new Date(firstMessage.createdOn).getTime();
   const secondDate = new Date(secondMessage.createdOn).getTime();
   // Workaround to get a stable order of message before we can get sequenceId from chat service.
