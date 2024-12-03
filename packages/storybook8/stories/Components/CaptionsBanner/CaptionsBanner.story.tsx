@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { PrimaryButton, Stack } from '@fluentui/react';
 import { CaptionsInformation, CaptionsBanner as CaptionsBannerComponent } from '@azure/communication-react';
+import { PrimaryButton, Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
   GenerateMockNewCaption,
