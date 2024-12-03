@@ -313,6 +313,26 @@ export interface VideoGalleryProps {
    * This callback is to mute a remote participant
    */
   onMuteParticipant?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * This callback is to forbid audio for a remote participant
+   */
+  onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * This callback is to permit audio for a remote participant
+   */
+  onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * This callback is to forbid video for a remote participant
+   */
+  onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * This callback is to permit video for a remote participant
+   */
+  onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
 }
 
 /**
@@ -397,7 +417,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxParticipantsToSpotlight,
     reactionResources,
     videoTilesOptions,
-    onMuteParticipant
+    onMuteParticipant,
+    /* @conditional-compile-remove(media-access) */
+    onForbidParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
+    onPermitParticipantAudio,
+    /* @conditional-compile-remove(media-access) */
+    onForbidParticipantVideo,
+    /* @conditional-compile-remove(media-access) */
+    onPermitParticipantVideo
   } = props;
 
   const ids = useIdentifiers();
@@ -517,6 +545,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           reactionResources={reactionResources}
           participantsCount={remoteParticipants.length + 1}
           isScreenSharingOn={localParticipant.isScreenSharingOn}
+          /* @conditional-compile-remove(media-access) */
+          mediaAccess={localParticipant.mediaAccess}
         />
       </Stack>
     );
@@ -647,32 +677,48 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           reactionResources={reactionResources}
           onMuteParticipant={onMuteParticipant}
+          /* @conditional-compile-remove(media-access) */
+          onForbidParticipantAudio={onForbidParticipantAudio}
+          /* @conditional-compile-remove(media-access) */
+          onPermitParticipantAudio={onPermitParticipantAudio}
+          /* @conditional-compile-remove(media-access) */
+          onForbidParticipantVideo={onForbidParticipantVideo}
+          /* @conditional-compile-remove(media-access) */
+          onPermitParticipantVideo={onPermitParticipantVideo}
         />
       );
     },
     [
+      selectedScalingModeState,
+      pinnedParticipants,
+      videoTilesOptions?.alwaysShowLabelBackground,
       onCreateRemoteStreamView,
       onDisposeRemoteVideoStreamView,
-      remoteVideoViewOptions,
-      localParticipant,
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      drawerMenuHostId,
+      localParticipant.userId,
       remoteVideoTileMenu,
-      selectedScalingModeState,
-      pinnedParticipants,
+      drawerMenuHostId,
       onPinParticipant,
       onUnpinParticipant,
-      toggleAnnouncerString,
       onUpdateScalingMode,
+      toggleAnnouncerString,
       spotlightedParticipants,
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       maxParticipantsToSpotlight,
-      onMuteParticipant,
       reactionResources,
-      videoTilesOptions
+      onMuteParticipant,
+      /* @conditional-compile-remove(media-access) */
+      onForbidParticipantAudio,
+      /* @conditional-compile-remove(media-access) */
+      onPermitParticipantAudio,
+      /* @conditional-compile-remove(media-access) */
+      onForbidParticipantVideo,
+      /* @conditional-compile-remove(media-access) */
+      onPermitParticipantVideo,
+      remoteVideoViewOptions
     ]
   );
 

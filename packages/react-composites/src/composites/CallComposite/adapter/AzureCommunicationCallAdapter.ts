@@ -73,6 +73,10 @@ import { ReactionResources } from '@internal/react-components';
 import { TransferAcceptedListener } from './CallAdapter';
 import { CapabilitiesChangedListener } from './CallAdapter';
 import { SpotlightChangedListener } from './CallAdapter';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccessChangedListener, MeetingMediaAccessChangedListener } from './CallAdapter';
+/* @conditional-compile-remove(media-access) */
+import type { MediaAccessChangedEvent, MeetingMediaAccessChangedEvent } from '@azure/communication-calling';
 import {
   CaptionsReceivedListener,
   IsCaptionsActiveChangedListener,
@@ -634,6 +638,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.stopAllSpotlight.bind(this);
     this.muteParticipant.bind(this);
     this.muteAllRemoteParticipants.bind(this);
+    /* @conditional-compile-remove(media-access) */
+    this.forbidOthersAudio.bind(this);
+    /* @conditional-compile-remove(media-access) */
+    this.permitOthersAudio.bind(this);
+    /* @conditional-compile-remove(media-access) */
+    this.forbidOthersAudio.bind(this);
+    /* @conditional-compile-remove(media-access) */
+    this.permitOthersAudio.bind(this);
   }
 
   public dispose(): void {
@@ -1166,6 +1178,40 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onStopAllSpotlight();
   }
 
+  /* @conditional-compile-remove(media-access) */
+  public async forbidParticipantAudio(userIds: string[]): Promise<void> {
+    this.handlers.onForbidParticipantAudio?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitParticipantAudio(userIds: string[]): Promise<void> {
+    this.handlers.onPermitParticipantAudio?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async forbidOthersAudio(): Promise<void> {
+    this.handlers.onForbidOthersAudio?.();
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitOthersAudio(): Promise<void> {
+    this.handlers.onPermitOthersAudio?.();
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async forbidParticipantVideo(userIds: string[]): Promise<void> {
+    this.handlers.onForbidParticipantVideo?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitParticipantVideo(userIds: string[]): Promise<void> {
+    this.handlers.onPermitParticipantVideo?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async forbidOthersVideo(): Promise<void> {
+    this.handlers.onForbidOthersVideo?.();
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitOthersVideo(): Promise<void> {
+    this.handlers.onPermitOthersVideo?.();
+  }
+
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
     if (!this.originCall) {
@@ -1220,6 +1266,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(breakout-rooms) */
   on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public on(event: string, listener: (e: any) => void): void {
@@ -1273,6 +1323,22 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       captionsFeature?.off('CaptionsKindChanged', this.captionsKindChanged.bind(this));
     }
   }
+  /* @conditional-compile-remove(media-access) */
+  private subscribeToMediaAccessEvents(): void {
+    const mediaAccessFeature = this.call?.feature(Features.MediaAccess);
+    if (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting) {
+      mediaAccessFeature?.on('mediaAccessChanged', this.mediaAccessChanged.bind(this));
+      mediaAccessFeature?.on('meetingMediaAccessChanged', this.meetingMediaAccessChanged.bind(this));
+    }
+  }
+  /* @conditional-compile-remove(media-access) */
+  private unsubscribeFromMediaAccessEvents(): void {
+    const mediaAccessFeature = this.call?.feature(Features.MediaAccess);
+    if (this.context.getState().isTeamsCall || this.context.getState().isTeamsMeeting) {
+      mediaAccessFeature?.off('mediaAccessChanged', this.mediaAccessChanged.bind(this));
+      mediaAccessFeature?.off('meetingMediaAccessChanged', this.meetingMediaAccessChanged.bind(this));
+    }
+  }
 
   private subscribeCallEvents(): void {
     if (this.call) {
@@ -1298,6 +1364,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (breakoutRoomsFeature) {
       breakoutRoomsFeature.on('breakoutRoomsUpdated', this.breakoutRoomsUpdated.bind(this));
     }
+    /* @conditional-compile-remove(media-access) */
+    this.subscribeToMediaAccessEvents();
   }
 
   private unsubscribeCallEvents(): void {
@@ -1321,6 +1389,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (breakoutRoomsFeature) {
       breakoutRoomsFeature.off('breakoutRoomsUpdated', this.breakoutRoomsUpdated.bind(this));
     }
+    /* @conditional-compile-remove(media-access) */
+    this.unsubscribeFromMediaAccessEvents();
   }
 
   private isMyMutedChanged = (): void => {
@@ -1404,18 +1474,37 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('transferAccepted', args);
   }
 
-  private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
+  private capabilitiesChangedturnVideoOnTrampoline(data: CapabilitiesChangeInfo): void {
+    /* @conditional-compile-remove(media-access) */
+    if (data.newValue.turnVideoOn?.isPresent === false) {
+      this.disposeLocalVideoStreamView();
+    }
+    /* @conditional-compile-remove(media-access) */
+    return;
+
     if (data.newValue.turnVideoOn?.isPresent === false) {
       // Only stop camera when the call state is not on hold. The Calling SDK does not allow us to stop camera when
       // the call state is on hold.
       if (this.call?.state !== 'LocalHold' && this.call?.state !== 'RemoteHold') {
         this.stopCamera();
       }
+
       this.disposeLocalVideoStreamView();
     }
+  }
+
+  private capabilitiesChangedunmuteMicTrampoline(data: CapabilitiesChangeInfo): void {
+    /* @conditional-compile-remove(media-access) */
+    return;
+
     if (data.newValue.unmuteMic?.isPresent === false) {
       this.mute();
     }
+  }
+
+  private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
+    this.capabilitiesChangedturnVideoOnTrampoline(data);
+    this.capabilitiesChangedunmuteMicTrampoline(data);
     if (data.newValue.shareScreen?.isPresent === false) {
       this.stopScreenShare();
     }
@@ -1432,6 +1521,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private spotlightChanged(args: { added: SpotlightedParticipant[]; removed: SpotlightedParticipant[] }): void {
     this.emitter.emit('spotlightChanged', args);
   }
+  /* @conditional-compile-remove(media-access) */
+  private mediaAccessChanged = (data: MediaAccessChangedEvent): void => {
+    this.emitter.emit('mediaAccessChanged', data);
+  };
+  /* @conditional-compile-remove(media-access) */
+  private meetingMediaAccessChanged = (data: MeetingMediaAccessChangedEvent): void => {
+    this.emitter.emit('meetingMediaAccessChanged', data);
+  };
 
   /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomsUpdated(eventData: BreakoutRoomsEventData): void {
@@ -1520,6 +1617,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
   /* @conditional-compile-remove(breakout-rooms) */
   off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public off(event: string, listener: (e: any) => void): void {

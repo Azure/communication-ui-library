@@ -84,7 +84,9 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
               (participant.diagnostics?.networkSendQuality?.value ?? 0) as number
             ),
             /* @conditional-compile-remove(media-access) */
-            participant.mediaAccess
+            participant.mediaAccess,
+            /* @conditional-compile-remove(media-access) */
+            participant.role
           );
         })
     );
@@ -105,7 +107,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     spotlight?: Spotlight,
     /* @conditional-compile-remove(remote-ufd) */
     signalStrength?: number,
-    mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
+    mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess,
+    role?: undefined | /* @conditional-compile-remove(media-access) */ ParticipantRole
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -121,7 +124,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       /* @conditional-compile-remove(remote-ufd) */
       signalStrength,
       /* @conditional-compile-remove(media-access) */
-      mediaAccess
+      mediaAccess,
+      /* @conditional-compile-remove(media-access) */
+      role
     );
   }
 );
@@ -140,7 +145,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   spotlight?: Spotlight,
   /* @conditional-compile-remove(remote-ufd) */
   signalStrength?: number,
-  mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
+  mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess,
+  role?: undefined | /* @conditional-compile-remove(media-access) */ ParticipantRole
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -187,7 +193,9 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     /* @conditional-compile-remove(remote-ufd) */
     signalStrength,
     /* @conditional-compile-remove(media-access) */
-    mediaAccess
+    mediaAccess,
+    /* @conditional-compile-remove(media-access) */
+    role
   };
 };
 

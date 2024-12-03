@@ -4,6 +4,8 @@
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
+/* @conditional-compile-remove(media-access) */
+import type { MediaAccessChangedEvent, MeetingMediaAccessChangedEvent } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import type { SpotlightedParticipant } from '@azure/communication-calling';
@@ -41,6 +43,8 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamViewResult } from '@internal/react-components';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccess } from '@internal/react-components';
 /**
  * Major UI screens shown in the {@link CallComposite}.
  *
@@ -185,6 +189,11 @@ export type CallAdapterClientState = {
    * @public
    */
   reactions?: ReactionResources;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * State to track media access for this call.
+   */
+  mediaAccess?: MediaAccess;
 };
 
 /**
@@ -416,6 +425,18 @@ export type SpotlightChangedListener = (args: {
   added: SpotlightedParticipant[];
   removed: SpotlightedParticipant[];
 }) => void;
+/* @conditional-compile-remove(media-access) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'MediaAccessChanged' event.
+ * @beta
+ **/
+export type MediaAccessChangedListener = (data: MediaAccessChangedEvent) => void;
+/* @conditional-compile-remove(media-access) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'MeetingMediaAccessChanged' event.
+ * @beta
+ **/
+export type MeetingMediaAccessChangedListener = (data: MeetingMediaAccessChangedEvent) => void;
 
 /**
  * Contains the attibutes of a selected video background effect
@@ -807,6 +828,22 @@ export interface CallAdapterCallOperations {
    * Return to origin call of breakout room
    */
   returnFromBreakoutRoom(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  forbidParticipantAudio(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  permitParticipantAudio(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersAudio(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersAudio(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  forbidParticipantVideo(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  permitParticipantVideo(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersVideo(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersVideo(): Promise<void>;
 }
 
 /**
@@ -999,6 +1036,16 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'breakoutRoomsUpdated' event.
    */
   on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Subscribe function for 'mediaAccessChanged' event.
+   */
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Subscribe function for 'meetingMediaAccessChanged' event.
+   */
+  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
   /**
    * Unsubscribe function for 'participantsJoined' event.
    */
@@ -1089,6 +1136,16 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'breakoutRoomsUpdated' event.
    */
   off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Unsubscribe function for 'mediaAccessChanged' event.
+   */
+  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Unsubscribe function for 'meetingMediaAccessChanged' event.
+   */
+  off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
 }
 
 // This type remains for non-breaking change reason

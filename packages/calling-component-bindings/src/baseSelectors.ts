@@ -3,6 +3,8 @@
 import { CallState, DominantSpeakersInfo, EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom } from '@azure/communication-calling';
+/* @conditional-compile-remove(media-access) */
+import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -62,6 +64,17 @@ export const getCapabilities = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesFeature?.capabilities;
+
+/* @conditional-compile-remove(media-access) */
+/**
+ * @private
+ */
+export const getLatestCapabilitiesChangedInfo = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): CapabilitiesChangeInfo | undefined => {
+  return state.calls[props.callId]?.capabilitiesFeature?.latestCapabilitiesChangeInfo;
+};
 
 /**
  * @private

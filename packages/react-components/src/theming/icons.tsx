@@ -271,6 +271,14 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
   ControlButtonRaiseHand: <ControlButtonRaiseHandIcon />,
   ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
+  /* @conditional-compile-remove(media-access) */
+  ControlButtonMicProhibited: <MicProhibited20Filled />,
+  /* @conditional-compile-remove(media-access) */
+  ControlButtonMicProhibitedSmall: <MicProhibited16Filled />,
+  /* @conditional-compile-remove(media-access) */
+  ControlButtonCameraProhibited: <VideoProhibited20Filled />,
+  /* @conditional-compile-remove(media-access) */
+  ControlButtonCameraProhibitedSmall: <VideoProhibited16Filled />,
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   ReactionButtonIcon: <Emoji20Regular />,
@@ -334,6 +342,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
+  /* @conditional-compile-remove(media-access) */
+  VideoTileCameraOff: <VideoProhibited16Filled />,
   DialpadBackspace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
   SitePermissionsSparkle: <SitePermissionSparkle20Filled />,
