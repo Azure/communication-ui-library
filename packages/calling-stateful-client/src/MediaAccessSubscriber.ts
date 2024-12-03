@@ -2,7 +2,11 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(media-access) */
-import { MediaAccessCallFeature, MediaAccessChangedEvent } from '@azure/communication-calling';
+import {
+  MediaAccessCallFeature,
+  MediaAccessChangedEvent,
+  MeetingMediaAccessChangedEvent
+} from '@azure/communication-calling';
 /* @conditional-compile-remove(media-access) */
 import { CallContext } from './CallContext';
 /* @conditional-compile-remove(media-access) */
@@ -22,20 +26,27 @@ export class MediaAccessSubscriber {
     this._context = context;
     this._mediaAccessCallFeature = mediaAccessCallFeature;
 
-    const mediaAccesses = this._mediaAccessCallFeature.getRemoteParticipantsMediaAccess();
+    const mediaAccesses = this._mediaAccessCallFeature.getAllOthersMediaAccess();
+    const meetingMediaAccess = this._mediaAccessCallFeature.getMeetingMediaAccess();
+
     this._context.setMediaAccesses(this._callIdRef.callId, mediaAccesses);
+    this._context.setMeetingMediaAccess(this._callIdRef.callId, meetingMediaAccess);
     this.subscribe();
   }
 
   private subscribe = (): void => {
     this._mediaAccessCallFeature.on('mediaAccessChanged', this.mediaAccessChanged);
+    this._mediaAccessCallFeature.on('meetingMediaAccessChanged', this.meetingMediaAccessChanged);
   };
 
   public unsubscribe = (): void => {
     this._mediaAccessCallFeature.off('mediaAccessChanged', this.mediaAccessChanged);
+    this._mediaAccessCallFeature.off('meetingMediaAccessChanged', this.meetingMediaAccessChanged);
   };
 
-  private mediaAccessChanged = (data: MediaAccessChangedEvent): void => {
+  private mediaAccessChanged = (data: MediaAccessChangedEvent): void =>
     this._context.setMediaAccesses(this._callIdRef.callId, data.mediaAccesses);
-  };
+
+  private meetingMediaAccessChanged = (data: MeetingMediaAccessChangedEvent): void =>
+    this._context.setMeetingMediaAccess(this._callIdRef.callId, data.meetingMediaAccess);
 }

@@ -21,7 +21,13 @@ import {
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(media-access) */
-import { MediaAccessCallFeature, MediaAccessChangedListener, MediaAccess } from '@azure/communication-calling';
+import {
+  MediaAccessCallFeature,
+  MediaAccessChangedListener,
+  MediaAccess,
+  MeetingMediaAccessChangedListener,
+  MeetingMediaAccess
+} from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 
 import { VideoEffectsFeature } from '@azure/communication-calling';
@@ -96,6 +102,10 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
  * @private
  */
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
+  public isConsentRequired = false;
+  consentToBeingRecordedAndTranscribed(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   public name = 'Recording';
   public isRecordingActive = false;
   public recordings: RecordingInfo[] = [];
@@ -197,31 +207,39 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
     return Promise.resolve();
   }
 
-  permitRemoteParticipantsAudio(): Promise<void> {
+  permitOthersAudio(): Promise<void> {
     return Promise.resolve();
   }
 
-  forbidRemoteParticipantsAudio(): Promise<void> {
+  forbidOthersAudio(): Promise<void> {
     return Promise.resolve();
   }
 
-  permitRemoteParticipantsVideo(): Promise<void> {
+  permitOthersVideo(): Promise<void> {
     return Promise.resolve();
   }
 
-  forbidRemoteParticipantsVideo(): Promise<void> {
+  forbidOthersVideo(): Promise<void> {
     return Promise.resolve();
   }
 
-  getRemoteParticipantsMediaAccess(): MediaAccess[] {
+  getAllOthersMediaAccess(): MediaAccess[] {
     return this.mediaAccesses;
   }
 
-  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
+  getMeetingMediaAccess(): MeetingMediaAccess {
+    return { isAudioPermitted: true, isVideoPermitted: true };
+  }
+
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  on(event: string, listener: (...args: any[]) => void): void {
     this.emitter.on(event, listener);
   }
 
-  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
+  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  off(event: string, listener: (...args: any[]) => void): void {
     this.emitter.off(event, listener);
   }
 
@@ -234,6 +252,10 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
  * @private
  */
 export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
+  public isConsentRequired = false;
+  consentToBeingRecordedAndTranscribed(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   public name = 'Transcription';
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();
@@ -461,7 +483,9 @@ export function createMockApiFeatures(
       isRecordingActive: false,
       isTranscriptionActive: false,
       /* @conditional-compile-remove(media-access) */
-      getRemoteParticipantsMediaAccess: () => []
+      getAllOthersMediaAccess: () => [],
+      /* @conditional-compile-remove(media-access) */
+      getMeetingMediaAccess: () => ({ isAudioPermitted: true, isVideoPermitted: true })
     });
     return generic;
   };

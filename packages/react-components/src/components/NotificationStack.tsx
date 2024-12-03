@@ -268,6 +268,18 @@ export interface NotificationStackStrings {
    * Message shown in notification when breakout room is closing soon
    */
   breakoutRoomClosingSoon?: NotificationStrings;
+
+  /* @conditional-compile-remove(media-access) */
+  capabilityTurnVideoOnPresent?: NotificationStrings;
+
+  /* @conditional-compile-remove(media-access) */
+  capabilityTurnVideoOnAbsent?: NotificationStrings;
+
+  /* @conditional-compile-remove(media-access) */
+  capabilityUnmuteMicPresent?: NotificationStrings;
+
+  /* @conditional-compile-remove(media-access) */
+  capabilityUnmuteMicAbsent?: NotificationStrings;
 }
 
 /**
