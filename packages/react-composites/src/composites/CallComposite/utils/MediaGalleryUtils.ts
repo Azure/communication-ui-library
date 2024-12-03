@@ -197,7 +197,7 @@ export const showDtmfDialer = (
    * to fallback on the original logic so that it will also render the callControls to show and hide the dialpad
    * for the user.
    */
-  if (showDtmfDialerAuto || dialerOptions === undefined) {
+  if (showDtmfDialerAuto || dialerOptions === undefined || dialerOptions === false) {
     callees?.forEach((callee) => {
       if (isMicrosoftTeamsAppIdentifier(callee) || isPhoneNumberIdentifier(callee)) {
         showDtmfDialer = true;
