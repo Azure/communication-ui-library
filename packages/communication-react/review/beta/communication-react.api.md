@@ -45,9 +45,6 @@ import type { CommunicationUserKind } from '@azure/communication-common';
 import { CreateViewOptions } from '@azure/communication-calling';
 import { DeviceAccess } from '@azure/communication-calling';
 import { DeviceManager } from '@azure/communication-calling';
-import type { DiagnosticFlag } from '@azure/communication-calling';
-import type { DiagnosticQuality } from '@azure/communication-calling';
-import type { DiagnosticValueType } from '@azure/communication-calling';
 import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { DtmfTone as DtmfTone_2 } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
@@ -77,12 +74,10 @@ import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { LocalRecordingInfo } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
-import type { MediaDiagnosticType } from '@azure/communication-calling';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
-import type { NetworkDiagnosticType } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
@@ -101,7 +96,6 @@ import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/commu
 import { RoomCallLocator } from '@azure/communication-calling';
 import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
-import type { ServerDiagnosticType } from '@azure/communication-calling';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { StartCallOptions } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
@@ -444,15 +438,11 @@ export interface CallAdapterCallOperations {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
-    // @beta
-    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta
-    disposeTogetherModeStreamViews(): Promise<void>;
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
@@ -468,15 +458,11 @@ export interface CallAdapterCallOperations {
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
-    // @beta
-    setTogetherModeSceneSize(width: number, height: number): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
     startNoiseSuppressionEffect(): Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
-    // @beta
-    startTogetherMode(): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -531,7 +517,7 @@ export interface CallAdapterDeviceManagement {
 }
 
 // @public
-export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator | TeamsMeetingIdLocator;
+export type CallAdapterLocator = TeamsMeetingLinkLocator | GroupCallLocator | RoomCallLocator | CallParticipantsLocator | TeamsMeetingIdLocator;
 
 // @public
 export type CallAdapterState = CallAdapterUiState & CallAdapterClientState;
@@ -609,7 +595,7 @@ export interface CallAgentState {
 
 // @public
 export interface CallAndChatLocator {
-    callLocator: GroupCallLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator;
+    callLocator: GroupCallLocator | CallParticipantsLocator;
     chatThreadId: string;
 }
 
@@ -788,7 +774,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | 'transferring' | 'badRequest';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | 'unsupportedEnvironment' | 'transferring' | 'badRequest';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -1046,16 +1032,7 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll' | 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
-
-// @beta
-export type CallFeatureStreamName = 'togetherMode';
-
-// @beta
-export interface CallFeatureStreamState extends RemoteVideoStreamState {
-    // (undocumented)
-    feature?: CallFeatureStreamName;
-}
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | 'CallAgent.handlePushNotification' | 'Call.admit' | 'Call.rejectParticipant' | 'Call.admitAll' | 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -1132,7 +1109,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     spotlight?: Spotlight;
-    mediaAccess?: MediaAccess;
 };
 
 // @beta
@@ -1165,7 +1141,7 @@ export interface CallState {
     endTime: Date | undefined;
     hideAttendeeNames?: boolean;
     id: string;
-    info?: TeamsCallInfo | /* @conditional-compile-remove(calling-beta-sdk) */ CallInfo;
+    info?: TeamsCallInfo | CallInfo;
     isMuted: boolean;
     isScreenSharingOn: boolean;
     kind: CallKind;
@@ -1190,8 +1166,6 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
-    // @beta
-    togetherMode: TogetherModeCallFeature;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
@@ -1218,16 +1192,12 @@ export interface CallWithChatAdapterManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     // @beta
-    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
-    // @beta
     deleteImage(imageId: string): Promise<void>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-    // @beta
-    disposeTogetherModeStreamViews(): Promise<void>;
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
@@ -1253,7 +1223,7 @@ export interface CallWithChatAdapterManagement {
     resumeCall(): Promise<void>;
     returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
-    sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions | MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
@@ -1261,8 +1231,6 @@ export interface CallWithChatAdapterManagement {
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
-    // @beta
-    setTogetherModeSceneSize(width: number, height: number): void;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
@@ -1270,8 +1238,6 @@ export interface CallWithChatAdapterManagement {
     startNoiseSuppressionEffect(): Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
-    // @beta
-    startTogetherMode(): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -1283,7 +1249,7 @@ export interface CallWithChatAdapterManagement {
     submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
     unmute(): Promise<void>;
     updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-    updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
+    updateMessage(messageId: string, content: string, options?: Record<string, string> | MessageOptions): Promise<void>;
     updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
     // @beta
     uploadImage(image: Blob, imageFilename: string): Promise<UploadChatImageResult>;
@@ -1630,7 +1596,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1884,11 +1850,11 @@ export interface ChatAdapterThreadManagement {
     loadPreviousChatMessages(messagesToLoad: number): Promise<boolean>;
     removeParticipant(userId: string): Promise<void>;
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
-    sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
+    sendMessage(content: string, options?: SendMessageOptions | MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setTopic(topicName: string): Promise<void>;
-    updateMessage(messageId: string, content: string, options?: Record<string, string> | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
+    updateMessage(messageId: string, content: string, options?: Record<string, string> | MessageOptions): Promise<void>;
     uploadImage(image: Blob, imageFilename: string): Promise<UploadChatImageResult>;
 }
 
@@ -2010,11 +1976,11 @@ export type ChatErrors = {
 };
 
 // @public
-export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.updateProperties' | 'ChatThreadClient.updateTopic' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.uploadImage' | /* @conditional-compile-remove(chat-beta-sdk) */ 'ChatThreadClient.deleteImage';
+export type ChatErrorTarget = 'ChatClient.createChatThread' | 'ChatClient.deleteChatThread' | 'ChatClient.getChatThreadClient' | 'ChatClient.listChatThreads' | 'ChatClient.off' | 'ChatClient.on' | 'ChatClient.startRealtimeNotifications' | 'ChatClient.stopRealtimeNotifications' | 'ChatThreadClient.addParticipants' | 'ChatThreadClient.deleteMessage' | 'ChatThreadClient.getMessage' | 'ChatThreadClient.getProperties' | 'ChatThreadClient.listMessages' | 'ChatThreadClient.listParticipants' | 'ChatThreadClient.listReadReceipts' | 'ChatThreadClient.removeParticipant' | 'ChatThreadClient.sendMessage' | 'ChatThreadClient.sendReadReceipt' | 'ChatThreadClient.sendTypingNotification' | 'ChatThreadClient.updateMessage' | 'ChatThreadClient.updateProperties' | 'ChatThreadClient.updateTopic' | 'ChatThreadClient.uploadImage' | 'ChatThreadClient.deleteImage';
 
 // @public
 export type ChatHandlers = {
-    onSendMessage: (content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions) => Promise<void>;
+    onSendMessage: (content: string, options?: SendMessageOptions | MessageOptions) => Promise<void>;
     onUploadImage: (image: Blob, imageFilename: string) => Promise<UploadChatImageResult>;
     onDeleteImage: (imageId: string) => Promise<void>;
     onMessageSeen: (chatMessageId: string) => Promise<void>;
@@ -2204,8 +2170,6 @@ export interface CommonCallingHandlers {
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    // @beta
-    onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     // (undocumented)
     onDisposeLocalScreenShareStreamView: () => Promise<void>;
     // (undocumented)
@@ -2216,16 +2180,6 @@ export interface CommonCallingHandlers {
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
-    // @beta
-    onDisposeTogetherModeStreamViews: () => Promise<void>;
-    // (undocumented)
-    onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onForbidRemoteParticipantsAudio?: () => Promise<void>;
-    // (undocumented)
-    onForbidRemoteParticipantsVideo?: () => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -2234,14 +2188,6 @@ export interface CommonCallingHandlers {
     onMuteAllRemoteParticipants: () => Promise<void>;
     // (undocumented)
     onMuteParticipant: (userId: string) => Promise<void>;
-    // (undocumented)
-    onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onPermitRemoteParticipantsAudio?: () => Promise<void>;
-    // (undocumented)
-    onPermitRemoteParticipantsVideo?: () => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
@@ -2268,8 +2214,6 @@ export interface CommonCallingHandlers {
     onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
-    // @beta
-    onSetTogetherModeSceneSize: (width: number, height: number) => void;
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
     // (undocumented)
@@ -2282,8 +2226,6 @@ export interface CommonCallingHandlers {
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
     onStartSpotlight: (userIds?: string[]) => Promise<void>;
-    // @beta
-    onStartTogetherMode: () => Promise<void>;
     // (undocumented)
     onStopAllSpotlight: () => Promise<void>;
     // (undocumented)
@@ -2454,9 +2396,6 @@ export interface ComponentStrings {
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
     richTextSendBox: RichTextSendBoxStrings;
-    rtt: RealTimeTextStrings;
-    rttDisclosureBanner: RTTDisclosureBannerStrings;
-    rttModal: RTTModalStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     typingIndicator: TypingIndicatorStrings;
@@ -2664,10 +2603,10 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
 
 // @public (undocumented)
-export const createTeamsCallAdapter: (args: TeamsCallAdapterArgs | /* @conditional-compile-remove(teams-identity-support-beta) */ TeamsOutboundCallAdapterArgs) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapter: (args: TeamsCallAdapterArgs | TeamsOutboundCallAdapterArgs) => Promise<TeamsCallAdapter>;
 
 // @public
-export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator | /* @conditional-compile-remove(teams-identity-support-beta) */ StartTeamsCallIdentifier[], options?: TeamsAdapterOptions) => Promise<TeamsCallAdapter>;
+export const createTeamsCallAdapterFromClient: (callClient: StatefulCallClient, callAgent: TeamsCallAgent, locator: CallAdapterLocator | StartTeamsCallIdentifier[], options?: TeamsAdapterOptions) => Promise<TeamsCallAdapter>;
 
 // @public
 export interface CreateVideoStreamViewResult {
@@ -2872,7 +2811,6 @@ export const DEFAULT_COMPONENT_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
-    RTTIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -3053,7 +2991,6 @@ export const DEFAULT_COMPOSITE_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
-    RTTIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -3607,18 +3544,6 @@ export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrien
 // @public
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
-// @alpha
-export type MediaAccess = {
-    isAudioPermitted: boolean;
-    isVideoPermitted: boolean;
-};
-
-// @alpha
-export interface MediaAccessState {
-    isAudioPermitted: boolean;
-    isVideoPermitted: boolean;
-}
-
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';
@@ -3673,7 +3598,7 @@ export interface MentionPopoverStrings {
 }
 
 // @public
-export type Message = ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage;
+export type Message = ChatMessage | SystemMessage | CustomMessage | BlockedMessage;
 
 // @public
 export type MessageAttachedStatus = 'bottom' | 'top' | boolean;
@@ -3705,7 +3630,7 @@ export type MessageOptions = {
 // @public
 export type MessageProps = {
     message: Message;
-    strings: MessageThreadStrings & /* @conditional-compile-remove(rich-text-editor) */ Partial<RichTextStrings>;
+    strings: MessageThreadStrings & Partial<RichTextStrings>;
     messageContainerStyle?: ComponentSlotStyle;
     showDate?: boolean;
     disableEditing?: boolean;
@@ -3769,7 +3694,7 @@ export const MessageThread: (props: MessageThreadProps) => JSX.Element;
 // @public
 export type MessageThreadProps = {
     userId: string;
-    messages: (ChatMessage | SystemMessage | CustomMessage | /* @conditional-compile-remove(data-loss-prevention) */ BlockedMessage)[];
+    messages: (ChatMessage | SystemMessage | CustomMessage | BlockedMessage)[];
     participantCount?: number;
     readReceiptsBySenderId?: ReadReceiptsBySenderId;
     styles?: MessageThreadStyles;
@@ -4401,25 +4326,6 @@ export type ReadReceiptsBySenderId = {
     };
 };
 
-// @beta
-export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
-
-// @beta
-export interface RealTimeTextProps {
-    captionText: string;
-    displayName: string;
-    id: string;
-    isTyping?: boolean;
-    onRenderAvatar?: OnRenderAvatarCallback;
-    strings?: RealTimeTextStrings;
-    userId?: string;
-}
-
-// @beta
-export interface RealTimeTextStrings {
-    isTypingText?: string;
-}
-
 // @public
 export interface RecordingCallFeature {
     activeRecordings?: RecordingInfo[];
@@ -4427,26 +4333,14 @@ export interface RecordingCallFeature {
     lastStoppedRecording?: RecordingInfo[];
 }
 
-// @beta
-export type RemoteDiagnosticState = {
-    readonly diagnostic: RemoteDiagnosticType;
-    readonly value: DiagnosticQuality | DiagnosticFlag;
-    readonly valueType: DiagnosticValueType;
-};
-
-// @beta
-export type RemoteDiagnosticType = NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
-
 // @public
 export interface RemoteParticipantState {
     callEndReason?: CallEndReason;
     contentSharingStream?: HTMLElement;
-    diagnostics?: Partial<Record<RemoteDiagnosticType, RemoteDiagnosticState>>;
     displayName?: string;
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
-    mediaAccess?: MediaAccessState;
     raisedHand?: RaisedHandState;
     reactionState?: ReactionState;
     role?: ParticipantRole;
@@ -4555,46 +4449,6 @@ export interface RichTextStrings {
     richTextToolbarAriaLabel: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
-}
-
-// @beta
-export const RTTDisclosureBanner: (props: RTTDisclosureBannerProps) => JSX.Element;
-
-// @beta
-export interface RTTDisclosureBannerProps {
-    onClickLink?: () => void;
-    strings?: RTTDisclosureBannerStrings;
-}
-
-// @beta
-export interface RTTDisclosureBannerStrings {
-    // (undocumented)
-    bannerContent: string;
-    // (undocumented)
-    bannerLinkLabel?: string;
-    // (undocumented)
-    bannerTitle: string;
-}
-
-// @beta
-export const RTTModal: (props: RTTModalProps) => JSX.Element;
-
-// @beta
-export interface RTTModalProps {
-    onDismissModal?: () => void;
-    onStartRTT?: () => Promise<void>;
-    showModal?: boolean;
-    strings?: RTTModalStrings;
-}
-
-// @beta
-export interface RTTModalStrings {
-    rttCancelButtonLabel?: string;
-    rttCloseModalButtonAriaLabel?: string;
-    rttConfirmButtonLabel?: string;
-    rttModalAriaLabel?: string;
-    rttModalText?: string;
-    rttModalTitle?: string;
 }
 
 // @public
@@ -4857,11 +4711,7 @@ export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
     createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
-    // @beta
-    createView(callId: string, stream: CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
     disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
-    // @beta
-    disposeView(callId: string, stream: CallFeatureStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
@@ -5007,7 +4857,7 @@ export interface TeamsCallAdapter extends CommonCallAdapter {
 
 // @public
 export type TeamsCallAdapterArgs = TeamsCallAdapterArgsCommon & {
-    locator: TeamsMeetingLinkLocator | /* @conditional-compile-remove(call-participants-locator) */ CallParticipantsLocator | TeamsMeetingIdLocator;
+    locator: TeamsMeetingLinkLocator | CallParticipantsLocator | TeamsMeetingIdLocator;
 };
 
 // @public
@@ -5045,41 +4895,6 @@ export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {
 
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
-
-// @beta
-export interface TogetherModeCallFeature {
-    // (undocumented)
-    isActive: boolean;
-    seatingPositions: TogetherModeParticipantSeatingState;
-    streams: TogetherModeStreamsState;
-}
-
-// @beta
-export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
-
-// @beta
-export interface TogetherModeSeatingPositionState {
-    // (undocumented)
-    height: number;
-    // (undocumented)
-    left: number;
-    // (undocumented)
-    top: number;
-    // (undocumented)
-    width: number;
-}
-
-// @beta
-export interface TogetherModeStreamsState {
-    // (undocumented)
-    mainVideoStream?: CallFeatureStreamState;
-}
-
-// @beta
-export interface TogetherModeStreamViewResult {
-    // (undocumented)
-    mainVideoView?: CreateVideoStreamViewResult;
-}
 
 // @public
 export type TopicChangedListener = (event: {
@@ -5237,7 +5052,7 @@ export const useSelector: <ParamT extends Selector | undefined>(selector: ParamT
 export const useTeamsCall: () => undefined | TeamsCall;
 
 // @public
-export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs | /* @conditional-compile-remove(teams-identity-support-beta) */ TeamsOutboundCallAdapterArgs>, afterCreate?: (adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>, beforeDispose?: (adapter: TeamsCallAdapter) => Promise<void>) => TeamsCallAdapter | undefined;
+export const useTeamsCallAdapter: (args: Partial<TeamsCallAdapterArgs | TeamsOutboundCallAdapterArgs>, afterCreate?: (adapter: TeamsCallAdapter) => Promise<TeamsCallAdapter>, beforeDispose?: (adapter: TeamsCallAdapter) => Promise<void>) => TeamsCallAdapter | undefined;
 
 // @public
 export const useTeamsCallAgent: () => undefined | TeamsCallAgent;
@@ -5300,7 +5115,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
@@ -5317,8 +5132,6 @@ export type VideoGalleryParticipant = {
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
     spotlight?: Spotlight;
-    signalStrength?: number;
-    mediaAccess?: MediaAccess;
 };
 
 // @public
@@ -5366,8 +5179,6 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
-    // (undocumented)
-    mediaAccess?: MediaAccess;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
@@ -5504,7 +5315,6 @@ export interface VideoTileStrings {
     moreOptionsParticipantIsSpeakingAriaLabel: string;
     moreOptionsParticipantMutedStateMutedAriaLabel: string;
     moreOptionsParticipantMutedStateUnmutedAriaLabel: string;
-    participantReconnecting?: string;
     participantStateHold: string;
     participantStateRinging: string;
 }
