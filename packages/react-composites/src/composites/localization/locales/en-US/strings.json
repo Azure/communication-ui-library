@@ -118,7 +118,7 @@
     "captionsSettingsSpokenLanguageDropdownLabel": "Spoken language",
     "captionsSettingsCaptionLanguageDropdownLabel": "Captions language",
     "captionsSettingsSpokenLanguageDropdownInfoText": "Language that everyone on this call is speaking.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "Captions will appear in this langugage.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Captions will appear in this language.",
     "captionsSettingsConfirmButtonLabel": "Confirm",
     "captionsSettingsCancelButtonLabel": "Cancel",
     "captionsSettingsModalAriaLabel": "Captions Setting Modal",
