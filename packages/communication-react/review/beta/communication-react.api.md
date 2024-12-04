@@ -5066,18 +5066,6 @@ export interface TogetherModeSeatingPositionState {
 }
 
 // @beta
-export interface TogetherModeStream {
-    isAvailable?: boolean;
-    isReceiving?: boolean;
-    renderElement?: HTMLElement;
-    scalingMode?: ViewScalingMode;
-    streamSize?: {
-        width: number;
-        height: number;
-    };
-}
-
-// @beta
 export interface TogetherModeStreamOptions extends VideoStreamOptions {
     // (undocumented)
     viewKind?: 'main' | 'panoramic';
@@ -5487,7 +5475,7 @@ export interface VideoGalleryTogetherModeSeatingInfo {
 // @beta
 export interface VideoGalleryTogetherModeStreams {
     // (undocumented)
-    mainVideoStream?: TogetherModeStream;
+    mainVideoStream?: VideoGalleryStream;
 }
 
 // @public

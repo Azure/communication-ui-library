@@ -1,10 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+/* @conditional-compile-remove(together-mode) */
 import { _pxToRem } from '@internal/acs-ui-common';
-// import { BaseCustomStyles } from '../../types/CustomStylesProps';
+/* @conditional-compile-remove(together-mode) */
 import { BaseCustomStyles } from '../../types/CustomStylesProps';
+/* @conditional-compile-remove(together-mode) */
 import { VideoGalleryTogetherModeSeatingInfo } from '../../types/TogetherModeTypes';
 
+/* @conditional-compile-remove(together-mode) */
 /**
  * Interface for defining the coordinates of a seat in Together Mode.
  */
@@ -15,6 +18,7 @@ export interface ITogetherModeSeatCoordinates {
   top?: number;
 }
 
+/* @conditional-compile-remove(together-mode) */
 /**
  * Interface for defining the style of a seat position in Together Mode.
  */
@@ -25,22 +29,7 @@ export interface ITogetherModeSeatPositionStyle {
   position?: string;
 }
 
-/**
- * Style for the signaling action container.
- * This container is used to participant's displayName,
- * raisehands, spotlight, and mute icons
- */
-export const signalingActionContainerStyle = {
-  color: 'white',
-  textAlign: 'center' as const,
-  backgroundColor: 'black',
-  display: 'inline-block',
-  position: 'absolute' as const,
-  bottom: '0px',
-  margin: `auto`,
-  border: '1px solid blue'
-};
-
+/* @conditional-compile-remove(together-mode) */
 /**
  * Generates the root style for Together Mode.
  *
@@ -54,16 +43,14 @@ export const togetherModeRootStyle = (width: number, height: number): BaseCustom
    */
   const rootStyle = {
     root: {
-      width: `${width}px`,
-      height: `${height}px`,
-      position: 'relative' as const,
-      top: 0,
-      left: 0
+      width: `100%`,
+      height: `100%`
     }
   };
   return rootStyle;
 };
 
+/* @conditional-compile-remove(together-mode) */
 /**
  * Sets the seating position for a participant in Together Mode.
  *
@@ -80,6 +67,8 @@ export function setParticipantSeatingPosition(
     top: seatingPosition.top || 0
   };
 }
+
+/* @conditional-compile-remove(together-mode) */
 /**
  * Return a style bucket based on the number of active sprites.
  * For example, the first three reactions should appear at maximum
@@ -92,10 +81,12 @@ export function getTogetherModeSeatPositionStyle(
   return {
     sizeScale: 0.9,
     opacityMax: 0.9,
-    seatCoordinates: setParticipantSeatingPosition(seatingPosition)
+    seatCoordinates: setParticipantSeatingPosition(seatingPosition),
+    position: 'absolute'
   };
 }
 
+/* @conditional-compile-remove(together-mode) */
 /**
  * Generates the overlay style for a participant in Together Mode.
  *
@@ -106,8 +97,19 @@ export function getTogetherModeParticipantOverlayStyle(
   seatingPositionStyle: ITogetherModeSeatPositionStyle
 ): React.CSSProperties {
   return {
-    position: 'absolute',
     border: '1px solid green',
-    ...seatingPositionStyle.seatCoordinates
+    ...seatingPositionStyle.seatCoordinates,
+    zIndex: 20
+  };
+}
+
+/**
+ * Generates the hover style for Together Mode.
+ *
+ * @returns The style object for the hover state.
+ */
+export function togetherModeHover(): React.CSSProperties {
+  return {
+    border: '1px solid blue'
   };
 }

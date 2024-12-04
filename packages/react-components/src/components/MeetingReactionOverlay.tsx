@@ -135,7 +135,16 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
   } else if (props.overlayMode === 'together-mode') {
     /* @conditional-compile-remove(together-mode) */
     return (
-      <div ref={videoTileRef} style={{ width: '100%', height: '100%', pointerEvents: 'none' }}>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          position: 'absolute',
+          top: '0',
+          left: '0'
+        }}
+      >
         <TogetherModeOverlay
           emojiSize={emojiSizePx}
           reactionResources={reactionResources}

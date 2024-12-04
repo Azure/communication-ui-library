@@ -3,6 +3,7 @@
 
 /* @conditional-compile-remove(together-mode) */
 import React, { useMemo, useRef, useState } from 'react';
+/* @conditional-compile-remove(together-mode) */
 import { useId } from '@fluentui/react-hooks';
 /* @conditional-compile-remove(together-mode) */
 import { _formatString } from '@internal/acs-ui-common';
@@ -10,11 +11,17 @@ import { _formatString } from '@internal/acs-ui-common';
 import { LayoutProps } from './Layout';
 /* @conditional-compile-remove(together-mode) */
 import { LayerHost, mergeStyles, Stack } from '@fluentui/react';
+/* @conditional-compile-remove(together-mode) */
 import { renderTiles, useOrganizedParticipants } from './utils/videoGalleryLayoutUtils';
+/* @conditional-compile-remove(together-mode) */
 import { OverflowGallery } from './OverflowGallery';
+/* @conditional-compile-remove(together-mode) */
 import { rootLayoutStyle } from './styles/DefaultLayout.styles';
+/* @conditional-compile-remove(together-mode) */
 import { isNarrowWidth, isShortHeight } from '../utils/responsive';
+/* @conditional-compile-remove(together-mode) */
 import { innerLayoutStyle, layerHostStyle } from './styles/FloatingLocalVideoLayout.styles';
+/* @conditional-compile-remove(together-mode) */
 import { videoGalleryLayoutGap } from './styles/Layout.styles';
 
 /* @conditional-compile-remove(together-mode) */
@@ -125,6 +132,7 @@ export const TogetherModeLayout = (props: LayoutProps): JSX.Element => {
   );
 };
 
+/* @conditional-compile-remove(together-mode) */
 const overflowGalleryTrampoline = (
   gallery: JSX.Element | null,
   galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'

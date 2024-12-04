@@ -27,11 +27,13 @@ import { getEmojiResource } from './VideoGallery/utils/videoGalleryLayoutUtils';
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(together-mode) */
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
+/* @conditional-compile-remove(together-mode) */
 import {
   getTogetherModeParticipantOverlayStyle,
   getTogetherModeSeatPositionStyle,
   ITogetherModeSeatPositionStyle
 } from './styles/TogetherMode.styles';
+/* @conditional-compile-remove(together-mode) */
 import { iconContainerStyle } from './styles/VideoTile.styles';
 
 /* @conditional-compile-remove(together-mode) */
@@ -125,13 +127,28 @@ export const TogetherModeOverlay = React.memo(
     }, [remoteParticipants, localParticipant, participantsSeatingArrangement, updateTogetherModeSeatingUI]);
 
     return (
-      <Stack>
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          pointerEvents: 'none',
+          position: 'absolute',
+          top: '0',
+          left: '0'
+        }}
+      >
         {Object.values(visibleSignals).map((participantSignal) => (
           <div
             key={participantSignal.id}
-            style={getTogetherModeParticipantOverlayStyle(participantSignal.seatPositionStyle)}
+            style={{
+              ...getTogetherModeParticipantOverlayStyle(participantSignal.seatPositionStyle),
+              border: '1px solid red',
+              position: 'absolute',
+              left: `${participantSignal.seatPositionStyle.seatCoordinates.left}px`,
+              top: `${participantSignal.seatPositionStyle.seatCoordinates.top}px`
+            }}
           >
-            <div className="reaction-item">
+            <div className="togetherMode-item">
               {
                 <div
                   style={{
@@ -181,7 +198,7 @@ export const TogetherModeOverlay = React.memo(
             </div>
           </div>
         ))}
-      </Stack>
+      </div>
     );
   }
 );

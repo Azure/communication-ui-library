@@ -319,7 +319,6 @@ export type {
   VideoGalleryTogetherModeStreams,
   VideoGalleryTogetherModeParticipantPosition,
   VideoGalleryTogetherModeSeatingInfo,
-  TogetherModeStream,
   TogetherModeStreamOptions
 } from '../../react-components/src';
 

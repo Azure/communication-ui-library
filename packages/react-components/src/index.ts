@@ -67,7 +67,6 @@ export type {
 /* @conditional-compile-remove(together-mode) */
 export type {
   TogetherModeStreamViewResult,
-  TogetherModeStream,
   VideoGalleryTogetherModeParticipantPosition,
   VideoGalleryTogetherModeSeatingInfo,
   VideoGalleryTogetherModeStreams,
