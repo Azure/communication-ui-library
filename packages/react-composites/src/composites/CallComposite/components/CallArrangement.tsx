@@ -21,7 +21,7 @@ import React, { useMemo, useRef, useState } from 'react';
 import { useEffect } from 'react';
 import { useCallback } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-import { CaptionsBanner } from '../../common/CaptionsBanner';
+import { CallingCaptionsBanner } from '../../common/CallingCaptionsBanner';
 import { containerDivStyles } from '../../common/ContainerRectProps';
 import { compositeMinWidthRem } from '../../common/styles/Composite.styles';
 import { useAdapter } from '../adapter/CallAdapterProvider';
@@ -607,7 +607,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   </Stack.Item>
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {!isInLocalHold && (
-                    <CaptionsBanner
+                    <CallingCaptionsBanner
                       captionsOptions={props.captionsOptions}
                       isMobile={props.mobileView}
                       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}

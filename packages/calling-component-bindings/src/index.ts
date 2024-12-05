@@ -21,10 +21,10 @@ export { incomingCallStackSelector } from './incomingCallStackSelector';
 export type {
   _StartCaptionsButtonSelector,
   _CaptionSettingsSelector,
-  _CaptionsBannerSelector
+  CaptionsBannerSelector
 } from './captionsSelector';
 
-export { _captionsBannerSelector, _startCaptionsButtonSelector, _captionSettingsSelector } from './captionsSelector';
+export { captionsBannerSelector, _startCaptionsButtonSelector, _captionSettingsSelector } from './captionsSelector';
 
 export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/createHandlers';
 
