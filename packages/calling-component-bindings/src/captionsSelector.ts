@@ -19,7 +19,7 @@ import {
 } from './baseSelectors';
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { _CaptionsInfo, _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
+import { _CaptionsInfo, SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
 
 /**
  * Selector type for the {@link StartCaptionsButton} component.
@@ -52,25 +52,25 @@ export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = resele
 
 /**
  * Selector type for components for Changing caption language and spoken language
- * @internal
+ * @public
  */
-export type _CaptionSettingsSelector = (
+export type CaptionSettingsSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  supportedCaptionLanguages: _SupportedCaptionLanguage[];
-  currentCaptionLanguage: _SupportedCaptionLanguage;
-  supportedSpokenLanguages: _SupportedSpokenLanguage[];
-  currentSpokenLanguage: _SupportedSpokenLanguage;
+  supportedCaptionLanguages: SupportedCaptionLanguage[];
+  currentCaptionLanguage: SupportedCaptionLanguage;
+  supportedSpokenLanguages: SupportedSpokenLanguage[];
+  currentSpokenLanguage: SupportedSpokenLanguage;
   isCaptionsFeatureActive: boolean;
 };
 
 /**
  * Selector for Changing caption language and spoken language
  *
- * @internal
+ * @public
  */
-export const _captionSettingsSelector: _CaptionSettingsSelector = reselect.createSelector(
+export const captionSettingsSelector: CaptionSettingsSelector = reselect.createSelector(
   [
     getSupportedCaptionLanguages,
     getCurrentCaptionLanguage,

@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { _CaptionsBanner, _CaptionsBannerStrings, CustomAvatarOptions } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 import { mergeStyles, Stack } from '@fluentui/react';
-import { CaptionsSettingsModal } from './CaptionsSettingsModal';
+import { CallingCaptionsSettingsModal } from './CallingCaptionsSettingsModal';
 import { CaptionsBannerMoreButton } from './CaptionsBannerMoreButton';
 import { useAdaptedSelector } from '../CallComposite/hooks/useAdaptedSelector';
 import { useHandlers } from '../CallComposite/hooks/useHandlers';
@@ -89,7 +89,7 @@ export const CaptionsBanner = (props: {
   return (
     <>
       {isCaptionsSettingsOpen && (
-        <CaptionsSettingsModal
+        <CallingCaptionsSettingsModal
           showCaptionsSettingsModal={isCaptionsSettingsOpen}
           onDismissCaptionsSettings={onDismissCaptionsSettings}
           changeCaptionLanguage={props.useTeamsCaptions}

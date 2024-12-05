@@ -3,7 +3,7 @@
 
 import React from 'react';
 import { useMemo, useCallback } from 'react';
-import { _CaptionsSettingsModal, CaptionLanguageStrings, useTheme } from '@internal/react-components';
+import { CaptionLanguageStrings, useTheme } from '@internal/react-components';
 import {
   _DrawerMenu as DrawerMenu,
   _DrawerMenuItemProps as DrawerMenuItemProps,

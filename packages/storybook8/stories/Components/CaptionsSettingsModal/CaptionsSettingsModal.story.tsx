@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles, PrimaryButton, Stack } from '@fluentui/react';
 import {
-  _CaptionsSettingsModal,
-  _CaptionsSettingsModalStrings,
+  CaptionLanguageStrings,
+  CaptionsSettingsModal as CaptionsSettingsModalComponent,
   SpokenLanguageStrings
-} from '@internal/react-components';
+} from '@azure/communication-react';
+import { mergeStyles, PrimaryButton, Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 
 const CaptionsSettingsModalStory = (args: any): JSX.Element => {
@@ -53,31 +53,40 @@ const CaptionsSettingsModalStory = (args: any): JSX.Element => {
     'sk-sk',
     'zh-tw'
   ];
-
+  const supportedCaptionLanguages: Array<keyof CaptionLanguageStrings> = [
+    'ar',
+    'da',
+    'de',
+    'en',
+    'es',
+    'fi',
+    'fr',
+    'fr-ca',
+    'hi',
+    'it',
+    'ja',
+    'ko',
+    'nb',
+    'nl'
+  ];
   const currentSpokenLanguage = 'en-us';
+  const currentCaptionLanguage = 'en';
   const [showModal, setShowModal] = useState<boolean>(false);
   const onDismissCaptionsSettings = (): void => {
     setShowModal(false);
   };
   const onSetSpokenLanguage = (language: any): Promise<void> => {
-    alert(`Selected ${language}`);
+    console.log(`Spoken language set to ${language}`);
+    return Promise.resolve();
+  };
+
+  const onSetCaptionLanguage = (language: any): Promise<void> => {
+    console.log(`Caption language set to ${language}`);
     return Promise.resolve();
   };
 
   const onStartCaptions = (): Promise<void> => {
-    alert(`Start Captions with selected language`);
     return Promise.resolve();
-  };
-
-  const strings = {
-    startCaptionsButtonTooltipOffContent: 'Turn on captions',
-    captionsSettingsModalTitle: 'What language is being spoken?',
-    captionsSettingsDropdownLabel: 'Spoken language',
-    captionsSettingsDropdownInfoText: 'Language that everyone on this call is speaking.',
-    captionsSettingsConfirmButtonLabel: 'Confirm',
-    captionsSettingsCancelButtonLabel: 'Cancel',
-    captionsSettingsModalAriaLabel: 'Captions Setting Modal',
-    captionsSettingsCloseModalButtonAriaLabel: 'Close Captions Setting'
   };
 
   return (
@@ -90,18 +99,18 @@ const CaptionsSettingsModalStory = (args: any): JSX.Element => {
       >
         {'Captions Settings Modal'}
       </PrimaryButton>
-      <_CaptionsSettingsModal
+      <CaptionsSettingsModalComponent
         showModal={showModal}
-        isCaptionsFeatureActive={args.isCaptionsFeatureActive}
+        isCaptionsFeatureActive
         supportedSpokenLanguages={supportedSpokenLanguages}
+        supportedCaptionLanguages={supportedCaptionLanguages}
         currentSpokenLanguage={currentSpokenLanguage}
+        currentCaptionLanguage={currentCaptionLanguage}
         onSetSpokenLanguage={onSetSpokenLanguage}
+        onSetCaptionLanguage={onSetCaptionLanguage}
         onStartCaptions={onStartCaptions}
         onDismissCaptionsSettings={onDismissCaptionsSettings}
-        strings={strings}
-        supportedCaptionLanguages={[]}
-        onSetCaptionLanguage={Promise.resolve}
-        currentCaptionLanguage={'en'}
+        changeCaptionLanguage
       />{' '}
     </Stack>
   );

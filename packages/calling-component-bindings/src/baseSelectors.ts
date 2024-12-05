@@ -22,7 +22,7 @@ import { CaptionsInfo } from '@internal/calling-stateful-client';
 
 import { CaptionsKind } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
-import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
+import { SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
@@ -231,32 +231,32 @@ export const getStartCaptionsInProgress = (
 export const getCurrentCaptionLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): _SupportedCaptionLanguage | undefined => {
-  return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage as _SupportedCaptionLanguage;
+): SupportedCaptionLanguage | undefined => {
+  return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage as SupportedCaptionLanguage;
 };
 
 /** @private */
 export const getCurrentSpokenLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): _SupportedSpokenLanguage | undefined => {
-  return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage as _SupportedSpokenLanguage;
+): SupportedSpokenLanguage | undefined => {
+  return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage as SupportedSpokenLanguage;
 };
 
 /** @private */
 export const getSupportedCaptionLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): _SupportedCaptionLanguage[] | undefined => {
-  return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages as _SupportedCaptionLanguage[];
+): SupportedCaptionLanguage[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages as SupportedCaptionLanguage[];
 };
 
 /** @private */
 export const getSupportedSpokenLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): _SupportedSpokenLanguage[] | undefined => {
-  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
+): SupportedSpokenLanguage[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as SupportedSpokenLanguage[];
 };
 
 /** @private */

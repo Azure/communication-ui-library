@@ -9,9 +9,9 @@ import { defaultSpokenLanguage } from './utils';
 /**
  * options bag to start captions
  *
- * @internal
+ * @public
  */
-export type _captionsOptions = {
+export type StartCaptionsOptions = {
   spokenLanguage: string;
 };
 
@@ -23,7 +23,7 @@ export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
    * Utility property for using this component with communication react handlers
    * Start captions based on captions state
    */
-  onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+  onStartCaptions: (options?: StartCaptionsOptions) => Promise<void>;
   /**
    * Utility property for using this component with communication react handlers
    * Stop captions based on captions state
@@ -85,7 +85,7 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
     return <_HighContrastAwareIcon disabled={props.disabled} iconName="CaptionsOffIcon" />;
   };
 
-  const options: _captionsOptions = useMemo(() => {
+  const options: StartCaptionsOptions = useMemo(() => {
     return { spokenLanguage: currentSpokenLanguage === '' ? defaultSpokenLanguage : currentSpokenLanguage };
   }, [currentSpokenLanguage]);
 

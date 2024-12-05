@@ -90,7 +90,8 @@ export type {
   ParticipantListSelector,
   MicrophoneButtonSelector,
   ParticipantsButtonSelector,
-  CreateDefaultCallingHandlers
+  CreateDefaultCallingHandlers,
+  CaptionSettingsSelector
 } from '../../calling-component-bindings/src';
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
@@ -460,3 +461,10 @@ export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-compone
 export { RealTimeText } from '../../react-components/src/components/RealTimeText';
 /* @conditional-compile-remove(media-access) */
 export type { MediaAccess } from '../../react-components/src';
+export type { CaptionsSettingsModalStrings, CaptionsSettingsModalProps } from '../../react-components/src';
+export { CaptionsSettingsModal } from '../../react-components/src';
+export type {
+  SupportedCaptionLanguage,
+  SupportedSpokenLanguage,
+  StartCaptionsOptions
+} from '../../react-components/src';
