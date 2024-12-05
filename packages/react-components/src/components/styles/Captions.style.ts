@@ -143,7 +143,7 @@ export const loadingBannerFullHeightStyles = (theme: ITheme): IStackStyles => {
  */
 export const captionsContentContainerClassName = mergeStyles({
   width: '100%',
-  paddingInlineEnd: _pxToRem(8)
+  paddingInlineEnd: _pxToRem(4)
 });
 
 /**
