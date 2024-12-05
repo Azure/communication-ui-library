@@ -5,9 +5,12 @@
     "removeButtonLabel": "إزالة",
     "sharingIconLabel": "جارٍ المشاركة",
     "mutedIconLabel": "تم كتم الصوت",
+    "handRaisedIconLabel": "يد مرفوعة - الموضع {position}",
     "displayNamePlaceholder": "مشارك غير مسمى",
     "participantStateRinging": "يتم الآن الاتصال...",
     "participantStateHold": "قيد الانتظار",
+    "participantItemAriaLabel": "{displayName}، {handRaisedState}، {mutedState}، {sharingState}، {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}، {handRaisedState}، {mutedState}، {sharingState}، {connectionState}، المزيد من الخيارات",
     "attendeeRole": "الحضور"
   },
   "ParticipantList": {

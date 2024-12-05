@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Effekter",
     "videoEffectsPaneBackgroundSelectionTitle": "Bakgrund",
     "videoEffectsPaneAriaLabel": "Fönstret Videoeffekter",
+    "configurationPageCameraIsLoadingLabel": "Videon läses in...",
     "configurationPageVideoEffectsButtonLabel": "Effekter",
     "unableToStartVideoEffect": "Det går inte att tillämpa videoeffekten.",
     "blurBackgroundEffectButtonLabel": "Oskärpa",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Gallerivy",
     "moreButtonGalleryFocusedContentLayoutLabel": "Fokusera på innehållet",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Stort galleri",
+    "moreButtonTogetherModeLayoutLabel": "Tillsammans-läge",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kameran har inaktiverats. Du kan inte längre dela video.",

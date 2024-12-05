@@ -5,9 +5,12 @@
     "removeButtonLabel": "Entfernen",
     "sharingIconLabel": "Teilen",
     "mutedIconLabel": "Stumm geschaltet",
+    "handRaisedIconLabel": "Hand erhoben – Position {position}",
     "displayNamePlaceholder": "Teilnehmer ohne Namen",
     "participantStateRinging": "Anrufen...",
     "participantStateHold": "In der Warteschleife",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Weitere Optionen",
     "attendeeRole": "Teilnehmer"
   },
   "ParticipantList": {
@@ -286,7 +289,7 @@
     "failedToJoinCallInvalidMeetingLink": "Teilnahme an Besprechung nicht möglich. Ungültiger Link.",
     "cameraFrozenForRemoteParticipants": "Benutzer im Anruf haben Probleme, Ihr Video zu sehen. Überprüfen Sie Ihre Geräte und Ihr Netzwerk.",
     "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden.",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Das Spotlight für Teilnehmer*innen kann nicht gestartet werden, da die maximale Anzahl von Teilnehmer*innen bereits im Spotlight ist.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Das Spotlight für Teilnehmende kann nicht gestartet werden, da die maximale Anzahl von Teilnehmenden bereits im Spotlight ist.",
     "mutedByRemoteParticipant": "Sie wurden von einem anderen Teilnehmer stummgeschaltet."
   },
   "notificationStack": {

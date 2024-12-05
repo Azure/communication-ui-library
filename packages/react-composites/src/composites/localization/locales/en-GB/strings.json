@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Effects",
     "videoEffectsPaneBackgroundSelectionTitle": "Background",
     "videoEffectsPaneAriaLabel": "Video effects pane",
+    "configurationPageCameraIsLoadingLabel": "Video is loading...",
     "configurationPageVideoEffectsButtonLabel": "Effects",
     "unableToStartVideoEffect": "Unable to apply video effect.",
     "blurBackgroundEffectButtonLabel": "Blur",
@@ -117,7 +118,7 @@
     "captionsSettingsSpokenLanguageDropdownLabel": "Spoken language",
     "captionsSettingsCaptionLanguageDropdownLabel": "Captions language",
     "captionsSettingsSpokenLanguageDropdownInfoText": "Language that everyone on this call is speaking.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "Captions will appear in this langugage.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Captions will appear in this language.",
     "captionsSettingsConfirmButtonLabel": "Confirm",
     "captionsSettingsCancelButtonLabel": "Cancel",
     "captionsSettingsModalAriaLabel": "Captions Setting Modal",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Gallery view",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focus on content",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Large Gallery",
+    "moreButtonTogetherModeLayoutLabel": "Together mode",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Your camera has been disabled. You can no longer share video.",

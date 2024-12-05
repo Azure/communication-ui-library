@@ -5,9 +5,12 @@
     "removeButtonLabel": "Poista",
     "sharingIconLabel": "Jakaminen",
     "mutedIconLabel": "Mykistetty",
+    "handRaisedIconLabel": "Käsi ylhäällä – paikka {position}",
     "displayNamePlaceholder": "Nimetön osallistuja",
     "participantStateRinging": "Soitetaan...",
     "participantStateHold": "Pidossa",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, lisää asetuksia",
     "attendeeRole": "Osallistuja"
   },
   "ParticipantList": {

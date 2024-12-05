@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "التأثيرات",
     "videoEffectsPaneBackgroundSelectionTitle": "الخلفية",
     "videoEffectsPaneAriaLabel": "جزء تأثيرات الفيديو",
+    "configurationPageCameraIsLoadingLabel": "يتم الآن تحميل الفيديو...",
     "configurationPageVideoEffectsButtonLabel": "التأثيرات",
     "unableToStartVideoEffect": "يتعذر تطبيق تأثير الفيديو.",
     "blurBackgroundEffectButtonLabel": "تمويه",
@@ -117,7 +118,7 @@
     "captionsSettingsSpokenLanguageDropdownLabel": "اللغة المنطوقة",
     "captionsSettingsCaptionLanguageDropdownLabel": "لغة التسميات التوضيحية",
     "captionsSettingsSpokenLanguageDropdownInfoText": "اللغة التي يتحدث بها كل شخص في هذه المكالمة.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "ستظهر التسميات التوضيحية بهذه اللغة.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "سيظهر نص الكلام بهذه اللغة.",
     "captionsSettingsConfirmButtonLabel": "تأكيد",
     "captionsSettingsCancelButtonLabel": "إلغاء",
     "captionsSettingsModalAriaLabel": "مربع حوار إعدادات نص الكلام المشروط",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "طريقة عرض المعرض",
     "moreButtonGalleryFocusedContentLayoutLabel": "التركيز على المحتوى",
     "moreButtonLargeGalleryDefaultLayoutLabel": "معرض كبير",
+    "moreButtonTogetherModeLayoutLabel": "وضع التجميع",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "تم تعطيل الكاميرا الخاصة بك. لم يعد بإمكانك مشاركة الفيديو.",

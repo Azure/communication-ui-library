@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "效果",
     "videoEffectsPaneBackgroundSelectionTitle": "背景",
     "videoEffectsPaneAriaLabel": "视频效果窗格",
+    "configurationPageCameraIsLoadingLabel": "正在加载视频...",
     "configurationPageVideoEffectsButtonLabel": "效果",
     "unableToStartVideoEffect": "无法应用视频效果。",
     "blurBackgroundEffectButtonLabel": "模糊",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "库视图",
     "moreButtonGalleryFocusedContentLayoutLabel": "关注内容",
     "moreButtonLargeGalleryDefaultLayoutLabel": "大型画廊模式",
+    "moreButtonTogetherModeLayoutLabel": "同框场景模式",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "你的照相机已禁用。你无法再共享视频。",

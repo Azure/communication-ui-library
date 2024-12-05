@@ -5,9 +5,12 @@
     "removeButtonLabel": "Kaldır",
     "sharingIconLabel": "Paylaşım",
     "mutedIconLabel": "Ses kapatıldı",
+    "handRaisedIconLabel": "El kaldırdı - Konum {position}",
     "displayNamePlaceholder": "Adsız katılımcı",
     "participantStateRinging": "Arıyor...",
     "participantStateHold": "Beklemede",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Diğer Seçenekler",
     "attendeeRole": "Katılımcı"
   },
   "ParticipantList": {

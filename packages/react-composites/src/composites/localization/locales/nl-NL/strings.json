@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Effecten",
     "videoEffectsPaneBackgroundSelectionTitle": "Achtergrond",
     "videoEffectsPaneAriaLabel": "Deelvenster video-effectenVideo",
+    "configurationPageCameraIsLoadingLabel": "Video wordt geladen...",
     "configurationPageVideoEffectsButtonLabel": "Effecten",
     "unableToStartVideoEffect": "Kan video-effect niet toepassen.",
     "blurBackgroundEffectButtonLabel": "Vervagen",
@@ -117,7 +118,7 @@
     "captionsSettingsSpokenLanguageDropdownLabel": "Gesproken taal",
     "captionsSettingsCaptionLanguageDropdownLabel": "Taal van ondertitels",
     "captionsSettingsSpokenLanguageDropdownInfoText": "Taal die iedereen in dit gesprek spreekt.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "Bijschriften worden weergegeven in deze taal.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Ondertitels worden weergegeven in deze taal.",
     "captionsSettingsConfirmButtonLabel": "Bevestigen",
     "captionsSettingsCancelButtonLabel": "Annuleren",
     "captionsSettingsModalAriaLabel": "Bijschriften instellen modaal",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Galerieweergave",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focus op inhoud",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Grote galerie",
+    "moreButtonTogetherModeLayoutLabel": "Modus Samen",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Uw camera is uitgeschakeld. U kunt geen video meer delen.",
