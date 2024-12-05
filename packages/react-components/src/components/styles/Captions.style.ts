@@ -73,6 +73,7 @@ export const captionsContainerClassName = mergeStyles({
 export const captionContainerClassName = mergeStyles({
   marginTop: _pxToRem(6),
   marginBottom: _pxToRem(6),
+  marginInlineEnd: _pxToRem(8),
   textAlign: 'unset', // ensure RTL spoken language captions are appropriately aligned to the right
   overflowAnchor: 'auto'
 });
