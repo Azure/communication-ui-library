@@ -5,9 +5,12 @@
     "removeButtonLabel": "הסר",
     "sharingIconLabel": "משתף",
     "mutedIconLabel": "מושתק",
+    "handRaisedIconLabel": "יד מורמת - מיקום {position}",
     "displayNamePlaceholder": "משתתף ללא שם",
     "participantStateRinging": "מתקשר...",
     "participantStateHold": "בהמתנה",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, אפשרויות נוספות",
     "attendeeRole": "משתתף"
   },
   "ParticipantList": {

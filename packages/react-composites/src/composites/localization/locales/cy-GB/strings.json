@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Effeithiau",
     "videoEffectsPaneBackgroundSelectionTitle": "Cefndir",
     "videoEffectsPaneAriaLabel": "Cwarel effeithiau fideo",
+    "configurationPageCameraIsLoadingLabel": "Mae’r fideo’n llwytho...",
     "configurationPageVideoEffectsButtonLabel": "Effeithiau",
     "unableToStartVideoEffect": "Does dim modd defnyddio'r effaith fideo.",
     "blurBackgroundEffectButtonLabel": "Pylu",
@@ -117,7 +118,7 @@
     "captionsSettingsSpokenLanguageDropdownLabel": "Iaith lafar",
     "captionsSettingsCaptionLanguageDropdownLabel": "Iaith capsiynau",
     "captionsSettingsSpokenLanguageDropdownInfoText": "Yr iaith y mae pawb yn yr alwad hon yn ei siarad.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "Bydd capsiynau'n ymddangos yn yr iaith hon.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Bydd capsiynau’n ymddangos yn yr iaith hon.",
     "captionsSettingsConfirmButtonLabel": "Cadarnhau",
     "captionsSettingsCancelButtonLabel": "Canslo",
     "captionsSettingsModalAriaLabel": "Moddol Gosodiad Capsiynau",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Gwedd oriel",
     "moreButtonGalleryFocusedContentLayoutLabel": "Canolbwyntio ar y cynnwys",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Oriel Fawr",
+    "moreButtonTogetherModeLayoutLabel": "Modd Ynghyd",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Mae eich camera wedi'i analluogi. Does dim modd i chi rannu fideo mwyach.",

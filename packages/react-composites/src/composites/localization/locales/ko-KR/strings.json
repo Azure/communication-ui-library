@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "효과",
     "videoEffectsPaneBackgroundSelectionTitle": "백그라운드",
     "videoEffectsPaneAriaLabel": "동영상 효과 창",
+    "configurationPageCameraIsLoadingLabel": "비디오를 로드하는 중...",
     "configurationPageVideoEffectsButtonLabel": "효과",
     "unableToStartVideoEffect": "비디오 효과를 적용할 수 없습니다.",
     "blurBackgroundEffectButtonLabel": "흐리기",
@@ -117,7 +118,7 @@
     "captionsSettingsSpokenLanguageDropdownLabel": "음성 언어",
     "captionsSettingsCaptionLanguageDropdownLabel": "캡션 언어",
     "captionsSettingsSpokenLanguageDropdownInfoText": "이 통화의 모든 사람이 말하는 언어입니다.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "캡션이 이 언어로 표시됩니다.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "캡션은 이 언어로 표시됩니다.",
     "captionsSettingsConfirmButtonLabel": "확인하기",
     "captionsSettingsCancelButtonLabel": "취소하기",
     "captionsSettingsModalAriaLabel": "캡션 설정 모달",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "갤러리 보기",
     "moreButtonGalleryFocusedContentLayoutLabel": "콘텐츠에 포커스 맞추기",
     "moreButtonLargeGalleryDefaultLayoutLabel": "대형 갤러리",
+    "moreButtonTogetherModeLayoutLabel": "함께 모드",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "카메라를 사용할 수 없습니다. 더 이상 비디오를 공유할 수 없습니다.",

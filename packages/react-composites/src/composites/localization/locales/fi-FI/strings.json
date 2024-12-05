@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Tehosteet",
     "videoEffectsPaneBackgroundSelectionTitle": "Tausta",
     "videoEffectsPaneAriaLabel": "Videotehosteet-ruutu",
+    "configurationPageCameraIsLoadingLabel": "Videota ladataan...",
     "configurationPageVideoEffectsButtonLabel": "Tehosteet",
     "unableToStartVideoEffect": "Videotehosteen käyttäminen ei onnistu.",
     "blurBackgroundEffectButtonLabel": "Sumenna",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Valikoimanäkymä",
     "moreButtonGalleryFocusedContentLayoutLabel": "Huomio sisältöön",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Suuri galleria",
+    "moreButtonTogetherModeLayoutLabel": "Yhdessä-tila",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kamerasi on poistettu käytöstä. Et voi enää jakaa videota.",

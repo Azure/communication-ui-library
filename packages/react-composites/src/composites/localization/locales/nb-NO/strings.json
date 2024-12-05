@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Effekter",
     "videoEffectsPaneBackgroundSelectionTitle": "Bakgrunn",
     "videoEffectsPaneAriaLabel": "Videoeffekter-ruten",
+    "configurationPageCameraIsLoadingLabel": "Videoen lastes inn ...",
     "configurationPageVideoEffectsButtonLabel": "Effekter",
     "unableToStartVideoEffect": "Kan ikke bruke videoeffekt.",
     "blurBackgroundEffectButtonLabel": "Uskarp bakgrunn",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Gallerivisning",
     "moreButtonGalleryFocusedContentLayoutLabel": "Fokuser på innhold",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Stort galleri",
+    "moreButtonTogetherModeLayoutLabel": "Sammen-modus",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Kameraet er deaktivert. Du kan ikke lenger dele video.",

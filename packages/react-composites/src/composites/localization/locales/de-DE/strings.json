@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Effekte",
     "videoEffectsPaneBackgroundSelectionTitle": "Hintergrund",
     "videoEffectsPaneAriaLabel": "Bereich \"Videoeffekte\"",
+    "configurationPageCameraIsLoadingLabel": "Video wird geladen...",
     "configurationPageVideoEffectsButtonLabel": "Effekte",
     "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden.",
     "blurBackgroundEffectButtonLabel": "Unscharf machen",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Profilfotoansicht",
     "moreButtonGalleryFocusedContentLayoutLabel": "Fokus auf Inhalte",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Große Galerie",
+    "moreButtonTogetherModeLayoutLabel": "Zusammen-Modus",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Ihre Kamera wurde deaktiviert. Sie können kein Video mehr freigeben.",

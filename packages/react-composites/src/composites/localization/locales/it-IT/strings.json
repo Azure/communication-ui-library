@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Effetti",
     "videoEffectsPaneBackgroundSelectionTitle": "In background",
     "videoEffectsPaneAriaLabel": "Riquadro Effetti video",
+    "configurationPageCameraIsLoadingLabel": "Il video è in corso di caricamento ...",
     "configurationPageVideoEffectsButtonLabel": "Effetti",
     "unableToStartVideoEffect": "Non è possibile applicare l'effetto video.",
     "blurBackgroundEffectButtonLabel": "Sfocatura",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Visualizzazione raccolta",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focus sul contenuto",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Galleria estesa",
+    "moreButtonTogetherModeLayoutLabel": "Modalità Insieme",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "La fotocamera è stata disattivata. Non è più possibile condividere video.",

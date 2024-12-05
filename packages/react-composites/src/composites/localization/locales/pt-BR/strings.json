@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Efeitos",
     "videoEffectsPaneBackgroundSelectionTitle": "Tela de fundo",
     "videoEffectsPaneAriaLabel": "Painel de efeitos de vídeo",
+    "configurationPageCameraIsLoadingLabel": "O vídeo está carregando...",
     "configurationPageVideoEffectsButtonLabel": "Efeitos",
     "unableToStartVideoEffect": "Não é possível aplicar o efeito de vídeo.",
     "blurBackgroundEffectButtonLabel": "Desfoque",
@@ -117,7 +118,7 @@
     "captionsSettingsSpokenLanguageDropdownLabel": "Idioma falado",
     "captionsSettingsCaptionLanguageDropdownLabel": "Idioma das legendas",
     "captionsSettingsSpokenLanguageDropdownInfoText": "Idioma que todos nesta chamada estão falando.",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "As legendas serão exibidas neste idioma.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "As legendas aparecerão neste idioma.",
     "captionsSettingsConfirmButtonLabel": "Confirmar",
     "captionsSettingsCancelButtonLabel": "Cancelar",
     "captionsSettingsModalAriaLabel": "Configuração de Legendas Modal",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Modo de exibição de galeria",
     "moreButtonGalleryFocusedContentLayoutLabel": "Foco no conteúdo",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Galeria Grande",
+    "moreButtonTogetherModeLayoutLabel": "Modo Conferência",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Sua câmera foi desabilitada. Você não pode mais compartilhar vídeo.",

@@ -5,9 +5,12 @@
     "removeButtonLabel": "Удалить",
     "sharingIconLabel": "Общий доступ",
     "mutedIconLabel": "Микрофон отключен",
+    "handRaisedIconLabel": "Поднята рука — позиция {position}",
     "displayNamePlaceholder": "Участник без имени",
     "participantStateRinging": "Выполняется вызов...",
     "participantStateHold": "На удержании",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, дополнительные параметры",
     "attendeeRole": "Участник"
   },
   "ParticipantList": {

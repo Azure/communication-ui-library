@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Effets",
     "videoEffectsPaneBackgroundSelectionTitle": "Arrière-plan",
     "videoEffectsPaneAriaLabel": "Volet Effets vidéo",
+    "configurationPageCameraIsLoadingLabel": "Chargement de la vidéo...",
     "configurationPageVideoEffectsButtonLabel": "Effets",
     "unableToStartVideoEffect": "Impossible d’appliquer l’effet vidéo.",
     "blurBackgroundEffectButtonLabel": "Flouter",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Vue Galerie",
     "moreButtonGalleryFocusedContentLayoutLabel": "Focalisation sur le contenu",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Grande galerie",
+    "moreButtonTogetherModeLayoutLabel": "Mode ensemble",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Votre caméra a été désactivée. Vous ne pouvez plus partager de vidéo.",

@@ -5,9 +5,12 @@
     "removeButtonLabel": "Usuń",
     "sharingIconLabel": "Udostępnianie",
     "mutedIconLabel": "Wyciszono",
+    "handRaisedIconLabel": "Podniesiona ręka — położenie {position}",
     "displayNamePlaceholder": "Uczestnik bez nazwy",
     "participantStateRinging": "Trwa łączenie…",
     "participantStateHold": "Zawieszony",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Więcej opcji",
     "attendeeRole": "Uczestnik"
   },
   "ParticipantList": {

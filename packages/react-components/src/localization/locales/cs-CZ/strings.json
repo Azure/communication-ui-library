@@ -5,9 +5,12 @@
     "removeButtonLabel": "Odebrat",
     "sharingIconLabel": "Sdílení",
     "mutedIconLabel": "Ztlumeno",
+    "handRaisedIconLabel": "Zvednutá ruka – pozice {position}",
     "displayNamePlaceholder": "Nepojmenovaný účastník",
     "participantStateRinging": "Volání…",
     "participantStateHold": "Pozastavený hovor",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Další možnosti",
     "attendeeRole": "Účastník"
   },
   "ParticipantList": {

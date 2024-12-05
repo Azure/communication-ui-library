@@ -5,9 +5,12 @@
     "removeButtonLabel": "移除",
     "sharingIconLabel": "分享",
     "mutedIconLabel": "已靜音",
+    "handRaisedIconLabel": "舉手- 位置 {position}",
     "displayNamePlaceholder": "未命名的參與者",
     "participantStateRinging": "撥號中...",
     "participantStateHold": "電話保留",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, 更多選項",
     "attendeeRole": "出席者"
   },
   "ParticipantList": {
