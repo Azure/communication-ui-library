@@ -9,7 +9,7 @@ import {
 import { mergeStyles, PrimaryButton, Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 
-const CaptionsSettingsModalStory = (args: any): JSX.Element => {
+const CaptionsSettingsModalStory = (): JSX.Element => {
   const supportedSpokenLanguages: Array<keyof SpokenLanguageStrings> = [
     'ar-ae',
     'ar-sa',

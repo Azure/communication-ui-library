@@ -45,8 +45,6 @@ export type {
   CallingHandlersOptions
 } from '../../calling-component-bindings/src';
 
-export type { CaptionsOptions } from '../../calling-component-bindings/src';
-
 export type {
   ChatClientProviderProps,
   ChatThreadClientProviderProps,
@@ -463,8 +461,4 @@ export { RealTimeText } from '../../react-components/src/components/RealTimeText
 export type { MediaAccess } from '../../react-components/src';
 export type { CaptionsSettingsModalStrings, CaptionsSettingsModalProps } from '../../react-components/src';
 export { CaptionsSettingsModal } from '../../react-components/src';
-export type {
-  SupportedCaptionLanguage,
-  SupportedSpokenLanguage,
-  StartCaptionsOptions
-} from '../../react-components/src';
+export type { SupportedCaptionLanguage, SupportedSpokenLanguage, CaptionsOptions } from '../../react-components/src';

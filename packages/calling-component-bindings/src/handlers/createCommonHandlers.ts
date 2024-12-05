@@ -17,6 +17,7 @@ import {
   LocalVideoStream,
   RemoteParticipant,
   StartCallOptions,
+  StartCaptionsOptions,
   TeamsCall,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -94,7 +95,7 @@ export interface CommonCallingHandlers {
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
   onStartNoiseSuppressionEffect: () => Promise<void>;
   onStopNoiseSuppressionEffect: () => Promise<void>;
-  onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
+  onStartCaptions: (options?: StartCaptionsOptions) => Promise<void>;
   onStopCaptions: () => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
@@ -151,15 +152,6 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(media-access) */
   onPermitRemoteParticipantsVideo?: () => Promise<void>;
 }
-
-/**
- * options bag to start captions
- *
- * @public
- */
-export type CaptionsOptions = {
-  spokenLanguage: string;
-};
 
 /**
  * @private
@@ -692,7 +684,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
+    const onStartCaptions = async (options?: StartCaptionsOptions): Promise<void> => {
       const captionsFeature = call?.feature(Features.Captions).captions;
       await captionsFeature?.startCaptions(options);
     };

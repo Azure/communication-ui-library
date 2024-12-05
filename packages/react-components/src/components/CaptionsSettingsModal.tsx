@@ -26,7 +26,7 @@ import {
   titleClassName,
   titleContainerClassName
 } from './styles/CaptionsSettingsModal.styles';
-import { StartCaptionsOptions } from './StartCaptionsButton';
+import { CaptionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
 import {
   SpokenLanguageStrings,
@@ -107,7 +107,7 @@ export interface CaptionsSettingsModalProps {
   /**
    * Callback to start captions
    */
-  onStartCaptions: (options?: StartCaptionsOptions) => Promise<void>;
+  onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   /**
    * Current spoken language
    */

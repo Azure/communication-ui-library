@@ -91,7 +91,7 @@ import { ScalingMode } from '@azure/communication-calling';
 import { SendMessageOptions } from '@azure/communication-chat';
 import { SpotlightedParticipant } from '@azure/communication-calling';
 import { StartCallOptions } from '@azure/communication-calling';
-import { StartCaptionsOptions as StartCaptionsOptions_2 } from '@azure/communication-calling';
+import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
@@ -1579,7 +1579,7 @@ export interface CaptionsSettingsModalProps {
     onDismissCaptionsSettings?: () => void;
     onSetCaptionLanguage?: (language: SupportedCaptionLanguage) => Promise<void>;
     onSetSpokenLanguage: (language: SupportedSpokenLanguage) => Promise<void>;
-    onStartCaptions: (options?: StartCaptionsOptions) => Promise<void>;
+    onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
     showModal?: boolean;
     spokenLanguageStrings?: SpokenLanguageStrings;
     strings?: CaptionsSettingsModalStrings;
@@ -1983,7 +1983,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
     // (undocumented)
-    onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
+    onStartCaptions: (options?: StartCaptionsOptions) => Promise<void>;
     // (undocumented)
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
@@ -4159,14 +4159,9 @@ export interface SpotlightState {
 export type StartCallIdentifier = CommunicationIdentifier;
 
 // @public
-export interface StartCaptionsAdapterOptions extends StartCaptionsOptions_2 {
+export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
     startInBackground?: boolean;
 }
-
-// @public
-export type StartCaptionsOptions = {
-    spokenLanguage: string;
-};
 
 // @public
 export interface StatefulCallClient extends CallClient {
