@@ -3,7 +3,6 @@
 
 import { IStackStyles, ITheme, mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { scrollbarStyles } from './Common.style';
 
 /**
  * @private
@@ -93,8 +92,7 @@ export const captionsBannerClassName = (formFactor: 'default' | 'compact'): stri
     ...resetUlStyling,
     overflowX: 'hidden',
     height: formFactor === 'compact' ? '4.5rem' : '8.75rem',
-    overflowY: 'auto',
-    ...scrollbarStyles
+    overflowY: 'auto'
   });
 };
 
@@ -110,8 +108,7 @@ export const captionsBannerFullHeightClassName = (theme: ITheme): string => {
     width: '100%',
     position: 'absolute',
     backgroundColor: theme.palette.white,
-    left: 0,
-    ...scrollbarStyles
+    left: 0
   });
 };
 
