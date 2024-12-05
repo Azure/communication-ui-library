@@ -5,9 +5,12 @@
     "removeButtonLabel": "Rimuovi",
     "sharingIconLabel": "Condivisione",
     "mutedIconLabel": "Disattivato",
+    "handRaisedIconLabel": "Mano alzata - Posizione {position}",
     "displayNamePlaceholder": "Partecipante senza nome",
     "participantStateRinging": "Chiamata in corso...",
     "participantStateHold": "Per l'attesa",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, More Options",
     "attendeeRole": "Partecipante"
   },
   "ParticipantList": {

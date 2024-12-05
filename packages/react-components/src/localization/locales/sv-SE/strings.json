@@ -5,9 +5,12 @@
     "removeButtonLabel": "Ta bort",
     "sharingIconLabel": "Delar",
     "mutedIconLabel": "Ljudet är avstängt",
+    "handRaisedIconLabel": "Upphöjt hand – position {position}",
     "displayNamePlaceholder": "Namnlös deltagare",
     "participantStateRinging": "Ringer...",
     "participantStateHold": "Parkerat",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Fler alternativ",
     "attendeeRole": "Deltagare"
   },
   "ParticipantList": {

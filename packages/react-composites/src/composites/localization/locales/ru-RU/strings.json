@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "Эффекты",
     "videoEffectsPaneBackgroundSelectionTitle": "Фон",
     "videoEffectsPaneAriaLabel": "Панель видеоэффектов",
+    "configurationPageCameraIsLoadingLabel": "Загрузка видео...",
     "configurationPageVideoEffectsButtonLabel": "Эффекты",
     "unableToStartVideoEffect": "Не удалось применить эффект видео.",
     "blurBackgroundEffectButtonLabel": "Размытие",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "Представление галереи",
     "moreButtonGalleryFocusedContentLayoutLabel": "Фокусировка на содержимом",
     "moreButtonLargeGalleryDefaultLayoutLabel": "Большая галерея",
+    "moreButtonTogetherModeLayoutLabel": "Режим \"Вместе\"",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "Камера отключена. Вы больше не можете делиться видео.",

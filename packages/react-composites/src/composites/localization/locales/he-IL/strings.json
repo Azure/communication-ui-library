@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "אפקטים",
     "videoEffectsPaneBackgroundSelectionTitle": "רקע",
     "videoEffectsPaneAriaLabel": "חלונית אפקטי וידאו",
+    "configurationPageCameraIsLoadingLabel": "הווידאו נטען...",
     "configurationPageVideoEffectsButtonLabel": "אפקטים",
     "unableToStartVideoEffect": "לא ניתן להחיל אפקט וידאו.",
     "blurBackgroundEffectButtonLabel": "טשטוש",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "תצוגת גלריה",
     "moreButtonGalleryFocusedContentLayoutLabel": "התמקדות בתוכן",
     "moreButtonLargeGalleryDefaultLayoutLabel": "גלריה גדולה",
+    "moreButtonTogetherModeLayoutLabel": "מצב ביחד",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "המצלמה שלך הפכה ללא זמינה. כבר אינך יכול לשתף וידאו.",

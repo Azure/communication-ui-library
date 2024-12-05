@@ -5,9 +5,12 @@
     "removeButtonLabel": "Tynnu",
     "sharingIconLabel": "Rhannu",
     "mutedIconLabel": "Wedi tewi",
+    "handRaisedIconLabel": "Llaw wedi'i chodi - Lleoliad {position}",
     "displayNamePlaceholder": "Cyfranogwr dienw",
     "participantStateRinging": "Wrthi'n galw...",
     "participantStateHold": "Galwad yn aros",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Mwy o Ddewisiadau",
     "attendeeRole": "Mynychwr"
   },
   "ParticipantList": {

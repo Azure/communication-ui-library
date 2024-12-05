@@ -5,9 +5,12 @@
     "removeButtonLabel": "Fjern",
     "sharingIconLabel": "Deling",
     "mutedIconLabel": "Dempet",
+    "handRaisedIconLabel": "Hevet hånd – posisjon {position}",
     "displayNamePlaceholder": "Deltaker uten navn",
     "participantStateRinging": "Ringer ...",
     "participantStateHold": "På vent",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, flere alternativer",
     "attendeeRole": "Deltaker"
   },
   "ParticipantList": {

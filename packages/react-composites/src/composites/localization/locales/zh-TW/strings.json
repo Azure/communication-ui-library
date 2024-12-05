@@ -27,6 +27,7 @@
     "videoEffectsPaneTitle": "效果",
     "videoEffectsPaneBackgroundSelectionTitle": "背景",
     "videoEffectsPaneAriaLabel": "視訊效果​​窗格",
+    "configurationPageCameraIsLoadingLabel": "正在載入影片...",
     "configurationPageVideoEffectsButtonLabel": "效果",
     "unableToStartVideoEffect": "無法套用視訊效果。",
     "blurBackgroundEffectButtonLabel": "模糊",
@@ -117,7 +118,7 @@
     "captionsSettingsSpokenLanguageDropdownLabel": "口語語言",
     "captionsSettingsCaptionLanguageDropdownLabel": "字幕語言",
     "captionsSettingsSpokenLanguageDropdownInfoText": "此通話中的每個人在說的語言。",
-    "captionsSettingsCaptionLanguageDropdownInfoText": "字幕將以此語言顯示。",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "字幕將會以此語言顯示。",
     "captionsSettingsConfirmButtonLabel": "確認",
     "captionsSettingsCancelButtonLabel": "取消",
     "captionsSettingsModalAriaLabel": "字幕設定模式",
@@ -235,6 +236,7 @@
     "moreButtonGalleryDefaultLayoutLabel": "圖庫檢視",
     "moreButtonGalleryFocusedContentLayoutLabel": "聚焦內容",
     "moreButtonLargeGalleryDefaultLayoutLabel": "大型圖庫",
+    "moreButtonTogetherModeLayoutLabel": "在一起模式",
     "capabilityChangedNotification": {
       "turnVideoOn": {
         "lostDueToMeetingOption": "您的相機已停用。您無法再分享視訊。",

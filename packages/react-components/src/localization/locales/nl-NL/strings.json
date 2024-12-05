@@ -5,9 +5,12 @@
     "removeButtonLabel": "Verwijderen",
     "sharingIconLabel": "Delen",
     "mutedIconLabel": "Gedempt",
+    "handRaisedIconLabel": "Opgestoken hand - Positie {position}",
     "displayNamePlaceholder": "Naamloze deelnemer",
     "participantStateRinging": "Bellen...",
     "participantStateHold": "In de wacht",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, meer opties",
     "attendeeRole": "Genodigde"
   },
   "ParticipantList": {

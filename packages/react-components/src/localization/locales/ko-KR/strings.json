@@ -5,9 +5,12 @@
     "removeButtonLabel": "제거",
     "sharingIconLabel": "공유 중",
     "mutedIconLabel": "음소거됨",
+    "handRaisedIconLabel": "손들기 - 위치 {position}",
     "displayNamePlaceholder": "명명되지 않은 참가자",
     "participantStateRinging": "전화 거는 중...",
     "participantStateHold": "대기 중",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, 기타 옵션",
     "attendeeRole": "참석자"
   },
   "ParticipantList": {
