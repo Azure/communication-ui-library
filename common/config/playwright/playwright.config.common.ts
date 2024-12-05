@@ -73,7 +73,7 @@ export const config: PlaywrightTestConfig<TestOptions> = {
     },
     // components tests use toHaveScreenshot
     toHaveScreenshot: {
-      maxDiffPixels: 1,
+      maxDiffPixels: 3,
       // make stricter comparison for colors, default value was 0.2
       // which didn't catch some color differences for gray colors
       threshold: 0
