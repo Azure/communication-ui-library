@@ -7,7 +7,12 @@ import {
   isPhoneNumberIdentifier,
   isUnknownIdentifier
 } from '@azure/communication-common';
-import { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from './identifier';
+import {
+  fromFlatCommunicationIdentifier,
+  toFlatCommunicationIdentifier,
+  _toCommunicationIdentifier,
+  _isValidIdentifier
+} from './identifier';
 
 test('Communication user conversions', () => {
   const parsed = fromFlatCommunicationIdentifier('8:acs:OPAQUE');
@@ -93,4 +98,35 @@ test('Unknown user conversions', () => {
     id: 'OPAQUE'
   });
   expect(toFlatCommunicationIdentifier(parsed)).toEqual('OPAQUE');
+});
+
+test('toCommunicationIdentifier with communication identifier', () => {
+  const userId = { kind: 'communicationUser', communicationUserId: '8:acs:OPAQUE' };
+  const identifierResponse = _toCommunicationIdentifier(userId);
+  expect(userId).toEqual(identifierResponse);
+  expect(identifierResponse).toEqual({
+    kind: 'communicationUser',
+    communicationUserId: '8:acs:OPAQUE'
+  });
+});
+
+test('toCommunicationIdentifier with communication identifier as string', () => {
+  const identifierResponse = _toCommunicationIdentifier('8:acs:OPAQUE');
+  expect(isCommunicationUserIdentifier(identifierResponse)).toBeTruthy();
+  expect(identifierResponse).toEqual({
+    kind: 'communicationUser',
+    communicationUserId: '8:acs:OPAQUE'
+  });
+});
+
+test('isValidIdentifier with communication identifier', () => {
+  const userId = { kind: 'communicationUser', communicationUserId: '8:acs:OPAQUE' };
+  const isValid = _isValidIdentifier(userId);
+  expect(isValid).toBeTruthy();
+});
+
+test('isValidIdentifier with unknown identifier', () => {
+  const userId = { kind: 'unknown', id: 'OPAQUE' };
+  const isValid = _isValidIdentifier(userId);
+  expect(isValid).toBeTruthy();
 });
