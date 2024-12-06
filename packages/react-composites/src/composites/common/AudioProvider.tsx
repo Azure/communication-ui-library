@@ -18,18 +18,12 @@ export interface ACSAudioProviderProps {
  */
 export const ACSAudioProvider = (props: ACSAudioProviderProps): JSX.Element => {
   const { audioContext, children } = props;
-  const [stateAudioContext, setStateAudioContext] = useState<AudioContext | undefined>(audioContext);
+  const [stateAudioContext, setStateAudioContext] = useState<AudioContext | undefined>(undefined);
 
   useEffect(() => {
     // Create the AudioContext only when the component is rendered
-    const context = new AudioContext();
-    setStateAudioContext(context);
-
-    // Clean up the AudioContext when the component is unmounted
-    return () => {
-      context.close();
-    };
-  }, []);
+    setStateAudioContext(audioContext);
+  }, [audioContext]);
 
   const alreadyWrapped = useAudio();
   if (alreadyWrapped) {
