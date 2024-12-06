@@ -16,7 +16,8 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings,
   VideoGalleryStrings,
-  CaptionsSettingsModalStrings
+  CaptionsSettingsModalStrings,
+  CaptionsBannerStrings
 } from '../components';
 import { NotificationStackStrings } from '../components';
 import { RaiseHandButtonStrings } from '../components';
@@ -206,6 +207,8 @@ export interface ComponentStrings {
    * 1 to 1 mapping between language code and language string for caption languages
    */
   captionLanguages: CaptionLanguageStrings;
+  /** Strings for CaptionsBanner */
+  captionsBanner: CaptionsBannerStrings;
 }
 
 /**

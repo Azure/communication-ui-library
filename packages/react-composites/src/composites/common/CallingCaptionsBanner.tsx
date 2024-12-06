@@ -3,22 +3,20 @@
 
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
-import { _CaptionsBanner, _CaptionsBannerStrings, CustomAvatarOptions } from '@internal/react-components';
+import { CaptionsBanner, CaptionsBannerStrings, CustomAvatarOptions } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { CallingCaptionsSettingsModal } from './CallingCaptionsSettingsModal';
 import { CaptionsBannerMoreButton } from './CaptionsBannerMoreButton';
-import { useAdaptedSelector } from '../CallComposite/hooks/useAdaptedSelector';
-import { useHandlers } from '../CallComposite/hooks/useHandlers';
-import { _captionsBannerSelector } from '@internal/calling-component-bindings';
 import { useLocale } from '../localization';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { FocusableElement } from './types/FocusableElement';
+import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
 const mobileViewBannerWidth = '90%';
 
 /** @private */
-export const CaptionsBanner = (props: {
+export const CallingCaptionsBanner = (props: {
   isMobile: boolean;
   useTeamsCaptions?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
@@ -28,10 +26,7 @@ export const CaptionsBanner = (props: {
   /** Element to return focus to when the Captions Banner is closed */
   returnFocusRef?: React.RefObject<FocusableElement>;
 }): JSX.Element => {
-  const captionsBannerProps = useAdaptedSelector(_captionsBannerSelector);
-
-  const handlers = useHandlers(_CaptionsBanner);
-
+  const captionsBannerProps = usePropsFor(CaptionsBanner);
   const [isCaptionsSettingsOpen, setIsCaptionsSettingsOpen] = useState<boolean>(false);
 
   const onClickCaptionsSettings = (): void => {
@@ -60,7 +55,7 @@ export const CaptionsBanner = (props: {
 
   const strings = useLocale().strings.call;
 
-  const captionsBannerStrings: _CaptionsBannerStrings = {
+  const captionsBannerStrings: CaptionsBannerStrings = {
     captionsBannerSpinnerText: strings.captionsBannerSpinnerText
   };
 
@@ -99,13 +94,13 @@ export const CaptionsBanner = (props: {
         <div className={containerClassName}>
           <Stack horizontalAlign="center">
             <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
-              <_CaptionsBanner
-                {...captionsBannerProps}
-                {...handlers}
+              <CaptionsBanner
+                captions={captionsBannerProps.captions ?? []}
                 captionsOptions={props.captionsOptions}
                 onRenderAvatar={onRenderAvatar}
                 formFactor={props.isMobile ? 'compact' : 'default'}
                 strings={captionsBannerStrings}
+                {...captionsBannerProps}
               />
             </Stack.Item>
           </Stack>

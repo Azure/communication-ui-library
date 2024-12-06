@@ -462,3 +462,9 @@ export type { MediaAccess } from '../../react-components/src';
 export type { CaptionsSettingsModalStrings, CaptionsSettingsModalProps } from '../../react-components/src';
 export { CaptionsSettingsModal } from '../../react-components/src';
 export type { SupportedCaptionLanguage, SupportedSpokenLanguage, CaptionsOptions } from '../../react-components/src';
+export type {
+  CaptionsBannerProps,
+  CaptionsInformation,
+  CaptionsBannerStrings
+} from '../../react-components/src/components/CaptionsBanner';
+export { CaptionsBanner } from '../../react-components/src/components/CaptionsBanner';
