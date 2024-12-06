@@ -822,11 +822,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
     /* @conditional-compile-remove(media-access) */
     const onForbidRemoteParticipantsAudio = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).forbidRemoteParticipantsAudio();
+      await call?.feature(Features.MediaAccess).forbidOthersAudio();
     };
     /* @conditional-compile-remove(media-access) */
     const onPermitRemoteParticipantsAudio = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).permitRemoteParticipantsAudio();
+      await call?.feature(Features.MediaAccess).permitOthersAudio();
     };
 
     /* @conditional-compile-remove(media-access) */
@@ -841,11 +841,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
     /* @conditional-compile-remove(media-access) */
     const onForbidRemoteParticipantsVideo = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).forbidRemoteParticipantsVideo();
+      await call?.feature(Features.MediaAccess).forbidOthersVideo();
     };
     /* @conditional-compile-remove(media-access) */
     const onPermitRemoteParticipantsVideo = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).permitRemoteParticipantsVideo();
+      await call?.feature(Features.MediaAccess).forbidOthersAudio();
     };
     return {
       onHangUp,
