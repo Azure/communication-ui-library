@@ -30,7 +30,7 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
-import { _formatString } from '@internal/acs-ui-common';
+import { _formatString, _isIdentityMicrosoftTeamsUser } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
@@ -790,6 +790,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       containerHeight
     ]
   );
+  // Current implementation of capabilities is only based on user role.
+  // This logic checks for the user role and if the user is a Teams user.
+  const canSwitchToTogetherModeLayout =
+    isTogetherModeActive || (_isIdentityMicrosoftTeamsUser(localParticipant.userId) && startTogetherModeEnabled);
+
   const layoutProps = useMemo<LayoutProps>(
     () => ({
       remoteParticipants,
@@ -848,11 +853,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return <LargeGalleryLayout {...layoutProps} />;
     }
     /* @conditional-compile-remove(together-mode) */
-    if (layout === 'togetherMode') {
+    // Teams users can switch to Together mode layout only if they have the capability,
+    // while ACS users can do so only if Together mode is enabled.
+    if (layout === 'togetherMode' && canSwitchToTogetherModeLayout) {
       return <TogetherModeLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps, screenShareParticipant]);
+  }, [canSwitchToTogetherModeLayout, layout, layoutProps, screenShareParticipant]);
 
   return (
     <div
