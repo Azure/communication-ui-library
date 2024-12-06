@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "togetherMode",
-  "comment": "Included a common util method that set call features renderer info",
-  "packageName": "@azure/communication-react",
-  "email": "nwankwojustin93@gmail.com",
-  "dependentChangeType": "patch"
-}
