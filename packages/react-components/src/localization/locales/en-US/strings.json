@@ -497,6 +497,14 @@
       "title": "Room time limit about to expire.",
       "message": "This room will close in 30 seconds",
       "dismissButtonAriaLabel": "Close"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode has started",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode has ended",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {

@@ -80,6 +80,7 @@ export class TogetherModeSubscriber {
   ): void => {
     for (const stream of removedStreams) {
       this._togetherModeVideoStreamSubscribers.get(stream.id)?.unsubscribe();
+      this._togetherModeVideoStreamSubscribers.delete(stream.id);
       this._internalContext.deleteCallFeatureRenderInfo(
         this._callIdRef.callId,
         this._featureName,
@@ -107,6 +108,17 @@ export class TogetherModeSubscriber {
         convertSdkCallFeatureStreamToDeclarativeCallFeatureStream(stream, this._featureName)
       )
     );
+    if (this._togetherMode.togetherModeStream.length) {
+      this._context.setLatestNotification(this._callIdRef.callId, {
+        target: 'togetherModeStarted',
+        timestamp: new Date(Date.now())
+      });
+    } else {
+      this._context.setLatestNotification(this._callIdRef.callId, {
+        target: 'togetherModeEnded',
+        timestamp: new Date(Date.now())
+      });
+    }
   };
 
   private onTogetherModeStreamUpdated = (args: {
