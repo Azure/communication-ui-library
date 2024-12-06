@@ -89,7 +89,8 @@ export type {
   MicrophoneButtonSelector,
   ParticipantsButtonSelector,
   CreateDefaultCallingHandlers,
-  CaptionSettingsSelector
+  CaptionSettingsSelector,
+  CaptionsBannerSelector
 } from '../../calling-component-bindings/src';
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 

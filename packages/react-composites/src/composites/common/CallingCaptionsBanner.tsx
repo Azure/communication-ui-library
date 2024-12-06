@@ -95,7 +95,6 @@ export const CallingCaptionsBanner = (props: {
           <Stack horizontalAlign="center">
             <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
               <CaptionsBanner
-                captions={captionsBannerProps.captions ?? []}
                 captionsOptions={props.captionsOptions}
                 onRenderAvatar={onRenderAvatar}
                 formFactor={props.isMobile ? 'compact' : 'default'}
