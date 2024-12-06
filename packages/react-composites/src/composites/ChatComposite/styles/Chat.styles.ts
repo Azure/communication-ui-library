@@ -30,20 +30,7 @@ export const chatScreenContainerStyle = mergeStyles({
 export const chatContainer = mergeStyles({
   height: '100%',
   width: '100%',
-  overflow: 'hidden',
-
-  '*::-webkit-scrollbar': {
-    width: '0.3rem',
-    height: '0.3rem'
-  },
-  '.scroll::-webkit-scrollbar-track': {
-    background: 'rgba(150, 150, 150)',
-    borderRadius: '0.3rem'
-  },
-  '*::-webkit-scrollbar-thumb': {
-    borderRadius: '10px',
-    background: 'rgba(150, 150, 150)'
-  }
+  overflow: 'hidden'
 });
 
 /**
