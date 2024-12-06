@@ -39,7 +39,7 @@ import { isDisabled, _isSafari } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
-import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
+import { CallingCaptionsSettingsModal } from '../CallingCaptionsSettingsModal';
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
@@ -358,7 +358,7 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
       <div ref={controlBarSizeRef}>
         <CallAdapterProvider adapter={props.callAdapter}>
           {showCaptionsSettingsModal && (
-            <CaptionsSettingsModal
+            <CallingCaptionsSettingsModal
               showCaptionsSettingsModal={showCaptionsSettingsModal}
               onDismissCaptionsSettings={onDismissCaptionsSettings}
               changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
