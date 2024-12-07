@@ -389,22 +389,12 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  ipAudio: {
+  forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  ipVideo: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsAudio: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsVideo: {
+  forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -451,22 +441,12 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  ipAudio: {
+  forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  ipVideo: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsAudio: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsVideo: {
+  forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -513,22 +493,12 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  ipAudio: {
+  forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  ipVideo: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsAudio: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsVideo: {
+  forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
@@ -575,22 +545,12 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: true, reason: 'Capable' },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  ipAudio: {
+  forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  ipVideo: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsAudio: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  forbidRemoteParticipantsVideo: {
+  forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
