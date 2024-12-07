@@ -3,11 +3,12 @@
 
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(together-mode) */
-import { TogetherModeParticipantSeatingState, TogetherModeStreamsState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
-import { VideoGalleryTogetherModeStreams } from '@internal/react-components';
+import {
+  VideoGalleryTogetherModeStreams,
+  VideoGalleryTogetherModeParticipantPosition
+} from '@internal/react-components';
 import { createSelector } from 'reselect';
 import {
   CallingBaseSelectorProps,
@@ -60,9 +61,9 @@ export type VideoGallerySelector = (
   /* @conditional-compile-remove(together-mode) */
   startTogetherModeEnabled?: boolean;
   /* @conditional-compile-remove(together-mode) */
-  togetherModeStreamsMap?: TogetherModeStreamsState;
+  togetherModeStreams?: VideoGalleryTogetherModeStreams;
   /* @conditional-compile-remove(together-mode) */
-  togetherModeSeatingCoordinates?: TogetherModeParticipantSeatingState;
+  togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 };
 
 /**
@@ -121,7 +122,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
     const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
     /* @conditional-compile-remove(together-mode) */
-    const togetherModeStreamsMap: VideoGalleryTogetherModeStreams = {
+    const togetherModeStreams = {
       mainVideoStream: {
         isAvailable: togetherModeCallFeature?.streams?.mainVideoStream?.isAvailable,
         renderElement: togetherModeCallFeature?.streams?.mainVideoStream?.view?.target,
@@ -166,7 +167,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       spotlightedParticipants: spotlightedParticipantIds,
       maxParticipantsToSpotlight: spotlightCallFeature?.maxParticipantsToSpotlight,
       /* @conditional-compile-remove(together-mode) */
-      togetherModeStreams: togetherModeStreamsMap,
+      togetherModeStreams: togetherModeStreams,
       /* @conditional-compile-remove(together-mode) */
       togetherModeSeatingCoordinates: togetherModeCallFeature?.seatingPositions,
       /* @conditional-compile-remove(together-mode) */

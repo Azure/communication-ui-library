@@ -790,6 +790,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       containerHeight
     ]
   );
+  /* @conditional-compile-remove(together-mode) */
   // Current implementation of capabilities is only based on user role.
   // This logic checks for the user role and if the user is a Teams user.
   const canSwitchToTogetherModeLayout =
@@ -859,7 +860,12 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       return <TogetherModeLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [canSwitchToTogetherModeLayout, layout, layoutProps, screenShareParticipant]);
+  }, [
+    /* @conditional-compile-remove(together-mode) */ canSwitchToTogetherModeLayout,
+    layout,
+    layoutProps,
+    screenShareParticipant
+  ]);
 
   return (
     <div

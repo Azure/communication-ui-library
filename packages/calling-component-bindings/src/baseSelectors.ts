@@ -27,8 +27,7 @@ import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeCallFeatureState } from '@internal/calling-stateful-client/dist/dist-esm/CallClientState';
-
+import { TogetherModeCallFeatureState } from '@internal/calling-stateful-client';
 /**
  * Common props used to reference calling declarative client state.
  *

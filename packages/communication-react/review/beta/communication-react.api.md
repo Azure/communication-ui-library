@@ -1193,7 +1193,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     // @beta
-    togetherMode: TogetherModeCallFeature;
+    togetherMode: TogetherModeCallFeatureState;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
@@ -5077,7 +5077,7 @@ export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
 // @beta
-export interface TogetherModeCallFeature {
+export interface TogetherModeCallFeatureState {
     // (undocumented)
     isActive: boolean;
     seatingPositions: TogetherModeParticipantSeatingState;
@@ -5436,8 +5436,8 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     maxParticipantsToSpotlight?: number;
     isTogetherModeActive?: boolean;
     startTogetherModeEnabled?: boolean;
-    togetherModeStreamsMap?: TogetherModeStreamsState;
-    togetherModeSeatingCoordinates?: TogetherModeParticipantSeatingState;
+    togetherModeStreams?: VideoGalleryTogetherModeStreams;
+    togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 };
 
 // @public
