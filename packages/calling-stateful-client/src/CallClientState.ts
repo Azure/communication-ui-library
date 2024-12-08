@@ -1143,7 +1143,9 @@ export type NotificationTarget =
   | 'assignedBreakoutRoomOpenedPromptJoin'
   | 'assignedBreakoutRoomChanged'
   | 'breakoutRoomJoined'
-  | 'breakoutRoomClosingSoon';
+  | 'breakoutRoomClosingSoon'
+  | 'togetherModeStarted'
+  | 'togetherModeEnded';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

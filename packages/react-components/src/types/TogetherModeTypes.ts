@@ -2,8 +2,16 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import { CreateVideoStreamViewResult, ViewScalingMode } from './VideoGalleryParticipant';
+import { CreateVideoStreamViewResult, VideoGalleryStream, VideoStreamOptions } from './VideoGalleryParticipant';
 
+/* @conditional-compile-remove(together-mode) */
+/**
+ * Interface representing the result of a Together Mode stream view.
+ * @beta
+ */
+export interface TogetherModeStreamOptions extends VideoStreamOptions {
+  viewKind?: 'main' | 'panoramic';
+}
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the result of a Together Mode stream view.
@@ -15,41 +23,11 @@ export interface TogetherModeStreamViewResult {
 
 /* @conditional-compile-remove(together-mode) */
 /**
- * Represents a video stream in Together Mode.
- * @beta
- */
-export interface TogetherModeStream {
-  /**
-   * Flag indicating whether the video stream is available for rendering
-   */
-  isAvailable?: boolean;
-  /**
-   * Flag indicating whether the together mode stream is packets are being received.
-   */
-  isReceiving?: boolean;
-  /**
-   * The HTML element used to render the video stream.
-   *
-   */
-  renderElement?: HTMLElement;
-  /**
-   * Scaling mode of the video stream
-   */
-  scalingMode?: ViewScalingMode;
-  /**
-   * The size of the video stream.
-   *
-   */
-  streamSize?: { width: number; height: number };
-}
-
-/* @conditional-compile-remove(together-mode) */
-/**
  * Interface representing the streams in Together Mode.
  * @beta
  */
 export interface VideoGalleryTogetherModeStreams {
-  mainVideoStream?: TogetherModeStream;
+  mainVideoStream?: VideoGalleryStream;
 }
 
 /* @conditional-compile-remove(together-mode) */
