@@ -21,7 +21,7 @@ test.describe('VGL - VideoGallery tests', () => {
       })
     );
     const component = await mount(
-      <Stack styles={{ root: { width: '100vw', height: '100vh' } }}>
+      <Stack styles={{ root: { width: '90vw', height: '90vh' } }}>
         <VideoGallery
           localParticipant={localParticipant}
           remoteParticipants={remoteParticipants}
@@ -29,9 +29,10 @@ test.describe('VGL - VideoGallery tests', () => {
         />
       </Stack>
     );
+    await component.waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('VGL-1-1-videogallery-with-audio-only-before-dominant-speakers.png');
     await component.update(
-      <Stack styles={{ root: { width: '100vw', height: '100vh' } }}>
+      <Stack styles={{ root: { width: '90vw', height: '90vh' } }}>
         <VideoGallery
           localParticipant={localParticipant}
           remoteParticipants={remoteParticipants}
@@ -40,6 +41,7 @@ test.describe('VGL - VideoGallery tests', () => {
         />
       </Stack>
     );
+    await component.waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('VGL-1-2-videogallery-with-audio-only-after-dominant-speakers.png');
   });
 
@@ -59,7 +61,7 @@ test.describe('VGL - VideoGallery tests', () => {
     remoteParticipants[8].videoStream = { isAvailable: true };
 
     const component = await mount(
-      <Stack styles={{ root: { width: '100vw', height: '100vh' } }}>
+      <Stack styles={{ root: { width: '90vw', height: '90vh' } }}>
         <VideoGallery
           localParticipant={localParticipant}
           remoteParticipants={remoteParticipants}
@@ -67,9 +69,10 @@ test.describe('VGL - VideoGallery tests', () => {
         />
       </Stack>
     );
+    await component.waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('VGL-2-1-videogallery-with-some-video-before-dominant-speakers.png');
     await component.update(
-      <Stack styles={{ root: { width: '100vw', height: '100vh' } }}>
+      <Stack styles={{ root: { width: '90vw', height: '90vh' } }}>
         <VideoGallery
           localParticipant={localParticipant}
           remoteParticipants={remoteParticipants}
@@ -78,6 +81,7 @@ test.describe('VGL - VideoGallery tests', () => {
         />
       </Stack>
     );
+    await component.waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('VGL-2-2-videogallery--with-some-video-after-dominant-speakers.png');
   });
 
@@ -92,7 +96,7 @@ test.describe('VGL - VideoGallery tests', () => {
     remoteParticipants[5].isScreenSharingOn = true;
     remoteParticipants[5].screenShareStream = { isAvailable: true };
     const component = await mount(
-      <Stack styles={{ root: { width: '100vw', height: '100vh' } }}>
+      <Stack styles={{ root: { width: '90vw', height: '90vh' } }}>
         <VideoGallery
           localParticipant={localParticipant}
           remoteParticipants={remoteParticipants}
@@ -100,9 +104,10 @@ test.describe('VGL - VideoGallery tests', () => {
         />
       </Stack>
     );
+    await component.waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('VGL-3-1-videogallery-with-screen-share-before-dominant-speakers.png');
     await component.update(
-      <Stack styles={{ root: { width: '100vw', height: '100vh' } }}>
+      <Stack styles={{ root: { width: '90vw', height: '90vw' } }}>
         <VideoGallery
           localParticipant={localParticipant}
           remoteParticipants={remoteParticipants}
@@ -111,6 +116,7 @@ test.describe('VGL - VideoGallery tests', () => {
         />
       </Stack>
     );
+    await component.waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('VGL-3-2-videogallery-with-screen-share-after-dominant-speakers.png');
   });
 
@@ -125,7 +131,7 @@ test.describe('VGL - VideoGallery tests', () => {
     };
     remoteParticipants.push(screenSharingParticipant);
     const component = await mount(
-      <Stack styles={{ root: { width: '100vw', height: '100vh' } }}>
+      <Stack styles={{ root: { width: '90vw', height: '90vh' } }}>
         <VideoGallery
           localParticipant={localParticipant}
           remoteParticipants={remoteParticipants}
@@ -133,10 +139,11 @@ test.describe('VGL - VideoGallery tests', () => {
         />
       </Stack>
     );
+    await component.waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('VGL-4-1-videogallery-before-spotlight.png');
     remoteParticipants[7].spotlight = { spotlightedOrderPosition: 1 };
     component.update(
-      <Stack styles={{ root: { width: '100vw', height: '100vh' } }}>
+      <Stack styles={{ root: { width: '90vw', height: '90vh' } }}>
         <VideoGallery
           localParticipant={localParticipant}
           remoteParticipants={remoteParticipants}
@@ -145,6 +152,7 @@ test.describe('VGL - VideoGallery tests', () => {
         />
       </Stack>
     );
+    await component.waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('VGL-4-2-videogallery-after-spotlight.png');
   });
 });
