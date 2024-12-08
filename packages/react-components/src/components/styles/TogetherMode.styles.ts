@@ -6,6 +6,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import { BaseCustomStyles } from '../../types/CustomStylesProps';
 /* @conditional-compile-remove(together-mode) */
 import { VideoGalleryTogetherModeSeatingInfo } from '../../types/TogetherModeTypes';
+import { mergeStyles } from '@fluentui/react';
 
 /* @conditional-compile-remove(together-mode) */
 /**
@@ -113,3 +114,21 @@ export function togetherModeHover(): React.CSSProperties {
     border: '1px solid blue'
   };
 }
+
+/**
+ * Style for text with ellipsis overflow.
+ */
+export const ellipsisTextStyle = mergeStyles({
+  whiteSpace: 'nowrap',
+  overflow: 'hidden',
+  textOverflow: 'ellipsis',
+  maxWidth: '150px', // Initial max width
+  display: 'inline-block',
+  transition: 'all 0.3s ease-in-out', // Smooth transition for all changes
+
+  selectors: {
+    '&:hover': {
+      maxWidth: '300px' // Expanded width on hover
+    }
+  }
+});

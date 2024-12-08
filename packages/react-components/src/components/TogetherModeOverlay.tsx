@@ -12,7 +12,7 @@ import {
   VideoGalleryRemoteParticipant
 } from '../types';
 /* @conditional-compile-remove(together-mode) */
-import { spriteAnimationStyles } from './styles/ReactionOverlay.style';
+import { moveAnimationStyles, spriteAnimationStyles } from './styles/ReactionOverlay.style';
 /* @conditional-compile-remove(together-mode) */
 import {
   // getCombinedKey,
@@ -29,6 +29,7 @@ import { useLocale } from '../localization';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 /* @conditional-compile-remove(together-mode) */
 import {
+  ellipsisTextStyle,
   getTogetherModeParticipantOverlayStyle,
   getTogetherModeSeatPositionStyle,
   ITogetherModeSeatPositionStyle
@@ -150,8 +151,8 @@ export const TogetherModeOverlay = React.memo(
               border: '1px solid red',
               position: 'absolute',
               left: `${participantSignal.seatPositionStyle.seatCoordinates.left}px`,
-              top: `${participantSignal.seatPositionStyle.seatCoordinates.top}px`,
-              zIndex: 70
+              top: `${participantSignal.seatPositionStyle.seatCoordinates.top}px`
+              // zIndex: 70
             }}
             onMouseEnter={() => {
               setHoveredParticipantID(`${participantSignal.id}`);
@@ -161,50 +162,71 @@ export const TogetherModeOverlay = React.memo(
             }}
           >
             <div className="togetherMode-item">
-              {
+              {participantSignal?.reaction?.reactionType && (
                 <div
-                  style={{
-                    width: `${REACTION_START_DISPLAY_SIZE}px`,
-                    top: `${(100 - (REACTION_START_DISPLAY_SIZE / (participantSignal.seatPositionStyle.seatCoordinates.height ?? 1)) * 100) / 2}%`,
-                    left: `${(100 - (REACTION_START_DISPLAY_SIZE / (participantSignal.seatPositionStyle.seatCoordinates.width ?? 1)) * 100) / 2}%`,
-                    position: 'absolute'
-                  }}
+                  style={moveAnimationStyles(
+                    participantSignal.seatPositionStyle.seatCoordinates.height ?? 1 / 2, // dividing by two because reactionOverlayStyle height is set to 50%
+                    (participantSignal.seatPositionStyle.seatCoordinates.height ?? 1 / 2) * (1 - 0.7 * 0.95)
+                  )}
                 >
                   <div
-                    style={spriteAnimationStyles(
-                      REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                      REACTION_START_DISPLAY_SIZE,
-                      (participantSignal.reaction &&
-                        getEmojiResource(participantSignal?.reaction.reactionType, reactionResources)) ??
-                        ''
-                    )}
-                  />
+                    style={{
+                      width: `${REACTION_START_DISPLAY_SIZE}px`,
+                      left: `${(100 - (REACTION_START_DISPLAY_SIZE / (participantSignal.seatPositionStyle.seatCoordinates.width ?? 1)) * 100) / 2}%`,
+                      position: 'absolute'
+                    }}
+                  >
+                    <div
+                      style={spriteAnimationStyles(
+                        REACTION_NUMBER_OF_ANIMATION_FRAMES,
+                        REACTION_START_DISPLAY_SIZE,
+                        (participantSignal.reaction &&
+                          getEmojiResource(participantSignal?.reaction.reactionType, reactionResources)) ??
+                          ''
+                      )}
+                    />
+                  </div>
                 </div>
-              }
-              <div>
-                <Stack horizontal>
-                  <Stack horizontal>
-                    {participantSignal.isHandRaised && (
-                      <Stack className={mergeStyles(iconContainerStyle)}>
-                        <Icon iconName="ControlButtonRaiseHand" />
-                      </Stack>
-                    )}
-                    {participantSignal.showDisplayName && (
-                      <Text title={participantSignal.displayName} data-ui-id="video-tile-display-name">
-                        {participantSignal.displayName}
-                      </Text>
-                    )}
-                    {participantSignal.showDisplayName && participantSignal.isMuted && (
-                      <Stack className={mergeStyles(iconContainerStyle)}>
-                        <Icon iconName="VideoTileMicOff" />
-                      </Stack>
-                    )}
-                    {participantSignal.isSpotlighted && (
-                      <Stack className={mergeStyles(iconContainerStyle)}>
-                        <Icon iconName="VideoTileSpotlighted" />
-                      </Stack>
-                    )}
-                  </Stack>
+              )}
+              <div
+                style={{
+                  position: 'absolute',
+                  bottom: '0',
+                  width: '100%',
+                  backgroundColor: participantSignal.showDisplayName ? 'rgba(0, 0, 0, 0.7)' : 'transparent',
+                  color: 'white',
+                  textAlign: 'center',
+                  overflow: 'visible' // Allow content to overflow parent
+                }}
+              >
+                <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 4 }}>
+                  {participantSignal.isHandRaised && (
+                    <Stack className={mergeStyles(iconContainerStyle)}>
+                      <Icon iconName="ControlButtonRaiseHand" />
+                    </Stack>
+                  )}
+                  {participantSignal.showDisplayName && (
+                    <Text
+                      data-ui-id="video-tile-display-name"
+                      className={ellipsisTextStyle}
+                      style={{
+                        maxWidth: hoveredParticipantID === `${participantSignal.id}` ? '300px' : '150px', // Dynamically change width based on state
+                        overflow: hoveredParticipantID === `${participantSignal.id}` ? 'visible' : 'hidden' // Show content when expanded
+                      }}
+                    >
+                      {participantSignal.displayName}
+                    </Text>
+                  )}
+                  {participantSignal.showDisplayName && participantSignal.isMuted && (
+                    <Stack className={mergeStyles(iconContainerStyle)}>
+                      <Icon iconName="VideoTileMicOff" />
+                    </Stack>
+                  )}
+                  {participantSignal.isSpotlighted && (
+                    <Stack className={mergeStyles(iconContainerStyle)}>
+                      <Icon iconName="VideoTileSpotlighted" />
+                    </Stack>
+                  )}
                 </Stack>
               </div>
             </div>
