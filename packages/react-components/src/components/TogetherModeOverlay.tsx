@@ -72,6 +72,7 @@ export const TogetherModeOverlay = React.memo(
     const locale = useLocale();
     const { reactionResources, remoteParticipants, localParticipant, participantsSeatingArrangement } = props;
     const [visibleSignals, setVisibleSignals] = useState<Record<string, VisibleTogetherModeSignalingAction>>({});
+    const [hoveredParticipantID, setHoveredParticipantID] = useState('');
 
     useMemo(() => {
       const updatedParticipantsIds = remoteParticipants?.map((participant) => participant.userId) ?? [];
@@ -104,12 +105,17 @@ export const TogetherModeOverlay = React.memo(
             isSpotlighted: !!participant.spotlight,
             isMuted: participant.isMuted,
             displayName: participant.displayName || locale.strings.videoGallery.displayNamePlaceholder,
-            showDisplayName: !!(participant.spotlight || participant.raisedHand || participant.reaction),
+            showDisplayName: !!(
+              participant.spotlight ||
+              participant.raisedHand ||
+              participant.reaction ||
+              hoveredParticipantID === participantID
+            ),
             seatPositionStyle: togetherModeSeatStyle
           }
         }));
       },
-      [locale.strings.videoGallery.displayNamePlaceholder, participantsSeatingArrangement]
+      [hoveredParticipantID, locale.strings.videoGallery.displayNamePlaceholder, participantsSeatingArrangement]
     );
 
     useEffect(() => {
@@ -131,7 +137,6 @@ export const TogetherModeOverlay = React.memo(
         style={{
           width: '100%',
           height: '100%',
-          pointerEvents: 'none',
           position: 'absolute',
           top: '0',
           left: '0'
@@ -145,7 +150,14 @@ export const TogetherModeOverlay = React.memo(
               border: '1px solid red',
               position: 'absolute',
               left: `${participantSignal.seatPositionStyle.seatCoordinates.left}px`,
-              top: `${participantSignal.seatPositionStyle.seatCoordinates.top}px`
+              top: `${participantSignal.seatPositionStyle.seatCoordinates.top}px`,
+              zIndex: 70
+            }}
+            onMouseEnter={() => {
+              setHoveredParticipantID(`${participantSignal.id}`);
+            }}
+            onMouseLeave={() => {
+              setHoveredParticipantID('');
             }}
           >
             <div className="togetherMode-item">

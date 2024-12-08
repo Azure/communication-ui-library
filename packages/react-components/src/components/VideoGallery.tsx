@@ -793,8 +793,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   /* @conditional-compile-remove(together-mode) */
   // Current implementation of capabilities is only based on user role.
   // This logic checks for the user role and if the user is a Teams user.
-  const canSwitchToTogetherModeLayout =
-    isTogetherModeActive || (_isIdentityMicrosoftTeamsUser(localParticipant.userId) && startTogetherModeEnabled);
+  // const canSwitchToTogetherModeLayout =
+  //   isTogetherModeActive || (_isIdentityMicrosoftTeamsUser(localParticipant.userId) && startTogetherModeEnabled);
 
   const layoutProps = useMemo<LayoutProps>(
     () => ({
@@ -856,16 +856,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(together-mode) */
     // Teams users can switch to Together mode layout only if they have the capability,
     // while ACS users can do so only if Together mode is enabled.
-    if (layout === 'togetherMode' && canSwitchToTogetherModeLayout) {
+    if (layout === 'togetherMode') {
       return <TogetherModeLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [
-    /* @conditional-compile-remove(together-mode) */ canSwitchToTogetherModeLayout,
-    layout,
-    layoutProps,
-    screenShareParticipant
-  ]);
+  }, [layout, layoutProps, screenShareParticipant]);
 
   return (
     <div

@@ -22,7 +22,7 @@ import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
 /* @conditional-compile-remove(together-mode) */
 import { Stack } from '@fluentui/react';
 /* @conditional-compile-remove(together-mode) */
-import { togetherModeRootStyle } from '../styles/TogetherMode.styles'; // Ensure this is an object, not a string
+// import { togetherModeRootStyle } from '../styles/TogetherMode.styles'; // Ensure this is an object, not a string
 
 /* @conditional-compile-remove(together-mode) */
 /**
@@ -75,18 +75,13 @@ export const TogetherModeStream = React.memo(
 
     // Update scene size only when container dimensions change
     useEffect(() => {
-      if (!onSetTogetherModeSceneSize) {
-        console.log(`Chuk Scene change callback is null ${containerWidth} ${containerHeight}`);
-      }
       if (onSetTogetherModeSceneSize && containerWidth && containerHeight) {
         if (containerWidth !== sceneDimensions.width || containerHeight !== sceneDimensions.height) {
           onSetTogetherModeSceneSize(containerWidth, containerHeight);
-          console.log(`Setting scene size width to ${containerWidth}  == ${sceneDimensions.width}`);
-          console.log(`Setting scene size height to ${containerHeight}  == ${sceneDimensions.height}`);
           setSceneDimensions({ width: containerWidth, height: containerHeight });
         }
       }
-    }, [onSetTogetherModeSceneSize, containerWidth, containerHeight, sceneDimensions.width, sceneDimensions.height]);
+    }, [onSetTogetherModeSceneSize, containerWidth, containerHeight, sceneDimensions]);
 
     // Memoized layout computation
     const layout = getTogetherModeMainVideoLayout(props);
@@ -122,7 +117,7 @@ const getTogetherModeMainVideoLayout = (props: {
           videoStreamElement={stream?.renderElement || null}
           isMirrored={true}
           loadingState={showLoadingIndicator ? 'loading' : 'none'}
-          styles={togetherModeRootStyle(props.containerWidth, props.containerHeight)}
+          // styles={togetherModeRootStyle(props.containerWidth, props.containerHeight)}
         />
         {props.reactionResources && (
           <MeetingReactionOverlay
