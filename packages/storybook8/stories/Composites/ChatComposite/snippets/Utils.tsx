@@ -9,28 +9,28 @@ import React from 'react';
 import { CompositeConnectionParamsErrMessage } from '../../../CompositeStringUtils';
 import { MICROSOFT_AZURE_ACCESS_TOKEN_QUICKSTART } from '../../../constants';
 
-const botDisplayName = 'A simple bot';
+const remoteParticipantDisplayName = 'A simple remote participant';
 
-// Adds a bot to the thread that sends out provided canned messages one by one.
-export const addParrotBotToThread = async (
+// Adds a placeholder remote participant to the thread that sends out provided canned messages one by one.
+export const addRemoteParticipantToThread = async (
   userToken: string,
-  botId: string,
-  botToken: string,
+  remoteParticipantId: string,
+  remoteParticipantToken: string,
   endpointUrl: string,
   threadId: string,
   messages: string[]
 ): Promise<CommunicationUserIdentifier> => {
-  const botIdentifier: CommunicationUserIdentifier = { communicationUserId: botId };
+  const remoteParticipantIdentifier: CommunicationUserIdentifier = { communicationUserId: remoteParticipantId };
   const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(userToken));
   await chatClient.getChatThreadClient(threadId).addParticipants({
-    participants: [{ id: botIdentifier, displayName: botDisplayName }]
+    participants: [{ id: remoteParticipantIdentifier, displayName: remoteParticipantDisplayName }]
   });
 
-  sendMessagesAsBot(botToken, endpointUrl, threadId, messages);
-  return botIdentifier;
+  sendMessagesAsRemoteParticipant(remoteParticipantToken, endpointUrl, threadId, messages);
+  return remoteParticipantIdentifier;
 };
 
-const sendMessagesAsBot = async (
+const sendMessagesAsRemoteParticipant = async (
   token: string,
   envUrl: string,
   threadId: string,
@@ -42,32 +42,35 @@ const sendMessagesAsBot = async (
   let index = 0;
   // Send first message immediately so users aren't staring at an empty chat thread.
   if (messages[0]) {
-    threadClient.sendMessage({ content: messages[0] }, { senderDisplayName: botDisplayName });
+    threadClient.sendMessage({ content: messages[0] }, { senderDisplayName: remoteParticipantDisplayName });
     index++;
   }
 
   const intervalHandle = setInterval(() => {
     const message = messages[index++];
     if (message) {
-      threadClient.sendMessage({ content: message }, { senderDisplayName: botDisplayName });
+      threadClient.sendMessage({ content: message }, { senderDisplayName: remoteParticipantDisplayName });
     } else {
       clearInterval(intervalHandle);
     }
   }, 5000);
 };
 
-export const sendMessagesAsBotWithAdapter = async (adapter: ChatAdapter, messages: string[]): Promise<void> => {
+export const sendMessagesAsRemoteParticipantWithAdapter = async (
+  adapter: ChatAdapter,
+  messages: string[]
+): Promise<void> => {
   let index = 0;
   // Send first message immediately so users aren't staring at an empty chat thread.
   if (messages[0]) {
-    adapter.sendMessage(messages[0], { senderDisplayName: botDisplayName });
+    adapter.sendMessage(messages[0], { senderDisplayName: remoteParticipantDisplayName });
     index++;
   }
 
   const intervalHandle = setInterval(() => {
     const message = messages[index++];
     if (message) {
-      adapter.sendMessage(message, { senderDisplayName: botDisplayName });
+      adapter.sendMessage(message, { senderDisplayName: remoteParticipantDisplayName });
     } else {
       clearInterval(intervalHandle);
     }
@@ -123,7 +126,7 @@ export const createThreadAndAddUser = async (
   const threadId =
     (
       await chatClient.createChatThread(
-        { topic: 'Chat with a friendly bot' },
+        { topic: 'Chat with a remote participant' },
         {
           participants: [{ id: user, displayName: displayName }]
         }

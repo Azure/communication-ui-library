@@ -9,7 +9,7 @@ import { compositeExperienceContainerStyle } from '../../constants';
 import {
   defaultChatCompositeHiddenControls,
   controlsToAdd,
-  getControlledBotAvatarSymbol,
+  getControlledRemoteParticipantAvatarSymbol,
   ArgsFrom
 } from '../../controlsUtils';
 import { compositeLocale } from '../../localizationUtils';
@@ -17,11 +17,11 @@ import {
   CustomDataModelExampleContainer,
   CustomDataModelExampleContainerProps
 } from './snippets/CustomDataModelExampleContainer.snippet';
-import { ConfigHintBanner, addParrotBotToThread, createThreadAndAddUser } from './snippets/Utils';
+import { ConfigHintBanner, addRemoteParticipantToThread, createThreadAndAddUser } from './snippets/Utils';
 
 const messageArray = [
   'Welcome to the custom data model example!',
-  'Your display name is shown in the participant list, so is mine: A simple bot.',
+  'Your display name is shown in the participant list, so is mine: A simple remote participant.',
   'Additionally, you can change my avatar from the default Robot symbol to furrier creatures.',
   'Have fun!'
 ];
@@ -29,11 +29,11 @@ const messageArray = [
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
-  botId: controlsToAdd.botUserId,
-  botToken: controlsToAdd.botToken,
+  remoteParticipantId: controlsToAdd.remoteParticipantUserId,
+  remoteParticipantToken: controlsToAdd.remoteParticipantToken,
   endpointUrl: controlsToAdd.endpointUrl,
   displayName: controlsToAdd.requiredDisplayName,
-  avatar: controlsToAdd.botAvatar
+  avatar: controlsToAdd.remoteParticipantAvatar
 };
 
 const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element => {
@@ -44,32 +44,47 @@ const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context): JS
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
+      if (
+        args.userId &&
+        args.token &&
+        args.remoteParticipantId &&
+        args.remoteParticipantToken &&
+        args.endpointUrl &&
+        args.displayName
+      ) {
         const newPrerequisites = await createThreadAndAddUser(
           args.userId,
           args.token,
           args.endpointUrl,
           args.displayName
         );
-        const botUser = await addParrotBotToThread(
+        const remoteUser = await addRemoteParticipantToThread(
           args.token,
-          args.botId,
-          args.botToken,
+          args.remoteParticipantId,
+          args.remoteParticipantToken,
           args.endpointUrl,
           newPrerequisites.threadId,
           messageArray
         );
         setContainerProps({
           ...newPrerequisites,
-          botUserId: toFlatCommunicationIdentifier(botUser),
-          botAvatar: args.avatar
+          remoteParticipantUserId: toFlatCommunicationIdentifier(remoteUser),
+          remoteParticipantAvatar: args.avatar
         });
       } else {
         setContainerProps(undefined);
       }
     };
     fetchToken();
-  }, [args.avatar, args.botId, args.botToken, args.displayName, args.endpointUrl, args.token, args.userId]);
+  }, [
+    args.avatar,
+    args.remoteParticipantId,
+    args.remoteParticipantToken,
+    args.displayName,
+    args.endpointUrl,
+    args.token,
+    args.userId
+  ]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
@@ -79,7 +94,7 @@ const CustomDataModelStory = (args: ArgsFrom<typeof storyControls>, context): JS
           rtl={context.globals.rtl === 'rtl'}
           locale={compositeLocale(locale)}
           {...containerProps}
-          botAvatar={getControlledBotAvatarSymbol(args.avatar)}
+          remoteParticipantAvatar={getControlledRemoteParticipantAvatarSymbol(args.avatar)}
         />
       ) : (
         <ConfigHintBanner />

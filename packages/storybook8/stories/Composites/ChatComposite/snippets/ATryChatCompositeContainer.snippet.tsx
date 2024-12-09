@@ -4,7 +4,7 @@ import { PartialTheme, Theme } from '@fluentui/react';
 // eslint-disable-next-line no-restricted-imports
 import { _useFakeChatAdapters } from '@internal/react-composites';
 import React, { useMemo, useEffect } from 'react';
-import { sendMessagesAsBotWithAdapter } from './Utils';
+import { sendMessagesAsRemoteParticipantWithAdapter } from './Utils';
 
 export type ContainerProps = {
   displayName: string;
@@ -25,15 +25,15 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
       id: { communicationUserId: 'localId' },
       displayName: props.displayName
     };
-    const botParticipant: ChatParticipant = {
+    const remoteParticipant: ChatParticipant = {
       id: { communicationUserId: 'remoteId' },
-      displayName: 'A simple bot'
+      displayName: 'A simple remote participant'
     };
     return {
       topic: props.topic,
       localParticipant: localParticipant,
-      remoteParticipants: [botParticipant],
-      participantsWithHiddenComposites: [botParticipant]
+      remoteParticipants: [remoteParticipant],
+      participantsWithHiddenComposites: [remoteParticipant]
     };
   }, [props.displayName, props.topic]);
 
@@ -41,7 +41,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
 
   useEffect(() => {
     if (fakeAdapter?.remotes[0]) {
-      sendMessagesAsBotWithAdapter(fakeAdapter?.remotes[0], props.messages);
+      sendMessagesAsRemoteParticipantWithAdapter(fakeAdapter?.remotes[0], props.messages);
     }
   }, [fakeAdapter?.remotes, props.messages]);
 

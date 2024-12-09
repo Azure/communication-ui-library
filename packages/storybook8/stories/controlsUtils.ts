@@ -11,8 +11,8 @@ import {
   mediaGalleryHeightOptions
 } from './constants';
 
-const botAvatars = ['Default', 'Cat', 'Fox', 'Koala'];
-export const getControlledBotAvatarSymbol = (AvatarName: string): string => {
+const remoteParticipantAvatars = ['Default', 'Cat', 'Fox', 'Koala'];
+export const getControlledRemoteParticipantAvatarSymbol = (AvatarName: string): string => {
   switch (AvatarName) {
     case 'Default':
       return '🤖';
@@ -224,22 +224,27 @@ export const controlsToAdd = {
     name: 'App Name'
   },
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
-  botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
-  botChatTopic: {
+  remoteParticipantAvatar: {
+    control: 'radio',
+    options: remoteParticipantAvatars,
+    defaultValue: 'Default',
+    name: 'Remote Participant Avatar'
+  },
+  remoteParticipantChatTopic: {
     control: 'text',
     name: 'Chat Topic',
     type: { name: 'string', required: true }
   },
-  botToken: {
+  remoteParticipantToken: {
     control: 'text',
     defaultValue: '',
-    name: 'Valid token for bot',
+    name: 'Valid token for a remote participant',
     type: { name: 'string', required: true }
   },
-  botUserId: {
+  remoteParticipantUserId: {
     control: 'text',
     defaultValue: '',
-    name: 'User identifier for bot',
+    name: 'User identifier for a remote participant',
     type: { name: 'string', required: true }
   },
   calleeUserId: {

@@ -13,7 +13,7 @@ import { ContosoChatContainer } from './snippets/Container.snippet';
 import {
   ChatCompositeSetupProps,
   ConfigHintBanner,
-  addParrotBotToThread,
+  addRemoteParticipantToThread,
   createThreadAndAddUser,
   onDisplayDateTimeString
 } from './snippets/Utils';
@@ -28,8 +28,8 @@ const messageArray = [
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
-  botId: controlsToAdd.botUserId,
-  botToken: controlsToAdd.botToken,
+  remoteParticipantId: controlsToAdd.remoteParticipantUserId,
+  remoteParticipantToken: controlsToAdd.remoteParticipantToken,
   endpointUrl: controlsToAdd.endpointUrl,
   displayName: controlsToAdd.requiredDisplayName,
   showErrorBar: controlsToAdd.showErrorBar,
@@ -52,12 +52,19 @@ const CustomDateTimeFormatStory = (args: ArgsFrom<typeof storyControls>, context
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
+      if (
+        args.userId &&
+        args.token &&
+        args.remoteParticipantId &&
+        args.remoteParticipantToken &&
+        args.endpointUrl &&
+        args.displayName
+      ) {
         const newProps = await createThreadAndAddUser(args.userId, args.token, args.endpointUrl, args.displayName);
-        await addParrotBotToThread(
+        await addRemoteParticipantToThread(
           args.token,
-          args.botId,
-          args.botToken,
+          args.remoteParticipantId,
+          args.remoteParticipantToken,
           args.endpointUrl,
           newProps.threadId,
           messageArray
@@ -68,7 +75,14 @@ const CustomDateTimeFormatStory = (args: ArgsFrom<typeof storyControls>, context
       }
     };
     fetchToken();
-  }, [args.userId, args.token, args.botId, args.botToken, args.endpointUrl, args.displayName]);
+  }, [
+    args.userId,
+    args.token,
+    args.remoteParticipantId,
+    args.remoteParticipantToken,
+    args.endpointUrl,
+    args.displayName
+  ]);
 
   const strings = compositeLocale(locale)?.component.strings ?? COMPONENT_LOCALE_EN_US.strings;
   const compositeStrings = compositeLocale(locale)?.strings ?? COMPOSITE_LOCALE_EN_US.strings;

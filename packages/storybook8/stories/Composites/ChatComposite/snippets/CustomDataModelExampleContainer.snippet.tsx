@@ -17,8 +17,8 @@ export interface CustomDataModelExampleContainerProps {
   displayName: string;
   endpointUrl: string;
   threadId: string;
-  botUserId: string;
-  botAvatar: string;
+  remoteParticipantUserId: string;
+  remoteParticipantAvatar: string;
   fluentTheme?: PartialTheme | Theme;
   rtl?: boolean;
   locale?: CompositeLocale;
@@ -42,8 +42,8 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
     threadId: props.threadId
   });
 
-  // Data model injection: Contoso provides avatars for the chat bot participant.
-  // Unlike the displayName example above, this sets the avatar for the remote bot participant.
+  // Data model injection: Contoso provides avatars for the chat remote participant participant.
+  // Unlike the displayName example above, this sets the avatar for the remote participant.
   //
   // Note: Chat Composite doesn't implement a memoization mechanism for this callback.
   // It is recommended that Contoso memoize the `onFetchAvatarPersonaData` callback
@@ -51,9 +51,9 @@ export const CustomDataModelExampleContainer = (props: CustomDataModelExampleCon
   // A 3rd Party utility such as Lodash (_.memoize) can be used to memoize the callback.
   const onFetchAvatarPersonaData = (userId: string): Promise<AvatarPersonaData> =>
     new Promise((resolve) => {
-      if (userId === props.botUserId) {
+      if (userId === props.remoteParticipantUserId) {
         return resolve({
-          imageInitials: props.botAvatar,
+          imageInitials: props.remoteParticipantAvatar,
           initialsColor: 'white'
         });
       }

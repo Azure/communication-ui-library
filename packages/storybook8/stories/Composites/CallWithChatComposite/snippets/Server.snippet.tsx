@@ -7,7 +7,7 @@ import { v1 as createGUID } from 'uuid';
 
 const createNewChatThread = async (chatClient: ChatClient, participants: ChatParticipant[]): Promise<string> => {
   const chatThreadResponse = await chatClient.createChatThread(
-    { topic: 'Meeting with a friendly bot' },
+    { topic: 'Meeting with a remote participant' },
     { participants }
   );
   if (chatThreadResponse.invalidParticipants && chatThreadResponse.invalidParticipants.length > 0) {
