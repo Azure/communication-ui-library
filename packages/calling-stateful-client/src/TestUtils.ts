@@ -504,7 +504,9 @@ export function createMockApiFeatures(
       isRecordingActive: false,
       isTranscriptionActive: false,
       /* @conditional-compile-remove(media-access) */
-      getRemoteParticipantsMediaAccess: () => []
+      getAllOthersMediaAccess: () => [],
+      /* @conditional-compile-remove(media-access) */
+      getMeetingMediaAccess: () => ({ isAudioPermitted: true, isVideoPermitted: true })
     });
     return generic;
   };
