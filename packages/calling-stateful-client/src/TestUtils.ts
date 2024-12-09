@@ -102,10 +102,6 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
  * @private
  */
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
-  public isConsentRequired = false;
-  consentToBeingRecordedAndTranscribed(): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
   public name = 'Recording';
   public consentToBeingRecordedAndTranscribed(): Promise<void> {
     this.isRecordingActive = true;
@@ -197,7 +193,27 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
   constructor() {
     this.mediaAccesses = [];
   }
-
+  permitOthersAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+  forbidOthersAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+  forbidOthersVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+  permitOthersVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+  getAllOthersMediaAccess(): MediaAccess[] {
+    return this.mediaAccesses;
+  }
+  getMeetingMediaAccess(): MeetingMediaAccess {
+    return {
+      isAudioPermitted: true,
+      isVideoPermitted: true
+    };
+  }
   permitAudio(): Promise<void> {
     return Promise.resolve();
   }
@@ -214,39 +230,35 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
     return Promise.resolve();
   }
 
-  permitOthersAudio(): Promise<void> {
+  permitRemoteParticipantsAudio(): Promise<void> {
     return Promise.resolve();
   }
 
-  forbidOthersAudio(): Promise<void> {
+  forbidRemoteParticipantsAudio(): Promise<void> {
     return Promise.resolve();
   }
 
-  permitOthersVideo(): Promise<void> {
+  permitRemoteParticipantsVideo(): Promise<void> {
     return Promise.resolve();
   }
 
-  forbidOthersVideo(): Promise<void> {
+  forbidRemoteParticipantsVideo(): Promise<void> {
     return Promise.resolve();
   }
 
-  getAllOthersMediaAccess(): MediaAccess[] {
+  getRemoteParticipantsMediaAccess(): MediaAccess[] {
     return this.mediaAccesses;
   }
 
-  getMeetingMediaAccess(): MeetingMediaAccess {
-    return { isAudioPermitted: true, isVideoPermitted: true };
-  }
-
-  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
   on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
-  on(event: string, listener: (...args: any[]) => void): void {
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
 
   off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
   off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
-  off(event: string, listener: (...args: any[]) => void): void {
+  off(event: any, listener: any): void {
     this.emitter.off(event, listener);
   }
 
@@ -259,10 +271,6 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
  * @private
  */
 export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
-  public isConsentRequired = false;
-  consentToBeingRecordedAndTranscribed(): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
   public name = 'Transcription';
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();
