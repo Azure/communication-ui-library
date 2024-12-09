@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { _CaptionsInfo } from '@internal/react-components';
+import { CaptionsInformation } from '@azure/communication-react';
 
-export const GenerateMockNewCaption = (): _CaptionsInfo => {
+export const GenerateMockNewCaption = (): CaptionsInformation => {
   return {
     id: Date.now().toString(),
     displayName: 'SpongeBob',
@@ -12,7 +12,7 @@ export const GenerateMockNewCaption = (): _CaptionsInfo => {
   };
 };
 
-export const GenerateMockNewShortCaption = (): _CaptionsInfo => {
+export const GenerateMockNewShortCaption = (): CaptionsInformation => {
   return {
     id: Date.now().toString(),
     displayName: 'SpongeBob Patrick',
@@ -20,7 +20,7 @@ export const GenerateMockNewShortCaption = (): _CaptionsInfo => {
   };
 };
 
-export const GenerateMockNewCaptionWithLongName = (): _CaptionsInfo => {
+export const GenerateMockNewCaptionWithLongName = (): CaptionsInformation => {
   return {
     id: Date.now().toString(),
     displayName: 'SpongeBob Patrick Robert',
@@ -28,7 +28,7 @@ export const GenerateMockNewCaptionWithLongName = (): _CaptionsInfo => {
   };
 };
 
-export const GenerateMockNewCaptions = (): _CaptionsInfo[] => {
+export const GenerateMockNewCaptions = (): CaptionsInformation[] => {
   return [
     {
       id: Date.now().toString(),
