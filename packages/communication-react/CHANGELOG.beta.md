@@ -4,10 +4,10 @@
 
 <!-- Start content -->
 
-## [1.23.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.23.0-beta.1)
+## [1.22.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.22.0-beta.1)
 
 Mon, 02 Dec 2024 20:48:59 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0...1.23.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0...1.22.0-beta.1)
 
 ### Improvements
 - Add AAD sign out capability for sample app ([PR #5310](https://github.com/azure/communication-ui-library/pull/5310) by 77021369+jimchou-dev@users.noreply.github.com)
