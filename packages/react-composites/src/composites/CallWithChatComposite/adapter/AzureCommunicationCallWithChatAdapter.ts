@@ -521,10 +521,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     await this.callAdapter.disposeLocalVideoStreamView();
   }
   /* @conditional-compile-remove(together-mode) */
-  public async createTogetherModeStreamViews(
+  public async createTogetherModeStreamView(
     options?: VideoStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> {
-    return await this.callAdapter.createTogetherModeStreamViews(options);
+    return await this.callAdapter.createTogetherModeStreamView(options);
   }
   /* @conditional-compile-remove(together-mode) */
   public async startTogetherMode(): Promise<void> {
@@ -535,8 +535,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.setTogetherModeSceneSize(width, height);
   }
   /* @conditional-compile-remove(together-mode) */
-  public async disposeTogetherModeStreamViews(): Promise<void> {
-    await this.callAdapter.disposeTogetherModeStreamViews();
+  public async disposeTogetherModeStreamView(): Promise<void> {
+    await this.callAdapter.disposeTogetherModeStreamView();
   }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {

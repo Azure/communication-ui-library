@@ -231,7 +231,7 @@ const createCompositeHandlers = memoizeOne(
       },
       /* @conditional-compile-remove(together-mode) */
       onCreateTogetherModeStreamView: async (options) => {
-        return await adapter.createTogetherModeStreamViews(options);
+        return await adapter.createTogetherModeStreamView(options);
       },
       /* @conditional-compile-remove(together-mode) */
       onStartTogetherMode: async () => {
@@ -242,8 +242,8 @@ const createCompositeHandlers = memoizeOne(
         return adapter.setTogetherModeSceneSize(width, height);
       },
       /* @conditional-compile-remove(together-mode) */
-      onDisposeTogetherModeStreamViews: async () => {
-        return await adapter.disposeTogetherModeStreamViews();
+      onDisposeTogetherModeStreamView: async () => {
+        return await adapter.disposeTogetherModeStreamView();
       }
     };
   }

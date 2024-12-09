@@ -138,10 +138,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   ): Promise<void | CreateVideoStreamViewResult> =>
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   /* @conditional-compile-remove(together-mode) */
-  public createTogetherModeStreamViews = async (
+  public createTogetherModeStreamView = async (
     options?: VideoStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> =>
-    await this.callWithChatAdapter.createTogetherModeStreamViews(options);
+    await this.callWithChatAdapter.createTogetherModeStreamView(options);
   /* @conditional-compile-remove(together-mode) */
   public startTogetherMode = async (): Promise<void> => await this.callWithChatAdapter.startTogetherMode();
   /* @conditional-compile-remove(together-mode) */
@@ -159,8 +159,8 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.disposeLocalVideoStreamView();
   }
   /* @conditional-compile-remove(together-mode) */
-  public disposeTogetherModeStreamViews = async (): Promise<void> =>
-    await this.callWithChatAdapter.disposeTogetherModeStreamViews();
+  public disposeTogetherModeStreamView = async (): Promise<void> =>
+    await this.callWithChatAdapter.disposeTogetherModeStreamView();
   public holdCall = async (): Promise<void> => {
     await this.callWithChatAdapter.holdCall();
   };
