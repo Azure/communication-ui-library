@@ -239,7 +239,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+  createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
   /**
    * Start together mode.
@@ -274,7 +274,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @beta
    */
-  disposeTogetherModeStreamViews(): Promise<void>;
+  disposeTogetherModeStreamView(): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *
