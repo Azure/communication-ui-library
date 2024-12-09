@@ -1132,7 +1132,7 @@ export type CallNotifications = {
   [target in NotificationTarget]: CallNotification;
 };
 
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /**
  * @public
  */
@@ -1142,7 +1142,7 @@ export interface CallNotification {
   timestamp: Date;
 }
 
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /** @public */
 export type NotificationTarget =
   | 'assignedBreakoutRoomOpened'
