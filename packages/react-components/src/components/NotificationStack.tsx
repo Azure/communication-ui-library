@@ -268,6 +268,16 @@ export interface NotificationStackStrings {
    * Message shown in notification when breakout room is closing soon
    */
   breakoutRoomClosingSoon?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Speaking while muted message
+   */
+  togetherModeStarted?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Speaking while muted message
+   */
+  togetherModeEnded?: NotificationStrings;
 }
 
 /**

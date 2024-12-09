@@ -258,6 +258,22 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         timestamp: latestNotifications['breakoutRoomClosingSoon'].timestamp
       });
     }
+    /* @conditional-compile-remove(together-mode) */
+    if (latestNotifications['togetherModeStarted']) {
+      activeNotifications.push({
+        type: 'togetherModeStarted',
+        timestamp: latestNotifications['togetherModeStarted'].timestamp,
+        autoDismiss: true
+      });
+    }
+    /* @conditional-compile-remove(together-mode) */
+    if (latestNotifications['togetherModeEnded']) {
+      activeNotifications.push({
+        type: 'togetherModeEnded',
+        timestamp: latestNotifications['togetherModeEnded'].timestamp,
+        autoDismiss: true
+      });
+    }
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );

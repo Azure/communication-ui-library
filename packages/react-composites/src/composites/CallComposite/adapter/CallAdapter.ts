@@ -40,7 +40,7 @@ import {
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamViewResult } from '@internal/react-components';
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 /**
  * Major UI screens shown in the {@link CallComposite}.
  *
@@ -622,7 +622,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+  createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
   /**
    * Start Together mode.
@@ -657,7 +657,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  disposeTogetherModeStreamViews(): Promise<void>;
+  disposeTogetherModeStreamView(): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *

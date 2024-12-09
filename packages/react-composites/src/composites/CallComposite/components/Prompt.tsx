@@ -142,5 +142,5 @@ export interface SpotlightPromptStrings {
   /**
    * Label for button to close prompt
    */
-  closeSpotlightPromptButtonLabel: string;
+  closeSpotlightPromptButtonLabel?: string;
 }

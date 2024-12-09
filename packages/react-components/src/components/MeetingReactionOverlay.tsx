@@ -8,9 +8,13 @@ import {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant
 } from '../types';
+/* @conditional-compile-remove(together-mode) */
+import { VideoGalleryTogetherModeParticipantPosition } from '../types';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { ParticipantVideoTileOverlay } from './VideoGallery/ParticipantVideoTileOverlay';
 import { RemoteContentShareReactionOverlay } from './VideoGallery/RemoteContentShareReactionOverlay';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeOverlay } from './TogetherModeOverlay';
 
 /**
  * Reaction overlay component props
@@ -40,6 +44,9 @@ export interface MeetingReactionOverlayProps {
    * Remote participant's reaction event.
    */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
+
+  /* @conditional-compile-remove(together-mode) */
+  seatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 }
 
 /**
@@ -125,6 +132,28 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
         />
       </div>
     );
+  } else if (props.overlayMode === 'together-mode') {
+    /* @conditional-compile-remove(together-mode) */
+    return (
+      <div
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: '0',
+          left: '0'
+        }}
+      >
+        <TogetherModeOverlay
+          emojiSize={emojiSizePx}
+          reactionResources={reactionResources}
+          localParticipant={localParticipant}
+          remoteParticipants={remoteParticipants}
+          participantsSeatingArrangement={props.seatingCoordinates}
+        />
+      </div>
+    );
+    return <></>;
   } else {
     return <></>;
   }

@@ -92,8 +92,8 @@ export class MockCallAdapter implements CallAdapter {
     throw Error('disposeStreamView not implemented');
   }
   /* @conditional-compile-remove(together-mode) */
-  createTogetherModeStreamViews(): Promise<void> {
-    throw Error('createTogetherModeStreamViews not implemented');
+  createTogetherModeStreamView(): Promise<void> {
+    throw Error('createTogetherModeStreamView not implemented');
   }
   /* @conditional-compile-remove(together-mode) */
   startTogetherMode(): Promise<void> {
@@ -104,7 +104,7 @@ export class MockCallAdapter implements CallAdapter {
     throw Error(`Setting Together Mode width ${width} and height: ${height} not implemented`);
   }
   /* @conditional-compile-remove(together-mode) */
-  disposeTogetherModeStreamViews(): Promise<void> {
+  disposeTogetherModeStreamView(): Promise<void> {
     throw Error('disposeFeatureStreamView not implemented');
   }
   disposeScreenShareStreamView(): Promise<void> {
