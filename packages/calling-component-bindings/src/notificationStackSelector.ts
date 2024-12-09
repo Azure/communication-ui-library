@@ -9,7 +9,9 @@ import {
   getEnvironmentInfo
 } from './baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
-import { getLatestNotifications, getAssignedBreakoutRoom } from './baseSelectors';
+import { getAssignedBreakoutRoom } from './baseSelectors';
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
+import { getLatestNotifications } from './baseSelectors';
 
 import { getMeetingConferencePhones } from './baseSelectors';
 
@@ -20,6 +22,7 @@ import { createSelector } from 'reselect';
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
 
 import { DiagnosticQuality } from '@azure/communication-calling';
+
 /* @conditional-compile-remove(media-access) */
 import { CallNotifications } from '@internal/calling-stateful-client';
 
@@ -57,7 +60,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
   ],
   (
     latestErrors: CallErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ latestNotifications,
+    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ latestNotifications,
     diagnostics,
     deviceManager,
     environmentInfo,

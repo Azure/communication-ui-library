@@ -1124,7 +1124,7 @@ export type CallErrorTarget =
   | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /**
  * @public
  */
