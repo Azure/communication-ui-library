@@ -325,7 +325,11 @@ const appendMuteByOthersNotificationTrampoline = (
   latestNotifications?: undefined | /* @conditional-compile-remove(media-access) */ CallNotifications
 ): void => {
   /* @conditional-compile-remove(media-access) */
-  if (!latestNotifications['capabilityUnmuteMicAbsent'] && !latestNotifications['capabilityUnmuteMicPresent']) {
+  if (
+    latestNotifications &&
+    !latestNotifications['capabilityUnmuteMicAbsent'] &&
+    !latestNotifications['capabilityUnmuteMicPresent']
+  ) {
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
   }
   /* @conditional-compile-remove(media-access) */
