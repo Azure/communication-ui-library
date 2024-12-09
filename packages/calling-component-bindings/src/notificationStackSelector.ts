@@ -185,7 +185,11 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-    appendMuteByOthersNotificationTrampoline(latestNotifications, activeErrorMessages, latestErrors);
+    appendMuteByOthersNotificationTrampoline(
+      /* @conditional-compile-remove(media-access) */ latestNotifications,
+      activeErrorMessages,
+      latestErrors
+    );
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,
@@ -316,7 +320,7 @@ const appendActiveErrorIfDefined = (
 };
 
 const appendMuteByOthersNotificationTrampoline = (
-  latestNotifications: CallNotifications | undefined,
+  latestNotifications: undefined | /* @conditional-compile-remove(media-access) */ CallNotifications,
   activeErrorMessages: ActiveNotification[],
   latestErrors: CallErrors
 ): void => {
