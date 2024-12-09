@@ -1001,7 +1001,7 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
-  /* @conditional-compile-remove(breakout-rooms) */
+  /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   /**
    * Stores the latest notifications.
    *
