@@ -19,7 +19,7 @@ import {
 } from './baseSelectors';
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { _CaptionsInfo, _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
+import { CaptionsInformation, _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
 
 /**
  * Selector type for the {@link StartCaptionsButton} component.
@@ -96,22 +96,22 @@ export const _captionSettingsSelector: _CaptionSettingsSelector = reselect.creat
 );
 /**
  * Selector type for the {@link CaptionsBanner} component.
- * @internal
+ * @public
  */
-export type _CaptionsBannerSelector = (
+export type CaptionsBannerSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  captions: _CaptionsInfo[];
+  captions: CaptionsInformation[];
   isCaptionsOn: boolean;
 };
 
 /**
  * Selector for {@link CaptionsBanner} component.
  *
- * @internal
+ * @public
  */
-export const _captionsBannerSelector: _CaptionsBannerSelector = reselect.createSelector(
+export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSelector(
   [getCaptions, getCaptionsStatus, getStartCaptionsInProgress, getRemoteParticipants, getDisplayName, getIdentifier],
   (captions, isCaptionsFeatureActive, startCaptionsInProgress, remoteParticipants, displayName, identifier) => {
     const captionsInfo = captions?.map((c, index) => {

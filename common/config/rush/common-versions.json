@@ -24,7 +24,7 @@
      * instead of the latest version.
      */
     // "some-library": "1.2.3"
-    "@azure/communication-calling": "1.31.2-beta.1",
+    "@azure/communication-calling": "1.32.1-beta.1",
     "@azure/communication-common": "2.3.0",
     "@azure/communication-chat": "1.6.0-beta.3",
     "@azure/communication-signaling": "1.0.0-beta.27",
@@ -56,7 +56,7 @@
    * This design avoids unnecessary churn in this file.
    */
   "allowedAlternativeVersions": {
-    "@azure/communication-calling": ["1.31.2-beta.1"],
+    "@azure/communication-calling": ["1.32.1-beta.1"],
     "@azure/communication-common": ["2.3.0"],
     "@azure/communication-chat": ["1.6.0-beta.3"],
     "@azure/communication-signaling": ["1.0.0-beta.27"],

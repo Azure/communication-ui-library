@@ -389,16 +389,6 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  ipAudio: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  ipVideo: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
   forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
@@ -450,16 +440,6 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  ipAudio: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  ipVideo: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
   /* @conditional-compile-remove(calling-beta-sdk) */
   forbidOthersAudio: {
     isPresent: false,
@@ -513,16 +493,6 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  ipAudio: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  ipVideo: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
   forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
@@ -574,16 +544,6 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   startTogetherMode: { isPresent: true, reason: 'Capable' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: true, reason: 'Capable' },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  ipAudio: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  ipVideo: {
-    isPresent: false,
-    reason: 'CapabilityNotApplicableForTheCallType'
-  },
   /* @conditional-compile-remove(calling-beta-sdk) */
   forbidOthersAudio: {
     isPresent: false,

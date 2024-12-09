@@ -107,6 +107,12 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
     throw new Error('Method not implemented.');
   }
   public name = 'Recording';
+  public consentToBeingRecordedAndTranscribed(): Promise<void> {
+    this.isRecordingActive = true;
+    this.emitter.emit('isRecordingActiveChanged', this.isRecordingActive);
+    return Promise.resolve();
+  }
+  public isConsentRequired = false;
   public isRecordingActive = false;
   public recordings: RecordingInfo[] = [];
   public emitter = new EventEmitter();
@@ -191,6 +197,7 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
   constructor() {
     this.mediaAccesses = [];
   }
+
   permitAudio(): Promise<void> {
     return Promise.resolve();
   }
@@ -259,6 +266,12 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
   public name = 'Transcription';
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();
+  public isConsentRequired = false;
+  public consentToBeingRecordedAndTranscribed(): Promise<void> {
+    this.isTranscriptionActive = true;
+    this.emitter.emit('isTranscriptionActiveChanged', this.isTranscriptionActive);
+    return Promise.resolve();
+  }
   on(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
     this.emitter.on(event, listener);
   }
