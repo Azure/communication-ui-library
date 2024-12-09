@@ -20,7 +20,7 @@ const messageArray = [
 ];
 
 const storyControls = {
-  topic: controlsToAdd.botChatTopic,
+  topic: controlsToAdd.remoteParticipantChatTopic,
   displayName: controlsToAdd.requiredDisplayName,
   showParticipants: controlsToAdd.showChatParticipants,
   showTopic: controlsToAdd.showChatTopic,
@@ -28,7 +28,7 @@ const storyControls = {
 };
 
 const defaultControlsValues = {
-  topic: 'Chat with a friendly bot',
+  topic: 'Chat with a remote participant',
   displayName: 'John Smith',
   showParticipants: true,
   showTopic: true,
@@ -44,7 +44,7 @@ const TryChatCompositeStory = (args: ArgsFrom<typeof storyControls>, context): J
   useEffect(() => {
     setContainerProps({
       displayName: args.displayName ?? 'John Smith',
-      topic: args.topic ?? 'Chat with a friendly bot',
+      topic: args.topic ?? 'Chat with a remote participant',
       messages: messageArray
     });
   }, [args.displayName, args.topic]);
