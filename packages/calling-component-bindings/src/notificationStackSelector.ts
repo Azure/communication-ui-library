@@ -316,7 +316,7 @@ const appendActiveErrorIfDefined = (
 };
 
 const appendMuteByOthersNotificationTrampoline = (
-  latestNotifications: CallNotifications,
+  latestNotifications: CallNotifications | undefined,
   activeErrorMessages: ActiveNotification[],
   latestErrors: CallErrors
 ): void => {
