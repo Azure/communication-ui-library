@@ -152,7 +152,6 @@ export const TogetherModeOverlay = React.memo(
               position: 'absolute',
               left: `${participantSignal.seatPositionStyle.seatCoordinates.left}px`,
               top: `${participantSignal.seatPositionStyle.seatCoordinates.top}px`
-              // zIndex: 70
             }}
             onMouseEnter={() => {
               setHoveredParticipantID(`${participantSignal.id}`);
@@ -196,10 +195,22 @@ export const TogetherModeOverlay = React.memo(
                   backgroundColor: participantSignal.showDisplayName ? 'rgba(0, 0, 0, 0.7)' : 'transparent',
                   color: 'white',
                   textAlign: 'center',
-                  overflow: 'visible' // Allow content to overflow parent
+                  fontSize: '4px'
                 }}
               >
-                <Stack horizontal verticalAlign="center" tokens={{ childrenGap: 4 }}>
+                <Stack
+                  horizontal
+                  verticalAlign="center"
+                  tokens={{ childrenGap: 4 }}
+                  style={{
+                    position: 'absolute', // Ensure it's positioned absolutely within the parent
+                    bottom: 0,
+                    left: '50%', // Center horizontally in the parent
+                    transform: 'translate(-50%, -50%)', // Adjust position so the element is truly centered
+                    overflow: 'visible', // Allow overflow when expanded
+                    width: hoveredParticipantID === `${participantSignal.id}` ? 'auto' : '100%' // Ensure the element takes up the full width of the parent
+                  }}
+                >
                   {participantSignal.isHandRaised && (
                     <Stack className={mergeStyles(iconContainerStyle)}>
                       <Icon iconName="ControlButtonRaiseHand" />
@@ -210,8 +221,8 @@ export const TogetherModeOverlay = React.memo(
                       data-ui-id="video-tile-display-name"
                       className={ellipsisTextStyle}
                       style={{
-                        maxWidth: hoveredParticipantID === `${participantSignal.id}` ? '300px' : '150px', // Dynamically change width based on state
-                        overflow: hoveredParticipantID === `${participantSignal.id}` ? 'visible' : 'hidden' // Show content when expanded
+                        overflow: hoveredParticipantID === `${participantSignal.id}` ? 'visible' : 'hidden', // Show content when expanded
+                        transition: 'width 0.3s ease' // Smooth transition for width changes
                       }}
                     >
                       {participantSignal.displayName}

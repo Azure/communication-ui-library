@@ -121,14 +121,15 @@ export function togetherModeHover(): React.CSSProperties {
 export const ellipsisTextStyle = mergeStyles({
   whiteSpace: 'nowrap',
   overflow: 'hidden',
+  width: '70%',
   textOverflow: 'ellipsis',
-  maxWidth: '150px', // Initial max width
   display: 'inline-block',
-  transition: 'all 0.3s ease-in-out', // Smooth transition for all changes
+  transition: 'width 0.3s ease-in-out, transform 0.3s ease-in-out', // Smooth transition for all changes
 
   selectors: {
     '&:hover': {
-      maxWidth: '300px' // Expanded width on hover
+      width: 'auto' /* Allow the container to expand */,
+      transform: 'translateX(0)' // Reset any movement when hovered
     }
   }
 });
