@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Hard mute",
-  "comment": "Hard mute feature part1 - stateful client changes",
-  "packageName": "@azure/communication-react",
-  "email": "fuyan@microsoft.com",
-  "dependentChangeType": "patch"
-}

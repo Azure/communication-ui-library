@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "fix",
-  "workstream": "",
-  "comment": "Fix configuration page dropdown properties when permissions have been blocked",
-  "packageName": "@azure/communication-react",
-  "email": "2684369+JamesBurnside@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
