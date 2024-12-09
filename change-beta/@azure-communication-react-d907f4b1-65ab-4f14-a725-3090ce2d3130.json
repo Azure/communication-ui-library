@@ -4,6 +4,5 @@
   "workstream": "together-mode",
   "comment": "Updated together mode types",
   "packageName": "@azure/communication-react",
-  "email": "nwankwojustin93@gmail.com",
   "dependentChangeType": "patch"
 }
