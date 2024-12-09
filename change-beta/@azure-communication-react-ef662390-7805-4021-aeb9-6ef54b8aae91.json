@@ -1,0 +1,8 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "together-mode",
+  "comment": "Updated apis naming",
+  "packageName": "@azure/communication-react",
+  "dependentChangeType": "patch"
+}
