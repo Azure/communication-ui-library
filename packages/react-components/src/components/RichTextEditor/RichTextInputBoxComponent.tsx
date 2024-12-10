@@ -155,6 +155,10 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     [onEnterKeyDown, showRichTextEditorFormatting, onTyping]
   );
 
+  const onCompositionUpdate = useCallback(() => {
+    onTyping?.();
+  }, [onTyping]);
+
   const useHorizontalLayout = useMemo(() => {
     const isRichTextEditorToolbarShown = showRichTextEditorFormatting === true;
     return (
@@ -200,6 +204,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               placeholderText={placeholderText}
               onChange={onChange}
               onKeyDown={onKeyDown}
+              onCompositionUpdate={onCompositionUpdate}
               ref={editorComponentRef}
               strings={strings}
               showRichTextEditorFormatting={showRichTextEditorFormatting === true}

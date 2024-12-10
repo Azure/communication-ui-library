@@ -72,6 +72,8 @@ export interface RichTextEditorProps {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
   ) => void;
   onKeyDown?: (ev: KeyboardEvent) => void;
+  // OnKeyDown aren't called for composition events, so we need to handle them separately
+  onCompositionUpdate?: () => void;
   // update the current content of the rich text editor
   onContentModelUpdate?: (contentModel: ContentModelDocument | undefined) => void;
   contentModel?: ContentModelDocument | undefined;
@@ -121,6 +123,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     showRichTextEditorFormatting,
     autoFocus,
     onKeyDown,
+    onCompositionUpdate,
     onContentModelUpdate,
     contentModel,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -329,6 +332,11 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     // don't set callback in plugin constructor to update callback without plugin recreation
     keyboardInputPlugin.onKeyDown = onKeyDown;
   }, [keyboardInputPlugin, onKeyDown]);
+
+  useEffect(() => {
+    // don't set callback in plugin constructor to update callback without plugin recreation
+    keyboardInputPlugin.onCompositionUpdate = onCompositionUpdate;
+  }, [keyboardInputPlugin, onCompositionUpdate]);
 
   const tableContextMenuPlugin = useMemo(() => {
     return new TableEditContextMenuProvider();
