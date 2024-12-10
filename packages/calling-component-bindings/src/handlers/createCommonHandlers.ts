@@ -17,7 +17,6 @@ import {
   LocalVideoStream,
   RemoteParticipant,
   StartCallOptions,
-  StartCaptionsOptions,
   TeamsCall,
   VideoDeviceInfo
 } from '@azure/communication-calling';
@@ -27,7 +26,12 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
-import { CreateVideoStreamViewResult, VideoStreamOptions, ReactionButtonReaction } from '@internal/react-components';
+import {
+  CreateVideoStreamViewResult,
+  VideoStreamOptions,
+  ReactionButtonReaction,
+  CaptionsOptions
+} from '@internal/react-components';
 import {
   disposeAllLocalPreviewViews,
   _isInCall,
@@ -95,7 +99,7 @@ export interface CommonCallingHandlers {
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
   onStartNoiseSuppressionEffect: () => Promise<void>;
   onStopNoiseSuppressionEffect: () => Promise<void>;
-  onStartCaptions: (options?: StartCaptionsOptions) => Promise<void>;
+  onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   onStopCaptions: () => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
@@ -684,7 +688,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    const onStartCaptions = async (options?: StartCaptionsOptions): Promise<void> => {
+    const onStartCaptions = async (options?: CaptionsOptions): Promise<void> => {
       const captionsFeature = call?.feature(Features.Captions).captions;
       await captionsFeature?.startCaptions(options);
     };
