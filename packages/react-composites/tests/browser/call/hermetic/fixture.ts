@@ -1,649 +1,599 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import {
-  Call,
-  CallAgent,
-  CallClient,
-  DeviceManager,
-  UserFacingDiagnosticsFeature,
-  IncomingCall,
-  LatestMediaDiagnostics,
-  LatestNetworkDiagnostics,
-  LocalVideoStream,
-  PropertyChangedEvent,
-  RecordingCallFeature,
-  RemoteParticipant,
-  RemoteVideoStream,
-  TranscriptionCallFeature,
-  CallFeatureFactory,
-  CallFeature
-} from '@azure/communication-calling';
-import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
-/* @conditional-compile-remove(media-access) */
-import {
-  MediaAccessCallFeature,
-  MediaAccessChangedListener,
-  MediaAccess,
-  MeetingMediaAccessChangedListener,
-  MeetingMediaAccess
-} from '@azure/communication-calling';
-import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
+import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
+import { Browser, Page, test as base } from '@playwright/test';
+import path from 'path';
+import { createTestServer } from '../../common/server';
+import { loadNewPageWithPermissionsForCalls } from '../../common/fixtureHelpers';
+import { encodeQueryData } from '../../common/utils';
+import type {
+  MockCallAdapterState,
+  MockRemoteParticipantState,
+  MockVideoStreamRendererViewState
+} from '../../../common';
+import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
+import type { ParticipantCapabilities } from '@azure/communication-calling';
+import { CallState, CapabilitiesFeatureState } from '@internal/calling-stateful-client';
 
-import { VideoEffectsFeature } from '@azure/communication-calling';
-import { CommunicationTokenCredential } from '@azure/communication-common';
-import { AccessToken } from '@azure/core-auth';
-
-import { EventEmitter } from 'events';
-import { CallClientState } from './CallClientState';
-import { CallContext } from './CallContext';
-import { InternalCallContext } from './InternalCallContext';
-import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
-/* @conditional-compile-remove(calling-beta-sdk) */
-import { RemoteParticipantDiagnosticsData } from '@azure/communication-calling';
-
-let backupFreezeFunction: typeof Object.freeze;
+const SERVER_URL = 'http://localhost';
+const APP_DIR = path.join(__dirname, '../../../app/call');
 
 /**
- * @private
+ * Create the test URL.
+ *
+ * @param serverUrl - URL of webpage to test, this is typically https://localhost:3000
+ * @param mockCallAdapterState - Initial state for the {@link MockCallAdapter} constructed by the test app.
+ * @param qArgs - Optional args to add to the query search parameters of the URL.
+ * @returns URL string
  */
-export function mockoutObjectFreeze(): void {
-  beforeEach(() => {
-    backupFreezeFunction = Object.freeze;
-    Object.freeze = function <T>(obj: T): T {
-      return obj;
-    };
-  });
+export const buildUrlWithMockAdapter = (
+  serverUrl: string,
+  mockCallAdapterState?: MockCallAdapterState,
+  qArgs?: { [key: string]: string }
+): string => {
+  return `${serverUrl}?${encodeQueryData({
+    mockCallAdapterState: JSON.stringify(mockCallAdapterState),
+    ...qArgs
+  })}`;
+};
 
-  afterEach(() => {
-    Object.freeze = backupFreezeFunction;
-  });
+export interface TestFixture {
+  serverUrl: string;
+  page: Page;
 }
 
-/**
- * @private
- */
-export interface MockEmitter {
-  emitter: EventEmitter;
-  emit(eventName: string | symbol, ...args: any[]): boolean;
-}
-
-/**
- * @private
- */
-export type Mutable<T> = {
-  -readonly [k in keyof T]: T[k];
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+const usePage = async ({ browser }: { browser: Browser }, use: (page: Page) => Promise<void>) => {
+  await use(await loadNewPageWithPermissionsForCalls(browser));
 };
 
 /**
- * @private
+ * Create the default {@link MockCallAdapterState}for hermetic e2e tests.
  */
-export type MockRemoteVideoStream = Mutable<RemoteVideoStream> & MockEmitter;
-/**
- * @private
- */
-export type MockIncomingCall = Mutable<IncomingCall> & MockEmitter;
-
-/**
- * @private
- */
-export const stubCommunicationTokenCredential = (): CommunicationTokenCredential => {
-  return {
-    getToken: (): Promise<AccessToken> => {
-      throw new Error('Not implemented');
-    },
-    dispose: (): void => {
-      /* Nothing to dispose */
-    }
+export function defaultMockCallAdapterState(
+  participants?: MockRemoteParticipantState[],
+  role?: ParticipantRole,
+  isRoomsCall?: boolean,
+  callEndReasonSubCode?: number,
+  isReactionCapability?: boolean
+): MockCallAdapterState {
+  const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
+  participants?.forEach((p) => {
+    remoteParticipants[toFlatCommunicationIdentifier(p.identifier)] = p;
+  });
+  const speakers = participants?.filter((p) => p.isSpeaking);
+  const dominantSpeakers: DominantSpeakersInfo = {
+    speakersList: speakers?.map((s) => s.identifier) ?? [],
+    timestamp: new Date()
   };
+  return {
+    displayName: 'Agnes Thompson',
+    isLocalPreviewMicrophoneEnabled: true,
+    page: callEndReasonSubCode ? 'leftCall' : 'call',
+    call: {
+      id: 'call1',
+
+      kind: 'Call' as CallKind,
+      callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
+      direction: 'Incoming',
+      transcription: { isTranscriptionActive: false },
+      recording: { isRecordingActive: false },
+      /* @conditional-compile-remove(local-recording-notification) */
+      localRecording: { isLocalRecordingActive: false },
+      startTime: new Date(500000000000),
+      endTime: new Date(500000000000),
+      diagnostics: { network: { latest: {} }, media: { latest: {} } },
+      state: 'Connected',
+      localVideoStreams: [],
+      isMuted: role === 'Consumer', // default is false unless the role is Consumer
+      isScreenSharingOn: false,
+      remoteParticipants,
+      remoteParticipantsEnded: {},
+      raiseHand: { raisedHands: [] },
+      /* @conditional-compile-remove(together-mode) */
+      togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
+      pptLive: { isActive: false },
+      role: role ?? 'Unknown',
+      dominantSpeakers: dominantSpeakers,
+      totalParticipantCount:
+        Object.values(remoteParticipants).length > 0 ? Object.values(remoteParticipants).length + 1 : undefined,
+      captionsFeature: {
+        captions: [],
+        supportedSpokenLanguages: [],
+        supportedCaptionLanguages: [],
+        currentCaptionLanguage: '',
+        currentSpokenLanguage: '',
+        isCaptionsFeatureActive: false,
+        startCaptionsInProgress: false,
+
+        captionsKind: 'Captions'
+      },
+      transfer: {
+        acceptedTransfers: {}
+      },
+      optimalVideoCount: {
+        maxRemoteVideoStreams: 4
+      },
+
+      capabilitiesFeature: getCapabilitiesFromRole(role, isReactionCapability)
+    },
+    endedCall: callEndReasonSubCode
+      ? {
+          ...defaultEndedCallState,
+          callEndReason: {
+            code: 0,
+            subCode: callEndReasonSubCode,
+            /* @conditional-compile-remove(calling-beta-sdk) */ resultCategories: [],
+            /* @conditional-compile-remove(calling-beta-sdk) */ message: ''
+          }
+        }
+      : undefined,
+    userId: { kind: 'communicationUser', communicationUserId: '1' },
+    devices: {
+      isSpeakerSelectionAvailable: true,
+      selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
+      cameras: [{ id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' }],
+      selectedMicrophone: {
+        id: 'microphone1',
+        name: '1st Microphone',
+        deviceType: 'Microphone',
+        isSystemDefault: true
+      },
+      microphones: [{ id: 'microphone1', name: '1st Microphone', deviceType: 'Microphone', isSystemDefault: true }],
+      selectedSpeaker: { id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true },
+      speakers: [{ id: 'speaker1', name: '1st Speaker', deviceType: 'Speaker', isSystemDefault: true }],
+      unparentedViews: [],
+      deviceAccess: { video: true, audio: true }
+    },
+    isTeamsCall: false,
+    isTeamsMeeting: false,
+    isRoomsCall: isRoomsCall ?? false,
+    latestErrors: {},
+    /* @conditional-compile-remove(breakout-rooms) */
+    latestNotifications: {},
+    targetCallees: undefined,
+    reactions: undefined
+  };
+}
+
+/**
+ * Create the default {@link MockRemoteParticipantState} for hermetic e2e tests.
+ *
+ * Use this to add participants to state created via {@link defaultCallAdapterState}.
+ */
+export function defaultMockRemoteParticipant(displayName?: string): MockRemoteParticipantState {
+  return {
+    identifier: { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
+    state: 'Connected',
+    videoStreams: {
+      1: {
+        id: 1,
+        mediaStreamType: 'Video',
+        isAvailable: false,
+        isReceiving: false
+      },
+      2: {
+        id: 2,
+        mediaStreamType: 'ScreenSharing',
+        isAvailable: false,
+        isReceiving: false
+      }
+    },
+    isMuted: false,
+    isSpeaking: false,
+    displayName: displayName
+  };
+}
+
+/**
+ * Create the default {@link MockRemoteParticipantState} for a PSTN participant in a hermetic e2e test
+ *
+ * use to add PSTN participants to the {@link defaultCallAdapterState}
+ */
+export function defaultMockRemotePSTNParticipant(phoneNumber: string): MockRemoteParticipantState {
+  return {
+    identifier: { kind: 'phoneNumber', phoneNumber: `${phoneNumber}` },
+    state: 'Connected',
+    videoStreams: {},
+    isMuted: true,
+    isSpeaking: false,
+    displayName: phoneNumber
+  };
+}
+
+/**
+ * Add the default {@link MockLocalVideoStreamState} for hermetic e2e tests.
+ *
+ * Use this to add outgoing video to state created via {@link defaultCallAdapterState}.
+ */
+export function addDefaultMockLocalVideoStreamState(state: MockCallAdapterState): void {
+  if (!state.call) {
+    throw new Error('state.call must be defined');
+  }
+  state.call.localVideoStreams = [
+    {
+      source: {
+        deviceType: 'UsbCamera',
+        id: 'FakeLocalCamera',
+        name: 'FakeLocalCamera'
+      },
+      mediaStreamType: 'Video',
+      dummyView: { scalingMode: 'Crop', isMirrored: false }
+    }
+  ];
+}
+
+/**
+ * Add a video stream to {@link MockRemoteParticipantState}.
+ *
+ * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
+ */
+export function addVideoStream(
+  participant: MockRemoteParticipantState,
+  isReceiving: boolean,
+  scalingMode?: 'Stretch' | 'Crop' | 'Fit'
+): void {
+  const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType === 'Video');
+  if (streams.length !== 1 || !streams[0]) {
+    throw new Error(`Expected 1 video stream for ${participant.displayName}, got ${streams.length}`);
+  }
+  addDummyView(streams[0], isReceiving, scalingMode);
+}
+
+/**
+ * Add a screenshare stream to {@link MockRemoteParticipantState}.
+ *
+ * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
+ */
+export function addScreenshareStream(
+  participant: MockRemoteParticipantState,
+  isReceiving: boolean,
+  scalingMode?: 'Stretch' | 'Crop' | 'Fit'
+): void {
+  const streams = Object.values(participant.videoStreams).filter((s) => s.mediaStreamType === 'ScreenSharing');
+  if (streams.length !== 1 || !streams[0]) {
+    throw new Error(`Expected 1 screenshare stream for ${participant.displayName}, got ${streams.length}`);
+  }
+  addDummyView(streams[0], isReceiving, scalingMode);
+}
+
+/**
+ * Add a dummy view to a stream that will be replaced by an actual {@link HTMLElement} by the test app.
+ *
+ * Supports local / remote streams for video / screenshare.
+ */
+export function addDummyView(
+  stream: { isAvailable?: boolean; isReceiving?: boolean; dummyView?: MockVideoStreamRendererViewState },
+  isReceiving: boolean,
+  scalingMode?: 'Stretch' | 'Crop' | 'Fit'
+): void {
+  stream.isAvailable = true;
+  stream.isReceiving = isReceiving;
+  stream.dummyView = { scalingMode: scalingMode ?? 'Crop', isMirrored: false };
+}
+
+/**
+ * A test-scoped test fixture for hermetic {@link CallComposite} browser tests.
+ *
+ * This fixture runs the test app with a mock {@link CallAdapter}, avoiding
+ * any communication with the real Azure Communiction Services backend services.
+ */
+export const test = base.extend<TestFixture>({
+  /** @returns string URL for the server. */
+  serverUrl: [createTestServer({ appDir: APP_DIR, serverUrl: SERVER_URL }), { scope: 'test' }],
+
+  /** @returns An empty browser page. Tests should load the app via page.goto(). */
+  page: [usePage, { scope: 'test' }]
+});
+
+/**
+ * Sets up the default state for the configuration screen.
+ */
+export const defaultMockConfigurationPageState = (role?: ParticipantRole): MockCallAdapterState => {
+  let isRoomsCall = false;
+  if (role && role !== 'Unknown') {
+    isRoomsCall = true;
+  }
+  const state = defaultMockCallAdapterState([], role, isRoomsCall);
+  state.page = 'configuration';
+  state.call = undefined;
+  return state;
 };
 
 /**
- * @private
+ * Since we are providing a .y4m video to act as a fake video stream, chrome
+ * uses it's file path as the camera name. This file location can differ on
+ * every device causing a diff error in test screenshot comparisons.
+ * To avoid this error, we replace the unique file path with a custom string.
  */
-export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
-  public name = 'Recording';
-  public consentToBeingRecordedAndTranscribed(): Promise<void> {
-    this.isRecordingActive = true;
-    this.emitter.emit('isRecordingActiveChanged', this.isRecordingActive);
-    return Promise.resolve();
-  }
-  public isConsentRequired = false;
-  public isRecordingActive = false;
-  public recordings: RecordingInfo[] = [];
-  public emitter = new EventEmitter();
-  on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
-  on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  on(event: any, listener: any): void {
-    this.emitter.on(event, listener);
-  }
-  off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
-  off(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  off(event: any, listener: any): void {
-    this.emitter.on(event, listener);
-  }
-  dispose(): void {
-    /* No state to clean up */
-  }
-}
+export const stubLocalCameraName = async (page: Page): Promise<void> => {
+  await page.evaluate(() => {
+    const element = document.querySelector('[data-ui-id="call-composite-local-camera-settings"]');
+    if (element) {
+      element.innerHTML = element.innerHTML.replace(/C:.*?y4m/g, 'Fake Camera');
+    }
+  });
+};
 
-/**
- * @private
- */
-export class MockRaiseHandCallFeatureImpl implements RaiseHandCallFeature {
-  private raisedHands: RaisedHand[] = [];
-
-  // add a local user to the raised hands list
-  raiseHand(): Promise<void> {
-    const raisedHands = [{ identifier: { communicationUserId: 'localUserMRI' }, order: 1 } as RaisedHand];
-    this.raisedHands = raisedHands;
-    this.emitter.emit('raisedHandEvent');
-    return Promise.resolve();
-  }
-
-  //remove a local user from the raised hands list
-  lowerHand(): Promise<void> {
-    this.raisedHands = [];
-    this.emitter.emit('loweredHandEvent');
-    return Promise.resolve();
-  }
-
-  lowerHands(): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-
-  //remove all users from the raised hands list
-  lowerAllHands(): Promise<void> {
-    this.raisedHands = [];
-    this.emitter.emit('loweredHandEvent');
-    return Promise.resolve();
-  }
-  getRaisedHands(): RaisedHand[] {
-    return this.raisedHands;
-  }
-  public name = 'RaiseHand';
-  public emitter = new EventEmitter();
-  on(event: 'raisedHandEvent', listener: RaisedHandListener): void;
-  on(event: 'loweredHandEvent', listener: RaisedHandListener): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  on(event: any, listener: any): void {
-    this.emitter.on(event, listener);
-  }
-  off(event: 'raisedHandEvent', listener: RaisedHandListener): void;
-  off(event: 'loweredHandEvent', listener: RaisedHandListener): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-  off(event: any, listener: any): void {
-    this.emitter.on(event, listener);
-  }
-  dispose(): void {
-    /* No state to clean up */
-  }
-}
-/* @conditional-compile-remove(media-access) */
-/**
- * @private
- */
-export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
-  private mediaAccesses: MediaAccess[] = [];
-  public name = 'MediaAccess';
-  public emitter = new EventEmitter();
-
-  constructor() {
-    this.mediaAccesses = [];
-  }
-  permitOthersAudio(): Promise<void> {
-    return Promise.resolve();
-  }
-  forbidOthersAudio(): Promise<void> {
-    return Promise.resolve();
-  }
-  forbidOthersVideo(): Promise<void> {
-    return Promise.resolve();
-  }
-  permitOthersVideo(): Promise<void> {
-    return Promise.resolve();
-  }
-  getAllOthersMediaAccess(): MediaAccess[] {
-    return this.mediaAccesses;
-  }
-  getMeetingMediaAccess(): MeetingMediaAccess {
+const getCapabilitiesFromRole = (
+  role?: ParticipantRole,
+  isReactionCapability?: boolean
+): CapabilitiesFeatureState | undefined => {
+  if (isReactionCapability) {
     return {
-      isAudioPermitted: true,
-      isVideoPermitted: true
+      capabilities: presenterCapabilitiesInTeamsCall,
+      latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
     };
   }
-  permitAudio(): Promise<void> {
-    return Promise.resolve();
-  }
 
-  forbidAudio(): Promise<void> {
-    return Promise.resolve();
+  switch (role) {
+    case 'Attendee':
+      return {
+        capabilities: attendeeCapabilitiesInRoomsCall,
+        latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
+      };
+    case 'Consumer':
+      return {
+        capabilities: consumerCapabilitiesInRoomsCall,
+        latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
+      };
+    case 'Presenter':
+      return {
+        capabilities: presenterCapabilitiesInRoomsCall,
+        latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
+      };
+    default:
+      return undefined;
   }
+};
 
-  permitVideo(): Promise<void> {
-    return Promise.resolve();
-  }
-
-  forbidVideo(): Promise<void> {
-    return Promise.resolve();
-  }
-
-  permitRemoteParticipantsAudio(): Promise<void> {
-    return Promise.resolve();
-  }
-
-  forbidRemoteParticipantsAudio(): Promise<void> {
-    return Promise.resolve();
-  }
-
-  permitRemoteParticipantsVideo(): Promise<void> {
-    return Promise.resolve();
-  }
-
-  forbidRemoteParticipantsVideo(): Promise<void> {
-    return Promise.resolve();
-  }
-
-  getRemoteParticipantsMediaAccess(): MediaAccess[] {
-    return this.mediaAccesses;
-  }
-
-  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
-  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
-  on(event: any, listener: any): void {
-    this.emitter.on(event, listener);
-  }
-
-  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
-  off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
-  off(event: any, listener: any): void {
-    this.emitter.off(event, listener);
-  }
-
-  dispose(): void {
-    /* No state to clean up */
-  }
-}
-
-/**
- * @private
- */
-export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
-  public name = 'Transcription';
-  public isTranscriptionActive = false;
-  public emitter = new EventEmitter();
-  public isConsentRequired = false;
-  public consentToBeingRecordedAndTranscribed(): Promise<void> {
-    this.isTranscriptionActive = true;
-    this.emitter.emit('isTranscriptionActiveChanged', this.isTranscriptionActive);
-    return Promise.resolve();
-  }
-  on(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
-    this.emitter.on(event, listener);
-  }
-  off(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
-    this.emitter.off(event, listener);
-  }
-  dispose(): void {
-    /* No state to clean up */
-  }
-}
-
-/**
- * @private
- */
-export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeature {
-  public name = 'Diagnostics';
-  public media = {
-    getLatest(): LatestMediaDiagnostics {
-      return {};
-    },
-    on(): void {
-      /* Stub to appease types */
-    },
-    off(): void {
-      /* Stub to appease types */
-    }
-  };
-  public network = {
-    getLatest(): LatestNetworkDiagnostics {
-      return {};
-    },
-    on(): void {
-      /* Stub to appease types */
-    },
-    off(): void {
-      /* Stub to appease types */
-    }
-  };
-  dispose(): void {
-    /* No state to clean up */
-  }
+const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
+  addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  addTeamsUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  blurBackground: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  hangUpForEveryOne: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  manageLobby: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  unmuteMic: { isPresent: false, reason: 'RoleRestricted' },
+  pstnDialOut: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  raiseHand: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  removeParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  shareScreen: { isPresent: false, reason: 'RoleRestricted' },
+  spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveCallingCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  turnVideoOn: { isPresent: false, reason: 'RoleRestricted' },
+  muteOthers: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  useReactions: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  startLiveMeetingCaptions: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  setCaptionLanguage: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
   /* @conditional-compile-remove(calling-beta-sdk) */
-  public remote = {
-    getLatest(): RemoteParticipantDiagnosticsData {
-      return { diagnostics: [] };
-    },
-    on(): void {
-      /* Stub to appease types */
-    },
-    off(): void {
-      /* Stub to appease types */
-    }
-  };
-}
-
-/**
- * @private
- */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export function addMockEmitter(object: any): any {
-  object.emitter = new EventEmitter();
-  object.on = (event: any, listener: any): void => {
-    object.emitter.on(event, listener);
-  };
-  object.off = (event: any, listener: any): void => {
-    object.emitter.off(event, listener);
-  };
-  object.emit = (event: any, payload?: any): void => {
-    object.emitter.emit(event, payload);
-  };
-  return object;
-}
-
-/**
- * @private
- */
-export interface MockCall extends Mutable<Call>, MockEmitter {
-  testHelperPushRemoteParticipant(participant: RemoteParticipant): void;
-  testHelperPopRemoteParticipant(): RemoteParticipant;
-  testHelperPushLocalVideoStream(stream: LocalVideoStream): void;
-  testHelperPopLocalVideoStream(): LocalVideoStream;
-}
-
-/**
- * @private
- */
-export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
-  return addMockEmitter({
-    id: mockCallId,
-
-    kind: 'Call',
-    info: {
-      groupId: 'testGroupId'
-    },
-    remoteParticipants: [] as RemoteParticipant[],
-    localVideoStreams: [] as ReadonlyArray<LocalVideoStream>,
-    feature: createMockApiFeatures(new Map()),
-
-    testHelperPushRemoteParticipant(participant: RemoteParticipant): void {
-      this.remoteParticipants.push(participant);
-      this.emit('remoteParticipantsUpdated', { added: [participant], removed: [] });
-    },
-
-    testHelperPopRemoteParticipant(): RemoteParticipant {
-      const participant = this.remoteParticipants.pop();
-      this.emit('remoteParticipantsUpdated', { added: [], removed: [participant] });
-      return participant;
-    },
-
-    testHelperPushLocalVideoStream(stream: LocalVideoStream): void {
-      this.localVideoStreams = [stream];
-      this.emit('localVideoStreamsUpdated', { added: [stream], removed: [] });
-    },
-
-    testHelperPopLocalVideoStream(): LocalVideoStream {
-      const stream = this.localVideoStreams.pop();
-      this.emit('localVideoStreamsUpdated', { added: [], removed: [stream] });
-      return stream;
-    }
-  }) as MockCall;
-}
-
-/**
- * @private
- */
-export interface MockRemoteParticipant extends Mutable<RemoteParticipant> {
-  emit(eventName: string | symbol, ...args: any[]): boolean;
-  testHelperPushVideoStream(stream: RemoteVideoStream): void;
-  testHelperPopVideoStream(): RemoteVideoStream;
-}
-
-/**
- * @private
- */
-export function createMockRemoteParticipant(
-  mockCommunicationUserId = 'defaulRemoteParticipantId'
-): MockRemoteParticipant {
-  return addMockEmitter({
-    identifier: { kind: 'communicationUser', communicationUserId: mockCommunicationUserId },
-    videoStreams: [] as ReadonlyArray<RemoteVideoStream>,
-
-    testHelperPushVideoStream(stream: RemoteVideoStream): void {
-      this.videoStreams.push(stream);
-      this.emit('videoStreamsUpdated', { added: [stream], removed: [] });
-    },
-
-    testHelperPopVideoStream(): RemoteVideoStream {
-      const stream = this.videoStreams.pop();
-      this.emit('videoStreamsUpdated', { added: [], removed: [stream] });
-      return stream;
-    }
-  }) as MockRemoteParticipant;
-}
-
-/**
- * @private
- */
-export function createMockIncomingCall(mockCallId: string): MockIncomingCall {
-  const mockIncomingCall = { id: mockCallId } as MockIncomingCall;
-  return addMockEmitter(mockIncomingCall);
-}
-
-const createMockVideoEffectsAPI = (): VideoEffectsFeature =>
-  addMockEmitter({
-    activeEffects: ['MockVideoEffect'],
-    startEffects: () => Promise.resolve(),
-    stopEffects: () => Promise.resolve(),
-    dispose: () => Promise.resolve()
-  });
-
-/** @private */
-export const createMockLocalVideoStream = (): LocalVideoStream =>
-  ({
-    source: {
-      id: 'mockVideoDeviceSourceId',
-      name: 'mockVideoDeviceSourceName',
-      deviceType: 'Unknown'
-    },
-    mediaStreamType: 'Video',
-    switchSource: Promise.resolve,
-
-    feature: () => createMockVideoEffectsAPI()
-  }) as unknown as LocalVideoStream;
-
-/**
- * @private
- */
-export function createMockRemoteVideoStream(id = 42): MockRemoteVideoStream {
-  return addMockEmitter({ id, mediaStreamType: 'Video' }) as MockRemoteVideoStream;
-}
-
-/**
- * @private
- */
-export function createMockRemoteScreenshareStream(id = 42): MockRemoteVideoStream {
-  return addMockEmitter({ id, mediaStreamType: 'ScreenSharing' }) as MockRemoteVideoStream;
-}
-
-/**
- *
- * @private
- *
- * Creates a function equivalent to Call.api. The api() generated will use the passed in cache to return the feature
- * objects as defined in the cache. For any undefined feature not in cache, it will return a generic object. Containing
- * properties of all features. Note that this generic object is instanciated every call whereas the cache objects are
- * reused on repeated calls.
- */
-export function createMockApiFeatures(
-  cache: Map<CallFeatureFactory<any>, CallFeature>
-): <FeatureT extends CallFeature>(cls: CallFeatureFactory<FeatureT>) => FeatureT {
-  return <FeatureT extends CallFeature>(cls: CallFeatureFactory<FeatureT>): FeatureT => {
-    for (const [key, feature] of cache.entries()) {
-      if (cls && key && key.callApiCtor === cls.callApiCtor) {
-        return feature as FeatureT;
-      }
-    }
-
-    // Default one if none provided
-    const generic = addMockEmitter({
-      ...new StubDiagnosticsCallFeatureImpl(),
-      name: 'Default',
-      isRecordingActive: false,
-      isTranscriptionActive: false,
-      /* @conditional-compile-remove(media-access) */
-      getAllOthersMediaAccess: () => [],
-      /* @conditional-compile-remove(media-access) */
-      getMeetingMediaAccess: () => ({ isAudioPermitted: true, isVideoPermitted: true })
-    });
-    return generic;
-  };
-}
-
-function waitMilliseconds(duration: number): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, duration);
-  });
-}
-
-const BREAK_CONDITION_TIMEOUT_MILLESEC = 4000;
-/**
- *
- * @private
- * This will wait for up to 4 seconds and break when the given breakCondition is true. The reason for four seconds is
- * that by default the jest timeout for waiting for test is 5 seconds so ideally we want to break this and fail then
- * fail some expects check before the 5 seconds otherwise you'll just get a cryptic 'jest timeout error'.
- */
-export async function waitWithBreakCondition(breakCondition: () => boolean): Promise<boolean> {
-  const start = new Date();
-  for (let now = new Date(); +now - +start < BREAK_CONDITION_TIMEOUT_MILLESEC; now = new Date()) {
-    if (breakCondition()) {
-      return true;
-    }
-    await waitMilliseconds(10);
+  startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidOthersAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidOthersVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
   }
-  return false;
-}
-
-/**
- * @private
- */
-export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: DeviceManager): CallClient => {
-  return {
-    getDeviceManager: (): Promise<DeviceManager> => {
-      if (!deviceManager) {
-        throw new Error('deviceManager not set');
-      }
-      return Promise.resolve(deviceManager);
-    },
-    createCallAgent: (): Promise<CallAgent> => {
-      if (!callAgent) {
-        throw new Error('callAgent not set');
-      }
-      return Promise.resolve(callAgent);
-    },
-    feature: () => ({
-      getEnvironmentInfo: () =>
-        Promise.resolve({
-          environment: {
-            platform: 'mockPlatform',
-            browser: 'mockBrowser',
-            browserVersion: 'mockBrowserVersion'
-          },
-          isSupportedPlatform: true,
-          isSupportedBrowser: true,
-          isSupportedBrowserVersion: true,
-          isSupportedEnvironment: true
-        })
-    })
-  } as unknown as CallClient;
 };
 
-/**
- * @private
- */
-export interface MockCallAgent extends Mutable<CallAgent>, MockEmitter {
-  /**
-   * Add given call to calls and trigger an event to notify clients.
-   */
-  testHelperPushCall(call: Call): void;
-  testHelperPopCall(): void;
-}
-
-/**
- * @private
- */
-export const createMockCallAgent = (displayName = 'defaultDisplayName'): MockCallAgent => {
-  return addMockEmitter({
-    calls: [] as Call[],
-    displayName: displayName,
-
-    kind: 'CallAgent',
-
-    testHelperPushCall(call: Call): void {
-      this.calls.push(call);
-      this.emit('callsUpdated', {
-        added: [call],
-        removed: []
-      });
-    },
-
-    testHelperPopCall(): void {
-      const call = this.calls.pop();
-      this.emit('callsUpdated', {
-        added: [],
-        removed: [call]
-      });
-    }
-  }) as MockCallAgent;
+const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
+  addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  addTeamsUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  blurBackground: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  hangUpForEveryOne: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  manageLobby: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  unmuteMic: { isPresent: true, reason: 'Capable' },
+  pstnDialOut: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  raiseHand: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  removeParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  shareScreen: { isPresent: false, reason: 'RoleRestricted' },
+  spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveCallingCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveMeetingCaptions: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  turnVideoOn: { isPresent: true, reason: 'Capable' },
+  muteOthers: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  useReactions: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  setCaptionLanguage: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidOthersAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidOthersVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  }
 };
 
-/**
- * @private
- */
-export class StateChangeListener {
-  state: CallClientState;
-  onChangeCalledCount = 0;
-
-  constructor(client: StatefulCallClient) {
-    this.state = client.getState();
-    client.onStateChange(this.onChange.bind(this));
+const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
+  addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  addTeamsUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  blurBackground: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  hangUpForEveryOne: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  manageLobby: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  unmuteMic: { isPresent: true, reason: 'Capable' },
+  pstnDialOut: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  raiseHand: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  removeParticipant: { isPresent: true, reason: 'Capable' },
+  removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  shareScreen: { isPresent: true, reason: 'Capable' },
+  spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveCallingCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveMeetingCaptions: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  setCaptionLanguage: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  turnVideoOn: { isPresent: true, reason: 'Capable' },
+  muteOthers: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  useReactions: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidOthersAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidOthersVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
   }
-
-  private onChange(newState: CallClientState): void {
-    this.onChangeCalledCount++;
-    this.state = newState;
-  }
-}
-
-/**
- * @private
- */
-export const createStatefulCallClientWithAgent = (agent: CallAgent): StatefulCallClient => {
-  return createStatefulCallClientWithBaseClient(createMockCallClient(agent));
 };
 
-/**
- * @private
- */
-export const createStatefulCallClientWithBaseClient = (client: CallClient): StatefulCallClient => {
-  return createStatefulCallClientWithDeps(
-    client,
-    new CallContext({ kind: 'communicationUser', communicationUserId: 'defaultUserId' }),
-    new InternalCallContext()
-  );
+const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
+  addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  addTeamsUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  blurBackground: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  hangUpForEveryOne: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  manageLobby: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  unmuteMic: { isPresent: true, reason: 'Capable' },
+  pstnDialOut: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  raiseHand: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  removeParticipant: { isPresent: true, reason: 'Capable' },
+  removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  shareScreen: { isPresent: true, reason: 'Capable' },
+  spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveCallingCaptions: { isPresent: true, reason: 'Capable' },
+  startLiveMeetingCaptions: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  setCaptionLanguage: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  turnVideoOn: { isPresent: true, reason: 'Capable' },
+  muteOthers: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  useReactions: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: true, reason: 'Capable' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: true, reason: 'Capable' },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidOthersAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  forbidOthersVideo: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  }
+};
+
+const defaultEndedCallState: CallState = {
+  id: 'call0',
+
+  kind: 'Call' as CallKind,
+  callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
+  direction: 'Incoming',
+  transcription: { isTranscriptionActive: false },
+  recording: { isRecordingActive: false },
+  /* @conditional-compile-remove(local-recording-notification) */
+  localRecording: { isLocalRecordingActive: false },
+  startTime: new Date(500000000000),
+  endTime: new Date(500000000000),
+  diagnostics: { network: { latest: {} }, media: { latest: {} } },
+  state: 'Disconnected',
+  localVideoStreams: [],
+  isMuted: true,
+  isScreenSharingOn: false,
+  remoteParticipants: {},
+  remoteParticipantsEnded: {},
+  raiseHand: { raisedHands: [] },
+  /* @conditional-compile-remove(together-mode) */
+  togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
+  pptLive: { isActive: false },
+  captionsFeature: {
+    captions: [],
+    supportedSpokenLanguages: [],
+    supportedCaptionLanguages: [],
+    currentCaptionLanguage: '',
+    currentSpokenLanguage: '',
+    isCaptionsFeatureActive: false,
+    startCaptionsInProgress: false,
+
+    captionsKind: 'Captions'
+  },
+  transfer: {
+    acceptedTransfers: {}
+  },
+  optimalVideoCount: {
+    maxRemoteVideoStreams: 4
+  }
 };
