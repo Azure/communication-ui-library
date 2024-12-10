@@ -11,6 +11,7 @@ import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @condtional-compile-remove(gallery-options) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import { ReactionResources } from '@internal/react-components';
+import { DtmfDialPadOptions } from '../../CallComposite';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
@@ -24,6 +25,7 @@ export interface PreparedMoreDrawerProps {
   userSetGalleryLayout?: VideoGalleryLayout;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
+  dtmfDialerOptions?: boolean | DtmfDialPadOptions;
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
   onClickMeetingPhoneInfo?: () => void;
@@ -41,7 +43,6 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
       captionsMenuTitle: strings.moreDrawerCaptionsMenuTitle,
       spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle,
       captionLanguageMenuTitle: strings.moreDrawerCaptionLanguageMenuTitle,
-
       galleryOptionsMenuTitle: strings.moreDrawerGalleryOptionsMenuTitle
     }),
     [strings]

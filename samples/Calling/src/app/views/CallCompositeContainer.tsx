@@ -45,7 +45,7 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
           hangUpForEveryone: 'endCallOptions'
         }
       },
-      autoShowDtmfDialer: true
+      disableAutoShowDtmfDialer: { dialerBehavior: 'autoShow' }
     }),
     [shouldHideScreenShare]
   );

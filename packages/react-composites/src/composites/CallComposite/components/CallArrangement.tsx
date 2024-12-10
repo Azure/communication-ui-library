@@ -95,6 +95,7 @@ import { useCompositeStringsForNotificationStackStrings } from '../hooks/useComp
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
 import { FocusableElement } from '../../common/types/FocusableElement';
+import { DtmfDialPadOptions } from '../CallComposite';
 
 /**
  * @private
@@ -116,21 +117,17 @@ export interface CallArrangementProps {
   latestErrors: ActiveErrorMessage[] | ActiveNotification[];
   latestNotifications?: ActiveNotification[];
   onDismissError: (error: ActiveErrorMessage | ActiveNotification) => void;
-
   onDismissNotification?: (notification: ActiveNotification) => void;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayoutChange?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
-
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
   onCloseChatPane?: () => void;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
-
+  dtmfDialerOptions?: boolean | DtmfDialPadOptions;
   setIsPromptOpen?: (isOpen: boolean) => void;
-
   setPromptProps?: (props: PromptProps) => void;
-
   hideSpotlightButtons?: boolean;
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
@@ -565,6 +562,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 userSetGalleryLayout={props.userSetGalleryLayout}
                 onSetDialpadPage={props.onSetDialpadPage}
                 dtmfDialerPresent={props.dtmfDialerPresent}
+                dtmfDialerOptions={props.dtmfDialerOptions}
                 reactionResources={reactionResources}
                 onClickMeetingPhoneInfo={onMeetingPhoneInfoClicked}
               />
