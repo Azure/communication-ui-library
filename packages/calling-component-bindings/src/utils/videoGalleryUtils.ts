@@ -183,9 +183,10 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     raisedHand,
     reaction,
     spotlight,
-    signalStrength,
     mediaAccess,
-    role
+    role,
+    /* @conditional-compile-remove(remote-ufd) */
+    signalStrength
   };
 };
 
