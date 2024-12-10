@@ -445,14 +445,14 @@ export interface CallAdapterCallOperations {
     allowUnsupportedBrowserVersion(): void;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     // @beta
-    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+    createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
-    disposeTogetherModeStreamViews(): Promise<void>;
+    disposeTogetherModeStreamView(): Promise<void>;
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
@@ -1172,6 +1172,7 @@ export interface CallState {
     localParticipantReaction?: ReactionState;
     localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
+    mediaAccess?: MediaAccessState;
     meetingConference?: {
         conferencePhones: ConferencePhoneInfo[];
     };
@@ -1218,7 +1219,7 @@ export interface CallWithChatAdapterManagement {
     askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
     // @beta
-    createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+    createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
     // @beta
     deleteImage(imageId: string): Promise<void>;
     deleteMessage(messageId: string): Promise<void>;
@@ -1227,7 +1228,7 @@ export interface CallWithChatAdapterManagement {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
     // @beta
-    disposeTogetherModeStreamViews(): Promise<void>;
+    disposeTogetherModeStreamView(): Promise<void>;
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
@@ -2234,7 +2235,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // @beta
-    onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
+    onCreateTogetherModeStreamView: (options?: TogetherModeStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     // (undocumented)
     onDisposeLocalScreenShareStreamView: () => Promise<void>;
     // (undocumented)
@@ -2246,15 +2247,15 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // @beta
-    onDisposeTogetherModeStreamViews: () => Promise<void>;
-    // (undocumented)
-    onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onForbidRemoteParticipantsAudio?: () => Promise<void>;
-    // (undocumented)
-    onForbidRemoteParticipantsVideo?: () => Promise<void>;
+    onDisposeTogetherModeStreamView: () => Promise<void>;
+    // @beta
+    onForbidAudio?: (userIds: string[]) => Promise<void>;
+    // @beta
+    onForbidOthersAudio?: () => Promise<void>;
+    // @beta
+    onForbidOthersVideo?: () => Promise<void>;
+    // @beta
+    onForbidVideo?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -2263,14 +2264,14 @@ export interface CommonCallingHandlers {
     onMuteAllRemoteParticipants: () => Promise<void>;
     // (undocumented)
     onMuteParticipant: (userId: string) => Promise<void>;
-    // (undocumented)
-    onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onPermitRemoteParticipantsAudio?: () => Promise<void>;
-    // (undocumented)
-    onPermitRemoteParticipantsVideo?: () => Promise<void>;
+    // @beta
+    onPermitAudio?: (userIds: string[]) => Promise<void>;
+    // @beta
+    onPermitOthersAudio?: () => Promise<void>;
+    // @beta
+    onPermitOthersVideo?: () => Promise<void>;
+    // @beta
+    onPermitVideo?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
@@ -4040,6 +4041,14 @@ export interface NotificationStackStrings {
     callVideoRecoveredBySystem?: NotificationStrings;
     callVideoStoppedBySystem?: NotificationStrings;
     cameraFrozenForRemoteParticipants?: NotificationStrings;
+    // (undocumented)
+    capabilityTurnVideoOnAbsent?: NotificationStrings;
+    // (undocumented)
+    capabilityTurnVideoOnPresent?: NotificationStrings;
+    // (undocumented)
+    capabilityUnmuteMicAbsent?: NotificationStrings;
+    // (undocumented)
+    capabilityUnmuteMicPresent?: NotificationStrings;
     dismissButtonAriaLabel?: NotificationStrings;
     failedToJoinCallGeneric?: NotificationStrings;
     failedToJoinCallInvalidMeetingLink?: NotificationStrings;
@@ -4086,7 +4095,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
@@ -4886,12 +4895,8 @@ export type StartTeamsCallIdentifier = MicrosoftTeamsUserIdentifier | PhoneNumbe
 export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
-    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
-    // @beta
-    createView(callId: string, stream: CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
-    disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
-    // @beta
-    disposeView(callId: string, stream: CallFeatureStreamState): void;
+    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState | /* @conditional-compile-remove(together-mode) */ CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
+    disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState | /* @conditional-compile-remove(together-mode) */ CallFeatureStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
@@ -5097,6 +5102,12 @@ export interface TogetherModeSeatingPositionState {
     top: number;
     // (undocumented)
     width: number;
+}
+
+// @beta
+export interface TogetherModeStreamOptions extends VideoStreamOptions {
+    // (undocumented)
+    viewKind?: 'main' | 'panoramic';
 }
 
 // @beta
@@ -5349,6 +5360,7 @@ export type VideoGalleryParticipant = {
     spotlight?: Spotlight;
     signalStrength?: number;
     mediaAccess?: MediaAccess;
+    role?: string;
 };
 
 // @public
@@ -5464,6 +5476,27 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     horizontalGallery?: HorizontalGalleryStyles;
     localVideo?: IStyle;
     verticalGallery?: VerticalGalleryStyles;
+}
+
+// @beta
+export type VideoGalleryTogetherModeParticipantPosition = Record<string, VideoGalleryTogetherModeSeatingInfo>;
+
+// @beta
+export interface VideoGalleryTogetherModeSeatingInfo {
+    // (undocumented)
+    height: number;
+    // (undocumented)
+    left: number;
+    // (undocumented)
+    top: number;
+    // (undocumented)
+    width: number;
+}
+
+// @beta
+export interface VideoGalleryTogetherModeStreams {
+    // (undocumented)
+    mainVideoStream?: VideoGalleryStream;
 }
 
 // @public

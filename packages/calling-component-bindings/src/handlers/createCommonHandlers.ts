@@ -41,7 +41,7 @@ import { TeamsCaptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { _ComponentCallingHandlers } from './createHandlers';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamViewResult } from '@internal/react-components';
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 /**
  * Object containing all the handlers required for calling components.
  *
@@ -110,7 +110,7 @@ export interface CommonCallingHandlers {
    *
    * @beta
    */
-  onCreateTogetherModeStreamView: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
+  onCreateTogetherModeStreamView: (options?: TogetherModeStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
 
   /* @conditional-compile-remove(together-mode) */
   /**
@@ -132,24 +132,64 @@ export interface CommonCallingHandlers {
    *
    * @beta
    */
-  onDisposeTogetherModeStreamViews: () => Promise<void>;
+  onDisposeTogetherModeStreamView: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
+  /**
+   * Forbid remote participants from sending audio
+   *
+   * @beta
+   */
+  onForbidAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
+  /**
+   * Permit remote participants to send audio
+   *
+   * @beta
+   */
+  onPermitAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onForbidRemoteParticipantsAudio?: () => Promise<void>;
+  /**
+   * Change meeting option forbid remote participants from sending audio
+   *
+   * @beta
+   */
+  onForbidOthersAudio?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onPermitRemoteParticipantsAudio?: () => Promise<void>;
+  /**
+   * Change meeting option permit remote participants to send audio
+   *
+   * @beta
+   */
+  onPermitOthersAudio?: () => Promise<void>;
 
   /* @conditional-compile-remove(media-access) */
-  onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
+  /**
+   * Forbid remote participants from sending video
+   *
+   * @beta
+   */
+  onForbidVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
+  /**
+   * Permit remote participants to send video
+   *
+   * @beta
+   */
+  onPermitVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onForbidRemoteParticipantsVideo?: () => Promise<void>;
+  /**
+   * Change meeting option forbid remote participants from sending video
+   *
+   * @beta
+   */
+  onForbidOthersVideo?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
-  onPermitRemoteParticipantsVideo?: () => Promise<void>;
+  /**
+   * Change meeting option permit remote participants to send video
+   *
+   * @beta
+   */
+  onPermitOthersVideo?: () => Promise<void>;
 }
 
 /**
@@ -760,7 +800,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       : undefined;
     /* @conditional-compile-remove(together-mode) */
     const onCreateTogetherModeStreamView = async (
-      options = { scalingMode: 'Fit', isMirrored: false } as VideoStreamOptions
+      options = { scalingMode: 'Fit', isMirrored: false, viewKind: 'main' } as TogetherModeStreamOptions
     ): Promise<void | TogetherModeStreamViewResult> => {
       if (!call) {
         return;
@@ -774,7 +814,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
 
       const mainVideoStream = togetherModeStreams.mainVideoStream;
       if (mainVideoStream && mainVideoStream.isAvailable && !mainVideoStream.view) {
-        const createViewResult = await callClient.createView(call.id, mainVideoStream, options);
+        const createViewResult = await callClient.createView(call.id, undefined, mainVideoStream, options);
         // SDK currently only supports 1 Video media stream type
         togetherModeCreateViewResult.mainVideoView = createViewResult?.view
           ? { view: createViewResult?.view }
@@ -785,7 +825,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     /* @conditional-compile-remove(together-mode) */
-    const onDisposeTogetherModeStreamViews = async (): Promise<void> => {
+    const onDisposeTogetherModeStreamView = async (): Promise<void> => {
       if (!call) {
         return;
       }
@@ -800,7 +840,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
 
       if (togetherModeStreams.mainVideoStream.view) {
-        callClient.disposeView(call.id, togetherModeStreams.mainVideoStream);
+        callClient.disposeView(call.id, undefined, togetherModeStreams.mainVideoStream);
       }
     };
     /* @conditional-compile-remove(together-mode) */
@@ -811,41 +851,41 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
     /* @conditional-compile-remove(media-access) */
-    const onForbidParticipantAudio = async (userIds: string[]): Promise<void> => {
+    const onForbidAudio = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).forbidAudio(participants);
     };
     /* @conditional-compile-remove(media-access) */
-    const onPermitParticipantAudio = async (userIds: string[]): Promise<void> => {
+    const onPermitAudio = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).permitAudio(participants);
     };
     /* @conditional-compile-remove(media-access) */
-    const onForbidRemoteParticipantsAudio = async (): Promise<void> => {
+    const onForbidOthersAudio = async (): Promise<void> => {
       await call?.feature(Features.MediaAccess).forbidOthersAudio();
     };
     /* @conditional-compile-remove(media-access) */
-    const onPermitRemoteParticipantsAudio = async (): Promise<void> => {
+    const onPermitOthersAudio = async (): Promise<void> => {
       await call?.feature(Features.MediaAccess).permitOthersAudio();
     };
 
     /* @conditional-compile-remove(media-access) */
-    const onForbidParticipantVideo = async (userIds: string[]): Promise<void> => {
+    const onForbidVideo = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).forbidVideo(participants);
     };
     /* @conditional-compile-remove(media-access) */
-    const onPermitParticipantVideo = async (userIds: string[]): Promise<void> => {
+    const onPermitVideo = async (userIds: string[]): Promise<void> => {
       const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
       await call?.feature(Features.MediaAccess).permitVideo(participants);
     };
     /* @conditional-compile-remove(media-access) */
-    const onForbidRemoteParticipantsVideo = async (): Promise<void> => {
+    const onForbidOthersVideo = async (): Promise<void> => {
       await call?.feature(Features.MediaAccess).forbidOthersVideo();
     };
     /* @conditional-compile-remove(media-access) */
-    const onPermitRemoteParticipantsVideo = async (): Promise<void> => {
-      await call?.feature(Features.MediaAccess).forbidOthersAudio();
+    const onPermitOthersVideo = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).permitOthersVideo();
     };
     return {
       onHangUp,
@@ -902,25 +942,25 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(together-mode) */
       onStartTogetherMode: notImplemented,
       /* @conditional-compile-remove(together-mode) */
-      onDisposeTogetherModeStreamViews,
+      onDisposeTogetherModeStreamView,
       /* @conditional-compile-remove(together-mode) */
       onSetTogetherModeSceneSize,
       /* @conditional-compile-remove(media-access) */
-      onForbidParticipantAudio,
+      onForbidAudio,
       /* @conditional-compile-remove(media-access) */
-      onPermitParticipantAudio,
+      onPermitAudio,
       /* @conditional-compile-remove(media-access) */
-      onForbidRemoteParticipantsAudio,
+      onForbidOthersAudio,
       /* @conditional-compile-remove(media-access) */
-      onPermitRemoteParticipantsAudio,
+      onPermitOthersAudio,
       /* @conditional-compile-remove(media-access) */
-      onForbidParticipantVideo,
+      onForbidVideo,
       /* @conditional-compile-remove(media-access) */
-      onPermitParticipantVideo,
+      onPermitVideo,
       /* @conditional-compile-remove(media-access) */
-      onForbidRemoteParticipantsVideo,
+      onForbidOthersVideo,
       /* @conditional-compile-remove(media-access) */
-      onPermitRemoteParticipantsVideo
+      onPermitOthersVideo
     };
   }
 );
