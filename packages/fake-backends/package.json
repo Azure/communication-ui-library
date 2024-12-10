@@ -39,7 +39,7 @@
     "@types/events": "^3.0.3",
     "events": "^3.3.0",
     "immer": "10.1.1",
-    "nanoid": "3.3.6"
+    "nanoid": "3.3.8"
   },
   "devDependencies": {
     "@babel/cli": "^7.24.8",
