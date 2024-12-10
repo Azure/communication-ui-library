@@ -17,8 +17,6 @@ import {
   rttContainerClassName
 } from './styles/Captions.style';
 /* @conditional-compile-remove(rtt) */
-import { _CaptionsInfo } from './CaptionsBanner';
-/* @conditional-compile-remove(rtt) */
 import { useLocale } from '../localization';
 
 /* @conditional-compile-remove(rtt) */
