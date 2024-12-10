@@ -266,7 +266,7 @@ export type AvatarPersonaData = {
 };
 
 // @public
-export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData | undefined>;
+export type AvatarPersonaDataCallback = (userId: string) => Promise<AvatarPersonaData>;
 
 // @public
 export type AzureCommunicationCallAdapterArgs = {
@@ -1174,6 +1174,7 @@ export interface CallState {
     localParticipantReaction?: ReactionState;
     localRecording: LocalRecordingCallFeatureState;
     localVideoStreams: LocalVideoStreamState[];
+    mediaAccess?: MediaAccessState;
     meetingConference?: {
         conferencePhones: ConferencePhoneInfo[];
     };
@@ -2249,14 +2250,14 @@ export interface CommonCallingHandlers {
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // @beta
     onDisposeTogetherModeStreamView: () => Promise<void>;
-    // (undocumented)
-    onForbidParticipantAudio?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onForbidParticipantVideo?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onForbidRemoteParticipantsAudio?: () => Promise<void>;
-    // (undocumented)
-    onForbidRemoteParticipantsVideo?: () => Promise<void>;
+    // @beta
+    onForbidAudio?: (userIds: string[]) => Promise<void>;
+    // @beta
+    onForbidOthersAudio?: () => Promise<void>;
+    // @beta
+    onForbidOthersVideo?: () => Promise<void>;
+    // @beta
+    onForbidVideo?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -2265,14 +2266,14 @@ export interface CommonCallingHandlers {
     onMuteAllRemoteParticipants: () => Promise<void>;
     // (undocumented)
     onMuteParticipant: (userId: string) => Promise<void>;
-    // (undocumented)
-    onPermitParticipantAudio?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onPermitParticipantVideo?: (userIds: string[]) => Promise<void>;
-    // (undocumented)
-    onPermitRemoteParticipantsAudio?: () => Promise<void>;
-    // (undocumented)
-    onPermitRemoteParticipantsVideo?: () => Promise<void>;
+    // @beta
+    onPermitAudio?: (userIds: string[]) => Promise<void>;
+    // @beta
+    onPermitOthersAudio?: () => Promise<void>;
+    // @beta
+    onPermitOthersVideo?: () => Promise<void>;
+    // @beta
+    onPermitVideo?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
@@ -4042,6 +4043,14 @@ export interface NotificationStackStrings {
     callVideoRecoveredBySystem?: NotificationStrings;
     callVideoStoppedBySystem?: NotificationStrings;
     cameraFrozenForRemoteParticipants?: NotificationStrings;
+    // (undocumented)
+    capabilityTurnVideoOnAbsent?: NotificationStrings;
+    // (undocumented)
+    capabilityTurnVideoOnPresent?: NotificationStrings;
+    // (undocumented)
+    capabilityUnmuteMicAbsent?: NotificationStrings;
+    // (undocumented)
+    capabilityUnmuteMicPresent?: NotificationStrings;
     dismissButtonAriaLabel?: NotificationStrings;
     failedToJoinCallGeneric?: NotificationStrings;
     failedToJoinCallInvalidMeetingLink?: NotificationStrings;
@@ -4090,7 +4099,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'togetherModeStarted' | 'togetherModeEnded';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
@@ -5355,6 +5364,7 @@ export type VideoGalleryParticipant = {
     spotlight?: Spotlight;
     signalStrength?: number;
     mediaAccess?: MediaAccess;
+    role?: string;
 };
 
 // @public

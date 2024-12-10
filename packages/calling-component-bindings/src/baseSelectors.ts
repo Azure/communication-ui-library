@@ -26,6 +26,8 @@ import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/r
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(media-access) */
+import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeCallFeatureState } from '@internal/calling-stateful-client';
 /**
@@ -63,6 +65,17 @@ export const getCapabilities = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesFeature?.capabilities;
+
+/* @conditional-compile-remove(media-access) */
+/**
+ * @private
+ */
+export const getLatestCapabilitiesChangedInfo = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): CapabilitiesChangeInfo | undefined => {
+  return state.calls[props.callId]?.capabilitiesFeature?.latestCapabilitiesChangeInfo;
+};
 
 /**
  * @private
