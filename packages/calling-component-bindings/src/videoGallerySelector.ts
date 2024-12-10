@@ -115,7 +115,13 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
             screenShareRemoteParticipant.raisedHand,
             screenShareRemoteParticipant.contentSharingStream,
             undefined,
-            screenShareRemoteParticipant.spotlight
+            screenShareRemoteParticipant.spotlight,
+            /* @conditional-compile-remove(media-access) */
+            undefined,
+            /* @conditional-compile-remove(media-access) */
+            screenShareRemoteParticipant.mediaAccess,
+            /* @conditional-compile-remove(media-access) */
+            role
           )
         : undefined,
       localParticipant: memoizeLocalParticipant(
