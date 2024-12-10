@@ -81,8 +81,6 @@ module.exports = {
     // Do not use in production code.
     "stabilizedDemo",
     // Feature for forbid/permit remote participants audio/video access
-    "media-access",
-    // feature for breakout rooms
-    "breakout-rooms",
+    "media-access"
   ]
 }
