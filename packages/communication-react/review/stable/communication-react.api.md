@@ -13,6 +13,9 @@ import { BackgroundBlurConfig } from '@azure/communication-calling';
 import { BackgroundBlurEffect } from '@azure/communication-calling';
 import { BackgroundReplacementConfig } from '@azure/communication-calling';
 import { BackgroundReplacementEffect } from '@azure/communication-calling';
+import { BreakoutRoom } from '@azure/communication-calling';
+import { BreakoutRoomsSettings } from '@azure/communication-calling';
+import { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { Call } from '@azure/communication-calling';
 import { CallAgent } from '@azure/communication-calling';
 import { CallClient } from '@azure/communication-calling';
@@ -143,6 +146,17 @@ export type AdapterErrors = {
 };
 
 // @public
+export interface AdapterNotification {
+    target: string;
+    timestamp: Date;
+}
+
+// @public
+export type AdapterNotifications = {
+    [target: string]: AdapterNotification;
+};
+
+// @public
 export interface AdapterState<TState> {
     getState(): TState;
     offStateChange(handler: (state: TState) => void): void;
@@ -246,6 +260,18 @@ export interface BaseCustomStyles {
 }
 
 // @public
+export interface BreakoutRoomsState {
+    // (undocumented)
+    assignedBreakoutRoom?: BreakoutRoom;
+    // (undocumented)
+    breakoutRoomDisplayName?: string;
+    // (undocumented)
+    breakoutRoomOriginCallId?: string;
+    // (undocumented)
+    breakoutRoomSettings?: BreakoutRoomsSettings;
+}
+
+// @public
 export interface CallAdapter extends CommonCallAdapter {
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -279,6 +305,14 @@ export interface CallAdapterCallOperations {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // (undocumented)
+    forbidAudio(userIds: string[]): Promise<void>;
+    // (undocumented)
+    forbidOthersAudio(): Promise<void>;
+    // (undocumented)
+    forbidOthersVideo(): Promise<void>;
+    // (undocumented)
+    forbidVideo(userIds: string[]): Promise<void>;
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
@@ -286,10 +320,19 @@ export interface CallAdapterCallOperations {
     muteAllRemoteParticipants(): Promise<void>;
     muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
+    // (undocumented)
+    permitAudio(userIds: string[]): Promise<void>;
+    // (undocumented)
+    permitOthersAudio(): Promise<void>;
+    // (undocumented)
+    permitOthersVideo(): Promise<void>;
+    // (undocumented)
+    permitVideo(userIds: string[]): Promise<void>;
     raiseHand(): Promise<void>;
     removeParticipant(userId: string): Promise<void>;
     removeParticipant(participant: CommunicationIdentifier): Promise<void>;
     resumeCall(): Promise<void>;
+    returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
@@ -324,6 +367,7 @@ export type CallAdapterClientState = {
     isTeamsMeeting: boolean;
     isRoomsCall: boolean;
     latestErrors: AdapterErrors;
+    latestNotifications: AdapterNotifications;
     alternateCallerId?: string;
     environmentInfo?: EnvironmentInfo;
     cameraStatus?: 'On' | 'Off';
@@ -379,6 +423,7 @@ export interface CallAdapterSubscribers {
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
     off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+    off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
     on(event: 'participantsJoined', listener: ParticipantsJoinedListener): void;
     on(event: 'participantsLeft', listener: ParticipantsLeftListener): void;
     on(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -400,6 +445,7 @@ export interface CallAdapterSubscribers {
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
     on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
+    on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 }
 
 // @public
@@ -460,6 +506,7 @@ export interface CallClientState {
         [key: string]: IncomingCallState | TeamsIncomingCallState;
     };
     latestErrors: CallErrors;
+    latestNotifications: CallNotifications;
     userId: CommunicationIdentifierKind;
 }
 
@@ -479,7 +526,9 @@ export type CallCompositeIcons = {
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element;
+    ControlButtonCameraProhibitedSmall?: JSX.Element;
     ControlButtonMicProhibited?: JSX.Element;
+    ControlButtonMicProhibitedSmall?: JSX.Element;
     ControlButtonRaiseHand?: JSX.Element;
     ControlButtonLowerHand?: JSX.Element;
     ControlButtonExitSpotlight?: JSX.Element;
@@ -612,6 +661,7 @@ export interface CallCompositeStrings {
     addSpotlightMenuLabel: string;
     blurBackgroundEffectButtonLabel?: string;
     blurBackgroundTooltip?: string;
+    breakoutRoomJoinedNotificationTitle: string;
     callRejectedMoreDetails?: string;
     callRejectedTitle?: string;
     callTimeoutBotDetails?: string;
@@ -681,12 +731,40 @@ export interface CallCompositeStrings {
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
     failedToJoinTeamsMeetingReasonAccessDeniedTitle: string;
+    // (undocumented)
+    forbidAudioMenuLabel: string;
+    // (undocumented)
+    forbidOthersAudioCancelButtonLabel: string;
+    // (undocumented)
+    forbidOthersAudioConfirmButtonLabel: string;
+    // (undocumented)
+    forbidOthersAudioDialogContent: string;
+    // (undocumented)
+    forbidOthersAudioDialogTitle: string;
+    // (undocumented)
+    forbidOthersAudioMenuLabel: string;
+    // (undocumented)
+    forbidOthersVideoCancelButtonLabel: string;
+    // (undocumented)
+    forbidOthersVideoConfirmButtonLabel: string;
+    // (undocumented)
+    forbidOthersVideoDialogContent: string;
+    // (undocumented)
+    forbidOthersVideoDialogTitle: string;
+    // (undocumented)
+    forbidOthersVideoMenuLabel: string;
+    // (undocumented)
+    forbidVideoMenuLabel: string;
     hangUpCancelButtonLabel?: string;
     holdScreenLabel?: string;
     invalidMeetingIdentifier: string;
     inviteToRoomRemovedDetails?: string;
     inviteToRoomRemovedTitle: string;
+    joinBreakoutRoomBannerButtonLabel: string;
+    joinBreakoutRoomBannerTitle: string;
+    joinBreakoutRoomButtonLabel: string;
     learnMore: string;
+    leaveBreakoutRoomAndMeetingButtonLabel: string;
     leaveConfirmButtonLabel?: string;
     leaveConfirmDialogContent?: string;
     leaveConfirmDialogTitle?: string;
@@ -744,6 +822,30 @@ export interface CallCompositeStrings {
     peoplePaneTitle: string;
     permissionToReachTargetParticipantNotAllowedMoreDetails?: string;
     permissionToReachTargetParticipantNotAllowedTitle?: string;
+    // (undocumented)
+    permitAudioMenuLabel: string;
+    // (undocumented)
+    permitOthersAudioCancelButtonLabel: string;
+    // (undocumented)
+    permitOthersAudioConfirmButtonLabel: string;
+    // (undocumented)
+    permitOthersAudioDialogContent: string;
+    // (undocumented)
+    permitOthersAudioDialogTitle: string;
+    // (undocumented)
+    permitOthersAudioMenuLabel: string;
+    // (undocumented)
+    permitOthersVideoCancelButtonLabel: string;
+    // (undocumented)
+    permitOthersVideoConfirmButtonLabel: string;
+    // (undocumented)
+    permitOthersVideoDialogContent: string;
+    // (undocumented)
+    permitOthersVideoDialogTitle: string;
+    // (undocumented)
+    permitOthersVideoMenuLabel: string;
+    // (undocumented)
+    permitVideoMenuLabel: string;
     phoneCallMoreButtonLabel: string;
     pinParticipantLimitReachedMenuLabel: string;
     pinParticipantMenuItemAriaLabel: string;
@@ -759,6 +861,9 @@ export interface CallCompositeStrings {
     resumeCallButtonLabel?: string;
     resumingCallButtonAriaLabel?: string;
     resumingCallButtonLabel?: string;
+    returnFromBreakoutRoomBannerButtonLabel: string;
+    returnFromBreakoutRoomBannerTitle: string;
+    returnFromBreakoutRoomButtonLabel: string;
     returnToCallButtonAriaDescription?: string;
     returnToCallButtonAriaLabel?: string;
     roomNotFoundDetails?: string;
@@ -902,6 +1007,19 @@ export interface CallingTheme {
     };
 }
 
+// @public (undocumented)
+export interface CallNotification {
+    // (undocumented)
+    target: NotificationTarget;
+    // (undocumented)
+    timestamp: Date;
+}
+
+// @public (undocumented)
+export type CallNotifications = {
+    [target in NotificationTarget]: CallNotification;
+};
+
 // @public
 export type CallParticipantListParticipant = ParticipantListParticipant & {
     state: ParticipantState;
@@ -911,6 +1029,7 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     spotlight?: Spotlight;
+    mediaAccess?: MediaAccess;
 };
 
 // @public
@@ -926,6 +1045,7 @@ export interface CallProviderProps {
 
 // @public
 export interface CallState {
+    breakoutRooms?: BreakoutRoomsState;
     callEndReason?: CallEndReason;
     callerInfo: CallerInfo;
     capabilitiesFeature?: CapabilitiesFeatureState;
@@ -946,6 +1066,7 @@ export interface CallState {
     meetingConference?: {
         conferencePhones: ConferencePhoneInfo[];
     };
+    meetingMediaAccess?: MediaAccessState;
     optimalVideoCount: OptimalVideoCountFeatureState;
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
@@ -992,6 +1113,14 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
+    // (undocumented)
+    forbidAudio: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    forbidOthersAudio: () => Promise<void>;
+    // (undocumented)
+    forbidOthersVideo: () => Promise<void>;
+    // (undocumented)
+    forbidVideo: (userIds: string[]) => Promise<void>;
     holdCall(): Promise<void>;
     // @deprecated
     joinCall(microphoneOn?: boolean): Call | undefined;
@@ -1003,6 +1132,14 @@ export interface CallWithChatAdapterManagement {
     muteAllRemoteParticipants(): Promise<void>;
     muteParticipant(userId: string): Promise<void>;
     onReactionClick(reaction: Reaction_2): Promise<void>;
+    // (undocumented)
+    permitAudio: (userIds: string[]) => Promise<void>;
+    // (undocumented)
+    permitOthersAudio: () => Promise<void>;
+    // (undocumented)
+    permitOthersVideo: () => Promise<void>;
+    // (undocumented)
+    permitVideo: (userIds: string[]) => Promise<void>;
     queryCameras(): Promise<VideoDeviceInfo[]>;
     queryMicrophones(): Promise<AudioDeviceInfo[]>;
     querySpeakers(): Promise<AudioDeviceInfo[]>;
@@ -1012,6 +1149,7 @@ export interface CallWithChatAdapterManagement {
     // (undocumented)
     removeResourceFromCache(resourceDetails: ResourceDetails): void;
     resumeCall(): Promise<void>;
+    returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
@@ -1084,6 +1222,8 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     // (undocumented)
+    off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
+    // (undocumented)
     off(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     off(event: 'messageEdited', listener: MessageEditedListener): void;
@@ -1136,6 +1276,8 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
     // (undocumented)
+    on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
+    // (undocumented)
     on(event: 'messageReceived', listener: MessageReceivedListener): void;
     // (undocumented)
     on(event: 'messageEdited', listener: MessageEditedListener): void;
@@ -1175,6 +1317,7 @@ export interface CallWithChatClientState {
     isTeamsCall: boolean;
     isTeamsMeeting: boolean;
     latestCallErrors: AdapterErrors;
+    latestCallNotifications: AdapterNotifications;
     latestChatErrors: AdapterErrors;
     onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
     onResolveVideoEffectDependency?: () => Promise<VideoBackgroundEffectsDependency>;
@@ -1208,7 +1351,9 @@ export type CallWithChatCompositeIcons = {
     ControlButtonScreenShareStart?: JSX.Element;
     ControlButtonScreenShareStop?: JSX.Element;
     ControlButtonCameraProhibited?: JSX.Element;
+    ControlButtonCameraProhibitedSmall?: JSX.Element;
     ControlButtonMicProhibited?: JSX.Element;
+    ControlButtonMicProhibitedSmall?: JSX.Element;
     ErrorBarCallCameraAccessDenied?: JSX.Element;
     ErrorBarCallCameraAlreadyInUse?: JSX.Element;
     ErrorBarCallLocalVideoFreeze?: JSX.Element;
@@ -1317,11 +1462,13 @@ export interface CallWithChatCompositeProps extends BaseCompositeProps<CallWithC
 
 // @public
 export interface CallWithChatCompositeStrings {
+    breakoutRoomChatPaneTitle: string;
     chatButtonLabel: string;
     chatButtonNewMessageNotificationLabel: string;
     chatButtonTooltipClose: string;
     chatButtonTooltipClosedWithMessageCount: string;
     chatButtonTooltipOpen: string;
+    chatContentSpinnerLabel: string;
     chatPaneTitle: string;
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonActionedLabel: string;
@@ -1366,7 +1513,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -1932,6 +2079,14 @@ export interface CommonCallingHandlers {
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
+    // @beta
+    onForbidAudio?: (userIds: string[]) => Promise<void>;
+    // @beta
+    onForbidOthersAudio?: () => Promise<void>;
+    // @beta
+    onForbidOthersVideo?: () => Promise<void>;
+    // @beta
+    onForbidVideo?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onHangUp: (forEveryone?: boolean) => Promise<void>;
     // (undocumented)
@@ -1940,6 +2095,14 @@ export interface CommonCallingHandlers {
     onMuteAllRemoteParticipants: () => Promise<void>;
     // (undocumented)
     onMuteParticipant: (userId: string) => Promise<void>;
+    // @beta
+    onPermitAudio?: (userIds: string[]) => Promise<void>;
+    // @beta
+    onPermitOthersAudio?: () => Promise<void>;
+    // @beta
+    onPermitOthersVideo?: () => Promise<void>;
+    // @beta
+    onPermitVideo?: (userIds: string[]) => Promise<void>;
     // (undocumented)
     onRaiseHand: () => Promise<void>;
     // (undocumented)
@@ -2423,6 +2586,10 @@ export const DEFAULT_COMPONENT_ICONS: {
     ControlButtonScreenShareStop: React_2.JSX.Element;
     ControlButtonRaiseHand: React_2.JSX.Element;
     ControlButtonLowerHand: React_2.JSX.Element;
+    ControlButtonMicProhibited: React_2.JSX.Element;
+    ControlButtonMicProhibitedSmall: React_2.JSX.Element;
+    ControlButtonCameraProhibited: React_2.JSX.Element;
+    ControlButtonCameraProhibitedSmall: React_2.JSX.Element;
     RaiseHandContextualMenuItem: React_2.JSX.Element;
     LowerHandContextualMenuItem: React_2.JSX.Element;
     ReactionButtonIcon: React_2.JSX.Element;
@@ -2445,6 +2612,11 @@ export const DEFAULT_COMPONENT_ICONS: {
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
     ErrorBarMutedByRemoteParticipant: React_2.JSX.Element;
     NotificationBarRecording: React_2.JSX.Element;
+    NotificationBarBreakoutRoomOpened: React_2.JSX.Element;
+    NotificationBarBreakoutRoomPromptJoin: React_2.JSX.Element;
+    NotificationBarBreakoutRoomChanged: React_2.JSX.Element;
+    NotificationBarBreakoutRoomJoined: React_2.JSX.Element;
+    NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     HorizontalGalleryLeftButton: React_2.JSX.Element;
     HorizontalGalleryRightButton: React_2.JSX.Element;
     MessageDelivered: React_2.JSX.Element;
@@ -2468,6 +2640,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     SendBoxSend: React_2.JSX.Element;
     SendBoxSendHovered: React_2.JSX.Element;
     VideoTileMicOff: React_2.JSX.Element;
+    VideoTileCameraOff: React_2.JSX.Element;
     DialpadBackspace: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
     ParticipantItemPinned: React_2.JSX.Element;
@@ -2528,8 +2701,10 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonParticipants: JSX.Element;
     ControlButtonScreenShareStart: JSX.Element;
     ControlButtonScreenShareStop: JSX.Element;
-    ControlButtonCameraProhibited?: JSX.Element | undefined;
-    ControlButtonMicProhibited?: JSX.Element | undefined;
+    ControlButtonCameraProhibited: JSX.Element;
+    ControlButtonCameraProhibitedSmall: JSX.Element;
+    ControlButtonMicProhibited: JSX.Element;
+    ControlButtonMicProhibitedSmall: JSX.Element;
     ControlButtonRaiseHand: JSX.Element;
     ControlButtonLowerHand: JSX.Element;
     ControlButtonExitSpotlight?: JSX.Element | undefined;
@@ -2613,11 +2788,17 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ErrorBarCallVideoStoppedBySystem: React_2.JSX.Element;
     ErrorBarMutedByRemoteParticipant: React_2.JSX.Element;
     NotificationBarRecording: React_2.JSX.Element;
+    NotificationBarBreakoutRoomOpened: React_2.JSX.Element;
+    NotificationBarBreakoutRoomPromptJoin: React_2.JSX.Element;
+    NotificationBarBreakoutRoomChanged: React_2.JSX.Element;
+    NotificationBarBreakoutRoomJoined: React_2.JSX.Element;
+    NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;
     HoldCallContextualMenuItem: React_2.JSX.Element;
     HoldCallButton: React_2.JSX.Element;
     ResumeCall: React_2.JSX.Element;
+    VideoTileCameraOff: React_2.JSX.Element;
     DialpadBackspace: React_2.JSX.Element;
     VideoTilePinned: React_2.JSX.Element;
     ParticipantItemPinned: React_2.JSX.Element;
@@ -3185,6 +3366,18 @@ export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrien
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
 // @public
+export type MediaAccess = {
+    isAudioPermitted: boolean;
+    isVideoPermitted: boolean;
+};
+
+// @public
+export interface MediaAccessState {
+    isAudioPermitted: boolean;
+    isVideoPermitted: boolean;
+}
+
+// @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';
 };
@@ -3489,6 +3682,11 @@ export type NotificationStackSelector = (state: CallClientState, props: CallingB
 
 // @public
 export interface NotificationStackStrings {
+    assignedBreakoutRoomChanged?: NotificationStrings;
+    assignedBreakoutRoomOpened?: NotificationStrings;
+    assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
+    breakoutRoomClosingSoon?: NotificationStrings;
+    breakoutRoomJoined?: NotificationStrings;
     callCameraAccessDenied?: NotificationStrings;
     callCameraAccessDeniedSafari?: NotificationStrings;
     callCameraAlreadyInUse?: NotificationStrings;
@@ -3506,6 +3704,14 @@ export interface NotificationStackStrings {
     callVideoRecoveredBySystem?: NotificationStrings;
     callVideoStoppedBySystem?: NotificationStrings;
     cameraFrozenForRemoteParticipants?: NotificationStrings;
+    // (undocumented)
+    capabilityTurnVideoOnAbsent?: NotificationStrings;
+    // (undocumented)
+    capabilityTurnVideoOnPresent?: NotificationStrings;
+    // (undocumented)
+    capabilityUnmuteMicAbsent?: NotificationStrings;
+    // (undocumented)
+    capabilityUnmuteMicPresent?: NotificationStrings;
     dismissButtonAriaLabel?: NotificationStrings;
     failedToJoinCallGeneric?: NotificationStrings;
     failedToJoinCallInvalidMeetingLink?: NotificationStrings;
@@ -3550,6 +3756,9 @@ export interface NotificationStyles {
     secondaryButton?: IButtonStyles;
     title?: IStackStyles;
 }
+
+// @public (undocumented)
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
@@ -3899,6 +4108,7 @@ export interface RemoteParticipantState {
     identifier: CommunicationIdentifierKind;
     isMuted: boolean;
     isSpeaking: boolean;
+    mediaAccess?: MediaAccessState;
     raisedHand?: RaisedHandState;
     reactionState?: ReactionState;
     role?: ParticipantRole;
@@ -4511,6 +4721,8 @@ export type VideoGalleryParticipant = {
     videoStream?: VideoGalleryStream;
     isScreenSharingOn?: boolean;
     spotlight?: Spotlight;
+    mediaAccess?: MediaAccess;
+    role?: string;
 };
 
 // @public
@@ -4531,7 +4743,11 @@ export interface VideoGalleryProps {
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
+    onForbidAudio?: (userIds: string[]) => Promise<void>;
+    onForbidVideo?: (userIds: string[]) => Promise<void>;
     onMuteParticipant?: (userId: string) => Promise<void>;
+    onPermitAudio?: (userIds: string[]) => Promise<void>;
+    onPermitVideo?: (userIds: string[]) => Promise<void>;
     onPinParticipant?: (userId: string) => void;
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
@@ -4558,6 +4774,8 @@ export interface VideoGalleryProps {
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
     isSpeaking?: boolean;
+    // (undocumented)
+    mediaAccess?: MediaAccess;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
     screenShareStream?: VideoGalleryStream;
@@ -4665,6 +4883,7 @@ export interface VideoTileProps {
     isPinned?: boolean;
     isSpeaking?: boolean;
     isSpotlighted?: boolean;
+    mediaAccess?: MediaAccess;
     noVideoAvailableAriaLabel?: string;
     onLongTouch?: () => void;
     onRenderPlaceholder?: OnRenderAvatarCallback;
