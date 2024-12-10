@@ -133,26 +133,31 @@ export const usePeoplePane = (props: {
     setShowMuteAllPrompt(false);
   }, [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
 
+  /* @conditional-compile-remove(media-access) */
   const [showForbidOthersAudioPrompt, setShowForbidOthersAudioPrompt] = React.useState(false);
+  /* @conditional-compile-remove(media-access) */
   const [showPermitOthersAudioPrompt, setShowPermitOthersAudioPrompt] = React.useState(false);
+  /* @conditional-compile-remove(media-access) */
   const [showForbidOthersVideoPrompt, setShowForbidOthersVideoPrompt] = React.useState(false);
+  /* @conditional-compile-remove(media-access) */
   const [showPermitOthersVideoPrompt, setShowPermitOthersVideoPrompt] = React.useState(false);
 
+  /* @conditional-compile-remove(media-access) */
   const onForbidAllAttendeesPromptConfirm = useCallback(() => {
     onForbidOthersAudio && onForbidOthersAudio();
     setShowForbidOthersAudioPrompt(false);
   }, [onForbidOthersAudio, setShowForbidOthersAudioPrompt]);
-
+  /* @conditional-compile-remove(media-access) */
   const onPermitAllAttendeesPromptConfirm = useCallback(() => {
     onPermitOthersAudio && onPermitOthersAudio();
     setShowPermitOthersAudioPrompt(false);
   }, [onPermitOthersAudio, setShowPermitOthersAudioPrompt]);
-
+  /* @conditional-compile-remove(media-access) */
   const onForbidOthersVideoPromptConfirm = useCallback(() => {
     onForbidOthersVideo && onForbidOthersVideo();
     setShowForbidOthersVideoPrompt(false);
   }, [onForbidOthersVideo, setShowForbidOthersVideoPrompt]);
-
+  /* @conditional-compile-remove(media-access) */
   const onPermitOthersVideoPromptConfirm = useCallback(() => {
     onPermitOthersVideo && onPermitOthersVideo();
     setShowPermitOthersVideoPrompt(false);
@@ -296,11 +301,17 @@ export const usePeoplePane = (props: {
   }, [
     onMuteAllRemoteParticipants,
     remoteParticipants,
+    /* @conditional-compile-remove(media-access) */
     meetingMediaAccess?.isAudioPermitted,
+    /* @conditional-compile-remove(media-access) */
     meetingMediaAccess?.isVideoPermitted,
+    /* @conditional-compile-remove(media-access) */
     onForbidOthersAudio,
+    /* @conditional-compile-remove(media-access) */
     onPermitOthersAudio,
+    /* @conditional-compile-remove(media-access) */
     onForbidOthersVideo,
+    /* @conditional-compile-remove(media-access) */
     onPermitOthersVideo,
     onStopAllSpotlight,
     spotlightedParticipantUserIds,
