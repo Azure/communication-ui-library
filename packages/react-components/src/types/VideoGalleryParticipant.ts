@@ -51,8 +51,11 @@ export type VideoGalleryParticipant = {
   /** Signal strength of the participant, range from 1 to 3, lower means better connection **/
   signalStrength?: number;
   /* @conditional-compile-remove(media-access) */
-  /** audio video access states **/
+  /** Media audio video access states **/
   mediaAccess?: MediaAccess;
+  /* @conditional-compile-remove(media-access) */
+  /** Participant user role  **/
+  role?: string;
 };
 
 /**

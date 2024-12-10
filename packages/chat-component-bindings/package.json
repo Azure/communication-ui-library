@@ -46,8 +46,10 @@
   "devDependencies": {
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
+    "@testing-library/react": "^16.0.0",
     "@types/jest": "^29.5.14",
     "@types/react": "18.3.12",
+    "@types/uuid": "^9.0.8",
     "copyfiles": "^2.4.1",
     "cpy-cli": "^5.0.0",
     "cross-env": "^7.0.3",
@@ -64,6 +66,7 @@
     "react": "18.3.1",
     "rimraf": "^2.6.2",
     "rollup": "^4.27.2",
-    "typescript": "5.4.5"
+    "typescript": "5.4.5",
+    "uuid": "^9.0.0"
   }
 }
