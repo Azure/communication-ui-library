@@ -2247,7 +2247,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
     // @beta
-    onDisposeTogetherModeStreamViews: () => Promise<void>;
+    onDisposeTogetherModeStreamView: () => Promise<void>;
     // @beta
     onForbidAudio?: (userIds: string[]) => Promise<void>;
     // @beta
