@@ -134,21 +134,61 @@ export interface CommonCallingHandlers {
    */
   onDisposeTogetherModeStreamViews: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Forbid remote participants from sending audio
+   *
+   * @beta
+   */
   onForbidAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Permit remote participants to send audio
+   *
+   * @beta
+   */
   onPermitAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Change meeting option forbid remote participants from sending audio
+   *
+   * @beta
+   */
   onForbidOthersAudio?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Change meeting option permit remote participants to send audio
+   *
+   * @beta
+   */
   onPermitOthersAudio?: () => Promise<void>;
 
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Forbid remote participants from sending video
+   *
+   * @beta
+   */
   onForbidVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Permit remote participants to send video
+   *
+   * @beta
+   */
   onPermitVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Change meeting option forbid remote participants from sending video
+   *
+   * @beta
+   */
   onForbidOthersVideo?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Change meeting option permit remote participants to send video
+   *
+   * @beta
+   */
   onPermitOthersVideo?: () => Promise<void>;
 }
 

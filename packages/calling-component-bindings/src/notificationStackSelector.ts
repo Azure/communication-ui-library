@@ -9,7 +9,9 @@ import {
   getEnvironmentInfo
 } from './baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
-import { getLatestNotifications, getAssignedBreakoutRoom } from './baseSelectors';
+import { getAssignedBreakoutRoom } from './baseSelectors';
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
+import { getLatestNotifications } from './baseSelectors';
 
 import { getMeetingConferencePhones } from './baseSelectors';
 
@@ -57,7 +59,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
   ],
   (
     latestErrors: CallErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ latestNotifications,
+    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ latestNotifications,
     diagnostics,
     deviceManager,
     environmentInfo,
@@ -182,7 +184,11 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-    appendMuteByOthersNotificationTrampoline(latestNotifications, activeErrorMessages, latestErrors);
+    appendMuteByOthersNotificationTrampoline(
+      activeErrorMessages,
+      latestErrors,
+      /* @conditional-compile-remove(media-access) */ latestNotifications
+    );
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,
@@ -313,12 +319,16 @@ const appendActiveErrorIfDefined = (
 };
 
 const appendMuteByOthersNotificationTrampoline = (
-  latestNotifications: CallNotifications,
   activeErrorMessages: ActiveNotification[],
-  latestErrors: CallErrors
+  latestErrors: CallErrors,
+  latestNotifications?: undefined | /* @conditional-compile-remove(media-access) */ CallNotifications
 ): void => {
   /* @conditional-compile-remove(media-access) */
-  if (!latestNotifications['capabilityUnmuteMicAbsent'] && !latestNotifications['capabilityUnmuteMicPresent']) {
+  if (
+    latestNotifications &&
+    !latestNotifications['capabilityUnmuteMicAbsent'] &&
+    !latestNotifications['capabilityUnmuteMicPresent']
+  ) {
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
   }
   /* @conditional-compile-remove(media-access) */

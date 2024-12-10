@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ControlBarButtonStyles, RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
+import { ControlBarButtonStyles, RaiseHandButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { CallControlDisplayType } from '../../../common/types/CommonCallControlOptions';
 import { usePropsFor } from '../../hooks/usePropsFor';
@@ -18,7 +18,7 @@ export const RaiseHand = (props: {
   styles?: ControlBarButtonStyles;
   disabled?: boolean;
 }): JSX.Element => {
-  const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
+  const raiseHandButtonProps = usePropsFor(RaiseHandButton);
   const callStatus = useSelector(getCallStatus);
   const styles = useMemo(() => concatButtonBaseStyles(props.styles ?? {}), [props.styles]);
 

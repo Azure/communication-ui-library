@@ -3,8 +3,6 @@
 import { CallState, DominantSpeakersInfo, EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom } from '@azure/communication-calling';
-/* @conditional-compile-remove(media-access) */
-import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -28,6 +26,8 @@ import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/r
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CallNotifications } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(media-access) */
+import { CapabilitiesChangeInfo } from '@azure/communication-calling';
 
 /**
  * Common props used to reference calling declarative client state.
