@@ -41,7 +41,7 @@
     "html-react-parser": "^5.1.18",
     "immer": "10.1.1",
     "memoize-one": "^5.2.1",
-    "nanoid": "3.3.6",
+    "nanoid": "3.3.8",
     "react-linkify": "^1.0.0-alpha",
     "react-use-draggable-scroll": "^0.4.7",
     "reselect": "^4.0.0",
