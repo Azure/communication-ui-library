@@ -451,6 +451,8 @@ export interface CallAdapterCallOperations {
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    // @beta
+    disposeTogetherModeStreamView(): Promise<void>;
     // (undocumented)
     forbidAudio(userIds: string[]): Promise<void>;
     // (undocumented)
@@ -459,7 +461,6 @@ export interface CallAdapterCallOperations {
     forbidOthersVideo(): Promise<void>;
     // (undocumented)
     forbidVideo(userIds: string[]): Promise<void>;
-    disposeTogetherModeStreamView(): Promise<void>;
     holdCall(): Promise<void>;
     leaveCall(forEveryone?: boolean): Promise<void>;
     lowerHand(): Promise<void>;
