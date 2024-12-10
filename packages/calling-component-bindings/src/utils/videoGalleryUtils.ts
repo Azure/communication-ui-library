@@ -78,7 +78,7 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.contentSharingStream,
             remoteParticipantReaction,
             spotlight,
-            /* @conditional-compile-remove(remote-ufd) */
+            /* @conditional-compile-remove(remote-ufd) */ /* @conditional-compile-remove(media-access) */
             Math.max(
               (participant.diagnostics?.networkReceiveQuality?.value ?? 0) as number,
               (participant.diagnostics?.networkSendQuality?.value ?? 0) as number
@@ -105,7 +105,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
     spotlight?: Spotlight,
-    /* @conditional-compile-remove(remote-ufd) */
+    /* @conditional-compile-remove(remote-ufd) */ /* @conditional-compile-remove(media-access) */
     signalStrength?: number,
     mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess,
     role?: undefined | /* @conditional-compile-remove(media-access) */ ParticipantRole
@@ -121,7 +121,7 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       contentSharingStream,
       reaction,
       spotlight,
-      /* @conditional-compile-remove(remote-ufd) */
+      /* @conditional-compile-remove(remote-ufd) */ /* @conditional-compile-remove(media-access) */
       signalStrength,
       /* @conditional-compile-remove(media-access) */
       mediaAccess,
