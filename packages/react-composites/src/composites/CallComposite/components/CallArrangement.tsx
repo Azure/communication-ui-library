@@ -94,6 +94,8 @@ import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
+/* @conditional-compile-remove(media-access) */
+import { getMediaAccessSetting } from '../selectors/baseSelectors';
 import { FocusableElement } from '../../common/types/FocusableElement';
 
 /**
@@ -231,7 +233,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
-    localParticipant
+    localParticipant,
+    /* @conditional-compile-remove(media-access) */
+    onForbidAudio,
+    /* @conditional-compile-remove(media-access) */
+    onPermitAudio,
+    /* @conditional-compile-remove(media-access) */
+    onForbidVideo,
+    /* @conditional-compile-remove(media-access) */
+    onPermitVideo
   } = videoGalleryProps;
 
   const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
@@ -345,11 +355,56 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     spotlightedParticipants
   ]);
 
+  /* @conditional-compile-remove(media-access) */
+  const meetingMediaAccess = useSelector(getMediaAccessSetting);
+  /* @conditional-compile-remove(media-access) */
+  const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
+    return {
+      onForbidAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onForbidAudio
+        : undefined,
+      onPermitAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onPermitAudio
+        : undefined,
+      onForbidOthersAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onForbidOthersAudio
+        : undefined,
+      onPermitOthersAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onPermitOthersAudio
+        : undefined,
+      onForbidVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onForbidVideo
+        : undefined,
+      onPermitVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? onPermitVideo
+        : undefined,
+      onForbidOthersVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onForbidOthersVideo
+        : undefined,
+      onPermitOthersVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
+        ? muteAllHandlers.onPermitOthersVideo
+        : undefined,
+      meetingMediaAccess
+    };
+  }, [
+    role,
+    onForbidAudio,
+    onPermitAudio,
+    muteAllHandlers.onForbidOthersAudio,
+    muteAllHandlers.onPermitOthersAudio,
+    muteAllHandlers.onForbidOthersVideo,
+    muteAllHandlers.onPermitOthersVideo,
+    onForbidVideo,
+    onPermitVideo,
+    meetingMediaAccess
+  ]);
+
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
     ...spotlightPeoplePaneProps,
     ...onMuteParticipantPeoplePaneProps,
-    ...pinPeoplePaneProps
+    ...pinPeoplePaneProps,
+    /* @conditional-compile-remove(media-access) */ ...onToggleParticipantMicPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {

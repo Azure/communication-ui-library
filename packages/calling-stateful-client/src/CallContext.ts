@@ -1449,7 +1449,7 @@ export class CallContext {
       }
 
       if (meetingMediaAccess) {
-        call.mediaAccess = {
+        call.meetingMediaAccess = {
           isAudioPermitted: meetingMediaAccess.isAudioPermitted,
           isVideoPermitted: meetingMediaAccess.isVideoPermitted
         };

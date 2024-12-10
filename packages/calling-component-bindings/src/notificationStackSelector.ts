@@ -20,11 +20,10 @@ import { ActiveNotification, NotificationType } from '@internal/react-components
 import { createSelector } from 'reselect';
 
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
-
-import { DiagnosticQuality } from '@azure/communication-calling';
-
 /* @conditional-compile-remove(media-access) */
 import { CallNotifications } from '@internal/calling-stateful-client';
+
+import { DiagnosticQuality } from '@azure/communication-calling';
 
 /**
  * Selector type for {@link Notification} component.

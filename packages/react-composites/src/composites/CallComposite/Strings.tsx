@@ -892,4 +892,53 @@ export interface CallCompositeStrings {
    * notification.
    */
   returnFromBreakoutRoomBannerButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidAudioMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitAudioMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersAudioDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersAudioDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersAudioConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersAudioCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersAudioDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersAudioDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersAudioConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersAudioCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersAudioMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersAudioMenuLabel: string;
+
+  /* @conditional-compile-remove(media-access) */
+  forbidVideoMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitVideoMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersVideoDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersVideoDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersVideoConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersVideoCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersVideoDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersVideoDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersVideoConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersVideoCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersVideoMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersVideoMenuLabel: string;
 }
