@@ -3730,13 +3730,13 @@ export type LocalVideoTileSize = '9:16' | '16:9' | 'hidden' | 'followDeviceOrien
 // @public
 export type LongPressTrigger = 'mouseAndTouch' | 'touch';
 
-// @alpha
+// @public
 export type MediaAccess = {
     isAudioPermitted: boolean;
     isVideoPermitted: boolean;
 };
 
-// @alpha
+// @public
 export interface MediaAccessState {
     isAudioPermitted: boolean;
     isVideoPermitted: boolean;
