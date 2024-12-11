@@ -89,6 +89,7 @@ betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', ()
       await removeAttachmentAndSubmit(component, true);
 
       await expect(component.getByTestId('chat-composite-message')).toBeVisible();
+      await expect(component.getByTestId('attachment-card')).not.toBeVisible();
 
       await expect(component).toHaveScreenshot(
         'chat-my-message-component-rich-text-edit-box-not-empty-message-content-without-attachment.png'
@@ -143,24 +144,21 @@ betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
     await expect(component).toHaveScreenshot('chat-my-message-component-edit-box-empty-content-without-attachment.png');
   });
 
-  betaTest(
-    'Edit box should not allow to save empty html text when attachments are deleted',
-    async ({ mount, page }) => {
-      const component = await mount(
-        <ChatMyMessageComponent {...props('<div><br></div>', 'html')} isRichTextEditorEnabled={false} />
-      );
+  betaTest('Edit box should allow to save empty html text when attachments are deleted', async ({ mount, page }) => {
+    const component = await mount(
+      <ChatMyMessageComponent {...props('<div><br></div>', 'html')} isRichTextEditorEnabled={false} />
+    );
 
-      await startMessageEditing(component, page);
-      await removeAttachmentAndSubmit(component, false);
+    await startMessageEditing(component, page);
+    await removeAttachmentAndSubmit(component, false);
 
-      // the plain edit box is not empty
-      await expect(component.getByTestId('chat-composite-message')).toBeVisible();
+    // the plain edit box is not empty
+    await expect(component.getByTestId('chat-composite-message')).toBeVisible();
 
-      await expect(component).toHaveScreenshot(
-        'chat-my-message-component-edit-box-empty-html-content-without-attachment.png'
-      );
-    }
-  );
+    await expect(component).toHaveScreenshot(
+      'chat-my-message-component-edit-box-empty-html-content-without-attachment.png'
+    );
+  });
 
   betaTest(
     'Edit box should allow to save the message when content exists but attachments are deleted',
@@ -172,6 +170,7 @@ betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
       await removeAttachmentAndSubmit(component, false);
 
       await expect(component.getByTestId('chat-composite-message')).toBeVisible();
+      await expect(component.getByTestId('attachment-card')).not.toBeVisible();
 
       await expect(component).toHaveScreenshot(
         'chat-my-message-component-edit-box-not-empty-message-content-without-attachment.png'
