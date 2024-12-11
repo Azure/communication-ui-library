@@ -9,6 +9,7 @@ import type { IEditor } from 'roosterjs-content-model-types';
 export class PlaceholderPlugin extends WatermarkPlugin {
   private isPlaceholderShown: boolean = false;
   private editorValue: IEditor | null = null;
+  private disposer: (() => void) | null = null;
 
   updatePlaceholder(placeholder: string): void {
     this.watermark = placeholder;
@@ -26,11 +27,21 @@ export class PlaceholderPlugin extends WatermarkPlugin {
     // Hide/show the placeholder as workaround for the placeholder not hiding in some cases
     this.hide(this.editorValue);
     this.show(this.editorValue);
+
+    this.disposer = this.editorValue.attachDomEvent({
+      compositionstart: { beforeDispatch: this.onCompositionStart }
+    });
   }
+
   dispose(): void {
     this.editorValue = null;
+    if (this.disposer) {
+      this.disposer();
+      this.disposer = null;
+    }
     super.dispose();
   }
+
   protected show(editor: IEditor): void {
     super.show(editor);
     this.isPlaceholderShown = true;
@@ -39,4 +50,11 @@ export class PlaceholderPlugin extends WatermarkPlugin {
     super.hide(editor);
     this.isPlaceholderShown = false;
   }
+
+  private onCompositionStart = (): void => {
+    if (this.editorValue && this.isPlaceholderShown) {
+      // Hide the placeholder when composition starts
+      this.hide(this.editorValue);
+    }
+  };
 }
