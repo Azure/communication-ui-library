@@ -66,6 +66,10 @@ export interface ParticipantsButtonStrings {
    */
   tooltipContent?: string;
   /**
+   * Aria label for button accessibility announcement
+   */
+  ariaLabel: string;
+  /**
    * Header of menu pop up
    */
   menuHeader: string;
@@ -366,6 +370,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         menuIconProps={{ hidden: true }}
         onRenderIcon={onRenderIcon ?? onRenderPeopleIcon}
         strings={strings}
+        aria-label={strings.ariaLabel}
         labelKey={props.labelKey ?? 'participantsButtonLabel'}
       />
     </>
