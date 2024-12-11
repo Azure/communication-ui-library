@@ -68,7 +68,7 @@ export interface ParticipantsButtonStrings {
   /**
    * Aria label for button accessibility announcement
    */
-  ariaLabel: string;
+  ariaLabel?: string;
   /**
    * Header of menu pop up
    */
