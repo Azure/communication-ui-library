@@ -100,7 +100,12 @@ describe('Stateful call client', () => {
       agent.testHelperPushCall(createMockCall());
       expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
       expect(await waitWithBreakCondition(() => Object.keys(client.getState().callsEnded).length === 0)).toBe(true);
+      // Expecting different results for different flavors, 1 for stable and 2 for beta.
+      /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
       expect(listener.onChangeCalledCount).toBe(2);
+      /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
+      return;
+      expect(listener.onChangeCalledCount).toBe(1);
     }
     {
       const listener = new StateChangeListener(client);
