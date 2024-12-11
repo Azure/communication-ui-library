@@ -86,13 +86,15 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
     userId: CommunicationUserIdentifier;
     token: string;
     displayName: string;
+    mediaAccess?: { isAudioPermitted: boolean; isVideoPermitted: boolean };
   }[] = [];
   for (const displayName of displayNames) {
     const userAndToken = await tokenClient.createUserAndToken(['chat']);
     userData.push({
       userId: userAndToken.user,
       token: userAndToken.token,
-      displayName: displayName
+      displayName: displayName,
+      mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
     });
   }
 
@@ -117,7 +119,8 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
     endpointUrl,
     displayName: data.displayName,
     threadId,
-    topic: CHAT_TOPIC_NAME
+    topic: CHAT_TOPIC_NAME,
+    mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
   }));
 };
 
