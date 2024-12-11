@@ -204,7 +204,8 @@ export function defaultMockRemotePSTNParticipant(phoneNumber: string): MockRemot
     videoStreams: {},
     isMuted: true,
     isSpeaking: false,
-    displayName: phoneNumber
+    displayName: phoneNumber,
+    mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
   };
 }
 
