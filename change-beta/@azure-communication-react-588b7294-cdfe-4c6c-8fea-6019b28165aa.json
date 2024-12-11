@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "togetherMode",
-  "comment": "Stream utils implementation for call feature streams. This also included the client state for together mode feature",
-  "packageName": "@azure/communication-react",
-  "dependentChangeType": "patch"
-}
