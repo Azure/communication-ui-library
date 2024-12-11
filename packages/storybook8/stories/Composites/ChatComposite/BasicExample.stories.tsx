@@ -11,7 +11,7 @@ import { ContosoChatContainer } from './snippets/Container.snippet';
 import {
   ChatCompositeSetupProps,
   ConfigHintBanner,
-  addParrotBotToThread,
+  addRemoteParticipantToThread,
   createThreadAndAddUser
 } from './snippets/Utils';
 
@@ -34,8 +34,8 @@ const defaultControlsValues = {
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
-  botId: controlsToAdd.botUserId,
-  botToken: controlsToAdd.botToken,
+  remoteParticipantId: controlsToAdd.remoteParticipantUserId,
+  remoteParticipantToken: controlsToAdd.remoteParticipantToken,
   endpointUrl: controlsToAdd.endpointUrl,
   displayName: controlsToAdd.requiredDisplayName,
   showErrorBar: controlsToAdd.showErrorBar,
@@ -52,12 +52,19 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
+      if (
+        args.userId &&
+        args.token &&
+        args.remoteParticipantId &&
+        args.remoteParticipantToken &&
+        args.endpointUrl &&
+        args.displayName
+      ) {
         const newProps = await createThreadAndAddUser(args.userId, args.token, args.endpointUrl, args.displayName);
-        await addParrotBotToThread(
+        await addRemoteParticipantToThread(
           args.token,
-          args.botId,
-          args.botToken,
+          args.remoteParticipantId,
+          args.remoteParticipantToken,
           args.endpointUrl,
           newProps.threadId,
           messageArray
@@ -68,7 +75,14 @@ const BasicStory = (args: ArgsFrom<typeof storyControls>, context): JSX.Element 
       }
     };
     fetchToken();
-  }, [args.userId, args.token, args.botId, args.botToken, args.endpointUrl, args.displayName]);
+  }, [
+    args.userId,
+    args.token,
+    args.remoteParticipantId,
+    args.remoteParticipantToken,
+    args.endpointUrl,
+    args.displayName
+  ]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
