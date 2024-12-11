@@ -53,7 +53,7 @@ const usePage = async ({ browser }: { browser: Browser }, use: (page: Page) => P
  */
 export function defaultMockCallAdapterState(
   participants?: MockRemoteParticipantState[],
-  role?: ParticipantRole,
+  role: ParticipantRole = 'Presenter',
   isRoomsCall?: boolean,
   callEndReasonSubCode?: number,
   isReactionCapability?: boolean
