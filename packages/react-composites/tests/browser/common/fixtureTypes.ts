@@ -17,10 +17,6 @@ export type CallUserType = {
   displayName?: string;
   groupId?: string;
   token: string;
-  mediaAccess?: {
-    isAudioPermitted: boolean;
-    isVideoPermitted: boolean;
-  };
 };
 
 export type CallWithChatUserType = {

@@ -156,7 +156,6 @@ export const createCallUsers =
       const user = await createCallingUserAndToken();
       user.displayName = displayName;
       user.groupId = groupId;
-      user.mediaAccess = { isAudioPermitted: true, isVideoPermitted: true };
       users.push(user);
     }
     await use(users);
