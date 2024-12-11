@@ -17,7 +17,9 @@ import {
   RemoteVideoStream,
   TranscriptionCallFeature,
   CallFeatureFactory,
-  CallFeature
+  CallFeature,
+  MeetingMediaAccessChangedListener,
+  MeetingMediaAccess
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(media-access) */
@@ -100,6 +102,7 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public isRecordingActive = false;
   public recordings: RecordingInfo[] = [];
   public emitter = new EventEmitter();
+  public isConsentRequired = false;
   on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
   on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -111,6 +114,10 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   off(event: any, listener: any): void {
     this.emitter.on(event, listener);
+  }
+  consentToBeingRecordedAndTranscribed(): Promise<void> {
+    this.isConsentRequired = false;
+    return Promise.resolve();
   }
   dispose(): void {
     /* No state to clean up */
@@ -197,32 +204,44 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
     return Promise.resolve();
   }
 
-  permitRemoteParticipantsAudio(): Promise<void> {
+  permitOthersAudio(): Promise<void> {
     return Promise.resolve();
   }
 
-  forbidRemoteParticipantsAudio(): Promise<void> {
+  forbidOthersAudio(): Promise<void> {
     return Promise.resolve();
   }
 
-  permitRemoteParticipantsVideo(): Promise<void> {
+  permitOthersVideo(): Promise<void> {
     return Promise.resolve();
   }
 
-  forbidRemoteParticipantsVideo(): Promise<void> {
+  forbidOthersVideo(): Promise<void> {
     return Promise.resolve();
   }
 
-  getRemoteParticipantsMediaAccess(): MediaAccess[] {
+  getAllOthersMediaAccess(): MediaAccess[] {
     return this.mediaAccesses;
   }
 
-  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
-    this.emitter.on(event, listener);
+  getMeetingMediaAccess(): MeetingMediaAccess {
+    return {
+      isAudioPermitted: true,
+      isVideoPermitted: true
+    };
   }
 
-  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
-    this.emitter.off(event, listener);
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  on(event: any, listener: any): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  off(event: any, listener: any): void {
+    this.emitter.on(event, listener);
   }
 
   dispose(): void {
@@ -237,11 +256,16 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
   public name = 'Transcription';
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();
+  public isConsentRequired = false;
   on(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
     this.emitter.on(event, listener);
   }
   off(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
     this.emitter.off(event, listener);
+  }
+  consentToBeingRecordedAndTranscribed(): Promise<void> {
+    this.isConsentRequired = false;
+    return Promise.resolve();
   }
   dispose(): void {
     /* No state to clean up */
