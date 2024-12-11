@@ -156,6 +156,7 @@ export const createCallUsers =
       const user = await createCallingUserAndToken();
       user.displayName = displayName;
       user.groupId = groupId;
+      user.mediaAccess = { isAudioPermitted: true, isVideoPermitted: true };
       users.push(user);
     }
     await use(users);
@@ -175,13 +176,15 @@ export const createCallWithChatObjectsAndUsers = async (
     userId: CommunicationUserIdentifier;
     token: string;
     displayName: string;
+    mediaAccess?: { isAudioPermitted: boolean; isVideoPermitted: boolean };
   }[] = [];
   for (const displayName of displayNames) {
     const userAndToken = await tokenClient.createUserAndToken(['chat', 'voip']);
     userData.push({
       userId: userAndToken.user,
       token: userAndToken.token,
-      displayName: displayName
+      displayName: displayName,
+      mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
     });
   }
 
@@ -207,7 +210,8 @@ export const createCallWithChatObjectsAndUsers = async (
     displayName: data.displayName,
     threadId,
     topic: CHAT_TOPIC_NAME,
-    groupId: callId
+    groupId: callId,
+    mediaAccess: data.mediaAccess
   }));
 };
 
