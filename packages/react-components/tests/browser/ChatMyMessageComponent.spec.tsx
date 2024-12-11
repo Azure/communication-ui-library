@@ -197,5 +197,8 @@ const removeAttachmentAndSubmit = async (component: Locator, isRichTexEditor: bo
   const submitButtonTestId = isRichTexEditor
     ? 'chat-message-rich-text-edit-box-submit-button'
     : 'chat-message-edit-box-submit-button';
+
+  await expect(component.getByLabel('Remove file')).not.toBeVisible();
+
   await component.getByTestId(submitButtonTestId).click();
 };
