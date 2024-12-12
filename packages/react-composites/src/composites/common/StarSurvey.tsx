@@ -3,7 +3,6 @@
 
 import React from 'react';
 import { _StarSurvey, _StarSurveyStrings, _CallSurvey, _CallSurveyResponse } from '@internal/react-components';
-import { _captionSettingsSelector } from '@internal/calling-component-bindings';
 import { useLocale } from '../localization';
 
 /** @private */

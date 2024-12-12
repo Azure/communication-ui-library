@@ -139,14 +139,14 @@ export const _spokenLanguageToCaptionLanguage = {
 };
 
 /**
- * @internal
+ * @public
  */
-export type _SupportedSpokenLanguage = keyof SpokenLanguageStrings;
+export type SupportedSpokenLanguage = keyof SpokenLanguageStrings;
 
 /**
- * @internal
+ * @public
  */
-export type _SupportedCaptionLanguage = keyof CaptionLanguageStrings;
+export type SupportedCaptionLanguage = keyof CaptionLanguageStrings;
 
 /**
  * @internal
