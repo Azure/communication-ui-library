@@ -272,7 +272,7 @@ const createCompositeHandlers = memoizeOne(
           }
         : undefined,
       /* @conditional-compile-remove(media-access) */
-      onPermitOthersVideo: capabilities?.forbidOthersVideo.isPresent
+      onPermitOthersVideo: capabilities?.forbidOthersVideo?.isPresent
         ? async (): Promise<void> => {
             await adapter.permitOthersVideo();
           }
