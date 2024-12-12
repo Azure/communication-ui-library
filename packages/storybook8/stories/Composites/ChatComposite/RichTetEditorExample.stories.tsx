@@ -8,7 +8,7 @@ import { compositeExperienceContainerStyle } from '../../constants';
 import { defaultChatCompositeHiddenControls, controlsToAdd, ArgsFrom } from '../../controlsUtils';
 import { compositeLocale } from '../../localizationUtils';
 import { ContosoChatContainer, ContainerProps } from './snippets/Container.snippet';
-import { ConfigHintBanner, addParrotBotToThread, createThreadAndAddUser } from './snippets/Utils';
+import { ConfigHintBanner, addRemoteParticipantToThread, createThreadAndAddUser } from './snippets/Utils';
 
 const messageArray = [
   'Welcome to an example on how to add Rich Text Editor to the ChatComposite',
@@ -19,8 +19,8 @@ const messageArray = [
 const storyControls = {
   userId: controlsToAdd.userId,
   token: controlsToAdd.token,
-  botId: controlsToAdd.botUserId,
-  botToken: controlsToAdd.botToken,
+  remoteParticipantId: controlsToAdd.remoteParticipantUserId,
+  remoteParticipantToken: controlsToAdd.remoteParticipantToken,
   endpointUrl: controlsToAdd.endpointUrl,
   displayName: controlsToAdd.requiredDisplayName
 };
@@ -37,12 +37,19 @@ const RichTextEditorStory = (args: ArgsFrom<typeof storyControls>, context): JSX
 
   useEffect(() => {
     const fetchToken = async (): Promise<void> => {
-      if (args.userId && args.token && args.botId && args.botToken && args.endpointUrl && args.displayName) {
+      if (
+        args.userId &&
+        args.token &&
+        args.remoteParticipantId &&
+        args.remoteParticipantToken &&
+        args.endpointUrl &&
+        args.displayName
+      ) {
         const newProps = await createThreadAndAddUser(args.userId, args.token, args.endpointUrl, args.displayName);
-        await addParrotBotToThread(
+        await addRemoteParticipantToThread(
           args.token,
-          args.botId,
-          args.botToken,
+          args.remoteParticipantId,
+          args.remoteParticipantToken,
           args.endpointUrl,
           newProps.threadId,
           messageArray
@@ -53,7 +60,14 @@ const RichTextEditorStory = (args: ArgsFrom<typeof storyControls>, context): JSX
       }
     };
     fetchToken();
-  }, [args.userId, args.token, args.botId, args.botToken, args.endpointUrl, args.displayName]);
+  }, [
+    args.userId,
+    args.token,
+    args.remoteParticipantId,
+    args.remoteParticipantToken,
+    args.endpointUrl,
+    args.displayName
+  ]);
 
   return (
     <Stack horizontalAlign="center" verticalAlign="center" styles={compositeExperienceContainerStyle}>
