@@ -1,9 +1,8 @@
 {
   "type": "prerelease",
   "area": "feature",
-  "workstream": "",
-  "comment": "Add network signal to selector",
+  "workstream": "together-mode",
+  "comment": "Updated apis naming",
   "packageName": "@azure/communication-react",
-  "email": "jiangnanhello@live.com",
   "dependentChangeType": "patch"
 }

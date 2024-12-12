@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "Hard mute",
-  "comment": "Hard mute part 2 - component binding",
-  "packageName": "@azure/communication-react",
-  "email": "fuyan@microsoft.com",
-  "dependentChangeType": "patch"
-}
