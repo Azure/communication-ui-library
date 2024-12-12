@@ -64,6 +64,15 @@ export type {
   ViewScalingMode
 } from './types';
 
+/* @conditional-compile-remove(together-mode) */
+export type {
+  TogetherModeStreamViewResult,
+  VideoGalleryTogetherModeParticipantPosition,
+  VideoGalleryTogetherModeSeatingInfo,
+  VideoGalleryTogetherModeStreams,
+  TogetherModeStreamOptions
+} from './types';
+
 export type { RaisedHand } from './types';
 
 export type { Spotlight } from './types';
