@@ -38,7 +38,6 @@ import {
   CaptionLanguageDropdownOptions
 } from '../types';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
-import { useLocale } from '../localization';
 
 /**
  * @public
@@ -165,16 +164,9 @@ export const CaptionsSettingsModal = (props: CaptionsSettingsModalProps): JSX.El
     changeCaptionLanguage = false
   } = props;
   const theme = useTheme();
-  const localeStrings = useLocale().strings.captionsSettingsModal;
-  const localSpokenLanguageStrings = useLocale().strings.spokenLanguages;
-  const localCaptionLanguageStrings = useLocale().strings.captionLanguages;
-  const strings = { ...localeStrings, ...props.strings };
-  const spokenLanguageStrings = useMemo(() => {
-    return { ...localSpokenLanguageStrings, ...props.spokenLanguageStrings };
-  }, [localSpokenLanguageStrings, props.spokenLanguageStrings]);
-  const captionLanguageStrings = useMemo(() => {
-    return { ...localCaptionLanguageStrings, ...props.captionLanguageStrings };
-  }, [localCaptionLanguageStrings, props.captionLanguageStrings]);
+  const strings = props.strings;
+  const spokenLanguageStrings = props.spokenLanguageStrings;
+  const captionLanguageStrings = props.captionLanguageStrings;
   const [hasSetSpokenLanguage, setHasSetSpokenLanguage] = useState(false);
 
   const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState<SpokenLanguageDropdownOptions>({
