@@ -76,12 +76,12 @@ const CaptionsSettingsModalStory = (): JSX.Element => {
     setShowModal(false);
   };
   const onSetSpokenLanguage = (language: any): Promise<void> => {
-    console.log(`Spoken language set to ${language}`);
+    alert(`Spoken language set to ${language}`);
     return Promise.resolve();
   };
 
   const onSetCaptionLanguage = (language: any): Promise<void> => {
-    console.log(`Caption language set to ${language}`);
+    alert(`Caption language set to ${language}`);
     return Promise.resolve();
   };
 
