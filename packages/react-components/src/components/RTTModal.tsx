@@ -7,8 +7,6 @@ import { useMemo } from 'react';
 /* @conditional-compile-remove(rtt) */
 import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, DefaultButton, PrimaryButton } from '@fluentui/react';
 /* @conditional-compile-remove(rtt) */
-import { _captionsOptions } from './StartCaptionsButton';
-/* @conditional-compile-remove(rtt) */
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rtt) */
 import {

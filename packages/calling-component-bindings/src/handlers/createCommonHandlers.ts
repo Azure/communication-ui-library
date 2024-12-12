@@ -26,7 +26,12 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
-import { CreateVideoStreamViewResult, VideoStreamOptions, ReactionButtonReaction } from '@internal/react-components';
+import {
+  CreateVideoStreamViewResult,
+  VideoStreamOptions,
+  ReactionButtonReaction,
+  CaptionsOptions
+} from '@internal/react-components';
 import {
   disposeAllLocalPreviewViews,
   _isInCall,
@@ -191,15 +196,6 @@ export interface CommonCallingHandlers {
    */
   onPermitOthersVideo?: () => Promise<void>;
 }
-
-/**
- * options bag to start captions
- *
- * @public
- */
-export type CaptionsOptions = {
-  spokenLanguage: string;
-};
 
 /**
  * @private

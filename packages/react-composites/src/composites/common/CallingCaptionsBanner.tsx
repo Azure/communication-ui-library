@@ -6,7 +6,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { CaptionsBanner, CaptionsBannerStrings, CustomAvatarOptions } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 import { mergeStyles, Stack } from '@fluentui/react';
-import { CaptionsSettingsModal } from './CaptionsSettingsModal';
+import { CallingCaptionsSettingsModal } from './CallingCaptionsSettingsModal';
 import { CaptionsBannerMoreButton } from './CaptionsBannerMoreButton';
 import { useLocale } from '../localization';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
@@ -84,7 +84,7 @@ export const CallingCaptionsBanner = (props: {
   return (
     <>
       {isCaptionsSettingsOpen && (
-        <CaptionsSettingsModal
+        <CallingCaptionsSettingsModal
           showCaptionsSettingsModal={isCaptionsSettingsOpen}
           onDismissCaptionsSettings={onDismissCaptionsSettings}
           changeCaptionLanguage={props.useTeamsCaptions}
@@ -95,7 +95,6 @@ export const CallingCaptionsBanner = (props: {
           <Stack horizontalAlign="center">
             <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
               <CaptionsBanner
-                captions={captionsBannerProps.captions ?? []}
                 captionsOptions={props.captionsOptions}
                 onRenderAvatar={onRenderAvatar}
                 formFactor={props.isMobile ? 'compact' : 'default'}

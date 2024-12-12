@@ -3,7 +3,7 @@
 
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
-import { _SupportedSpokenLanguage } from '../types';
+import { SupportedSpokenLanguage } from '../types';
 import { ActiveNotification, NotificationType } from './NotificationStack';
 import { VideoTileStrings } from './VideoTile';
 import { _formatString } from '@internal/acs-ui-common';
@@ -392,7 +392,7 @@ export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
 /**
  * @private
  */
-export const defaultSpokenLanguage: _SupportedSpokenLanguage = 'en-us';
+export const defaultSpokenLanguage: SupportedSpokenLanguage = 'en-us';
 
 /**
  * @private
