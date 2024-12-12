@@ -161,6 +161,7 @@
   },
   "participantsButton": {
     "label": "People",
+    "ariaLabel": "People",
     "tooltipContent": "Show participants",
     "menuHeader": "In this call",
     "participantsListButtonLabel": "{numParticipants} people",
@@ -184,7 +185,7 @@
   },
   "reactionButton": {
     "label": "React",
-    "ariaLabel": "React Button, Send a reaction",
+    "ariaLabel": "React",
     "tooltipDisabledContent": "Reaction action is disabled",
     "tooltipContent": "Send a reaction",
     "likeReactionTooltipContent": "Like",
