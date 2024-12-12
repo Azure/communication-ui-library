@@ -568,11 +568,7 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                   {isEnabled(options?.peopleButton) && (
                     <PeopleButton
                       checked={props.peopleButtonChecked}
-                      ariaLabel={
-                        props.peopleButtonChecked
-                          ? peopleButtonStrings?.tooltipCloseAriaLabel
-                          : peopleButtonStrings?.tooltipOpenAriaLabel
-                      }
+                      ariaLabel={peopleButtonStrings.label}
                       showLabel={options.displayType !== 'compact'}
                       onClick={props.onPeopleButtonClicked}
                       data-ui-id="common-call-composite-people-button"
