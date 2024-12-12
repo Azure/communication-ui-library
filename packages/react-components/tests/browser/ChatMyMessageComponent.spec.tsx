@@ -48,10 +48,10 @@ betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', ()
     await startMessageEditing(component, page);
     await removeAttachmentAndSubmit(component, true);
 
-    await expect(component.getByTestId('chat-composite-message')).not.toBeVisible();
-
+    const editor = component.getByTestId('rooster-rich-text-editor');
+    await expect(editor).toBeVisible();
     // make screenshot consistent
-    component.getByTestId('rooster-rich-text-editor').click();
+    await editor.click();
 
     await expect(component).toHaveScreenshot(
       'chat-my-message-component-rich-text-edit-box-empty-content-without-attachment.png'
@@ -68,10 +68,10 @@ betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', ()
       await startMessageEditing(component, page);
       await removeAttachmentAndSubmit(component, true);
 
-      await expect(component.getByTestId('chat-composite-message')).not.toBeVisible();
-
+      const editor = component.getByTestId('rooster-rich-text-editor');
+      await expect(editor).toBeVisible();
       // make screenshot consistent
-      component.getByTestId('rooster-rich-text-editor').click();
+      await editor.click();
 
       await expect(component).toHaveScreenshot(
         'chat-my-message-component-rich-text-edit-box-empty-html-content-without-attachment.png'
@@ -82,14 +82,15 @@ betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', ()
   betaTest(
     'Edit box should allow to save the message when content exists but attachments are deleted',
     async ({ mount, page }) => {
-      const component = await await mount(
+      const component = await mount(
         <ChatMyMessageComponent {...props('test', 'text')} isRichTextEditorEnabled={true} />
       );
+
       await startMessageEditing(component, page);
       await removeAttachmentAndSubmit(component, true);
 
-      await expect(component.getByTestId('chat-composite-message')).toBeVisible();
-      await expect(component.getByTestId('attachment-card')).not.toBeVisible();
+      await component.getByTestId('chat-composite-message').waitFor({ state: 'visible' });
+      await expect(component.getByTestId('attachment-card')).toBeHidden();
 
       await expect(component).toHaveScreenshot(
         'chat-my-message-component-rich-text-edit-box-not-empty-message-content-without-attachment.png'
@@ -136,10 +137,10 @@ betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
     await startMessageEditing(component, page);
     await removeAttachmentAndSubmit(component, false);
 
-    await expect(component.getByTestId('chat-composite-message')).not.toBeVisible();
-
+    const editor = component.getByRole('textbox');
+    await expect(editor).toBeVisible();
     // make screenshot consistent
-    component.getByRole('textbox').click();
+    await editor.click();
 
     await expect(component).toHaveScreenshot('chat-my-message-component-edit-box-empty-content-without-attachment.png');
   });
@@ -152,8 +153,8 @@ betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
     await startMessageEditing(component, page);
     await removeAttachmentAndSubmit(component, false);
 
-    // the plain edit box is not empty
-    await expect(component.getByTestId('chat-composite-message')).toBeVisible();
+    // the plain edit box is not empty, so the message should be visible
+    await component.getByTestId('chat-composite-message').waitFor({ state: 'visible' });
 
     await expect(component).toHaveScreenshot(
       'chat-my-message-component-edit-box-empty-html-content-without-attachment.png'
@@ -169,8 +170,8 @@ betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
       await startMessageEditing(component, page);
       await removeAttachmentAndSubmit(component, false);
 
-      await expect(component.getByTestId('chat-composite-message')).toBeVisible();
-      await expect(component.getByTestId('attachment-card')).not.toBeVisible();
+      await component.getByTestId('chat-composite-message').waitFor({ state: 'visible' });
+      await expect(component.getByTestId('attachment-card')).toBeHidden();
 
       await expect(component).toHaveScreenshot(
         'chat-my-message-component-edit-box-not-empty-message-content-without-attachment.png'
@@ -193,12 +194,20 @@ const startMessageEditing = async (component: Locator, page: Page): Promise<void
 };
 
 const removeAttachmentAndSubmit = async (component: Locator, isRichTexEditor: boolean): Promise<void> => {
-  await component.getByLabel('Remove file').click();
+  const editor = isRichTexEditor ? component.getByTestId('rooster-rich-text-editor') : component.getByRole('textbox');
+  //check that the correct editor is shown (as tests can be faster than rich text editor initialization)
+  await editor.waitFor({ state: 'visible' });
+  const removeFileButton = component.getByRole('button', { name: 'Remove file' });
+  // Check that the button is visible and enabled
+  await removeFileButton.waitFor({ state: 'visible' });
+  await expect(removeFileButton).toBeEnabled();
+  await removeFileButton.click();
+
   const submitButtonTestId = isRichTexEditor
     ? 'chat-message-rich-text-edit-box-submit-button'
     : 'chat-message-edit-box-submit-button';
 
-  await expect(component.getByLabel('Remove file')).not.toBeVisible();
+  await component.getByTestId('attachment-card').waitFor({ state: 'hidden' });
 
   await component.getByTestId(submitButtonTestId).click();
 };
