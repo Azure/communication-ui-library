@@ -3,26 +3,23 @@
 
 import React from 'react';
 import {
-  _CaptionsSettingsModal,
-  _CaptionsSettingsModalStrings,
+  CaptionsSettingsModal,
+  CaptionsSettingsModalStrings,
   SpokenLanguageStrings,
   CaptionLanguageStrings
 } from '@internal/react-components';
-import { useAdaptedSelector } from '../CallComposite/hooks/useAdaptedSelector';
-import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { useLocale } from '../localization';
-import { _captionSettingsSelector } from '@internal/calling-component-bindings';
+import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
 /** @private */
-export const CaptionsSettingsModal = (props: {
+export const CallingCaptionsSettingsModal = (props: {
   showCaptionsSettingsModal: boolean;
   onDismissCaptionsSettings: () => void;
   changeCaptionLanguage?: boolean;
 }): JSX.Element => {
-  const CaptionsSettingsModalProps = useAdaptedSelector(_captionSettingsSelector);
-  const handlers = useHandlers(_CaptionsSettingsModal);
+  const CaptionsSettingsModalProps = usePropsFor(CaptionsSettingsModal);
   const strings = useLocale().strings.call;
-  const modalStrings: _CaptionsSettingsModalStrings = {
+  const modalStrings: CaptionsSettingsModalStrings = {
     captionsSettingsModalTitle: strings.captionsSettingsModalTitle,
     captionsSettingsSpokenLanguageDropdownLabel: strings.captionsSettingsSpokenLanguageDropdownLabel,
     captionsSettingsCaptionLanguageDropdownLabel: strings.captionsSettingsCaptionLanguageDropdownLabel,
@@ -39,9 +36,8 @@ export const CaptionsSettingsModal = (props: {
   const captionLanguageStrings: CaptionLanguageStrings | undefined = strings.captionLanguageStrings;
 
   return (
-    <_CaptionsSettingsModal
+    <CaptionsSettingsModal
       {...CaptionsSettingsModalProps}
-      {...handlers}
       strings={modalStrings}
       spokenLanguageStrings={spokenLanguageStrings}
       captionLanguageStrings={captionLanguageStrings}
