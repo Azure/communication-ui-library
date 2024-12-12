@@ -204,6 +204,7 @@ export interface BreakoutRoomsState {
   breakoutRoomSettings?: BreakoutRoomsSettings;
   breakoutRoomOriginCallId?: string;
   breakoutRoomDisplayName?: string;
+  endedBreakoutRoomCallId?: string;
 }
 
 /**

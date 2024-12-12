@@ -3,9 +3,15 @@
 
 import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
-import { Features } from '@azure/communication-calling';
-
-import { PropertyChangedEvent, CaptionsCallFeature } from '@azure/communication-calling';
+import {
+  // BreakoutRoom,
+  // BreakoutRoomsCallFeature,
+  // BreakoutRoomsEventData,
+  // BreakoutRoomsUpdatedListener,
+  Features,
+  PropertyChangedEvent,
+  CaptionsCallFeature
+} from '@azure/communication-calling';
 
 import { Captions } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
@@ -119,6 +125,11 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
             const proxyFeature = new ProxySpotlightCallFeature(this._context);
             return new Proxy(spotlightFeature, proxyFeature);
           }
+          // if (args[0] === Features.BreakoutRooms) {
+          //   const breakoutRoomsFeature = target.feature(Features.BreakoutRooms);
+          //   const proxyFeature = new ProxyBreakoutRoomsCallFeature(this._context, target);
+          //   return new Proxy(breakoutRoomsFeature, proxyFeature);
+          // }
           return target.feature(...args);
         }, 'Call.feature');
       }
@@ -306,3 +317,67 @@ class ProxyTransferCallFeature implements ProxyHandler<TransferCallFeature> {
     }
   }
 }
+
+// /* @conditional-compile-remove(breakout-rooms) */
+// /**
+//  * @private
+//  */
+// class ProxyBreakoutRoomsCallFeature implements ProxyHandler<BreakoutRoomsCallFeature> {
+//   private _context: CallContext;
+//   private _call: CallCommon;
+
+//   constructor(context: CallContext, call: CallCommon) {
+//     this._context = context;
+//     this._call = call;
+//   }
+
+//   public get<P extends keyof BreakoutRoomsCallFeature>(target: BreakoutRoomsCallFeature, prop: P): any {
+//     switch (prop) {
+//       case 'on':
+//         return (...args: Parameters<BreakoutRoomsCallFeature['on']>): void => {
+//           if (args[0] === 'breakoutRoomsUpdated') {
+//             const listener = args[1] as BreakoutRoomsUpdatedListener;
+//             const newListener = (args: BreakoutRoomsEventData): void => {
+//               if (args.type === 'assignedBreakoutRooms' && args.data) {
+//                 args.data = new Proxy(args.data, new ProxyBreakoutRoom(this._context, this._call));
+//               }
+//               listener(args);
+//             };
+//             return target.on('breakoutRoomsUpdated', newListener);
+//           }
+//         };
+//       default:
+//         return Reflect.get(target, prop);
+//     }
+//   }
+// }
+
+// /**
+//  * @private
+//  */
+// class ProxyBreakoutRoom implements ProxyHandler<BreakoutRoom> {
+//   private _context: CallContext;
+//   private _call: CallCommon;
+
+//   constructor(context: CallContext, call: CallCommon) {
+//     this._context = context;
+//     this._call = call;
+//   }
+
+//   public get<P extends keyof BreakoutRoom>(target: BreakoutRoom, prop: P): any {
+//     switch (prop) {
+//       case 'returnToMainMeeting':
+//         alert('MAAAAAN');
+//         return this._context.withAsyncErrorTeedToState(
+//           async (...args: Parameters<BreakoutRoom['returnToMainMeeting']>) => {
+//             const ret = await target.returnToMainMeeting(...args);
+//             this._context.setEndedBreakoutRoomCall(this._call.id, ret.id);
+//             return ret;
+//           },
+//           'Call.feature'
+//         );
+//       default:
+//         return Reflect.get(target, prop);
+//     }
+//   }
+// }

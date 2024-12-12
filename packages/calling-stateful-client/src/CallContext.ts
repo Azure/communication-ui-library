@@ -741,7 +741,10 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.breakoutRooms = { ...call.breakoutRooms, assignedBreakoutRoom: breakoutRoom };
+        call.breakoutRooms = {
+          ...call.breakoutRooms,
+          assignedBreakoutRoom: breakoutRoom ? new Proxy(breakoutRoom, new ProxyBreakoutRoom(this, call.id)) : undefined
+        };
       }
     });
   }
@@ -752,6 +755,16 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(breakoutRoomCallId)];
       if (call) {
         call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomOriginCallId: callId };
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setEndedBreakoutRoomCall(callId: string, endedBreakoutRoomCallId: string): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.breakoutRooms = { ...call.breakoutRooms, endedBreakoutRoomCallId };
       }
     });
   }
@@ -1474,4 +1487,34 @@ const findOldestCallEnded = (calls: { [key: string]: { endTime?: Date } }): stri
 
 function clearParticipantReactionState(callContext: CallContext, callId: string, participantKey: string): void {
   callContext.setReceivedReactionFromParticipant(callId, participantKey, null);
+}
+
+/* @conditional-compile-remove(breakout-rooms) */
+/**
+ * @private
+ */
+class ProxyBreakoutRoom implements ProxyHandler<BreakoutRoom> {
+  private _context: CallContext;
+  private _callid: string;
+
+  constructor(context: CallContext, callId: string) {
+    this._context = context;
+    this._callid = callId;
+  }
+
+  public get<P extends keyof BreakoutRoom>(target: BreakoutRoom, prop: P): any {
+    switch (prop) {
+      case 'returnToMainMeeting':
+        return this._context.withAsyncErrorTeedToState(
+          async (...args: Parameters<BreakoutRoom['returnToMainMeeting']>) => {
+            const mainMeetingCall = await target.returnToMainMeeting(...args);
+            this._context.setEndedBreakoutRoomCall(mainMeetingCall.id, this._callid);
+            return mainMeetingCall;
+          },
+          'Call.feature'
+        );
+      default:
+        return Reflect.get(target, prop);
+    }
+  }
 }

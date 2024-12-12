@@ -155,6 +155,8 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
     const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
     /* @conditional-compile-remove(breakout-rooms) */
     const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
+    console.log('DEBUG assignedBreakoutRoom: ', assignedBreakoutRoom);
+    console.log('DEBUG breakoutRoomSettings: ', breakoutRoomSettings);
 
     const handleResize = useCallback((): void => {
       setControlBarButtonsWidth(controlBarContainerRef.current ? controlBarContainerRef.current.offsetWidth : 0);
@@ -409,7 +411,7 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                         !props.mobileView &&
                           assignedBreakoutRoom &&
                           assignedBreakoutRoom.state === 'open' &&
-                          assignedBreakoutRoom.call && (
+                          !breakoutRoomSettings && (
                             <PrimaryButton
                               text={callStrings.joinBreakoutRoomButtonLabel}
                               onClick={async (): Promise<void> => {
