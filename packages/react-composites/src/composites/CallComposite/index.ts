@@ -7,6 +7,7 @@ export type { CallCompositeOptions, CallCompositeProps, RemoteVideoTileMenuOptio
 export type { DeviceCheckOptions } from './CallComposite';
 export type { LocalVideoTileOptions } from './CallComposite';
 export type { CallControlOptions } from './types/CallControlOptions';
+export type { DtmfDialPadOptions } from './CallComposite';
 
 export * from './Strings';
 

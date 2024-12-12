@@ -12,7 +12,7 @@ import React, { useMemo } from 'react';
 import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
-import { CallCompositeOptions } from '../CallComposite';
+import { CallCompositeOptions, DtmfDialPadOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { MediaGallery } from '../components/MediaGallery';
 import { NetworkReconnectTile } from '../components/NetworkReconnectTile';
@@ -61,7 +61,7 @@ export interface CallPageProps {
   pinnedParticipants?: string[];
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   compositeAudioContext?: AudioContext;
-  disableAutoShowDtmfDialer?: boolean;
+  disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
 }
 
 /**
@@ -82,7 +82,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
     pinnedParticipants = [],
     setPinnedParticipants,
     compositeAudioContext,
-    disableAutoShowDtmfDialer = false,
+    disableAutoShowDtmfDialer = { dialerBehavior: 'autoShow' },
     latestNotifications,
     onDismissNotification
   } = props;
@@ -98,10 +98,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const networkReconnectTileProps = useSelector(networkReconnectTileSelector);
   const remoteParticipantsConnected = useSelector(getRemoteParticipantsConnectedSelector);
   const callees = useSelector(getTargetCallees);
-  const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected);
-  const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(
-    renderDtmfDialerFromStart && disableAutoShowDtmfDialer
-  );
+  const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected, disableAutoShowDtmfDialer);
+  const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
 
   const strings = useLocale().strings.call;
 
@@ -213,6 +211,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         /* @conditional-compile-remove(call-readiness) */
         doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
         captionsOptions={options?.captionsBanner}
+        dtmfDialerOptions={disableAutoShowDtmfDialer}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>

@@ -149,6 +149,15 @@ export interface LocalVideoTileOptions {
    */
   position?: 'grid' | 'floating';
 }
+
+/**
+ * Options to determine the rendering behavior of the dtmfDialer in the CallComposite
+ * @public
+ */
+export interface DtmfDialPadOptions {
+  dialerBehavior?: 'autoShow' | 'alwaysShow' | 'alwaysHide';
+}
+
 /**
  * Optional features of the {@link CallComposite}.
  *
@@ -244,7 +253,7 @@ export type CallCompositeOptions = {
    * - PSTN Calls
    * @defaultValue false
    */
-  disableAutoShowDtmfDialer?: boolean;
+  disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
