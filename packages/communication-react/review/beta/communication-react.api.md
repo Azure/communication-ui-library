@@ -1192,7 +1192,7 @@ export interface CallState {
     startTime: Date;
     state: CallState_2;
     // @beta
-    togetherMode: TogetherModeCallFeature;
+    togetherMode: TogetherModeCallFeatureState;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
@@ -4066,6 +4066,10 @@ export interface NotificationStackStrings {
     stopScreenShareGeneric?: NotificationStrings;
     stopVideoGeneric?: NotificationStrings;
     teamsMeetingCallNetworkQualityLow?: NotificationStrings;
+    // (undocumented)
+    togetherModeEnded?: NotificationStrings;
+    // (undocumented)
+    togetherModeStarted?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
     transcriptionStopped?: NotificationStrings;
     transcriptionStoppedStillRecording?: NotificationStrings;
@@ -4095,7 +4099,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent' | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted' | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
@@ -5082,7 +5086,7 @@ export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
 // @beta
-export interface TogetherModeCallFeature {
+export interface TogetherModeCallFeatureState {
     // (undocumented)
     isActive: boolean;
     seatingPositions: TogetherModeParticipantSeatingState;
