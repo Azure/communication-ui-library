@@ -132,7 +132,7 @@ export const _RemoteVideoTile = React.memo(
         scalingMode: remoteVideoViewOptions?.scalingMode,
         streamId,
         /* @conditional-compile-remove(media-access) */
-        isVideoPermitted: remoteParticipant.mediaAccess?.isVideoPermitted
+        isVideoPermitted: remoteParticipant.mediaAccess ? remoteParticipant.mediaAccess.isVideoPermitted : true
       }),
       [
         isAvailable,
@@ -146,7 +146,7 @@ export const _RemoteVideoTile = React.memo(
         userId,
         streamId,
         /* @conditional-compile-remove(media-access) */
-        remoteParticipant.mediaAccess?.isVideoPermitted
+        remoteParticipant.mediaAccess
       ]
     );
 

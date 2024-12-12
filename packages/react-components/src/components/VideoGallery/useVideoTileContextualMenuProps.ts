@@ -117,7 +117,7 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(media-access) */
     const isAttendee = participant.role === 'Attendee';
     /* @conditional-compile-remove(media-access) */
-    if (isAttendee && !participant.mediaAccess?.isAudioPermitted && onPermitAudio) {
+    if (isAttendee && participant.mediaAccess && !participant.mediaAccess.isAudioPermitted && onPermitAudio) {
       items.push({
         key: 'permitAudio',
         text: strings?.permitAudioTileMenuLabel,
@@ -146,7 +146,7 @@ export const useVideoTileContextualMenuProps = (props: {
     }
 
     /* @conditional-compile-remove(media-access) */
-    if (isAttendee && !participant.mediaAccess?.isVideoPermitted && onPermitVideo) {
+    if (isAttendee && participant.mediaAccess && !participant.mediaAccess.isVideoPermitted && onPermitVideo) {
       items.push({
         key: 'permitVideo',
         text: strings?.permitVideoTileMenuLabel,
@@ -343,9 +343,7 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(media-access) */
     participant.role,
     /* @conditional-compile-remove(media-access) */
-    participant.mediaAccess?.isAudioPermitted,
-    /* @conditional-compile-remove(media-access) */
-    participant.mediaAccess?.isVideoPermitted,
+    participant.mediaAccess,
     /* @conditional-compile-remove(media-access) */
     onPermitAudio,
     /* @conditional-compile-remove(media-access) */

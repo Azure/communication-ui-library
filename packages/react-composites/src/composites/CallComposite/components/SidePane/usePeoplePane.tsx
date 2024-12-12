@@ -363,7 +363,8 @@ export const usePeoplePane = (props: {
       const remoteParticipant = remoteParticipants?.[participantId];
       /* @conditional-compile-remove(media-access) */
       if (
-        !remoteParticipant?.mediaAccess?.isAudioPermitted &&
+        remoteParticipant?.mediaAccess &&
+        !remoteParticipant.mediaAccess.isAudioPermitted &&
         remoteParticipant?.role === 'Attendee' &&
         onPermitAudio
       ) {
@@ -399,7 +400,8 @@ export const usePeoplePane = (props: {
       }
       /* @conditional-compile-remove(media-access) */
       if (
-        !remoteParticipant?.mediaAccess?.isVideoPermitted &&
+        remoteParticipant?.mediaAccess &&
+        !remoteParticipant.mediaAccess.isVideoPermitted &&
         remoteParticipant?.role === 'Attendee' &&
         onPermitVideo
       ) {

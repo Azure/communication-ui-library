@@ -568,7 +568,7 @@ const getMediaAccessIconsTrampoline = (
   /* @conditional-compile-remove(media-access) */
   return (
     <>
-      {!mediaAccess?.isVideoPermitted ? (
+      {mediaAccess && !mediaAccess?.isVideoPermitted ? (
         <Stack className={mergeStyles(iconContainerStyle)}>
           <Icon iconName="ControlButtonCameraProhibitedSmall" />
         </Stack>
@@ -578,7 +578,7 @@ const getMediaAccessIconsTrampoline = (
           <Icon iconName="VideoTileMicOff" />
         </Stack>
       ) : undefined}
-      {!mediaAccess?.isAudioPermitted && showMuteIndicator ? (
+      {mediaAccess && !mediaAccess?.isAudioPermitted && showMuteIndicator ? (
         <Stack className={mergeStyles(iconContainerStyle)}>
           <Icon iconName="ControlButtonMicProhibitedSmall" />
         </Stack>

@@ -161,8 +161,8 @@ const onRenderParticipantDefault = (
       callingParticipant?.isMuted ||
       callingParticipant?.raisedHand ||
       isPinned ||
-      !callingParticipant?.mediaAccess?.isAudioPermitted ||
-      !callingParticipant?.mediaAccess?.isVideoPermitted
+      !(callingParticipant?.mediaAccess ? callingParticipant.mediaAccess.isAudioPermitted : true) ||
+      !(callingParticipant?.mediaAccess ? callingParticipant.mediaAccess.isVideoPermitted : true)
     );
 
     return !!(
@@ -215,7 +215,7 @@ const onRenderParticipantDefault = (
 
   const getControlButtonMicProhibitedTrampoline = (callingParticipant: CallParticipantListParticipant): JSX.Element => {
     /* @conditional-compile-remove(media-access) */
-    if (!callingParticipant.mediaAccess?.isAudioPermitted) {
+    if (callingParticipant.mediaAccess && !callingParticipant.mediaAccess?.isAudioPermitted) {
       return <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
     }
 
@@ -235,7 +235,7 @@ const onRenderParticipantDefault = (
     callingParticipant: CallParticipantListParticipant
   ): JSX.Element => {
     /* @conditional-compile-remove(media-access) */
-    if (!callingParticipant.mediaAccess?.isVideoPermitted) {
+    if (callingParticipant.mediaAccess && !callingParticipant.mediaAccess.isVideoPermitted) {
       return (
         <Icon iconName="ControlButtonCameraProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
       );
