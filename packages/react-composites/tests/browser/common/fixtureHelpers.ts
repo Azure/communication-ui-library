@@ -86,15 +86,13 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
     userId: CommunicationUserIdentifier;
     token: string;
     displayName: string;
-    mediaAccess?: { isAudioPermitted: boolean; isVideoPermitted: boolean };
   }[] = [];
   for (const displayName of displayNames) {
     const userAndToken = await tokenClient.createUserAndToken(['chat']);
     userData.push({
       userId: userAndToken.user,
       token: userAndToken.token,
-      displayName: displayName,
-      mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
+      displayName: displayName
     });
   }
 
@@ -119,8 +117,7 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
     endpointUrl,
     displayName: data.displayName,
     threadId,
-    topic: CHAT_TOPIC_NAME,
-    mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
+    topic: CHAT_TOPIC_NAME
   }));
 };
 
@@ -178,15 +175,13 @@ export const createCallWithChatObjectsAndUsers = async (
     userId: CommunicationUserIdentifier;
     token: string;
     displayName: string;
-    mediaAccess?: { isAudioPermitted: boolean; isVideoPermitted: boolean };
   }[] = [];
   for (const displayName of displayNames) {
     const userAndToken = await tokenClient.createUserAndToken(['chat', 'voip']);
     userData.push({
       userId: userAndToken.user,
       token: userAndToken.token,
-      displayName: displayName,
-      mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
+      displayName: displayName
     });
   }
 
@@ -212,8 +207,7 @@ export const createCallWithChatObjectsAndUsers = async (
     displayName: data.displayName,
     threadId,
     topic: CHAT_TOPIC_NAME,
-    groupId: callId,
-    mediaAccess: data.mediaAccess
+    groupId: callId
   }));
 };
 
