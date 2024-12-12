@@ -314,7 +314,13 @@ export type {
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(together-mode) */
-export type { TogetherModeStreamViewResult } from '../../react-components/src';
+export type {
+  TogetherModeStreamViewResult,
+  VideoGalleryTogetherModeStreams,
+  VideoGalleryTogetherModeParticipantPosition,
+  VideoGalleryTogetherModeSeatingInfo,
+  TogetherModeStreamOptions
+} from '../../react-components/src';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
 export type {
@@ -460,3 +466,9 @@ export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-compone
 export { RealTimeText } from '../../react-components/src/components/RealTimeText';
 /* @conditional-compile-remove(media-access) */
 export type { MediaAccess } from '../../react-components/src';
+export type {
+  CaptionsBannerProps,
+  CaptionsInformation,
+  CaptionsBannerStrings
+} from '../../react-components/src/components/CaptionsBanner';
+export { CaptionsBanner } from '../../react-components/src/components/CaptionsBanner';
