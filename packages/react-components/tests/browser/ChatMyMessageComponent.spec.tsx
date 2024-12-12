@@ -51,7 +51,7 @@ betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', ()
     await expect(component.getByTestId('chat-composite-message')).not.toBeVisible();
 
     // make screenshot consistent
-    component.getByTestId('rooster-rich-text-editor').click();
+    await component.getByTestId('rooster-rich-text-editor').click();
 
     await expect(component).toHaveScreenshot(
       'chat-my-message-component-rich-text-edit-box-empty-content-without-attachment.png'
@@ -71,7 +71,7 @@ betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', ()
       await expect(component.getByTestId('chat-composite-message')).not.toBeVisible();
 
       // make screenshot consistent
-      component.getByTestId('rooster-rich-text-editor').click();
+      await component.getByTestId('rooster-rich-text-editor').click();
 
       await expect(component).toHaveScreenshot(
         'chat-my-message-component-rich-text-edit-box-empty-html-content-without-attachment.png'
@@ -82,7 +82,7 @@ betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', ()
   betaTest(
     'Edit box should allow to save the message when content exists but attachments are deleted',
     async ({ mount, page }) => {
-      const component = await await mount(
+      const component = await mount(
         <ChatMyMessageComponent {...props('test', 'text')} isRichTextEditorEnabled={true} />
       );
       await startMessageEditing(component, page);
@@ -139,7 +139,7 @@ betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
     await expect(component.getByTestId('chat-composite-message')).not.toBeVisible();
 
     // make screenshot consistent
-    component.getByRole('textbox').click();
+    await component.getByRole('textbox').click();
 
     await expect(component).toHaveScreenshot('chat-my-message-component-edit-box-empty-content-without-attachment.png');
   });
@@ -193,12 +193,17 @@ const startMessageEditing = async (component: Locator, page: Page): Promise<void
 };
 
 const removeAttachmentAndSubmit = async (component: Locator, isRichTexEditor: boolean): Promise<void> => {
-  await component.getByLabel('Remove file').click();
+  const removeFileButton = component.getByRole('button', { name: 'Remove file' });
+  // Check that the button is visible and enabled
+  await expect(removeFileButton).toBeVisible();
+  await expect(removeFileButton).toBeEnabled();
+  await removeFileButton.click();
+
   const submitButtonTestId = isRichTexEditor
     ? 'chat-message-rich-text-edit-box-submit-button'
     : 'chat-message-edit-box-submit-button';
 
-  await expect(component.getByLabel('Remove file')).not.toBeVisible();
+  await expect(removeFileButton).not.toBeVisible();
 
   await component.getByTestId(submitButtonTestId).click();
 };
