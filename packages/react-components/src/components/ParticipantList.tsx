@@ -224,7 +224,10 @@ const onRenderParticipantDefault = (
 
   const getParticipantItemMicOffTrampoline = (callingParticipant: CallParticipantListParticipant): JSX.Element => {
     /* @conditional-compile-remove(media-access) */
-    if (callingParticipant.mediaAccess?.isAudioPermitted && callingParticipant.isMuted) {
+    if (
+      (callingParticipant.mediaAccess ? callingParticipant.mediaAccess.isAudioPermitted : true) &&
+      callingParticipant.isMuted
+    ) {
       return <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
     }
 
