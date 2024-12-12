@@ -73,6 +73,7 @@ export function defaultMockCallAdapterState(
     page: callEndReasonSubCode ? 'leftCall' : 'call',
     call: {
       id: 'call1',
+
       kind: 'Call' as CallKind,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
@@ -114,11 +115,8 @@ export function defaultMockCallAdapterState(
       optimalVideoCount: {
         maxRemoteVideoStreams: 4
       },
-      capabilitiesFeature: getCapabilitiesFromRole(role, isReactionCapability),
-      meetingMediaAccess: {
-        isAudioPermitted: true,
-        isVideoPermitted: true
-      }
+
+      capabilitiesFeature: getCapabilitiesFromRole(role, isReactionCapability)
     },
     endedCall: callEndReasonSubCode
       ? {
@@ -184,11 +182,7 @@ export function defaultMockRemoteParticipant(displayName?: string): MockRemotePa
     },
     isMuted: false,
     isSpeaking: false,
-    displayName: displayName,
-    mediaAccess: {
-      isAudioPermitted: true,
-      isVideoPermitted: true
-    }
+    displayName: displayName
   };
 }
 
@@ -204,8 +198,7 @@ export function defaultMockRemotePSTNParticipant(phoneNumber: string): MockRemot
     videoStreams: {},
     isMuted: true,
     isSpeaking: false,
-    displayName: phoneNumber,
-    mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
+    displayName: phoneNumber
   };
 }
 
@@ -602,9 +595,5 @@ const defaultEndedCallState: CallState = {
   },
   optimalVideoCount: {
     maxRemoteVideoStreams: 4
-  },
-  meetingMediaAccess: {
-    isAudioPermitted: true,
-    isVideoPermitted: true
   }
 };
