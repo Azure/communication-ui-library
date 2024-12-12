@@ -120,11 +120,8 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 
 const WifiWarning16Filled = (): JSX.Element => (
   // All ErrorBar icons are 16px x 16px (when 1rem = 16 px).
-  // There is no 16px version of this icon in the fluent icon package, so scale the larger
-  // one down to required size.
-  <div className={mergeStyles({ transform: 'scale(0.8)' })}>
-    <WifiWarning20Filled />
-  </div>
+  // There is no 16px version of this icon in the fluent icon package, so set height and width to 1rem.
+  <WifiWarning20Filled style={{ height: '1rem', width: '1rem' }} />
 );
 
 const MoreHorizontal18Regular = (): JSX.Element => (
