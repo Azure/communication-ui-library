@@ -400,7 +400,7 @@ export const buildUrl = (
 
 // Unexported types from @playwright/tests package we need
 type PageFunction<R> = string | ((arg: unknown) => R | Promise<R>);
-type SmartHandle<T> = T extends Node ? ElementHandle<T> : JSHandle<T>;
+type SmartHandle<T> = [T] extends [Node] ? ElementHandle<T> : JSHandle<T>;
 
 /**
  *  Helper function to detect whether a test is for a mobile broswer or not.

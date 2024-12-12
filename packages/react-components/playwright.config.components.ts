@@ -1,9 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { PlaywrightTestConfig, defineConfig, devices } from '@playwright/experimental-ct-react';
+import { PlaywrightTestConfig, defineConfig } from '@playwright/experimental-ct-react';
 import react from '@vitejs/plugin-react';
 import { TestOptions } from '../../common/config/playwright/playwrightConfigConstants';
 import { config as commonConfig } from '../../common/config/playwright/playwright.config.common';
+import { resolve } from 'path';
 
 const isBetaBuild = process.env['COMMUNICATION_REACT_FLAVOR'] === 'beta';
 
@@ -31,6 +32,12 @@ const ctViteConfig = {
     // Fix warning for telemetryVersion
     commonjsOptions: {
       include: undefined
+    }
+  },
+  resolve: {
+    alias: {
+      // resolve internal dependencies for the components tests
+      '@internal/acs-ui-common': resolve(__dirname, '../acs-ui-common/src')
     }
   }
 };
