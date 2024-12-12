@@ -573,7 +573,7 @@ const getMediaAccessIconsTrampoline = (
           <Icon iconName="ControlButtonCameraProhibitedSmall" />
         </Stack>
       ) : undefined}
-      {mediaAccess?.isAudioPermitted && showMuteIndicator && isMuted ? (
+      {(mediaAccess ? mediaAccess.isAudioPermitted : true) && showMuteIndicator && isMuted ? (
         <Stack className={mergeStyles(iconContainerStyle)}>
           <Icon iconName="VideoTileMicOff" />
         </Stack>
