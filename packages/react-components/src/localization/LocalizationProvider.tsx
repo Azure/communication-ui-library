@@ -15,7 +15,8 @@ import {
   ScreenShareButtonStrings,
   SendBoxStrings,
   TypingIndicatorStrings,
-  VideoGalleryStrings
+  VideoGalleryStrings,
+  CaptionsBannerStrings
 } from '../components';
 import { NotificationStackStrings } from '../components';
 import { RaiseHandButtonStrings } from '../components';
@@ -194,6 +195,8 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(rtt) */
   /** Strings for RealTimeText */
   rtt: RealTimeTextStrings;
+  /** Strings for CaptionsBanner */
+  captionsBanner: CaptionsBannerStrings;
 }
 
 /**

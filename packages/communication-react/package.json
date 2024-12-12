@@ -1,6 +1,6 @@
 {
   "name": "@azure/communication-react",
-  "version": "1.22.0-beta.0",
+  "version": "1.22.0-beta.1",
   "sideEffects": false,
   "description": "React library for building modern communication user experiences utilizing Azure Communication Services",
   "keywords": [
@@ -30,7 +30,7 @@
     "@fluentui/react": "^8.121.11",
     "@fluentui/react-file-type-icons": "8.12.4",
     "@fluentui/react-hooks": "^8.8.16",
-    "@fluentui/react-icons": "^2.0.265",
+    "@fluentui/react-icons": "^2.0.266",
     "@fluentui/react-window-provider": "^2.2.27",
     "@fluentui-contrib/react-chat": "0.1.10",
     "@griffel/react": "^1.5.27",
@@ -41,7 +41,7 @@
     "html-react-parser": "^5.1.18",
     "immer": "10.1.1",
     "memoize-one": "^5.2.1",
-    "nanoid": "3.3.6",
+    "nanoid": "3.3.8",
     "react-linkify": "^1.0.0-alpha",
     "react-use-draggable-scroll": "^0.4.7",
     "reselect": "^4.0.0",
@@ -55,7 +55,7 @@
     "uuid": "^9.0.0"
   },
   "peerDependencies": {
-    "@azure/communication-calling": "1.31.2-beta.2 || ^1.30.4",
+    "@azure/communication-calling": "1.32.1-beta.1 || ^1.31.1",
     "@azure/communication-calling-effects": "^1.1.2",
     "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.4",
     "@types/react": ">=16.8.0 <19.0.0",
@@ -111,19 +111,19 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "devDependencies": {
-    "@azure/communication-calling": "1.31.2-beta.2 || ^1.30.4",
+    "@azure/communication-calling": "1.32.1-beta.1 || ^1.31.1",
     "@azure/communication-calling-effects": "^1.1.2",
     "@azure/core-auth": "^1.7.2",
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.25.2",
-    "@internal/calling-component-bindings": "1.22.0-beta.0",
-    "@internal/calling-stateful-client": "1.22.0-beta.0",
-    "@internal/chat-component-bindings": "1.22.0-beta.0",
-    "@internal/chat-stateful-client": "1.22.0-beta.0",
-    "@internal/fake-backends": "1.22.0-beta.0",
-    "@internal/react-components": "1.22.0-beta.0",
-    "@internal/react-composites": "1.22.0-beta.0",
-    "@internal/acs-ui-javascript-loaders": "1.22.0-beta.0",
+    "@internal/calling-component-bindings": "1.22.0-beta.1",
+    "@internal/calling-stateful-client": "1.22.0-beta.1",
+    "@internal/chat-component-bindings": "1.22.0-beta.1",
+    "@internal/chat-stateful-client": "1.22.0-beta.1",
+    "@internal/fake-backends": "1.22.0-beta.1",
+    "@internal/react-components": "1.22.0-beta.1",
+    "@internal/react-composites": "1.22.0-beta.1",
+    "@internal/acs-ui-javascript-loaders": "1.22.0-beta.1",
     "@microsoft/api-documenter": "~7.26.0",
     "@microsoft/api-extractor": "~7.48.0",
     "@rollup/plugin-json": "^6.0.1",
@@ -147,10 +147,10 @@
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "^2.31.0",
-    "eslint-plugin-jsx-a11y": "^6.8.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-prettier": "5.2.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react": "^7.37.1",
+    "eslint-plugin-react": "^7.37.2",
     "eslint": "^8.57.0",
     "if-env": "^1.0.4",
     "jest": "29.7.0",
@@ -172,7 +172,7 @@
     "ts-patch": "^3.1.2",
     "type-fest": "^4.14.0",
     "typescript": "5.4.5",
-    "typescript-transform-paths": "^3.4.7"
+    "typescript-transform-paths": "^3.5.2"
   },
   "beachball": {
     "shouldPublish": false

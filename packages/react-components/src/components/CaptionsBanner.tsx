@@ -12,33 +12,59 @@ import {
   loadingBannerStyles
 } from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
+import { useLocale } from '../localization';
 
 /**
- * @internal
+ * @public
  * information required for each line of caption
  */
-export type _CaptionsInfo = {
+export type CaptionsInformation = {
+  /**
+   * unique id for each caption
+   */
   id: string;
+  /**
+   * speaker's display name
+   */
   displayName: string;
+  /**
+   * content of the caption
+   */
   captionText: string;
+  /**
+   * id of the speaker
+   */
   userId?: string;
 };
 
 /**
- * @internal
+ * @public
  * strings for captions banner
  */
-export interface _CaptionsBannerStrings {
+export interface CaptionsBannerStrings {
+  /**
+   * Spinner text for captions banner
+   */
   captionsBannerSpinnerText?: string;
 }
 
 /**
- * @internal
- * _CaptionsBanner Component Props.
+ * @public
+ * CaptionsBanner Component Props.
  */
-export interface _CaptionsBannerProps {
-  captions: _CaptionsInfo[];
+export interface CaptionsBannerProps {
+  /**
+   * Array of captions to be displayed
+   */
+  captions: CaptionsInformation[];
+  /**
+   * Flag to indicate if captions are on
+   */
   isCaptionsOn?: boolean;
+  /**
+   * Flag to indicate if captions are being started
+   * This is used to show spinner while captions are being started
+   */
   startCaptionsInProgress?: boolean;
   /**
    * Optional callback to override render of the avatar.
@@ -46,12 +72,18 @@ export interface _CaptionsBannerProps {
    * @param userId - user Id
    */
   onRenderAvatar?: OnRenderAvatarCallback;
-  strings?: _CaptionsBannerStrings;
+  /**
+   * Optional strings for the component
+   */
+  strings?: CaptionsBannerStrings;
   /**
    * Optional form factor for the component.
    * @defaultValue 'default'
    */
   formFactor?: 'default' | 'compact';
+  /**
+   * Optional options for the component.
+   */
   captionsOptions?: {
     height: 'full' | 'default';
   };
@@ -60,19 +92,20 @@ export interface _CaptionsBannerProps {
 const SCROLL_OFFSET_ALLOWANCE = 20;
 
 /**
- * @internal
+ * @public
  * A component for displaying a CaptionsBanner with user icon, displayName and captions text.
  */
-export const _CaptionsBanner = (props: _CaptionsBannerProps): JSX.Element => {
+export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   const {
     captions,
     isCaptionsOn,
     startCaptionsInProgress,
     onRenderAvatar,
-    strings,
     formFactor = 'default',
     captionsOptions
   } = props;
+  const localeStrings = useLocale().strings.captionsBanner;
+  const strings = { ...localeStrings, ...props.strings };
   const captionsScrollDivRef = useRef<HTMLUListElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const theme = useTheme();

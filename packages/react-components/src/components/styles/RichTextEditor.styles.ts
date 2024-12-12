@@ -15,7 +15,9 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
     minHeight: props.minHeight,
     maxHeight: props.maxHeight,
     maxWidth: '100%',
-    paddingTop: '0.5rem'
+    paddingTop: '0.5rem',
+    paddingInlineStart: `0.75rem`,
+    paddingInlineEnd: `0.75rem`
   });
 };
 
@@ -24,8 +26,6 @@ export const richTextEditorStyle = (props: { minHeight: string; maxHeight: strin
  */
 export const richTextEditorWrapperStyle = (theme: Theme): string => {
   return mergeStyles({
-    paddingInlineStart: `0.75rem`,
-    paddingInlineEnd: `0.75rem`,
     maxWidth: '100%',
     color: theme.palette.neutralPrimary,
     '& img': {
