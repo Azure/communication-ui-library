@@ -51,7 +51,7 @@ export type NotificationStackSelector = (
 export const notificationStackSelector: NotificationStackSelector = createSelector(
   [
     getLatestErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ getLatestNotifications,
+    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ getLatestNotifications,
     getDiagnostics,
     getDeviceManager,
     getEnvironmentInfo,

@@ -488,7 +488,7 @@ export interface VideoStreamRendererViewState {
 /* @conditional-compile-remove(media-access) */
 /**
  * Media access state
- * @alpha
+ * @public
  */
 export interface MediaAccessState {
   /**
@@ -763,7 +763,7 @@ export interface CallState {
   /**
    * Proxy of {@link @azure/communication-calling#MediaAccessFeature}.
    */
-  mediaAccess?: MediaAccessState;
+  meetingMediaAccess?: MediaAccessState;
 }
 
 /**

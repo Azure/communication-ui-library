@@ -807,6 +807,22 @@ export interface CallAdapterCallOperations {
    * Return to origin call of breakout room
    */
   returnFromBreakoutRoom(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  forbidAudio(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  permitAudio(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersAudio(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersAudio(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  forbidVideo(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  permitVideo(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersVideo(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  permitOthersVideo(): Promise<void>;
 }
 
 /**

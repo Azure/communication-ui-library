@@ -24,7 +24,7 @@ export type {
   VideoStreamRendererViewState,
   CallInfoState
 } from './CallClientState';
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 export type { CallNotification, CallNotifications, NotificationTarget } from './CallClientState';
 export type { TeamsIncomingCallState } from './CallClientState';
 /* @conditional-compile-remove(remote-ufd) */

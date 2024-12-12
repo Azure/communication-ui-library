@@ -48,8 +48,8 @@ import {
   CallErrorTarget,
   CallError
 } from './CallClientState';
-/* @conditional-compile-remove(breakout-rooms) */
-import { NotificationTarget, CallNotification, CallNotifications } from './CallClientState';
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
+import { NotificationTarget, CallNotifications, CallNotification } from './CallClientState';
 import { TeamsIncomingCallState } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { ReactionState } from './CallClientState';
@@ -94,7 +94,7 @@ export class CallContext {
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
   private _timeOutId: { [key: string]: ReturnType<typeof setTimeout> } = {};
-  /* @conditional-compile-remove(breakout-rooms) */
+  /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
 
   constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
@@ -115,7 +115,8 @@ export class CallContext {
       userId: userId,
       environmentInfo: undefined,
       latestErrors: {} as CallErrors,
-      /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: {} as CallNotifications
+      /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ latestNotifications:
+        {} as CallNotifications
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
@@ -1395,7 +1396,7 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
+  /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   public setLatestNotification(callId: string, notification: CallNotification): void {
     this._latestCallIdsThatPushedNotifications[notification.target] = callId;
     this.modifyState((draft: CallClientState) => {
@@ -1403,7 +1404,7 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
+  /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   public deleteLatestNotification(callId: string, notificationTarget: NotificationTarget): void {
     let callIdToPushLatestNotification = this._latestCallIdsThatPushedNotifications[notificationTarget];
     callIdToPushLatestNotification = callIdToPushLatestNotification
@@ -1449,7 +1450,7 @@ export class CallContext {
       }
 
       if (meetingMediaAccess) {
-        call.mediaAccess = {
+        call.meetingMediaAccess = {
           isAudioPermitted: meetingMediaAccess.isAudioPermitted,
           isVideoPermitted: meetingMediaAccess.isVideoPermitted
         };

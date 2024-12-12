@@ -43,7 +43,7 @@ import {
   CallErrors,
   CreateViewResult
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 import { CallNotifications } from '@internal/calling-stateful-client';
 import { EventEmitter } from 'events';
 /**
@@ -172,7 +172,7 @@ export const createStatefulCallClientMock = (): StatefulCallClient => {
       incomingCallsEnded: {},
       userId: userId,
       latestErrors: {} as CallErrors,
-      /* @conditional-compile-remove(breakout-rooms) */
+      /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
       latestNotifications: {} as CallNotifications
     })
   );
