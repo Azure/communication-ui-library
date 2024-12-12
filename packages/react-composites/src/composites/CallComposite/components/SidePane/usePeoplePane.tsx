@@ -203,9 +203,9 @@ export const usePeoplePane = (props: {
       }
     }
     /* @conditional-compile-remove(media-access) */
-    const isMeetingAudioPermitted = meetingMediaAccess?.isAudioPermitted;
+    const isMeetingAudioPermitted = meetingMediaAccess ? meetingMediaAccess.isAudioPermitted : true;
     /* @conditional-compile-remove(media-access) */
-    const isMeetingVideoPermitted = meetingMediaAccess?.isVideoPermitted;
+    const isMeetingVideoPermitted = meetingMediaAccess ? meetingMediaAccess.isVideoPermitted : true;
     /* @conditional-compile-remove(media-access) */
     if (onForbidOthersAudio && remoteParticipants) {
       hasAttendee &&
@@ -302,9 +302,7 @@ export const usePeoplePane = (props: {
     onMuteAllRemoteParticipants,
     remoteParticipants,
     /* @conditional-compile-remove(media-access) */
-    meetingMediaAccess?.isAudioPermitted,
-    /* @conditional-compile-remove(media-access) */
-    meetingMediaAccess?.isVideoPermitted,
+    meetingMediaAccess,
     /* @conditional-compile-remove(media-access) */
     onForbidOthersAudio,
     /* @conditional-compile-remove(media-access) */

@@ -246,8 +246,8 @@ export const memoizeLocalParticipant = memoizeOne(
     capabilities,
     /* @conditional-compile-remove(media-access) */
     mediaAccess: {
-      isAudioPermitted: capabilities?.unmuteMic.isPresent,
-      isVideoPermitted: capabilities?.turnVideoOn.isPresent
+      isAudioPermitted: capabilities ? capabilities.unmuteMic.isPresent : true,
+      isVideoPermitted: capabilities ? capabilities.turnVideoOn.isPresent : true
     }
   })
 );
