@@ -2151,7 +2151,9 @@ export type ComponentSlotStyle = Omit<IRawStyle, 'animation'>;
 // @public
 export interface ComponentStrings {
     cameraButton: CameraButtonStrings;
+    captionLanguages: CaptionLanguageStrings;
     captionsBanner: CaptionsBannerStrings;
+    captionsSettingsModal: CaptionsSettingsModalStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
@@ -2171,6 +2173,7 @@ export interface ComponentStrings {
     reactionButton: ReactionButtonStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
+    spokenLanguages: SpokenLanguageStrings;
     typingIndicator: TypingIndicatorStrings;
     verticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;

@@ -196,6 +196,15 @@
   "rtt": {
     "isTypingText": "RTT typing"
   },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Captions Settings"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabic - U.A.E."
+  },
+  "captionLanguages": {
+    "ar": "Arabic"
+  },
   "messageThread": {
     "yesterday": "Yesterday",
     "sunday": "Sunday",

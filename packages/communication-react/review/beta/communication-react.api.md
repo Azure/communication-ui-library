@@ -2509,7 +2509,9 @@ export interface ComponentStrings {
     CameraSitePermissionsDenied: SitePermissionsStrings;
     CameraSitePermissionsDeniedSafari: SitePermissionsStrings;
     CameraSitePermissionsRequest: SitePermissionsStrings;
+    captionLanguages: CaptionLanguageStrings;
     captionsBanner: CaptionsBannerStrings;
+    captionsSettingsModal: CaptionsSettingsModalStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
@@ -2539,6 +2541,7 @@ export interface ComponentStrings {
     rttModal: RTTModalStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
+    spokenLanguages: SpokenLanguageStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
