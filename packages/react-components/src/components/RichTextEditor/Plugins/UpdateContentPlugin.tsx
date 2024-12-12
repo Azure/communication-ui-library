@@ -41,7 +41,8 @@ export class UpdateContentPlugin implements EditorPlugin {
   initialize(editor: IEditor): void {
     this.editor = editor;
     this.disposer = this.editor.attachDomEvent({
-      blur: { beforeDispatch: this.onBlur }
+      blur: { beforeDispatch: this.onBlur },
+      compositionupdate: { beforeDispatch: this.onCompositionUpdate }
     });
   }
 
@@ -58,7 +59,6 @@ export class UpdateContentPlugin implements EditorPlugin {
     if (this.onUpdate === null) {
       return;
     }
-
     switch (event.eventType) {
       case PluginEventType.EditorReady:
         this.onUpdate(UpdateEvent.Init);
@@ -66,6 +66,10 @@ export class UpdateContentPlugin implements EditorPlugin {
 
       case PluginEventType.BeforeDispose:
         this.onUpdate(UpdateEvent.Dispose);
+        break;
+
+      case PluginEventType.CompositionEnd:
+        this.onUpdate(UpdateEvent.ContentChanged);
         break;
 
       case PluginEventType.ContentChanged:
@@ -88,6 +92,13 @@ export class UpdateContentPlugin implements EditorPlugin {
         break;
     }
   }
+
+  private onCompositionUpdate = (): void => {
+    if (this.onUpdate === null) {
+      return;
+    }
+    this.onUpdate(UpdateEvent.ContentChanged);
+  };
 
   private onBlur = (): void => {
     if (this.onUpdate === null) {
