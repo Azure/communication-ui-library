@@ -1,0 +1,16 @@
+import { StartCaptionsButton } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as StartCaptionsButtonStories from './index.stories';
+import StartCaptionsButtonExampleText from '!!raw-loader!./snippets/StartCaptionsButton.snippet.tsx';
+
+<Meta of={StartCaptionsButtonStories} />
+
+# StartCaptionsButton
+
+A component to start and stop captions.
+
+<Canvas of={StartCaptionsButtonStories.StartCaptionsButton} source={{ code: StartCaptionsButtonExampleText }} />
+
+## Props
+
+<ArgTypes of={StartCaptionsButton} />
