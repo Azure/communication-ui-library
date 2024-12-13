@@ -5,16 +5,14 @@ import React from 'react';
 import { ControlBarButtonProps } from '@internal/react-components';
 import { useCallback } from 'react';
 import { IContextualMenuItem } from '@fluentui/react';
-import { _StartCaptionsButton } from '@internal/react-components';
+import { StartCaptionsButton } from '@internal/react-components';
 import { useMemo } from 'react';
-import { useAdaptedSelector } from '../CallComposite/hooks/useAdaptedSelector';
-import { useHandlers } from '../CallComposite/hooks/useHandlers';
 import { buttonFlyoutIncreasedSizeStyles } from '../CallComposite/styles/Buttons.styles';
 import { useLocale } from '../localization';
 import { MoreButton } from './MoreButton';
-import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import { FocusableElement } from './types/FocusableElement';
+import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
 /** @private */
 export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
@@ -30,8 +28,7 @@ export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
  */
 export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): JSX.Element => {
   const localeStrings = useLocale();
-  const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
-  const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
+  const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
   const moreButtonStrings = useMemo(
     () => ({
       label: localeStrings.strings.call.captionsBannerMoreButtonCallingLabel,
@@ -43,15 +40,15 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
   const moreButtonContextualMenuItems: IContextualMenuItem[] = [];
 
   const startCaptions = useCallback(async () => {
-    await startCaptionsButtonHandlers.onStartCaptions({
+    await startCaptionsButtonProps.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
-  }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
+  }, [startCaptionsButtonProps, startCaptionsButtonProps.currentSpokenLanguage]);
 
   const stopCaptions = useCallback(async () => {
-    await startCaptionsButtonHandlers.onStopCaptions();
+    await startCaptionsButtonProps.onStopCaptions();
     props.returnFocusRef?.current?.focus();
-  }, [startCaptionsButtonHandlers, props.returnFocusRef]);
+  }, [startCaptionsButtonProps, props.returnFocusRef]);
 
   moreButtonContextualMenuItems.push({
     key: 'ToggleCaptionsKey',

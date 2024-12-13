@@ -23,9 +23,9 @@ import { CaptionsInformation, SupportedCaptionLanguage, SupportedSpokenLanguage 
 
 /**
  * Selector type for the {@link StartCaptionsButton} component.
- * @internal
+ * @public
  */
-export type _StartCaptionsButtonSelector = (
+export type StartCaptionsButtonSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
@@ -37,9 +37,9 @@ export type _StartCaptionsButtonSelector = (
 /**
  * Selector for {@link StartCaptionsButton} component.
  *
- * @internal
+ * @public
  */
-export const _startCaptionsButtonSelector: _StartCaptionsButtonSelector = reselect.createSelector(
+export const startCaptionsButtonSelector: StartCaptionsButtonSelector = reselect.createSelector(
   [getCaptionsStatus, getCurrentCaptionLanguage, getCurrentSpokenLanguage],
   (isCaptionsFeatureActive, currentCaptionLanguage, currentSpokenLanguage) => {
     return {

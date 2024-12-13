@@ -18,9 +18,9 @@ export type { HoldButtonSelector } from './callControlSelectors';
 export type { IncomingCallStackSelector } from './incomingCallStackSelector';
 export { incomingCallStackSelector } from './incomingCallStackSelector';
 
-export type { _StartCaptionsButtonSelector, CaptionSettingsSelector, CaptionsBannerSelector } from './captionsSelector';
+export type { StartCaptionsButtonSelector, CaptionSettingsSelector, CaptionsBannerSelector } from './captionsSelector';
 
-export { captionsBannerSelector, _startCaptionsButtonSelector, captionSettingsSelector } from './captionsSelector';
+export { captionsBannerSelector, startCaptionsButtonSelector, captionSettingsSelector } from './captionsSelector';
 
 export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/createHandlers';
 

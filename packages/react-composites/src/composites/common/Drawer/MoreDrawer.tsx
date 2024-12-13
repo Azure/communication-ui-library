@@ -16,7 +16,7 @@ import {
 import { _ReactionDrawerMenuItem } from '@internal/react-components';
 import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-import { _StartCaptionsButton } from '@internal/react-components';
+import { StartCaptionsButton } from '@internal/react-components';
 
 import { HoldButton } from '@internal/react-components';
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
@@ -32,8 +32,6 @@ import { isDisabled } from '../../CallComposite/utils';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 import { Stack, Toggle, useTheme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
-import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { CaptionLanguageSettingsDrawer } from './CaptionLanguageSettingsDrawer';
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
 import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
@@ -456,7 +454,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const captionSettingsProp = usePropsFor(CaptionsSettingsModal);
 
-  const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
+  const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
 
   const [isSpokenLanguageDrawerOpen, setIsSpokenLanguageDrawerOpen] = useState<boolean>(false);
 
@@ -472,13 +470,13 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const onToggleChange = useCallback(async () => {
     if (!captionSettingsProp.isCaptionsFeatureActive) {
-      await startCaptionsButtonHandlers.onStartCaptions({
+      await startCaptionsButtonProps.onStartCaptions({
         spokenLanguage: currentSpokenLanguage
       });
     } else {
-      startCaptionsButtonHandlers.onStopCaptions();
+      startCaptionsButtonProps.onStopCaptions();
     }
-  }, [captionSettingsProp.isCaptionsFeatureActive, startCaptionsButtonHandlers, currentSpokenLanguage]);
+  }, [captionSettingsProp.isCaptionsFeatureActive, startCaptionsButtonProps, currentSpokenLanguage]);
 
   if (showCaptionsButton) {
     const captionsDrawerItems: DrawerMenuItemProps[] = [];
