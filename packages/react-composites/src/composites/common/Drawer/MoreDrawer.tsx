@@ -10,12 +10,13 @@ import {
   _DrawerMenuItemProps as DrawerMenuItemProps,
   _DrawerMenuStyles,
   SpokenLanguageStrings,
-  CaptionLanguageStrings
+  CaptionLanguageStrings,
+  CaptionsSettingsModal
 } from '@internal/react-components';
 import { _ReactionDrawerMenuItem } from '@internal/react-components';
 import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
+import { _StartCaptionsButton } from '@internal/react-components';
 
 import { HoldButton } from '@internal/react-components';
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
@@ -31,8 +32,7 @@ import { isDisabled } from '../../CallComposite/utils';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 import { Stack, Toggle, useTheme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
-import { _captionSettingsSelector, _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
+import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
 import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { CaptionLanguageSettingsDrawer } from './CaptionLanguageSettingsDrawer';
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
@@ -462,11 +462,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   //Captions drawer menu
   const supportedCaptionLanguageStrings = useLocale().strings.call.captionLanguageStrings;
 
-  const captionSettingsProp = useAdaptedSelector(_captionSettingsSelector);
+  const captionSettingsProp = usePropsFor(CaptionsSettingsModal);
 
   const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
-
-  const captionSettingsHandlers = useHandlers(_CaptionsSettingsModal);
 
   const [isSpokenLanguageDrawerOpen, setIsSpokenLanguageDrawerOpen] = useState<boolean>(false);
 
@@ -599,7 +597,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         <SpokenLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}
           selectLanguage={setCurrentSpokenLanguage}
-          setCurrentLanguage={captionSettingsHandlers.onSetSpokenLanguage}
+          setCurrentLanguage={captionSettingsProp.onSetSpokenLanguage}
           currentLanguage={currentSpokenLanguage}
           strings={{ menuTitle: props.strings.spokenLanguageMenuTitle }}
           supportedLanguageStrings={supportedSpokenLanguageStrings}
@@ -609,7 +607,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         <CaptionLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}
           selectLanguage={setCurrentCaptionLanguage}
-          setCurrentLanguage={captionSettingsHandlers.onSetCaptionLanguage}
+          setCurrentLanguage={captionSettingsProp.onSetCaptionLanguage}
           currentLanguage={currentCaptionLanguage}
           strings={{ menuTitle: props.strings.captionLanguageMenuTitle }}
           supportedLanguageStrings={supportedCaptionLanguageStrings}
