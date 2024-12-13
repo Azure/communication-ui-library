@@ -24,16 +24,15 @@ export const StartCaptionsButtonStory = (): JSX.Element => {
   };
 
   return (
-    <Stack style={{ border: 'solid grey 0.1rem' }} horizontalAlign="center">
-      <Stack.Item style={{ width: '60%' }}>
-        <StartCaptionsButton
-          onStartCaptions={onStartCaptions}
-          onStopCaptions={onStopCaptions}
-          onSetSpokenLanguage={onSetSpokenLanguage}
-          currentSpokenLanguage="en-us"
-          checked={isCaptionsActive}
-        />
-      </Stack.Item>
+    <Stack>
+      <StartCaptionsButton
+        onStartCaptions={onStartCaptions}
+        onStopCaptions={onStopCaptions}
+        onSetSpokenLanguage={onSetSpokenLanguage}
+        currentSpokenLanguage="en-us"
+        checked={isCaptionsActive}
+        showLabel
+      />
     </Stack>
   );
 };
