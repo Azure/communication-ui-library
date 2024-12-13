@@ -15,7 +15,7 @@ import {
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { LocalLanguage20Regular } from '@fluentui/react-icons';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 
 export const CallingComponents = (): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
