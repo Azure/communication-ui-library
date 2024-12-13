@@ -64,14 +64,9 @@ const useVideoStreamLifecycleMaintainer = (
       /* @conditional-compile-remove(media-access) */ isVideoPermitted?: boolean
     ) => {
       /* @conditional-compile-remove(media-access) */
-      if (isStreamAvailable && !renderElementExists && isVideoPermitted) {
-        onCreateStreamView?.({ isMirrored, scalingMode })?.then((result) => {
-          result && setVideoStreamViewResult(result);
-        });
+      if (isVideoPermitted === false) {
+        return;
       }
-
-      /* @conditional-compile-remove(media-access) */
-      return;
 
       if (isStreamAvailable && !renderElementExists) {
         onCreateStreamView?.({ isMirrored, scalingMode })?.then((result) => {

@@ -360,34 +360,19 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(media-access) */
   const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
     return {
-      onForbidAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? onForbidAudio
-        : undefined,
-      onPermitAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? onPermitAudio
-        : undefined,
-      onForbidOthersAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onForbidOthersAudio
-        : undefined,
-      onPermitOthersAudio: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onPermitOthersAudio
-        : undefined,
-      onForbidVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? onForbidVideo
-        : undefined,
-      onPermitVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? onPermitVideo
-        : undefined,
-      onForbidOthersVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onForbidOthersVideo
-        : undefined,
-      onPermitOthersVideo: ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(role ?? '')
-        ? muteAllHandlers.onPermitOthersVideo
-        : undefined,
+      onForbidAudio: capabilities?.forbidOthersAudio?.isPresent ? onForbidAudio : undefined,
+      onPermitAudio: capabilities?.forbidOthersAudio?.isPresent ? onPermitAudio : undefined,
+      onForbidOthersAudio: capabilities?.forbidOthersAudio?.isPresent ? muteAllHandlers.onForbidOthersAudio : undefined,
+      onPermitOthersAudio: capabilities?.forbidOthersAudio?.isPresent ? muteAllHandlers.onPermitOthersAudio : undefined,
+      onForbidVideo: capabilities?.forbidOthersVideo?.isPresent ? onForbidVideo : undefined,
+      onPermitVideo: capabilities?.forbidOthersVideo?.isPresent ? onPermitVideo : undefined,
+      onForbidOthersVideo: capabilities?.forbidOthersVideo?.isPresent ? muteAllHandlers.onForbidOthersVideo : undefined,
+      onPermitOthersVideo: capabilities?.forbidOthersVideo?.isPresent ? muteAllHandlers.onPermitOthersVideo : undefined,
       meetingMediaAccess
     };
   }, [
-    role,
+    capabilities?.forbidOthersAudio?.isPresent,
+    capabilities?.forbidOthersVideo?.isPresent,
     onForbidAudio,
     onPermitAudio,
     muteAllHandlers.onForbidOthersAudio,
