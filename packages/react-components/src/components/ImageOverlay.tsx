@@ -27,6 +27,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(image-overlay-theme) */
 import { imageOverlayTheme } from '../theming';
 import { darkTheme } from '../theming';
+import Announcer from './Announcer/Announcer';
 
 /**
  * Props for {@link ImageOverlay}.
@@ -77,6 +78,10 @@ export interface ImageOverlayStrings {
    * Dismiss button aria label for ImageOverlay
    */
   dismissButtonAriaLabel: string;
+  /**
+   * Announcer message for when ImageOverlay becomes active
+   */
+  overlayVisibleMessage: string;
 }
 /**
  * Component to render a fullscreen modal for a selected image.
@@ -106,7 +111,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
 
   const renderHeaderBar = (): JSX.Element => {
     return (
-      <Stack className={mergeStyles(headerStyle)} role="heading" aria-label={title || 'Image'} aria-level={2}>
+      <Stack className={mergeStyles(headerStyle)}>
         <Stack className={mergeStyles(titleBarContainerStyle)}>
           {titleIcon}
           <Stack.Item className={mergeStyles(titleStyle(overlayTheme))}>{title}</Stack.Item>
@@ -178,6 +183,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
       styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
       isDarkOverlay={true}
     >
+      <Announcer polite={{ id: `${title}`, message: localeStrings.overlayVisibleMessage ?? altText }} />
       <FluentThemeProvider fluentTheme={overlayTheme} rootStyle={themeProviderRootStyle}>
         {renderHeaderBar()}
         {renderBodyWithLightDismiss()}

@@ -744,6 +744,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       {overlayImageItem && (
         <ImageOverlay
           {...overlayImageItem}
+          altText={'Image Details Opened'}
           isOpen={isImageOverlayOpen}
           onDismiss={() => {
             setOverlayImageItem(undefined);
