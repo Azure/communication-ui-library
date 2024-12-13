@@ -5,9 +5,12 @@
     "removeButtonLabel": "Tynnu",
     "sharingIconLabel": "Rhannu",
     "mutedIconLabel": "Wedi tewi",
+    "handRaisedIconLabel": "Llaw wedi'i chodi - Lleoliad {position}",
     "displayNamePlaceholder": "Cyfranogwr dienw",
     "participantStateRinging": "Wrthi'n galw...",
     "participantStateHold": "Galwad yn aros",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Mwy o Ddewisiadau",
     "attendeeRole": "Mynychwr"
   },
   "ParticipantList": {
@@ -73,6 +76,9 @@
     "rttConfirmButtonLabel": "Galluogi",
     "rttCancelButtonLabel": "Canslo",
     "rttCloseModalButtonAriaLabel": "Cau'r Moddol RTT"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Starting captions..."
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Awgrymiadau"
@@ -155,6 +161,7 @@
   },
   "participantsButton": {
     "label": "Pobl",
+    "ariaLabel": "People",
     "tooltipContent": "Dangos cyfranogwyr",
     "menuHeader": "Yn yr alwad hon",
     "participantsListButtonLabel": "{numParticipants} o bobl",
@@ -189,6 +196,100 @@
   },
   "rtt": {
     "isTypingText": "Teipio RTT"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Captions Settings",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Spoken language",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Captions language",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Yr iaith y mae pawb yn yr alwad hon yn ei siarad.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Bydd capsiynau'n ymddangos yn yr iaith hon.",
+    "captionsSettingsConfirmButtonLabel": "Confirm",
+    "captionsSettingsCancelButtonLabel": "Cancel",
+    "captionsSettingsModalAriaLabel": "Captions Setting Modal",
+    "captionsSettingsCloseModalButtonAriaLabel": "Close Captions Setting"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabeg - E.A.U.",
+    "ar-sa": "Arabic - Saudi Arabia",
+    "da-dk": "Danish",
+    "de-de": "German - Germany",
+    "en-au": "English - Australia",
+    "en-ca": "English - Canada",
+    "en-gb": "English - United Kingdom",
+    "en-in": "English - India",
+    "en-nz": "English - New Zealand",
+    "en-us": "English - United States",
+    "es-es": "Sbaeneg - Sbaen (Modern)",
+    "es-mx": "Spanish - Mexico",
+    "fi-fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr-fr": "French - France",
+    "hi-in": "Hindi",
+    "it-it": "Italian - Italy",
+    "ja-jp": "Japanese",
+    "ko-kr": "Korean",
+    "nb-no": "Norwegian (Bokmål)",
+    "nl-be": "Dutch - Belgium",
+    "nl-nl": "Dutch - Netherlands",
+    "pl-pl": "Polish",
+    "pt-br": "Portuguese - Brazil",
+    "ru-ru": "Russian",
+    "sv-se": "Swedish",
+    "zh-cn": "Tsieinëeg - Gweriniaeth y Bobl Tsieina",
+    "zh-hk": "Tsieinëeg - Hong Kong SAR",
+    "cs-cz": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr-tr": "Turkish",
+    "vi-vn": "Vietnamese",
+    "th-th": "Thai",
+    "he-il": "Hebrew",
+    "cy-gb": "Welsh",
+    "uk-ua": "Ukrainian",
+    "el-gr": "Greek",
+    "hu-hu": "Hungarian",
+    "ro-ro": "Romanian",
+    "sk-sk": "Slovak",
+    "zh-tw": "Chinese - Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabic",
+    "da": "Danish",
+    "de": "German",
+    "en": "English",
+    "es": "Spanish",
+    "fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr": "French - France",
+    "hi": "Hindi",
+    "it": "Italian",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "nb": "Norwegian (Bokmål)",
+    "nl": "Dutch",
+    "pl": "Polish",
+    "pt": "Portuguese - Brazil",
+    "ru": "Russian",
+    "sv": "Swedish",
+    "zh-Hans": "Chinese (Simplified)",
+    "zh-Hant": "Chinese (Traditional)",
+    "cs": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr": "Turkish",
+    "vi": "Vietnamese",
+    "th": "Thai",
+    "he": "Hebrew",
+    "cy": "Welsh",
+    "uk": "Ukrainian",
+    "el": "Greek",
+    "hu": "Hungarian",
+    "ro": "Romanian",
+    "sk": "Slovak"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Turn on captions",
+    "offLabel": "Turn off captions",
+    "tooltipOnContent": "Turn off captions",
+    "tooltipOffContent": "Turn on captions"
   },
   "messageThread": {
     "yesterday": "Ddoe",
@@ -494,6 +595,26 @@
       "title": "Mae terfyn amser yr ystafell ar fin dod i ben.",
       "message": "Bydd yr ystafell hon yn cau mewn 30 eiliad",
       "dismissButtonAriaLabel": "Cau"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Mae eich camera wedi cael ei alluogi",
+      "message": "Rhowch eich camera ar waith os hoffech chi rannu fideo",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Mae eich camera wedi cael ei analluogi",
+      "message": "Does dim modd i chi rannu fideo bellach",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Mae eich meic wedi cael ei alluogi",
+      "message": "Dad-dewch y meicroffon os hoffech chi siarad.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Mae eich meic wedi cael ei analluogi",
+      "message": "Does dim modd i chi ddad-dewi bellach.",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {
@@ -522,7 +643,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Gadael y sbotolau",
     "attendeeRole": "Mynychwr",
     "muteParticipantMenuItemLabel": "Tewi",
-    "waitingScreenText": "Yn aros i bobl eraill ymuno"
+    "waitingScreenText": "Yn aros i bobl eraill ymuno",
+    "forbidAudio": "Disable mic",
+    "permitAudio": "Allow mic",
+    "forbidAudioTileMenuLabel": "Disable mic",
+    "permitAudioTileMenuLabel": "Allow mic",
+    "forbidVideo": "Disable camera",
+    "permitVideo": "Allow camera",
+    "forbidVideoTileMenuLabel": "Disable camera",
+    "permitVideoTileMenuLabel": "Allow camera"
   },
   "dialpad": {
     "placeholderText": "Rhowch rif ffôn",

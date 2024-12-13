@@ -5,9 +5,12 @@
     "removeButtonLabel": "הסר",
     "sharingIconLabel": "משתף",
     "mutedIconLabel": "מושתק",
+    "handRaisedIconLabel": "יד מורמת - מיקום {position}",
     "displayNamePlaceholder": "משתתף ללא שם",
     "participantStateRinging": "מתקשר...",
     "participantStateHold": "בהמתנה",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, אפשרויות נוספות",
     "attendeeRole": "משתתף"
   },
   "ParticipantList": {
@@ -73,6 +76,9 @@
     "rttConfirmButtonLabel": "הפעל",
     "rttCancelButtonLabel": "ביטול",
     "rttCloseModalButtonAriaLabel": "סגור תיבת דו-שיח מודאלית של RTT"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Starting captions..."
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
@@ -155,6 +161,7 @@
   },
   "participantsButton": {
     "label": "אנשים",
+    "ariaLabel": "People",
     "tooltipContent": "הצג משתתפים",
     "menuHeader": "בשיחה זו",
     "participantsListButtonLabel": "{numParticipants} אנשים",
@@ -189,6 +196,100 @@
   },
   "rtt": {
     "isTypingText": "הקלדת RTT"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Captions Settings",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Spoken language",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Captions language",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Language that everyone on this call is speaking.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "הכתוביות יופיעו בשפה זו.",
+    "captionsSettingsConfirmButtonLabel": "Confirm",
+    "captionsSettingsCancelButtonLabel": "Cancel",
+    "captionsSettingsModalAriaLabel": "Captions Setting Modal",
+    "captionsSettingsCloseModalButtonAriaLabel": "Close Captions Setting"
+  },
+  "spokenLanguages": {
+    "ar-ae": "ערבית - איחוד האמירויות",
+    "ar-sa": "Arabic - Saudi Arabia",
+    "da-dk": "Danish",
+    "de-de": "German - Germany",
+    "en-au": "English - Australia",
+    "en-ca": "English - Canada",
+    "en-gb": "English - United Kingdom",
+    "en-in": "English - India",
+    "en-nz": "English - New Zealand",
+    "en-us": "English - United States",
+    "es-es": "ספרדית - ספרד (ספרדית מודרנית)",
+    "es-mx": "Spanish - Mexico",
+    "fi-fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr-fr": "French - France",
+    "hi-in": "Hindi",
+    "it-it": "Italian - Italy",
+    "ja-jp": "Japanese",
+    "ko-kr": "Korean",
+    "nb-no": "Norwegian (Bokmål)",
+    "nl-be": "Dutch - Belgium",
+    "nl-nl": "Dutch - Netherlands",
+    "pl-pl": "Polish",
+    "pt-br": "Portuguese - Brazil",
+    "ru-ru": "Russian",
+    "sv-se": "Swedish",
+    "zh-cn": "סינית - הרפובליקה העממית של סין",
+    "zh-hk": "Chinese - Hong Kong SAR",
+    "cs-cz": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr-tr": "Turkish",
+    "vi-vn": "Vietnamese",
+    "th-th": "Thai",
+    "he-il": "Hebrew",
+    "cy-gb": "Welsh",
+    "uk-ua": "Ukrainian",
+    "el-gr": "Greek",
+    "hu-hu": "Hungarian",
+    "ro-ro": "Romanian",
+    "sk-sk": "Slovak",
+    "zh-tw": "Chinese - Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabic",
+    "da": "Danish",
+    "de": "German",
+    "en": "English",
+    "es": "Spanish",
+    "fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr": "French - France",
+    "hi": "Hindi",
+    "it": "Italian",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "nb": "Norwegian (Bokmål)",
+    "nl": "Dutch",
+    "pl": "Polish",
+    "pt": "Portuguese - Brazil",
+    "ru": "Russian",
+    "sv": "Swedish",
+    "zh-Hans": "Chinese (Simplified)",
+    "zh-Hant": "Chinese (Traditional)",
+    "cs": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr": "Turkish",
+    "vi": "Vietnamese",
+    "th": "Thai",
+    "he": "Hebrew",
+    "cy": "Welsh",
+    "uk": "Ukrainian",
+    "el": "Greek",
+    "hu": "Hungarian",
+    "ro": "Romanian",
+    "sk": "Slovak"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Turn on captions",
+    "offLabel": "Turn off captions",
+    "tooltipOnContent": "Turn off captions",
+    "tooltipOffContent": "Turn on captions"
   },
   "messageThread": {
     "yesterday": "אתמול",
@@ -494,6 +595,26 @@
       "title": "תוקף מגבלת זמן החדר עומד לפוג.",
       "message": "חדר זה ייסגר בעוד 30 שניות",
       "dismissButtonAriaLabel": "סגור"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "המצלמה שלך הפכה לזמינה",
+      "message": "הפעל אותה אם ברצונך לשתף וידאו.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "המצלמה שלך הושבתה",
+      "message": "לא תוכל עוד לשתף וידאו.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "המיקרופון שלך הפך לזמין",
+      "message": "בטל את ההשתקה אם אתה מעוניין לדבר.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "המיקרופון שלך הפך ללא זמין",
+      "message": "לא תוכל עוד לבטל השתקה.",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {
@@ -522,7 +643,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "צא מזרקור",
     "attendeeRole": "משתתף",
     "muteParticipantMenuItemLabel": "השתק",
-    "waitingScreenText": "מחכה שאחרים יצטרפו"
+    "waitingScreenText": "מחכה שאחרים יצטרפו",
+    "forbidAudio": "Disable mic",
+    "permitAudio": "Allow mic",
+    "forbidAudioTileMenuLabel": "Disable mic",
+    "permitAudioTileMenuLabel": "Allow mic",
+    "forbidVideo": "Disable camera",
+    "permitVideo": "Allow camera",
+    "forbidVideoTileMenuLabel": "Disable camera",
+    "permitVideoTileMenuLabel": "Allow camera"
   },
   "dialpad": {
     "placeholderText": "הזן מספר טלפון",

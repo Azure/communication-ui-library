@@ -5,9 +5,12 @@
     "removeButtonLabel": "إزالة",
     "sharingIconLabel": "جارٍ المشاركة",
     "mutedIconLabel": "تم كتم الصوت",
+    "handRaisedIconLabel": "يد مرفوعة - الموضع {position}",
     "displayNamePlaceholder": "مشارك غير مسمى",
     "participantStateRinging": "يتم الآن الاتصال...",
     "participantStateHold": "قيد الانتظار",
+    "participantItemAriaLabel": "{displayName}، {handRaisedState}، {mutedState}، {sharingState}، {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}، {handRaisedState}، {mutedState}، {sharingState}، {connectionState}، المزيد من الخيارات",
     "attendeeRole": "الحضور"
   },
   "ParticipantList": {
@@ -73,6 +76,9 @@
     "rttConfirmButtonLabel": "تشغيل",
     "rttCancelButtonLabel": "إلغاء الأمر",
     "rttCloseModalButtonAriaLabel": "إغلاق مربع حوار عرض الكتابة في الوقت الحقيقي المشروط"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Starting captions..."
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -155,6 +161,7 @@
   },
   "participantsButton": {
     "label": "الأشخاص",
+    "ariaLabel": "People",
     "tooltipContent": "إظهار المشاركين",
     "menuHeader": "في هذه المكالمة",
     "participantsListButtonLabel": "{numParticipants} من الأشخاص",
@@ -189,6 +196,100 @@
   },
   "rtt": {
     "isTypingText": "يكتب في عرض الكتابة في الوقت الحقيقي"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Captions Settings",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Spoken language",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Captions language",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "اللغة التي يتحدث بها كل شخص في هذه المكالمة.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "ستظهر التسميات التوضيحية بهذه اللغة.",
+    "captionsSettingsConfirmButtonLabel": "Confirm",
+    "captionsSettingsCancelButtonLabel": "Cancel",
+    "captionsSettingsModalAriaLabel": "Captions Setting Modal",
+    "captionsSettingsCloseModalButtonAriaLabel": "Close Captions Setting"
+  },
+  "spokenLanguages": {
+    "ar-ae": "العربية - الإمارات العربية المتحدة",
+    "ar-sa": "Arabic - Saudi Arabia",
+    "da-dk": "Danish",
+    "de-de": "German - Germany",
+    "en-au": "English - Australia",
+    "en-ca": "English - Canada",
+    "en-gb": "English - United Kingdom",
+    "en-in": "English - India",
+    "en-nz": "English - New Zealand",
+    "en-us": "English - United States",
+    "es-es": "الإسبانية - إسبانيا (فرز حديث)",
+    "es-mx": "Spanish - Mexico",
+    "fi-fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr-fr": "French - France",
+    "hi-in": "Hindi",
+    "it-it": "Italian - Italy",
+    "ja-jp": "Japanese",
+    "ko-kr": "Korean",
+    "nb-no": "Norwegian (Bokmål)",
+    "nl-be": "Dutch - Belgium",
+    "nl-nl": "Dutch - Netherlands",
+    "pl-pl": "Polish",
+    "pt-br": "Portuguese - Brazil",
+    "ru-ru": "Russian",
+    "sv-se": "Swedish",
+    "zh-cn": "الصينية - جمهورية الصين الشعبية",
+    "zh-hk": "الصينية - منطقة هونغ كونغ الإدارية الخاصة",
+    "cs-cz": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr-tr": "Turkish",
+    "vi-vn": "Vietnamese",
+    "th-th": "Thai",
+    "he-il": "Hebrew",
+    "cy-gb": "Welsh",
+    "uk-ua": "Ukrainian",
+    "el-gr": "Greek",
+    "hu-hu": "Hungarian",
+    "ro-ro": "Romanian",
+    "sk-sk": "Slovak",
+    "zh-tw": "Chinese - Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabic",
+    "da": "Danish",
+    "de": "German",
+    "en": "English",
+    "es": "Spanish",
+    "fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr": "French - France",
+    "hi": "Hindi",
+    "it": "Italian",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "nb": "Norwegian (Bokmål)",
+    "nl": "Dutch",
+    "pl": "Polish",
+    "pt": "Portuguese - Brazil",
+    "ru": "Russian",
+    "sv": "Swedish",
+    "zh-Hans": "Chinese (Simplified)",
+    "zh-Hant": "Chinese (Traditional)",
+    "cs": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr": "Turkish",
+    "vi": "Vietnamese",
+    "th": "Thai",
+    "he": "Hebrew",
+    "cy": "Welsh",
+    "uk": "Ukrainian",
+    "el": "Greek",
+    "hu": "Hungarian",
+    "ro": "Romanian",
+    "sk": "Slovak"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Turn on captions",
+    "offLabel": "Turn off captions",
+    "tooltipOnContent": "Turn off captions",
+    "tooltipOffContent": "Turn on captions"
   },
   "messageThread": {
     "yesterday": "أمس",
@@ -494,6 +595,26 @@
       "title": "أوشكت صلاحية الحد الزمني للغرفة على الانتهاء.",
       "message": "سيتم إغلاق هذه الغرفة في غضون 30 ثانية.",
       "dismissButtonAriaLabel": "‏إغلاق"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "تم تمكين الكاميرا لديك",
+      "message": "قم بتشغيلها إذا كنت ترغب في مشاركة الفيديو.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "تم تعطيل الكاميرا",
+      "message": "لم يعد بإمكانك مشاركة الفيديو.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "تم تمكين الميكروفون لديك",
+      "message": "قم بإلغاء كتم الصوت إذا أردت التحدث.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "تم تعطيل الميكروفون",
+      "message": "لم يعد بإمكانك إلغاء كتم الصوت.",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {
@@ -522,7 +643,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "الخروج من وضع تسليط الضوء",
     "attendeeRole": "الحضور",
     "muteParticipantMenuItemLabel": "كتم الصوت",
-    "waitingScreenText": "في انتظار انضمام الآخرين"
+    "waitingScreenText": "في انتظار انضمام الآخرين",
+    "forbidAudio": "Disable mic",
+    "permitAudio": "Allow mic",
+    "forbidAudioTileMenuLabel": "Disable mic",
+    "permitAudioTileMenuLabel": "Allow mic",
+    "forbidVideo": "Disable camera",
+    "permitVideo": "Allow camera",
+    "forbidVideoTileMenuLabel": "Disable camera",
+    "permitVideoTileMenuLabel": "Allow camera"
   },
   "dialpad": {
     "placeholderText": "أدخل رقم الهاتف",

@@ -5,9 +5,12 @@
     "removeButtonLabel": "Quitar",
     "sharingIconLabel": "Compartiendo",
     "mutedIconLabel": "Silenciado",
+    "handRaisedIconLabel": "Mano levantada: posición {position}",
     "displayNamePlaceholder": "Participante sin nombre",
     "participantStateRinging": "Llamando...",
     "participantStateHold": "En espera",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, más opciones",
     "attendeeRole": "Asistente"
   },
   "ParticipantList": {
@@ -73,6 +76,9 @@
     "rttConfirmButtonLabel": "Activar",
     "rttCancelButtonLabel": "Cancelar",
     "rttCloseModalButtonAriaLabel": "Cerrar modal RTT"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Starting captions..."
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugerencias"
@@ -155,6 +161,7 @@
   },
   "participantsButton": {
     "label": "Contactos",
+    "ariaLabel": "People",
     "tooltipContent": "Mostrar participantes",
     "menuHeader": "En esta llamada",
     "participantsListButtonLabel": "{numParticipants} personas",
@@ -189,6 +196,100 @@
   },
   "rtt": {
     "isTypingText": "Escritura en tiempo real"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Captions Settings",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Spoken language",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Captions language",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Language that everyone on this call is speaking.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Captions will appear in this langugage.",
+    "captionsSettingsConfirmButtonLabel": "Confirm",
+    "captionsSettingsCancelButtonLabel": "Cancel",
+    "captionsSettingsModalAriaLabel": "Captions Setting Modal",
+    "captionsSettingsCloseModalButtonAriaLabel": "Close Captions Setting"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabic - U.A.E.",
+    "ar-sa": "Arabic - Saudi Arabia",
+    "da-dk": "Danish",
+    "de-de": "German - Germany",
+    "en-au": "English - Australia",
+    "en-ca": "English - Canada",
+    "en-gb": "English - United Kingdom",
+    "en-in": "English - India",
+    "en-nz": "English - New Zealand",
+    "en-us": "English - United States",
+    "es-es": "Spanish - Spain (Modern Sort)",
+    "es-mx": "Spanish - Mexico",
+    "fi-fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr-fr": "French - France",
+    "hi-in": "Hindi",
+    "it-it": "Italian - Italy",
+    "ja-jp": "Japanese",
+    "ko-kr": "Korean",
+    "nb-no": "Norwegian (Bokmål)",
+    "nl-be": "Dutch - Belgium",
+    "nl-nl": "Dutch - Netherlands",
+    "pl-pl": "Polish",
+    "pt-br": "Portuguese - Brazil",
+    "ru-ru": "Russian",
+    "sv-se": "Swedish",
+    "zh-cn": "Chinese - People's Republic of China",
+    "zh-hk": "Chinese - Hong Kong SAR",
+    "cs-cz": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr-tr": "Turkish",
+    "vi-vn": "Vietnamese",
+    "th-th": "Thai",
+    "he-il": "Hebrew",
+    "cy-gb": "Welsh",
+    "uk-ua": "Ukrainian",
+    "el-gr": "Greek",
+    "hu-hu": "Hungarian",
+    "ro-ro": "Romanian",
+    "sk-sk": "Slovak",
+    "zh-tw": "Chinese - Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabic",
+    "da": "Danish",
+    "de": "German",
+    "en": "English",
+    "es": "Spanish",
+    "fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr": "French - France",
+    "hi": "Hindi",
+    "it": "Italian",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "nb": "Norwegian (Bokmål)",
+    "nl": "Dutch",
+    "pl": "Polish",
+    "pt": "Portuguese - Brazil",
+    "ru": "Russian",
+    "sv": "Swedish",
+    "zh-Hans": "Chinese (Simplified)",
+    "zh-Hant": "Chinese (Traditional)",
+    "cs": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr": "Turkish",
+    "vi": "Vietnamese",
+    "th": "Thai",
+    "he": "Hebrew",
+    "cy": "Welsh",
+    "uk": "Ukrainian",
+    "el": "Greek",
+    "hu": "Hungarian",
+    "ro": "Romanian",
+    "sk": "Slovak"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Turn on captions",
+    "offLabel": "Turn off captions",
+    "tooltipOnContent": "Turn off captions",
+    "tooltipOffContent": "Turn on captions"
   },
   "messageThread": {
     "yesterday": "Ayer",
@@ -494,6 +595,26 @@
       "title": "El límite de tiempo de sala está por expirar.",
       "message": "Esta sala se cerrará en 30 segundos",
       "dismissButtonAriaLabel": "Cerrar"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Your camera has been enabled",
+      "message": "Turn it on if you'd like to share video.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Your camera has been disabled",
+      "message": "You can no longer share video.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Your mic has been enabled",
+      "message": "Unmute if you'd like to speak.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Your mic has been disabled",
+      "message": "You can no longer unmute.",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {
@@ -522,7 +643,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Salir de primer plano",
     "attendeeRole": "Asistente",
     "muteParticipantMenuItemLabel": "Silenciar",
-    "waitingScreenText": "Esperando a que se unan otros usuarios"
+    "waitingScreenText": "Esperando a que se unan otros usuarios",
+    "forbidAudio": "Disable mic",
+    "permitAudio": "Allow mic",
+    "forbidAudioTileMenuLabel": "Disable mic",
+    "permitAudioTileMenuLabel": "Allow mic",
+    "forbidVideo": "Disable camera",
+    "permitVideo": "Allow camera",
+    "forbidVideoTileMenuLabel": "Disable camera",
+    "permitVideoTileMenuLabel": "Allow camera"
   },
   "dialpad": {
     "placeholderText": "Escribir un número de teléfono",

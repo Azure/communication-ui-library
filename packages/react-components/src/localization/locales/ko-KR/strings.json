@@ -5,9 +5,12 @@
     "removeButtonLabel": "제거",
     "sharingIconLabel": "공유 중",
     "mutedIconLabel": "음소거됨",
+    "handRaisedIconLabel": "손들기 - 위치 {position}",
     "displayNamePlaceholder": "명명되지 않은 참가자",
     "participantStateRinging": "전화 거는 중...",
     "participantStateHold": "대기 중",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, 기타 옵션",
     "attendeeRole": "참석자"
   },
   "ParticipantList": {
@@ -73,6 +76,9 @@
     "rttConfirmButtonLabel": "활성화",
     "rttCancelButtonLabel": "취소",
     "rttCloseModalButtonAriaLabel": "실시간 입력 모달 닫기"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Starting captions..."
   },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
@@ -155,6 +161,7 @@
   },
   "participantsButton": {
     "label": "사용자",
+    "ariaLabel": "People",
     "tooltipContent": "참가자 표시",
     "menuHeader": "이 통화에서",
     "participantsListButtonLabel": "{numParticipants}명",
@@ -189,6 +196,100 @@
   },
   "rtt": {
     "isTypingText": "실시간 입력 입력 중"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Captions Settings",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Spoken language",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Captions language",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "이 통화의 모든 사람이 말하는 언어입니다.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "캡션이 이 언어로 표시됩니다.",
+    "captionsSettingsConfirmButtonLabel": "Confirm",
+    "captionsSettingsCancelButtonLabel": "Cancel",
+    "captionsSettingsModalAriaLabel": "Captions Setting Modal",
+    "captionsSettingsCloseModalButtonAriaLabel": "Close Captions Setting"
+  },
+  "spokenLanguages": {
+    "ar-ae": "아랍어 - 아랍에미리트",
+    "ar-sa": "Arabic - Saudi Arabia",
+    "da-dk": "Danish",
+    "de-de": "German - Germany",
+    "en-au": "English - Australia",
+    "en-ca": "English - Canada",
+    "en-gb": "English - United Kingdom",
+    "en-in": "English - India",
+    "en-nz": "English - New Zealand",
+    "en-us": "English - United States",
+    "es-es": "스페인어 - 스페인(현대 정렬)",
+    "es-mx": "Spanish - Mexico",
+    "fi-fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr-fr": "French - France",
+    "hi-in": "Hindi",
+    "it-it": "Italian - Italy",
+    "ja-jp": "Japanese",
+    "ko-kr": "Korean",
+    "nb-no": "Norwegian (Bokmål)",
+    "nl-be": "Dutch - Belgium",
+    "nl-nl": "Dutch - Netherlands",
+    "pl-pl": "Polish",
+    "pt-br": "Portuguese - Brazil",
+    "ru-ru": "Russian",
+    "sv-se": "Swedish",
+    "zh-cn": "중국어 - 중국",
+    "zh-hk": "중국어 - 홍콩 특별 행정구",
+    "cs-cz": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr-tr": "Turkish",
+    "vi-vn": "Vietnamese",
+    "th-th": "Thai",
+    "he-il": "Hebrew",
+    "cy-gb": "Welsh",
+    "uk-ua": "Ukrainian",
+    "el-gr": "Greek",
+    "hu-hu": "Hungarian",
+    "ro-ro": "Romanian",
+    "sk-sk": "Slovak",
+    "zh-tw": "Chinese - Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabic",
+    "da": "Danish",
+    "de": "German",
+    "en": "English",
+    "es": "Spanish",
+    "fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr": "French - France",
+    "hi": "Hindi",
+    "it": "Italian",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "nb": "Norwegian (Bokmål)",
+    "nl": "Dutch",
+    "pl": "Polish",
+    "pt": "Portuguese - Brazil",
+    "ru": "Russian",
+    "sv": "Swedish",
+    "zh-Hans": "Chinese (Simplified)",
+    "zh-Hant": "Chinese (Traditional)",
+    "cs": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr": "Turkish",
+    "vi": "Vietnamese",
+    "th": "Thai",
+    "he": "Hebrew",
+    "cy": "Welsh",
+    "uk": "Ukrainian",
+    "el": "Greek",
+    "hu": "Hungarian",
+    "ro": "Romanian",
+    "sk": "Slovak"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Turn on captions",
+    "offLabel": "Turn off captions",
+    "tooltipOnContent": "Turn off captions",
+    "tooltipOffContent": "Turn on captions"
   },
   "messageThread": {
     "yesterday": "어제",
@@ -494,6 +595,26 @@
       "title": "소회의실 시간 제한이 곧 만료됩니다.",
       "message": "이 소회의실은 30초 후에 닫힙니다.",
       "dismissButtonAriaLabel": "닫기"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "카메라가 사용하도록 설정되었습니다",
+      "message": "비디오를 공유하고자 하는 경우 이 기능을 켜세요.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "카메라를 사용하지 않습니다",
+      "message": "더 이상 비디오를 공유할 수 없습니다.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "마이크를 사용하도록 설정했습니다",
+      "message": "말하기를 원하는 경우 음소거를 해제하세요.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "마이크를 사용할 수 없습니다.",
+      "message": "더 이상 음소거 해제할 수 없음",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {
@@ -522,7 +643,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "스포트라이트 종료",
     "attendeeRole": "참석자",
     "muteParticipantMenuItemLabel": "음소거",
-    "waitingScreenText": "다른 사용자의 참여를 기다리는 중"
+    "waitingScreenText": "다른 사용자의 참여를 기다리는 중",
+    "forbidAudio": "Disable mic",
+    "permitAudio": "Allow mic",
+    "forbidAudioTileMenuLabel": "Disable mic",
+    "permitAudioTileMenuLabel": "Allow mic",
+    "forbidVideo": "Disable camera",
+    "permitVideo": "Allow camera",
+    "forbidVideoTileMenuLabel": "Disable camera",
+    "permitVideoTileMenuLabel": "Allow camera"
   },
   "dialpad": {
     "placeholderText": "전화 번호를 입력하세요.",
