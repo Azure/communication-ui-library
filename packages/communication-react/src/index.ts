@@ -90,7 +90,8 @@ export type {
   ParticipantsButtonSelector,
   CreateDefaultCallingHandlers,
   CaptionSettingsSelector,
-  CaptionsBannerSelector
+  CaptionsBannerSelector,
+  StartCaptionsButtonSelector
 } from '../../calling-component-bindings/src';
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
@@ -475,3 +476,8 @@ export type {
   CaptionsBannerStrings
 } from '../../react-components/src/components/CaptionsBanner';
 export { CaptionsBanner } from '../../react-components/src/components/CaptionsBanner';
+export { StartCaptionsButton } from '../../react-components/src/components/StartCaptionsButton';
+export type {
+  StartCaptionsButtonProps,
+  StartCaptionsButtonStrings
+} from '../../react-components/src/components/StartCaptionsButton';

@@ -17,7 +17,8 @@ import {
   TypingIndicatorStrings,
   VideoGalleryStrings,
   CaptionsSettingsModalStrings,
-  CaptionsBannerStrings
+  CaptionsBannerStrings,
+  StartCaptionsButtonStrings
 } from '../components';
 import { NotificationStackStrings } from '../components';
 import { RaiseHandButtonStrings } from '../components';
@@ -209,6 +210,8 @@ export interface ComponentStrings {
   captionLanguages: CaptionLanguageStrings;
   /** Strings for CaptionsBanner */
   captionsBanner: CaptionsBannerStrings;
+  /** Strings for Start Captions Button */
+  startCaptionsButton: StartCaptionsButtonStrings;
 }
 
 /**
