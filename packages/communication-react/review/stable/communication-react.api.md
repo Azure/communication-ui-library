@@ -570,7 +570,7 @@ export type CallCompositeOptions = {
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     videoTilesOptions?: VideoTilesOptions;
-    disableAutoShowDtmfDialer?: boolean;
+    disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
@@ -2835,6 +2835,12 @@ interface Disposable_2 {
     dispose(): void;
 }
 export { Disposable_2 as Disposable }
+
+// @public
+export interface DtmfDialPadOptions {
+    // (undocumented)
+    dialerBehavior?: 'autoShow' | 'alwaysShow' | 'alwaysHide';
+}
 
 // @public
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
