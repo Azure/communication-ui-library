@@ -29,17 +29,7 @@ export const CallingComponents = (): JSX.Element => {
 
   const [callEnded, setCallEnded] = useState(false);
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
-  const [callConnected, setCallConnected] = useState(false);
   const call = useCall();
-  useEffect(() => {
-    if (call) {
-      call.on('stateChanged', () => {
-        if (call.state === 'Connected') {
-          setCallConnected(true);
-        }
-      });
-    }
-  }, [call]);
   const localVideoViewOptions = {
     scalingMode: 'Crop',
     isMirrored: true
@@ -87,7 +77,7 @@ export const CallingComponents = (): JSX.Element => {
               {startCaptionsButtonProps && (
                 <StartCaptionsButton
                   {...startCaptionsButtonProps}
-                  disabled={!callConnected}
+                  disabled={!(call?.state === 'Connected')}
                   onStartCaptions={async () => {
                     setShowCaptionsSettingsModal(true);
                     startCaptionsButtonProps.onStartCaptions();
