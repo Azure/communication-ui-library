@@ -19,12 +19,12 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
     await expect(component).toHaveScreenshot('rich-text-input-box-component-without-format-toolbar.png');
     const formatButton = component.getByTestId(formatButtonId);
 
-    await formatButton.hover();
+    await component.getByTestId('rooster-rich-text-editor').hover();
     await expect(component).toHaveScreenshot('rich-text-input-box-component-hover.png');
 
     await formatButton.click();
-    //move mouse to the format button so the screenshots are consistent
-    await formatButton.hover();
+    //move mouse to the editor so the screenshots are consistent
+    await component.getByTestId('rooster-rich-text-editor').hover();
     await expect(component).toHaveScreenshot('rich-text-input-box-component-with-format-toolbar.png');
   });
 
