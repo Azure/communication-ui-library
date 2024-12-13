@@ -12,6 +12,7 @@ import {
   isMicrosoftTeamsAppIdentifier,
   isPhoneNumberIdentifier
 } from '@azure/communication-common';
+import { DtmfDialPadOptions } from '../CallComposite';
 
 type ParticipantChangedAnnouncmentStrings = {
   participantJoinedNoticeString: string;
@@ -174,22 +175,41 @@ export const createAnnouncementString = (
  */
 export const showDtmfDialer = (
   callees?: CommunicationIdentifier[],
-  remoteParticipants?: RemoteParticipantState[]
+  remoteParticipants?: RemoteParticipantState[],
+  dialerOptions?: boolean | DtmfDialPadOptions
 ): boolean => {
-  let showDtmfDialer = false;
-  callees?.forEach((callee) => {
-    if (isMicrosoftTeamsAppIdentifier(callee) || isPhoneNumberIdentifier(callee)) {
-      showDtmfDialer = true;
+  let showDtmfDialerAuto = false;
+  if (typeof dialerOptions === 'object' && 'dialerBehavior' in dialerOptions) {
+    const hideDtmfDialerAlways = dialerOptions.dialerBehavior && dialerOptions.dialerBehavior === 'alwaysHide';
+    const showDtmfDialerAlways = dialerOptions.dialerBehavior === 'alwaysShow';
+    showDtmfDialerAuto = dialerOptions.dialerBehavior === 'autoShow' ? true : false;
+    if (showDtmfDialerAlways) {
+      return true;
     }
-  });
-  if (remoteParticipants) {
-    remoteParticipants.forEach((participant) => {
-      if (!('phoneNumber' in participant.identifier || 'teamsAppId' in participant.identifier)) {
-        showDtmfDialer = false;
+    if (hideDtmfDialerAlways) {
+      return false;
+    }
+  }
+  let showDtmfDialer = false;
+
+  /**
+   * We also want to check to see if the option is undefined. If this is the case we want this function
+   * to fallback on the original logic so that it will also render the callControls to show and hide the dialpad
+   * for the user.
+   */
+  if (showDtmfDialerAuto || dialerOptions === undefined || dialerOptions === false) {
+    callees?.forEach((callee) => {
+      if (isMicrosoftTeamsAppIdentifier(callee) || isPhoneNumberIdentifier(callee)) {
+        showDtmfDialer = true;
       }
     });
+    if (remoteParticipants) {
+      remoteParticipants.forEach((participant) => {
+        if (!('phoneNumber' in participant.identifier || 'teamsAppId' in participant.identifier)) {
+          showDtmfDialer = false;
+        }
+      });
+    }
   }
-  /* @conditional-compile-remove(dtmf-dialer-on-by-default) */
-  showDtmfDialer = true;
   return showDtmfDialer;
 };
