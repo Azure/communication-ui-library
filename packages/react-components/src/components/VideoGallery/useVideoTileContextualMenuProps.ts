@@ -29,14 +29,6 @@ export const useVideoTileContextualMenuProps = (props: {
     spotlightLimitReachedMenuTitle?: string;
     muteParticipantMenuItemLabel?: string;
     /* @conditional-compile-remove(media-access) */
-    forbidAudio?: string;
-    /* @conditional-compile-remove(media-access) */
-    permitAudio?: string;
-    /* @conditional-compile-remove(media-access) */
-    forbidVideo?: string;
-    /* @conditional-compile-remove(media-access) */
-    permitVideo?: string;
-    /* @conditional-compile-remove(media-access) */
     forbidAudioTileMenuLabel?: string;
     /* @conditional-compile-remove(media-access) */
     permitAudioTileMenuLabel?: string;
