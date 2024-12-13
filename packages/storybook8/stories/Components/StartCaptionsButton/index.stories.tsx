@@ -8,7 +8,7 @@ import { hiddenControl } from '../../controlsUtils';
 export { StartCaptionsButton } from './StartCaptionsButton.story';
 
 const meta: Meta = {
-  title: 'Components/Start Captions Button',
+  title: 'Components/StartCaptionsButton',
   component: StartCaptionsButton,
   argTypes: {
     onStartCaptions: hiddenControl,
