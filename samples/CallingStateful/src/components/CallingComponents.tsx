@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { CaptionsBanner, CaptionsSettingsModal, ControlBarButton, useCall } from '@azure/communication-react';
 import {
   usePropsFor,
   VideoGallery,
@@ -9,10 +10,12 @@ import {
   MicrophoneButton,
   ScreenShareButton,
   EndCallButton,
-  VideoStreamOptions
+  VideoStreamOptions,
+  StartCaptionsButton
 } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import React, { useCallback, useState } from 'react';
+import { LocalLanguage20Regular } from '@fluentui/react-icons';
+import React, { useCallback, useEffect, useState } from 'react';
 
 export const CallingComponents = (): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -20,9 +23,23 @@ export const CallingComponents = (): JSX.Element => {
   const microphoneProps = usePropsFor(MicrophoneButton);
   const screenShareProps = usePropsFor(ScreenShareButton);
   const endCallProps = usePropsFor(EndCallButton);
+  const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
+  const captionsSettingsModalProps = usePropsFor(CaptionsSettingsModal);
+  const captionsBannerProps = usePropsFor(CaptionsBanner);
 
   const [callEnded, setCallEnded] = useState(false);
-
+  const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
+  const [callConnected, setCallConnected] = useState(false);
+  const call = useCall();
+  useEffect(() => {
+    if (call) {
+      call.on('stateChanged', () => {
+        if (call.state === 'Connected') {
+          setCallConnected(true);
+        }
+      });
+    }
+  }, [call]);
   const localVideoViewOptions = {
     scalingMode: 'Crop',
     isMirrored: true
@@ -52,11 +69,41 @@ export const CallingComponents = (): JSX.Element => {
             localVideoViewOptions={localVideoViewOptions}
             remoteVideoViewOptions={remoteVideoViewOptions}
           />
+          {captionsSettingsModalProps?.isCaptionsFeatureActive && (
+            <CaptionsSettingsModal
+              {...captionsSettingsModalProps}
+              showModal={showCaptionsSettingsModal}
+              onDismissCaptionsSettings={() => {
+                setShowCaptionsSettingsModal(false);
+              }}
+            />
+          )}
+          {captionsBannerProps?.isCaptionsOn && <CaptionsBanner {...captionsBannerProps} />}
           <Stack>
             <ControlBar layout={'floatingBottom'}>
               {cameraProps && <CameraButton {...cameraProps} />}
               {microphoneProps && <MicrophoneButton {...microphoneProps} />}
               {screenShareProps && <ScreenShareButton {...screenShareProps} />}
+              {startCaptionsButtonProps && (
+                <StartCaptionsButton
+                  {...startCaptionsButtonProps}
+                  disabled={!callConnected}
+                  onStartCaptions={async () => {
+                    setShowCaptionsSettingsModal(true);
+                    startCaptionsButtonProps.onStartCaptions();
+                  }}
+                />
+              )}
+              {startCaptionsButtonProps && (
+                <ControlBarButton
+                  onRenderOnIcon={() => <LocalLanguage20Regular />}
+                  onRenderOffIcon={() => <LocalLanguage20Regular />}
+                  disabled={!captionsSettingsModalProps.isCaptionsFeatureActive}
+                  onClick={() => {
+                    setShowCaptionsSettingsModal(true);
+                  }}
+                />
+              )}
               {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
             </ControlBar>
           </Stack>
