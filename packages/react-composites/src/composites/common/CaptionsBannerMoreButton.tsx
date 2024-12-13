@@ -43,7 +43,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
     await startCaptionsButtonProps.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
-  }, [startCaptionsButtonProps, startCaptionsButtonProps.currentSpokenLanguage]);
+  }, [startCaptionsButtonProps]);
 
   const stopCaptions = useCallback(async () => {
     await startCaptionsButtonProps.onStopCaptions();

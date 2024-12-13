@@ -54,7 +54,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     await startCaptionsButtonProps.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
-  }, [startCaptionsButtonProps, startCaptionsButtonProps.currentSpokenLanguage]);
+  }, [startCaptionsButtonProps]);
 
   /* @conditional-compile-remove(overflow-top-composite) */
   const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
