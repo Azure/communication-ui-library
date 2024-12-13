@@ -41,6 +41,8 @@ import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
+import { DtmfDialPadOptions } from '../../CallComposite';
+import { getRemoteParticipantsConnectedSelector } from '../../CallComposite/selectors/mediaGallerySelector';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -134,6 +136,10 @@ export interface MoreDrawerDevicesMenuProps {
    * Whether the dialpad is present in the call
    */
   dtmfDialerPresent?: boolean;
+  /**
+   * options for the controls of the DTMF dialer
+   */
+  dtmfDialerOptions?: boolean | DtmfDialPadOptions;
 }
 
 /** @private */
@@ -174,7 +180,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const holdButtonProps = usePropsFor(HoldButton);
 
   const callees = useSelector(getTargetCallees);
-  const allowDtmfDialer = showDtmfDialer(callees);
+  const participants = useSelector(getRemoteParticipantsConnectedSelector);
+  const allowDtmfDialer = showDtmfDialer(callees, participants, props.dtmfDialerOptions);
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
