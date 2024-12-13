@@ -111,7 +111,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
 
   const renderHeaderBar = (): JSX.Element => {
     return (
-      <Stack className={mergeStyles(headerStyle)}>
+      <Stack className={mergeStyles(headerStyle)} role="heading" aria-label={title || 'Image'} aria-level={2}>
         <Stack className={mergeStyles(titleBarContainerStyle)}>
           {titleIcon}
           <Stack.Item className={mergeStyles(titleStyle(overlayTheme))}>{title}</Stack.Item>
