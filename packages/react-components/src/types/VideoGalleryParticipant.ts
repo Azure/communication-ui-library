@@ -140,5 +140,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * */
   reaction?: Reaction;
   /* @conditional-compile-remove(media-access) */
+  /** Media audio video access states **/
   mediaAccess?: MediaAccess;
 }
