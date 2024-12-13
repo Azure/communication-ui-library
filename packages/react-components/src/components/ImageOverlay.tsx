@@ -27,7 +27,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(image-overlay-theme) */
 import { imageOverlayTheme } from '../theming';
 import { darkTheme } from '../theming';
-import Announcer from './Announcer/Announcer';
+import { Announcer } from './Announcer';
 
 /**
  * Props for {@link ImageOverlay}.
@@ -183,7 +183,7 @@ export const ImageOverlay = (props: ImageOverlayProps): JSX.Element => {
       styles={{ main: focusTrapZoneStyle, scrollableContent: scrollableContentStyle }}
       isDarkOverlay={true}
     >
-      <Announcer polite={{ id: `${title}`, message: localeStrings.overlayVisibleMessage ?? altText }} />
+      <Announcer ariaLive={'polite'} announcementString={localeStrings.overlayVisibleMessage} />
       <FluentThemeProvider fluentTheme={overlayTheme} rootStyle={themeProviderRootStyle}>
         {renderHeaderBar()}
         {renderBodyWithLightDismiss()}
