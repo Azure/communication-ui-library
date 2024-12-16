@@ -1,6 +1,6 @@
 {
   "name": "@internal/acs-ui-javascript-loaders",
-  "version": "1.22.0",
+  "version": "1.23.0-beta.0",
   "description": "Component bindings specific to components that integrate with the Azure Communication Services Calling JavaScript SDK",
   "module": "dist/dist-esm/index.js",
   "main": "dist/dist-cjs/index.js",
@@ -32,8 +32,8 @@
   "license": "ISC",
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
-    "@internal/acs-ui-common": "1.22.0",
-    "@internal/react-composites": "1.22.0",
+    "@internal/acs-ui-common": "1.23.0-beta.0",
+    "@internal/react-composites": "1.23.0-beta.0",
     "@fluentui/react": "^8.121.11",
     "@azure/logger": "^1.0.4"
   },
