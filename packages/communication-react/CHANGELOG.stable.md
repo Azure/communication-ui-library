@@ -10,7 +10,7 @@ Mon, 16 Dec 2024 19:44:14 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0...1.22.0)
 
 ### Features
-- We are launching the ability to use components to build your own captions experience. These components include Start Captions Button, Captions Settings Modal, and Captions Banner. ([PR #5499](https://github.com/azure/communication-ui-library/pull/5499) by 96077406+carocao-msft@users.noreply.github.com, [PR #5469](https://github.com/azure/communication-ui-library/pull/5469) by 96077406+carocao-msft@users.noreply.github.com, [PR #5460](https://github.com/azure/communication-ui-library/pull/5460) by 96077406+carocao-msft@users.noreply.github.com)
+- We are launching the ability to use components to build your own captions experience. These components are Start Captions Button, Captions Settings Modal, and Captions Banner. ([PR #5499](https://github.com/azure/communication-ui-library/pull/5499) by 96077406+carocao-msft@users.noreply.github.com, [PR #5469](https://github.com/azure/communication-ui-library/pull/5469) by 96077406+carocao-msft@users.noreply.github.com, [PR #5460](https://github.com/azure/communication-ui-library/pull/5460) by 96077406+carocao-msft@users.noreply.github.com)
 
 ### Improvements
 - Update nanoid package ([PR #5490](https://github.com/azure/communication-ui-library/pull/5490) by 98852890+vhuseinova-msft@users.noreply.github.com)
