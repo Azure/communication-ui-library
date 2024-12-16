@@ -7,7 +7,7 @@
 ## [1.22.0](https://github.com/azure/communication-ui-library/tree/1.22.0)
 
 Mon, 16 Dec 2024 19:44:14 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.22.0-beta.1...1.22.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0...1.22.0)
 
 ### Improvements
 - Update nanoid package ([PR #5490](https://github.com/azure/communication-ui-library/pull/5490) by 98852890+vhuseinova-msft@users.noreply.github.com)
