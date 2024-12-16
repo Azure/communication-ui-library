@@ -5,9 +5,12 @@
     "removeButtonLabel": "Odebrat",
     "sharingIconLabel": "Sdílení",
     "mutedIconLabel": "Ztlumeno",
+    "handRaisedIconLabel": "Zvednutá ruka – pozice {position}",
     "displayNamePlaceholder": "Nepojmenovaný účastník",
     "participantStateRinging": "Volání…",
     "participantStateHold": "Pozastavený hovor",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Další možnosti",
     "attendeeRole": "Účastník"
   },
   "ParticipantList": {
@@ -74,12 +77,16 @@
     "rttCancelButtonLabel": "Zrušit",
     "rttCloseModalButtonAriaLabel": "Zavřít modální okno RTT"
   },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Spouští se titulky..."
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
   },
   "imageOverlay": {
     "downloadButtonLabel": "Stáhnout",
-    "dismissButtonAriaLabel": "Zavřít"
+    "dismissButtonAriaLabel": "Zavřít",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Zpráva byla odeslána",
@@ -155,6 +162,7 @@
   },
   "participantsButton": {
     "label": "Lidé",
+    "ariaLabel": "Lidé",
     "tooltipContent": "Zobrazit účastníky",
     "menuHeader": "V tomto hovoru",
     "participantsListButtonLabel": "Počet lidí: {numParticipants}",
@@ -178,7 +186,7 @@
   },
   "reactionButton": {
     "label": "Reagovat",
-    "ariaLabel": "Tlačítko Reagovat, odeslat reakci",
+    "ariaLabel": "Reagovat",
     "tooltipDisabledContent": "Akce reakce je zakázaná",
     "tooltipContent": "Odeslání reakce",
     "likeReactionTooltipContent": "To se mi líbí",
@@ -189,6 +197,100 @@
   },
   "rtt": {
     "isTypingText": "Psaní textu v reálném čase"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Nastavení titulků",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Mluvený jazyk",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Jazyk titulků",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Jazyk, kterým mluví všichni účastníci tohoto hovoru.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Titulky se zobrazí v tomto jazyce. ",
+    "captionsSettingsConfirmButtonLabel": "Potvrdit",
+    "captionsSettingsCancelButtonLabel": "Zrušit",
+    "captionsSettingsModalAriaLabel": "Modální nastavení titulků",
+    "captionsSettingsCloseModalButtonAriaLabel": "Nastavení titulků"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabština - Spojené arabské emiráty",
+    "ar-sa": "Arabština - Saúdská Arábie",
+    "da-dk": "Dánština",
+    "de-de": "Němčina - Německo",
+    "en-au": "Angličtina - Austrálie",
+    "en-ca": "Angličtina - Kanada",
+    "en-gb": "Angličtina - Spojené království",
+    "en-in": "Angličtina - Indie",
+    "en-nz": "Angličtina - Nový Zéland",
+    "en-us": "Angličtina - Spojené státy americké",
+    "es-es": "Španělština - Španělsko (Modern Sort)",
+    "es-mx": "Španělština - Mexiko",
+    "fi-fi": "Finština",
+    "fr-ca": "Francouzština - Kanada",
+    "fr-fr": "Francouzština - Francie",
+    "hi-in": "Hindština",
+    "it-it": "Italština - Itálie",
+    "ja-jp": "Japonština",
+    "ko-kr": "Korejština",
+    "nb-no": "Norština (Bokmål)",
+    "nl-be": "Holandština – Belgie",
+    "nl-nl": "Holandština - Nizozemsko",
+    "pl-pl": "Polština",
+    "pt-br": "Portugalština – Brazílie",
+    "ru-ru": "Ruština",
+    "sv-se": "Švédština",
+    "zh-cn": "Čínština – Čínská lidová republika",
+    "zh-hk": "Čínština – Hong Kong SAR",
+    "cs-cz": "Čeština",
+    "pt-pt": "Portugalština – Portugalsko",
+    "tr-tr": "Turečtina",
+    "vi-vn": "Vietnamština",
+    "th-th": "Thajština",
+    "he-il": "Hebrejština",
+    "cy-gb": "Velština",
+    "uk-ua": "Ukrajinština",
+    "el-gr": "Řečtina",
+    "hu-hu": "Maďarština",
+    "ro-ro": "Rumunština",
+    "sk-sk": "Slovenština",
+    "zh-tw": "Čínština – Tchaj-wan"
+  },
+  "captionLanguages": {
+    "ar": "Arabština",
+    "da": "Dánština",
+    "de": "Němčina",
+    "en": "Angličtina",
+    "es": "Španělština",
+    "fi": "Finština",
+    "fr-ca": "Francouzština - Kanada",
+    "fr": "Francouzština - Francie",
+    "hi": "Hindština",
+    "it": "Italština",
+    "ja": "Japonština",
+    "ko": "Korejština",
+    "nb": "Norština (Bokmål)",
+    "nl": "Nizozemština",
+    "pl": "Polština",
+    "pt": "Portugalština – Brazílie",
+    "ru": "Ruština",
+    "sv": "Švédština",
+    "zh-Hans": "Čínština (zjednodušená)",
+    "zh-Hant": "Čínština (tradiční)",
+    "cs": "Čeština",
+    "pt-pt": "Portugalština – Portugalsko",
+    "tr": "Turečtina",
+    "vi": "Vietnamština",
+    "th": "Thajština",
+    "he": "Hebrejština",
+    "cy": "Velština",
+    "uk": "Ukrajinština",
+    "el": "Řečtina",
+    "hu": "Maďarština",
+    "ro": "Rumunština",
+    "sk": "Slovenština"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Zapnout titulky",
+    "offLabel": "Vypnout titulky",
+    "tooltipOnContent": "Vypnout titulky",
+    "tooltipOffContent": "Zapnout titulky"
   },
   "messageThread": {
     "yesterday": "Včera",
@@ -494,6 +596,26 @@
       "title": "Časový limit místnosti brzy vyprší.",
       "message": "Tato místnost se zavře během 30 sekund.",
       "dismissButtonAriaLabel": "Zavřít"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Vaše kamera je zapnutá",
+      "message": "Pokud byste chtěli sdílet video, zapněte tuto funkci.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Vaše kamera byla vypnuta",
+      "message": "Už nemůžete sdílet video.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Váš mikrofon je zapnutý.",
+      "message": "Zrušte ztlumení, pokud chcete mluvit.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Váš mikrofon je vypnutý.",
+      "message": "Už nemůžete zrušit ztlumení.",
+      "dismissButtonAriaLabel": "Zavřít"
     }
   },
   "videoGallery": {
@@ -522,7 +644,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Ukončit hlavní výběr",
     "attendeeRole": "Účastník",
     "muteParticipantMenuItemLabel": "Ztlumit",
-    "waitingScreenText": "Čeká se na připojení ostatních"
+    "waitingScreenText": "Čeká se na připojení ostatních",
+    "forbidAudio": "Vypnout mikrofon",
+    "permitAudio": "Povolit mikrofon",
+    "forbidAudioTileMenuLabel": "Vypnout mikrofon",
+    "permitAudioTileMenuLabel": "Povolit mikrofon",
+    "forbidVideo": "Zakázat kameru",
+    "permitVideo": "Povolit kameru",
+    "forbidVideoTileMenuLabel": "Zakázat kameru",
+    "permitVideoTileMenuLabel": "Povolit kameru"
   },
   "dialpad": {
     "placeholderText": "Zadejte telefonní číslo",
