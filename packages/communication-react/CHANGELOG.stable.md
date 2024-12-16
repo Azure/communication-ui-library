@@ -9,34 +9,27 @@
 Mon, 16 Dec 2024 19:44:14 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.22.0-beta.1...1.22.0)
 
-### Features
-- Merge branch 'main' into fuyan/hard_mute_part3_integrate_web_sdk ([PR #5437](https://github.com/azure/communication-ui-library/pull/5437) by fuyan@microsoft.com)
 ### Improvements
-- nanoid package update ([PR #5490](https://github.com/azure/communication-ui-library/pull/5490) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Automate dominant speaker, pinning, and spotlight tests ([PR #5173](https://github.com/azure/communication-ui-library/pull/5173) by miguelgamis@microsoft.com)
+- Update nanoid package ([PR #5490](https://github.com/azure/communication-ui-library/pull/5490) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Update `@azure/communication-calling-effects` to 1.1.2 ([PR #5407](https://github.com/azure/communication-ui-library/pull/5407) by 2684369+JamesBurnside@users.noreply.github.com)
-- Update @azure/communication-calling to 1.31.2-beta.2 ([PR #5440](https://github.com/azure/communication-ui-library/pull/5440) by 79475487+mgamis-msft@users.noreply.github.com)
-- Add hard mute localization ([PR #5485](https://github.com/azure/communication-ui-library/pull/5485) by fuyan@microsoft.com)
-- Build captions inside caling stateful sample ([PR #5502](https://github.com/azure/communication-ui-library/pull/5502) by 96077406+carocao-msft@users.noreply.github.com)
+
 ### Bug Fixes
 - Fix an issue where edited message could be saved without the content and attachments when rich text editor is enabled ([PR #5434](https://github.com/azure/communication-ui-library/pull/5434) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Fix screenshare tab outline color when presenting ([PR #5431](https://github.com/azure/communication-ui-library/pull/5431) by 2684369+JamesBurnside@users.noreply.github.com)
 - In CallCompsite, return focus to control bar when captions is closed from the captions settings button ([PR #5438](https://github.com/azure/communication-ui-library/pull/5438) by 2684369+JamesBurnside@users.noreply.github.com)
 - Update configuration page local preview to show 'Video is loading' while camera is switching on or switching source. Also disable camera button while swiching source. ([PR #5430](https://github.com/azure/communication-ui-library/pull/5430) by 2684369+JamesBurnside@users.noreply.github.com)
-- Revert changes to add undefined type so we are not introducing a breaking change to the beta release ([PR #5461](https://github.com/azure/communication-ui-library/pull/5461) by 96077406+carocao-msft@users.noreply.github.com)
 - Fix error bar icon size for low network quality and local video freeze ([PR #5282](https://github.com/azure/communication-ui-library/pull/5282) by 79475487+mgamis-msft@users.noreply.github.com)
 - Fix regression that caused minor inconsistent padding between connecting and call pages in CallComposite ([PR #5423](https://github.com/azure/communication-ui-library/pull/5423) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix an issue where text editors didn't trigger typing events when using input method editor ([PR #5486](https://github.com/azure/communication-ui-library/pull/5486) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Fix console error that requested teams conference details in unsupported calls ([PR #5444](https://github.com/azure/communication-ui-library/pull/5444) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix console error that requested Teams conference details in unsupported calls ([PR #5444](https://github.com/azure/communication-ui-library/pull/5444) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix A11y Properties of Participant List More Options to have aria-expanded, aria-controls and aria-label. Correctly apply focus when the CallComposite people pane is opened when no one else has joined the call. ([PR #5427](https://github.com/azure/communication-ui-library/pull/5427) by 2684369+JamesBurnside@users.noreply.github.com)
 - Update aria-live property of notifications in the notification stack. Update camera button aria-label to indicate loading status to match announcer. ([PR #5428](https://github.com/azure/communication-ui-library/pull/5428) by 2684369+JamesBurnside@users.noreply.github.com)
-- Fix bug so onfetchavatarpersonadata now allows returning undefined ([PR #5323](https://github.com/azure/communication-ui-library/pull/5323) by 96077406+carocao-msft@users.noreply.github.com)
-- add aria descriptions to reaction and raise buttons ([PR #5414](https://github.com/azure/communication-ui-library/pull/5414) by dmceachern@microsoft.com)
+- Add aria descriptions to reaction and raise buttons ([PR #5414](https://github.com/azure/communication-ui-library/pull/5414) by dmceachern@microsoft.com)
 - Fix an issue where system chat messages weren't announced ([PR #5463](https://github.com/azure/communication-ui-library/pull/5463) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Fix issue where AudioContext for composites is made too early ([PR #5476](https://github.com/azure/communication-ui-library/pull/5476) by dmceachern@microsoft.com)
 - Removed custom styles for scroll bar for ChatComposite and Captions components ([PR #5470](https://github.com/azure/communication-ui-library/pull/5470) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Update Control bar button aria-describedby ([PR #5493](https://github.com/azure/communication-ui-library/pull/5493) by dmceachern@microsoft.com)
-- Allow for contoso to hard set the dialer page, on, off, or follow our behaviors ([PR #5454](https://github.com/azure/communication-ui-library/pull/5454) by dmceachern@microsoft.com)
+- Allow for Contoso to hard set the dialer page, on, off, or follow our behaviors ([PR #5454](https://github.com/azure/communication-ui-library/pull/5454) by dmceachern@microsoft.com)
 - Fix string typo for captions dropdown info. Fix usePropsFor return type for RaiseHandButton. ([PR #5448](https://github.com/azure/communication-ui-library/pull/5448) by 79475487+mgamis-msft@users.noreply.github.com)
 
 
