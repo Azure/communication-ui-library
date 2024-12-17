@@ -45,8 +45,6 @@ export type {
   CallingHandlersOptions
 } from '../../calling-component-bindings/src';
 
-export type { CaptionsOptions } from '../../calling-component-bindings/src';
-
 export type {
   ChatClientProviderProps,
   ChatThreadClientProviderProps,
@@ -90,7 +88,10 @@ export type {
   ParticipantListSelector,
   MicrophoneButtonSelector,
   ParticipantsButtonSelector,
-  CreateDefaultCallingHandlers
+  CreateDefaultCallingHandlers,
+  CaptionSettingsSelector,
+  CaptionsBannerSelector,
+  StartCaptionsButtonSelector
 } from '../../calling-component-bindings/src';
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
@@ -466,9 +467,17 @@ export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-compone
 export { RealTimeText } from '../../react-components/src/components/RealTimeText';
 /* @conditional-compile-remove(media-access) */
 export type { MediaAccess } from '../../react-components/src';
+export type { CaptionsSettingsModalStrings, CaptionsSettingsModalProps } from '../../react-components/src';
+export { CaptionsSettingsModal } from '../../react-components/src';
+export type { SupportedCaptionLanguage, SupportedSpokenLanguage, CaptionsOptions } from '../../react-components/src';
 export type {
   CaptionsBannerProps,
   CaptionsInformation,
   CaptionsBannerStrings
 } from '../../react-components/src/components/CaptionsBanner';
 export { CaptionsBanner } from '../../react-components/src/components/CaptionsBanner';
+export { StartCaptionsButton } from '../../react-components/src/components/StartCaptionsButton';
+export type {
+  StartCaptionsButtonProps,
+  StartCaptionsButtonStrings
+} from '../../react-components/src/components/StartCaptionsButton';

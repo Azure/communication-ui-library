@@ -17,7 +17,8 @@ export enum PluginEventType {
   BeforeCutCopy = 'beforeCutCopy',
   BeforePaste = 'beforePaste',
   ZoomChanged = 'zoomChanged',
-  MouseUp = 'mouseUp'
+  MouseUp = 'mouseUp',
+  CompositionEnd = 'compositionEnd'
 }
 
 /**
