@@ -3483,6 +3483,7 @@ export interface ImageOverlayProps {
 export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
+    overlayVisibleMessage: string;
 }
 
 // @public
