@@ -10,9 +10,11 @@ We use a Microsoft internal translation service for string translations. Strings
 
 To pull strings back to the repo:
 
-- Run the internal Azure pipeline manually and select `Commit strings to GitHub`.
+- Run the [internal Azure pipeline](https://skype.visualstudio.com/SCC/_apps/hub/ms.vss-build-web.ci-designer-hub?pipelineId=11254&branch=main) manually and select `Commit strings to GitHub`.
+![image](https://github.com/user-attachments/assets/f72ef185-153c-4cbb-a329-dbaf29854ee2)
+![image](https://github.com/user-attachments/assets/62e96b46-513a-402a-98f7-1933ff840681)
   - This will create a branch called `td/new-strings-<datetime>` with the new strings.
-  - This pipeline can br run off any branch and the strings will be translated from that branch. We typically run it off `main` or a `release` branch.
+  - This pipeline can be run off any branch and the strings will be translated from that branch. We typically run it off `main` or a `release` branch.
 - Then create a PR to merge this branch into your desired branch.
 
 ## References

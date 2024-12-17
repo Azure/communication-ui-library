@@ -761,7 +761,7 @@ export type CallCompositeOptions = {
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     videoTilesOptions?: VideoTilesOptions;
-    disableAutoShowDtmfDialer?: boolean;
+    disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
     };
@@ -1832,6 +1832,12 @@ export interface CaptionsBannerProps {
 }
 
 // @public
+export type CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    captions: CaptionsInformation[];
+    isCaptionsOn: boolean;
+};
+
+// @public
 export interface CaptionsBannerStrings {
     captionsBannerSpinnerText?: string;
 }
@@ -1847,6 +1853,15 @@ export interface CaptionsCallFeatureState {
     supportedCaptionLanguages: string[];
     supportedSpokenLanguages: string[];
 }
+
+// @public
+export type CaptionSettingsSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    supportedCaptionLanguages: SupportedCaptionLanguage[];
+    currentCaptionLanguage: SupportedCaptionLanguage;
+    supportedSpokenLanguages: SupportedSpokenLanguage[];
+    currentSpokenLanguage: SupportedSpokenLanguage;
+    isCaptionsFeatureActive: boolean;
+};
 
 // @public (undocumented)
 export interface CaptionsInfo {
@@ -1876,6 +1891,40 @@ export type CaptionsOptions = {
 export type CaptionsReceivedListener = (event: {
     captionsInfo: CaptionsInfo;
 }) => void;
+
+// @public
+export const CaptionsSettingsModal: (props: CaptionsSettingsModalProps) => JSX.Element;
+
+// @public
+export interface CaptionsSettingsModalProps {
+    captionLanguageStrings?: CaptionLanguageStrings;
+    changeCaptionLanguage?: boolean;
+    currentCaptionLanguage?: SupportedCaptionLanguage;
+    currentSpokenLanguage: SupportedSpokenLanguage;
+    isCaptionsFeatureActive?: boolean;
+    onDismissCaptionsSettings?: () => void;
+    onSetCaptionLanguage?: (language: SupportedCaptionLanguage) => Promise<void>;
+    onSetSpokenLanguage: (language: SupportedSpokenLanguage) => Promise<void>;
+    onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
+    showModal?: boolean;
+    spokenLanguageStrings?: SpokenLanguageStrings;
+    strings?: CaptionsSettingsModalStrings;
+    supportedCaptionLanguages?: SupportedCaptionLanguage[];
+    supportedSpokenLanguages: SupportedSpokenLanguage[];
+}
+
+// @public
+export interface CaptionsSettingsModalStrings {
+    captionsSettingsCancelButtonLabel?: string;
+    captionsSettingsCaptionLanguageDropdownInfoText?: string;
+    captionsSettingsCaptionLanguageDropdownLabel?: string;
+    captionsSettingsCloseModalButtonAriaLabel?: string;
+    captionsSettingsConfirmButtonLabel?: string;
+    captionsSettingsModalAriaLabel?: string;
+    captionsSettingsModalTitle?: string;
+    captionsSettingsSpokenLanguageDropdownInfoText?: string;
+    captionsSettingsSpokenLanguageDropdownLabel?: string;
+}
 
 // @public
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers;
@@ -2460,7 +2509,9 @@ export interface ComponentStrings {
     CameraSitePermissionsDenied: SitePermissionsStrings;
     CameraSitePermissionsDeniedSafari: SitePermissionsStrings;
     CameraSitePermissionsRequest: SitePermissionsStrings;
+    captionLanguages: CaptionLanguageStrings;
     captionsBanner: CaptionsBannerStrings;
+    captionsSettingsModal: CaptionsSettingsModalStrings;
     devicesButton: DevicesButtonStrings;
     dialpad: DialpadStrings;
     endCallButton: EndCallButtonStrings;
@@ -2490,6 +2541,8 @@ export interface ComponentStrings {
     rttModal: RTTModalStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
+    spokenLanguages: SpokenLanguageStrings;
+    startCaptionsButton: StartCaptionsButtonStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -3227,6 +3280,12 @@ interface Disposable_2 {
 export { Disposable_2 as Disposable }
 
 // @public
+export interface DtmfDialPadOptions {
+    // (undocumented)
+    dialerBehavior?: 'autoShow' | 'alwaysShow' | 'alwaysHide';
+}
+
+// @public
 export type DtmfTone = 'A' | 'B' | 'C' | 'D' | 'Flash' | 'Num0' | 'Num1' | 'Num2' | 'Num3' | 'Num4' | 'Num5' | 'Num6' | 'Num7' | 'Num8' | 'Num9' | 'Pound' | 'Star';
 
 // @public
@@ -3318,7 +3377,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : AreEqual<Component, typeof ReactionButton> extends true ? RaiseHandButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? EmptySelector : AreEqual<Component, typeof CaptionsBanner> extends true ? EmptySelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : AreEqual<Component, typeof ReactionButton> extends true ? RaiseHandButtonSelector : AreEqual<Component, typeof CaptionsSettingsModal> extends true ? CaptionSettingsSelector : AreEqual<Component, typeof CaptionsBanner> extends true ? CaptionsBannerSelector : AreEqual<Component, typeof StartCaptionsButton> extends true ? StartCaptionsButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? EmptySelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -3424,6 +3483,7 @@ export interface ImageOverlayProps {
 export interface ImageOverlayStrings {
     dismissButtonAriaLabel: string;
     downloadButtonLabel: string;
+    overlayVisibleMessage: string;
 }
 
 // @public
@@ -4296,6 +4356,7 @@ export type ParticipantsButtonSelector = (state: CallClientState, props: Calling
 
 // @public
 export interface ParticipantsButtonStrings {
+    ariaLabel?: string;
     copyInviteLinkActionedAriaLabel: string;
     copyInviteLinkButtonLabel: string;
     label: string;
@@ -4888,6 +4949,33 @@ export interface StartCaptionsAdapterOptions extends StartCaptionsOptions {
     startInBackground?: boolean;
 }
 
+// @public
+export const StartCaptionsButton: (props: StartCaptionsButtonProps) => JSX.Element;
+
+// @public (undocumented)
+export interface StartCaptionsButtonProps extends ControlBarButtonProps {
+    currentSpokenLanguage: string;
+    onSetSpokenLanguage: (language: string) => Promise<void>;
+    onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
+    onStopCaptions: () => Promise<void>;
+    strings?: StartCaptionsButtonStrings;
+}
+
+// @public
+export type StartCaptionsButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    checked: boolean;
+    currentCaptionLanguage: string;
+    currentSpokenLanguage: string;
+};
+
+// @public
+export interface StartCaptionsButtonStrings {
+    offLabel: string;
+    onLabel: string;
+    tooltipOffContent: string;
+    tooltipOnContent: string;
+}
+
 // @beta
 export type StartTeamsCallIdentifier = MicrosoftTeamsUserIdentifier | PhoneNumberIdentifier | MicrosoftTeamsAppIdentifier | UnknownIdentifier;
 
@@ -4958,6 +5046,12 @@ export interface StreamMediaProps {
     styles?: BaseCustomStyles;
     videoStreamElement: HTMLElement | null;
 }
+
+// @public (undocumented)
+export type SupportedCaptionLanguage = keyof CaptionLanguageStrings;
+
+// @public (undocumented)
+export type SupportedSpokenLanguage = keyof SpokenLanguageStrings;
 
 // @public
 export interface SurveyIssues {
