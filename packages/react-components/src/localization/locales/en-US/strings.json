@@ -85,7 +85,8 @@
   },
   "imageOverlay": {
     "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "dismissButtonAriaLabel": "Close",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
