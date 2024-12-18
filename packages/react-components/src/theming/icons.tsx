@@ -72,6 +72,8 @@ import {
   VideoProhibited16Filled,
   WifiWarning20Filled
 } from '@fluentui/react-icons';
+/* @conditional-compile-remove(together-mode) */
+import { PeopleAudience20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rtt) */
 import { SlideTextCall20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
@@ -408,5 +410,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   IncomingCallNotificationAcceptIcon: <Call20Filled />,
   IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />,
   /* @conditional-compile-remove(rtt) */
-  RTTIcon: <SlideTextCall20Regular />
+  RTTIcon: <SlideTextCall20Regular />,
+  /* @conditional-compile-remove(together-mode) */
+  NotificationBarTogetherModeIcon: <PeopleAudience20Regular />
 };
