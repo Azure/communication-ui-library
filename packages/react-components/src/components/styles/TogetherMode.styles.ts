@@ -6,8 +6,6 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import { BaseCustomStyles } from '../../types/CustomStylesProps';
 /* @conditional-compile-remove(together-mode) */
 import { VideoGalleryTogetherModeSeatingInfo } from '../../types/TogetherModeTypes';
-import { mergeStyles } from '@fluentui/react';
-
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface for defining the coordinates of a seat in Together Mode.
@@ -38,7 +36,7 @@ export interface ITogetherModeSeatPositionStyle {
  * @param height - The height of the root element.
  * @returns The base custom styles for the root element.
  */
-export const togetherModeRootStyle = (width: number, height: number): BaseCustomStyles => {
+export const togetherModeRootStyle = (): BaseCustomStyles => {
   /**
    * The root style for Together Mode.
    */
@@ -98,38 +96,128 @@ export function getTogetherModeParticipantOverlayStyle(
   seatingPositionStyle: ITogetherModeSeatPositionStyle
 ): React.CSSProperties {
   return {
-    border: '1px solid green',
-    ...seatingPositionStyle.seatCoordinates,
-    zIndex: 20
+    // border: '1px solid green',
+    ...seatingPositionStyle.seatCoordinates
   };
 }
 
+// Function to map a value from one range to another
+const mapRange = (value: number, inMin: number, inMax: number, outMin: number, outMax: number): number => {
+  return outMin + ((value - inMin) * (outMax - outMin)) / (inMax - inMin);
+};
+
 /**
- * Generates the hover style for Together Mode.
+ * Calculate the scaled size based on width and height.
  *
- * @returns The style object for the hover state.
+ * @param width - The width of the element.
+ * @param height - The height of the element.
+ * @returns The scaled size.
  */
-export function togetherModeHover(): React.CSSProperties {
-  return {
-    border: '1px solid blue'
-  };
-}
+export const calculateScaledSize = (width: number, height: number): number => {
+  const maxSize = 600;
+  const minSize = 200;
+  const minScaledSize = 35;
+  const maxScaledSize = 70;
+
+  // Use width or height to determine scaling factor
+  const size = Math.min(width, height);
+
+  // Map the size to the desired range
+  return mapRange(size, minSize, maxSize, minScaledSize, maxScaledSize);
+};
+
+///////
+import { CSSProperties } from 'react';
+import { moveAnimationStyles } from './ReactionOverlay.style';
+/**
+ * General container style.
+ */
+export const containerStyle: CSSProperties = {
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  top: 0,
+  left: 0
+};
 
 /**
- * Style for text with ellipsis overflow.
+ * Generates the style for the participant signal container.
+ *
+ * @param seatCoordinates - The coordinates of the seat.
+ * @returns The style object for the participant signal container.
  */
-export const ellipsisTextStyle = mergeStyles({
-  whiteSpace: 'nowrap',
-  overflow: 'hidden',
-  width: '70%',
-  textOverflow: 'ellipsis',
-  display: 'inline-block',
-  transition: 'width 0.3s ease-in-out, transform 0.3s ease-in-out', // Smooth transition for all changes
+export const participantSignalStyle = (seatCoordinates: { left: number; top: number }): CSSProperties => ({
+  position: 'absolute',
+  left: `${seatCoordinates.left}px`,
+  top: `${seatCoordinates.top}px`,
+  border: '1px solid red'
+});
 
-  selectors: {
-    '&:hover': {
-      width: 'auto' /* Allow the container to expand */,
-      transform: 'translateX(0)' // Reset any movement when hovered
-    }
-  }
+/**
+ * Generates the style for the move animation container.
+ *
+ * @param height - The height of the container.
+ * @param offset - The offset for the animation.
+ * @returns The style object for the move animation container.
+ */
+export const moveAnimationContainerStyle = (height: number, offset: number): CSSProperties => ({
+  ...moveAnimationStyles(height * 0.5, height * 0.35) // Assuming moveAnimationStyles is imported
+});
+
+/**
+ * Generates the style for the emoji container.
+ *
+ * @param emojiSize - The size of the emoji.
+ * @param seatWidth - The width of the seat.
+ * @returns The style object for the emoji container.
+ */
+export const emojiContainerStyle = (emojiSize: number, seatWidth: number): CSSProperties => ({
+  width: `${emojiSize}px`,
+  position: 'absolute',
+  left: `${(100 - (emojiSize / seatWidth) * 100) / 2}%`
+});
+
+/**
+ * Style for the display name container.
+ */
+export const displayNameContainerStyle: CSSProperties = {
+  position: 'absolute',
+  bottom: '10px',
+  width: '100%',
+  color: 'white',
+  textAlign: 'center'
+};
+
+/**
+ * Background container style for display name.
+ */
+export const displayNameBackgroundStyle: CSSProperties = {
+  backgroundColor: 'rgba(50, 50, 50, 1)', // Darker and greyish background
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  gap: '10px',
+  margin: '0 auto', // Centers the container
+  maxWidth: 'max-content', // Allows container to grow with content
+  transition: 'width 0.3s ease, max-width 0.3s ease', // Smooth transition for container expansion
+  padding: '0 5px',
+  borderRadius: '2px'
+};
+
+// Display name text style
+/**
+ * Generates the style for the display name text.
+ *
+ * @param hoveredParticipantID - The ID of the participant being hovered over.
+ * @param participantSignalID - The ID of the participant signal.
+ * @returns The style object for the display name text.
+ */
+export const displayNameTextStyle = (hoveredParticipantID: string, participantSignalID: string): CSSProperties => ({
+  textOverflow: 'ellipsis',
+  flexGrow: 1, // Allow text to grow within available space
+  overflow: hoveredParticipantID === participantSignalID ? 'visible' : 'hidden',
+  whiteSpace: 'nowrap',
+  textAlign: 'center',
+  width: hoveredParticipantID === `${participantSignalID}` ? 'calc(100% - 100px)' : 'auto', // Expand width from center
+  transition: 'width 0.3s ease' // Smooth transition for width changes
 });

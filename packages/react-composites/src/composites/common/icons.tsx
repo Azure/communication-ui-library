@@ -18,7 +18,8 @@ import {
   Video20Filled,
   VideoOff20Filled,
   WifiWarning20Filled,
-  Circle20Regular
+  Circle20Regular,
+  PeopleAudience20Regular
 } from '@fluentui/react-icons';
 import { PersonCall20Regular, Clock20Filled } from '@fluentui/react-icons';
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
@@ -108,7 +109,8 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   JoinByPhoneConferenceIdIcon: <Dialpad20Regular />,
   JoinByPhoneWaitToBeAdmittedIcon: <Clock20Filled />,
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
-  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
+  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />,
+  TogetherModeLayout: <PeopleAudience20Regular />
 };
 
 /**
@@ -247,6 +249,7 @@ export type CallCompositeIcons = {
   JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
   PeoplePaneMoreButton?: JSX.Element;
   StopAllSpotlightMenuButton?: JSX.Element;
+  TogetherModeLayout?: JSX.Element;
 };
 
 /**

@@ -722,7 +722,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
-
   const localScreenShareStreamComponent = (
     <LocalScreenShare
       localParticipant={localParticipant}
@@ -778,10 +777,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       isTogetherModeActive,
       onCreateTogetherModeStreamView,
       onStartTogetherMode,
+      onDisposeTogetherModeStreamView,
       onSetTogetherModeSceneSize,
       togetherModeStreams,
       togetherModeSeatingCoordinates,
-      onDisposeTogetherModeStreamView,
       localParticipant,
       remoteParticipants,
       reactionResources,

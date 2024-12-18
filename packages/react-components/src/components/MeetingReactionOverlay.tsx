@@ -75,7 +75,7 @@ const REACTION_EMOJI_RESIZE_SCALE_CONSTANT = 3;
  * @internal
  */
 export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.Element => {
-  const { overlayMode, reaction, reactionResources, localParticipant, remoteParticipants } = props;
+  const { overlayMode, reaction, reactionResources, localParticipant, remoteParticipants, seatingCoordinates } = props;
   const [emojiSizePx, setEmojiSizePx] = useState(0);
   const [divHeight, setDivHeight] = useState(0);
   const [divWidth, setDivWidth] = useState(0);
@@ -136,6 +136,7 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
     /* @conditional-compile-remove(together-mode) */
     return (
       <div
+        ref={videoTileRef}
         style={{
           width: '100%',
           height: '100%',
@@ -147,9 +148,9 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
         <TogetherModeOverlay
           emojiSize={emojiSizePx}
           reactionResources={reactionResources}
-          localParticipant={localParticipant}
-          remoteParticipants={remoteParticipants}
-          participantsSeatingArrangement={props.seatingCoordinates}
+          localParticipant={localParticipant ?? ({} as VideoGalleryLocalParticipant)}
+          remoteParticipants={remoteParticipants ?? ([] as VideoGalleryRemoteParticipant[])}
+          participantsSeatingArrangement={seatingCoordinates ?? {}}
         />
       </div>
     );

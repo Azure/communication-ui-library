@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 /* @conditional-compile-remove(together-mode) */
 import {
   Reaction,
@@ -16,11 +16,11 @@ import { moveAnimationStyles, spriteAnimationStyles } from './styles/ReactionOve
 /* @conditional-compile-remove(together-mode) */
 import {
   // getCombinedKey,
-  REACTION_NUMBER_OF_ANIMATION_FRAMES,
-  REACTION_START_DISPLAY_SIZE
+  REACTION_NUMBER_OF_ANIMATION_FRAMES
+  // REACTION_START_DISPLAY_SIZE
 } from './VideoGallery/utils/reactionUtils';
 /* @conditional-compile-remove(together-mode) */
-import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
+import { Icon, Text } from '@fluentui/react';
 /* @conditional-compile-remove(together-mode) */
 import { getEmojiResource } from './VideoGallery/utils/videoGalleryLayoutUtils';
 /* @conditional-compile-remove(together-mode) */
@@ -29,13 +29,17 @@ import { useLocale } from '../localization';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 /* @conditional-compile-remove(together-mode) */
 import {
-  ellipsisTextStyle,
+  calculateScaledSize,
   getTogetherModeParticipantOverlayStyle,
   getTogetherModeSeatPositionStyle,
   ITogetherModeSeatPositionStyle
 } from './styles/TogetherMode.styles';
+import { CallingTheme, useTheme } from '../theming';
+// import { iconContainerStyle, raiseHandContainerStyles } from './styles/VideoTile.styles';
+import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(together-mode) */
-import { iconContainerStyle } from './styles/VideoTile.styles';
+// import { iconContainerStyle } from './styles/VideoTile.styles';
+// import { useTheme } from '../theming';
 
 /* @conditional-compile-remove(together-mode) */
 /**
@@ -50,7 +54,7 @@ type VisibleTogetherModeSignalingAction = {
   isHandRaised?: boolean;
   isSpotlighted?: boolean;
   isMuted?: boolean;
-  id?: string;
+  id: string;
   seatPositionStyle: ITogetherModeSeatPositionStyle;
   displayName?: string;
   showDisplayName?: boolean;
@@ -64,74 +68,103 @@ type VisibleTogetherModeSignalingAction = {
  */
 export const TogetherModeOverlay = React.memo(
   (props: {
-    emojiSize?: number;
+    emojiSize: number;
     reactionResources: ReactionResources;
-    localParticipant?: VideoGalleryLocalParticipant;
-    remoteParticipants?: VideoGalleryRemoteParticipant[];
-    participantsSeatingArrangement?: VideoGalleryTogetherModeParticipantPosition;
+    localParticipant: VideoGalleryLocalParticipant;
+    remoteParticipants: VideoGalleryRemoteParticipant[];
+    participantsSeatingArrangement: VideoGalleryTogetherModeParticipantPosition;
   }) => {
     const locale = useLocale();
-    const { reactionResources, remoteParticipants, localParticipant, participantsSeatingArrangement } = props;
-    const [visibleSignals, setVisibleSignals] = useState<Record<string, VisibleTogetherModeSignalingAction>>({});
+    const theme = useTheme();
+    const callingPalette = (theme as unknown as CallingTheme).callingPalette;
+
+    const { emojiSize, reactionResources, remoteParticipants, localParticipant, participantsSeatingArrangement } =
+      props;
+    const [visibleSignals, setVisibleSignals] = useState<{ [key: string]: VisibleTogetherModeSignalingAction }>({});
     const [hoveredParticipantID, setHoveredParticipantID] = useState('');
 
-    useMemo(() => {
-      const updatedParticipantsIds = remoteParticipants?.map((participant) => participant.userId) ?? [];
-      updatedParticipantsIds.push(localParticipant?.userId ?? '');
-
+    const hideSignalForParticipantsNotInTogetherMode = useCallback(() => {
       const removedVisibleParticipants = Object.keys(visibleSignals).filter(
-        (participantId) => !updatedParticipantsIds.includes(participantId)
+        (participantId) => !participantsSeatingArrangement[participantId]
+      );
+      // Update visible signals state instead of directly mutating it
+      setVisibleSignals((prevSignals) => {
+        const newSignals = { ...prevSignals };
+        removedVisibleParticipants.forEach((participantId) => {
+          delete newSignals[participantId];
+        });
+
+        // Trigger a re-render only if changes occurred
+        const hasChanges = Object.keys(newSignals).length !== Object.keys(prevSignals).length;
+        if (hasChanges) {
+          return newSignals;
+        }
+        return prevSignals;
+      });
+    }, [visibleSignals, participantsSeatingArrangement]);
+
+    const Testing = useCallback(() => {
+      const allParticipants = [...remoteParticipants, localParticipant];
+
+      const participantsWithVideoAvailable = allParticipants.filter(
+        (p) => p.videoStream?.isAvailable && participantsSeatingArrangement[p.userId]
+      );
+      const updatedSignals = participantsWithVideoAvailable.reduce(
+        (acc: { [key: string]: VisibleTogetherModeSignalingAction }, p: VideoGalleryLocalParticipant) => {
+          const { userId, reaction, raisedHand, spotlight, isMuted, displayName } = p;
+          const seatingPosition = participantsSeatingArrangement[userId];
+          if (seatingPosition) {
+            acc[userId] = {
+              id: userId,
+              reaction,
+              isHandRaised: !!raisedHand,
+              isSpotlighted: !!spotlight,
+              isMuted,
+              displayName: displayName || locale.strings.videoGallery.displayNamePlaceholder,
+              showDisplayName: !!(spotlight || raisedHand || reaction || hoveredParticipantID === userId),
+              seatPositionStyle: getTogetherModeSeatPositionStyle(seatingPosition)
+            };
+          }
+          return acc;
+        },
+        {}
       );
 
-      removedVisibleParticipants.forEach((participantId) => {
-        delete visibleSignals[participantId];
+      const participantsNotInTogetherModeStream = Object.keys(visibleSignals).filter((id) => !updatedSignals[id]);
+
+      setVisibleSignals((prevSignals) => {
+        const newSignals = { ...prevSignals, ...updatedSignals };
+        participantsNotInTogetherModeStream.forEach((id) => {
+          delete newSignals[id];
+        });
+
+        const hasChanges = Object.keys(newSignals).some(
+          (key) => JSON.stringify(newSignals[key]) !== JSON.stringify(prevSignals[key])
+        );
+
+        return hasChanges ? newSignals : prevSignals;
       });
-    }, [remoteParticipants, localParticipant, visibleSignals]);
+    }, [
+      remoteParticipants,
+      localParticipant,
+      visibleSignals,
+      participantsSeatingArrangement,
+      locale.strings.videoGallery.displayNamePlaceholder,
+      hoveredParticipantID
+    ]);
 
-    const updateTogetherModeSeatingUI = useCallback(
-      (participant: VideoGalleryLocalParticipant | VideoGalleryRemoteParticipant): void => {
-        const participantID = participant.userId;
-        const seatingPosition = participantsSeatingArrangement?.[participantID];
-        if (!seatingPosition) {
-          return;
-        }
-        const togetherModeSeatStyle: ITogetherModeSeatPositionStyle = getTogetherModeSeatPositionStyle(seatingPosition);
-
-        setVisibleSignals((prevVisibleSignals) => ({
-          ...prevVisibleSignals,
-          [participantID]: {
-            id: participantID,
-            reaction: participant.reaction,
-            isHandRaised: !!participant.raisedHand,
-            isSpotlighted: !!participant.spotlight,
-            isMuted: participant.isMuted,
-            displayName: participant.displayName || locale.strings.videoGallery.displayNamePlaceholder,
-            showDisplayName: !!(
-              participant.spotlight ||
-              participant.raisedHand ||
-              participant.reaction ||
-              hoveredParticipantID === participantID
-            ),
-            seatPositionStyle: togetherModeSeatStyle
-          }
-        }));
-      },
-      [hoveredParticipantID, locale.strings.videoGallery.displayNamePlaceholder, participantsSeatingArrangement]
-    );
-
+    // Trigger updates on dependency changes
     useEffect(() => {
-      remoteParticipants?.forEach((participant) => {
-        if (participant.videoStream?.isAvailable) {
-          updateTogetherModeSeatingUI(participant);
-        }
-      });
-
-      if (localParticipant) {
-        if (localParticipant.videoStream?.isAvailable) {
-          updateTogetherModeSeatingUI(localParticipant);
-        }
-      }
-    }, [remoteParticipants, localParticipant, participantsSeatingArrangement, updateTogetherModeSeatingUI]);
+      Testing();
+      hideSignalForParticipantsNotInTogetherMode();
+    }, [
+      remoteParticipants,
+      localParticipant,
+      participantsSeatingArrangement,
+      hoveredParticipantID,
+      Testing,
+      hideSignalForParticipantsNotInTogetherMode
+    ]);
 
     return (
       <div
@@ -139,8 +172,9 @@ export const TogetherModeOverlay = React.memo(
           width: '100%',
           height: '100%',
           position: 'absolute',
-          top: '0',
-          left: '0'
+          top: 0,
+          left: 0,
+          color: 'white'
         }}
       >
         {Object.values(visibleSignals).map((participantSignal) => (
@@ -148,37 +182,36 @@ export const TogetherModeOverlay = React.memo(
             key={participantSignal.id}
             style={{
               ...getTogetherModeParticipantOverlayStyle(participantSignal.seatPositionStyle),
-              border: '1px solid red',
               position: 'absolute',
               left: `${participantSignal.seatPositionStyle.seatCoordinates.left}px`,
-              top: `${participantSignal.seatPositionStyle.seatCoordinates.top}px`
+              top: `${participantSignal.seatPositionStyle.seatCoordinates.top}px`,
+              border: '1px solid red'
             }}
-            onMouseEnter={() => {
-              setHoveredParticipantID(`${participantSignal.id}`);
-            }}
-            onMouseLeave={() => {
-              setHoveredParticipantID('');
-            }}
+            onMouseEnter={() => setHoveredParticipantID(participantSignal.id)}
+            onMouseLeave={() => setHoveredParticipantID('')}
           >
             <div className="togetherMode-item">
-              {participantSignal?.reaction?.reactionType && (
+              {participantSignal.reaction?.reactionType && (
                 <div
                   style={moveAnimationStyles(
-                    participantSignal.seatPositionStyle.seatCoordinates.height ?? 1 / 2, // dividing by two because reactionOverlayStyle height is set to 50%
-                    (participantSignal.seatPositionStyle.seatCoordinates.height ?? 1 / 2) * (1 - 0.7 * 0.95)
+                    (participantSignal.seatPositionStyle.seatCoordinates.height ?? 1) * 0.5,
+                    (participantSignal.seatPositionStyle.seatCoordinates.height ?? 1) * 0.35
                   )}
                 >
                   <div
                     style={{
-                      width: `${REACTION_START_DISPLAY_SIZE}px`,
-                      left: `${(100 - (REACTION_START_DISPLAY_SIZE / (participantSignal.seatPositionStyle.seatCoordinates.width ?? 1)) * 100) / 2}%`,
-                      position: 'absolute'
+                      width: `${emojiSize}px`,
+                      position: 'absolute',
+                      left: `${(100 - (emojiSize / (participantSignal.seatPositionStyle.seatCoordinates.width ?? 1)) * 100) / 2}%`
                     }}
                   >
                     <div
                       style={spriteAnimationStyles(
                         REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                        REACTION_START_DISPLAY_SIZE,
+                        calculateScaledSize(
+                          participantSignal.seatPositionStyle.seatCoordinates.width ?? 1,
+                          participantSignal.seatPositionStyle.seatCoordinates.height ?? 1
+                        ),
                         (participantSignal.reaction &&
                           getEmojiResource(participantSignal?.reaction.reactionType, reactionResources)) ??
                           ''
@@ -187,59 +220,89 @@ export const TogetherModeOverlay = React.memo(
                   </div>
                 </div>
               )}
-              <div
-                style={{
-                  position: 'absolute',
-                  bottom: '0',
-                  width: '100%',
-                  backgroundColor: participantSignal.showDisplayName ? 'rgba(0, 0, 0, 0.7)' : 'transparent',
-                  color: 'white',
-                  textAlign: 'center',
-                  fontSize: '4px'
-                }}
-              >
-                <Stack
-                  horizontal
-                  verticalAlign="center"
-                  tokens={{ childrenGap: 4 }}
+
+              {participantSignal.showDisplayName && (
+                <div
                   style={{
-                    position: 'absolute', // Ensure it's positioned absolutely within the parent
-                    bottom: 0,
-                    left: '50%', // Center horizontally in the parent
-                    transform: 'translate(-50%, -50%)', // Adjust position so the element is truly centered
-                    overflow: 'visible', // Allow overflow when expanded
-                    width: hoveredParticipantID === `${participantSignal.id}` ? 'auto' : '100%' // Ensure the element takes up the full width of the parent
+                    position: 'absolute',
+                    bottom: '0.5%',
+                    width: '100%',
+                    color: 'white',
+                    textAlign: 'center'
                   }}
                 >
-                  {participantSignal.isHandRaised && (
-                    <Stack className={mergeStyles(iconContainerStyle)}>
-                      <Icon iconName="ControlButtonRaiseHand" />
-                    </Stack>
-                  )}
-                  {participantSignal.showDisplayName && (
-                    <Text
-                      data-ui-id="video-tile-display-name"
-                      className={ellipsisTextStyle}
-                      style={{
-                        overflow: hoveredParticipantID === `${participantSignal.id}` ? 'visible' : 'hidden', // Show content when expanded
-                        transition: 'width 0.3s ease' // Smooth transition for width changes
-                      }}
-                    >
-                      {participantSignal.displayName}
-                    </Text>
-                  )}
-                  {participantSignal.showDisplayName && participantSignal.isMuted && (
-                    <Stack className={mergeStyles(iconContainerStyle)}>
-                      <Icon iconName="VideoTileMicOff" />
-                    </Stack>
-                  )}
-                  {participantSignal.isSpotlighted && (
-                    <Stack className={mergeStyles(iconContainerStyle)}>
-                      <Icon iconName="VideoTileSpotlighted" />
-                    </Stack>
-                  )}
-                </Stack>
-              </div>
+                  <div
+                    style={{
+                      backgroundColor: callingPalette.videoTileLabelBackgroundLight,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      alignItems: 'center',
+                      gap: '2px',
+                      margin: '0 auto', // Centers the container
+                      // maxWidth: 'max-content', // Allows container to grow with content
+                      transition: 'width 0.3s ease, max-width 0.3s ease', // Smooth transition for container expansion
+                      padding: '0 5px',
+                      borderRadius: theme.effects.roundedCorner4,
+                      borderColor: 'white',
+                      width: 'fit-content'
+                    }}
+                  >
+                    {participantSignal.isHandRaised && (
+                      <span
+                        style={{
+                          width: '20px',
+                          flexShrink: 0
+                        }}
+                      >
+                        <RaisedHandIcon />
+                      </span>
+                    )}
+                    {participantSignal.showDisplayName && (
+                      <Text
+                        style={{
+                          textOverflow: 'ellipsis',
+                          flexGrow: 1, // Allow text to grow within available space
+                          overflow: hoveredParticipantID === participantSignal.id ? 'visible' : 'hidden',
+                          whiteSpace: 'nowrap',
+                          textAlign: 'center',
+                          // width: hoveredParticipantID === `${participantSignal.id}` ? 'calc(100% - 100px)' : 'auto', // Expand width from center
+                          transition: 'width 0.3s ease', // Smooth transition for width changes
+                          color: participantSignal.displayName ? theme.palette.neutralSecondary : 'inherit',
+                          display:
+                            hoveredParticipantID === participantSignal.id ||
+                            (participantSignal.seatPositionStyle.seatCoordinates.width ?? 0) > 100
+                              ? 'inline-block'
+                              : 'none' // Completely remove the element when hidden
+                        }}
+                      >
+                        {participantSignal.displayName}
+                      </Text>
+                    )}
+                    {participantSignal.isMuted && (
+                      <Icon
+                        iconName="VideoTileMicOff"
+                        // className={mergeStyles(iconContainerStyle)}
+                        style={{
+                          width: '20px',
+                          flexShrink: 0,
+                          color: participantSignal.displayName ? theme.palette.neutralSecondary : 'inherit'
+                        }}
+                      />
+                    )}
+                    {participantSignal.isSpotlighted && (
+                      <Icon
+                        iconName="VideoTileSpotlighted"
+                        // className={mergeStyles(iconContainerStyle)}
+                        style={{
+                          width: '20px',
+                          flexShrink: 0,
+                          color: participantSignal.displayName ? theme.palette.neutralSecondary : 'inherit'
+                        }}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         ))}

@@ -124,6 +124,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     /* @conditional-compile-remove(together-mode) */
     const togetherModeStreams = {
       mainVideoStream: {
+        isReceiving: togetherModeCallFeature?.streams?.mainVideoStream?.isReceiving,
         isAvailable: togetherModeCallFeature?.streams?.mainVideoStream?.isAvailable,
         renderElement: togetherModeCallFeature?.streams?.mainVideoStream?.view?.target,
         streamSize: togetherModeCallFeature?.streams?.mainVideoStream?.streamSize

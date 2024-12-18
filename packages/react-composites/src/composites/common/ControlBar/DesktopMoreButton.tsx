@@ -362,7 +362,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         isTogetherModeActive
       ),
       iconProps: {
-        iconName: 'LargeGalleryLayout',
+        iconName: 'TogetherModeLayout',
         styles: { root: { lineHeight: 0 } }
       }
     };

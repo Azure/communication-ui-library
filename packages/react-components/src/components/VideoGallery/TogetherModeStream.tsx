@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo } from 'react';
 /* @conditional-compile-remove(together-mode) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(together-mode) */
@@ -21,6 +21,7 @@ import { StreamMedia } from '../StreamMedia';
 import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
 /* @conditional-compile-remove(together-mode) */
 import { Stack } from '@fluentui/react';
+import { togetherModeRootStyle } from '../styles/TogetherMode.styles';
 /* @conditional-compile-remove(together-mode) */
 // import { togetherModeRootStyle } from '../styles/TogetherMode.styles'; // Ensure this is an object, not a string
 
@@ -53,12 +54,19 @@ export const TogetherModeStream = React.memo(
       onCreateTogetherModeStreamView,
       onStartTogetherMode,
       onSetTogetherModeSceneSize,
+      onDisposeTogetherModeStreamView,
       togetherModeStreams,
       containerWidth,
       containerHeight
     } = props;
 
-    const [sceneDimensions, setSceneDimensions] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
+    useEffect(() => {
+      return () => {
+        // TODO: Isolate disposing behaviors for screenShare and videoStream
+        onDisposeTogetherModeStreamView && onDisposeTogetherModeStreamView();
+      };
+    }, [onDisposeTogetherModeStreamView]);
+
     // Trigger startTogetherMode only when needed
     useEffect(() => {
       if (startTogetherModeEnabled && !isTogetherModeActive) {
@@ -74,61 +82,54 @@ export const TogetherModeStream = React.memo(
     }, [togetherModeStreams?.mainVideoStream?.renderElement, onCreateTogetherModeStreamView]);
 
     // Update scene size only when container dimensions change
-    useEffect(() => {
+    const reCalculateSeatingPosition = useMemo(() => {
       if (onSetTogetherModeSceneSize && containerWidth && containerHeight) {
-        if (containerWidth !== sceneDimensions.width || containerHeight !== sceneDimensions.height) {
-          onSetTogetherModeSceneSize(containerWidth, containerHeight);
-          setSceneDimensions({ width: containerWidth, height: containerHeight });
-        }
+        onSetTogetherModeSceneSize(containerWidth, containerHeight);
       }
-    }, [onSetTogetherModeSceneSize, containerWidth, containerHeight, sceneDimensions]);
+    }, [onSetTogetherModeSceneSize, containerWidth, containerHeight]);
 
-    // Memoized layout computation
-    const layout = getTogetherModeMainVideoLayout(props);
+    useEffect(() => {
+      // Re-render MeetingReactionOverlay on participant changes
+    }, [
+      props.localParticipant,
+      props.remoteParticipants,
+      props.reactionResources,
+      props.seatingCoordinates,
+      containerWidth,
+      containerHeight,
+      reCalculateSeatingPosition
+    ]);
 
-    return layout;
+    const stream = props.togetherModeStreams?.mainVideoStream;
+    const showLoadingIndicator = !(stream && stream.isAvailable && stream.isReceiving);
+    // console.log(`Chuk Seating arrangement TogetherMode === ${JSON.stringify(props.seatingCoordinates)}`);
+    return containerWidth && containerHeight ? (
+      <Stack>
+        <div
+          data-ui-id="together-mode-video-tile"
+          style={{
+            width: `${_pxToRem(containerWidth)}`,
+            height: `${_pxToRem(containerHeight)}`,
+            position: 'relative'
+          }}
+        >
+          <StreamMedia
+            videoStreamElement={stream?.renderElement || null}
+            isMirrored={true}
+            loadingState={showLoadingIndicator ? 'loading' : 'none'}
+            styles={togetherModeRootStyle()}
+          />
+          {props.reactionResources && (
+            <MeetingReactionOverlay
+              reactionResources={props.reactionResources}
+              localParticipant={props.localParticipant}
+              remoteParticipants={props.remoteParticipants}
+              seatingCoordinates={props.seatingCoordinates}
+              overlayMode="together-mode"
+            />
+          )}
+        </div>
+      </Stack>
+    ) : null;
   }
 );
-
-/* @conditional-compile-remove(together-mode) */
-const getTogetherModeMainVideoLayout = (props: {
-  togetherModeStreams?: VideoGalleryTogetherModeStreams;
-  containerWidth?: number;
-  containerHeight?: number;
-  reactionResources?: ReactionResources;
-  localParticipant?: VideoGalleryLocalParticipant;
-  remoteParticipants?: VideoGalleryRemoteParticipant[];
-  seatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
-}): JSX.Element | null => {
-  const stream = props.togetherModeStreams?.mainVideoStream;
-  const showLoadingIndicator = stream && stream.isAvailable && stream.isReceiving;
-
-  return props.containerWidth && props.containerHeight ? (
-    <Stack>
-      <div
-        data-ui-id="together-mode-video-tile"
-        style={{
-          width: `${_pxToRem(props.containerWidth)}`,
-          height: `${_pxToRem(props.containerHeight)}`,
-          position: 'relative'
-        }}
-      >
-        <StreamMedia
-          videoStreamElement={stream?.renderElement || null}
-          isMirrored={true}
-          loadingState={showLoadingIndicator ? 'loading' : 'none'}
-          // styles={togetherModeRootStyle(props.containerWidth, props.containerHeight)}
-        />
-        {props.reactionResources && (
-          <MeetingReactionOverlay
-            reactionResources={props.reactionResources}
-            localParticipant={props.localParticipant}
-            remoteParticipants={props.remoteParticipants}
-            seatingCoordinates={props.seatingCoordinates}
-            overlayMode="together-mode"
-          />
-        )}
-      </div>
-    </Stack>
-  ) : null;
-};
