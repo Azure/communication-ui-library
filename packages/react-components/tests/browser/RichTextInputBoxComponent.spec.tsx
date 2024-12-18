@@ -112,8 +112,3 @@ const addList = async (listButtonLabel: string, component: Locator): Promise<voi
   editor.hover();
   await editor.pressSequentially('Third line');
 };
-
-const formatButtonClick = async (component: Locator): Promise<void> => {
-  await component.getByTestId(formatButtonId).click();
-  await component.getByTestId('rich-text-editor-toolbar').waitFor({ state: 'visible' });
-};
