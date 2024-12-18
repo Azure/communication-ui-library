@@ -5,9 +5,12 @@
     "removeButtonLabel": "Fjern",
     "sharingIconLabel": "Deling",
     "mutedIconLabel": "Dempet",
+    "handRaisedIconLabel": "Hevet hånd – posisjon {position}",
     "displayNamePlaceholder": "Deltaker uten navn",
     "participantStateRinging": "Ringer ...",
     "participantStateHold": "På vent",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, flere alternativer",
     "attendeeRole": "Deltaker"
   },
   "ParticipantList": {
@@ -74,12 +77,16 @@
     "rttCancelButtonLabel": "Avslutt",
     "rttCloseModalButtonAriaLabel": "Lukk RTT-modal"
   },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Starter teksting ..."
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
   },
   "imageOverlay": {
     "downloadButtonLabel": "Last ned",
-    "dismissButtonAriaLabel": "Lukk"
+    "dismissButtonAriaLabel": "Lukk",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Melding sendt",
@@ -155,6 +162,7 @@
   },
   "participantsButton": {
     "label": "Personer",
+    "ariaLabel": "Personer",
     "tooltipContent": "Vis deltakere",
     "menuHeader": "I denne samtalen",
     "participantsListButtonLabel": "{numParticipants} personer",
@@ -178,7 +186,7 @@
   },
   "reactionButton": {
     "label": "Reager",
-    "ariaLabel": "Reager-knapp, send en reaksjon",
+    "ariaLabel": "Reager",
     "tooltipDisabledContent": "Reaksjonshandling er deaktivert",
     "tooltipContent": "Send en reaksjon",
     "likeReactionTooltipContent": "Liker",
@@ -189,6 +197,100 @@
   },
   "rtt": {
     "isTypingText": "RTT-skriving"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Undertekstinnstillinger",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Talespråk",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Undertekstspråk",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Språket som alle i denne samtalen snakker.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Undertekster vises på dette språket.",
+    "captionsSettingsConfirmButtonLabel": "Bekreft",
+    "captionsSettingsCancelButtonLabel": "Avbryt",
+    "captionsSettingsModalAriaLabel": "Sperre for innstillinger for undertekster",
+    "captionsSettingsCloseModalButtonAriaLabel": "Lukk innstilling for undertekster"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabisk – De forente arabiske emirater",
+    "ar-sa": "Arabisk – Saudi-Arabia",
+    "da-dk": "Dansk",
+    "de-de": "Tysk – Tyskland",
+    "en-au": "Engelsk – Australia",
+    "en-ca": "Engelsk – Canada",
+    "en-gb": "Engelsk – Storbritannia",
+    "en-in": "Engelsk – India",
+    "en-nz": "Engelsk – New Zealand",
+    "en-us": "Engelsk – USA",
+    "es-es": "Spansk – Spania (moderne)",
+    "es-mx": "Spansk – Mexico",
+    "fi-fi": "Finsk",
+    "fr-ca": "Fransk – Canada",
+    "fr-fr": "Fransk – Frankrike",
+    "hi-in": "Hindi",
+    "it-it": "Italiensk – Italia",
+    "ja-jp": "Japansk",
+    "ko-kr": "Koreansk",
+    "nb-no": "Norsk (bokmål)",
+    "nl-be": "Nederlandsk – Belgia",
+    "nl-nl": "Nederlandsk – Nederland",
+    "pl-pl": "Polsk",
+    "pt-br": "Portugisisk – Brasil",
+    "ru-ru": "Russisk",
+    "sv-se": "Svensk",
+    "zh-cn": "Kinesisk – Folkerepublikken Kina",
+    "zh-hk": "Kinesisk – Hongkong SAR",
+    "cs-cz": "Tsjekkisk",
+    "pt-pt": "Portugisisk – Portugal",
+    "tr-tr": "Tyrkisk",
+    "vi-vn": "Vietnamesisk",
+    "th-th": "Thai",
+    "he-il": "Hebraisk",
+    "cy-gb": "Walisisk",
+    "uk-ua": "Ukrainsk",
+    "el-gr": "Gresk",
+    "hu-hu": "Ungarsk",
+    "ro-ro": "Rumensk",
+    "sk-sk": "Slovakisk",
+    "zh-tw": "Kinesisk – Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabisk",
+    "da": "Dansk",
+    "de": "Tysk",
+    "en": "Engelsk",
+    "es": "Spansk",
+    "fi": "Finsk",
+    "fr-ca": "Fransk – Canada",
+    "fr": "Fransk – Frankrike",
+    "hi": "Hindi",
+    "it": "Italiensk",
+    "ja": "Japansk",
+    "ko": "Koreansk",
+    "nb": "Norsk (bokmål)",
+    "nl": "Nederlandsk",
+    "pl": "Polsk",
+    "pt": "Portugisisk – Brasil",
+    "ru": "Russisk",
+    "sv": "Svensk",
+    "zh-Hans": "Kinesisk (forenklet)",
+    "zh-Hant": "Kinesisk (tradisjonell)",
+    "cs": "Tsjekkisk",
+    "pt-pt": "Portugisisk – Portugal",
+    "tr": "Tyrkisk",
+    "vi": "Vietnamesisk",
+    "th": "Thai",
+    "he": "Hebraisk",
+    "cy": "Walisisk",
+    "uk": "Ukrainsk",
+    "el": "Gresk",
+    "hu": "Ungarsk",
+    "ro": "Rumensk",
+    "sk": "Slovakisk"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Slå på undertekster",
+    "offLabel": "Deaktiver undertekster",
+    "tooltipOnContent": "Deaktiver undertekster",
+    "tooltipOffContent": "Slå på undertekster"
   },
   "messageThread": {
     "yesterday": "I går",
@@ -494,6 +596,26 @@
       "title": "Romtidsgrensen er i ferd med å utløpe.",
       "message": "Dette rommet blir lukket om 30 sekunder",
       "dismissButtonAriaLabel": "Lukk"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Kameraet er aktivert",
+      "message": "Slå den på hvis du vil dele video.",
+      "dismissButtonAriaLabel": "Lukk"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Kameraet ditt er deaktivert",
+      "message": "Du kan ikke lenger dele video.",
+      "dismissButtonAriaLabel": "Lukk"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Mikrofonen er aktivert",
+      "message": "Slå på lyden for å snakke.",
+      "dismissButtonAriaLabel": "Lukk"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Mikrofonen er deaktivert",
+      "message": "Du kan ikke lenger oppheve dempingen.",
+      "dismissButtonAriaLabel": "Lukk"
     }
   },
   "videoGallery": {
@@ -522,7 +644,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Rampelys av",
     "attendeeRole": "Deltaker",
     "muteParticipantMenuItemLabel": "Demp",
-    "waitingScreenText": "Venter på at andre skal bli med"
+    "waitingScreenText": "Venter på at andre skal bli med",
+    "forbidAudio": "Deaktivere mikrofon",
+    "permitAudio": "Tillat mikrofon",
+    "forbidAudioTileMenuLabel": "Deaktivere mikrofon",
+    "permitAudioTileMenuLabel": "Tillat mikrofon",
+    "forbidVideo": "Deaktivere kamera",
+    "permitVideo": "Tillat kamera",
+    "forbidVideoTileMenuLabel": "Deaktivere kamera",
+    "permitVideoTileMenuLabel": "Tillat kamera"
   },
   "dialpad": {
     "placeholderText": "Skriv inn telefonnummeret",
