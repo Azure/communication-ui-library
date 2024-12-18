@@ -7,6 +7,7 @@ import { test as betaTest } from './FlavoredBaseTest';
 import { RichTextSendBox } from '../../src/components/RichTextEditor/RichTextSendBox';
 import { MessageThread, SendBox } from '../../src';
 import { TestMessageThreadWithCustomAttachmentActions } from './TestingComponents/TestMessageThreadWithCustomAttachmentActions';
+import { Locator, Page } from 'playwright-core';
 
 betaTest.describe('Attachment tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
@@ -24,8 +25,7 @@ betaTest.describe('Attachment tests', () => {
         ]}
       />
     );
-    await page.waitForLoadState();
-    await component.evaluate(() => document.fonts.ready);
+    await checkAttachmentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachment-in-sendbox-with-progress-group-layout.png');
   });
 
@@ -38,8 +38,7 @@ betaTest.describe('Attachment tests', () => {
         attachments={[{ progress: 0.65, id: 'id1', name: 'test1.pdf' }]}
       />
     );
-    await page.waitForLoadState();
-    await component.evaluate(() => document.fonts.ready);
+    await checkAttachmentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachment-in-sendbox-with-progress-singlular-layout.png');
   });
 
@@ -58,8 +57,7 @@ betaTest.describe('Attachment tests', () => {
         ]}
       />
     );
-    await page.waitForLoadState();
-    await component.evaluate(() => document.fonts.ready);
+    await checkFailedAttachmentsComponentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachment-in-sendbox-with-error.png');
   });
 
@@ -72,8 +70,7 @@ betaTest.describe('Attachment tests', () => {
         attachments={[{ progress: 0.65, id: 'id1', name: 'test1.pdf' }]}
       />
     );
-    await page.waitForLoadState();
-    await component.evaluate(() => document.fonts.ready);
+    await checkAttachmentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachments-in-richtext-sendbox-with-progress-singular-layout.png');
   });
 
@@ -90,8 +87,7 @@ betaTest.describe('Attachment tests', () => {
         ]}
       />
     );
-    await page.waitForLoadState();
-    await component.evaluate(() => document.fonts.ready);
+    await checkAttachmentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachments-in-richtext-sendbox-with-progress-group-layout.png');
   });
 
@@ -110,8 +106,7 @@ betaTest.describe('Attachment tests', () => {
         ]}
       />
     );
-    await page.waitForLoadState();
-    await component.evaluate(() => document.fonts.ready);
+    await checkFailedAttachmentsComponentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachment-in-richtext-sendbox-with-error.png');
   });
 
@@ -134,8 +129,7 @@ betaTest.describe('Attachment tests', () => {
         ]}
       />
     );
-    await page.waitForLoadState();
-    await component.evaluate(() => document.fonts.ready);
+    await checkAttachmentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-single.png');
   });
 
@@ -162,21 +156,20 @@ betaTest.describe('Attachment tests', () => {
         ]}
       />
     );
-    await page.waitForLoadState();
-    await component.evaluate(() => document.fonts.ready);
+    await checkAttachmentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-multiple.png');
   });
 
   betaTest(
     'MessageThread should show single attachments that has sent out with custom action',
     async ({ mount, page }) => {
-      // due to limitation of playright, a mock component is required
+      // due to limitation of playwright, a mock component is required
       // we can't test directly on the MessageThread component
       const component = await mount(<TestMessageThreadWithCustomAttachmentActions />);
-      await page.waitForLoadState();
-      await component.evaluate(() => document.fonts.ready);
+      await checkAttachmentsLoaded(component, page);
       await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-custom-actions.png');
       await component.getByRole('button').click();
+      await page.getByLabel('Download').click();
       await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-custom-actions-clicked.png');
     }
   );
@@ -204,8 +197,7 @@ betaTest.describe('Attachment tests', () => {
         ]}
       />
     );
-    await component.evaluate(() => document.fonts.ready);
-    await page.waitForLoadState();
+    await checkAttachmentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachment-in-messagethread-acs-message-multiple.png');
   });
 
@@ -228,8 +220,7 @@ betaTest.describe('Attachment tests', () => {
         ]}
       />
     );
-    await page.waitForLoadState();
-    await component.evaluate(() => document.fonts.ready);
+    await checkAttachmentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachment-in-messagethread-acs-message-single.png');
   });
 
@@ -258,8 +249,7 @@ betaTest.describe('Attachment tests', () => {
           ]}
         />
       );
-      await page.waitForLoadState();
-      await component.evaluate(() => document.fonts.ready);
+      await checkAttachmentsLoaded(component, page);
       await expect(component).toHaveScreenshot('attachment-in-messagethread-teams-message-multiple.png');
     }
   );
@@ -283,8 +273,19 @@ betaTest.describe('Attachment tests', () => {
         ]}
       />
     );
-    await page.waitForLoadState();
-    await component.evaluate(() => document.fonts.ready);
+    await checkAttachmentsLoaded(component, page);
     await expect(component).toHaveScreenshot('attachment-in-messagethread-teams-message-single.png');
   });
 });
+
+const checkAttachmentsLoaded = async (component: Locator, page: Page): Promise<void> => {
+  await page.waitForLoadState();
+  await component.evaluate(() => document.fonts.ready);
+  await component.getByTestId('attachment-card').first().waitFor({ state: 'visible' });
+};
+
+const checkFailedAttachmentsComponentsLoaded = async (component: Locator, page: Page): Promise<void> => {
+  await page.waitForLoadState();
+  await component.evaluate(() => document.fonts.ready);
+  await component.getByTestId('send-box-message-bar').waitFor({ state: 'visible' });
+};
