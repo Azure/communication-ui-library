@@ -6,8 +6,7 @@ import { expect } from '@playwright/experimental-ct-react';
 import { TestRichTextInputBoxComponent } from './TestingComponents/TestRichTextInputBoxComponent';
 import { Locator, Page } from 'playwright-core';
 import { test as betaTest } from './FlavoredBaseTest';
-
-const formatButtonId = 'rich-text-input-box-format-button';
+import { formatButtonClick } from './utils/RichTextEditorUtils';
 
 // create a separate file for table tests to speed up the test execution
 betaTest.describe('RichTextInputBoxComponent table tests', () => {
@@ -159,9 +158,4 @@ const selectTableContextMenu = async ({
   if (text) {
     await component.pressSequentially(text);
   }
-};
-
-const formatButtonClick = async (component: Locator): Promise<void> => {
-  await component.getByTestId(formatButtonId).click();
-  await component.getByTestId('rich-text-editor-toolbar').waitFor({ state: 'visible' });
 };
