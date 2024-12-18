@@ -240,6 +240,38 @@ export class _MockCallAdapter implements CallAdapter {
   returnFromBreakoutRoom(): Promise<void> {
     throw Error('returnFromBreakoutRoom not implemented');
   }
+  /* @conditional-compile-remove(media-access) */
+  forbidAudio(userIds: string[]): Promise<void> {
+    throw Error(`forbidAudio not implemented userIds=${userIds}`);
+  }
+  /* @conditional-compile-remove(media-access) */
+  permitAudio(userIds: string[]): Promise<void> {
+    throw Error(`permitAudio not implemented userIds=${userIds}`);
+  }
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersAudio(): Promise<void> {
+    throw Error('forbidOthersAudio not implemented');
+  }
+  /* @conditional-compile-remove(media-access) */
+  permitOthersAudio(): Promise<void> {
+    throw Error('permitOthersAudio not implemented');
+  }
+  /* @conditional-compile-remove(media-access) */
+  forbidVideo(userIds: string[]): Promise<void> {
+    throw Error(`forbidAudio not implemented - userIds=${userIds}`);
+  }
+  /* @conditional-compile-remove(media-access) */
+  permitVideo(userIds: string[]): Promise<void> {
+    throw Error(`permitAudio not implemented userIds=${userIds}`);
+  }
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersVideo(): Promise<void> {
+    throw Error('forbidOthersAudio not implemented');
+  }
+  /* @conditional-compile-remove(media-access) */
+  permitOthersVideo(): Promise<void> {
+    throw Error('permitOthersAudio not implemented');
+  }
 }
 
 /**

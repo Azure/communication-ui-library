@@ -67,7 +67,6 @@ import {
 
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
-
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
@@ -557,6 +556,32 @@ export interface CallWithChatAdapterManagement {
    * Return to origin call of breakout room
    */
   returnFromBreakoutRoom(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * forbids audio for the specified user ids.
+   */
+  forbidAudio: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /** permits audio for the specified user ids. */
+  permitAudio: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /** forbids audio for Teams meeting attendees except the local user. */
+  forbidOthersAudio: () => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**  permits audio for Teams meeting attendees except the local user. */
+  permitOthersAudio: () => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /** forbids video for the specified user ids. */
+  forbidVideo: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /** permits video for the specified user ids. */
+  permitVideo: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /** forbids video for Teams meeting attendees except the local user. */
+  forbidOthersVideo: () => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /** permits video for Teams meeting attendees except the local user. */
+  permitOthersVideo: () => Promise<void>;
 }
 
 /**

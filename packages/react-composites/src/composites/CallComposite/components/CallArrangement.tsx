@@ -94,6 +94,8 @@ import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
+/* @conditional-compile-remove(media-access) */
+import { getMediaAccessSetting } from '../selectors/baseSelectors';
 import { FocusableElement } from '../../common/types/FocusableElement';
 import { DtmfDialPadOptions } from '../CallComposite';
 
@@ -228,7 +230,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
-    localParticipant
+    localParticipant,
+    /* @conditional-compile-remove(media-access) */
+    onForbidAudio,
+    /* @conditional-compile-remove(media-access) */
+    onPermitAudio,
+    /* @conditional-compile-remove(media-access) */
+    onForbidVideo,
+    /* @conditional-compile-remove(media-access) */
+    onPermitVideo
   } = videoGalleryProps;
 
   const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
@@ -342,11 +352,41 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     spotlightedParticipants
   ]);
 
+  /* @conditional-compile-remove(media-access) */
+  const meetingMediaAccess = useSelector(getMediaAccessSetting);
+  /* @conditional-compile-remove(media-access) */
+  const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
+    return {
+      onForbidAudio: capabilities?.forbidOthersAudio?.isPresent ? onForbidAudio : undefined,
+      onPermitAudio: capabilities?.forbidOthersAudio?.isPresent ? onPermitAudio : undefined,
+      onForbidOthersAudio: capabilities?.forbidOthersAudio?.isPresent ? muteAllHandlers.onForbidOthersAudio : undefined,
+      onPermitOthersAudio: capabilities?.forbidOthersAudio?.isPresent ? muteAllHandlers.onPermitOthersAudio : undefined,
+      onForbidVideo: capabilities?.forbidOthersVideo?.isPresent ? onForbidVideo : undefined,
+      onPermitVideo: capabilities?.forbidOthersVideo?.isPresent ? onPermitVideo : undefined,
+      onForbidOthersVideo: capabilities?.forbidOthersVideo?.isPresent ? muteAllHandlers.onForbidOthersVideo : undefined,
+      onPermitOthersVideo: capabilities?.forbidOthersVideo?.isPresent ? muteAllHandlers.onPermitOthersVideo : undefined,
+      meetingMediaAccess
+    };
+  }, [
+    capabilities?.forbidOthersAudio?.isPresent,
+    capabilities?.forbidOthersVideo?.isPresent,
+    onForbidAudio,
+    onPermitAudio,
+    muteAllHandlers.onForbidOthersAudio,
+    muteAllHandlers.onPermitOthersAudio,
+    muteAllHandlers.onForbidOthersVideo,
+    muteAllHandlers.onPermitOthersVideo,
+    onForbidVideo,
+    onPermitVideo,
+    meetingMediaAccess
+  ]);
+
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
     ...spotlightPeoplePaneProps,
     ...onMuteParticipantPeoplePaneProps,
-    ...pinPeoplePaneProps
+    ...pinPeoplePaneProps,
+    /* @conditional-compile-remove(media-access) */ ...onToggleParticipantMicPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
