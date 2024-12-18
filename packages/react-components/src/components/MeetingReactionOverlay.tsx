@@ -8,9 +8,13 @@ import {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant
 } from '../types';
+/* @conditional-compile-remove(together-mode) */
+import { VideoGalleryTogetherModeParticipantPosition } from '../types';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { ParticipantVideoTileOverlay } from './VideoGallery/ParticipantVideoTileOverlay';
 import { RemoteContentShareReactionOverlay } from './VideoGallery/RemoteContentShareReactionOverlay';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeOverlay } from './TogetherModeOverlay';
 
 /**
  * Reaction overlay component props
@@ -40,6 +44,9 @@ export interface MeetingReactionOverlayProps {
    * Remote participant's reaction event.
    */
   remoteParticipants?: VideoGalleryRemoteParticipant[];
+
+  /* @conditional-compile-remove(together-mode) */
+  seatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 }
 
 /**
@@ -68,7 +75,7 @@ const REACTION_EMOJI_RESIZE_SCALE_CONSTANT = 3;
  * @internal
  */
 export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.Element => {
-  const { overlayMode, reaction, reactionResources, localParticipant, remoteParticipants } = props;
+  const { overlayMode, reaction, reactionResources, localParticipant, remoteParticipants, seatingCoordinates } = props;
   const [emojiSizePx, setEmojiSizePx] = useState(0);
   const [divHeight, setDivHeight] = useState(0);
   const [divWidth, setDivWidth] = useState(0);
@@ -125,6 +132,29 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
         />
       </div>
     );
+  } else if (props.overlayMode === 'together-mode') {
+    /* @conditional-compile-remove(together-mode) */
+    return (
+      <div
+        ref={videoTileRef}
+        style={{
+          width: '100%',
+          height: '100%',
+          position: 'absolute',
+          top: '0',
+          left: '0'
+        }}
+      >
+        <TogetherModeOverlay
+          emojiSize={emojiSizePx}
+          reactionResources={reactionResources}
+          localParticipant={localParticipant ?? ({} as VideoGalleryLocalParticipant)}
+          remoteParticipants={remoteParticipants ?? ([] as VideoGalleryRemoteParticipant[])}
+          participantsSeatingArrangement={seatingCoordinates ?? {}}
+        />
+      </div>
+    );
+    return <></>;
   } else {
     return <></>;
   }

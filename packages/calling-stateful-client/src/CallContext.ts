@@ -559,7 +559,9 @@ export class CallContext {
         for (const [userId, seatingPosition] of seatingMap.entries()) {
           seatingPositions[userId] = seatingPosition;
         }
-        call.togetherMode.seatingPositions = seatingPositions;
+        if (Object.keys(seatingPositions).length > 0) {
+          call.togetherMode.seatingPositions = seatingPositions;
+        }
       }
     });
   }
