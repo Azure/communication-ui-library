@@ -111,6 +111,7 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   JoinByPhoneWaitToBeAdmittedIcon: <Clock20Filled />,
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
   StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />,
+  /* @conditional-compile-remove(together-mode) */
   TogetherModeLayout: <PeopleAudience20Regular />
 };
 
