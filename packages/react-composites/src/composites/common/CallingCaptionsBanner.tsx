@@ -91,7 +91,7 @@ export const CallingCaptionsBanner = (props: {
         />
       )}
       {
-        <div className={containerClassName} role='region' aria-label={strings.liveCaptionsLabel}>
+        <div className={containerClassName} role="region" aria-label={strings.liveCaptionsLabel}>
           <Stack horizontalAlign="center">
             <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
               <CaptionsBanner
