@@ -93,6 +93,9 @@ extends:
                     $dateTime = Get-Date -Format "yyyyMMdd-HHmmss"
                     $newBranchName = "td/update-strings-$dateTime"
 
+                    # Fix line endings
+                    git config --global core.autocrlf true
+
                     Write-Host "Creating new branch $newBranchName"
                     git checkout -b $newBranchName
                     git add -A
