@@ -5,9 +5,12 @@
     "removeButtonLabel": "Удалить",
     "sharingIconLabel": "Общий доступ",
     "mutedIconLabel": "Микрофон отключен",
+    "handRaisedIconLabel": "Поднята рука — позиция {position}",
     "displayNamePlaceholder": "Участник без имени",
     "participantStateRinging": "Выполняется вызов...",
     "participantStateHold": "На удержании",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, дополнительные параметры",
     "attendeeRole": "Участник"
   },
   "ParticipantList": {
@@ -73,6 +76,9 @@
     "rttConfirmButtonLabel": "Включить",
     "rttCancelButtonLabel": "Отмена",
     "rttCloseModalButtonAriaLabel": "Закрыть модальное окно ввода в режиме реального времени"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Запуск субтитров..."
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
@@ -155,6 +161,7 @@
   },
   "participantsButton": {
     "label": "Люди",
+    "ariaLabel": "Люди",
     "tooltipContent": "Показать участников",
     "menuHeader": "В этом звонке",
     "participantsListButtonLabel": "Пользователей: {numParticipants}",
@@ -178,7 +185,7 @@
   },
   "reactionButton": {
     "label": "Отреагировать",
-    "ariaLabel": "Кнопка \"Отреагировать\", отправить реакцию",
+    "ariaLabel": "Отреагировать",
     "tooltipDisabledContent": "Действие реакции отключено",
     "tooltipContent": "Отправка реакции",
     "likeReactionTooltipContent": "Нравится",
@@ -189,6 +196,100 @@
   },
   "rtt": {
     "isTypingText": "Ввод в режиме реального времени"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Параметры субтитров",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Язык речи",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Язык субтитров",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Язык, на котором говорят все участники звонка.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Субтитры будут отображаться на этом языке.",
+    "captionsSettingsConfirmButtonLabel": "Подтвердить",
+    "captionsSettingsCancelButtonLabel": "Отмена",
+    "captionsSettingsModalAriaLabel": "Модальное окно параметров субтитров",
+    "captionsSettingsCloseModalButtonAriaLabel": "Закрыть параметры субтитров"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Арабский (ОАЭ)",
+    "ar-sa": "Арабский (Саудовская Аравия)",
+    "da-dk": "Датский",
+    "de-de": "Немецкий (Германия)",
+    "en-au": "Английский (Австралия)",
+    "en-ca": "Английский (Канада)",
+    "en-gb": "Английский (Соединенное Королевство)",
+    "en-in": "Английский (Индия)",
+    "en-nz": "Английский (Новая Зеландия)",
+    "en-us": "Английский (США)",
+    "es-es": "Испанский (Испания), современная сортировка",
+    "es-mx": "Испанский (Мексика)",
+    "fi-fi": "Финский",
+    "fr-ca": "Французский (Канада)",
+    "fr-fr": "Французский (Франция)",
+    "hi-in": "Хинди",
+    "it-it": "Итальянский (Италия)",
+    "ja-jp": "Японский",
+    "ko-kr": "Корейский",
+    "nb-no": "Норвежский (букмол)",
+    "nl-be": "Нидерландский (Бельгия)",
+    "nl-nl": "Нидерландский (Нидерланды)",
+    "pl-pl": "Польский",
+    "pt-br": "Португальский (Бразилия)",
+    "ru-ru": "Русский",
+    "sv-se": "Шведский",
+    "zh-cn": "Китайский (Китайская Народная Республика)",
+    "zh-hk": "Китайский (Гонконг, САР)",
+    "cs-cz": "Чешский",
+    "pt-pt": "Португальский (Португалия)",
+    "tr-tr": "Турецкий",
+    "vi-vn": "Вьетнамский",
+    "th-th": "Тайский",
+    "he-il": "Иврит",
+    "cy-gb": "Валлийский",
+    "uk-ua": "Украинский",
+    "el-gr": "Греческий",
+    "hu-hu": "Венгерский",
+    "ro-ro": "Румынский",
+    "sk-sk": "Словацкий",
+    "zh-tw": "Китайский (Тайвань)"
+  },
+  "captionLanguages": {
+    "ar": "Арабский",
+    "da": "Датский",
+    "de": "Немецкий",
+    "en": "Английский",
+    "es": "Испанский",
+    "fi": "Финский",
+    "fr-ca": "Французский (Канада)",
+    "fr": "Французский (Франция)",
+    "hi": "Хинди",
+    "it": "Итальянский",
+    "ja": "Японский",
+    "ko": "Корейский",
+    "nb": "Норвежский (букмол)",
+    "nl": "Голландский",
+    "pl": "Польский",
+    "pt": "Португальский (Бразилия)",
+    "ru": "Русский",
+    "sv": "Шведский",
+    "zh-Hans": "Китайский (упрощенное письмо)",
+    "zh-Hant": "Китайский, традиционное письмо",
+    "cs": "Чешский",
+    "pt-pt": "Португальский (Португалия)",
+    "tr": "Турецкий",
+    "vi": "Вьетнамский",
+    "th": "Тайский",
+    "he": "Иврит",
+    "cy": "Валлийский",
+    "uk": "Украинский",
+    "el": "Греческий",
+    "hu": "Венгерский",
+    "ro": "Румынский",
+    "sk": "Словацкий"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Включить автоматические субтитры",
+    "offLabel": "Отключить автоматические субтитры",
+    "tooltipOnContent": "Отключить автоматические субтитры",
+    "tooltipOffContent": "Включить автоматические субтитры"
   },
   "messageThread": {
     "yesterday": "Вчера",
@@ -494,6 +595,26 @@
       "title": "Скоро будет достигнуто ограничение времени для комнаты.",
       "message": "Эта комната будет закрыта через 30 секунд",
       "dismissButtonAriaLabel": "Закрыть"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Камера включена",
+      "message": "Включите этот параметр, если хотите демонстрировать видео.",
+      "dismissButtonAriaLabel": "Закрыть"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Ваша камера отключена",
+      "message": "Вы больше не можете демонстрировать видео.",
+      "dismissButtonAriaLabel": "Закрыть"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Ваш микрофон включен",
+      "message": "Включите микрофон, если хотите что-то сказать.",
+      "dismissButtonAriaLabel": "Закрыть"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Ваш микрофон отключен",
+      "message": "Вы больше не можете включать звук.",
+      "dismissButtonAriaLabel": "Закрыть"
     }
   },
   "videoGallery": {
@@ -522,7 +643,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Открепить",
     "attendeeRole": "Участник",
     "muteParticipantMenuItemLabel": "Отключить микрофон",
-    "waitingScreenText": "Ожидание присоединения других участников"
+    "waitingScreenText": "Ожидание присоединения других участников",
+    "forbidAudio": "Отключить микрофон",
+    "permitAudio": "Разрешить использовать микрофон",
+    "forbidAudioTileMenuLabel": "Отключить микрофон",
+    "permitAudioTileMenuLabel": "Разрешить использовать микрофон",
+    "forbidVideo": "Выключить камеру",
+    "permitVideo": "Разрешить использовать камеру",
+    "forbidVideoTileMenuLabel": "Выключить камеру",
+    "permitVideoTileMenuLabel": "Разрешить использовать камеру"
   },
   "dialpad": {
     "placeholderText": "Введите номер телефона",

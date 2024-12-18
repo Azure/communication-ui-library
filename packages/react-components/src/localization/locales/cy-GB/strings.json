@@ -5,9 +5,12 @@
     "removeButtonLabel": "Tynnu",
     "sharingIconLabel": "Rhannu",
     "mutedIconLabel": "Wedi tewi",
+    "handRaisedIconLabel": "Llaw wedi'i chodi - Lleoliad {position}",
     "displayNamePlaceholder": "Cyfranogwr dienw",
     "participantStateRinging": "Wrthi'n galw...",
     "participantStateHold": "Galwad yn aros",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Mwy o Ddewisiadau",
     "attendeeRole": "Mynychwr"
   },
   "ParticipantList": {
@@ -73,6 +76,9 @@
     "rttConfirmButtonLabel": "Galluogi",
     "rttCancelButtonLabel": "Canslo",
     "rttCloseModalButtonAriaLabel": "Cau'r Moddol RTT"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Wrthi'n dechrau'r capsiynau..."
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Awgrymiadau"
@@ -155,6 +161,7 @@
   },
   "participantsButton": {
     "label": "Pobl",
+    "ariaLabel": "Pobl",
     "tooltipContent": "Dangos cyfranogwyr",
     "menuHeader": "Yn yr alwad hon",
     "participantsListButtonLabel": "{numParticipants} o bobl",
@@ -178,7 +185,7 @@
   },
   "reactionButton": {
     "label": "Ymateb",
-    "ariaLabel": "Botwm Ymateb, Anfon ymateb",
+    "ariaLabel": "Ymateb",
     "tooltipDisabledContent": "Mae'r weithred ymateb wedi'i hanalluogi",
     "tooltipContent": "Anfon ymateb",
     "likeReactionTooltipContent": "Hoffi",
@@ -189,6 +196,100 @@
   },
   "rtt": {
     "isTypingText": "Teipio RTT"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Gosodiadau Capsiynau",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Iaith lafar",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Iaith capsiynau",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Yr iaith y mae pawb yn yr alwad hon yn ei siarad.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Bydd capsiynau'n ymddangos yn yr iaith hon.",
+    "captionsSettingsConfirmButtonLabel": "Cadarnhau",
+    "captionsSettingsCancelButtonLabel": "Canslo",
+    "captionsSettingsModalAriaLabel": "Moddol Gosodiad Capsiynau",
+    "captionsSettingsCloseModalButtonAriaLabel": "Cau Gosodiad Capsiynau"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabeg - E.A.U.",
+    "ar-sa": "Arabeg - Saudi Arabia",
+    "da-dk": "Daneg",
+    "de-de": "Almaeneg - Yr Almaen",
+    "en-au": "Saesneg - Awstralia",
+    "en-ca": "Saesneg - Canada",
+    "en-gb": "Saesneg - Y Deyrnas Unedig",
+    "en-in": "Saesneg - India",
+    "en-nz": "Saesneg - Seland Newydd",
+    "en-us": "Saesneg - Unol Daleithiau America",
+    "es-es": "Sbaeneg - Sbaen (Modern)",
+    "es-mx": "Sbaeneg - Mecsico",
+    "fi-fi": "Ffinneg",
+    "fr-ca": "Ffrangeg - Canada",
+    "fr-fr": "Ffrangeg - Ffrainc",
+    "hi-in": "Hindi",
+    "it-it": "Eidaleg - Yr Eidal",
+    "ja-jp": "Japaneeg",
+    "ko-kr": "Coreeg",
+    "nb-no": "Norwyeg (Bokmål)",
+    "nl-be": "Iseldireg - Gwlad Belg",
+    "nl-nl": "Iseldireg - Yr Iseldiroedd",
+    "pl-pl": "Pwyleg",
+    "pt-br": "Portiwgaleg - Brasil",
+    "ru-ru": "Rwseg",
+    "sv-se": "Swedeg",
+    "zh-cn": "Tsieinëeg - Gweriniaeth y Bobl Tsieina",
+    "zh-hk": "Tsieinëeg - Hong Kong SAR",
+    "cs-cz": "Tsieceg",
+    "pt-pt": "Portiwgaleg - Portiwgal",
+    "tr-tr": "Tyrceg",
+    "vi-vn": "Fietnameg",
+    "th-th": "Thai",
+    "he-il": "Hebraeg",
+    "cy-gb": "Cymraeg",
+    "uk-ua": "Wcreineg",
+    "el-gr": "Groeg",
+    "hu-hu": "Hwngareg",
+    "ro-ro": "Rwmaneg",
+    "sk-sk": "Slofaceg",
+    "zh-tw": "Tsieinëeg - Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabeg",
+    "da": "Daneg",
+    "de": "Almaeneg",
+    "en": "Saesneg",
+    "es": "Sbaeneg",
+    "fi": "Ffinneg",
+    "fr-ca": "Ffrangeg - Canada",
+    "fr": "Ffrangeg - Ffrainc",
+    "hi": "Hindi",
+    "it": "Eidaleg",
+    "ja": "Japaneeg",
+    "ko": "Coreeg",
+    "nb": "Norwyeg (Bokmål)",
+    "nl": "Iseldireg",
+    "pl": "Pwyleg",
+    "pt": "Portiwgaleg - Brasil",
+    "ru": "Rwseg",
+    "sv": "Swedeg",
+    "zh-Hans": "Tsieinëeg (Syml)",
+    "zh-Hant": "Tsieinëeg (Traddodiadol)",
+    "cs": "Tsieceg",
+    "pt-pt": "Portiwgaleg - Portiwgal",
+    "tr": "Tyrceg",
+    "vi": "Fietnameg",
+    "th": "Thai",
+    "he": "Hebraeg",
+    "cy": "Cymraeg",
+    "uk": "Wcreineg",
+    "el": "Groeg",
+    "hu": "Hwngareg",
+    "ro": "Rwmaneg",
+    "sk": "Slofaceg"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Galluogi capsiynau",
+    "offLabel": "Analluogi capsiynau",
+    "tooltipOnContent": "Analluogi capsiynau",
+    "tooltipOffContent": "Galluogi capsiynau"
   },
   "messageThread": {
     "yesterday": "Ddoe",
@@ -494,6 +595,26 @@
       "title": "Mae terfyn amser yr ystafell ar fin dod i ben.",
       "message": "Bydd yr ystafell hon yn cau mewn 30 eiliad",
       "dismissButtonAriaLabel": "Cau"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Mae eich camera wedi cael ei alluogi",
+      "message": "Rhowch eich camera ar waith os hoffech chi rannu fideo",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Mae eich camera wedi cael ei analluogi",
+      "message": "Does dim modd i chi rannu fideo bellach",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Mae eich meic wedi cael ei alluogi",
+      "message": "Dad-dewch y meicroffon os hoffech chi siarad.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Mae eich meic wedi cael ei analluogi",
+      "message": "Does dim modd i chi ddad-dewi bellach.",
+      "dismissButtonAriaLabel": "Cau"
     }
   },
   "videoGallery": {
@@ -522,7 +643,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Gadael y sbotolau",
     "attendeeRole": "Mynychwr",
     "muteParticipantMenuItemLabel": "Tewi",
-    "waitingScreenText": "Yn aros i bobl eraill ymuno"
+    "waitingScreenText": "Yn aros i bobl eraill ymuno",
+    "forbidAudio": "Analluogi meic",
+    "permitAudio": "Caniatáu meic",
+    "forbidAudioTileMenuLabel": "Analluogi meic",
+    "permitAudioTileMenuLabel": "Caniatáu meic",
+    "forbidVideo": "Analluogi camera",
+    "permitVideo": "Caniatáu camera",
+    "forbidVideoTileMenuLabel": "Analluogi camera",
+    "permitVideoTileMenuLabel": "Caniatáu camera"
   },
   "dialpad": {
     "placeholderText": "Rhowch rif ffôn",

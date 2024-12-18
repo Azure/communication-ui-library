@@ -5,9 +5,12 @@
     "removeButtonLabel": "Poista",
     "sharingIconLabel": "Jakaminen",
     "mutedIconLabel": "Mykistetty",
+    "handRaisedIconLabel": "Käsi ylhäällä – paikka {position}",
     "displayNamePlaceholder": "Nimetön osallistuja",
     "participantStateRinging": "Soitetaan...",
     "participantStateHold": "Pidossa",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, lisää asetuksia",
     "attendeeRole": "Osallistuja"
   },
   "ParticipantList": {
@@ -73,6 +76,9 @@
     "rttConfirmButtonLabel": "Ota käyttöön",
     "rttCancelButtonLabel": "Peruuta",
     "rttCloseModalButtonAriaLabel": "Sulje RTT-modaalinen"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Aloitetaan tekstitystä..."
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -155,6 +161,7 @@
   },
   "participantsButton": {
     "label": "Ihmiset",
+    "ariaLabel": "Henkilöt",
     "tooltipContent": "Näytä osallistujat",
     "menuHeader": "Tässä puhelussa",
     "participantsListButtonLabel": "{numParticipants} henkilöä",
@@ -178,7 +185,7 @@
   },
   "reactionButton": {
     "label": "Reagoi",
-    "ariaLabel": "Reagoi-painike, lähetä reaktio",
+    "ariaLabel": "Reagoi",
     "tooltipDisabledContent": "Reaktiotoiminto on poistettu käytöstä",
     "tooltipContent": "Lähetä reaktio",
     "likeReactionTooltipContent": "Tykkää",
@@ -189,6 +196,100 @@
   },
   "rtt": {
     "isTypingText": "RTT-kirjoitus"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Tekstitysasetukset",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Puhuttu kieli",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Tekstitysten kieli",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Kieli, jota kaikki tähän puheluun osallistuvat puhuvat.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Tekstitys näkyy tällä kielellä.",
+    "captionsSettingsConfirmButtonLabel": "Vahvista",
+    "captionsSettingsCancelButtonLabel": "Peruuta",
+    "captionsSettingsModalAriaLabel": "Tekstitysasetus, modaalinen valintaikkuna",
+    "captionsSettingsCloseModalButtonAriaLabel": "Sulje tekstitysasetus"
+  },
+  "spokenLanguages": {
+    "ar-ae": "arabia – Arabiemiirikunnat",
+    "ar-sa": "arabia – Saudi-Arabia",
+    "da-dk": "tanska",
+    "de-de": "saksa – Saksa",
+    "en-au": "englanti – Australia",
+    "en-ca": "englanti – Kanada",
+    "en-gb": "englanti – Yhdistynyt kuningaskunta",
+    "en-in": "englanti – Intia",
+    "en-nz": "englanti – Uusi-Seelanti",
+    "en-us": "englanti – Yhdysvallat",
+    "es-es": "espanja – Espanja (nykykieli)",
+    "es-mx": "espanja – Meksiko",
+    "fi-fi": "suomi",
+    "fr-ca": "ranska – Kanada",
+    "fr-fr": "ranska – Ranska",
+    "hi-in": "hindi",
+    "it-it": "italia – Italia",
+    "ja-jp": "japani",
+    "ko-kr": "korea",
+    "nb-no": "norja (bokmål)",
+    "nl-be": "hollanti – Belgia",
+    "nl-nl": "hollanti – Alankomaat",
+    "pl-pl": "puola",
+    "pt-br": "portugali (Brasilia)",
+    "ru-ru": "venäjä",
+    "sv-se": "ruotsi",
+    "zh-cn": "kiina – Kiinan kansantasavalta",
+    "zh-hk": "kiina – Hongkong, erityishallintoalue",
+    "cs-cz": "tšekki",
+    "pt-pt": "portugali – Portugali",
+    "tr-tr": "turkki",
+    "vi-vn": "vietnam",
+    "th-th": "thai",
+    "he-il": "heprea",
+    "cy-gb": "kymri",
+    "uk-ua": "ukraina",
+    "el-gr": "kreikka",
+    "hu-hu": "unkari",
+    "ro-ro": "romania",
+    "sk-sk": "slovakki",
+    "zh-tw": "kiina – Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "arabia",
+    "da": "tanska",
+    "de": "saksa",
+    "en": "englanti",
+    "es": "espanja",
+    "fi": "suomi",
+    "fr-ca": "ranska – Kanada",
+    "fr": "ranska – Ranska",
+    "hi": "hindi",
+    "it": "italia",
+    "ja": "japani",
+    "ko": "korea",
+    "nb": "norja (bokmål)",
+    "nl": "hollanti",
+    "pl": "puola",
+    "pt": "portugali (Brasilia)",
+    "ru": "venäjä",
+    "sv": "ruotsi",
+    "zh-Hans": "kiina (yksinkertaistettu)",
+    "zh-Hant": "kiina (perinteinen)",
+    "cs": "tšekki",
+    "pt-pt": "portugali – Portugali",
+    "tr": "turkki",
+    "vi": "vietnam",
+    "th": "thai",
+    "he": "heprea",
+    "cy": "kymri",
+    "uk": "ukraina",
+    "el": "kreikka",
+    "hu": "unkari",
+    "ro": "romania",
+    "sk": "slovakki"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Ota tekstitykset käyttöön",
+    "offLabel": "Poista tekstitykset käytöstä",
+    "tooltipOnContent": "Poista tekstitykset käytöstä",
+    "tooltipOffContent": "Ota tekstitykset käyttöön"
   },
   "messageThread": {
     "yesterday": "eilen",
@@ -494,6 +595,26 @@
       "title": "Pienryhmätilan aikaraja on täyttymässä.",
       "message": "Tämä huone suljetaan 30 sekunnin kuluttua",
       "dismissButtonAriaLabel": "Sulje"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Kamera on otettu käyttöön",
+      "message": "Ota se käyttöön, jos haluat jakaa videokuvaa.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Kamerasi on pois käytöstä",
+      "message": "Et voi enää jakaa videokuvaa.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Mikrofoni on otettu käyttöön",
+      "message": "Poista mikrofonin mykistys, jos haluat puhua.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Mikrofonisi on poissa käytöstä",
+      "message": "Et voi enää poistaa mykistystä.",
+      "dismissButtonAriaLabel": "Sulje"
     }
   },
   "videoGallery": {
@@ -522,7 +643,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Valokeila",
     "attendeeRole": "Osallistuja",
     "muteParticipantMenuItemLabel": "Mykistä",
-    "waitingScreenText": "Odotetaan että muut liittyvät"
+    "waitingScreenText": "Odotetaan että muut liittyvät",
+    "forbidAudio": "Poista mikrofoni käytöstä",
+    "permitAudio": "Salli mikrofoni",
+    "forbidAudioTileMenuLabel": "Poista mikrofoni käytöstä",
+    "permitAudioTileMenuLabel": "Salli mikrofoni",
+    "forbidVideo": "Poista kamera käytöstä",
+    "permitVideo": "Salli kamera",
+    "forbidVideoTileMenuLabel": "Poista kamera käytöstä",
+    "permitVideoTileMenuLabel": "Salli kamera"
   },
   "dialpad": {
     "placeholderText": "Anna puhelinnumero",

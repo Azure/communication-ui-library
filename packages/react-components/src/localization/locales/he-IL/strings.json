@@ -5,9 +5,12 @@
     "removeButtonLabel": "הסר",
     "sharingIconLabel": "משתף",
     "mutedIconLabel": "מושתק",
+    "handRaisedIconLabel": "יד מורמת - מיקום {position}",
     "displayNamePlaceholder": "משתתף ללא שם",
     "participantStateRinging": "מתקשר...",
     "participantStateHold": "בהמתנה",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, אפשרויות נוספות",
     "attendeeRole": "משתתף"
   },
   "ParticipantList": {
@@ -73,6 +76,9 @@
     "rttConfirmButtonLabel": "הפעל",
     "rttCancelButtonLabel": "ביטול",
     "rttCloseModalButtonAriaLabel": "סגור תיבת דו-שיח מודאלית של RTT"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "מאתחל כתוביות..."
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
@@ -155,6 +161,7 @@
   },
   "participantsButton": {
     "label": "אנשים",
+    "ariaLabel": "אנשים",
     "tooltipContent": "הצג משתתפים",
     "menuHeader": "בשיחה זו",
     "participantsListButtonLabel": "{numParticipants} אנשים",
@@ -178,7 +185,7 @@
   },
   "reactionButton": {
     "label": "תגובה",
-    "ariaLabel": "לחצן 'הגב', שלח תגובה",
+    "ariaLabel": "תגובה",
     "tooltipDisabledContent": "פעולת התגובה אינה זמינה",
     "tooltipContent": "שלח תגובה",
     "likeReactionTooltipContent": "אהבתי",
@@ -189,6 +196,100 @@
   },
   "rtt": {
     "isTypingText": "הקלדת RTT"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "הגדרות כתוביות",
+    "captionsSettingsSpokenLanguageDropdownLabel": "שפה מדוברת",
+    "captionsSettingsCaptionLanguageDropdownLabel": "שפת כתוביות",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "השפה שבה כולם בשיחה הזו מדברים.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "הכתוביות יופיעו בשפה זו.",
+    "captionsSettingsConfirmButtonLabel": "אישור",
+    "captionsSettingsCancelButtonLabel": "ביטול",
+    "captionsSettingsModalAriaLabel": "מודאל הגדרת כתוביות",
+    "captionsSettingsCloseModalButtonAriaLabel": "סגור הגדרת כתוביות"
+  },
+  "spokenLanguages": {
+    "ar-ae": "ערבית - איחוד האמירויות",
+    "ar-sa": "ערבית - ערב הסעודית",
+    "da-dk": "דנית",
+    "de-de": "גרמנית - גרמניה",
+    "en-au": "אנגלית - אוסטרליה",
+    "en-ca": "אנגלית - קנדה",
+    "en-gb": "אנגלית - בריטניה",
+    "en-in": "אנגלית - הודו",
+    "en-nz": "אנגלית - ניו זילנד",
+    "en-us": "אנגלית - ארצות הברית",
+    "es-es": "ספרדית - ספרד (ספרדית מודרנית)",
+    "es-mx": "ספרדית - מקסיקו",
+    "fi-fi": "פינית",
+    "fr-ca": "צרפתית - קנדה",
+    "fr-fr": "צרפתית - צרפת",
+    "hi-in": "הינדי",
+    "it-it": "איטלקית - איטליה",
+    "ja-jp": "יפנית",
+    "ko-kr": "קוריאנית",
+    "nb-no": "נורווגית (Bokmål)",
+    "nl-be": "הולנדית - בלגיה",
+    "nl-nl": "הולנדית - הולנד",
+    "pl-pl": "פולנית",
+    "pt-br": "פורטוגזית - ברזיל",
+    "ru-ru": "רוסית",
+    "sv-se": "שוודית",
+    "zh-cn": "סינית - הרפובליקה העממית של סין",
+    "zh-hk": "סינית - הונג קונג",
+    "cs-cz": "צ'כית",
+    "pt-pt": "פורטוגזית - פורטוגל",
+    "tr-tr": "טורקית",
+    "vi-vn": "וייטנאמית",
+    "th-th": "תאית",
+    "he-il": "עברית",
+    "cy-gb": "וולשית",
+    "uk-ua": "אוקראינית",
+    "el-gr": "יוונית",
+    "hu-hu": "הונגרית",
+    "ro-ro": "רומנית",
+    "sk-sk": "סלובקית",
+    "zh-tw": "סינית - טייוואן"
+  },
+  "captionLanguages": {
+    "ar": "ערבית",
+    "da": "דנית",
+    "de": "גרמנית",
+    "en": "אנגלית",
+    "es": "ספרדית",
+    "fi": "פינית",
+    "fr-ca": "צרפתית - קנדה",
+    "fr": "צרפתית - צרפת",
+    "hi": "הינדי",
+    "it": "איטלקית",
+    "ja": "יפנית",
+    "ko": "קוריאנית",
+    "nb": "נורווגית (Bokmål)",
+    "nl": "הולנדית",
+    "pl": "פולנית",
+    "pt": "פורטוגזית - ברזיל",
+    "ru": "רוסית",
+    "sv": "שוודית",
+    "zh-Hans": "סינית (פשוטה)",
+    "zh-Hant": "סינית (מסורתית)",
+    "cs": "צ'כית",
+    "pt-pt": "פורטוגזית - פורטוגל",
+    "tr": "טורקית",
+    "vi": "וייטנאמית",
+    "th": "תאית",
+    "he": "עברית",
+    "cy": "וולשית",
+    "uk": "אוקראינית",
+    "el": "יוונית",
+    "hu": "הונגרית",
+    "ro": "רומנית",
+    "sk": "סלובקית"
+  },
+  "startCaptionsButton": {
+    "onLabel": "הפעל כתוביות",
+    "offLabel": "כבה כתוביות",
+    "tooltipOnContent": "כבה כתוביות",
+    "tooltipOffContent": "הפעל כתוביות"
   },
   "messageThread": {
     "yesterday": "אתמול",
@@ -494,6 +595,26 @@
       "title": "תוקף מגבלת זמן החדר עומד לפוג.",
       "message": "חדר זה ייסגר בעוד 30 שניות",
       "dismissButtonAriaLabel": "סגור"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "המצלמה שלך הפכה לזמינה",
+      "message": "הפעל אותה אם ברצונך לשתף וידאו.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "המצלמה שלך הושבתה",
+      "message": "לא תוכל עוד לשתף וידאו.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "המיקרופון שלך הפך לזמין",
+      "message": "בטל את ההשתקה אם אתה מעוניין לדבר.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "המיקרופון שלך הפך ללא זמין",
+      "message": "לא תוכל עוד לבטל השתקה.",
+      "dismissButtonAriaLabel": "סגור"
     }
   },
   "videoGallery": {
@@ -522,7 +643,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "צא מזרקור",
     "attendeeRole": "משתתף",
     "muteParticipantMenuItemLabel": "השתק",
-    "waitingScreenText": "מחכה שאחרים יצטרפו"
+    "waitingScreenText": "מחכה שאחרים יצטרפו",
+    "forbidAudio": "הפוך את המיקרופון ללא זמין",
+    "permitAudio": "אפשר שימוש במיקרופון",
+    "forbidAudioTileMenuLabel": "הפוך את המיקרופון ללא זמין",
+    "permitAudioTileMenuLabel": "אפשר שימוש במיקרופון",
+    "forbidVideo": "הפוך את המצלמה ללא זמינה",
+    "permitVideo": "אפשר שימוש במצלמה",
+    "forbidVideoTileMenuLabel": "הפוך את המצלמה ללא זמינה",
+    "permitVideoTileMenuLabel": "אפשר שימוש במצלמה"
   },
   "dialpad": {
     "placeholderText": "הזן מספר טלפון",
