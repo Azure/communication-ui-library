@@ -169,7 +169,7 @@ betaTest.describe('Attachment tests', () => {
       await checkAttachmentsLoaded(component, page);
       await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-custom-actions.png');
       await component.getByRole('button').click();
-      await page.getByLabel('Download').click();
+      await page.getByLabel('Download').waitFor({ state: 'visible' });
       await expect(component).toHaveScreenshot('attachment-in-messagethread-mymessage-custom-actions-clicked.png');
     }
   );
