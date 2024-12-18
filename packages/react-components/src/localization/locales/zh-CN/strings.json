@@ -5,9 +5,12 @@
     "removeButtonLabel": "删除",
     "sharingIconLabel": "共享",
     "mutedIconLabel": "已静音",
+    "handRaisedIconLabel": "已举手 - 位置 {position}",
     "displayNamePlaceholder": "未命名的参与者",
     "participantStateRinging": "正在呼叫...",
     "participantStateHold": "保留",
+    "participantItemAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{sharingState}、{connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{sharingState}、{connectionState}、更多选项",
     "attendeeRole": "与会者"
   },
   "ParticipantList": {
@@ -74,12 +77,16 @@
     "rttCancelButtonLabel": "取消",
     "rttCloseModalButtonAriaLabel": "关闭 RTT 模式"
   },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "正在启动字幕..."
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
   },
   "imageOverlay": {
     "downloadButtonLabel": "下载",
-    "dismissButtonAriaLabel": "关闭"
+    "dismissButtonAriaLabel": "关闭",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "已发送消息",
@@ -155,6 +162,7 @@
   },
   "participantsButton": {
     "label": "人员",
+    "ariaLabel": "人脉",
     "tooltipContent": "显示参与者",
     "menuHeader": "在此通话中",
     "participantsListButtonLabel": "{numParticipants} 人",
@@ -178,7 +186,7 @@
   },
   "reactionButton": {
     "label": "回应",
-    "ariaLabel": "回应按钮，发送回应",
+    "ariaLabel": "回应",
     "tooltipDisabledContent": "已禁用表情符号操作",
     "tooltipContent": "发送表情符号",
     "likeReactionTooltipContent": "点赞",
@@ -189,6 +197,100 @@
   },
   "rtt": {
     "isTypingText": "RTT 键入"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "字幕设置",
+    "captionsSettingsSpokenLanguageDropdownLabel": "口语",
+    "captionsSettingsCaptionLanguageDropdownLabel": "辅助字幕语言",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "此通话中的每个人都在讲的语言。",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "字幕将以此语言显示。",
+    "captionsSettingsConfirmButtonLabel": "确认",
+    "captionsSettingsCancelButtonLabel": "取消",
+    "captionsSettingsModalAriaLabel": "字幕设置模式",
+    "captionsSettingsCloseModalButtonAriaLabel": "关闭字幕设置"
+  },
+  "spokenLanguages": {
+    "ar-ae": "阿拉伯语 - 阿拉伯联合酋长国",
+    "ar-sa": "阿拉伯语 - 沙特阿拉伯",
+    "da-dk": "丹麦语",
+    "de-de": "德语 - 德国",
+    "en-au": "英语 - 澳大利亚",
+    "en-ca": "英语 - 加拿大",
+    "en-gb": "英语 - 英国",
+    "en-in": "英语 - 印度",
+    "en-nz": "英语 - 新西兰",
+    "en-us": "英语 - 美国",
+    "es-es": "西班牙语 - 西班牙(现代风格)",
+    "es-mx": "西班牙语 - 墨西哥",
+    "fi-fi": "芬兰语",
+    "fr-ca": "法语 - 加拿大",
+    "fr-fr": "法语 - 法国",
+    "hi-in": "印地语",
+    "it-it": "意大利语–意大利",
+    "ja-jp": "日语",
+    "ko-kr": "韩语",
+    "nb-no": "挪威语(博克马尔语)",
+    "nl-be": "荷兰语 - 比利时",
+    "nl-nl": "荷兰语 - 荷兰",
+    "pl-pl": "波兰语",
+    "pt-br": "葡萄牙语 - 巴西",
+    "ru-ru": "俄语",
+    "sv-se": "瑞典语",
+    "zh-cn": "中文 - 中华人民共和国",
+    "zh-hk": "中文 - 香港特别行政区",
+    "cs-cz": "捷克语",
+    "pt-pt": "葡萄牙语 - 葡萄牙",
+    "tr-tr": "土耳其语",
+    "vi-vn": "越南语",
+    "th-th": "泰语",
+    "he-il": "希伯来语",
+    "cy-gb": "威尔士语",
+    "uk-ua": "乌克兰语",
+    "el-gr": "希腊语",
+    "hu-hu": "匈牙利语",
+    "ro-ro": "罗马尼亚语",
+    "sk-sk": "斯洛伐克",
+    "zh-tw": "中文 – 台湾"
+  },
+  "captionLanguages": {
+    "ar": "阿拉伯语",
+    "da": "丹麦语",
+    "de": "德语",
+    "en": "英语",
+    "es": "西班牙语",
+    "fi": "芬兰语",
+    "fr-ca": "法语 - 加拿大",
+    "fr": "法语 - 法国",
+    "hi": "印地语",
+    "it": "意大利语",
+    "ja": "日语",
+    "ko": "韩语",
+    "nb": "挪威语(博克马尔语)",
+    "nl": "荷兰语",
+    "pl": "波兰语",
+    "pt": "葡萄牙语 - 巴西",
+    "ru": "俄语",
+    "sv": "瑞典语",
+    "zh-Hans": "简体中文",
+    "zh-Hant": "中文(繁体)",
+    "cs": "捷克语",
+    "pt-pt": "葡萄牙语 - 葡萄牙",
+    "tr": "土耳其语",
+    "vi": "越南语",
+    "th": "泰语",
+    "he": "希伯来语",
+    "cy": "威尔士语",
+    "uk": "乌克兰语",
+    "el": "希腊语",
+    "hu": "匈牙利语",
+    "ro": "罗马尼亚语",
+    "sk": "斯洛伐克"
+  },
+  "startCaptionsButton": {
+    "onLabel": "开启字幕",
+    "offLabel": "关闭辅助字幕",
+    "tooltipOnContent": "关闭辅助字幕",
+    "tooltipOffContent": "开启字幕"
   },
   "messageThread": {
     "yesterday": "昨天",
@@ -494,6 +596,26 @@
       "title": "分组讨论室时间限制即将过期。",
       "message": "此分组讨论室将在 30 秒内关闭",
       "dismissButtonAriaLabel": "关闭"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "已启用你的摄像头",
+      "message": "如果想要共享视频，请将其打开。",
+      "dismissButtonAriaLabel": "关闭"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "你的摄像头已被禁用",
+      "message": "你无法再共享视频。",
+      "dismissButtonAriaLabel": "关闭"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "已启用麦克风",
+      "message": "你想说话时，请取消静音。",
+      "dismissButtonAriaLabel": "关闭"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "已禁用麦克风",
+      "message": "你无法再取消静音。",
+      "dismissButtonAriaLabel": "关闭"
     }
   },
   "videoGallery": {
@@ -522,7 +644,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "退出聚焦",
     "attendeeRole": "与会者",
     "muteParticipantMenuItemLabel": "静音",
-    "waitingScreenText": "正在等待其他人加入"
+    "waitingScreenText": "正在等待其他人加入",
+    "forbidAudio": "禁用麦克风",
+    "permitAudio": "允许使用麦克风",
+    "forbidAudioTileMenuLabel": "禁用麦克风",
+    "permitAudioTileMenuLabel": "允许使用麦克风",
+    "forbidVideo": "禁用摄像头",
+    "permitVideo": "允许使用摄像头",
+    "forbidVideoTileMenuLabel": "禁用摄像头",
+    "permitVideoTileMenuLabel": "允许使用摄像头"
   },
   "dialpad": {
     "placeholderText": "输入电话号码",

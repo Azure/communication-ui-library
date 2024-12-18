@@ -85,7 +85,8 @@
   },
   "imageOverlay": {
     "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "dismissButtonAriaLabel": "Close",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
@@ -614,6 +615,14 @@
     "capabilityUnmuteMicAbsent": {
       "title": "Your mic has been disabled",
       "message": "You can no longer unmute.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode has started",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode has ended",
       "dismissButtonAriaLabel": "Close"
     }
   },
