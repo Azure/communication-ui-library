@@ -359,7 +359,11 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(breakout-rooms) */
   breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
   /* @conditional-compile-remove(breakout-rooms) */
-  breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon'
+  breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon',
+  /* @conditional-compile-remove(together-mode) */
+  togetherModeStarted: 'NotificationBarTogetherModeIcon',
+  /* @conditional-compile-remove(together-mode) */
+  togetherModeEnded: 'NotificationBarTogetherModeIcon'
 };
 
 /**
