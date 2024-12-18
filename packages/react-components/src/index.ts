@@ -82,8 +82,8 @@ export type { Reaction, ReactionResources, ReactionSprite } from './types';
 export type {
   SpokenLanguageStrings,
   CaptionLanguageStrings,
-  _SupportedSpokenLanguage,
-  _SupportedCaptionLanguage
+  SupportedSpokenLanguage,
+  SupportedCaptionLanguage
 } from './types';
 export { _spokenLanguageToCaptionLanguage } from './types';
 

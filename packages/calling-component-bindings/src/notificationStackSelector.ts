@@ -60,7 +60,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
   ],
   (
     latestErrors: CallErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ latestNotifications,
+    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ /* @conditional-compile-remove(together-mode) */ latestNotifications,
     diagnostics,
     deviceManager,
     environmentInfo,

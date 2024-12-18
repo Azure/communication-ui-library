@@ -4,8 +4,8 @@
 import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-import { _StartCaptionsButton } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
+import { StartCaptionsButton } from '@internal/react-components';
 import React from 'react';
 import { useState } from 'react';
 import { useMemo, useCallback } from 'react';
@@ -19,9 +19,6 @@ import {
   generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
-import { useHandlers } from '../../CallComposite/hooks/useHandlers';
-import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
-import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
@@ -54,13 +51,12 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
 export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element => {
   const localeStrings = useLocale();
   const holdButtonProps = usePropsFor(HoldButton);
-  const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
-  const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
+  const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
   const startCaptions = useCallback(async () => {
-    await startCaptionsButtonHandlers.onStartCaptions({
+    await startCaptionsButtonProps.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
-  }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
+  }, [startCaptionsButtonProps]);
 
   /* @conditional-compile-remove(overflow-top-composite) */
   const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
@@ -150,7 +146,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
       onClick: () => {
         startCaptionsButtonProps.checked
-          ? startCaptionsButtonHandlers.onStopCaptions()
+          ? startCaptionsButtonProps.onStopCaptions()
           : startCaptionsButtonProps.currentSpokenLanguage !== ''
             ? startCaptions()
             : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();

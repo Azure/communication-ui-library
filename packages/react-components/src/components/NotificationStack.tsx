@@ -281,10 +281,10 @@ export interface NotificationStackStrings {
   /* @conditional-compile-remove(media-access) */
   capabilityUnmuteMicAbsent?: NotificationStrings;
 
-  /* @conditional-compile-remove(breakout-rooms) */
+  /* @conditional-compile-remove(together-mode) */
   togetherModeStarted?: NotificationStrings;
 
-  /* @conditional-compile-remove(breakout-rooms) */
+  /* @conditional-compile-remove(together-mode) */
   togetherModeEnded?: NotificationStrings;
 }
 
