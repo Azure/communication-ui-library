@@ -16,7 +16,9 @@ import {
   SendBoxStrings,
   TypingIndicatorStrings,
   VideoGalleryStrings,
-  CaptionsBannerStrings
+  CaptionsSettingsModalStrings,
+  CaptionsBannerStrings,
+  StartCaptionsButtonStrings
 } from '../components';
 import { NotificationStackStrings } from '../components';
 import { RaiseHandButtonStrings } from '../components';
@@ -53,6 +55,7 @@ import { RTTDisclosureBannerStrings } from '../components/RTTDisclosureBanner';
 import { RTTModalStrings } from '../components/RTTModal';
 /* @conditional-compile-remove(rtt) */
 import { RealTimeTextStrings } from '../components/RealTimeText';
+import { CaptionLanguageStrings, SpokenLanguageStrings } from '../types';
 
 /**
  * Locale information for all components exported from this library.
@@ -195,8 +198,20 @@ export interface ComponentStrings {
   /* @conditional-compile-remove(rtt) */
   /** Strings for RealTimeText */
   rtt: RealTimeTextStrings;
+  /** Strings for Captions Setting Modal */
+  captionsSettingsModal: CaptionsSettingsModalStrings;
+  /**
+   * 1 to 1 mapping between language code and language string for spoken languages
+   */
+  spokenLanguages: SpokenLanguageStrings;
+  /**
+   * 1 to 1 mapping between language code and language string for caption languages
+   */
+  captionLanguages: CaptionLanguageStrings;
   /** Strings for CaptionsBanner */
   captionsBanner: CaptionsBannerStrings;
+  /** Strings for Start Captions Button */
+  startCaptionsButton: StartCaptionsButtonStrings;
 }
 
 /**

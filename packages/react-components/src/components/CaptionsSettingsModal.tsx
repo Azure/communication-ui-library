@@ -26,61 +26,131 @@ import {
   titleClassName,
   titleContainerClassName
 } from './styles/CaptionsSettingsModal.styles';
-import { _captionsOptions } from './StartCaptionsButton';
+import { CaptionsOptions } from './StartCaptionsButton';
 import { defaultSpokenLanguage } from './utils';
 import {
   SpokenLanguageStrings,
   CaptionLanguageStrings,
   _spokenLanguageToCaptionLanguage,
-  _SupportedSpokenLanguage,
-  _SupportedCaptionLanguage,
+  SupportedSpokenLanguage,
+  SupportedCaptionLanguage,
   SpokenLanguageDropdownOptions,
   CaptionLanguageDropdownOptions
 } from '../types';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
+import { useLocale } from '../localization';
 
 /**
- * @internal
+ * @public
  * strings for captions setting modal
  */
-export interface _CaptionsSettingsModalStrings {
+export interface CaptionsSettingsModalStrings {
+  /**
+   * Title for the modal
+   */
   captionsSettingsModalTitle?: string;
+  /**
+   * Label for the spoken language dropdown menu
+   */
   captionsSettingsSpokenLanguageDropdownLabel?: string;
+  /**
+   * Label for the caption language dropdown menu
+   */
   captionsSettingsCaptionLanguageDropdownLabel?: string;
+  /**
+   * Disclaimer for the spoken language dropdown menu
+   */
   captionsSettingsSpokenLanguageDropdownInfoText?: string;
+  /**
+   * Disclaimer for the caption language dropdown menu
+   */
   captionsSettingsCaptionLanguageDropdownInfoText?: string;
+  /**
+   * Label for the confirm button
+   */
   captionsSettingsConfirmButtonLabel?: string;
+  /**
+   * Label for the cancel button
+   */
   captionsSettingsCancelButtonLabel?: string;
+  /**
+   * Aria label for the modal
+   */
   captionsSettingsModalAriaLabel?: string;
+  /**
+   * Aria label for the close modal button
+   */
   captionsSettingsCloseModalButtonAriaLabel?: string;
 }
 
 /**
- * @internal
- * _CaptionsSettingsModal Component Props.
+ * @public
+ * CaptionsSettingsModal Component Props.
  */
-export interface _CaptionsSettingsModalProps {
-  supportedSpokenLanguages: _SupportedSpokenLanguage[];
-  supportedCaptionLanguages: _SupportedCaptionLanguage[];
-  onSetSpokenLanguage: (language: _SupportedSpokenLanguage) => Promise<void>;
-  onSetCaptionLanguage: (language: _SupportedCaptionLanguage) => Promise<void>;
-  onStartCaptions: (options?: _captionsOptions) => Promise<void>;
-  currentSpokenLanguage: _SupportedSpokenLanguage;
-  currentCaptionLanguage: _SupportedCaptionLanguage;
+export interface CaptionsSettingsModalProps {
+  /**
+   * List of supported spoken languages
+   */
+  supportedSpokenLanguages: SupportedSpokenLanguage[];
+  /**
+   * List of supported caption languages
+   */
+  supportedCaptionLanguages?: SupportedCaptionLanguage[];
+  /**
+   * Callback to set spoken language
+   */
+  onSetSpokenLanguage: (language: SupportedSpokenLanguage) => Promise<void>;
+  /**
+   * Callback to set caption language
+   */
+  onSetCaptionLanguage?: (language: SupportedCaptionLanguage) => Promise<void>;
+  /**
+   * Callback to start captions
+   */
+  onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
+  /**
+   * Current spoken language
+   */
+  currentSpokenLanguage: SupportedSpokenLanguage;
+  /**
+   * Current caption language
+   */
+  currentCaptionLanguage?: SupportedCaptionLanguage;
+  /**
+   * 1 to 1 mapping between language code and language string for spoken languages
+   */
   spokenLanguageStrings?: SpokenLanguageStrings;
+  /**
+   * 1 to 1 mapping between language code and language string for caption languages
+   */
   captionLanguageStrings?: CaptionLanguageStrings;
+  /**
+   * Flag to indicate if captions feature is active
+   */
   isCaptionsFeatureActive?: boolean;
-  strings?: _CaptionsSettingsModalStrings;
+  /**
+   * Strings for the captions settings modal
+   */
+  strings?: CaptionsSettingsModalStrings;
+  /**
+   * Flag to show the modal
+   */
   showModal?: boolean;
+  /**
+   * Callback that is triggered when the modal is dismissed
+   */
   onDismissCaptionsSettings?: () => void;
+  /**
+   * Flag to show the caption language dropdown
+   */
   changeCaptionLanguage?: boolean;
 }
 
 /**
- * @internal
+ * @public
  * a component for setting spoken languages
  */
-export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.Element => {
+export const CaptionsSettingsModal = (props: CaptionsSettingsModalProps): JSX.Element => {
   const {
     supportedSpokenLanguages,
     supportedCaptionLanguages,
@@ -92,14 +162,19 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     onSetCaptionLanguage,
     onDismissCaptionsSettings,
     onStartCaptions,
-    strings,
-    spokenLanguageStrings,
-    captionLanguageStrings,
     changeCaptionLanguage = false
   } = props;
-
   const theme = useTheme();
-
+  const localeStrings = useLocale().strings.captionsSettingsModal;
+  const localSpokenLanguageStrings = useLocale().strings.spokenLanguages;
+  const localCaptionLanguageStrings = useLocale().strings.captionLanguages;
+  const strings = { ...localeStrings, ...props.strings };
+  const spokenLanguageStrings = useMemo(() => {
+    return { ...localSpokenLanguageStrings, ...props.spokenLanguageStrings };
+  }, [localSpokenLanguageStrings, props.spokenLanguageStrings]);
+  const captionLanguageStrings = useMemo(() => {
+    return { ...localCaptionLanguageStrings, ...props.captionLanguageStrings };
+  }, [localCaptionLanguageStrings, props.captionLanguageStrings]);
   const [hasSetSpokenLanguage, setHasSetSpokenLanguage] = useState(false);
 
   const [selectedSpokenLanguage, setSelectedSpokenLanguage] = useState<SpokenLanguageDropdownOptions>({
@@ -108,7 +183,9 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   });
 
   const [selectedCaptionLanguage, setSelectedCaptionLanguage] = useState<CaptionLanguageDropdownOptions>({
-    key: currentCaptionLanguage || _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key],
+    key:
+      currentCaptionLanguage ||
+      (_spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key] as keyof CaptionLanguageStrings),
     text: currentCaptionLanguage || _spokenLanguageToCaptionLanguage[selectedSpokenLanguage.key]
   });
 
@@ -134,7 +211,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     if (isCaptionsFeatureActive) {
       onSetSpokenLanguage(spokenLanguageCode);
       if (changeCaptionLanguage) {
-        onSetCaptionLanguage(captionLanguageCode);
+        onSetCaptionLanguage && onSetCaptionLanguage(captionLanguageCode);
       }
     } else {
       await onStartCaptions({ spokenLanguage: spokenLanguageCode });
@@ -160,8 +237,8 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
     });
   }, [supportedSpokenLanguages, spokenLanguageStrings]);
 
-  const captionLanguageDropdownOptions: IDropdownOption[] = useMemo(() => {
-    return supportedCaptionLanguages.map((languageCode) => {
+  const captionLanguageDropdownOptions: IDropdownOption[] | undefined = useMemo(() => {
+    return supportedCaptionLanguages?.map((languageCode) => {
       return {
         key: languageCode,
         text: captionLanguageStrings ? captionLanguageStrings[languageCode] : languageCode
@@ -175,7 +252,7 @@ export const _CaptionsSettingsModal = (props: _CaptionsSettingsModalProps): JSX.
   }, [spokenLanguageDropdownOptions]);
 
   const sortedCaptionLanguageDropdownOptions: IDropdownOption[] = useMemo(() => {
-    const copy = [...captionLanguageDropdownOptions];
+    const copy = [...(captionLanguageDropdownOptions ?? [])];
     return copy.sort((a, b) => (a.text > b.text ? 1 : -1));
   }, [captionLanguageDropdownOptions]);
 

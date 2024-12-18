@@ -202,13 +202,13 @@ async function createAzureCommunicationCallAdapter(args: AzureCommunicationCallA
 | **`locator`**                      | [`GroupCallLocator`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/groupcalllocator) \| [`TeamsMeetingLinkLocator`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/teamsmeetinglinklocator) \| [`TeamsMeetingIdLocator`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/teamsmeetingidlocator) \| [`RoomCallLocator`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/roomcalllocator) **(Beta)** \| `CallParticipantsLocator` **(Beta)** <br /><br /> _CallParticipantsLocator is an array of participantIds to join._ |
 | **`alternateCallerId`** **(Beta)** | `string`                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
 
-### createTeamsCallAdapter **(Beta)**
+### createTeamsCallAdaptee\*\*
 
 ```ts
 async function createTeamsCallAdapter(args: TeamsCallAdapterArgs);
 ```
 
-#### TeamsCallAdapterArgs (Beta)
+#### TeamsCallAdapterArgs
 
 | Property         | Type                                                                                                                                                                                                                                                                                                                                                    |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -217,7 +217,7 @@ async function createTeamsCallAdapter(args: TeamsCallAdapterArgs);
 | **`locator`**    | [`TeamsMeetingLinkLocator`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/TeamsMeetingLinkLocator) \| [`TeamsMeetingIdLocator`](https://docs.microsoft.com/en-us/javascript/api/azure-communication-services/@azure/communication-calling/TeamsMeetingIdLocator) \| CallParticipantsLocator |
 | **`options`**    | TeamsAdapterOptions                                                                                                                                                                                                                                                                                                                                     |
 
-### TeamsAdapterOptions (Beta)
+### TeamsAdapterOptions
 
 | Property                     | Type                                                                                                                      |
 | ---------------------------- | ------------------------------------------------------------------------------------------------------------------------- |

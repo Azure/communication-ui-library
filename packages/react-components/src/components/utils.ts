@@ -3,7 +3,7 @@
 
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
-import { _SupportedSpokenLanguage } from '../types';
+import { SupportedSpokenLanguage } from '../types';
 import { ActiveNotification, NotificationType } from './NotificationStack';
 import { VideoTileStrings } from './VideoTile';
 import { _formatString } from '@internal/acs-ui-common';
@@ -392,7 +392,7 @@ export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
 /**
  * @private
  */
-export const defaultSpokenLanguage: _SupportedSpokenLanguage = 'en-us';
+export const defaultSpokenLanguage: SupportedSpokenLanguage = 'en-us';
 
 /**
  * @private
@@ -403,9 +403,12 @@ const SAFARI_COMPOSITION_KEYCODE = 229;
  *
  * @private
  */
-export const isEnterKeyEventFromCompositionSession = (e: KeyboardEvent): boolean =>
-  // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
-  e.isComposing || e.keyCode === SAFARI_COMPOSITION_KEYCODE || e.which === SAFARI_COMPOSITION_KEYCODE;
+export const isEnterKeyEventFromCompositionSession = (e: KeyboardEvent): boolean => {
+  // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (the code check is needed for Safari only, for everything else e.isComposing check is enough)
+  const isComposing =
+    e.isComposing || e.keyCode === SAFARI_COMPOSITION_KEYCODE || e.which === SAFARI_COMPOSITION_KEYCODE;
+  return isComposing && e.key === 'Enter';
+};
 
 /**
  * @private
