@@ -106,10 +106,14 @@ export const useVideoTileContextualMenuProps = (props: {
         disabled: participant.isMuted
       });
     }
+
     /* @conditional-compile-remove(media-access) */
-    const isAttendee = participant.role === 'Attendee';
-    /* @conditional-compile-remove(media-access) */
-    if (isAttendee && participant.mediaAccess && !participant.mediaAccess.isAudioPermitted && onPermitAudio) {
+    if (
+      participant.canAudioBeForbidden &&
+      participant.mediaAccess &&
+      !participant.mediaAccess.isAudioPermitted &&
+      onPermitAudio
+    ) {
       items.push({
         key: 'permitAudio',
         text: strings?.permitAudioTileMenuLabel,
@@ -123,7 +127,7 @@ export const useVideoTileContextualMenuProps = (props: {
       });
     }
     /* @conditional-compile-remove(media-access) */
-    if (isAttendee && participant.mediaAccess?.isAudioPermitted && onForbidAudio) {
+    if (participant.canAudioBeForbidden && participant.mediaAccess?.isAudioPermitted && onForbidAudio) {
       items.push({
         key: 'forbidAudio',
         text: strings?.forbidAudioTileMenuLabel,
@@ -138,7 +142,12 @@ export const useVideoTileContextualMenuProps = (props: {
     }
 
     /* @conditional-compile-remove(media-access) */
-    if (isAttendee && participant.mediaAccess && !participant.mediaAccess.isVideoPermitted && onPermitVideo) {
+    if (
+      participant.canVideoBeForbidden &&
+      participant.mediaAccess &&
+      !participant.mediaAccess.isVideoPermitted &&
+      onPermitVideo
+    ) {
       items.push({
         key: 'permitVideo',
         text: strings?.permitVideoTileMenuLabel,
@@ -152,7 +161,7 @@ export const useVideoTileContextualMenuProps = (props: {
       });
     }
     /* @conditional-compile-remove(media-access) */
-    if (isAttendee && participant.mediaAccess?.isVideoPermitted && onForbidVideo) {
+    if (participant.canVideoBeForbidden && participant.mediaAccess?.isVideoPermitted && onForbidVideo) {
       items.push({
         key: 'forbidVideo',
         text: strings?.forbidVideoTileMenuLabel,
@@ -333,7 +342,9 @@ export const useVideoTileContextualMenuProps = (props: {
     /* @conditional-compile-remove(media-access) */
     strings?.forbidVideoTileMenuLabel,
     /* @conditional-compile-remove(media-access) */
-    participant.role,
+    participant.canAudioBeForbidden,
+    /* @conditional-compile-remove(media-access) */
+    participant.canVideoBeForbidden,
     /* @conditional-compile-remove(media-access) */
     participant.mediaAccess,
     /* @conditional-compile-remove(media-access) */

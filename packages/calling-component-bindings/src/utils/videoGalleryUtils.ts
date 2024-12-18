@@ -184,7 +184,10 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     reaction,
     spotlight,
     mediaAccess,
-    role,
+    /* @conditional-compile-remove(media-access) */
+    canAudioBeForbidden: role === 'Attendee',
+    /* @conditional-compile-remove(media-access) */
+    canVideoBeForbidden: role === 'Attendee',
     /* @conditional-compile-remove(remote-ufd) */
     signalStrength
   };
