@@ -1153,7 +1153,9 @@ export type NotificationTarget =
   | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent'
   | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent'
   | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent'
-  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent';
+  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent'
+  | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted'
+  | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
