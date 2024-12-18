@@ -60,7 +60,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
   ],
   (
     latestErrors: CallErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ latestNotifications,
+    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ /* @conditional-compile-remove(together-mode) */ latestNotifications,
     diagnostics,
     deviceManager,
     environmentInfo,
@@ -297,6 +297,24 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       activeNotifications.push({
         type: 'capabilityUnmuteMicAbsent',
         timestamp: latestNotifications['capabilityUnmuteMicAbsent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(together-mode) */
+    if (latestNotifications['togetherModeStarted']) {
+      activeNotifications.push({
+        type: 'togetherModeStarted',
+        timestamp: latestNotifications['togetherModeStarted'].timestamp,
+        autoDismiss: true
+      });
+    }
+
+    /* @conditional-compile-remove(together-mode) */
+    if (latestNotifications['togetherModeEnded']) {
+      activeNotifications.push({
+        type: 'togetherModeEnded',
+        timestamp: latestNotifications['togetherModeEnded'].timestamp,
+        autoDismiss: true
       });
     }
 
