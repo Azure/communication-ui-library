@@ -19,7 +19,7 @@ betaTest.describe('RichTextInputBoxComponent table tests', () => {
     );
     await component.evaluate(() => document.fonts.ready);
 
-    await component.getByTestId(formatButtonId).click();
+    await formatButtonClick(component);
 
     await component.getByLabel('Insert table').click();
     await expect(component).toHaveScreenshot('rich-text-input-box-component-insert-table-panel.png');
@@ -50,7 +50,7 @@ betaTest.describe('RichTextInputBoxComponent table tests', () => {
     );
     await component.evaluate(() => document.fonts.ready);
 
-    await component.getByTestId(formatButtonId).click();
+    await formatButtonClick(component);
 
     await component.getByLabel('Insert table').click();
 
@@ -96,7 +96,7 @@ betaTest.describe('RichTextInputBoxComponent table tests', () => {
     );
     await component.evaluate(() => document.fonts.ready);
 
-    await component.getByTestId(formatButtonId).click();
+    await formatButtonClick(component);
 
     await component.getByLabel('Insert table').click();
     // add table 1*1 to have only one cell for the next step
@@ -159,4 +159,9 @@ const selectTableContextMenu = async ({
   if (text) {
     await component.pressSequentially(text);
   }
+};
+
+const formatButtonClick = async (component: Locator): Promise<void> => {
+  await component.getByTestId(formatButtonId).click();
+  await component.getByTestId('rich-text-editor-toolbar').waitFor({ state: 'visible' });
 };

@@ -5,9 +5,12 @@
     "removeButtonLabel": "Usuń",
     "sharingIconLabel": "Udostępnianie",
     "mutedIconLabel": "Wyciszono",
+    "handRaisedIconLabel": "Podniesiona ręka — położenie {position}",
     "displayNamePlaceholder": "Uczestnik bez nazwy",
     "participantStateRinging": "Trwa łączenie…",
     "participantStateHold": "Zawieszony",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Więcej opcji",
     "attendeeRole": "Uczestnik"
   },
   "ParticipantList": {
@@ -74,12 +77,16 @@
     "rttCancelButtonLabel": "Anuluj",
     "rttCloseModalButtonAriaLabel": "Zamknij modalne okno dialogowe pisania w czasie rzeczywistym"
   },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Trwa uruchamianie napisów..."
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
   },
   "imageOverlay": {
     "downloadButtonLabel": "Pobierz",
-    "dismissButtonAriaLabel": "Zamknij"
+    "dismissButtonAriaLabel": "Zamknij",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Wiadomość została wysłana",
@@ -155,6 +162,7 @@
   },
   "participantsButton": {
     "label": "Osoby",
+    "ariaLabel": "Osoby",
     "tooltipContent": "Pokaż uczestników",
     "menuHeader": "W tej rozmowie",
     "participantsListButtonLabel": "Liczba osób: {numParticipants}",
@@ -178,7 +186,7 @@
   },
   "reactionButton": {
     "label": "Zareaguj",
-    "ariaLabel": "Przycisk reagowania, Wyślij reakcję",
+    "ariaLabel": "Zareaguj",
     "tooltipDisabledContent": "Akcja reakcji jest wyłączona",
     "tooltipContent": "Wyślij reakcję",
     "likeReactionTooltipContent": "Lubię",
@@ -189,6 +197,100 @@
   },
   "rtt": {
     "isTypingText": "Pisanie w czasie rzeczywistym"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Ustawienia napisów",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Język mówiony",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Język napisów",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Język, w którym mówią wszyscy uczestnicy tej rozmowy.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Napisy będą wyświetlane w tym języku.",
+    "captionsSettingsConfirmButtonLabel": "Potwierdź",
+    "captionsSettingsCancelButtonLabel": "Anuluj",
+    "captionsSettingsModalAriaLabel": "Modalne ustawianie podpisów",
+    "captionsSettingsCloseModalButtonAriaLabel": "Ustawienie podpisów"
+  },
+  "spokenLanguages": {
+    "ar-ae": "arabski — Zjednoczone Emiraty Arabskie",
+    "ar-sa": "arabski — Arabia Saudyjska",
+    "da-dk": "duński",
+    "de-de": "niemiecki — Niemcy",
+    "en-au": "angielski — Australia",
+    "en-ca": "angielski — Kanada",
+    "en-gb": "angielski — Zjednoczone Królestwo",
+    "en-in": "angielski — Indie",
+    "en-nz": "angielski — Nowa Zelandia",
+    "en-us": "angielski — Stany Zjednoczone",
+    "es-es": "hiszpański — Hiszpania (nowoczesny)",
+    "es-mx": "hiszpański — Meksyk",
+    "fi-fi": "fiński",
+    "fr-ca": "francuski — Kanada",
+    "fr-fr": "francuski — Francja",
+    "hi-in": "hindi",
+    "it-it": "włoski — Włochy",
+    "ja-jp": "japoński",
+    "ko-kr": "koreański",
+    "nb-no": "norweski (Bokmål)",
+    "nl-be": "niderlandzki — Belgia",
+    "nl-nl": "niderlandzki — Holandia",
+    "pl-pl": "polski",
+    "pt-br": "portugalski — Brazylia",
+    "ru-ru": "rosyjski",
+    "sv-se": "szwedzki",
+    "zh-cn": "chiński (Chińska Republika Ludowa)",
+    "zh-hk": "chiński — Hongkong SAR",
+    "cs-cz": "czeski",
+    "pt-pt": "portugalski — Portugalia",
+    "tr-tr": "turecki",
+    "vi-vn": "wietnamski",
+    "th-th": "tajski",
+    "he-il": "hebrajski",
+    "cy-gb": "walijski",
+    "uk-ua": "ukraiński",
+    "el-gr": "grecki",
+    "hu-hu": "węgierski",
+    "ro-ro": "rumuński",
+    "sk-sk": "słowacki",
+    "zh-tw": "chiński — Tajwan"
+  },
+  "captionLanguages": {
+    "ar": "arabski",
+    "da": "duński",
+    "de": "niemiecki",
+    "en": "angielski",
+    "es": "hiszpański",
+    "fi": "fiński",
+    "fr-ca": "francuski — Kanada",
+    "fr": "francuski — Francja",
+    "hi": "hindi",
+    "it": "włoski",
+    "ja": "japoński",
+    "ko": "koreański",
+    "nb": "norweski (Bokmål)",
+    "nl": "holenderski",
+    "pl": "polski",
+    "pt": "portugalski — Brazylia",
+    "ru": "rosyjski",
+    "sv": "szwedzki",
+    "zh-Hans": "chiński (uproszczony)",
+    "zh-Hant": "chiński (tradycyjny)",
+    "cs": "czeski",
+    "pt-pt": "portugalski — Portugalia",
+    "tr": "turecki",
+    "vi": "wietnamski",
+    "th": "tajski",
+    "he": "hebrajski",
+    "cy": "walijski",
+    "uk": "ukraiński",
+    "el": "grecki",
+    "hu": "węgierski",
+    "ro": "rumuński",
+    "sk": "słowacki"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Włącz podpisy",
+    "offLabel": "Wyłącz podpisy",
+    "tooltipOnContent": "Wyłącz podpisy",
+    "tooltipOffContent": "Włącz podpisy"
   },
   "messageThread": {
     "yesterday": "Wczoraj",
@@ -494,6 +596,26 @@
       "title": "Limit czasu pokoju wkrótce wygaśnie.",
       "message": "Ten pokój zostanie zamknięty za 30 sekund",
       "dismissButtonAriaLabel": "Zamknij"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Twoja kamera została włączona",
+      "message": "Włącz to, jeśli chcesz udostępnić wideo.",
+      "dismissButtonAriaLabel": "Zamknij"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Twoja kamera została wyłączona",
+      "message": "Nie można już udostępniać wideo.",
+      "dismissButtonAriaLabel": "Zamknij"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Twój mikrofon został włączony",
+      "message": "Wyłącz wyciszenie, jeśli chcesz przemawiać.",
+      "dismissButtonAriaLabel": "Zamknij"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Twój mikrofon został wyłączony",
+      "message": "Nie możesz już wyłączać wyciszenia.",
+      "dismissButtonAriaLabel": "Zamknij"
     }
   },
   "videoGallery": {
@@ -522,7 +644,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Zakończ wyróżnienie",
     "attendeeRole": "Uczestnik",
     "muteParticipantMenuItemLabel": "Wycisz",
-    "waitingScreenText": "Oczekiwanie na dołączenie innych osób"
+    "waitingScreenText": "Oczekiwanie na dołączenie innych osób",
+    "forbidAudio": "Wyłącz mikrofon",
+    "permitAudio": "Zezwalaj na mikrofon",
+    "forbidAudioTileMenuLabel": "Wyłącz mikrofon",
+    "permitAudioTileMenuLabel": "Zezwalaj na mikrofon",
+    "forbidVideo": "Wyłącz kamerę",
+    "permitVideo": "Zezwalaj na kamerę",
+    "forbidVideoTileMenuLabel": "Wyłącz kamerę",
+    "permitVideoTileMenuLabel": "Zezwalaj na kamerę"
   },
   "dialpad": {
     "placeholderText": "Wprowadź numer telefonu",

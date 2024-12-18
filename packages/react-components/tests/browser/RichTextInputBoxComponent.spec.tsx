@@ -17,21 +17,20 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
     await expect(component).toHaveScreenshot('rich-text-input-box-component-without-format-toolbar.png');
-    const formatButton = component.getByTestId(formatButtonId);
 
-    await formatButton.hover();
+    await component.getByTestId('rooster-rich-text-editor').hover();
     await expect(component).toHaveScreenshot('rich-text-input-box-component-hover.png');
 
-    await formatButton.click();
-    //move mouse to the format button so the screenshots are consistent
-    await formatButton.hover();
+    await formatButtonClick(component);
+    //move mouse to the editor so the screenshots are consistent
+    await component.getByTestId('rooster-rich-text-editor').hover();
     await expect(component).toHaveScreenshot('rich-text-input-box-component-with-format-toolbar.png');
   });
 
   betaTest('Text should be formatted correctly when only 1 text style selected', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
-    await component.getByTestId(formatButtonId).click();
+    await formatButtonClick(component);
     const editor = component.getByTestId(editorId);
     const boldButton = component.getByLabel('Bold');
     const italicButton = component.getByLabel('Italic');
@@ -57,7 +56,7 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
   betaTest('Text should be formatted correctly when only all text styles selected', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
-    await component.getByTestId(formatButtonId).click();
+    await formatButtonClick(component);
     const editor = component.getByTestId(editorId);
 
     await component.getByLabel('Bold').click();
@@ -93,7 +92,7 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
 });
 
 const addList = async (listButtonLabel: string, component: Locator): Promise<void> => {
-  await component.getByTestId(formatButtonId).click();
+  await formatButtonClick(component);
   const editor = component.getByTestId(editorId);
 
   await component.getByLabel(listButtonLabel).click();
@@ -111,4 +110,9 @@ const addList = async (listButtonLabel: string, component: Locator): Promise<voi
   // click is not used as it might set cursor to incorrect position
   editor.hover();
   await editor.pressSequentially('Third line');
+};
+
+const formatButtonClick = async (component: Locator): Promise<void> => {
+  await component.getByTestId(formatButtonId).click();
+  await component.getByTestId('rich-text-editor-toolbar').waitFor({ state: 'visible' });
 };

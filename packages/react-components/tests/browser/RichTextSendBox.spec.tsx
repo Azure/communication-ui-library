@@ -22,12 +22,12 @@ betaTest.describe('RichTextSendBox tests', () => {
     await expect(component).toHaveScreenshot('rich-text-send-box-without-format-toolbar.png');
     const formatButton = component.getByTestId(formatButtonId);
 
-    await formatButton.hover();
+    await component.getByTestId('rooster-rich-text-editor').hover();
     await expect(component).toHaveScreenshot('rich-text-send-box-hover.png');
 
     await formatButton.click();
-    //move mouse to the format button so the screenshots are consistent
-    await formatButton.hover();
+    //move mouse to the editor so the screenshots are consistent
+    await component.getByTestId('rooster-rich-text-editor').hover();
     await expect(component).toHaveScreenshot('rich-text-send-box-with-format-toolbar.png');
   });
 
@@ -41,6 +41,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId('rich-text-input-box-format-button').waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-disabled-without-format-toolbar.png');
   });
 
@@ -54,6 +55,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId('rich-text-input-box-format-button').waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-with-system-message.png');
   });
 
@@ -71,6 +73,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId('rich-text-input-box-format-button').waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-with-attachments-with-progress.png');
   });
 
@@ -84,6 +87,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId('rich-text-input-box-format-button').waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-with-auto-focus.png');
   });
 });

@@ -11,7 +11,8 @@ import {
   ScreenShareButton,
   VideoGallery,
   CaptionsSettingsModal,
-  CaptionsBanner
+  CaptionsBanner,
+  StartCaptionsButton
 } from '@internal/react-components';
 import { IncomingCallStack } from '@internal/react-components';
 
@@ -50,8 +51,10 @@ import { incomingCallStackSelector, IncomingCallStackSelector } from '../incomin
 import {
   CaptionSettingsSelector,
   CaptionsBannerSelector,
+  StartCaptionsButtonSelector,
   captionSettingsSelector,
-  captionsBannerSelector
+  captionsBannerSelector,
+  startCaptionsButtonSelector
 } from '../captionsSelector';
 
 /**
@@ -136,9 +139,11 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
                                 ? CaptionSettingsSelector
                                 : AreEqual<Component, typeof CaptionsBanner> extends true
                                   ? CaptionsBannerSelector
-                                  : AreEqual<Component, typeof RaiseHandButton> extends true
-                                    ? EmptySelector
-                                    : undefined;
+                                  : AreEqual<Component, typeof StartCaptionsButton> extends true
+                                    ? StartCaptionsButtonSelector
+                                    : AreEqual<Component, typeof RaiseHandButton> extends true
+                                      ? EmptySelector
+                                      : undefined;
 
 /**
  * Get the selector for a specified component.
@@ -194,6 +199,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return captionsBannerSelector;
     case CaptionsSettingsModal:
       return captionSettingsSelector;
+    case StartCaptionsButton:
+      return startCaptionsButtonSelector;
   }
   return undefined;
 };

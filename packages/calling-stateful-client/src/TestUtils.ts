@@ -110,6 +110,10 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public isRecordingActive = false;
   public recordings: RecordingInfo[] = [];
   public emitter = new EventEmitter();
+  public isTeamsConsentRequired = false;
+  public grantTeamsConsent(): Promise<void> {
+    return Promise.resolve();
+  }
   on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
   on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -253,16 +257,22 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
  * @private
  */
 export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
-  consentToBeingRecordedAndTranscribed(): Promise<void> {
-    throw new Error('Method not implemented.');
-  }
-  public isConsentRequired = false;
   consentForTranscription(): Promise<void> {
     throw new Error('Method not implemented.');
   }
   public name = 'Transcription';
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();
+  public isConsentRequired = false;
+  public isTeamsConsentRequired = false;
+  public grantTeamsConsent(): Promise<void> {
+    return Promise.resolve();
+  }
+  public consentToBeingRecordedAndTranscribed(): Promise<void> {
+    this.isTranscriptionActive = true;
+    this.emitter.emit('isTranscriptionActiveChanged', this.isTranscriptionActive);
+    return Promise.resolve();
+  }
   on(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
     this.emitter.on(event, listener);
   }
