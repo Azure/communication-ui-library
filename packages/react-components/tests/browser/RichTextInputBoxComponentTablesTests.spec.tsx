@@ -159,3 +159,8 @@ const selectTableContextMenu = async ({
     await component.pressSequentially(text);
   }
 };
+
+const formatButtonClick = async (component: Locator): Promise<void> => {
+  await component.getByTestId(formatButtonId).click();
+  await component.getByTestId('rich-text-editor-toolbar').waitFor({ state: 'visible' });
+};

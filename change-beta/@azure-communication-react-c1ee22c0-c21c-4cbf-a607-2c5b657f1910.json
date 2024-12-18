@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "together-mode",
+  "comment": "updated together mode subscriber and included notification when together mode starts or stops",
+  "packageName": "@azure/communication-react",
+  "email": "nwankwojustin93@gmail.com",
+  "dependentChangeType": "patch"
+}

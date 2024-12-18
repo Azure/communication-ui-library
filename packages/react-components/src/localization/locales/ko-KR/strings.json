@@ -5,9 +5,12 @@
     "removeButtonLabel": "제거",
     "sharingIconLabel": "공유 중",
     "mutedIconLabel": "음소거됨",
+    "handRaisedIconLabel": "손들기 - 위치 {position}",
     "displayNamePlaceholder": "명명되지 않은 참가자",
     "participantStateRinging": "전화 거는 중...",
     "participantStateHold": "대기 중",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, 기타 옵션",
     "attendeeRole": "참석자"
   },
   "ParticipantList": {
@@ -74,12 +77,16 @@
     "rttCancelButtonLabel": "취소",
     "rttCloseModalButtonAriaLabel": "실시간 입력 모달 닫기"
   },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "캡션 시작 중..."
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
   },
   "imageOverlay": {
     "downloadButtonLabel": "다운로드",
-    "dismissButtonAriaLabel": "닫기"
+    "dismissButtonAriaLabel": "닫기",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "메시지를 보냄",
@@ -155,6 +162,7 @@
   },
   "participantsButton": {
     "label": "사용자",
+    "ariaLabel": "사용자",
     "tooltipContent": "참가자 표시",
     "menuHeader": "이 통화에서",
     "participantsListButtonLabel": "{numParticipants}명",
@@ -178,7 +186,7 @@
   },
   "reactionButton": {
     "label": "반응",
-    "ariaLabel": "반응 단추, 반응 보내기",
+    "ariaLabel": "반응",
     "tooltipDisabledContent": "반응 동작을 사용할 수 없습니다.",
     "tooltipContent": "반응 보내기",
     "likeReactionTooltipContent": "좋아요",
@@ -189,6 +197,100 @@
   },
   "rtt": {
     "isTypingText": "실시간 입력 입력 중"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "캡션 설정",
+    "captionsSettingsSpokenLanguageDropdownLabel": "음성 언어",
+    "captionsSettingsCaptionLanguageDropdownLabel": "캡션 언어",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "이 통화의 모든 사람이 말하는 언어입니다.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "캡션이 이 언어로 표시됩니다.",
+    "captionsSettingsConfirmButtonLabel": "확인",
+    "captionsSettingsCancelButtonLabel": "취소",
+    "captionsSettingsModalAriaLabel": "캡션 설정 모달",
+    "captionsSettingsCloseModalButtonAriaLabel": "캡션 설정 닫기"
+  },
+  "spokenLanguages": {
+    "ar-ae": "아랍어 - 아랍에미리트",
+    "ar-sa": "아라비아어 - 사우디 아라비아",
+    "da-dk": "덴마크어",
+    "de-de": "독일어 - 독일",
+    "en-au": "영어 - 오스트레일리아",
+    "en-ca": "영어 - 캐나다",
+    "en-gb": "영어 - 영국",
+    "en-in": "영어 - 인도",
+    "en-nz": "영어 - 뉴질랜드",
+    "en-us": "영어 - 미국",
+    "es-es": "스페인어 - 스페인(현대 정렬)",
+    "es-mx": "스페인어 - 멕시코",
+    "fi-fi": "핀란드어",
+    "fr-ca": "프랑스어 - 캐나다",
+    "fr-fr": "프랑스어 - 프랑스",
+    "hi-in": "힌디어",
+    "it-it": "이탈리아어 - 이탈리아",
+    "ja-jp": "일본어",
+    "ko-kr": "한국어",
+    "nb-no": "노르웨이어(보크몰)",
+    "nl-be": "네덜란드어 - 벨기에",
+    "nl-nl": "네덜란드어 - 네덜란드",
+    "pl-pl": "폴란드어",
+    "pt-br": "포르투갈어 - 브라질",
+    "ru-ru": "러시아어",
+    "sv-se": "스웨덴어",
+    "zh-cn": "중국어 - 중국",
+    "zh-hk": "중국어 - 홍콩 특별 행정구",
+    "cs-cz": "체코어",
+    "pt-pt": "포르투갈어 - 포르투갈",
+    "tr-tr": "터키어",
+    "vi-vn": "베트남어",
+    "th-th": "태국어",
+    "he-il": "히브리어",
+    "cy-gb": "웨일스어",
+    "uk-ua": "우크라이나어",
+    "el-gr": "그리스어",
+    "hu-hu": "헝가리어",
+    "ro-ro": "루마니아어",
+    "sk-sk": "슬로바키아어",
+    "zh-tw": "중국어 - 대만"
+  },
+  "captionLanguages": {
+    "ar": "아랍어",
+    "da": "덴마크어",
+    "de": "독일어",
+    "en": "영어",
+    "es": "스페인어",
+    "fi": "핀란드어",
+    "fr-ca": "프랑스어 - 캐나다",
+    "fr": "프랑스어 - 프랑스",
+    "hi": "힌디어",
+    "it": "이탈리아어",
+    "ja": "일본어",
+    "ko": "한국어",
+    "nb": "노르웨이어(보크몰)",
+    "nl": "네덜란드어",
+    "pl": "폴란드어",
+    "pt": "포르투갈어 - 브라질",
+    "ru": "러시아어",
+    "sv": "스웨덴어",
+    "zh-Hans": "중국어(간체)",
+    "zh-Hant": "중국어(번체)",
+    "cs": "체코어",
+    "pt-pt": "포르투갈어 - 포르투갈",
+    "tr": "터키어",
+    "vi": "베트남어",
+    "th": "태국어",
+    "he": "히브리어",
+    "cy": "웨일스어",
+    "uk": "우크라이나어",
+    "el": "그리스어",
+    "hu": "헝가리어",
+    "ro": "루마니아어",
+    "sk": "슬로바키아어"
+  },
+  "startCaptionsButton": {
+    "onLabel": "캡션 켜기",
+    "offLabel": "캡션 끄기",
+    "tooltipOnContent": "캡션 끄기",
+    "tooltipOffContent": "캡션 켜기"
   },
   "messageThread": {
     "yesterday": "어제",
@@ -494,6 +596,26 @@
       "title": "소회의실 시간 제한이 곧 만료됩니다.",
       "message": "이 소회의실은 30초 후에 닫힙니다.",
       "dismissButtonAriaLabel": "닫기"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "카메라가 사용하도록 설정되었습니다",
+      "message": "비디오를 공유하고자 하는 경우 이 기능을 켜세요.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "카메라를 사용하지 않습니다",
+      "message": "더 이상 비디오를 공유할 수 없습니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "마이크를 사용하도록 설정했습니다",
+      "message": "말하기를 원하는 경우 음소거를 해제하세요.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "마이크를 사용할 수 없습니다.",
+      "message": "더 이상 음소거 해제할 수 없음",
+      "dismissButtonAriaLabel": "닫기"
     }
   },
   "videoGallery": {
@@ -522,7 +644,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "스포트라이트 종료",
     "attendeeRole": "참석자",
     "muteParticipantMenuItemLabel": "음소거",
-    "waitingScreenText": "다른 사용자의 참여를 기다리는 중"
+    "waitingScreenText": "다른 사용자의 참여를 기다리는 중",
+    "forbidAudio": "마이크 비활성화",
+    "permitAudio": "마이크 허용",
+    "forbidAudioTileMenuLabel": "마이크 비활성화",
+    "permitAudioTileMenuLabel": "마이크 허용",
+    "forbidVideo": "카메라 비활성화",
+    "permitVideo": "카메라 허용",
+    "forbidVideoTileMenuLabel": "카메라 비활성화",
+    "permitVideoTileMenuLabel": "카메라 허용"
   },
   "dialpad": {
     "placeholderText": "전화 번호를 입력하세요.",
