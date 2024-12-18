@@ -112,9 +112,7 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public isRecordingActive = false;
   public recordings: RecordingInfo[] = [];
   public emitter = new EventEmitter();
-  /* @conditional-compile-remove(calling-beta-sdk) */
   public isTeamsConsentRequired = false;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   public grantTeamsConsent(): Promise<void> {
     return Promise.resolve();
   }
@@ -281,9 +279,7 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();
   public isConsentRequired = false;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   public isTeamsConsentRequired = false;
-  /* @conditional-compile-remove(calling-beta-sdk) */
   public grantTeamsConsent(): Promise<void> {
     return Promise.resolve();
   }
