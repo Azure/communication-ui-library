@@ -112,6 +112,10 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public isRecordingActive = false;
   public recordings: RecordingInfo[] = [];
   public emitter = new EventEmitter();
+  public isTeamsConsentRequired = false;
+  public grantTeamsConsent(): Promise<void> {
+    return Promise.resolve();
+  }
   on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
   on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -275,6 +279,10 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();
   public isConsentRequired = false;
+  public isTeamsConsentRequired = false;
+  public grantTeamsConsent(): Promise<void> {
+    return Promise.resolve();
+  }
   public consentToBeingRecordedAndTranscribed(): Promise<void> {
     this.isTranscriptionActive = true;
     this.emitter.emit('isTranscriptionActiveChanged', this.isTranscriptionActive);
