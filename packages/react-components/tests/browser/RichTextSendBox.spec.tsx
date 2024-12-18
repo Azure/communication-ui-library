@@ -41,6 +41,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId('rich-text-input-box-format-button').waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-disabled-without-format-toolbar.png');
   });
 
@@ -54,6 +55,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId('rich-text-input-box-format-button').waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-with-system-message.png');
   });
 
@@ -71,6 +73,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId('rich-text-input-box-format-button').waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-with-attachments-with-progress.png');
   });
 
@@ -84,6 +87,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId('rich-text-input-box-format-button').waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-with-auto-focus.png');
   });
 });

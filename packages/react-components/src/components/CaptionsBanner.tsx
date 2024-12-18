@@ -146,7 +146,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   return (
     <>
       {startCaptionsInProgress && (
-        <FocusZone className={captionsContainerClassName} data-ui-id="captions-banner">
+        <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
           {isCaptionsOn && (
             <ul
               ref={captionsScrollDivRef}
