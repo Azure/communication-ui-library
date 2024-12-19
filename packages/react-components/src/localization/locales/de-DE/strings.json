@@ -5,9 +5,12 @@
     "removeButtonLabel": "Entfernen",
     "sharingIconLabel": "Teilen",
     "mutedIconLabel": "Stumm geschaltet",
+    "handRaisedIconLabel": "Hand erhoben – Position {position}",
     "displayNamePlaceholder": "Teilnehmer ohne Namen",
     "participantStateRinging": "Anrufen...",
     "participantStateHold": "In der Warteschleife",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Weitere Optionen",
     "attendeeRole": "Teilnehmer"
   },
   "ParticipantList": {
@@ -74,12 +77,16 @@
     "rttCancelButtonLabel": "Abbrechen",
     "rttCloseModalButtonAriaLabel": "RTT Modal schließen"
   },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Untertitel werden gestartet..."
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
   },
   "imageOverlay": {
     "downloadButtonLabel": "Herunterladen",
-    "dismissButtonAriaLabel": "Schließen"
+    "dismissButtonAriaLabel": "Schließen",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Nachricht gesendet",
@@ -155,6 +162,7 @@
   },
   "participantsButton": {
     "label": "Personen",
+    "ariaLabel": "Personen",
     "tooltipContent": "Teilnehmende anzeigen",
     "menuHeader": "In diesem Anruf",
     "participantsListButtonLabel": "{numParticipants} Personen",
@@ -178,7 +186,7 @@
   },
   "reactionButton": {
     "label": "Reagieren",
-    "ariaLabel": "Reaktionsschaltfläche, Reaktion senden",
+    "ariaLabel": "Reagieren",
     "tooltipDisabledContent": "Reaktionsaktion ist deaktiviert",
     "tooltipContent": "Reaktion senden",
     "likeReactionTooltipContent": "Gefällt mir",
@@ -189,6 +197,100 @@
   },
   "rtt": {
     "isTypingText": "RTT-Eingabe"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Einstellungen für Untertitel",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Gesprochene Sprache",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Sprache der Untertitel",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Sprache, die jeder in diesem Anruf spricht.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Untertitel werden in dieser Sprache angezeigt.",
+    "captionsSettingsConfirmButtonLabel": "Bestätigen",
+    "captionsSettingsCancelButtonLabel": "Abbrechen",
+    "captionsSettingsModalAriaLabel": "Untertiteleinstellung modal",
+    "captionsSettingsCloseModalButtonAriaLabel": "Einstellung „Untertitel“ schließen"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabisch – Vereinigte Arabische Emirate",
+    "ar-sa": "Arabisch – Saudi-Arabien",
+    "da-dk": "Dänisch",
+    "de-de": "Deutsch – Deutschland",
+    "en-au": "Englisch – Australien",
+    "en-ca": "Englisch – Kanada",
+    "en-gb": "Englisch – Vereinigtes Königreich",
+    "en-in": "Englisch – Indien",
+    "en-nz": "Englisch – Neuseeland",
+    "en-us": "Englisch – USA",
+    "es-es": "Spanisch – Spanien (Moderne Sortierung)",
+    "es-mx": "Spanisch – Mexiko",
+    "fi-fi": "Finnisch",
+    "fr-ca": "Französisch (Kanada)",
+    "fr-fr": "Französisch (Frankreich)",
+    "hi-in": "Hindi",
+    "it-it": "Italienisch – Italien",
+    "ja-jp": "Japanisch",
+    "ko-kr": "Koreanisch",
+    "nb-no": "Norwegisch (Bokmål)",
+    "nl-be": "Niederländisch – Belgien",
+    "nl-nl": "Niederländisch – Niederlande",
+    "pl-pl": "Polnisch",
+    "pt-br": "Portugiesisch (Brasilien)",
+    "ru-ru": "Russisch",
+    "sv-se": "Schwedisch",
+    "zh-cn": "Chinesisch – Volksrepublik China",
+    "zh-hk": "Chinesisch – Hongkong (SAR)",
+    "cs-cz": "Tschechisch",
+    "pt-pt": "Portugiesisch (Portugal)",
+    "tr-tr": "Türkisch",
+    "vi-vn": "Vietnamesisch",
+    "th-th": "Thailändisch",
+    "he-il": "Hebräisch",
+    "cy-gb": "Walisisch",
+    "uk-ua": "Ukrainisch",
+    "el-gr": "Griechisch",
+    "hu-hu": "Ungarisch",
+    "ro-ro": "Rumänisch",
+    "sk-sk": "Slowakisch",
+    "zh-tw": "Chinesisch – Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabisch",
+    "da": "Dänisch",
+    "de": "Deutsch",
+    "en": "Englisch",
+    "es": "Spanisch",
+    "fi": "Finnisch",
+    "fr-ca": "Französisch (Kanada)",
+    "fr": "Französisch (Frankreich)",
+    "hi": "Hindi",
+    "it": "Italienisch",
+    "ja": "Japanisch",
+    "ko": "Koreanisch",
+    "nb": "Norwegisch (Bokmål)",
+    "nl": "Niederländisch",
+    "pl": "Polnisch",
+    "pt": "Portugiesisch (Brasilien)",
+    "ru": "Russisch",
+    "sv": "Schwedisch",
+    "zh-Hans": "Chinesisch (vereinfacht)",
+    "zh-Hant": "Chinesisch (traditionell)",
+    "cs": "Tschechisch",
+    "pt-pt": "Portugiesisch (Portugal)",
+    "tr": "Türkisch",
+    "vi": "Vietnamesisch",
+    "th": "Thailändisch",
+    "he": "Hebräisch",
+    "cy": "Walisisch",
+    "uk": "Ukrainisch",
+    "el": "Griechisch",
+    "hu": "Ungarisch",
+    "ro": "Rumänisch",
+    "sk": "Slowakisch"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Beschriftungen aktivieren",
+    "offLabel": "Untertitel deaktivieren",
+    "tooltipOnContent": "Untertitel deaktivieren",
+    "tooltipOffContent": "Beschriftungen aktivieren"
   },
   "messageThread": {
     "yesterday": "Gestern",
@@ -286,7 +388,7 @@
     "failedToJoinCallInvalidMeetingLink": "Teilnahme an Besprechung nicht möglich. Ungültiger Link.",
     "cameraFrozenForRemoteParticipants": "Benutzer im Anruf haben Probleme, Ihr Video zu sehen. Überprüfen Sie Ihre Geräte und Ihr Netzwerk.",
     "unableToStartVideoEffect": "Videoeffekt kann nicht angewendet werden.",
-    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Das Spotlight für Teilnehmer*innen kann nicht gestartet werden, da die maximale Anzahl von Teilnehmer*innen bereits im Spotlight ist.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "Das Spotlight für Teilnehmende kann nicht gestartet werden, da die maximale Anzahl von Teilnehmenden bereits im Spotlight ist.",
     "mutedByRemoteParticipant": "Sie wurden von einem anderen Teilnehmer stummgeschaltet."
   },
   "notificationStack": {
@@ -494,6 +596,26 @@
       "title": "Das Raumzeitlimit läuft bald ab.",
       "message": "Dieser Raum wird in 30 Sekunden geschlossen.",
       "dismissButtonAriaLabel": "Schließen"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Ihre Kamera wurde aktiviert",
+      "message": "Aktivieren Sie diese, wenn Sie Video freigeben möchten.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Ihre Kamera wurde deaktiviert.",
+      "message": "Sie können kein Video mehr freigeben.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Ihr Mikrofon wurde aktiviert",
+      "message": "Wenn Sie sprechen möchten, heben Sie die Stummschaltung auf.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Ihr Mikro wurde deaktiviert",
+      "message": "Sie können die Stummschaltung nicht mehr aufheben.",
+      "dismissButtonAriaLabel": "Schließen"
     }
   },
   "videoGallery": {
@@ -522,7 +644,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight beenden",
     "attendeeRole": "Teilnehmer",
     "muteParticipantMenuItemLabel": "Stummschalten",
-    "waitingScreenText": "Warten auf andere Teilnehmer"
+    "waitingScreenText": "Warten auf andere Teilnehmer",
+    "forbidAudio": "Mikro deaktivieren",
+    "permitAudio": "Mikrofon zulassen",
+    "forbidAudioTileMenuLabel": "Mikro deaktivieren",
+    "permitAudioTileMenuLabel": "Mikrofon zulassen",
+    "forbidVideo": "Kamera deaktivieren",
+    "permitVideo": "Kamera zulassen",
+    "forbidVideoTileMenuLabel": "Kamera deaktivieren",
+    "permitVideoTileMenuLabel": "Kamera zulassen"
   },
   "dialpad": {
     "placeholderText": "Telefonnummer eingeben",

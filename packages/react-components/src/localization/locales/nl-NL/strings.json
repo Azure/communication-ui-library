@@ -5,9 +5,12 @@
     "removeButtonLabel": "Verwijderen",
     "sharingIconLabel": "Delen",
     "mutedIconLabel": "Gedempt",
+    "handRaisedIconLabel": "Opgestoken hand - Positie {position}",
     "displayNamePlaceholder": "Naamloze deelnemer",
     "participantStateRinging": "Bellen...",
     "participantStateHold": "In de wacht",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, meer opties",
     "attendeeRole": "Genodigde"
   },
   "ParticipantList": {
@@ -74,12 +77,16 @@
     "rttCancelButtonLabel": "Annuleren",
     "rttCloseModalButtonAriaLabel": "RTT Modaal sluiten"
   },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Ondertitels starten..."
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
   },
   "imageOverlay": {
     "downloadButtonLabel": "Downloaden",
-    "dismissButtonAriaLabel": "Sluiten"
+    "dismissButtonAriaLabel": "Sluiten",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Bericht verzonden",
@@ -155,6 +162,7 @@
   },
   "participantsButton": {
     "label": "Personen",
+    "ariaLabel": "Personen",
     "tooltipContent": "Deelnemers weergeven",
     "menuHeader": "In dit gesprek",
     "participantsListButtonLabel": "{numParticipants} personen",
@@ -178,7 +186,7 @@
   },
   "reactionButton": {
     "label": "Reageren",
-    "ariaLabel": "Knop Regageren, een reactie verzenden",
+    "ariaLabel": "Reageren",
     "tooltipDisabledContent": "Reactieactie is uitgeschakeld",
     "tooltipContent": "Verzend een reactie",
     "likeReactionTooltipContent": "Vind ik leuk",
@@ -189,6 +197,100 @@
   },
   "rtt": {
     "isTypingText": "RTT typen"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Instellingen voor ondertitels",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Gesproken taal",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Taal van ondertitels",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Taal die iedereen in dit gesprek spreekt.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Bijschriften worden weergegeven in deze taal.",
+    "captionsSettingsConfirmButtonLabel": "Bevestigen",
+    "captionsSettingsCancelButtonLabel": "Annuleren",
+    "captionsSettingsModalAriaLabel": "Bijschriften instellen modaal",
+    "captionsSettingsCloseModalButtonAriaLabel": "Instelling voor ondertiteling sluiten"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabisch - Verenigde Arabische Emiraten",
+    "ar-sa": "Arabisch - Saudi-Arabië",
+    "da-dk": "Deens",
+    "de-de": "Duits - Duitsland",
+    "en-au": "Engels - Australië",
+    "en-ca": "Engels - Canada",
+    "en-gb": "Engels - Verenigd Koninkrijk",
+    "en-in": "Engels - India",
+    "en-nz": "Engels - Nieuw-Zeeland",
+    "en-us": "Engels - Verenigde Staten",
+    "es-es": "Spaans - Spanje (modern)",
+    "es-mx": "Spaans - Mexico",
+    "fi-fi": "Fins",
+    "fr-ca": "Frans - Canada",
+    "fr-fr": "Frans - Frankrijk",
+    "hi-in": "Hindi",
+    "it-it": "Italiaans - Italië",
+    "ja-jp": "Japans",
+    "ko-kr": "Koreaans",
+    "nb-no": "Noors (Bokmål)",
+    "nl-be": "Nederlands - België",
+    "nl-nl": "Nederlands - Nederland",
+    "pl-pl": "Pools",
+    "pt-br": "Portugees - Brazilië",
+    "ru-ru": "Russisch",
+    "sv-se": "Zweeds",
+    "zh-cn": "Chinees (Volksrepubliek China)",
+    "zh-hk": "Chinees - Hongkong SAR",
+    "cs-cz": "Tsjechisch",
+    "pt-pt": "Portugees - Portugal",
+    "tr-tr": "Turks",
+    "vi-vn": "Vietnamees",
+    "th-th": "Thai",
+    "he-il": "Hebreeuws",
+    "cy-gb": "Welsh",
+    "uk-ua": "Oekraïens",
+    "el-gr": "Grieks",
+    "hu-hu": "Hongaars",
+    "ro-ro": "Roemeens",
+    "sk-sk": "Slowaaks",
+    "zh-tw": "Chinees - Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabisch",
+    "da": "Deens",
+    "de": "Duits",
+    "en": "Engels",
+    "es": "Spaans",
+    "fi": "Fins",
+    "fr-ca": "Frans - Canada",
+    "fr": "Frans - Frankrijk",
+    "hi": "Hindi",
+    "it": "Italiaans",
+    "ja": "Japans",
+    "ko": "Koreaans",
+    "nb": "Noors (Bokmål)",
+    "nl": "Nederlands",
+    "pl": "Pools",
+    "pt": "Portugees - Brazilië",
+    "ru": "Russisch",
+    "sv": "Zweeds",
+    "zh-Hans": "Chinees (vereenvoudigd)",
+    "zh-Hant": "Chinees (traditioneel)",
+    "cs": "Tsjechisch",
+    "pt-pt": "Portugees - Portugal",
+    "tr": "Turks",
+    "vi": "Vietnamees",
+    "th": "Thai",
+    "he": "Hebreeuws",
+    "cy": "Welsh",
+    "uk": "Oekraïens",
+    "el": "Grieks",
+    "hu": "Hongaars",
+    "ro": "Roemeens",
+    "sk": "Slowaaks"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Bijschriften inschakelen",
+    "offLabel": "Ondertitels uitschakelen",
+    "tooltipOnContent": "Ondertitels uitschakelen",
+    "tooltipOffContent": "Bijschriften inschakelen"
   },
   "messageThread": {
     "yesterday": "Gisteren",
@@ -494,6 +596,26 @@
       "title": "De tijdslimiet voor de ruimte verloopt binnenkort.",
       "message": "Deze ruimte wordt in 30 seconden gesloten.",
       "dismissButtonAriaLabel": "Sluiten"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Uw camera is ingeschakeld",
+      "message": "Schakel deze in als u video wilt delen.",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Uw camera is uitgeschakeld",
+      "message": "U kunt geen video meer delen.",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Uw microfoon is ingeschakeld",
+      "message": "Dempen opheffen als u wilt spreken.",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Uw microfoon is uitgeschakeld",
+      "message": "U kunt het dempen niet meer opheffen.",
+      "dismissButtonAriaLabel": "Sluiten"
     }
   },
   "videoGallery": {
@@ -522,7 +644,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight afsluiten",
     "attendeeRole": "Genodigde",
     "muteParticipantMenuItemLabel": "Dempen",
-    "waitingScreenText": "Wachten tot anderen deelnemen"
+    "waitingScreenText": "Wachten tot anderen deelnemen",
+    "forbidAudio": "Microfoon uitschakelen",
+    "permitAudio": "Microfoon toestaan",
+    "forbidAudioTileMenuLabel": "Microfoon uitschakelen",
+    "permitAudioTileMenuLabel": "Microfoon toestaan",
+    "forbidVideo": "Camera uitschakelen",
+    "permitVideo": "Camera toestaan",
+    "forbidVideoTileMenuLabel": "Camera uitschakelen",
+    "permitVideoTileMenuLabel": "Camera toestaan"
   },
   "dialpad": {
     "placeholderText": "Telefoonnummer invoeren",

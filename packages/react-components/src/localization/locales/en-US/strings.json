@@ -616,6 +616,14 @@
       "title": "Your mic has been disabled",
       "message": "You can no longer unmute.",
       "dismissButtonAriaLabel": "Close"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode has started",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode has ended",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {

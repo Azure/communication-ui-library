@@ -12,7 +12,7 @@ betaTest.describe('RichTextInsertTablePane tests', () => {
   betaTest('RichTextInsertTablePane should be shown correctly', async ({ mount, page }) => {
     const component = await mount(<TestRichTextInsertTablePane maxRowsNumber={5} maxColumnsNumber={5} />);
     await component.evaluate(() => document.fonts.ready);
-
+    await component.getByTestId('cell_0_0').waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-insert-table-pane-1-1-selection.png');
 
     await page.getByTestId('cell_3_2').hover();

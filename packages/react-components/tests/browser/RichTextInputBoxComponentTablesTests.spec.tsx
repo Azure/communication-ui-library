@@ -6,8 +6,7 @@ import { expect } from '@playwright/experimental-ct-react';
 import { TestRichTextInputBoxComponent } from './TestingComponents/TestRichTextInputBoxComponent';
 import { Locator, Page } from 'playwright-core';
 import { test as betaTest } from './FlavoredBaseTest';
-
-const formatButtonId = 'rich-text-input-box-format-button';
+import { formatButtonClick } from './utils/RichTextEditorUtils';
 
 // create a separate file for table tests to speed up the test execution
 betaTest.describe('RichTextInputBoxComponent table tests', () => {
@@ -19,7 +18,7 @@ betaTest.describe('RichTextInputBoxComponent table tests', () => {
     );
     await component.evaluate(() => document.fonts.ready);
 
-    await component.getByTestId(formatButtonId).click();
+    await formatButtonClick(component);
 
     await component.getByLabel('Insert table').click();
     await expect(component).toHaveScreenshot('rich-text-input-box-component-insert-table-panel.png');
@@ -50,7 +49,7 @@ betaTest.describe('RichTextInputBoxComponent table tests', () => {
     );
     await component.evaluate(() => document.fonts.ready);
 
-    await component.getByTestId(formatButtonId).click();
+    await formatButtonClick(component);
 
     await component.getByLabel('Insert table').click();
 
@@ -96,7 +95,7 @@ betaTest.describe('RichTextInputBoxComponent table tests', () => {
     );
     await component.evaluate(() => document.fonts.ready);
 
-    await component.getByTestId(formatButtonId).click();
+    await formatButtonClick(component);
 
     await component.getByLabel('Insert table').click();
     // add table 1*1 to have only one cell for the next step

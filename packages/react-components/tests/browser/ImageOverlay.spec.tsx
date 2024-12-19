@@ -34,7 +34,7 @@ betaTest.describe('ImageOverlay tests', () => {
     }
   ];
 
-  betaTest('ImageOverlay should be shown correctly when loading', async ({ mount }) => {
+  betaTest('ImageOverlay should be shown correctly when loading', async ({ mount, page }) => {
     const component = await mount(
       <div>
         <MessageThread userId={'1'} messages={messages} />
@@ -50,6 +50,8 @@ betaTest.describe('ImageOverlay tests', () => {
       </div>
     );
     await component.evaluate(() => document.fonts.ready);
+    await page.getByRole('button', { name: 'Download' }).waitFor({ state: 'visible' });
+    await page.getByRole('button', { name: 'Close' }).waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('image-overlay-loading-stage.png');
   });
 });

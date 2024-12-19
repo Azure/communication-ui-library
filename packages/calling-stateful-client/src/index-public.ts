@@ -32,14 +32,13 @@ export type { RemoteDiagnosticState, RemoteDiagnosticType } from './CallClientSt
 export type { CreateViewResult } from './StreamUtils';
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
-export type { TogetherModeCallFeatureState as TogetherModeCallFeature } from './CallClientState';
-/* @conditional-compile-remove(together-mode) */
 export type {
   CallFeatureStreamState,
   TogetherModeSeatingPositionState,
   CallFeatureStreamName,
   TogetherModeStreamsState,
-  TogetherModeParticipantSeatingState
+  TogetherModeParticipantSeatingState,
+  TogetherModeCallFeatureState
 } from './CallClientState';
 
 export type { RaisedHandState } from './CallClientState';
