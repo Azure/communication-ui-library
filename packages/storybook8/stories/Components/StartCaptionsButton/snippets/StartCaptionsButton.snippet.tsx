@@ -1,38 +1,23 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { StartCaptionsButton } from '@azure/communication-react';
-import { Stack } from '@fluentui/react';
-import React, { useState } from 'react';
+import { StartCaptionsButton, usePropsFor } from '@azure/communication-react';
+import React from 'react';
 
 export const StartCaptionsButtonStory = (): JSX.Element => {
-  const [isCaptionsActive, setIsCaptionsActive] = useState<boolean>(false);
-
-  const onStartCaptions = async (): Promise<void> => {
-    setIsCaptionsActive(true);
-    Promise.resolve();
-  };
-
-  const onStopCaptions = async (): Promise<void> => {
-    setIsCaptionsActive(false);
-    Promise.resolve();
-  };
-
-  const onSetSpokenLanguage = async (language: string): Promise<void> => {
-    alert(`Spoken language set to ${language}`);
-    Promise.resolve();
-  };
+  const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
 
   return (
-    <Stack>
-      <StartCaptionsButton
-        onStartCaptions={onStartCaptions}
-        onStopCaptions={onStopCaptions}
-        onSetSpokenLanguage={onSetSpokenLanguage}
-        currentSpokenLanguage="en-us"
-        checked={isCaptionsActive}
-        showLabel
-      />
-    </Stack>
+    <>
+      {startCaptionsButtonProps && (
+        <StartCaptionsButton
+          {...startCaptionsButtonProps}
+          onStartCaptions={async () => {
+            console.log('Caption is Starting');
+            startCaptionsButtonProps.onStartCaptions();
+          }}
+        />
+      )}
+    </>
   );
 };
