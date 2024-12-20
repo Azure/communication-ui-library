@@ -31,16 +31,18 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import {
   calculateScaledSize,
   getTogetherModeParticipantOverlayStyle,
-  getTogetherModeSeatPositionStyle,
-  ITogetherModeSeatPositionStyle
+  setTogetherModeSeatPositionStyle,
+  togetherModeIconStyle,
+  togetherModeParticipantDisplayName,
+  togetherModeParticipantStatusContainer,
+  TogetherModeSeatStyle
 } from './styles/TogetherMode.styles';
+/* @conditional-compile-remove(together-mode) */
 import { CallingTheme, useTheme } from '../theming';
-// import { iconContainerStyle, raiseHandContainerStyles } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(together-mode) */
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(together-mode) */
-// import { iconContainerStyle } from './styles/VideoTile.styles';
-// import { useTheme } from '../theming';
-
+import { _pxToRem, _remToPx } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(together-mode) */
 /**
  * Signaling action overlay component props
@@ -49,15 +51,16 @@ import { RaisedHandIcon } from './assets/RaisedHandIcon';
  *
  * @internal
  */
-type VisibleTogetherModeSignalingAction = {
+type TogetherModeParticipantStatus = {
   reaction?: Reaction;
+  scaledSize?: number;
   isHandRaised?: boolean;
   isSpotlighted?: boolean;
   isMuted?: boolean;
   id: string;
-  seatPositionStyle: ITogetherModeSeatPositionStyle;
-  displayName?: string;
-  showDisplayName?: boolean;
+  seatPositionStyle: TogetherModeSeatStyle;
+  displayName: string;
+  showDisplayName: boolean;
 };
 
 /* @conditional-compile-remove(together-mode) */
@@ -72,22 +75,21 @@ export const TogetherModeOverlay = React.memo(
     reactionResources: ReactionResources;
     localParticipant: VideoGalleryLocalParticipant;
     remoteParticipants: VideoGalleryRemoteParticipant[];
-    participantsSeatingArrangement: VideoGalleryTogetherModeParticipantPosition;
+    togetherModeSeatPositions: VideoGalleryTogetherModeParticipantPosition;
   }) => {
     const locale = useLocale();
     const theme = useTheme();
     const callingPalette = (theme as unknown as CallingTheme).callingPalette;
 
-    const { emojiSize, reactionResources, remoteParticipants, localParticipant, participantsSeatingArrangement } =
-      props;
-    const [visibleSignals, setVisibleSignals] = useState<{ [key: string]: VisibleTogetherModeSignalingAction }>({});
+    const { emojiSize, reactionResources, remoteParticipants, localParticipant, togetherModeSeatPositions } = props;
+    const [visibleSignals, setVisibleSignals] = useState<{ [key: string]: TogetherModeParticipantStatus }>({});
     const [hoveredParticipantID, setHoveredParticipantID] = useState('');
 
-    // When a 50-participant scene switches to a smaller group in Together Mode, signals for those no longer in the stream are removed
     const hideSignalForParticipantsNotInTogetherMode = useCallback(() => {
       const removedVisibleParticipants = Object.keys(visibleSignals).filter(
-        (participantId) => !participantsSeatingArrangement[participantId]
+        (participantId) => !togetherModeSeatPositions[participantId]
       );
+      // Update visible signals state instead of directly mutating it
       setVisibleSignals((prevSignals) => {
         const newSignals = { ...prevSignals };
         removedVisibleParticipants.forEach((participantId) => {
@@ -101,18 +103,18 @@ export const TogetherModeOverlay = React.memo(
         }
         return prevSignals;
       });
-    }, [visibleSignals, participantsSeatingArrangement]);
+    }, [visibleSignals, togetherModeSeatPositions]);
 
-    const updateTogetherModeSignals = useCallback(() => {
+    const Testing = useCallback(() => {
       const allParticipants = [...remoteParticipants, localParticipant];
 
       const participantsWithVideoAvailable = allParticipants.filter(
-        (p) => p.videoStream?.isAvailable && participantsSeatingArrangement[p.userId]
+        (p) => p.videoStream?.isAvailable && togetherModeSeatPositions[p.userId]
       );
       const updatedSignals = participantsWithVideoAvailable.reduce(
-        (acc: { [key: string]: VisibleTogetherModeSignalingAction }, p: VideoGalleryLocalParticipant) => {
+        (acc: { [key: string]: TogetherModeParticipantStatus }, p: VideoGalleryLocalParticipant) => {
           const { userId, reaction, raisedHand, spotlight, isMuted, displayName } = p;
-          const seatingPosition = participantsSeatingArrangement[userId];
+          const seatingPosition = togetherModeSeatPositions[userId];
           if (seatingPosition) {
             acc[userId] = {
               id: userId,
@@ -122,7 +124,8 @@ export const TogetherModeOverlay = React.memo(
               isMuted,
               displayName: displayName || locale.strings.videoGallery.displayNamePlaceholder,
               showDisplayName: !!(spotlight || raisedHand || reaction || hoveredParticipantID === userId),
-              seatPositionStyle: getTogetherModeSeatPositionStyle(seatingPosition)
+              scaledSize: calculateScaledSize(seatingPosition.width, seatingPosition.height),
+              seatPositionStyle: setTogetherModeSeatPositionStyle(seatingPosition)
             };
           }
           return acc;
@@ -148,70 +151,60 @@ export const TogetherModeOverlay = React.memo(
       remoteParticipants,
       localParticipant,
       visibleSignals,
-      participantsSeatingArrangement,
+      togetherModeSeatPositions,
       locale.strings.videoGallery.displayNamePlaceholder,
       hoveredParticipantID
     ]);
 
     // Trigger updates on dependency changes
     useEffect(() => {
-      updateTogetherModeSignals();
+      Testing();
       hideSignalForParticipantsNotInTogetherMode();
     }, [
       remoteParticipants,
       localParticipant,
-      participantsSeatingArrangement,
       hoveredParticipantID,
-      updateTogetherModeSignals,
+      Testing,
       hideSignalForParticipantsNotInTogetherMode
     ]);
 
     return (
-      <div
-        style={{
-          width: '100%',
-          height: '100%',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          color: 'white'
-        }}
-      >
+      <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
         {Object.values(visibleSignals).map((participantSignal) => (
           <div
             key={participantSignal.id}
             style={{
               ...getTogetherModeParticipantOverlayStyle(participantSignal.seatPositionStyle),
-              position: 'absolute',
-              left: `${participantSignal.seatPositionStyle.seatCoordinates.left}px`,
-              top: `${participantSignal.seatPositionStyle.seatCoordinates.top}px`,
               border: '1px solid red'
             }}
             onMouseEnter={() => setHoveredParticipantID(participantSignal.id)}
             onMouseLeave={() => setHoveredParticipantID('')}
           >
-            <div className="togetherMode-item">
+            <div>
               {participantSignal.reaction?.reactionType && (
                 <div
                   style={moveAnimationStyles(
-                    (participantSignal.seatPositionStyle.seatCoordinates.height ?? 1) * 0.5,
-                    (participantSignal.seatPositionStyle.seatCoordinates.height ?? 1) * 0.35
+                    _remToPx(participantSignal.seatPositionStyle.seatPosition.height) * 0.5,
+                    _remToPx(participantSignal.seatPositionStyle.seatPosition.height) * 0.35
                   )}
                 >
                   <div
                     style={{
-                      width: `${emojiSize}px`,
+                      width: `${emojiSize}`,
                       position: 'absolute',
-                      left: `${(100 - (emojiSize / (participantSignal.seatPositionStyle.seatCoordinates.width ?? 1)) * 100) / 2}%`
+                      left: `${
+                        (100 -
+                          ((participantSignal.scaledSize || 1) /
+                            _remToPx(participantSignal.seatPositionStyle.seatPosition.width)) *
+                            100) /
+                        2
+                      }%`
                     }}
                   >
                     <div
                       style={spriteAnimationStyles(
                         REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                        calculateScaledSize(
-                          participantSignal.seatPositionStyle.seatCoordinates.width ?? 1,
-                          participantSignal.seatPositionStyle.seatCoordinates.height ?? 1
-                        ),
+                        participantSignal.scaledSize || 1,
                         (participantSignal.reaction &&
                           getEmojiResource(participantSignal?.reaction.reactionType, reactionResources)) ??
                           ''
@@ -225,33 +218,23 @@ export const TogetherModeOverlay = React.memo(
                 <div
                   style={{
                     position: 'absolute',
-                    bottom: '0.5%',
+                    bottom: `${_pxToRem(2)}`,
                     width: '100%',
-                    color: 'white',
                     textAlign: 'center'
                   }}
                 >
                   <div
                     style={{
-                      backgroundColor: callingPalette.videoTileLabelBackgroundLight,
-                      display: 'flex',
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      gap: '2px',
-                      margin: '0 auto', // Centers the container
-                      // maxWidth: 'max-content', // Allows container to grow with content
-                      transition: 'width 0.3s ease, max-width 0.3s ease', // Smooth transition for container expansion
-                      padding: '0 5px',
-                      borderRadius: theme.effects.roundedCorner4,
-                      borderColor: 'white',
-                      width: 'fit-content'
+                      ...togetherModeParticipantStatusContainer(
+                        callingPalette.videoTileLabelBackgroundLight,
+                        theme.effects.roundedCorner4
+                      )
                     }}
                   >
                     {participantSignal.isHandRaised && (
                       <span
                         style={{
-                          width: '20px',
-                          flexShrink: 0
+                          ...togetherModeIconStyle()
                         }}
                       >
                         <RaisedHandIcon />
@@ -260,19 +243,11 @@ export const TogetherModeOverlay = React.memo(
                     {participantSignal.showDisplayName && (
                       <Text
                         style={{
-                          textOverflow: 'ellipsis',
-                          flexGrow: 1, // Allow text to grow within available space
-                          overflow: hoveredParticipantID === participantSignal.id ? 'visible' : 'hidden',
-                          whiteSpace: 'nowrap',
-                          textAlign: 'center',
-                          // width: hoveredParticipantID === `${participantSignal.id}` ? 'calc(100% - 100px)' : 'auto', // Expand width from center
-                          transition: 'width 0.3s ease', // Smooth transition for width changes
-                          color: participantSignal.displayName ? theme.palette.neutralSecondary : 'inherit',
-                          display:
-                            hoveredParticipantID === participantSignal.id ||
-                            (participantSignal.seatPositionStyle.seatCoordinates.width ?? 0) > 100
-                              ? 'inline-block'
-                              : 'none' // Completely remove the element when hidden
+                          ...togetherModeParticipantDisplayName(
+                            hoveredParticipantID === participantSignal.id,
+                            _remToPx(participantSignal.seatPositionStyle.seatPosition.width),
+                            participantSignal.displayName ? theme.palette.neutralSecondary : 'inherit'
+                          )
                         }}
                       >
                         {participantSignal.displayName}
@@ -281,10 +256,8 @@ export const TogetherModeOverlay = React.memo(
                     {participantSignal.isMuted && (
                       <Icon
                         iconName="VideoTileMicOff"
-                        // className={mergeStyles(iconContainerStyle)}
                         style={{
-                          width: '20px',
-                          flexShrink: 0,
+                          ...togetherModeIconStyle(),
                           color: participantSignal.displayName ? theme.palette.neutralSecondary : 'inherit'
                         }}
                       />
@@ -292,10 +265,8 @@ export const TogetherModeOverlay = React.memo(
                     {participantSignal.isSpotlighted && (
                       <Icon
                         iconName="VideoTileSpotlighted"
-                        // className={mergeStyles(iconContainerStyle)}
                         style={{
-                          width: '20px',
-                          flexShrink: 0,
+                          ...togetherModeIconStyle(),
                           color: participantSignal.displayName ? theme.palette.neutralSecondary : 'inherit'
                         }}
                       />
