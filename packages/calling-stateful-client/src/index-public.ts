@@ -33,7 +33,6 @@ export type { CreateViewResult } from './StreamUtils';
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
 export type {
-  TogetherModeCallFeatureState,
   CallFeatureStreamState,
   TogetherModeSeatingPositionState,
   CallFeatureStreamName,

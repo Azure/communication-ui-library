@@ -46,7 +46,7 @@ export interface MeetingReactionOverlayProps {
   remoteParticipants?: VideoGalleryRemoteParticipant[];
 
   /* @conditional-compile-remove(together-mode) */
-  seatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
+  togetherModeSeatPositions?: VideoGalleryTogetherModeParticipantPosition;
 }
 
 /**
@@ -75,7 +75,8 @@ const REACTION_EMOJI_RESIZE_SCALE_CONSTANT = 3;
  * @internal
  */
 export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.Element => {
-  const { overlayMode, reaction, reactionResources, localParticipant, remoteParticipants, seatingCoordinates } = props;
+  const { overlayMode, reaction, reactionResources, localParticipant, remoteParticipants, togetherModeSeatPositions } =
+    props;
   const [emojiSizePx, setEmojiSizePx] = useState(0);
   const [divHeight, setDivHeight] = useState(0);
   const [divWidth, setDivWidth] = useState(0);
@@ -136,7 +137,6 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
     /* @conditional-compile-remove(together-mode) */
     return (
       <div
-        ref={videoTileRef}
         style={{
           width: '100%',
           height: '100%',
@@ -150,7 +150,7 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
           reactionResources={reactionResources}
           localParticipant={localParticipant ?? ({} as VideoGalleryLocalParticipant)}
           remoteParticipants={remoteParticipants ?? ([] as VideoGalleryRemoteParticipant[])}
-          participantsSeatingArrangement={seatingCoordinates ?? {}}
+          togetherModeSeatPositions={togetherModeSeatPositions ?? {}}
         />
       </div>
     );

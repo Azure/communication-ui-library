@@ -21,10 +21,8 @@ import { StreamMedia } from '../StreamMedia';
 import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
 /* @conditional-compile-remove(together-mode) */
 import { Stack } from '@fluentui/react';
-import { togetherModeRootStyle } from '../styles/TogetherMode.styles';
 /* @conditional-compile-remove(together-mode) */
-// import { togetherModeRootStyle } from '../styles/TogetherMode.styles'; // Ensure this is an object, not a string
-
+import { togetherModeStreamRootStyle } from '../styles/TogetherMode.styles';
 /* @conditional-compile-remove(together-mode) */
 /**
  * A memoized version of local screen share component. React.memo is used for a performance
@@ -102,33 +100,20 @@ export const TogetherModeStream = React.memo(
 
     const stream = props.togetherModeStreams?.mainVideoStream;
     const showLoadingIndicator = !(stream && stream.isAvailable && stream.isReceiving);
-    // console.log(`Chuk Seating arrangement TogetherMode === ${JSON.stringify(props.seatingCoordinates)}`);
     return containerWidth && containerHeight ? (
-      <Stack>
-        <div
-          data-ui-id="together-mode-video-tile"
-          style={{
-            width: `${_pxToRem(containerWidth)}`,
-            height: `${_pxToRem(containerHeight)}`,
-            position: 'relative'
-          }}
-        >
-          <StreamMedia
-            videoStreamElement={stream?.renderElement || null}
-            isMirrored={true}
-            loadingState={showLoadingIndicator ? 'loading' : 'none'}
-            styles={togetherModeRootStyle()}
-          />
-          {props.reactionResources && (
-            <MeetingReactionOverlay
-              reactionResources={props.reactionResources}
-              localParticipant={props.localParticipant}
-              remoteParticipants={props.remoteParticipants}
-              seatingCoordinates={props.seatingCoordinates}
-              overlayMode="together-mode"
-            />
-          )}
-        </div>
+      <Stack styles={togetherModeStreamRootStyle} horizontalAlign="center" verticalAlign="center">
+        <StreamMedia
+          videoStreamElement={stream?.renderElement || null}
+          isMirrored={true}
+          loadingState={showLoadingIndicator ? 'loading' : 'none'}
+        />
+        <MeetingReactionOverlay
+          reactionResources={props.reactionResources || ({} as ReactionResources)}
+          localParticipant={props.localParticipant}
+          remoteParticipants={props.remoteParticipants}
+          togetherModeSeatPositions={props.seatingCoordinates}
+          overlayMode="together-mode"
+        />
       </Stack>
     ) : null;
   }

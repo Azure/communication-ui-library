@@ -18,8 +18,7 @@ import {
   Video20Filled,
   VideoOff20Filled,
   WifiWarning20Filled,
-  Circle20Regular,
-  PeopleAudience20Regular
+  Circle20Regular
 } from '@fluentui/react-icons';
 import { PersonCall20Regular, Clock20Filled } from '@fluentui/react-icons';
 import { MoreHorizontal20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
