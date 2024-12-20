@@ -4149,13 +4149,9 @@ export interface NotificationStackStrings {
     callVideoRecoveredBySystem?: NotificationStrings;
     callVideoStoppedBySystem?: NotificationStrings;
     cameraFrozenForRemoteParticipants?: NotificationStrings;
-    // (undocumented)
     capabilityTurnVideoOnAbsent?: NotificationStrings;
-    // (undocumented)
     capabilityTurnVideoOnPresent?: NotificationStrings;
-    // (undocumented)
     capabilityUnmuteMicAbsent?: NotificationStrings;
-    // (undocumented)
     capabilityUnmuteMicPresent?: NotificationStrings;
     dismissButtonAriaLabel?: NotificationStrings;
     failedToJoinCallGeneric?: NotificationStrings;
