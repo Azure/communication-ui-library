@@ -52,8 +52,6 @@ export const PeoplePaneContent = (props: {
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
   const getStrings = () => {
     return localeStrings.strings.call;
-
-    return localeStrings.strings.callWithChat;
   };
   const strings = getStrings();
 

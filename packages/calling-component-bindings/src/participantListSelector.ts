@@ -43,7 +43,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         // Filter out MicrosoftBot participants
         .filter((participant: RemoteParticipantState) => {
           return !isMicrosoftTeamsAppIdentifier(participant.identifier);
-          return true;
         })
         /**
          * hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients.

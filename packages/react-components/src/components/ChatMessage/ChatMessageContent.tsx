@@ -244,7 +244,6 @@ export const getAttachmentCountLiveMessage = (
   return _formatString(attachmentCardGroupMessage, {
     attachmentCount: `${attachments.length}`
   });
-  return '';
 };
 
 const defaultOnRenderInlineImage = (inlineImage: InlineImage): JSX.Element => {
