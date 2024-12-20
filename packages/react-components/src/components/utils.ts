@@ -360,6 +360,14 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
   /* @conditional-compile-remove(breakout-rooms) */
   breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon',
+  /* @conditional-compile-remove(media-access) */
+  capabilityTurnVideoOnPresent: 'ControlButtonCameraOff',
+  /* @conditional-compile-remove(media-access) */
+  capabilityTurnVideoOnAbsent: 'ControlButtonCameraProhibited',
+  /* @conditional-compile-remove(media-access) */
+  capabilityUnmuteMicPresent: 'ControlButtonMicOff',
+  /* @conditional-compile-remove(media-access) */
+  capabilityUnmuteMicAbsent: 'ControlButtonMicProhibited',
   /* @conditional-compile-remove(together-mode) */
   togetherModeStarted: 'NotificationBarTogetherModeIcon',
   /* @conditional-compile-remove(together-mode) */
