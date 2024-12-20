@@ -11,7 +11,6 @@ import {
   paneFooterTokens,
   textFieldStyles
 } from '../styles/Footer.styles';
-
 import React from 'react';
 
 const invitePeopleString = 'Invite people to join';
