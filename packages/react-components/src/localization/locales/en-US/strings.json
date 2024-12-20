@@ -619,12 +619,10 @@
     },
     "togetherModeStarted": {
       "title": "Togethermode has started",
-      "message": "Togethermode has started",
       "dismissButtonAriaLabel": "Close"
     },
     "togetherModeEnded": {
       "title": "Togethermode has ended",
-      "message": "Togethermode has ended",
       "dismissButtonAriaLabel": "Close"
     }
   },

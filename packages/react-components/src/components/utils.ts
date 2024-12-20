@@ -367,7 +367,11 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(media-access) */
   capabilityUnmuteMicPresent: 'ControlButtonMicOff',
   /* @conditional-compile-remove(media-access) */
-  capabilityUnmuteMicAbsent: 'ControlButtonMicProhibited'
+  capabilityUnmuteMicAbsent: 'ControlButtonMicProhibited',
+  /* @conditional-compile-remove(together-mode) */
+  togetherModeStarted: 'NotificationBarTogetherModeIcon',
+  /* @conditional-compile-remove(together-mode) */
+  togetherModeEnded: 'NotificationBarTogetherModeIcon'
 };
 
 /**
