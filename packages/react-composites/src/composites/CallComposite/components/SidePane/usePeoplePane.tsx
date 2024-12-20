@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { RefObject, useCallback, useEffect, useMemo } from 'react';
+import React, { RefObject, useCallback, useEffect, useMemo, useState } from 'react';
 import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 import { PeoplePaneContent } from '../../../common/PeoplePaneContent';
@@ -112,7 +112,7 @@ export const usePeoplePane = (props: {
 
   const localeStrings = useLocale().strings.call;
   const remoteParticipants = useSelector(getRemoteParticipants);
-  const [showMuteAllPrompt, setShowMuteAllPrompt] = React.useState(false);
+  const [showMuteAllPrompt, setShowMuteAllPrompt] = useState(false);
   const muteAllPromptLabels = useMemo(
     () => ({
       confirmButtonLabel: localeStrings.muteAllConfirmButtonLabel,
@@ -134,13 +134,13 @@ export const usePeoplePane = (props: {
   }, [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
 
   /* @conditional-compile-remove(media-access) */
-  const [showForbidOthersAudioPrompt, setShowForbidOthersAudioPrompt] = React.useState(false);
+  const [showForbidOthersAudioPrompt, setShowForbidOthersAudioPrompt] = useState(false);
   /* @conditional-compile-remove(media-access) */
-  const [showPermitOthersAudioPrompt, setShowPermitOthersAudioPrompt] = React.useState(false);
+  const [showPermitOthersAudioPrompt, setShowPermitOthersAudioPrompt] = useState(false);
   /* @conditional-compile-remove(media-access) */
-  const [showForbidOthersVideoPrompt, setShowForbidOthersVideoPrompt] = React.useState(false);
+  const [showForbidOthersVideoPrompt, setShowForbidOthersVideoPrompt] = useState(false);
   /* @conditional-compile-remove(media-access) */
-  const [showPermitOthersVideoPrompt, setShowPermitOthersVideoPrompt] = React.useState(false);
+  const [showPermitOthersVideoPrompt, setShowPermitOthersVideoPrompt] = useState(false);
 
   /* @conditional-compile-remove(media-access) */
   const onForbidAllAttendeesPromptConfirm = useCallback(() => {

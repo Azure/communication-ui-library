@@ -315,22 +315,22 @@ export interface VideoGalleryProps {
   onMuteParticipant?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to forbid audio for a remote participant
+   * This callback is to forbid audio for a remote participant(s)
    */
   onForbidAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to permit audio for a remote participant
+   * This callback is to permit audio for a remote participant(s)
    */
   onPermitAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to forbid video for a remote participant
+   * This callback is to forbid video for a remote participant(s)
    */
   onForbidVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to permit video for a remote participant
+   * This callback is to permit video for a remote participant(s)
    */
   onPermitVideo?: (userIds: string[]) => Promise<void>;
 }
