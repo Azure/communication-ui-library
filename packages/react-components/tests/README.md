@@ -43,7 +43,10 @@ script to update the snapshots.
 ## Test development
 
 The components tests are lightweight and use less resources comparing with the usual Playwright tests.
-A file with extension `.spec.tsx` should be created for new components tests.
+- A file with extension `.spec.tsx` should be created for new components tests.
+- `component.evaluate(() => document.fonts.ready);` should be called after the component is mounted to check that all fonts are loaded and get more stable results for snapshots.
+- Be sure to check that components are show as expected with `expect` or `waitFor` before checking the snapshots. This is because Playwright components tests are super fast and tests may be flaky because of this.
+
 
 ### Conditional Compilation
 

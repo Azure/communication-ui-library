@@ -12,12 +12,14 @@ betaTest.describe('MessageThread inline image tests', () => {
   betaTest('MessageThread inline image should show grey box when loading', async ({ mount }) => {
     const component = await mount(<MessageThread userId={'1'} messages={getMessages('')} />);
     await component.evaluate(() => document.fonts.ready);
+    await component.getByRole('img', { name: 'image' }).waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('message-thread-inline-image-loading-stage.png');
   });
 
   betaTest('MessageThread inline image should show broken image icon with invalid src', async ({ mount }) => {
     const component = await mount(<MessageThread userId={'1'} messages={getMessages('http://')} />);
     await component.evaluate(() => document.fonts.ready);
+    await component.getByRole('img', { name: 'image' }).waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('message-thread-inline-image-broken-image.png');
   });
 
