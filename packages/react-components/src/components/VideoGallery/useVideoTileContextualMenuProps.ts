@@ -303,19 +303,7 @@ export const useVideoTileContextualMenuProps = (props: {
     return { items, styles: {}, calloutProps: { preventDismissOnEvent }, shouldFocusOnContainer: false };
   }, [
     onMuteParticipant,
-    strings?.muteParticipantMenuItemLabel,
-    strings?.unpinParticipantForMe,
-    strings?.pinParticipantForMe,
-    strings?.unpinParticipantMenuItemAriaLabel,
-    strings?.pinnedParticipantAnnouncementAriaLabel,
-    strings?.pinParticipantForMeLimitReached,
-    strings?.stopSpotlightOnSelfVideoTileMenuLabel,
-    strings?.stopSpotlightVideoTileMenuLabel,
-    strings?.addSpotlightVideoTileMenuLabel,
-    strings?.startSpotlightVideoTileMenuLabel,
-    strings?.spotlightLimitReachedMenuTitle,
-    strings?.fitRemoteParticipantToFrame,
-    strings?.fillRemoteParticipantFrame,
+    strings,
     participant.isMuted,
     participant.userId,
     participant.displayName,
@@ -333,14 +321,6 @@ export const useVideoTileContextualMenuProps = (props: {
     onStartSpotlight,
     onUpdateScalingMode,
     view,
-    /* @conditional-compile-remove(media-access) */
-    strings?.permitAudioTileMenuLabel,
-    /* @conditional-compile-remove(media-access) */
-    strings?.forbidAudioTileMenuLabel,
-    /* @conditional-compile-remove(media-access) */
-    strings?.permitVideoTileMenuLabel,
-    /* @conditional-compile-remove(media-access) */
-    strings?.forbidVideoTileMenuLabel,
     /* @conditional-compile-remove(media-access) */
     participant.canAudioBeForbidden,
     /* @conditional-compile-remove(media-access) */

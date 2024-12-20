@@ -355,27 +355,31 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   /* @conditional-compile-remove(media-access) */
   const meetingMediaAccess = useSelector(getMediaAccessSetting);
   /* @conditional-compile-remove(media-access) */
+  const canForbidOthersAudio = !!capabilities?.forbidOthersAudio?.isPresent;
+  /* @conditional-compile-remove(media-access) */
+  const canForbidOthersVideo = !!capabilities?.forbidOthersVideo?.isPresent;
+  /* @conditional-compile-remove(media-access) */
   const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
     return {
-      onForbidAudio: capabilities?.forbidOthersAudio?.isPresent ? onForbidAudio : undefined,
-      onPermitAudio: capabilities?.forbidOthersAudio?.isPresent ? onPermitAudio : undefined,
-      onForbidOthersAudio: capabilities?.forbidOthersAudio?.isPresent ? muteAllHandlers.onForbidOthersAudio : undefined,
-      onPermitOthersAudio: capabilities?.forbidOthersAudio?.isPresent ? muteAllHandlers.onPermitOthersAudio : undefined,
-      onForbidVideo: capabilities?.forbidOthersVideo?.isPresent ? onForbidVideo : undefined,
-      onPermitVideo: capabilities?.forbidOthersVideo?.isPresent ? onPermitVideo : undefined,
-      onForbidOthersVideo: capabilities?.forbidOthersVideo?.isPresent ? muteAllHandlers.onForbidOthersVideo : undefined,
-      onPermitOthersVideo: capabilities?.forbidOthersVideo?.isPresent ? muteAllHandlers.onPermitOthersVideo : undefined,
+      onForbidAudio: canForbidOthersAudio ? onForbidAudio : undefined,
+      onPermitAudio: canForbidOthersAudio ? onPermitAudio : undefined,
+      onForbidOthersAudio: canForbidOthersAudio ? muteAllHandlers.onForbidOthersAudio : undefined,
+      onPermitOthersAudio: canForbidOthersAudio ? muteAllHandlers.onPermitOthersAudio : undefined,
+      onForbidVideo: canForbidOthersVideo ? onForbidVideo : undefined,
+      onPermitVideo: canForbidOthersVideo ? onPermitVideo : undefined,
+      onForbidOthersVideo: canForbidOthersVideo ? muteAllHandlers.onForbidOthersVideo : undefined,
+      onPermitOthersVideo: canForbidOthersVideo ? muteAllHandlers.onPermitOthersVideo : undefined,
       meetingMediaAccess
     };
   }, [
-    capabilities?.forbidOthersAudio?.isPresent,
-    capabilities?.forbidOthersVideo?.isPresent,
+    canForbidOthersAudio,
     onForbidAudio,
     onPermitAudio,
     muteAllHandlers.onForbidOthersAudio,
     muteAllHandlers.onPermitOthersAudio,
     muteAllHandlers.onForbidOthersVideo,
     muteAllHandlers.onPermitOthersVideo,
+    canForbidOthersVideo,
     onForbidVideo,
     onPermitVideo,
     meetingMediaAccess

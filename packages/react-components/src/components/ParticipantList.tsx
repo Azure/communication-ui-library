@@ -206,46 +206,32 @@ const onRenderParticipantDefault = (
           )}
           {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
           {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
-          {getParticipantItemCameraProhibitedTrampoline(callingParticipant)}
-          {getControlButtonMicProhibitedTrampoline(callingParticipant)}
-          {getParticipantItemMicOffTrampoline(callingParticipant)}
+          {
+            /* @conditional-compile-remove(media-access) */ callingParticipant.mediaAccess &&
+            !callingParticipant.mediaAccess.isVideoPermitted ? (
+              <Icon
+                iconName="ControlButtonCameraProhibited"
+                className={iconStyles}
+                ariaLabel={strings.mutedIconLabel}
+              />
+            ) : undefined
+          }
+          {
+            /* @conditional-compile-remove(media-access) */ callingParticipant.mediaAccess &&
+            !callingParticipant.mediaAccess?.isAudioPermitted ? (
+              <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+            ) : undefined
+          }
+          {
+            /* @conditional-compile-remove(media-access) */ (callingParticipant.mediaAccess
+              ? callingParticipant.mediaAccess.isAudioPermitted
+              : true) && callingParticipant.isMuted ? (
+              <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+            ) : undefined
+          }
         </Stack>
       )
     : () => null;
-
-  const getControlButtonMicProhibitedTrampoline = (callingParticipant: CallParticipantListParticipant): JSX.Element => {
-    /* @conditional-compile-remove(media-access) */
-    if (callingParticipant.mediaAccess && !callingParticipant.mediaAccess?.isAudioPermitted) {
-      return <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
-    }
-
-    return <></>;
-  };
-
-  const getParticipantItemMicOffTrampoline = (callingParticipant: CallParticipantListParticipant): JSX.Element => {
-    /* @conditional-compile-remove(media-access) */
-    if (
-      (callingParticipant.mediaAccess ? callingParticipant.mediaAccess.isAudioPermitted : true) &&
-      callingParticipant.isMuted
-    ) {
-      return <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />;
-    }
-
-    return <></>;
-  };
-
-  const getParticipantItemCameraProhibitedTrampoline = (
-    callingParticipant: CallParticipantListParticipant
-  ): JSX.Element => {
-    /* @conditional-compile-remove(media-access) */
-    if (callingParticipant.mediaAccess && !callingParticipant.mediaAccess.isVideoPermitted) {
-      return (
-        <Icon iconName="ControlButtonCameraProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
-      );
-    }
-
-    return <></>;
-  };
 
   const onRenderAvatarWithRaiseHand =
     callingParticipant?.raisedHand && onRenderAvatar
