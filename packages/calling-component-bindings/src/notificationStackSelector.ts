@@ -308,7 +308,6 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         autoDismiss: true
       });
     }
-
     /* @conditional-compile-remove(together-mode) */
     if (latestNotifications['togetherModeEnded']) {
       activeNotifications.push({

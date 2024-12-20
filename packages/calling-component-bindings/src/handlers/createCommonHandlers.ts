@@ -816,7 +816,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
           ? { view: createViewResult?.view }
           : undefined;
       }
-
       return togetherModeCreateViewResult;
     };
 
@@ -831,6 +830,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
 
       const togetherModeStreams = callState.togetherMode.streams;
+
       if (!togetherModeStreams.mainVideoStream) {
         return;
       }
@@ -938,9 +938,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(together-mode) */
       onStartTogetherMode: notImplemented,
       /* @conditional-compile-remove(together-mode) */
-      onDisposeTogetherModeStreamView,
-      /* @conditional-compile-remove(together-mode) */
       onSetTogetherModeSceneSize,
+      /* @conditional-compile-remove(together-mode) */
+      onDisposeTogetherModeStreamView,
       /* @conditional-compile-remove(media-access) */
       onForbidAudio,
       /* @conditional-compile-remove(media-access) */

@@ -4,6 +4,11 @@
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '@internal/react-components';
+/* @conditional-compile-remove(together-mode) */
+import {
+  VideoGalleryTogetherModeStreams,
+  VideoGalleryTogetherModeParticipantPosition
+} from '@internal/react-components';
 import { createSelector } from 'reselect';
 import {
   CallingBaseSelectorProps,
@@ -16,6 +21,8 @@ import {
   getRole,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
+/* @conditional-compile-remove(together-mode) */
+import { getTogetherModeCallFeature } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { getOptimalVideoCount } from './baseSelectors';
 import { _updateUserDisplayNames } from './utils/callUtils';
@@ -49,6 +56,14 @@ export type VideoGallerySelector = (
   optimalVideoCount?: number;
   spotlightedParticipants?: string[];
   maxParticipantsToSpotlight?: number;
+  /* @conditional-compile-remove(together-mode) */
+  isTogetherModeActive?: boolean;
+  /* @conditional-compile-remove(together-mode) */
+  startTogetherModeEnabled?: boolean;
+  /* @conditional-compile-remove(together-mode) */
+  togetherModeStreams?: VideoGalleryTogetherModeStreams;
+  /* @conditional-compile-remove(together-mode) */
+  togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 };
 
 /**
@@ -71,7 +86,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     isHideAttendeeNamesEnabled,
     getLocalParticipantReactionState,
     getSpotlightCallFeature,
-    getCapabilities
+    getCapabilities,
+    /* @conditional-compile-remove(together-mode) */
+    getTogetherModeCallFeature
   ],
   (
     screenShareRemoteParticipantId,
@@ -88,7 +105,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     isHideAttendeeNamesEnabled,
     localParticipantReaction,
     spotlightCallFeature,
-    capabilities
+    capabilities,
+    /* @conditional-compile-remove(together-mode) */
+    togetherModeCallFeature
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -102,7 +121,15 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const noRemoteParticipants: RemoteParticipantState[] = [];
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
     const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
-
+    /* @conditional-compile-remove(together-mode) */
+    const togetherModeStreams = {
+      mainVideoStream: {
+        isReceiving: togetherModeCallFeature?.streams?.mainVideoStream?.isReceiving,
+        isAvailable: togetherModeCallFeature?.streams?.mainVideoStream?.isAvailable,
+        renderElement: togetherModeCallFeature?.streams?.mainVideoStream?.view?.target,
+        streamSize: togetherModeCallFeature?.streams?.mainVideoStream?.streamSize
+      }
+    };
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -145,7 +172,15 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       dominantSpeakers: dominantSpeakerIds,
       maxRemoteVideoStreams: optimalVideoCount,
       spotlightedParticipants: spotlightedParticipantIds,
-      maxParticipantsToSpotlight: spotlightCallFeature?.maxParticipantsToSpotlight
+      maxParticipantsToSpotlight: spotlightCallFeature?.maxParticipantsToSpotlight,
+      /* @conditional-compile-remove(together-mode) */
+      togetherModeStreams: togetherModeStreams,
+      /* @conditional-compile-remove(together-mode) */
+      togetherModeSeatingCoordinates: togetherModeCallFeature?.seatingPositions,
+      /* @conditional-compile-remove(together-mode) */
+      isTogetherModeActive: togetherModeCallFeature?.isActive,
+      /* @conditional-compile-remove(together-mode) */
+      startTogetherModeEnabled: capabilities?.startTogetherMode.isPresent
     };
   }
 );
