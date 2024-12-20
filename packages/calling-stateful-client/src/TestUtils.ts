@@ -21,7 +21,13 @@ import {
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
 /* @conditional-compile-remove(media-access) */
-import { MediaAccessCallFeature, MediaAccessChangedListener, MediaAccess } from '@azure/communication-calling';
+import {
+  MediaAccessCallFeature,
+  MediaAccessChangedListener,
+  MediaAccess,
+  MeetingMediaAccessChangedListener,
+  MeetingMediaAccess
+} from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 
 import { VideoEffectsFeature } from '@azure/communication-calling';
@@ -97,9 +103,19 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
  */
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   public name = 'Recording';
+  public consentToBeingRecordedAndTranscribed(): Promise<void> {
+    this.isRecordingActive = true;
+    this.emitter.emit('isRecordingActiveChanged', this.isRecordingActive);
+    return Promise.resolve();
+  }
+  public isConsentRequired = false;
   public isRecordingActive = false;
   public recordings: RecordingInfo[] = [];
   public emitter = new EventEmitter();
+  public isTeamsConsentRequired = false;
+  public grantTeamsConsent(): Promise<void> {
+    return Promise.resolve();
+  }
   on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
   on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -181,6 +197,27 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
   constructor() {
     this.mediaAccesses = [];
   }
+  permitOthersAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+  forbidOthersAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+  forbidOthersVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+  permitOthersVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+  getAllOthersMediaAccess(): MediaAccess[] {
+    return this.mediaAccesses;
+  }
+  getMeetingMediaAccess(): MeetingMediaAccess {
+    return {
+      isAudioPermitted: true,
+      isVideoPermitted: true
+    };
+  }
   permitAudio(): Promise<void> {
     return Promise.resolve();
   }
@@ -217,11 +254,15 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
     return this.mediaAccesses;
   }
 
-  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
+  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
 
-  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void {
+  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  off(event: any, listener: any): void {
     this.emitter.off(event, listener);
   }
 
@@ -237,6 +278,16 @@ export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeatur
   public name = 'Transcription';
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();
+  public isConsentRequired = false;
+  public isTeamsConsentRequired = false;
+  public grantTeamsConsent(): Promise<void> {
+    return Promise.resolve();
+  }
+  public consentToBeingRecordedAndTranscribed(): Promise<void> {
+    this.isTranscriptionActive = true;
+    this.emitter.emit('isTranscriptionActiveChanged', this.isTranscriptionActive);
+    return Promise.resolve();
+  }
   on(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
     this.emitter.on(event, listener);
   }
@@ -461,7 +512,9 @@ export function createMockApiFeatures(
       isRecordingActive: false,
       isTranscriptionActive: false,
       /* @conditional-compile-remove(media-access) */
-      getRemoteParticipantsMediaAccess: () => []
+      getAllOthersMediaAccess: () => [],
+      /* @conditional-compile-remove(media-access) */
+      getMeetingMediaAccess: () => ({ isAudioPermitted: true, isVideoPermitted: true })
     });
     return generic;
   };

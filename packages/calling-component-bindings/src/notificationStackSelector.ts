@@ -9,7 +9,9 @@ import {
   getEnvironmentInfo
 } from './baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
-import { getLatestNotifications, getAssignedBreakoutRoom } from './baseSelectors';
+import { getAssignedBreakoutRoom } from './baseSelectors';
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
+import { getLatestNotifications } from './baseSelectors';
 
 import { getMeetingConferencePhones } from './baseSelectors';
 
@@ -20,6 +22,9 @@ import { createSelector } from 'reselect';
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
 
 import { DiagnosticQuality } from '@azure/communication-calling';
+
+/* @conditional-compile-remove(media-access) */
+import { CallNotifications } from '@internal/calling-stateful-client';
 
 /**
  * Selector type for {@link Notification} component.
@@ -55,7 +60,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
   ],
   (
     latestErrors: CallErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ latestNotifications,
+    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ /* @conditional-compile-remove(together-mode) */ latestNotifications,
     diagnostics,
     deviceManager,
     environmentInfo,
@@ -180,7 +185,11 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
+    appendMuteByOthersNotificationTrampoline(
+      activeErrorMessages,
+      latestErrors,
+      /* @conditional-compile-remove(media-access) */ latestNotifications
+    );
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,
@@ -258,6 +267,57 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         timestamp: latestNotifications['breakoutRoomClosingSoon'].timestamp
       });
     }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityTurnVideoOnPresent']) {
+      activeNotifications.push({
+        type: 'capabilityTurnVideoOnPresent',
+        timestamp: latestNotifications['capabilityTurnVideoOnPresent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityTurnVideoOnAbsent']) {
+      activeNotifications.push({
+        type: 'capabilityTurnVideoOnAbsent',
+        timestamp: latestNotifications['capabilityTurnVideoOnAbsent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityUnmuteMicPresent']) {
+      activeNotifications.push({
+        type: 'capabilityUnmuteMicPresent',
+        timestamp: latestNotifications['capabilityUnmuteMicPresent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (latestNotifications['capabilityUnmuteMicAbsent']) {
+      activeNotifications.push({
+        type: 'capabilityUnmuteMicAbsent',
+        timestamp: latestNotifications['capabilityUnmuteMicAbsent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(together-mode) */
+    if (latestNotifications['togetherModeStarted']) {
+      activeNotifications.push({
+        type: 'togetherModeStarted',
+        timestamp: latestNotifications['togetherModeStarted'].timestamp,
+        autoDismiss: true
+      });
+    }
+
+    /* @conditional-compile-remove(together-mode) */
+    if (latestNotifications['togetherModeEnded']) {
+      activeNotifications.push({
+        type: 'togetherModeEnded',
+        timestamp: latestNotifications['togetherModeEnded'].timestamp,
+        autoDismiss: true
+      });
+    }
+
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );
@@ -275,4 +335,23 @@ const appendActiveErrorIfDefined = (
     type: activeErrorType,
     timestamp: latestErrors[target].timestamp
   });
+};
+
+const appendMuteByOthersNotificationTrampoline = (
+  activeErrorMessages: ActiveNotification[],
+  latestErrors: CallErrors,
+  latestNotifications?: undefined | /* @conditional-compile-remove(media-access) */ CallNotifications
+): void => {
+  /* @conditional-compile-remove(media-access) */
+  if (
+    latestNotifications &&
+    !latestNotifications['capabilityUnmuteMicAbsent'] &&
+    !latestNotifications['capabilityUnmuteMicPresent']
+  ) {
+    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
+  }
+  /* @conditional-compile-remove(media-access) */
+  return;
+
+  appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
 };

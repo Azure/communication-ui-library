@@ -5,25 +5,26 @@ import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { defaultSpokenLanguage } from './utils';
+import { useLocale } from '../localization';
 
 /**
  * options bag to start captions
  *
- * @internal
+ * @public
  */
-export type _captionsOptions = {
+export type CaptionsOptions = {
   spokenLanguage: string;
 };
 
 /**
- *@internal
+ * @public
  */
-export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
+export interface StartCaptionsButtonProps extends ControlBarButtonProps {
   /**
    * Utility property for using this component with communication react handlers
    * Start captions based on captions state
    */
-  onStartCaptions: (options?: _captionsOptions) => Promise<void>;
+  onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   /**
    * Utility property for using this component with communication react handlers
    * Stop captions based on captions state
@@ -41,14 +42,14 @@ export interface _StartCaptionsButtonProps extends ControlBarButtonProps {
   /**
    * Optional strings to override in component
    */
-  strings?: _StartCaptionsButtonStrings;
+  strings?: StartCaptionsButtonStrings;
 }
 
 /**
  * Strings for the hold button labels
- * @internal
+ * @public
  */
-export interface _StartCaptionsButtonStrings {
+export interface StartCaptionsButtonStrings {
   /**
    * Label for when action is to start Captions
    */
@@ -73,11 +74,12 @@ export interface _StartCaptionsButtonStrings {
  * Can be used with {@link ControlBar}
  *
  * @param props - properties for the start captions button.
- * @internal
+ * @public
  */
-export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Element => {
-  const { onStartCaptions, onStopCaptions, onSetSpokenLanguage, currentSpokenLanguage, strings } = props;
-
+export const StartCaptionsButton = (props: StartCaptionsButtonProps): JSX.Element => {
+  const { onStartCaptions, onStopCaptions, onSetSpokenLanguage, currentSpokenLanguage } = props;
+  const localeStrings = useLocale().strings.startCaptionsButton;
+  const strings = { ...localeStrings, ...props.strings };
   const onRenderStartIcon = (): JSX.Element => {
     return <_HighContrastAwareIcon disabled={props.disabled} iconName="CaptionsIcon" />;
   };
@@ -85,7 +87,7 @@ export const _StartCaptionsButton = (props: _StartCaptionsButtonProps): JSX.Elem
     return <_HighContrastAwareIcon disabled={props.disabled} iconName="CaptionsOffIcon" />;
   };
 
-  const options: _captionsOptions = useMemo(() => {
+  const options: CaptionsOptions = useMemo(() => {
     return { spokenLanguage: currentSpokenLanguage === '' ? defaultSpokenLanguage : currentSpokenLanguage };
   }, [currentSpokenLanguage]);
 
