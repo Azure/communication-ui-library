@@ -57,10 +57,12 @@ do more if you wish.
 <Source code={MediaAccessMicCameraCapabilitiesText} />
 
 Note: Assigning a `capabilitiesChangedListener` callback to listen for 'capabilitiesChanged' events will not override the
-behavior of CallComposite and CallWithChatComposite which places spotlighted participants in the main view of
+behavior of CallComposite and CallWithChatComposite which places participants in the main view of
 VideoGallery.
 
-## Get remote participant(s) media access states
+## UI component to use remote participant(s) media access states
+If you want to build your own UI components using the media access states we suggest using the VideoGallerySelector or creating your own custom selector to pipe in the media access states for remote participants to your UI component.
+Here is an example of how we put to together the VideoGallery component with these media access states.
 
 <Source code={MediaAccessRemoteParticipantsText} />
 
