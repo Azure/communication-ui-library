@@ -7,7 +7,10 @@ export const CallScreen = (): JSX.Element => {
 
   // Logging remote participants' Media access state without modifying the array
   videoGalleryProps.remoteParticipants.forEach((participant) => {
-    console.log('Participant media access:', participant.mediaAccess);
+    console.log(
+      `Participant [${participant.userId}:${participant.displayName}]'s media access:`,
+      participant.mediaAccess
+    );
   });
 
   // Display VideoGallery
