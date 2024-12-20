@@ -5,7 +5,7 @@ export const CallScreen = (): JSX.Element => {
   // Use usePropsFor to get properties for VideoGallery
   const videoGalleryProps = usePropsFor(VideoGallery);
 
-  // Logging remote participants' Media access state without modifying the array
+  // Logging remote participants' media access state without modifying the array
   videoGalleryProps.remoteParticipants.forEach((participant) => {
     console.log(
       `Participant [${participant.userId}:${participant.displayName}]'s media access:`,
