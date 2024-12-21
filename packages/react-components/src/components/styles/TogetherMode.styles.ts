@@ -127,9 +127,9 @@ export const togetherModeStreamRootStyle: IStackStyles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute', // Prevents sliding due to resizing
-    top: 0, // Anchors the div at the top
-    left: 0 // Anchors the div at the left
+    position: 'absolute',
+    top: 0,
+    left: 0
   }
 };
 

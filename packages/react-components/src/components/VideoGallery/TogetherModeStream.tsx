@@ -80,23 +80,11 @@ export const TogetherModeStream = React.memo(
     }, [togetherModeStreams?.mainVideoStream?.renderElement, onCreateTogetherModeStreamView]);
 
     // Update scene size only when container dimensions change
-    const reCalculateSeatingPosition = useMemo(() => {
+    useMemo(() => {
       if (onSetTogetherModeSceneSize && containerWidth && containerHeight) {
         onSetTogetherModeSceneSize(containerWidth, containerHeight);
       }
     }, [onSetTogetherModeSceneSize, containerWidth, containerHeight]);
-
-    useEffect(() => {
-      // Re-render MeetingReactionOverlay on participant changes
-    }, [
-      props.localParticipant,
-      props.remoteParticipants,
-      props.reactionResources,
-      props.seatingCoordinates,
-      containerWidth,
-      containerHeight,
-      reCalculateSeatingPosition
-    ]);
 
     const stream = props.togetherModeStreams?.mainVideoStream;
     const showLoadingIndicator = !(stream && stream.isAvailable && stream.isReceiving);
