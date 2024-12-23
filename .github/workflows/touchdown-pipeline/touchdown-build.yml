@@ -93,6 +93,12 @@ extends:
                     $dateTime = Get-Date -Format "yyyyMMdd-HHmmss"
                     $newBranchName = "td/update-strings-$dateTime"
 
+                    # Turn off autocrlf to prevent LF to CRLF conversion
+                    git config core.autocrlf false
+
+                    # Convert CRLF to LF in all strings.json files
+                    sed -i 's/\r/\n/g; s/\n$//' packages/react-components/src/localization/locales/**/strings.json packages/react-composites/src/composites/localization/locales/**/strings.json
+
                     Write-Host "Creating new branch $newBranchName"
                     git checkout -b $newBranchName
                     git add -A
