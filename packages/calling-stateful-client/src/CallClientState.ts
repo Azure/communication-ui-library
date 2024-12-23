@@ -29,6 +29,8 @@ import type {
   DiagnosticQuality,
   DiagnosticFlag
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -129,6 +131,20 @@ export interface CaptionsCallFeatureState {
    * current caption kind: teams or acs captions
    */
   captionsKind: CaptionsKind;
+}
+/* @conditional-compile-remove(rtt) */
+/**
+ * @public
+ */
+export interface RealTimeTextCallFeatureState {
+  /**
+   * array of received real time text
+   */
+  realTimeText: RealTimeTextInfo[];
+  /**
+   * whether real time text is on/off
+   */
+  isRealTimeTextFeatureActive: boolean;
 }
 
 /**
@@ -644,6 +660,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Proxy of {@link @azure/communication-calling#RealTimeTextCallFeature}.
+   */
+  realTimeTextFeature: RealTimeTextCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
    */

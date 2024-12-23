@@ -2,7 +2,10 @@
 // Licensed under the MIT License.
 
 import { IContextualMenuItem } from '@fluentui/react';
-import { ControlBarButtonProps } from '@internal/react-components';
+import {
+  ControlBarButtonProps,
+  /* @conditional-compile-remove(rtt) */ StartRealTimeTextButton
+} from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
 import { StartCaptionsButton } from '@internal/react-components';
@@ -31,8 +34,12 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   disableButtonsForHoldScreen?: boolean;
   onClickShowDialpad?: () => void;
   isCaptionsSupported?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  isRealTimeTextSupported?: boolean;
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  onStartRealTimeTextClick?: () => void;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
@@ -50,6 +57,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   const localeStrings = useLocale();
   const holdButtonProps = usePropsFor(HoldButton);
   const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
+  const startRealTimeTextButtonProps = usePropsFor(StartRealTimeTextButton);
   const startCaptions = useCallback(async () => {
     await startCaptionsButtonProps.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
@@ -169,6 +177,49 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         disabled: props.disableButtonsForHoldScreen || !startCaptionsButtonProps.checked
       });
     }
+  }
+
+  //RTT
+  /* @conditional-compile-remove(rtt) */
+  if (props.isRealTimeTextSupported) {
+    const realTimeTextContextualMenuItems: IContextualMenuItem[] = [];
+
+    moreButtonContextualMenuItems.push({
+      key: 'realTimeTextKey',
+      id: 'common-call-composite-captions-button',
+      text: localeStrings.strings.call.realTimeTextLabel,
+      iconProps: { iconName: 'RealTimeTextIcon', styles: { root: { lineHeight: 0 } } },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      disabled: props.disableButtonsForHoldScreen,
+      subMenuProps: {
+        id: 'rtt-contextual-menu',
+        items: realTimeTextContextualMenuItems,
+        calloutProps: {
+          preventDismissOnEvent: _preventDismissOnEvent
+        }
+      },
+      submenuIconProps: {
+        iconName: 'HorizontalGalleryRightButton',
+        styles: menuSubIconStyleSet
+      }
+    });
+
+    realTimeTextContextualMenuItems.push({
+      key: 'StartRealTimeTextKey',
+      id: 'common-call-composite-rtt-start-button',
+      text: localeStrings.strings.call.startRealTimeTextLabel,
+      onClick: props.onStartRealTimeTextClick,
+      iconProps: {
+        iconName: 'RealTimeTextIcon',
+        styles: { root: { lineHeight: 0 } }
+      },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      disabled: props.disableButtonsForHoldScreen || startRealTimeTextButtonProps.isRealTimeTextOn
+    });
   }
 
   const dtmfDialerScreenOption = {

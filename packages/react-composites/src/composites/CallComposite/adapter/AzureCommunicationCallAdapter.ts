@@ -623,6 +623,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.stopCaptions.bind(this);
     this.setSpokenLanguage.bind(this);
     this.setCaptionLanguage.bind(this);
+    /* @conditional-compile-remove(rtt) */
+    this.sendRealTimeText.bind(this);
+    /* @conditional-compile-remove(rtt) */
+    this.startRealTimeText.bind(this);
     this.startVideoBackgroundEffect.bind(this);
     this.stopVideoBackgroundEffects.bind(this);
     this.updateBackgroundPickerImages.bind(this);
@@ -1150,6 +1154,15 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   public async setSpokenLanguage(language: string): Promise<void> {
     this.handlers.onSetSpokenLanguage(language);
   }
+  /* @conditional-compile-remove(rtt) */
+  public async sendRealTimeText(text: string, finalized?: boolean): Promise<void> {
+    this.handlers.onSendRealTimeText(text, finalized);
+  }
+  /* @conditional-compile-remove(rtt) */
+  public async startRealTimeText(): Promise<void> {
+    this.handlers.onStartRealTimeText();
+  }
+
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {
     return this.handlers.onSubmitSurvey(survey);
   }

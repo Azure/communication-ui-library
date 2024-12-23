@@ -101,6 +101,10 @@ export interface CommonCallingHandlers {
   onStopNoiseSuppressionEffect: () => Promise<void>;
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   onStopCaptions: () => Promise<void>;
+  /* @conditional-compile-remove(rtt) */
+  onSendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
+  /* @conditional-compile-remove(rtt) */
+  onStartRealTimeText: () => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
   onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -735,6 +739,20 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
     };
+    /* @conditional-compile-remove(rtt) */
+    const onSendRealTimeText = async (text: string, finalized?: boolean): Promise<void> => {
+      const realTimeTextFeature = call?.feature(Features.RealTimeText);
+      if (finalized !== undefined) {
+        await realTimeTextFeature?.sendRealTimeText(text, finalized);
+        return;
+      }
+      await realTimeTextFeature?.sendRealTimeText(text);
+    };
+    /* @conditional-compile-remove(rtt) */
+    const onStartRealTimeText = async (): Promise<void> => {
+      const realTimeTextFeature = call?.feature(Features.RealTimeText);
+      await realTimeTextFeature?.sendRealTimeText(' ');
+    };
 
     const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
       await call?.feature(Features.CallSurvey).submitSurvey(survey);
@@ -947,7 +965,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(media-access) */
       onForbidOthersVideo,
       /* @conditional-compile-remove(media-access) */
-      onPermitOthersVideo
+      onPermitOthersVideo,
+      /* @conditional-compile-remove(rtt) */
+      onSendRealTimeText,
+      /* @conditional-compile-remove(rtt) */
+      onStartRealTimeText
     };
   }
 );

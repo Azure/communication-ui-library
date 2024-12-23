@@ -10,6 +10,8 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(media-access) */
 import { MediaAccess, MeetingMediaAccess } from '@azure/communication-calling';
 import { RaisedHand } from '@azure/communication-calling';
@@ -1221,6 +1223,45 @@ export class CallContext {
       captions.shift();
     }
   }
+  /* @conditional-compile-remove(rtt) */
+  private processNewRealTimeText(realTimeText: RealTimeTextInfo[], newRealTimeText: RealTimeTextInfo): void {
+    // if this is the first real time text, push it in
+    if (realTimeText.length === 0) {
+      realTimeText.push(newRealTimeText);
+    }
+    // if the last real time text is final, then push the new one in
+    else if (realTimeText[realTimeText.length - 1]?.resultType === 'Final') {
+      realTimeText.push(newRealTimeText);
+    }
+    // if the last real time text is Partial, then check if the speaker is the same as the new caption, if so, update the last caption
+    else {
+      const lastRealTimeText = realTimeText[realTimeText.length - 1];
+
+      if (
+        lastRealTimeText &&
+        lastRealTimeText.sender.identifier &&
+        newRealTimeText.sender.identifier &&
+        toFlatCommunicationIdentifier(lastRealTimeText.sender.identifier) ===
+          toFlatCommunicationIdentifier(newRealTimeText.sender.identifier)
+      ) {
+        realTimeText[realTimeText.length - 1] = newRealTimeText;
+      }
+      // if different speaker, ignore the interjector until the current speaker finishes
+      // double check on this logic to allign with teams and native
+      // edge case: if we dont receive the final caption from the current speaker for 5 secs, we turn the current speaker caption to final and push in the new interjector
+      else if (lastRealTimeText) {
+        if (Date.now() - lastRealTimeText.updatedTimestamp.getTime() > 5000) {
+          lastRealTimeText.resultType = 'Final';
+          realTimeText.push(newRealTimeText);
+        }
+      }
+    }
+
+    // If the array length exceeds 50, remove the oldest caption
+    if (realTimeText.length > 50) {
+      realTimeText.shift();
+    }
+  }
 
   public addTeamsCaption(callId: string, caption: TeamsCaptionsInfo): void {
     this.modifyState((draft: CallClientState) => {
@@ -1243,6 +1284,15 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
+      }
+    });
+  }
+  /* @conditional-compile-remove(rtt) */
+  public addRealTimeText(callId: string, realTimeText: RealTimeTextInfo): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        this.processNewRealTimeText(call.realTimeTextFeature.realTimeText, realTimeText);
       }
     });
   }
@@ -1270,6 +1320,15 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.captionsFeature.isCaptionsFeatureActive = isCaptionsActive;
+      }
+    });
+  }
+  /* @conditional-compile-remove(rtt) */
+  setIsRealTimeTextActive(callId: string, isRealTimeTextActive: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.realTimeTextFeature.isRealTimeTextFeatureActive = isRealTimeTextActive;
       }
     });
   }
