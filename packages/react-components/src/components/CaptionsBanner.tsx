@@ -116,6 +116,11 @@ export interface CaptionsBannerProps {
    * Optional callback to send real time text.
    */
   onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Id of the local user
+   */
+  localUserId?: string;
 }
 
 const SCROLL_OFFSET_ALLOWANCE = 20;
@@ -135,7 +140,9 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     /* @conditional-compile-remove(rtt) */
     isRealTimeTextOn,
     /* @conditional-compile-remove(rtt) */
-    onSendRealTimeText
+    onSendRealTimeText,
+    /* @conditional-compile-remove(rtt) */
+    localUserId
   } = props;
   const localeStrings = useLocale().strings.captionsBanner;
   const strings = { ...localeStrings, ...props.strings };
@@ -179,16 +186,26 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   const [textFieldValue, setTextFieldValue] = useState<string>('');
   /* @conditional-compile-remove(rtt) */
   useEffect(() => {
-    // if the latest real time text is final, clear the text field
+    // if the latest real time text sent by myself is final, clear the text field
     // find the last real time text caption
     const lastRealTimeText = captions
       .slice()
       .reverse()
-      .find((caption) => caption.isRealTimeText);
-    if (textFieldValue && lastRealTimeText && !lastRealTimeText.isPartial) {
+      .find((caption) => caption.isRealTimeText && caption.userId === localUserId);
+    if (lastRealTimeText && !lastRealTimeText.isPartial) {
       setTextFieldValue('');
     }
-  }, [captions, textFieldValue]);
+  }, [captions, localUserId]);
+  /* @conditional-compile-remove(rtt) */
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (textFieldValue && onSendRealTimeText) {
+        onSendRealTimeText(textFieldValue, true);
+        setTextFieldValue('');
+      }
+    }
+  };
 
   return (
     <>
@@ -227,6 +244,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               <TextField
                 label={strings.realTimeTextInputBoxDefaultText}
                 value={textFieldValue}
+                onKeyDown={handleKeyDown}
                 onChange={(_, newValue) => {
                   setTextFieldValue(newValue || '');
                   onSendRealTimeText(newValue || '');

@@ -1229,31 +1229,20 @@ export class CallContext {
     if (realTimeText.length === 0) {
       realTimeText.push(newRealTimeText);
     }
-    // if the last real time text is final, then push the new one in
-    else if (realTimeText[realTimeText.length - 1]?.resultType === 'Final') {
-      realTimeText.push(newRealTimeText);
-    }
-    // if the last real time text is Partial, then check if the speaker is the same as the new caption, if so, update the last caption
+    // find the index of the last real time text from the same speaker that is partial and update to the new real time text
     else {
-      const lastRealTimeText = realTimeText[realTimeText.length - 1];
-
-      if (
-        lastRealTimeText &&
-        lastRealTimeText.sender.identifier &&
-        newRealTimeText.sender.identifier &&
-        toFlatCommunicationIdentifier(lastRealTimeText.sender.identifier) ===
-          toFlatCommunicationIdentifier(newRealTimeText.sender.identifier)
-      ) {
-        realTimeText[realTimeText.length - 1] = newRealTimeText;
-      }
-      // if different speaker, ignore the interjector until the current speaker finishes
-      // double check on this logic to allign with teams and native
-      // edge case: if we dont receive the final caption from the current speaker for 5 secs, we turn the current speaker caption to final and push in the new interjector
-      else if (lastRealTimeText) {
-        if (Date.now() - lastRealTimeText.updatedTimestamp.getTime() > 5000) {
-          lastRealTimeText.resultType = 'Final';
-          realTimeText.push(newRealTimeText);
-        }
+      const lastRealTimeTextIndex = realTimeText
+        .slice()
+        .reverse()
+        .findIndex(
+          (realTimeText) =>
+            toFlatCommunicationIdentifier(realTimeText.sender.identifier) ===
+              toFlatCommunicationIdentifier(newRealTimeText.sender.identifier) && realTimeText.resultType === 'Partial'
+        );
+      if (lastRealTimeTextIndex !== -1) {
+        realTimeText[realTimeText.length - lastRealTimeTextIndex - 1] = newRealTimeText;
+      } else {
+        realTimeText.push(newRealTimeText);
       }
     }
 

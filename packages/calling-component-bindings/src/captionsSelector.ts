@@ -184,7 +184,9 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
       isCaptionsOn: isCaptionsFeatureActive ?? false,
       /* @conditional-compile-remove(rtt) */
       isRealTimeTextOn: isRealTimeTextActive ?? false,
-      startCaptionsInProgress: startCaptionsInProgress ?? false
+      startCaptionsInProgress: startCaptionsInProgress ?? false,
+      /* @conditional-compile-remove(rtt) */
+      localUserId: identifier
     };
   }
 );
