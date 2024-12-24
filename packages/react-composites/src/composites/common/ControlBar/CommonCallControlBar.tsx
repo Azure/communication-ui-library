@@ -1,7 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useMemo, useRef, useEffect, useState, useCallback, useImperativeHandle, forwardRef } from 'react';
+import React, {
+  useMemo,
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+  useImperativeHandle,
+  forwardRef,
+  RefObject
+} from 'react';
 import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
@@ -78,17 +87,16 @@ export interface CommonCallControlBarProps {
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
-  peopleButtonRef?: React.RefObject<IButton>;
-  cameraButtonRef?: React.RefObject<IButton>;
-  videoBackgroundPickerRef?: React.RefObject<IButton>;
+  peopleButtonRef?: RefObject<IButton>;
+  cameraButtonRef?: RefObject<IButton>;
+  videoBackgroundPickerRef?: RefObject<IButton>;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
   onStopLocalSpotlight?: () => void;
   useTeamsCaptions?: boolean;
-
   onToggleTeamsMeetingConferenceModal?: () => void;
-
   teamsMeetingConferenceModalPresent?: boolean;
+  sidePaneDissmissButtonRef?: RefObject<IButton>;
 }
 
 const inferCommonCallControlOptions = (
@@ -580,6 +588,7 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                       strings={peopleButtonStrings}
                       styles={commonButtonStyles}
                       componentRef={props.peopleButtonRef}
+                      peoplePaneDismissButtonRef={props.sidePaneDissmissButtonRef}
                     />
                   )}
                   {customButtons['secondary']

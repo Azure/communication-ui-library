@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CommandBarButton, DefaultButton, Stack, concatStyleSets } from '@fluentui/react';
+import { CommandBarButton, DefaultButton, IButton, Stack, concatStyleSets } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import React, { useMemo, RefObject } from 'react';
 import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
 import {
   mobilePaneBackButtonStyles,
@@ -22,6 +22,8 @@ export const SidePaneHeader = (props: {
   dismissSidePaneButtonAriaDescription?: string;
   onClose: () => void;
   mobileView: boolean;
+  peopleButtonRef?: RefObject<IButton>;
+  dismissButtonComponentRef?: RefObject<IButton>;
 }): JSX.Element => {
   const theme = useTheme();
   const sidePaneCloseButtonStyles = useMemo(
@@ -57,8 +59,10 @@ export const SidePaneHeader = (props: {
           ariaLabel={props.dismissSidePaneButtonAriaLabel}
           styles={sidePaneCloseButtonStyles}
           iconProps={{ iconName: 'cancel' }}
-          onClick={props.onClose}
-          autoFocus
+          onClick={() => {
+            props.onClose();
+          }}
+          componentRef={props.dismissButtonComponentRef}
         />
       </Stack.Item>
     </Stack>
