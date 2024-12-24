@@ -588,6 +588,7 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                       strings={peopleButtonStrings}
                       styles={commonButtonStyles}
                       componentRef={props.peopleButtonRef}
+                      chatButtonPresent={isEnabled(options.chatButton)}
                       peoplePaneDismissButtonRef={props.sidePaneDismissButtonRef}
                     />
                   )}

@@ -14,13 +14,14 @@ const icon = (): JSX.Element => <CallCompositeIcon iconName={'ControlBarPeopleBu
  */
 export interface PeopleButtonProps extends ControlBarButtonProps {
   peoplePaneDismissButtonRef?: RefObject<IButton>;
+  chatButtonPresent?: boolean;
 }
 
 /**
  * @private
  */
 export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
-  const { strings, onRenderOnIcon, onRenderOffIcon, onClick, peoplePaneDismissButtonRef } = props;
+  const { strings, onRenderOnIcon, onRenderOffIcon, onClick, peoplePaneDismissButtonRef, chatButtonPresent } = props;
   const theme = useTheme();
   const styles: ControlBarButtonStyles = useMemo(
     () =>
@@ -37,12 +38,12 @@ export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
 
   const handleTab = useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
-      if (event.key === 'Tab' && !event.shiftKey && peoplePaneDismissButtonRef?.current) {
+      if (event.key === 'Tab' && !event.shiftKey && peoplePaneDismissButtonRef?.current && !chatButtonPresent) {
         peoplePaneDismissButtonRef.current.focus();
         event.preventDefault();
       }
     },
-    [peoplePaneDismissButtonRef]
+    [peoplePaneDismissButtonRef, chatButtonPresent]
   );
 
   return (
@@ -52,7 +53,12 @@ export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
       labelKey={'peopleButtonLabelKey'}
       onRenderOnIcon={onRenderOnIcon ?? icon}
       onRenderOffIcon={onRenderOffIcon ?? icon}
-      onClick={onClick}
+      onClick={(event) => {
+        onClick?.(event);
+        if (chatButtonPresent) {
+          peoplePaneDismissButtonRef?.current?.focus();
+        }
+      }}
       onKeyDown={handleTab}
       styles={styles}
     />
