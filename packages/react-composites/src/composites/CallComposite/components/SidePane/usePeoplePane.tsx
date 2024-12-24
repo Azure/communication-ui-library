@@ -109,7 +109,6 @@ export const usePeoplePane = (props: {
 
   const closePane = useCallback(() => {
     updateSidePaneRenderer(undefined);
-    console.log(peopleButtonRef);
     peopleButtonRef?.current?.focus();
   }, [peopleButtonRef, updateSidePaneRenderer]);
 
