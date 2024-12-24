@@ -96,7 +96,7 @@ export interface CommonCallControlBarProps {
   useTeamsCaptions?: boolean;
   onToggleTeamsMeetingConferenceModal?: () => void;
   teamsMeetingConferenceModalPresent?: boolean;
-  sidePaneDissmissButtonRef?: RefObject<IButton>;
+  sidePaneDismissButtonRef?: RefObject<IButton>;
 }
 
 const inferCommonCallControlOptions = (
@@ -588,7 +588,7 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                       strings={peopleButtonStrings}
                       styles={commonButtonStyles}
                       componentRef={props.peopleButtonRef}
-                      peoplePaneDismissButtonRef={props.sidePaneDissmissButtonRef}
+                      peoplePaneDismissButtonRef={props.sidePaneDismissButtonRef}
                     />
                   )}
                   {customButtons['secondary']

@@ -162,7 +162,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const controlBarRef = useRef<FocusableElement>(null);
   const peopleButtonRef = useRef<IButton>(null);
   const cameraButtonRef = useRef<IButton>(null);
-  const sidePaneDissmissButtonRef = useRef<IButton>(null);
+  const sidePaneDismissButtonRef = useRef<IButton>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -206,7 +206,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       mobileView: props.mobileView,
       peopleButtonRef,
       setParticipantActioned,
-      sidePaneDissmissButtonRef
+      sidePaneDismissButtonRef
     }),
     [
       updateSidePaneRenderer,
@@ -216,7 +216,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       props.mobileView,
       peopleButtonRef,
       setParticipantActioned,
-      sidePaneDissmissButtonRef
+      sidePaneDismissButtonRef
     ]
   );
 
@@ -592,7 +592,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   }
                   onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
                   teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
-                  sidePaneDissmissButtonRef={sidePaneDissmissButtonRef}
+                  sidePaneDismissButtonRef={sidePaneDismissButtonRef}
                 />
               )}
             </Stack>
