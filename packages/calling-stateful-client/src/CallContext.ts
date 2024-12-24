@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CommunicationIdentifier, CommunicationIdentifierKind } from '@azure/communication-common';
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 import {
   AudioDeviceInfo,
   DeviceAccess,
