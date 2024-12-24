@@ -3,7 +3,7 @@
 
 import { CommandBarButton, DefaultButton, IButton, Stack, concatStyleSets } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
-import React, { useMemo, RefObject } from 'react';
+import React, { useMemo, RefObject, useCallback } from 'react';
 import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
 import {
   mobilePaneBackButtonStyles,
@@ -22,7 +22,7 @@ export const SidePaneHeader = (props: {
   dismissSidePaneButtonAriaDescription?: string;
   onClose: () => void;
   mobileView: boolean;
-  peopleButtonRef?: RefObject<IButton>;
+  paneOpenerButton?: RefObject<IButton>;
   dismissButtonComponentRef?: RefObject<IButton>;
 }): JSX.Element => {
   const theme = useTheme();
@@ -45,6 +45,16 @@ export const SidePaneHeader = (props: {
     [theme.palette.neutralSecondary, theme.semanticColors.bodyBackground, theme.effects.roundedCorner4]
   );
 
+  const handleShiftTab = useCallback(
+    (event: React.KeyboardEvent<HTMLElement>) => {
+      if (event.key === 'Tab' && event.shiftKey) {
+        props.paneOpenerButton?.current?.focus();
+        event.preventDefault();
+      }
+    },
+    [props.paneOpenerButton]
+  );
+
   if (props.mobileView) {
     return <SidePaneMobileHeader {...props} />;
   }
@@ -61,7 +71,9 @@ export const SidePaneHeader = (props: {
           iconProps={{ iconName: 'cancel' }}
           onClick={() => {
             props.onClose();
+            props.paneOpenerButton?.current?.focus();
           }}
+          onKeyDown={handleShiftTab}
           componentRef={props.dismissButtonComponentRef}
         />
       </Stack.Item>

@@ -58,7 +58,7 @@ export const usePeoplePane = (props: {
   onPermitOthersVideo?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   meetingMediaAccess?: MediaAccess;
-  sidePaneDissmissButtonRef?: RefObject<IButton>;
+  sidePaneDismissButtonRef?: RefObject<IButton>;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -104,7 +104,7 @@ export const usePeoplePane = (props: {
     onPermitOthersVideo,
     /* @conditional-compile-remove(media-access) */
     meetingMediaAccess,
-    sidePaneDissmissButtonRef
+    sidePaneDismissButtonRef
   } = props;
 
   const closePane = useCallback(() => {
@@ -327,13 +327,14 @@ export const usePeoplePane = (props: {
     () => (
       <SidePaneHeader
         onClose={closePane}
+        paneOpenerButton={peopleButtonRef}
         headingText={localeStrings.peoplePaneTitle}
         dismissSidePaneButtonAriaLabel={localeStrings.dismissSidePaneButtonLabel}
         mobileView={mobileView ?? false}
-        dismissButtonComponentRef={sidePaneDissmissButtonRef}
+        dismissButtonComponentRef={sidePaneDismissButtonRef}
       />
     ),
-    [mobileView, closePane, localeStrings, sidePaneDissmissButtonRef]
+    [mobileView, closePane, localeStrings, sidePaneDismissButtonRef, peopleButtonRef]
   );
 
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
