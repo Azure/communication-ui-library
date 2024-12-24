@@ -20,14 +20,9 @@ import { PrimaryButton } from '@fluentui/react';
 import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
-import {
-  BaseCustomStyles,
-  ControlBarButtonStyles,
-  /* @conditional-compile-remove(rtt) */
-  RTTModal,
-  /* @conditional-compile-remove(rtt) */
-  StartRealTimeTextButton
-} from '@internal/react-components';
+import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
+/* @conditional-compile-remove(rtt) */
+import { RTTModal, StartRealTimeTextButton } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';

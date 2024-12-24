@@ -29,8 +29,6 @@ import type {
   DiagnosticQuality,
   DiagnosticFlag
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(rtt) */
-import { RealTimeTextInfo } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -92,6 +90,21 @@ export interface CaptionsInfo {
    * The original spoken caption text prior to translating to subtitle language
    */
   spokenText?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Flag indicating if the caption is a subtitle caption or real time text
+   */
+  isRealTimeText?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * The timestamp when the real time text message was last updated.
+   */
+  realTimeTextUpdatedTimestamp?: Date;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * If message originated from the local participant
+   */
+  isLocal?: boolean;
 }
 
 /**
@@ -131,20 +144,11 @@ export interface CaptionsCallFeatureState {
    * current caption kind: teams or acs captions
    */
   captionsKind: CaptionsKind;
-}
-/* @conditional-compile-remove(rtt) */
-/**
- * @public
- */
-export interface RealTimeTextCallFeatureState {
-  /**
-   * array of received real time text
-   */
-  realTimeText: RealTimeTextInfo[];
+  /* @conditional-compile-remove(rtt) */
   /**
    * whether real time text is on/off
    */
-  isRealTimeTextFeatureActive: boolean;
+  isRealTimeTextFeatureActive?: boolean;
 }
 
 /**
@@ -660,11 +664,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
-  /* @conditional-compile-remove(rtt) */
-  /**
-   * Proxy of {@link @azure/communication-calling#RealTimeTextCallFeature}.
-   */
-  realTimeTextFeature: RealTimeTextCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
    */

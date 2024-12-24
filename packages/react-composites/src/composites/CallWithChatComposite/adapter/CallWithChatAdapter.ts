@@ -585,8 +585,8 @@ export interface CallWithChatAdapterManagement {
   /* @conditional-compile-remove(rtt) */
   /**
    * Send real time text
-   * @param text real time text content
-   * @param finalized Boolean to indicate if the real time text is final
+   * @param text - real time text content
+   * @param finalized - Boolean to indicate if the real time text is final
    */
   sendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
   /* @conditional-compile-remove(rtt) */

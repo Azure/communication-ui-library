@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { CallState, DominantSpeakersInfo, EnvironmentInfo, RealTimeTextInfo } from '@azure/communication-calling';
+import { CallState, DominantSpeakersInfo, EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
@@ -306,17 +306,9 @@ export const getAssignedBreakoutRoom = (
 ): BreakoutRoom | undefined => {
   return state.calls[props.callId]?.breakoutRooms?.assignedBreakoutRoom;
 };
-/* @conditional-compile-remove(rtt) */
-/** @private */
-export const getRealTimeText = (
-  state: CallClientState,
-  props: CallingBaseSelectorProps
-): RealTimeTextInfo[] | undefined => {
-  return state.calls[props.callId]?.realTimeTextFeature?.realTimeText;
-};
 
 /* @conditional-compile-remove(rtt) */
 /** @private */
 export const getRealTimeTextStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
-  return state.calls[props.callId]?.realTimeTextFeature?.isRealTimeTextFeatureActive;
+  return state.calls[props.callId]?.captionsFeature.isRealTimeTextFeatureActive;
 };

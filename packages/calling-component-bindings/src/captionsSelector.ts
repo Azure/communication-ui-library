@@ -11,7 +11,7 @@ import {
   getSupportedCaptionLanguages
 } from './baseSelectors';
 /* @conditional-compile-remove(rtt) */
-import { getRealTimeText, getRealTimeTextStatus } from './baseSelectors';
+import { getRealTimeTextStatus } from './baseSelectors';
 import {
   getCaptions,
   getCaptionsStatus,
@@ -22,8 +22,6 @@ import {
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CaptionsInformation, SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
-/* @conditional-compile-remove(rtt) */
-import { RealTimeTextInfo } from '@azure/communication-calling';
 
 /**
  * Selector type for the {@link StartCaptionsButton} component.
@@ -118,8 +116,6 @@ export type CaptionsBannerSelector = (
 export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSelector(
   [
     getCaptions,
-    /* @conditional-compile-remove(rtt) */
-    getRealTimeText,
     getCaptionsStatus,
     /* @conditional-compile-remove(rtt) */
     getRealTimeTextStatus,
@@ -130,8 +126,6 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
   ],
   (
     captions,
-    /* @conditional-compile-remove(rtt) */
-    realTimeText,
     isCaptionsFeatureActive,
     /* @conditional-compile-remove(rtt) */
     isRealTimeTextActive,
@@ -155,46 +149,24 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
         id: (finalDisplayName ?? 'Unnamed Participant') + index,
         displayName: finalDisplayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
-        userId
-      };
-    });
-    /* @conditional-compile-remove(rtt) */
-    const realTimeTextInfo = realTimeText?.map((rtt, index) => {
-      const userId = getRealTimeTextSenderIdentifier(rtt);
-      let finalDisplayName;
-      if (userId === identifier) {
-        finalDisplayName = displayName;
-      } else if (remoteParticipants) {
-        const participant = remoteParticipants[userId];
-        if (participant) {
-          finalDisplayName = participant.displayName;
-        }
-      }
-      return {
-        id: (finalDisplayName ?? 'Unnamed Participant') + index,
-        displayName: finalDisplayName ?? 'Unnamed Participant',
-        captionText: rtt.text ?? '',
         userId,
-        isRealTimeText: true,
-        isPartial: rtt.resultType === 'Partial'
+        /* @conditional-compile-remove(rtt) */
+        isRealTimeText: c.isRealTimeText,
+        isPartial: c.resultType === 'Partial',
+        /* @conditional-compile-remove(rtt) */
+        isLocalUser: c.isLocal
       };
     });
     return {
-      captions: [...(captionsInfo ?? []), /* @conditional-compile-remove(rtt) */ ...(realTimeTextInfo ?? [])],
+      captions: captionsInfo ?? [],
       isCaptionsOn: isCaptionsFeatureActive ?? false,
       /* @conditional-compile-remove(rtt) */
       isRealTimeTextOn: isRealTimeTextActive ?? false,
-      startCaptionsInProgress: startCaptionsInProgress ?? false,
-      /* @conditional-compile-remove(rtt) */
-      localUserId: identifier
+      startCaptionsInProgress: startCaptionsInProgress ?? false
     };
   }
 );
 
 const getCaptionsSpeakerIdentifier = (captions: CaptionsInfo): string => {
   return captions.speaker.identifier ? toFlatCommunicationIdentifier(captions.speaker.identifier) : '';
-};
-/* @conditional-compile-remove(rtt) */
-const getRealTimeTextSenderIdentifier = (realTimeText: RealTimeTextInfo): string => {
-  return realTimeText.sender.identifier ? toFlatCommunicationIdentifier(realTimeText.sender.identifier) : '';
 };

@@ -64,6 +64,10 @@ export interface RealTimeTextProps {
    */
   isTyping?: boolean;
   /**
+   * Boolean indicating whether the RealTimeText is from the local user
+   */
+  isLocalUser?: boolean;
+  /**
    * Strings for RealTimeText
    */
   strings?: RealTimeTextStrings;

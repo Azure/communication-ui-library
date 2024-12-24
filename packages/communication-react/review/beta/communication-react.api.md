@@ -474,6 +474,7 @@ export interface CallAdapterCallOperations {
     resumeCall(): Promise<void>;
     returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
+    sendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     // @beta
@@ -481,6 +482,7 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
     startNoiseSuppressionEffect(): Promise<void>;
+    startRealTimeText: () => Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     // @beta
@@ -980,6 +982,8 @@ export interface CallCompositeStrings {
     pinParticipantMenuItemAriaLabel: string;
     pinParticipantMenuLabel: string;
     privacyPolicy: string;
+    realTimeTextInputBoxDefaultText?: string;
+    realTimeTextLabel?: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
     removeBackgroundTooltip?: string;
@@ -1016,6 +1020,7 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
+    startRealTimeTextLabel?: string;
     startSpotlightMenuLabel: string;
     stopAllSpotlightMenuLabel: string;
     stopSpotlightMenuLabel: string;
@@ -1299,6 +1304,7 @@ export interface CallWithChatAdapterManagement {
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
+    sendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
@@ -1312,6 +1318,7 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
     startNoiseSuppressionEffect(): Promise<void>;
+    startRealTimeText: () => Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     // @beta
@@ -1871,7 +1878,9 @@ export interface CaptionsBannerProps {
     };
     formFactor?: 'default' | 'compact';
     isCaptionsOn?: boolean;
+    isRealTimeTextOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
+    onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
     startCaptionsInProgress?: boolean;
     strings?: CaptionsBannerStrings;
 }
@@ -1885,6 +1894,7 @@ export type CaptionsBannerSelector = (state: CallClientState, props: CallingBase
 // @public
 export interface CaptionsBannerStrings {
     captionsBannerSpinnerText?: string;
+    realTimeTextInputBoxDefaultText?: string;
 }
 
 // @public (undocumented)
@@ -1894,6 +1904,7 @@ export interface CaptionsCallFeatureState {
     currentCaptionLanguage: string;
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
+    isRealTimeTextFeatureActive?: boolean;
     startCaptionsInProgress: boolean;
     supportedCaptionLanguages: string[];
     supportedSpokenLanguages: string[];
@@ -1912,6 +1923,9 @@ export type CaptionSettingsSelector = (state: CallClientState, props: CallingBas
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
+    isLocal?: boolean;
+    isRealTimeText?: boolean;
+    realTimeTextUpdatedTimestamp?: Date;
     resultType: CaptionsResultType;
     speaker: CallerInfo;
     spokenLanguage: string;
@@ -1925,6 +1939,9 @@ export type CaptionsInformation = {
     displayName: string;
     captionText: string;
     userId?: string;
+    isRealTimeText?: boolean;
+    isPartial?: boolean;
+    isLocalUser?: boolean;
 };
 
 // @public
@@ -2381,6 +2398,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     // (undocumented)
+    onSendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
+    // (undocumented)
     onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
@@ -2394,6 +2413,8 @@ export interface CommonCallingHandlers {
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
     onStartNoiseSuppressionEffect: () => Promise<void>;
+    // (undocumented)
+    onStartRealTimeText: () => Promise<void>;
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
@@ -2580,6 +2601,7 @@ export interface ComponentStrings {
     sendBox: SendBoxStrings;
     spokenLanguages: SpokenLanguageStrings;
     startCaptionsButton: StartCaptionsButtonStrings;
+    startRealTimeTextButton: StartRealTimeTextButtonStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -2998,8 +3020,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
-    RTTIcon: React_2.JSX.Element;
     NotificationBarTogetherModeIcon: React_2.JSX.Element;
+    RealTimeTextIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -3184,8 +3206,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
-    RTTIcon: React_2.JSX.Element;
     NotificationBarTogetherModeIcon: React_2.JSX.Element;
+    RealTimeTextIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -3425,7 +3447,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : AreEqual<Component, typeof ReactionButton> extends true ? RaiseHandButtonSelector : AreEqual<Component, typeof CaptionsSettingsModal> extends true ? CaptionSettingsSelector : AreEqual<Component, typeof CaptionsBanner> extends true ? CaptionsBannerSelector : AreEqual<Component, typeof StartCaptionsButton> extends true ? StartCaptionsButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? EmptySelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : AreEqual<Component, typeof ReactionButton> extends true ? RaiseHandButtonSelector : AreEqual<Component, typeof CaptionsSettingsModal> extends true ? CaptionSettingsSelector : AreEqual<Component, typeof CaptionsBanner> extends true ? CaptionsBannerSelector : AreEqual<Component, typeof StartCaptionsButton> extends true ? StartCaptionsButtonSelector : AreEqual<Component, typeof StartRealTimeTextButton> extends true ? StartRealTimeTextButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? EmptySelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -4557,6 +4579,7 @@ export interface RealTimeTextProps {
     captionText: string;
     displayName: string;
     id: string;
+    isLocalUser?: boolean;
     isTyping?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
     strings?: RealTimeTextStrings;
@@ -5021,6 +5044,27 @@ export interface StartCaptionsButtonStrings {
     offLabel: string;
     onLabel: string;
     tooltipOffContent: string;
+    tooltipOnContent: string;
+}
+
+// @beta
+export const StartRealTimeTextButton: (props: StartRealTimeTextButtonProps) => JSX.Element;
+
+// @beta (undocumented)
+export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
+    isRealTimeTextOn: boolean;
+    onStartRealTimeText: () => Promise<void>;
+    strings?: StartRealTimeTextButtonStrings;
+}
+
+// @public
+export type StartRealTimeTextButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
+    isRealTimeTextOn: boolean;
+};
+
+// @beta
+export interface StartRealTimeTextButtonStrings {
+    onLabel: string;
     tooltipOnContent: string;
 }
 

@@ -2,10 +2,9 @@
 // Licensed under the MIT License.
 
 import { IContextualMenuItem } from '@fluentui/react';
-import {
-  ControlBarButtonProps,
-  /* @conditional-compile-remove(rtt) */ StartRealTimeTextButton
-} from '@internal/react-components';
+import { ControlBarButtonProps } from '@internal/react-components';
+/* @conditional-compile-remove(rtt) */
+import { StartRealTimeTextButton } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
 import { StartCaptionsButton } from '@internal/react-components';

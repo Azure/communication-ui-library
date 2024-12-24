@@ -325,10 +325,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
 
         captionsKind: 'Captions'
       },
-      realTimeTextFeature: {
-        realTimeText: [],
-        isRealTimeTextFeatureActive: false
-      },
       transfer: {
         acceptedTransfers: {}
       },

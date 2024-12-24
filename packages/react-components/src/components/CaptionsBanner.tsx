@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { Stack, FocusZone, Spinner, useTheme, /* @conditional-compile-remove(rtt) */ TextField } from '@fluentui/react';
+import { Stack, FocusZone, Spinner, useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(rtt) */
+import { TextField } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _Caption } from './Caption';
 import {
@@ -49,6 +51,11 @@ export type CaptionsInformation = {
    * if the caption received is a non finalized caption
    */
   isPartial?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * if the caption received is from the local user
+   */
+  isLocalUser?: boolean;
 };
 
 /**
@@ -116,11 +123,6 @@ export interface CaptionsBannerProps {
    * Optional callback to send real time text.
    */
   onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
-  /* @conditional-compile-remove(rtt) */
-  /**
-   * Id of the local user
-   */
-  localUserId?: string;
 }
 
 const SCROLL_OFFSET_ALLOWANCE = 20;
@@ -140,9 +142,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     /* @conditional-compile-remove(rtt) */
     isRealTimeTextOn,
     /* @conditional-compile-remove(rtt) */
-    onSendRealTimeText,
-    /* @conditional-compile-remove(rtt) */
-    localUserId
+    onSendRealTimeText
   } = props;
   const localeStrings = useLocale().strings.captionsBanner;
   const strings = { ...localeStrings, ...props.strings };
@@ -191,11 +191,11 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     const lastRealTimeText = captions
       .slice()
       .reverse()
-      .find((caption) => caption.isRealTimeText && caption.userId === localUserId);
+      .find((caption) => caption.isRealTimeText && caption.isLocalUser);
     if (lastRealTimeText && !lastRealTimeText.isPartial) {
       setTextFieldValue('');
     }
-  }, [captions, localUserId]);
+  }, [captions]);
   /* @conditional-compile-remove(rtt) */
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     if (event.key === 'Enter') {

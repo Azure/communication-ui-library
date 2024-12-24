@@ -253,11 +253,6 @@ function createMockCall(mockCallId: string): CallState {
       startCaptionsInProgress: false,
       captionsKind: 'Captions'
     },
-    /* @conditional-compile-remove(rtt) */
-    realTimeTextFeature: {
-      realTimeText: [],
-      isRealTimeTextFeatureActive: false
-    },
     transfer: {
       acceptedTransfers: {}
     },
