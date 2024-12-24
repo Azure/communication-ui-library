@@ -980,6 +980,8 @@ export interface CallCompositeStrings {
     pinParticipantMenuItemAriaLabel: string;
     pinParticipantMenuLabel: string;
     privacyPolicy: string;
+    realTimeTextInputBoxDefaultText?: string;
+    realTimeTextLabel?: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
     removeBackgroundTooltip?: string;
@@ -1016,6 +1018,7 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
+    startRealTimeTextLabel?: string;
     startSpotlightMenuLabel: string;
     stopAllSpotlightMenuLabel: string;
     stopSpotlightMenuLabel: string;
@@ -1871,7 +1874,9 @@ export interface CaptionsBannerProps {
     };
     formFactor?: 'default' | 'compact';
     isCaptionsOn?: boolean;
+    isRealTimeTextOn?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
+    onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
     startCaptionsInProgress?: boolean;
     strings?: CaptionsBannerStrings;
 }
@@ -1885,6 +1890,7 @@ export type CaptionsBannerSelector = (state: CallClientState, props: CallingBase
 // @public
 export interface CaptionsBannerStrings {
     captionsBannerSpinnerText?: string;
+    realTimeTextInputBoxDefaultText?: string;
 }
 
 // @public (undocumented)
@@ -1925,6 +1931,9 @@ export type CaptionsInformation = {
     displayName: string;
     captionText: string;
     userId?: string;
+    isRealTimeText?: boolean;
+    isPartial?: boolean;
+    isLocalUser?: boolean;
 };
 
 // @public
@@ -2580,6 +2589,7 @@ export interface ComponentStrings {
     sendBox: SendBoxStrings;
     spokenLanguages: SpokenLanguageStrings;
     startCaptionsButton: StartCaptionsButtonStrings;
+    startRealTimeTextButton: StartRealTimeTextButtonStrings;
     typingIndicator: TypingIndicatorStrings;
     UnsupportedBrowser: UnsupportedBrowserStrings;
     UnsupportedBrowserVersion: UnsupportedBrowserVersionStrings;
@@ -2998,8 +3008,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
-    RTTIcon: React_2.JSX.Element;
     NotificationBarTogetherModeIcon: React_2.JSX.Element;
+    RealTimeTextIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -3184,8 +3194,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
-    RTTIcon: React_2.JSX.Element;
     NotificationBarTogetherModeIcon: React_2.JSX.Element;
+    RealTimeTextIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -4557,6 +4567,7 @@ export interface RealTimeTextProps {
     captionText: string;
     displayName: string;
     id: string;
+    isLocalUser?: boolean;
     isTyping?: boolean;
     onRenderAvatar?: OnRenderAvatarCallback;
     strings?: RealTimeTextStrings;
@@ -5021,6 +5032,22 @@ export interface StartCaptionsButtonStrings {
     offLabel: string;
     onLabel: string;
     tooltipOffContent: string;
+    tooltipOnContent: string;
+}
+
+// @beta
+export const StartRealTimeTextButton: (props: StartRealTimeTextButtonProps) => JSX.Element;
+
+// @beta (undocumented)
+export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
+    isRealTimeTextOn: boolean;
+    onStartRealTimeText: () => Promise<void>;
+    strings?: StartRealTimeTextButtonStrings;
+}
+
+// @beta
+export interface StartRealTimeTextButtonStrings {
+    onLabel: string;
     tooltipOnContent: string;
 }
 
