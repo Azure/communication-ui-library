@@ -315,3 +315,5 @@ export * from './IncomingCallStack';
 export * from './RTTDisclosureBanner';
 /* @conditional-compile-remove(rtt) */
 export * from './RealTimeText';
+/* @conditional-compile-remove(rtt) */
+export * from './StartRealTimeTextButton';

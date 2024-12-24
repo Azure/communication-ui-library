@@ -56,7 +56,9 @@ export const CallingCaptionsBanner = (props: {
   const strings = useLocale().strings.call;
 
   const captionsBannerStrings: CaptionsBannerStrings = {
-    captionsBannerSpinnerText: strings.captionsBannerSpinnerText
+    captionsBannerSpinnerText: strings.captionsBannerSpinnerText,
+    /* @conditional-compile-remove(rtt) */
+    realTimeTextInputBoxDefaultText: strings.realTimeTextInputBoxDefaultText
   };
 
   const onRenderAvatar = useCallback(
