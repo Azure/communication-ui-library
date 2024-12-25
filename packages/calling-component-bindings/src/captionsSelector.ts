@@ -157,12 +157,24 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
         isLocalUser: c.isLocal
       };
     });
+
+    /* @conditional-compile-remove(rtt) */
+    // find the last real time text caption
+    const lastRealTimeText =
+      captionsInfo &&
+      captionsInfo
+        .slice()
+        .reverse()
+        .find((caption) => caption.isRealTimeText && caption.isLocalUser);
+
     return {
       captions: captionsInfo ?? [],
       isCaptionsOn: isCaptionsFeatureActive ?? false,
       /* @conditional-compile-remove(rtt) */
       isRealTimeTextOn: isRealTimeTextActive ?? false,
-      startCaptionsInProgress: startCaptionsInProgress ?? false
+      startCaptionsInProgress: startCaptionsInProgress ?? false,
+      /* @conditional-compile-remove(rtt) */
+      latestLocalRealTimeText: lastRealTimeText
     };
   }
 );
