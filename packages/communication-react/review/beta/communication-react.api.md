@@ -5038,7 +5038,7 @@ export interface StartCaptionsButtonStrings {
 // @beta
 export const StartRealTimeTextButton: (props: StartRealTimeTextButtonProps) => JSX.Element;
 
-// @beta (undocumented)
+// @beta
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
     isRealTimeTextOn: boolean;
     onStartRealTimeText: () => Promise<void>;

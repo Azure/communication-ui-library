@@ -11,6 +11,7 @@ import { useLocale } from '../localization';
 
 /* @conditional-compile-remove(rtt) */
 /**
+ * Props for the StartRealTimeTextButton component
  * @beta
  */
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
