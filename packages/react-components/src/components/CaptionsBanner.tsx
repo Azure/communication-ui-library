@@ -255,7 +255,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               />
             )
           }
-          {!isCaptionsOn && !isRealTimeTextOn && (
+          {!isCaptionsOn && /* @conditional-compile-remove(rtt) */ !isRealTimeTextOn && (
             <Stack
               verticalAlign="center"
               styles={
