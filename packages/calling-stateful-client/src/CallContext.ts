@@ -1196,24 +1196,7 @@ export class CallContext {
       // partial real time text always stays at the bottom and update in place
       // captions always go on top of all partial real time text
       if (isRealTimeText) {
-        // find the index of the last real time text from the same speaker that is partial and update to the new real time text
-        const lastRealTimeTextIndex = captions
-          .slice()
-          .reverse()
-          .findIndex(
-            (caption) =>
-              caption.resultType === 'Partial' &&
-              caption.isRealTimeText &&
-              caption.speaker.identifier &&
-              newCaption.speaker.identifier &&
-              toFlatCommunicationIdentifier(caption.speaker.identifier) ===
-                toFlatCommunicationIdentifier(newCaption.speaker.identifier)
-          );
-        if (lastRealTimeTextIndex !== -1) {
-          captions[captions.length - lastRealTimeTextIndex - 1] = newCaption;
-        } else {
-          captions.push(newCaption);
-        }
+        this.processNewRealTimeTextHelper(captions, newCaption);
       } else {
         // look for the first idex of real time text that is partial and split the list in 2 from there
         const lastRealTimeTextIndex = captions.findIndex(
@@ -1238,6 +1221,29 @@ export class CallContext {
       captions.shift();
     }
   }
+
+  /* @conditional-compile-remove(rtt) */
+  private processNewRealTimeTextHelper(captions: CaptionsInfo[], newCaption: CaptionsInfo): void {
+    // find the index of the last real time text from the same speaker that is partial and update to the new real time text
+    const lastRealTimeTextIndex = captions
+      .slice()
+      .reverse()
+      .findIndex(
+        (caption) =>
+          caption.resultType === 'Partial' &&
+          caption.isRealTimeText &&
+          caption.speaker.identifier &&
+          newCaption.speaker.identifier &&
+          toFlatCommunicationIdentifier(caption.speaker.identifier) ===
+            toFlatCommunicationIdentifier(newCaption.speaker.identifier)
+      );
+    if (lastRealTimeTextIndex !== -1) {
+      captions[captions.length - lastRealTimeTextIndex - 1] = newCaption;
+    } else {
+      captions.push(newCaption);
+    }
+  }
+
   /* @conditional-compile-remove(rtt) */
   private processNewCaptionHelper(captions: CaptionsInfo[], newCaption: CaptionsInfo): void {
     // time stamp when new caption comes in
