@@ -123,6 +123,11 @@ export interface CaptionsBannerProps {
    * Optional callback to send real time text.
    */
   onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Latest local real time text
+   */
+  latestLocalRealTimeText?: CaptionsInformation;
 }
 
 const SCROLL_OFFSET_ALLOWANCE = 20;
@@ -142,7 +147,9 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     /* @conditional-compile-remove(rtt) */
     isRealTimeTextOn,
     /* @conditional-compile-remove(rtt) */
-    onSendRealTimeText
+    onSendRealTimeText,
+    /* @conditional-compile-remove(rtt) */
+    latestLocalRealTimeText
   } = props;
   const localeStrings = useLocale().strings.captionsBanner;
   const strings = { ...localeStrings, ...props.strings };
@@ -187,15 +194,11 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   /* @conditional-compile-remove(rtt) */
   useEffect(() => {
     // if the latest real time text sent by myself is final, clear the text field
-    // find the last real time text caption
-    const lastRealTimeText = captions
-      .slice()
-      .reverse()
-      .find((caption) => caption.isRealTimeText && caption.isLocalUser);
-    if (lastRealTimeText && !lastRealTimeText.isPartial) {
+    if (latestLocalRealTimeText && !latestLocalRealTimeText.isPartial) {
       setTextFieldValue('');
     }
-  }, [captions]);
+  }, [latestLocalRealTimeText]);
+
   /* @conditional-compile-remove(rtt) */
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     if (event.key === 'Enter') {
