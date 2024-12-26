@@ -46,6 +46,18 @@ export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
     [peoplePaneDismissButtonRef, chatButtonPresent]
   );
 
+  const handleClick = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      onClick?.(event);
+      if (chatButtonPresent) {
+        console.log(peoplePaneDismissButtonRef);
+        peoplePaneDismissButtonRef?.current?.focus();
+        event.preventDefault();
+      }
+    },
+    [chatButtonPresent, onClick, peoplePaneDismissButtonRef]
+  );
+
   return (
     <ControlBarButton
       {...props}
@@ -53,12 +65,7 @@ export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
       labelKey={'peopleButtonLabelKey'}
       onRenderOnIcon={onRenderOnIcon ?? icon}
       onRenderOffIcon={onRenderOffIcon ?? icon}
-      onClick={(event) => {
-        onClick?.(event);
-        if (chatButtonPresent) {
-          peoplePaneDismissButtonRef?.current?.focus();
-        }
-      }}
+      onClick={handleClick}
       onKeyDown={handleTab}
       styles={styles}
     />

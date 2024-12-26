@@ -206,7 +206,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       mobileView: props.mobileView,
       peopleButtonRef,
       setParticipantActioned,
-      sidePaneDismissButtonRef
+      sidePaneDismissButtonRef,
+      chatButtonPresent: props.onCloseChatPane
     }),
     [
       updateSidePaneRenderer,
@@ -216,7 +217,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       props.mobileView,
       peopleButtonRef,
       setParticipantActioned,
-      sidePaneDismissButtonRef
+      sidePaneDismissButtonRef,
+      props.onCloseChatPane
     ]
   );
 

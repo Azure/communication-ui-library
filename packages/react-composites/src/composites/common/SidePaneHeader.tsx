@@ -24,6 +24,7 @@ export const SidePaneHeader = (props: {
   mobileView: boolean;
   paneOpenerButton?: RefObject<IButton>;
   dismissButtonComponentRef?: RefObject<IButton>;
+  chatButtonPresent?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
   const sidePaneCloseButtonStyles = useMemo(
@@ -47,12 +48,12 @@ export const SidePaneHeader = (props: {
 
   const handleShiftTab = useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
-      if (event.key === 'Tab' && event.shiftKey) {
+      if (event.key === 'Tab' && event.shiftKey && !props.chatButtonPresent) {
         props.paneOpenerButton?.current?.focus();
         event.preventDefault();
       }
     },
-    [props.paneOpenerButton]
+    [props.chatButtonPresent, props.paneOpenerButton]
   );
 
   if (props.mobileView) {
