@@ -94,6 +94,11 @@ export const TogetherModeStream = React.memo(
           videoStreamElement={stream?.renderElement || null}
           isMirrored={true}
           loadingState={showLoadingIndicator ? 'loading' : 'none'}
+          styles={{
+            root: {
+              border: '2px solid yellow'
+            }
+          }}
         />
         <MeetingReactionOverlay
           reactionResources={props.reactionResources || ({} as ReactionResources)}

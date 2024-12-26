@@ -114,7 +114,7 @@ export const TogetherModeLayout = (props: LayoutProps): JSX.Element => {
     parentWidth
   ]);
 
-  console.log(`CHUK == version === 12:17:9`);
+  console.log(`CHUK == version === mobile fix`);
   return screenShareComponent ? (
     <Stack styles={rootLayoutStyle}>
       <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />

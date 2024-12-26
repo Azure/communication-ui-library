@@ -119,12 +119,12 @@ export const TogetherModeOverlay = React.memo(
           if (seatingPosition) {
             acc[userId] = {
               id: userId,
-              reaction,
+              reaction: reactionResources && reaction,
               isHandRaised: !!raisedHand,
               isSpotlighted: !!spotlight,
               isMuted,
               displayName: displayName || locale.strings.videoGallery.displayNamePlaceholder,
-              showDisplayName: !!(spotlight || raisedHand || reaction || hoveredParticipantID === userId),
+              showDisplayName: !!(spotlight || raisedHand || hoveredParticipantID === userId),
               scaledSize: calculateScaledSize(seatingPosition.width, seatingPosition.height),
               seatPositionStyle: setTogetherModeSeatPositionStyle(seatingPosition)
             };
@@ -135,17 +135,20 @@ export const TogetherModeOverlay = React.memo(
       );
 
       const participantsNotInTogetherModeStream = Object.keys(togetherModeParticipantStatus).filter(
-        (id) => !togetherModeParticipantStatus[id]
+        (id) => !updatedSignals[id]
       );
 
       setTogetherModeParticipantStatus((prevSignals) => {
         const newSignals = { ...prevSignals, ...updatedSignals };
+        const newSignalsLength = Object.keys(newSignals).length;
         participantsNotInTogetherModeStream.forEach((id) => {
           delete newSignals[id];
         });
 
         const hasChanges = Object.keys(newSignals).some(
-          (key) => JSON.stringify(newSignals[key]) !== JSON.stringify(prevSignals[key])
+          (key) =>
+            JSON.stringify(newSignals[key]) !== JSON.stringify(prevSignals[key]) ||
+            newSignalsLength !== Object.keys(prevSignals).length
         );
 
         return hasChanges ? newSignals : prevSignals;
@@ -155,6 +158,7 @@ export const TogetherModeOverlay = React.memo(
       localParticipant,
       togetherModeParticipantStatus,
       togetherModeSeatPositions,
+      reactionResources,
       locale.strings.videoGallery.displayNamePlaceholder,
       hoveredParticipantID
     ]);
@@ -166,7 +170,7 @@ export const TogetherModeOverlay = React.memo(
             key={participantStatus.id}
             style={{
               ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle),
-              border: '1px solid yellow'
+              border: '1px solid blue'
             }}
             onMouseEnter={() => setHoveredParticipantID(participantStatus.id)}
             onMouseLeave={() => setHoveredParticipantID('')}
@@ -175,8 +179,8 @@ export const TogetherModeOverlay = React.memo(
               {participantStatus.reaction?.reactionType && (
                 <div
                   style={moveAnimationStyles(
-                    parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * 0.5,
-                    parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * 0.35
+                    parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * 0.5 * 16,
+                    parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * 0.35 * 16
                   )}
                 >
                   <div
@@ -186,7 +190,7 @@ export const TogetherModeOverlay = React.memo(
                       left: `${
                         (100 -
                           ((participantStatus.scaledSize || 1) /
-                            parseFloat(participantStatus.seatPositionStyle.seatPosition.width)) *
+                            (parseFloat(participantStatus.seatPositionStyle.seatPosition.width) * 16)) *
                             100) /
                         2
                       }%`
@@ -210,8 +214,12 @@ export const TogetherModeOverlay = React.memo(
                   style={{
                     position: 'absolute',
                     bottom: `${_pxToRem(2)}`,
-                    width: '100%',
-                    textAlign: 'center'
+                    width: 'fit-content',
+                    textAlign: 'center',
+                    border: '1px solid white',
+                    transform: 'translate(-50%)',
+                    transition: 'width 0.3s ease, transform 0.3s ease',
+                    left: '50%'
                   }}
                 >
                   <div
@@ -245,22 +253,26 @@ export const TogetherModeOverlay = React.memo(
                       </Text>
                     )}
                     {participantStatus.isMuted && (
-                      <Icon
-                        iconName="VideoTileMicOff"
-                        style={{
-                          ...togetherModeIconStyle(),
-                          color: participantStatus.displayName ? theme.palette.neutralSecondary : 'inherit'
-                        }}
-                      />
+                      <span>
+                        <Icon
+                          iconName="VideoTileMicOff"
+                          style={{
+                            ...togetherModeIconStyle(),
+                            color: participantStatus.displayName ? theme.palette.neutralSecondary : 'inherit'
+                          }}
+                        />
+                      </span>
                     )}
                     {participantStatus.isSpotlighted && (
-                      <Icon
-                        iconName="VideoTileSpotlighted"
-                        style={{
-                          ...togetherModeIconStyle(),
-                          color: participantStatus.displayName ? theme.palette.neutralSecondary : 'inherit'
-                        }}
-                      />
+                      <span>
+                        <Icon
+                          iconName="VideoTileSpotlighted"
+                          style={{
+                            ...togetherModeIconStyle(),
+                            color: participantStatus.displayName ? theme.palette.neutralSecondary : 'inherit'
+                          }}
+                        />
+                      </span>
                     )}
                   </div>
                 </div>

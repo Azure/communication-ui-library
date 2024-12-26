@@ -129,19 +129,9 @@ export const togetherModeStreamRootStyle: IStackStyles = {
     alignItems: 'center',
     position: 'absolute',
     top: 0,
-    left: 0
+    left: 0,
+    border: '2px solid red'
   }
-};
-
-/* @conditional-compile-remove(together-mode) */
-/**
- * @private
- */
-export const togetherModeIconStyle = (): React.CSSProperties => {
-  return {
-    width: '20px',
-    flexShrink: 0
-  };
 };
 
 /* @conditional-compile-remove(together-mode) */
@@ -157,11 +147,10 @@ export const togetherModeParticipantStatusContainer = (
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '2px',
+    gap: `${_pxToRem(5)}`,
     margin: '0 auto', // Centers the container
-    padding: '0 5px',
-    borderRadius,
-    width: 'fit-content'
+    padding: `0 ${_pxToRem(5)}`,
+    borderRadius
   };
 };
 
@@ -174,13 +163,29 @@ export const togetherModeParticipantDisplayName = (
   participantSeatingWidth: number,
   color: string
 ): React.CSSProperties => {
+  console.log(`CHUK ---Paarticipant width == ${participantSeatingWidth}`);
   return {
     textOverflow: 'ellipsis',
-    flexGrow: 1, // Allow text to grow within available space
-    overflow: isParticipantHovered ? 'visible' : 'hidden',
     whiteSpace: 'nowrap',
     textAlign: 'center',
     color,
-    display: isParticipantHovered || participantSeatingWidth > 100 ? 'inline-block' : 'none' // Completely remove the element when hidden
+    overflow: isParticipantHovered ? 'visible' : 'hidden',
+    width: isParticipantHovered ? `100%` : _pxToRem(0.7 * participantSeatingWidth * 16),
+    // border: '1px solid red',
+    display: isParticipantHovered || participantSeatingWidth * 16 > 150 ? 'inline-block' : 'none', // Completely remove the element when hidden
+    fontSize: `${_pxToRem(13)}`,
+    lineHeight: `${_pxToRem(20)}`
+  };
+};
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ */
+export const togetherModeIconStyle = (): React.CSSProperties => {
+  return {
+    width: 'fit-content',
+    display: 'flex',
+    alignItems: 'center'
   };
 };
