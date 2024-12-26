@@ -207,7 +207,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       peopleButtonRef,
       setParticipantActioned,
       sidePaneDismissButtonRef,
-      chatButtonPresent: props.onCloseChatPane
+      chatButtonPresent: !!props.onCloseChatPane
     }),
     [
       updateSidePaneRenderer,
