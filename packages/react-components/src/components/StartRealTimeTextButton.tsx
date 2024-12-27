@@ -1,12 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(rtt) */
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
+/* @conditional-compile-remove(rtt) */
 import React from 'react';
+/* @conditional-compile-remove(rtt) */
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
+/* @conditional-compile-remove(rtt) */
 import { useLocale } from '../localization';
 
+/* @conditional-compile-remove(rtt) */
 /**
+ * Props for the StartRealTimeTextButton component
  * @beta
  */
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
@@ -25,6 +31,8 @@ export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
   strings?: StartRealTimeTextButtonStrings;
 }
 
+
+/* @conditional-compile-remove(rtt) */
 /**
  * Strings for the hold button labels
  * @beta
@@ -40,6 +48,7 @@ export interface StartRealTimeTextButtonStrings {
   tooltipOnContent: string;
 }
 
+/* @conditional-compile-remove(rtt) */
 /**
  * a button to start RealTimeText
  * based on accessibility requirement, real time text cannot be turned off once it is on
@@ -67,3 +76,5 @@ export const StartRealTimeTextButton = (props: StartRealTimeTextButtonProps): JS
     />
   );
 };
+
+export {};

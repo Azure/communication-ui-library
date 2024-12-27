@@ -1879,6 +1879,7 @@ export interface CaptionsBannerProps {
     formFactor?: 'default' | 'compact';
     isCaptionsOn?: boolean;
     isRealTimeTextOn?: boolean;
+    latestLocalRealTimeText?: CaptionsInformation;
     onRenderAvatar?: OnRenderAvatarCallback;
     onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
     startCaptionsInProgress?: boolean;
@@ -5050,7 +5051,7 @@ export interface StartCaptionsButtonStrings {
 // @beta
 export const StartRealTimeTextButton: (props: StartRealTimeTextButtonProps) => JSX.Element;
 
-// @beta (undocumented)
+// @beta
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
     isRealTimeTextOn: boolean;
     onStartRealTimeText: () => Promise<void>;
