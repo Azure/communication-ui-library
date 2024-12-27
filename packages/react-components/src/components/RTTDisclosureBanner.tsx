@@ -10,7 +10,7 @@ import { Notification } from './Notification';
 /* @conditional-compile-remove(rtt) */
 import { useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(rtt) */
-import { rttContainerStyles } from './styles/RTTDisclosureBanner.styles';
+import { rttContainerStyles, rttIconStyles } from './styles/RTTDisclosureBanner.styles';
 
 /* @conditional-compile-remove(rtt) */
 /**
@@ -54,7 +54,10 @@ export const RTTDisclosureBanner = (props: RTTDisclosureBannerProps): JSX.Elemen
         message: strings.bannerContent,
         linkLabel: strings.bannerLinkLabel
       }}
-      notificationIconProps={{ iconName: 'RTTIcon' }}
+      notificationIconProps={{
+        iconName: 'RealTimeTextIcon',
+        styles: rttIconStyles()
+      }}
       onClickLink={props.onClickLink}
       styles={{ root: rttContainerStyles(theme) }}
     />

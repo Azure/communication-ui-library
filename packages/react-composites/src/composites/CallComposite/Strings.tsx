@@ -481,6 +481,16 @@ export interface CallCompositeStrings {
    * string to be used to start captions
    */
   startCaptionsButtonOnLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * string to be used to open real time text contextual menu
+   */
+  realTimeTextLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * string to be used to start real time text
+   */
+  startRealTimeTextLabel?: string;
   /**
    * string to be used to stop captions
    */
@@ -549,6 +559,11 @@ export interface CallCompositeStrings {
    * captions banner loading spinner label
    */
   captionsBannerSpinnerText?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Default text for RTT input text box
+   */
+  realTimeTextInputBoxDefaultText?: string;
   /**
    * transfer page text when showing the transferor who initiated the transfer
    */

@@ -416,8 +416,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   IncomingCallNotificationRejectIcon: <CallEnd20Filled />,
   IncomingCallNotificationAcceptIcon: <Call20Filled />,
   IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />,
-  /* @conditional-compile-remove(rtt) */
-  RTTIcon: <SlideTextCall20Regular />,
   /* @conditional-compile-remove(together-mode) */
-  NotificationBarTogetherModeIcon: <PeopleAudience20Regular />
+  NotificationBarTogetherModeIcon: <PeopleAudience20Regular />,
+  /* @conditional-compile-remove(rtt) */
+  RealTimeTextIcon: <SlideTextCall20Regular />
 };
