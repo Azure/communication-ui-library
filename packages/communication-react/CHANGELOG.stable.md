@@ -1,8 +1,40 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Tue, 12 Nov 2024 17:20:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 16 Dec 2024 19:44:14 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.22.0](https://github.com/azure/communication-ui-library/tree/1.22.0)
+
+Mon, 16 Dec 2024 19:44:14 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0...1.22.0)
+
+### Features
+- We are launching the ability to use components to build your own captions experience. These components are Start Captions Button, Captions Settings Modal, and Captions Banner. ([PR #5499](https://github.com/azure/communication-ui-library/pull/5499) by 96077406+carocao-msft@users.noreply.github.com, [PR #5469](https://github.com/azure/communication-ui-library/pull/5469) by 96077406+carocao-msft@users.noreply.github.com, [PR #5460](https://github.com/azure/communication-ui-library/pull/5460) by 96077406+carocao-msft@users.noreply.github.com)
+
+### Improvements
+- Update nanoid package ([PR #5490](https://github.com/azure/communication-ui-library/pull/5490) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update `@azure/communication-calling-effects` to 1.1.2 ([PR #5407](https://github.com/azure/communication-ui-library/pull/5407) by 2684369+JamesBurnside@users.noreply.github.com)
+
+### Bug Fixes
+- Fix an issue where edited message could be saved without the content and attachments when rich text editor is enabled ([PR #5434](https://github.com/azure/communication-ui-library/pull/5434) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix screenshare tab outline color when presenting ([PR #5431](https://github.com/azure/communication-ui-library/pull/5431) by 2684369+JamesBurnside@users.noreply.github.com)
+- In CallCompsite, return focus to control bar when captions is closed from the captions settings button ([PR #5438](https://github.com/azure/communication-ui-library/pull/5438) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update configuration page local preview to show 'Video is loading' while camera is switching on or switching source. Also disable camera button while swiching source. ([PR #5430](https://github.com/azure/communication-ui-library/pull/5430) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix error bar icon size for low network quality and local video freeze ([PR #5282](https://github.com/azure/communication-ui-library/pull/5282) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix regression that caused minor inconsistent padding between connecting and call pages in CallComposite ([PR #5423](https://github.com/azure/communication-ui-library/pull/5423) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix an issue where text editors didn't trigger typing events when using input method editor ([PR #5486](https://github.com/azure/communication-ui-library/pull/5486) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix console error that requested Teams conference details in unsupported calls ([PR #5444](https://github.com/azure/communication-ui-library/pull/5444) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix A11y Properties of Participant List More Options to have aria-expanded, aria-controls and aria-label. Correctly apply focus when the CallComposite people pane is opened when no one else has joined the call. ([PR #5427](https://github.com/azure/communication-ui-library/pull/5427) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update aria-live property of notifications in the notification stack. Update camera button aria-label to indicate loading status to match announcer. ([PR #5428](https://github.com/azure/communication-ui-library/pull/5428) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add aria descriptions to reaction and raise buttons ([PR #5414](https://github.com/azure/communication-ui-library/pull/5414) by dmceachern@microsoft.com)
+- Fix an issue where system chat messages weren't announced ([PR #5463](https://github.com/azure/communication-ui-library/pull/5463) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix issue where AudioContext for composites is made too early ([PR #5476](https://github.com/azure/communication-ui-library/pull/5476) by dmceachern@microsoft.com)
+- Removed custom styles for scroll bar for ChatComposite and Captions components ([PR #5470](https://github.com/azure/communication-ui-library/pull/5470) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update Control bar button aria-describedby ([PR #5493](https://github.com/azure/communication-ui-library/pull/5493) by dmceachern@microsoft.com)
+- Allow for Contoso to hard set the dialer page, on, off, or follow our behaviors ([PR #5454](https://github.com/azure/communication-ui-library/pull/5454) by dmceachern@microsoft.com)
+- Fix string typo for captions dropdown info. Fix usePropsFor return type for RaiseHandButton. ([PR #5448](https://github.com/azure/communication-ui-library/pull/5448) by 79475487+mgamis-msft@users.noreply.github.com)
+
 
 ## [1.21.0](https://github.com/azure/communication-ui-library/tree/1.21.0)
 
