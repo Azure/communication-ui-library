@@ -31,7 +31,8 @@ import {
   _videoGalleryRemoteParticipantsMemo,
   _dominantSpeakersWithFlatId,
   convertRemoteParticipantToVideoGalleryRemoteParticipant,
-  memoizeLocalParticipant
+  memoizeLocalParticipant,
+  memoizeTogetherModeStreams
 } from './utils/videoGalleryUtils';
 import { memoizeSpotlightedParticipantIds } from './utils/videoGalleryUtils';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
@@ -121,15 +122,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const noRemoteParticipants: RemoteParticipantState[] = [];
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
     const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
-    /* @conditional-compile-remove(together-mode) */
-    const togetherModeStreams = {
-      mainVideoStream: {
-        isReceiving: togetherModeCallFeature?.streams?.mainVideoStream?.isReceiving,
-        isAvailable: togetherModeCallFeature?.streams?.mainVideoStream?.isAvailable,
-        renderElement: togetherModeCallFeature?.streams?.mainVideoStream?.view?.target,
-        streamSize: togetherModeCallFeature?.streams?.mainVideoStream?.streamSize
-      }
-    };
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -174,7 +166,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       spotlightedParticipants: spotlightedParticipantIds,
       maxParticipantsToSpotlight: spotlightCallFeature?.maxParticipantsToSpotlight,
       /* @conditional-compile-remove(together-mode) */
-      togetherModeStreams: togetherModeStreams,
+      togetherModeStreams: memoizeTogetherModeStreams(togetherModeCallFeature?.streams),
       /* @conditional-compile-remove(together-mode) */
       togetherModeSeatingCoordinates: togetherModeCallFeature?.seatingPositions,
       /* @conditional-compile-remove(together-mode) */

@@ -137,10 +137,8 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
         if (!callState) {
           return;
         }
-        if (!callState.togetherMode.isActive) {
-          const togetherModeFeature = call?.feature(Features.TogetherMode);
-          await togetherModeFeature?.start();
-        }
+        const togetherModeFeature = call?.feature(Features.TogetherMode);
+        await togetherModeFeature?.start();
       }
     };
   }

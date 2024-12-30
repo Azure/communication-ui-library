@@ -265,3 +265,14 @@ export const memoizeLocalParticipant = memoizeOne(
 export const memoizeSpotlightedParticipantIds = memoizeOne((spotlightedParticipants) =>
   spotlightedParticipants?.map((p: SpotlightedParticipant) => toFlatCommunicationIdentifier(p.identifier))
 );
+
+/** @private */
+export const memoizeTogetherModeStreams = memoizeOne((togetherModeStreams) => ({
+  mainVideoStream: {
+    id: togetherModeStreams?.mainVideoStream?.id,
+    isReceiving: togetherModeStreams?.mainVideoStream?.isReceiving,
+    isAvailable: togetherModeStreams?.mainVideoStream?.isAvailable,
+    renderElement: togetherModeStreams?.mainVideoStream?.view?.target,
+    streamSize: togetherModeStreams?.mainVideoStream?.streamSize
+  }
+}));
