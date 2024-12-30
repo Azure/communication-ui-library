@@ -52,7 +52,7 @@ import { IncomingCallNotificationStrings } from '../components/IncomingCallNotif
 /* @conditional-compile-remove(rtt) */
 import { RTTDisclosureBannerStrings } from '../components/RTTDisclosureBanner';
 /* @conditional-compile-remove(rtt) */
-import { RTTModalStrings } from '../components/RTTModal';
+import { RealTimeTextModalStrings } from '../components/RealTimeTextModal';
 /* @conditional-compile-remove(rtt) */
 import { RealTimeTextStrings } from '../components/RealTimeText';
 import { CaptionLanguageStrings, SpokenLanguageStrings } from '../types';
@@ -195,11 +195,11 @@ export interface ComponentStrings {
   /** Strings for the RTT Disclosure Banner */
   rttDisclosureBanner: RTTDisclosureBannerStrings;
   /* @conditional-compile-remove(rtt) */
-  /** Strings for the RTTModal */
-  rttModal: RTTModalStrings;
+  /** Strings for the RealTimeTextModal */
+  realTimeTextModal: RealTimeTextModalStrings;
   /* @conditional-compile-remove(rtt) */
   /** Strings for RealTimeText */
-  rtt: RealTimeTextStrings;
+  realTimeText: RealTimeTextStrings;
   /** Strings for Captions Setting Modal */
   captionsSettingsModal: CaptionsSettingsModalStrings;
   /**

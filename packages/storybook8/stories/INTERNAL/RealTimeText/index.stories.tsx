@@ -4,10 +4,10 @@
 import { RealTimeText } from '@internal/react-components';
 import { Meta } from '@storybook/react';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
-import { ExampleRTT } from './snippets/ExampleRTT.snippet';
+import { ExampleRealTimeText } from './snippets/ExampleRealTimeText.snippet';
 
-export const ExampleRTTExampleDocsOnly = {
-  render: ExampleRTT
+export const ExampleRealTimeTextExampleDocsOnly = {
+  render: ExampleRealTimeText
 };
 
 export { RealTimeText } from './RealTimeText.story';

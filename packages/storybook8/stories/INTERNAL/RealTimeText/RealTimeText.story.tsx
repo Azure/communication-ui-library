@@ -2,13 +2,13 @@
 // Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
-import { RealTimeText as RTTExample } from '@internal/react-components';
+import { RealTimeText as RealTimeTextExample } from '@internal/react-components';
 import React from 'react';
 
 const RealTimeTextStory = (args: { isTyping: boolean; displayName: string; captionText: string }): JSX.Element => {
   return (
     <Stack>
-      <RTTExample
+      <RealTimeTextExample
         id="1"
         displayName={args.displayName ?? 'Caroline'}
         captionText={args.captionText ?? 'Hello'}
