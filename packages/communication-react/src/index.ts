@@ -459,11 +459,6 @@ export type { MeetingConferencePhoneInfoModalStrings } from '../../react-compone
 export type { RTTModalStrings, RTTModalProps } from '../../react-components/src';
 /* @conditional-compile-remove(rtt) */
 export { RTTModal } from '../../react-components/src';
-
-/* @conditional-compile-remove(rtt) */
-export type { RTTDisclosureBannerProps, RTTDisclosureBannerStrings } from '../../react-components/src';
-/* @conditional-compile-remove(rtt) */
-export { RTTDisclosureBanner } from '../../react-components/src';
 /* @conditional-compile-remove(rtt) */
 export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
 /* @conditional-compile-remove(rtt) */
