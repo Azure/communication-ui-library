@@ -30,8 +30,6 @@ import { controlBarContainerStyles } from '../../CallComposite/styles/CallContro
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
 import { BaseCustomStyles, ControlBarButtonStyles } from '@internal/react-components';
-/* @conditional-compile-remove(rtt) */
-import { RTTModal, StartRealTimeTextButton } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { ControlBar } from '@internal/react-components';
 import { Microphone } from '../../CallComposite/components/buttons/Microphone';
@@ -69,7 +67,7 @@ import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
 import { Timer } from './Timer';
 import { FocusableElement } from '../types/FocusableElement';
 /* @conditional-compile-remove(rtt) */
-import { usePropsFor } from '../../CallComposite/hooks/usePropsFor';
+import { CallingRealTimeTextModal } from '../CallingRealTimeTextModal';
 
 /**
  * @private
@@ -160,8 +158,6 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
     const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
     /* @conditional-compile-remove(rtt) */
     const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
-    /* @conditional-compile-remove(rtt) */
-    const startRealTimeTextButtonProps = usePropsFor(StartRealTimeTextButton);
 
     // If the hangup capability is not present, we default to true
     const isHangUpForEveryoneAllowed =
@@ -397,11 +393,7 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
           )}
           {
             /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
-              <RTTModal
-                showModal={showRealTimeTextModal}
-                onDismissModal={onDismissRealTimeTextModal}
-                onStartRTT={() => startRealTimeTextButtonProps?.onStartRealTimeText()}
-              />
+              <CallingRealTimeTextModal showModal={showRealTimeTextModal} onDismissModal={onDismissRealTimeTextModal} />
             )
           }
           {props.teamsMeetingConferenceModalPresent && (

@@ -56,6 +56,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   const localeStrings = useLocale();
   const holdButtonProps = usePropsFor(HoldButton);
   const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
+  /* @conditional-compile-remove(rtt) */
   const startRealTimeTextButtonProps = usePropsFor(StartRealTimeTextButton);
   const startCaptions = useCallback(async () => {
     await startCaptionsButtonProps.onStartCaptions({

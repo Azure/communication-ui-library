@@ -985,8 +985,14 @@ export interface CallCompositeStrings {
     realTimeTextBannerContent?: string;
     realTimeTextBannerLinkLabel?: string;
     realTimeTextBannerTitle?: string;
+    realTimeTextCancelButtonLabel: string;
+    realTimeTextCloseModalButtonAriaLabel: string;
+    realTimeTextConfirmButtonLabel: string;
     realTimeTextInputBoxDefaultText?: string;
     realTimeTextLabel?: string;
+    realTimeTextModalAriaLabel: string;
+    realTimeTextModalText: string;
+    realTimeTextModalTitle: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
     removeBackgroundTooltip?: string;
@@ -2603,7 +2609,6 @@ export interface ComponentStrings {
     realTimeText: RealTimeTextStrings;
     realTimeTextModal: RealTimeTextModalStrings;
     richTextSendBox: RichTextSendBoxStrings;
-    rttDisclosureBanner: RTTDisclosureBannerStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     spokenLanguages: SpokenLanguageStrings;
@@ -4754,25 +4759,6 @@ export interface RichTextStrings {
     richTextToolbarAriaLabel: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
-}
-
-// @beta
-export const RTTDisclosureBanner: (props: RTTDisclosureBannerProps) => JSX.Element;
-
-// @beta
-export interface RTTDisclosureBannerProps {
-    onClickLink?: () => void;
-    strings?: RTTDisclosureBannerStrings;
-}
-
-// @beta
-export interface RTTDisclosureBannerStrings {
-    // (undocumented)
-    bannerContent: string;
-    // (undocumented)
-    bannerLinkLabel?: string;
-    // (undocumented)
-    bannerTitle: string;
 }
 
 // @public
