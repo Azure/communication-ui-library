@@ -93,6 +93,7 @@ export type {
   CaptionsBannerSelector,
   StartCaptionsButtonSelector
 } from '../../calling-component-bindings/src';
+
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
@@ -465,6 +466,13 @@ export { RTTDisclosureBanner } from '../../react-components/src';
 export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
 /* @conditional-compile-remove(rtt) */
 export { RealTimeText } from '../../react-components/src/components/RealTimeText';
+/* @conditional-compile-remove(rtt) */
+export { StartRealTimeTextButton } from '../../react-components/src/components/StartRealTimeTextButton';
+/* @conditional-compile-remove(rtt) */
+export type {
+  StartRealTimeTextButtonProps,
+  StartRealTimeTextButtonStrings
+} from '../../react-components/src/components/StartRealTimeTextButton';
 /* @conditional-compile-remove(media-access) */
 export type { MediaAccess } from '../../react-components/src';
 export type { CaptionsSettingsModalStrings, CaptionsSettingsModalProps } from '../../react-components/src';

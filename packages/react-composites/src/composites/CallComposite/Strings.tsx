@@ -481,6 +481,16 @@ export interface CallCompositeStrings {
    * string to be used to start captions
    */
   startCaptionsButtonOnLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * string to be used to open real time text contextual menu
+   */
+  realTimeTextLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * string to be used to start real time text
+   */
+  startRealTimeTextLabel?: string;
   /**
    * string to be used to stop captions
    */
@@ -549,6 +559,11 @@ export interface CallCompositeStrings {
    * captions banner loading spinner label
    */
   captionsBannerSpinnerText?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Default text for RTT input text box
+   */
+  realTimeTextInputBoxDefaultText?: string;
   /**
    * transfer page text when showing the transferor who initiated the transfer
    */
@@ -892,4 +907,99 @@ export interface CallCompositeStrings {
    * notification.
    */
   returnFromBreakoutRoomBannerButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Label for menu item to forbid audio media access
+   */
+  forbidAudioMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Label for menu item to permit audio media access
+   */
+  permitAudioMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Dialog title to confirm forbid Teams meeting audio media access
+   */
+  forbidOthersAudioDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Dialog content to confirm forbid Teams meeting audio media access
+   */
+  forbidOthersAudioDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Dialog button to confirm forbid Teams meeting audio media access
+   */
+  forbidOthersAudioConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Dialog cancel button for forbid Teams meeting audio media access
+   */
+  forbidOthersAudioCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Dialog title to confirm permit Teams meeting audio media access
+   */
+  permitOthersAudioDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Dialog content to confirm permit Teams meeting audio media access
+   */
+  permitOthersAudioDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Dialog button to confirm permit Teams meeting audio media access
+   */
+  permitOthersAudioConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Dialog cancel button for permit Teams meeting audio media access
+   */
+  permitOthersAudioCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Label for menu item to forbid video media access
+   */
+  forbidOthersAudioMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Label for menu item to permit video media access */
+  permitOthersAudioMenuLabel: string;
+
+  /* @conditional-compile-remove(media-access) */
+  /** Label for menu item to forbid video media access */
+  forbidVideoMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Label for menu item to permit video media access */
+  permitVideoMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Dialog title to confirm forbid Teams meeting video media access */
+  forbidOthersVideoDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Dialog content to confirm forbid Teams meeting video media access */
+  forbidOthersVideoDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Dialog button to confirm forbid Teams meeting video media access */
+  forbidOthersVideoConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Dialog cancel button for forbid Teams meeting video media access */
+  forbidOthersVideoCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Dialog title to confirm permit Teams meeting video media access */
+  permitOthersVideoDialogTitle: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Dialog content to confirm permit Teams meeting video media access */
+  permitOthersVideoDialogContent: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Dialog button to confirm permit Teams meeting video media access */
+  permitOthersVideoConfirmButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Dialog cancel button for permit Teams meeting video media access */
+  permitOthersVideoCancelButtonLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Label for menu item to forbid audio media access */
+  forbidOthersVideoMenuLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Label for menu item to permit audio media access */
+  permitOthersVideoMenuLabel: string;
 }

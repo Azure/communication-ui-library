@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { Stack, FocusZone, Spinner, useTheme } from '@fluentui/react';
+/* @conditional-compile-remove(rtt) */
+import { TextField } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { _Caption } from './Caption';
 import {
@@ -13,6 +15,10 @@ import {
 } from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
 import { useLocale } from '../localization';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeText } from './RealTimeText';
+/* @conditional-compile-remove(rtt) */
+import { RTTDisclosureBanner } from './RTTDisclosureBanner';
 
 /**
  * @public
@@ -35,6 +41,21 @@ export type CaptionsInformation = {
    * id of the speaker
    */
   userId?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * if the caption received is real time text
+   */
+  isRealTimeText?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * if the caption received is a non finalized caption
+   */
+  isPartial?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * if the caption received is from the local user
+   */
+  isLocalUser?: boolean;
 };
 
 /**
@@ -46,6 +67,11 @@ export interface CaptionsBannerStrings {
    * Spinner text for captions banner
    */
   captionsBannerSpinnerText?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Default text for RTT input text box
+   */
+  realTimeTextInputBoxDefaultText?: string;
 }
 
 /**
@@ -61,6 +87,11 @@ export interface CaptionsBannerProps {
    * Flag to indicate if captions are on
    */
   isCaptionsOn?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Flag to indicate if real time text is on
+   */
+  isRealTimeTextOn?: boolean;
   /**
    * Flag to indicate if captions are being started
    * This is used to show spinner while captions are being started
@@ -87,6 +118,16 @@ export interface CaptionsBannerProps {
   captionsOptions?: {
     height: 'full' | 'default';
   };
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Optional callback to send real time text.
+   */
+  onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Latest local real time text
+   */
+  latestLocalRealTimeText?: CaptionsInformation;
 }
 
 const SCROLL_OFFSET_ALLOWANCE = 20;
@@ -102,7 +143,13 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     startCaptionsInProgress,
     onRenderAvatar,
     formFactor = 'default',
-    captionsOptions
+    captionsOptions,
+    /* @conditional-compile-remove(rtt) */
+    isRealTimeTextOn,
+    /* @conditional-compile-remove(rtt) */
+    onSendRealTimeText,
+    /* @conditional-compile-remove(rtt) */
+    latestLocalRealTimeText
   } = props;
   const localeStrings = useLocale().strings.captionsBanner;
   const strings = { ...localeStrings, ...props.strings };
@@ -142,12 +189,33 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
       scrollToBottom();
     }
   }, [captions, isAtBottomOfScroll]);
+  /* @conditional-compile-remove(rtt) */
+  const [textFieldValue, setTextFieldValue] = useState<string>('');
+  /* @conditional-compile-remove(rtt) */
+  useEffect(() => {
+    // if the latest real time text sent by myself is final, clear the text field
+    if (latestLocalRealTimeText && !latestLocalRealTimeText.isPartial) {
+      setTextFieldValue('');
+    }
+  }, [latestLocalRealTimeText]);
+
+  /* @conditional-compile-remove(rtt) */
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      if (textFieldValue && onSendRealTimeText) {
+        onSendRealTimeText(textFieldValue, true);
+        setTextFieldValue('');
+      }
+    }
+  };
 
   return (
     <>
-      {startCaptionsInProgress && (
+      {(startCaptionsInProgress || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
         <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
-          {isCaptionsOn && (
+          {/* @conditional-compile-remove(rtt) */ isRealTimeTextOn && <RTTDisclosureBanner />}
+          {(isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
             <ul
               ref={captionsScrollDivRef}
               className={
@@ -158,6 +226,14 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               data-ui-id="captions-banner-inner"
             >
               {captions.map((caption) => {
+                /* @conditional-compile-remove(rtt) */
+                if (caption.isRealTimeText) {
+                  return (
+                    <li key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
+                      <RealTimeText {...caption} isTyping={caption.isPartial} onRenderAvatar={onRenderAvatar} />
+                    </li>
+                  );
+                }
                 return (
                   <li key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
                     <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
@@ -166,7 +242,20 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               })}
             </ul>
           )}
-          {!isCaptionsOn && (
+          {
+            /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && onSendRealTimeText && (
+              <TextField
+                label={strings.realTimeTextInputBoxDefaultText}
+                value={textFieldValue}
+                onKeyDown={handleKeyDown}
+                onChange={(_, newValue) => {
+                  setTextFieldValue(newValue || '');
+                  onSendRealTimeText(newValue || '');
+                }}
+              />
+            )
+          }
+          {!isCaptionsOn && /* @conditional-compile-remove(rtt) */ !isRealTimeTextOn && (
             <Stack
               verticalAlign="center"
               styles={

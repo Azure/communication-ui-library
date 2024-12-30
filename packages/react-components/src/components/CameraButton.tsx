@@ -176,6 +176,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.cameraButton;
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+  const [announcerPresent, setAnnouncerPresent] = useState<boolean>(false);
 
   const disabled = props.disabled || waitForCamera;
 
@@ -297,7 +298,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
 
   return (
     <>
-      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      {announcerPresent && <Announcer announcementString={announcerString} ariaLive={'polite'} />}
       <ControlBarButton
         {...props}
         disabled={disabled}
@@ -323,6 +324,8 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         ariaLabel={ariaLabel}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         splitButtonMenuProps={splitButtonMenuProps}
+        onFocus={() => setAnnouncerPresent(true)}
+        onBlur={() => setAnnouncerPresent(false)}
       />
     </>
   );

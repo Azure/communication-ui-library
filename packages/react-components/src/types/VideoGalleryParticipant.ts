@@ -54,8 +54,11 @@ export type VideoGalleryParticipant = {
   /** Media audio video access states **/
   mediaAccess?: MediaAccess;
   /* @conditional-compile-remove(media-access) */
-  /** Participant user role  **/
-  role?: string;
+  /** Attendee can have audio be forbidden **/
+  canAudioBeForbidden?: boolean;
+  /* @conditional-compile-remove(media-access) */
+  /** Attendee can have video be forbidden **/
+  canVideoBeForbidden?: boolean;
 };
 
 /**
@@ -140,5 +143,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * */
   reaction?: Reaction;
   /* @conditional-compile-remove(media-access) */
+  /** Media audio video access states **/
   mediaAccess?: MediaAccess;
 }
