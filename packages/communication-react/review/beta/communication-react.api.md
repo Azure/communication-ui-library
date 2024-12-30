@@ -2600,9 +2600,10 @@ export interface ComponentStrings {
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
+    realTimeText: RealTimeTextStrings;
+    realTimeTextModal: RealTimeTextModalStrings;
     richTextSendBox: RichTextSendBoxStrings;
-    rtt: RealTimeTextStrings;
-    rttModal: RTTModalStrings;
+    rttDisclosureBanner: RTTDisclosureBannerStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     spokenLanguages: SpokenLanguageStrings;
@@ -4581,6 +4582,27 @@ export type ReadReceiptsBySenderId = {
 export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
 
 // @beta
+export const RealTimeTextModal: (props: RealTimeTextModalProps) => JSX.Element;
+
+// @beta
+export interface RealTimeTextModalProps {
+    onDismissModal?: () => void;
+    onStartRealTimeText?: () => Promise<void>;
+    showModal?: boolean;
+    strings?: RealTimeTextModalStrings;
+}
+
+// @beta
+export interface RealTimeTextModalStrings {
+    realTimeTextCancelButtonLabel?: string;
+    realTimeTextCloseModalButtonAriaLabel?: string;
+    realTimeTextConfirmButtonLabel?: string;
+    realTimeTextModalAriaLabel?: string;
+    realTimeTextModalText?: string;
+    realTimeTextModalTitle?: string;
+}
+
+// @beta
 export interface RealTimeTextProps {
     captionText: string;
     displayName: string;
@@ -4735,24 +4757,22 @@ export interface RichTextStrings {
 }
 
 // @beta
-export const RTTModal: (props: RTTModalProps) => JSX.Element;
+export const RTTDisclosureBanner: (props: RTTDisclosureBannerProps) => JSX.Element;
 
 // @beta
-export interface RTTModalProps {
-    onDismissModal?: () => void;
-    onStartRTT?: () => Promise<void>;
-    showModal?: boolean;
-    strings?: RTTModalStrings;
+export interface RTTDisclosureBannerProps {
+    onClickLink?: () => void;
+    strings?: RTTDisclosureBannerStrings;
 }
 
 // @beta
-export interface RTTModalStrings {
-    rttCancelButtonLabel?: string;
-    rttCloseModalButtonAriaLabel?: string;
-    rttConfirmButtonLabel?: string;
-    rttModalAriaLabel?: string;
-    rttModalText?: string;
-    rttModalTitle?: string;
+export interface RTTDisclosureBannerStrings {
+    // (undocumented)
+    bannerContent: string;
+    // (undocumented)
+    bannerLinkLabel?: string;
+    // (undocumented)
+    bannerTitle: string;
 }
 
 // @public
