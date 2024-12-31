@@ -4276,7 +4276,7 @@ export type SpotlightChangedListener = (args: {
 
 // @public
 export interface SpotlightPromptStrings {
-    closeSpotlightPromptButtonLabel: string;
+    closeSpotlightPromptButtonLabel?: string;
     startSpotlightCancelButtonLabel: string;
     startSpotlightConfirmButtonLabel: string;
     startSpotlightHeading: string;

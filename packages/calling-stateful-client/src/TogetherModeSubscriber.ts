@@ -67,7 +67,9 @@ export class TogetherModeSubscriber {
   };
 
   private addRemoteVideoStreamSubscriber = (togetherModeVideoStream: TogetherModeVideoStream): void => {
-    this._togetherModeVideoStreamSubscribers.get(togetherModeVideoStream.id)?.unsubscribe();
+    if (this._togetherModeVideoStreamSubscribers.has(togetherModeVideoStream.id)) {
+      return;
+    }
     this._togetherModeVideoStreamSubscribers.set(
       togetherModeVideoStream.id,
       new TogetherModeVideoStreamSubscriber(this._callIdRef, togetherModeVideoStream, this._context)
@@ -78,7 +80,7 @@ export class TogetherModeSubscriber {
     addedStreams: TogetherModeVideoStream[],
     removedStreams: TogetherModeVideoStream[]
   ): void => {
-    for (const stream of removedStreams) {
+    removedStreams.forEach((stream) => {
       this._togetherModeVideoStreamSubscribers.get(stream.id)?.unsubscribe();
       this._togetherModeVideoStreamSubscribers.delete(stream.id);
       this._internalContext.deleteCallFeatureRenderInfo(
@@ -86,39 +88,39 @@ export class TogetherModeSubscriber {
         this._featureName,
         stream.mediaStreamType
       );
-    }
+    });
 
-    for (const stream of addedStreams) {
-      this._internalContext.setCallFeatureRenderInfo(
-        this._callIdRef.callId,
-        this._featureName,
-        stream.mediaStreamType,
-        stream as RemoteVideoStream,
-        'NotRendered',
-        undefined
-      );
-      this.addRemoteVideoStreamSubscriber(stream);
-    }
+    addedStreams
+      .filter((stream) => stream.isAvailable)
+      .forEach((stream) => {
+        this._internalContext.setCallFeatureRenderInfo(
+          this._callIdRef.callId,
+          this._featureName,
+          stream.mediaStreamType,
+          stream as RemoteVideoStream,
+          'NotRendered',
+          undefined
+        );
+        this.addRemoteVideoStreamSubscriber(stream);
+      });
+
     this._context.setTogetherModeVideoStreams(
       this._callIdRef.callId,
-      addedStreams.map((stream) =>
-        convertSdkCallFeatureStreamToDeclarativeCallFeatureStream(stream, this._featureName)
-      ),
+      addedStreams
+        .filter((stream) => stream.isAvailable)
+        .map((stream) => convertSdkCallFeatureStreamToDeclarativeCallFeatureStream(stream, this._featureName)),
       removedStreams.map((stream) =>
         convertSdkCallFeatureStreamToDeclarativeCallFeatureStream(stream, this._featureName)
       )
     );
-    if (this._togetherMode.togetherModeStream.length) {
-      this._context.setLatestNotification(this._callIdRef.callId, {
-        target: 'togetherModeStarted',
-        timestamp: new Date(Date.now())
-      });
-    } else {
-      this._context.setLatestNotification(this._callIdRef.callId, {
-        target: 'togetherModeEnded',
-        timestamp: new Date(Date.now())
-      });
-    }
+
+    const notificationTarget = this._togetherMode.togetherModeStream.length
+      ? 'togetherModeStarted'
+      : 'togetherModeEnded';
+    this._context.setLatestNotification(this._callIdRef.callId, {
+      target: notificationTarget,
+      timestamp: new Date()
+    });
   };
 
   private onTogetherModeStreamUpdated = (args: {
