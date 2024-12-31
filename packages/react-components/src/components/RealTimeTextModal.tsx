@@ -22,45 +22,45 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(rtt) */
 /**
  * @beta
- * strings for rtt modal
+ * strings for realTimeText modal
  */
-export interface RTTModalStrings {
-  /** The title of the RTT modal */
-  rttModalTitle?: string;
-  /** The text of the RTT modal */
-  rttModalText?: string;
+export interface RealTimeTextModalStrings {
+  /** The title of the RealTimeText modal */
+  realTimeTextModalTitle?: string;
+  /** The text of the RealTimeText modal */
+  realTimeTextModalText?: string;
   /** The label for the confirm button */
-  rttConfirmButtonLabel?: string;
+  realTimeTextConfirmButtonLabel?: string;
   /** The label for the cancel button */
-  rttCancelButtonLabel?: string;
+  realTimeTextCancelButtonLabel?: string;
   /** The aria label for the modal */
-  rttModalAriaLabel?: string;
+  realTimeTextModalAriaLabel?: string;
   /** The aria label for the close button */
-  rttCloseModalButtonAriaLabel?: string;
+  realTimeTextCloseModalButtonAriaLabel?: string;
 }
 /* @conditional-compile-remove(rtt) */
 /**
  * @beta
- * RTTModal Component Props.
+ * RealTimeTextModal Component Props.
  */
-export interface RTTModalProps {
-  /** The strings for the RTT modal */
-  strings?: RTTModalStrings;
+export interface RealTimeTextModalProps {
+  /** The strings for the RealTimeText modal */
+  strings?: RealTimeTextModalStrings;
   /** The flag to show the modal */
   showModal?: boolean;
   /** The function to dismiss the modal */
   onDismissModal?: () => void;
-  /** The function to start RTT */
-  onStartRTT?: () => Promise<void>;
+  /** The function to start RealTimeText */
+  onStartRealTimeText?: () => Promise<void>;
 }
 /* @conditional-compile-remove(rtt) */
 /**
  * @beta
- * a component for rtt modal
+ * a component for realTimeText modal
  */
-export const RTTModal = (props: RTTModalProps): JSX.Element => {
-  const { showModal, onDismissModal, onStartRTT } = props;
-  const localeStrings = useLocale().strings.rttModal;
+export const RealTimeTextModal = (props: RealTimeTextModalProps): JSX.Element => {
+  const { showModal, onDismissModal, onStartRealTimeText } = props;
+  const localeStrings = useLocale().strings.realTimeTextModal;
   const strings = { ...localeStrings, ...props.strings };
 
   const theme = useTheme();
@@ -72,41 +72,41 @@ export const RTTModal = (props: RTTModalProps): JSX.Element => {
   }, [onDismissModal]);
 
   const onConfirm = useCallback(async (): Promise<void> => {
-    if (onStartRTT) {
-      await onStartRTT();
+    if (onStartRealTimeText) {
+      await onStartRealTimeText();
     }
     onDismiss();
-  }, [onDismiss, onStartRTT]);
+  }, [onDismiss, onStartRealTimeText]);
 
-  const RTTModalStyle: Partial<IModalStyles> = useMemo(() => themedCaptionsSettingsModalStyle(theme), [theme]);
+  const RealTimeTextModalStyle: Partial<IModalStyles> = useMemo(() => themedCaptionsSettingsModalStyle(theme), [theme]);
 
   return (
     <>
       {
         <Modal
-          titleAriaId={strings?.rttModalAriaLabel}
+          titleAriaId={strings?.realTimeTextModalAriaLabel}
           isOpen={showModal}
           onDismiss={onDismiss}
           isBlocking={true}
-          styles={RTTModalStyle}
+          styles={RealTimeTextModalStyle}
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-            <Text className={titleClassName}>{strings?.rttModalTitle}</Text>
+            <Text className={titleClassName}>{strings?.realTimeTextModalTitle}</Text>
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
-              ariaLabel={strings?.rttCloseModalButtonAriaLabel}
+              ariaLabel={strings?.realTimeTextCloseModalButtonAriaLabel}
               onClick={onDismiss}
               style={{ color: theme.palette.black }}
             />
           </Stack>
-          <Text>{strings?.rttModalText}</Text>
+          <Text>{strings?.realTimeTextModalText}</Text>
 
           <Stack horizontal horizontalAlign="end" className={buttonsContainerClassName}>
             <PrimaryButton styles={buttonStyles(theme)} onClick={onConfirm}>
-              <span>{strings?.rttConfirmButtonLabel}</span>
+              <span>{strings?.realTimeTextConfirmButtonLabel}</span>
             </PrimaryButton>
             <DefaultButton onClick={onDismiss} styles={buttonStyles(theme)}>
-              <span>{strings?.rttCancelButtonLabel}</span>
+              <span>{strings?.realTimeTextCancelButtonLabel}</span>
             </DefaultButton>
           </Stack>
         </Modal>

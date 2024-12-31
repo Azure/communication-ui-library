@@ -1,18 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { RTTModal } from '@internal/react-components';
+import { RealTimeTextModal } from '@internal/react-components';
 import { Meta } from '@storybook/react';
 import { hiddenControl } from '../../controlsUtils';
-export { RTTModal } from './RTTModal.story';
+export { RealTimeTextModal } from './RealTimeTextModal.story';
 
 const meta: Meta = {
-  title: 'Components/Internal/RTT Modal',
-  component: RTTModal,
+  title: 'Components/Internal/Real Time Text Modal',
+  component: RealTimeTextModal,
   argTypes: {
     showModal: hiddenControl,
     onDismissModal: hiddenControl,
-    onStartRTT: hiddenControl,
+    onStartRealTimeText: hiddenControl,
     strings: hiddenControl
   }
 };

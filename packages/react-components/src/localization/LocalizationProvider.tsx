@@ -50,7 +50,7 @@ import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSen
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
 /* @conditional-compile-remove(rtt) */
-import { RTTModalStrings } from '../components/RTTModal';
+import { RealTimeTextModalStrings } from '../components/RealTimeTextModal';
 /* @conditional-compile-remove(rtt) */
 import { RealTimeTextStrings } from '../components/RealTimeText';
 import { CaptionLanguageStrings, SpokenLanguageStrings } from '../types';
@@ -190,11 +190,11 @@ export interface ComponentStrings {
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
   IncomingCallNotification: IncomingCallNotificationStrings;
   /* @conditional-compile-remove(rtt) */
-  /** Strings for the RTTModal */
-  rttModal: RTTModalStrings;
+  /** Strings for the RealTimeTextModal */
+  realTimeTextModal: RealTimeTextModalStrings;
   /* @conditional-compile-remove(rtt) */
   /** Strings for RealTimeText */
-  rtt: RealTimeTextStrings;
+  realTimeText: RealTimeTextStrings;
   /** Strings for Captions Setting Modal */
   captionsSettingsModal: CaptionsSettingsModalStrings;
   /**

@@ -1,0 +1,16 @@
+import { RealTimeTextModal } from '@internal/react-components';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as RealTimeTextModalStories from './index.stories';
+import RealTimeTextModalExampleText from '!!raw-loader!./snippets/RealTimeTextModal.snippet.tsx';
+
+<Meta of={RealTimeTextModalStories} />
+
+# RealTimeText Modal
+
+A component for displaying a modal showing contents related to RealTimeText
+
+<Canvas of={RealTimeTextModalStories.RealTimeTextModal} source={{ code: RealTimeTextModalExampleText }} />
+
+## Props
+
+<ArgTypes of={RealTimeTextModal} />
