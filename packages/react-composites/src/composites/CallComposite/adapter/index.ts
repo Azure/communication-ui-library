@@ -71,6 +71,9 @@ export type {
   IsSpokenLanguageChangedListener
 } from './CallAdapter';
 
+/* conditional-compile-remove(rtt) */
+export type { RealTimeTextReceivedListener } from './CallAdapter';
+
 export type { TransferAcceptedListener } from './CallAdapter';
 
 export type { CapabilitiesChangedListener } from './CallAdapter';

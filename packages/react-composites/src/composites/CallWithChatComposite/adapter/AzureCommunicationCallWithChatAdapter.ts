@@ -102,7 +102,8 @@ import {
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from '../../CallComposite/adapter/CallAdapter';
-
+/* conditional-compile-remove(rtt) */
+import { RealTimeTextReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
@@ -786,6 +787,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'chatError', listener: (e: AdapterError) => void): void;
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* conditional-compile-remove(rtt) */
+  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
@@ -831,6 +834,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'captionsReceived':
         this.callAdapter.on('captionsReceived', listener);
+        break;
+      /* conditional-compile-remove(rtt) */
+      case 'realTimeTextReceived':
+        this.callAdapter.on('realTimeTextReceived', listener);
         break;
       case 'isCaptionsActiveChanged':
         this.callAdapter.on('isCaptionsActiveChanged', listener);
@@ -922,6 +929,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'chatParticipantsRemoved', listener: ParticipantsRemovedListener): void;
   off(event: 'chatError', listener: (e: AdapterError) => void): void;
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+  /* conditional-compile-remove(rtt) */
+  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
@@ -965,6 +974,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'captionsReceived':
         this.callAdapter.off('captionsReceived', listener);
+        break;
+      /* conditional-compile-remove(rtt) */
+      case 'realTimeTextReceived':
+        this.callAdapter.off('realTimeTextReceived', listener);
         break;
       case 'isCaptionsActiveChanged':
         this.callAdapter.off('isCaptionsActiveChanged', listener);
