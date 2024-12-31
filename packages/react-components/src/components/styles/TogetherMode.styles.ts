@@ -101,21 +101,6 @@ export const calculateScaledSize = (width: number, height: number): number => {
   return mapRange(size, minSize, maxSize, minScaledSize, maxScaledSize);
 };
 
-/**
- * Get the root participant status div style.
- *
- * @returns The style object for the root participant status div.
- */
-export const getRootParticipantStatusDivStatus = (): React.CSSProperties => {
-  return {
-    width: '100%',
-    height: '100%',
-    position: 'absolute',
-    top: 0,
-    left: 0
-  };
-};
-
 /* @conditional-compile-remove(together-mode) */
 /**
  * @private
