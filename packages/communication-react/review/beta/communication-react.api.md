@@ -95,6 +95,7 @@ import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import { Reaction as Reaction_2 } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
+import { RealTimeTextInfo } from '@azure/communication-calling';
 import { RecordingInfo } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -4627,7 +4628,7 @@ export interface RealTimeTextProps {
 
 // @beta
 export type RealTimeTextReceivedListener = (event: {
-    realTimeText: CaptionsInfo;
+    realTimeText: RealTimeTextInfo;
 }) => void;
 
 // @beta
