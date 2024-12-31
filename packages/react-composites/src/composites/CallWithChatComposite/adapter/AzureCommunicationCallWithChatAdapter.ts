@@ -102,7 +102,7 @@ import {
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from '../../CallComposite/adapter/CallAdapter';
-/* conditional-compile-remove(rtt) */
+/* @conditional-compile-remove(rtt) */
 import { RealTimeTextReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
@@ -790,7 +790,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* conditional-compile-remove(rtt) */
+  /* @conditional-compile-remove(rtt) */
   on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -834,7 +834,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'captionsReceived':
         this.callAdapter.on('captionsReceived', listener);
         break;
-      /* conditional-compile-remove(rtt) */
+      /* @conditional-compile-remove(rtt) */
       case 'realTimeTextReceived':
         this.callAdapter.on('realTimeTextReceived', listener);
         break;
@@ -931,7 +931,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* conditional-compile-remove(rtt) */
+  /* @conditional-compile-remove(rtt) */
   off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -974,7 +974,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'captionsReceived':
         this.callAdapter.off('captionsReceived', listener);
         break;
-      /* conditional-compile-remove(rtt) */
+      /* @conditional-compile-remove(rtt) */
       case 'realTimeTextReceived':
         this.callAdapter.off('realTimeTextReceived', listener);
         break;
