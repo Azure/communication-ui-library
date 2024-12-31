@@ -1019,11 +1019,7 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'captionsReceived' event.
    */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* conditional-compile-remove(rtt) */
-  /**
-   * Subscribe function for 'realTimeTextReceived' event.
-   */
-  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
+
   /**
    * Subscribe function for 'isCaptionsActiveChanged' event.
    */
@@ -1038,6 +1034,12 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'isSpokenLanguageChanged' event.
    */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+
+  /* conditional-compile-remove(rtt) */
+  /**
+   * Subscribe function for 'realTimeTextReceived' event.
+   */
+  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
 
   /**
    * Subscribe function for 'transferRequested' event.
@@ -1121,11 +1123,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isCaptionsActiveChanged' event.
    */
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-  /* conditional-compile-remove(rtt) */
-  /**
-   * Unsubscribe function for 'realTimeTextReceived' event.
-   */
-  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   /**
    * Unsubscribe function for 'isCaptionLanguageChanged' event.
    */
@@ -1134,6 +1131,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isSpokenLanguageChanged' event.
    */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* conditional-compile-remove(rtt) */
+  /**
+   * Unsubscribe function for 'realTimeTextReceived' event.
+   */
+  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   /**
    * Unsubscribe function for 'transferRequested' event.
    */

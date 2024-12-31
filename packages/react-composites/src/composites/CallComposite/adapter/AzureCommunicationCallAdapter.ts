@@ -1270,10 +1270,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'error', errorHandler: (e: AdapterError) => void): void;
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-  /* conditional-compile-remove(rtt) */
-  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* conditional-compile-remove(rtt) */
+  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
@@ -1582,11 +1582,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'error', errorHandler: (e: AdapterError) => void): void;
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* conditional-compile-remove(rtt) */
-  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* conditional-compile-remove(rtt) */
+  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;

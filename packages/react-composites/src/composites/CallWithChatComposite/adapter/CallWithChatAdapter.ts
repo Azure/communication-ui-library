@@ -616,11 +616,11 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   on(event: 'callError', listener: (e: AdapterError) => void): void;
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* conditional-compile-remove(rtt) */
-  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* conditional-compile-remove(rtt) */
+  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(breakout-rooms) */
@@ -637,11 +637,11 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
   off(event: 'callError', listener: (e: AdapterError) => void): void;
   off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-  /* conditional-compile-remove(rtt) */
-  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* conditional-compile-remove(rtt) */
+  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(breakout-rooms) */
@@ -709,9 +709,9 @@ export type CallWithChatEvent =
   | 'selectedSpeakerChanged'
   | 'isCaptionsActiveChanged'
   | 'captionsReceived'
-  | /* conditional-compile-remove(rtt) */ 'realTimeTextReceived'
   | 'isCaptionLanguageChanged'
   | 'isSpokenLanguageChanged'
+  | /* conditional-compile-remove(rtt) */ 'realTimeTextReceived'
   | 'capabilitiesChanged'
   | 'spotlightChanged'
   | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated'

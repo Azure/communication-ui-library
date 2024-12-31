@@ -563,9 +563,9 @@ export interface CallAdapterSubscribers {
     off(event: 'error', listener: (e: AdapterError) => void): void;
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
-    off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
@@ -585,10 +585,10 @@ export interface CallAdapterSubscribers {
     on(event: 'selectedSpeakerChanged', listener: PropertyChangedEvent): void;
     on(event: 'error', listener: (e: AdapterError) => void): void;
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
-    on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
@@ -1383,13 +1383,13 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     // (undocumented)
-    off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
-    // (undocumented)
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     // (undocumented)
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    // (undocumented)
+    off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     // (undocumented)
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
@@ -1439,13 +1439,13 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
     // (undocumented)
-    on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
-    // (undocumented)
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     // (undocumented)
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     // (undocumented)
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    // (undocumented)
+    on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     // (undocumented)
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
@@ -1699,7 +1699,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | /* conditional-compile-remove(rtt) */ 'realTimeTextReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | /* conditional-compile-remove(rtt) */ 'realTimeTextReceived' | 'capabilitiesChanged' | 'spotlightChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
