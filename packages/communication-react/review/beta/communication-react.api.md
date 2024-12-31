@@ -980,6 +980,9 @@ export interface CallCompositeStrings {
     pinParticipantMenuItemAriaLabel: string;
     pinParticipantMenuLabel: string;
     privacyPolicy: string;
+    realTimeTextBannerContent?: string;
+    realTimeTextBannerLinkLabel?: string;
+    realTimeTextBannerTitle?: string;
     realTimeTextInputBoxDefaultText?: string;
     realTimeTextLabel?: string;
     rejoinCallButtonLabel: string;
@@ -1891,6 +1894,9 @@ export type CaptionsBannerSelector = (state: CallClientState, props: CallingBase
 // @public
 export interface CaptionsBannerStrings {
     captionsBannerSpinnerText?: string;
+    realTimeTextBannerContent?: string;
+    realTimeTextBannerLinkLabel?: string;
+    realTimeTextBannerTitle?: string;
     realTimeTextInputBoxDefaultText?: string;
 }
 
@@ -2585,7 +2591,6 @@ export interface ComponentStrings {
     realTimeText: RealTimeTextStrings;
     realTimeTextModal: RealTimeTextModalStrings;
     richTextSendBox: RichTextSendBoxStrings;
-    rttDisclosureBanner: RTTDisclosureBannerStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     spokenLanguages: SpokenLanguageStrings;
@@ -4736,25 +4741,6 @@ export interface RichTextStrings {
     richTextToolbarAriaLabel: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
-}
-
-// @beta
-export const RTTDisclosureBanner: (props: RTTDisclosureBannerProps) => JSX.Element;
-
-// @beta
-export interface RTTDisclosureBannerProps {
-    onClickLink?: () => void;
-    strings?: RTTDisclosureBannerStrings;
-}
-
-// @beta
-export interface RTTDisclosureBannerStrings {
-    // (undocumented)
-    bannerContent: string;
-    // (undocumented)
-    bannerLinkLabel?: string;
-    // (undocumented)
-    bannerTitle: string;
 }
 
 // @public
