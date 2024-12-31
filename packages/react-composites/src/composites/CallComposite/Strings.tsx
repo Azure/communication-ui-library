@@ -1017,4 +1017,22 @@ export interface CallCompositeStrings {
   /* @conditional-compile-remove(media-access) */
   /** Label for menu item to permit audio media access */
   permitOthersVideoMenuLabel: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The title of the RealTimeText modal */
+  realTimeTextModalTitle: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The text of the RealTimeText modal */
+  realTimeTextModalText: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The label for the confirm button */
+  realTimeTextConfirmButtonLabel: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The label for the cancel button */
+  realTimeTextCancelButtonLabel: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The aria label for the modal */
+  realTimeTextModalAriaLabel: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The aria label for the close button */
+  realTimeTextCloseModalButtonAriaLabel: string;
 }

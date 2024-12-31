@@ -20,6 +20,8 @@ export interface PreparedMoreDrawerProps {
   callControls?: boolean | CommonCallControlOptions;
   onClickShowDialpad?: () => void;
   isCaptionsSupported?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  isRealTimeTextSupported?: boolean;
   disableButtonsForHoldScreen?: boolean;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;

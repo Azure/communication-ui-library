@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 /* @conditional-compile-remove(rtt) */
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 /* @conditional-compile-remove(rtt) */
@@ -30,6 +31,7 @@ export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
   strings?: StartRealTimeTextButtonStrings;
 }
 
+
 /* @conditional-compile-remove(rtt) */
 /**
  * Strings for the hold button labels
@@ -45,6 +47,7 @@ export interface StartRealTimeTextButtonStrings {
    */
   tooltipOnContent: string;
 }
+
 /* @conditional-compile-remove(rtt) */
 /**
  * a button to start RealTimeText

@@ -93,6 +93,8 @@ export type {
   CaptionsBannerSelector,
   StartCaptionsButtonSelector
 } from '../../calling-component-bindings/src';
+/* @conditional-compile-remove(rtt) */
+export type { StartRealTimeTextButtonSelector } from '../../calling-component-bindings/src';
 
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 

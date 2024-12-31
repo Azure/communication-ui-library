@@ -578,6 +578,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onPeopleButtonClicked={togglePeoplePane}
                   onMoreButtonClicked={onMoreButtonClicked}
                   isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
+                  /* @conditional-compile-remove(rtt) */
+                  isRealTimeTextSupported={hasJoinedCall}
                   useTeamsCaptions={useTeamsCaptions}
                   isCaptionsOn={isCaptionsOn}
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
@@ -607,6 +609,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onPeopleButtonClicked={onMoreDrawerPeopleClicked}
                 disableButtonsForHoldScreen={isInLocalHold}
                 isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
+                /* @conditional-compile-remove(rtt) */
+                isRealTimeTextSupported={hasJoinedCall}
                 useTeamsCaptions={useTeamsCaptions}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 userSetGalleryLayout={props.userSetGalleryLayout}

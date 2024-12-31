@@ -90,6 +90,21 @@ export interface CaptionsInfo {
    * The original spoken caption text prior to translating to subtitle language
    */
   spokenText?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Flag indicating if the caption is a subtitle caption or real time text
+   */
+  isRealTimeText?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * The timestamp when the real time text message was last updated.
+   */
+  realTimeTextUpdatedTimestamp?: Date;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * If message originated from the local participant
+   */
+  isLocal?: boolean;
 }
 
 /**
@@ -129,6 +144,11 @@ export interface CaptionsCallFeatureState {
    * current caption kind: teams or acs captions
    */
   captionsKind: CaptionsKind;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * whether real time text is on/off
+   */
+  isRealTimeTextFeatureActive?: boolean;
 }
 
 /**

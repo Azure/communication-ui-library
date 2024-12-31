@@ -306,3 +306,9 @@ export const getAssignedBreakoutRoom = (
 ): BreakoutRoom | undefined => {
   return state.calls[props.callId]?.breakoutRooms?.assignedBreakoutRoom;
 };
+
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeTextStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
+  return state.calls[props.callId]?.captionsFeature.isRealTimeTextFeatureActive;
+};

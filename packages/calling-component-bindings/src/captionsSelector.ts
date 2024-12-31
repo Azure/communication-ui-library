@@ -10,6 +10,8 @@ import {
   getStartCaptionsInProgress,
   getSupportedCaptionLanguages
 } from './baseSelectors';
+/* @conditional-compile-remove(rtt) */
+import { getRealTimeTextStatus } from './baseSelectors';
 import {
   getCaptions,
   getCaptionsStatus,
@@ -112,8 +114,26 @@ export type CaptionsBannerSelector = (
  * @public
  */
 export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSelector(
-  [getCaptions, getCaptionsStatus, getStartCaptionsInProgress, getRemoteParticipants, getDisplayName, getIdentifier],
-  (captions, isCaptionsFeatureActive, startCaptionsInProgress, remoteParticipants, displayName, identifier) => {
+  [
+    getCaptions,
+    getCaptionsStatus,
+    /* @conditional-compile-remove(rtt) */
+    getRealTimeTextStatus,
+    getStartCaptionsInProgress,
+    getRemoteParticipants,
+    getDisplayName,
+    getIdentifier
+  ],
+  (
+    captions,
+    isCaptionsFeatureActive,
+    /* @conditional-compile-remove(rtt) */
+    isRealTimeTextActive,
+    startCaptionsInProgress,
+    remoteParticipants,
+    displayName,
+    identifier
+  ) => {
     const captionsInfo = captions?.map((c, index) => {
       const userId = getCaptionsSpeakerIdentifier(c);
       let finalDisplayName;
@@ -129,13 +149,32 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
         id: (finalDisplayName ?? 'Unnamed Participant') + index,
         displayName: finalDisplayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
-        userId
+        userId,
+        /* @conditional-compile-remove(rtt) */
+        isRealTimeText: c.isRealTimeText,
+        isPartial: c.resultType === 'Partial',
+        /* @conditional-compile-remove(rtt) */
+        isLocalUser: c.isLocal
       };
     });
+
+    /* @conditional-compile-remove(rtt) */
+    // find the last real time text caption
+    const lastRealTimeText =
+      captionsInfo &&
+      captionsInfo
+        .slice()
+        .reverse()
+        .find((caption) => caption.isRealTimeText && caption.isLocalUser);
+
     return {
       captions: captionsInfo ?? [],
       isCaptionsOn: isCaptionsFeatureActive ?? false,
-      startCaptionsInProgress: startCaptionsInProgress ?? false
+      /* @conditional-compile-remove(rtt) */
+      isRealTimeTextOn: isRealTimeTextActive ?? false,
+      startCaptionsInProgress: startCaptionsInProgress ?? false,
+      /* @conditional-compile-remove(rtt) */
+      latestLocalRealTimeText: lastRealTimeText
     };
   }
 );

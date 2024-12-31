@@ -9,7 +9,8 @@ import {
   IncomingCall,
   IncomingCallCommon
 } from '@azure/communication-calling';
-
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeVideoStream as SdkTogetherModeVideoStream } from '@azure/communication-calling';
 import { TeamsIncomingCall } from '@azure/communication-calling';
@@ -259,6 +260,8 @@ export function convertFromSDKToDeclarativeVideoStreamRendererView(
  */
 export function convertFromTeamsSDKToCaptionInfoState(caption: TeamsCaptionsInfo): CaptionsInfo {
   return {
+    /* @conditional-compile-remove(rtt) */
+    isRealTimeText: false,
     ...caption
   };
 }
@@ -269,7 +272,25 @@ export function convertFromTeamsSDKToCaptionInfoState(caption: TeamsCaptionsInfo
 export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): CaptionsInfo {
   return {
     captionText: caption.spokenText,
+    /* @conditional-compile-remove(rtt) */
+    isRealTimeText: false,
     ...caption
+  };
+}
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
+export function convertFromSDKRealTimeTextToCaptionInfoState(caption: RealTimeTextInfo): CaptionsInfo {
+  return {
+    resultType: caption.resultType,
+    speaker: caption.sender,
+    spokenLanguage: 'en-us',
+    captionText: caption.text,
+    timestamp: caption.receivedTimestamp,
+    isRealTimeText: true,
+    realTimeTextUpdatedTimestamp: caption.updatedTimestamp,
+    isLocal: caption.isLocal
   };
 }
 

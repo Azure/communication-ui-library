@@ -66,6 +66,8 @@ import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
 /* @conditional-compile-remove(breakout-rooms) */
 import { Timer } from './Timer';
 import { FocusableElement } from '../types/FocusableElement';
+/* @conditional-compile-remove(rtt) */
+import { CallingRealTimeTextModal } from '../CallingRealTimeTextModal';
 
 /**
  * @private
@@ -82,6 +84,7 @@ export interface CommonCallControlBarProps {
   onClickShowDialpad?: () => void;
   onClickVideoEffects?: (showVideoEffects: boolean) => void;
   isCaptionsSupported?: boolean;
+  isRealTimeTextSupported?: boolean;
   isCaptionsOn?: boolean;
   displayVertical?: boolean;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
@@ -153,6 +156,8 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
     const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
     const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
+    /* @conditional-compile-remove(rtt) */
+    const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
 
     // If the hangup capability is not present, we default to true
     const isHangUpForEveryoneAllowed =
@@ -199,6 +204,14 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
 
     const openCaptionsSettingsModal = useCallback((): void => {
       setShowCaptionsSettingsModal(true);
+    }, []);
+    /* @conditional-compile-remove(rtt) */
+    const openRealTimeTextModal = useCallback((): void => {
+      setShowRealTimeTextModal(true);
+    }, []);
+    /* @conditional-compile-remove(rtt) */
+    const onDismissRealTimeTextModal = useCallback((): void => {
+      setShowRealTimeTextModal(false);
     }, []);
 
     const onDismissCaptionsSettings = useCallback((): void => {
@@ -350,12 +363,18 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
     const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
     const showCaptionsButton = props.isCaptionsSupported && isEnabled(options.captionsButton);
+    /* @conditional-compile-remove(rtt) */
+    const showRealTimeTextButton = props.isRealTimeTextSupported;
 
     const showTeamsMeetingPhoneCallButton = isEnabled(options?.teamsMeetingPhoneCallButton);
 
     const showDesktopMoreButton =
       isEnabled(options?.moreButton) &&
-      (false || isEnabled(options?.holdButton) || showCaptionsButton || props.onUserSetGalleryLayout);
+      (false ||
+        isEnabled(options?.holdButton) ||
+        showCaptionsButton ||
+        props.onUserSetGalleryLayout ||
+        /* @conditional-compile-remove(rtt) */ showRealTimeTextButton);
 
     const role = props.callAdapter.getState().call?.role;
     const hideRaiseHandButtonInRoomsCall =
@@ -372,6 +391,11 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
               changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
             />
           )}
+          {
+            /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
+              <CallingRealTimeTextModal showModal={showRealTimeTextModal} onDismissModal={onDismissRealTimeTextModal} />
+            )
+          }
           {props.teamsMeetingConferenceModalPresent && (
             <MeetingConferencePhoneInfoModal
               conferencePhoneInfoList={props.callAdapter.getState().call?.meetingConference?.conferencePhones ?? []}
@@ -528,7 +552,11 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                           onClickShowDialpad={props.onClickShowDialpad}
                           callControls={props.callControls}
                           isCaptionsSupported={showCaptionsButton}
+                          /* @conditional-compile-remove(rtt) */
+                          isRealTimeTextSupported={showRealTimeTextButton}
                           onCaptionsSettingsClick={openCaptionsSettingsModal}
+                          /* @conditional-compile-remove(rtt) */
+                          onStartRealTimeTextClick={openRealTimeTextModal}
                           onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                           onUserSetGalleryLayout={props.onUserSetGalleryLayout}
                           userSetGalleryLayout={props.userSetGalleryLayout}
