@@ -127,9 +127,9 @@ export const togetherModeStreamRootStyle: IStackStyles = {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    position: 'absolute', // Prevents sliding due to resizing
-    top: 0, // Anchors the div at the top
-    left: 0 // Anchors the div at the left
+    position: 'absolute',
+    top: 0,
+    left: 0
   }
 };
 
@@ -139,7 +139,7 @@ export const togetherModeStreamRootStyle: IStackStyles = {
  */
 export const togetherModeIconStyle = (): React.CSSProperties => {
   return {
-    width: '20px',
+    width: _pxToRem(20),
     flexShrink: 0
   };
 };
@@ -157,9 +157,9 @@ export const togetherModeParticipantStatusContainer = (
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    gap: '2px',
+    gap: _pxToRem(2),
     margin: '0 auto', // Centers the container
-    padding: '0 5px',
+    padding: `0 ${_pxToRem(5)}`,
     borderRadius,
     width: 'fit-content'
   };

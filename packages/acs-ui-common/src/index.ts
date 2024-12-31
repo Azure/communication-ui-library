@@ -29,7 +29,7 @@ export { _MAX_EVENT_LISTENERS } from './constants';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 export { _IMAGE_ATTRIBUTE_INLINE_IMAGE_FILE_NAME_KEY } from './constants';
 
-export { _pxToRem, _remToPx } from './cssUtils';
+export { _pxToRem } from './cssUtils';
 
 export { _logEvent } from './logEvent';
 export type { TelemetryEvent } from './logEvent';
