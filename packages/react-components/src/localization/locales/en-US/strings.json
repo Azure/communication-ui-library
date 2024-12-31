@@ -69,13 +69,13 @@
     "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
     "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Turn on RTT Modal",
-    "rttModalTitle": "Turn on RTT?",
-    "rttModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
-    "rttConfirmButtonLabel": "Turn on",
-    "rttCancelButtonLabel": "Cancel",
-    "rttCloseModalButtonAriaLabel": "Close RTT Modal"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
     "captionsBannerSpinnerText": "Starting captions...",
@@ -196,7 +196,7 @@
     "applauseReactionTooltipContent": "Applause",
     "surprisedReactionTooltipContent": "Surprised"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
