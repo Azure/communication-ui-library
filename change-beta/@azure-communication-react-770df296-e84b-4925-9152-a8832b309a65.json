@@ -1,8 +1,8 @@
 {
-  "type": "patch",
+  "type": "minor",
   "area": "feature",
   "workstream": "Hard mute",
-  "comment": "Merge branch 'main' into fuyan/hard_mute_part3_integrate_web_sdk",
+  "comment": "Hard mute feature UI changes",
   "packageName": "@azure/communication-react",
   "email": "fuyan@microsoft.com",
   "dependentChangeType": "patch"

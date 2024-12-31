@@ -24,7 +24,7 @@ import { CaptionsKind } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 import { CallNotifications } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(media-access) */
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
@@ -184,7 +184,7 @@ export const getIdentifier = (state: CallClientState): string => toFlatCommunica
  */
 export const getLatestErrors = (state: CallClientState): CallErrors => state.latestErrors;
 
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /**
  * @private
  */

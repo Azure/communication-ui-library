@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "A11y",
-  "comment": "Update Control bar button aria-describedby",
+  "workstream": "Ezra",
+  "comment": "Update people button behavior to meet A11y requirements",
   "packageName": "@azure/communication-react",
   "email": "dmceachern@microsoft.com",
   "dependentChangeType": "patch"

@@ -1,8 +1,8 @@
 {
-  "type": "minor",
-  "area": "improvement",
-  "workstream": "captions",
-  "comment": "Build captions inside caling stateful sample",
+  "type": "prerelease",
+  "area": "feature",
+  "workstream": "Real Time Text",
+  "comment": "Components for real time text",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

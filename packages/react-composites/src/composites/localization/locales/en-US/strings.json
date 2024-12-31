@@ -125,6 +125,8 @@
     "captionsSettingsCloseModalButtonAriaLabel": "Close Captions Setting",
     "captionsBannerMoreButtonCallingLabel": "More",
     "captionsBannerMoreButtonTooltip": "More options",
+    "realTimeTextLabel": "Real-time text (RTT)",
+    "startRealTimeTextLabel": "Turn on RTT for this call",
     "dismissModalAriaLabel": "Local and remote picture and picture, press enter to return to call",
     "callRejectedTitle": "The call could not be completed",
     "callRejectedMoreDetails": "The person you are trying to reach is unavailable. Please try again later.",
@@ -216,6 +218,7 @@
       "sk": "Slovak"
     },
     "captionsBannerSpinnerText": "Starting captions...",
+    "realTimeTextInputBoxDefaultText": "Type message in real-time",
     "transferPageTransferorText": "Transferring...",
     "transferPageTransferTargetText": "Connecting...",
     "transferPageUnknownTransferorDisplayName": "Unknown",

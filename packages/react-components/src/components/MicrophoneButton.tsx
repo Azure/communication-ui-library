@@ -202,6 +202,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const localeStrings = useLocale().strings.microphoneButton;
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
+  const [announcerPresent, setAnnouncerPresent] = useState<boolean>(false);
 
   const isSplit = props.split ?? props.enableDeviceSelectionMenu;
 
@@ -313,7 +314,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
 
   return (
     <>
-      <Announcer announcementString={announcerString} ariaLive={'polite'} />
+      {announcerPresent && <Announcer announcementString={announcerString} ariaLive={'polite'} />}
       <ControlBarButton
         {...props}
         onClick={props.onToggleMicrophone ? onToggleClick : props.onClick}
@@ -340,6 +341,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         disabled={disabled}
         primaryDisabled={primaryDisabled}
+        onFocus={() => setAnnouncerPresent(true)}
+        onBlur={() => setAnnouncerPresent(false)}
       />
     </>
   );

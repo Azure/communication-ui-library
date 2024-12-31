@@ -634,6 +634,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.stopAllSpotlight.bind(this);
     this.muteParticipant.bind(this);
     this.muteAllRemoteParticipants.bind(this);
+    /* @conditional-compile-remove(media-access) */
+    this.forbidOthersAudio.bind(this);
+    /* @conditional-compile-remove(media-access) */
+    this.permitOthersAudio.bind(this);
+    /* @conditional-compile-remove(media-access) */
+    this.forbidOthersAudio.bind(this);
+    /* @conditional-compile-remove(media-access) */
+    this.permitOthersAudio.bind(this);
   }
 
   public dispose(): void {
@@ -1166,6 +1174,40 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onStopAllSpotlight();
   }
 
+  /* @conditional-compile-remove(media-access) */
+  public async forbidAudio(userIds: string[]): Promise<void> {
+    this.handlers.onForbidAudio?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitAudio(userIds: string[]): Promise<void> {
+    this.handlers.onPermitAudio?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async forbidOthersAudio(): Promise<void> {
+    this.handlers.onForbidOthersAudio?.();
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitOthersAudio(): Promise<void> {
+    this.handlers.onPermitOthersAudio?.();
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async forbidVideo(userIds: string[]): Promise<void> {
+    this.handlers.onForbidVideo?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitVideo(userIds: string[]): Promise<void> {
+    this.handlers.onPermitVideo?.(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async forbidOthersVideo(): Promise<void> {
+    this.handlers.onForbidOthersVideo?.();
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitOthersVideo(): Promise<void> {
+    this.handlers.onPermitOthersVideo?.();
+  }
+
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
     if (!this.originCall) {
@@ -1404,18 +1446,21 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('transferAccepted', args);
   }
 
-  private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
-    if (data.newValue.turnVideoOn?.isPresent === false) {
-      // Only stop camera when the call state is not on hold. The Calling SDK does not allow us to stop camera when
-      // the call state is on hold.
-      if (this.call?.state !== 'LocalHold' && this.call?.state !== 'RemoteHold') {
-        this.stopCamera();
-      }
-      this.disposeLocalVideoStreamView();
-    }
+  private capabilitiesChangedunmuteMicTrampoline(data: CapabilitiesChangeInfo): void {
+    /* @conditional-compile-remove(media-access) */
+    return;
+
     if (data.newValue.unmuteMic?.isPresent === false) {
       this.mute();
     }
+  }
+
+  private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
+    if (data.newValue.turnVideoOn?.isPresent === false) {
+      // stopCamera is handled by web sdk when video hard muted.
+      this.disposeLocalVideoStreamView();
+    }
+    this.capabilitiesChangedunmuteMicTrampoline(data);
     if (data.newValue.shareScreen?.isPresent === false) {
       this.stopScreenShare();
     }

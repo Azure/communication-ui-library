@@ -27,6 +27,30 @@ export class MockCallAdapter implements CallAdapter {
     this._state = populateViewTargets(initialState);
     this._emitter = new EventEmitter();
   }
+  forbidAudio(userIds: string[]): Promise<void> {
+    throw new Error(`Method not implemented. userIds: ${userIds}`);
+  }
+  permitAudio(userIds: string[]): Promise<void> {
+    throw new Error(`Method not implemented. userIds: ${userIds}`);
+  }
+  forbidOthersAudio(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  permitOthersAudio(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  forbidVideo(userIds: string[]): Promise<void> {
+    throw new Error(`Method not implemented. userIds: ${userIds}`);
+  }
+  permitVideo(userIds: string[]): Promise<void> {
+    throw new Error(`Method not implemented. userIds: ${userIds}`);
+  }
+  forbidOthersVideo(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  permitOthersVideo(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
 
   onReactionClick(emoji: string): Promise<void> {
     throw new Error(`Method could not send ${emoji}.`);

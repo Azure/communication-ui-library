@@ -270,15 +270,27 @@ export interface NotificationStackStrings {
   breakoutRoomClosingSoon?: NotificationStrings;
 
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Message shown in notification when capability turnVideoOn is present
+   */
   capabilityTurnVideoOnPresent?: NotificationStrings;
 
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Message shown in notification when capability turnVideoOn is absent
+   */
   capabilityTurnVideoOnAbsent?: NotificationStrings;
 
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Message shown in notification when capability unMuteMic is present
+   */
   capabilityUnmuteMicPresent?: NotificationStrings;
 
   /* @conditional-compile-remove(media-access) */
+  /**
+   * Message shown in notification when capability unMuteMic is absent
+   */
   capabilityUnmuteMicAbsent?: NotificationStrings;
 
   /* @conditional-compile-remove(together-mode) */

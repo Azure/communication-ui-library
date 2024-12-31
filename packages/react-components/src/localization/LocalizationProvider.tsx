@@ -56,6 +56,8 @@ import { RTTModalStrings } from '../components/RTTModal';
 /* @conditional-compile-remove(rtt) */
 import { RealTimeTextStrings } from '../components/RealTimeText';
 import { CaptionLanguageStrings, SpokenLanguageStrings } from '../types';
+/* @conditional-compile-remove(rtt) */
+import { StartRealTimeTextButtonStrings } from '../components/StartRealTimeTextButton';
 
 /**
  * Locale information for all components exported from this library.
@@ -212,6 +214,9 @@ export interface ComponentStrings {
   captionsBanner: CaptionsBannerStrings;
   /** Strings for Start Captions Button */
   startCaptionsButton: StartCaptionsButtonStrings;
+  /* @conditional-compile-remove(rtt) */
+  /** Strings for Start RealTimeText Button */
+  startRealTimeTextButton: StartRealTimeTextButtonStrings;
 }
 
 /**

@@ -78,7 +78,8 @@
     "rttCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Starting captions..."
+    "captionsBannerSpinnerText": "Starting captions...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -291,6 +292,10 @@
     "offLabel": "Turn off captions",
     "tooltipOnContent": "Turn off captions",
     "tooltipOffContent": "Turn on captions"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "Yesterday",
