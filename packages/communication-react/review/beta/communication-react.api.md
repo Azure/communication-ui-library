@@ -5558,13 +5558,10 @@ export interface VideoGalleryProps {
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
-<<<<<<< HEAD
     // (undocumented)
     onDisposeTogetherModeStreamView?: () => Promise<void>;
-=======
     onForbidAudio?: (userIds: string[]) => Promise<void>;
     onForbidVideo?: (userIds: string[]) => Promise<void>;
->>>>>>> 8eefe6caaa51dd5462d4371c1b0b5639c336ba92
     onMuteParticipant?: (userId: string) => Promise<void>;
     onPermitAudio?: (userIds: string[]) => Promise<void>;
     onPermitVideo?: (userIds: string[]) => Promise<void>;
