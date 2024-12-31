@@ -1445,7 +1445,17 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
   /* conditional-compile-remove(rtt) */
   private realTimeTextReceived(realTimeText: RealTimeTextInfo): void {
-    this.emitter.emit('realTimeTextReceived', { realTimeText });
+    const realTimeTextInfo = {
+      resultType: realTimeText.resultType,
+      speaker: realTimeText.sender,
+      spokenLanguage: 'en-us',
+      captionsText: realTimeText.text,
+      timeStamp: realTimeText.receivedTimestamp,
+      isRealTimeText: true,
+      realTimeTextUpdatedTimestamp: realTimeText.updatedTimestamp,
+      isLocal: realTimeText.isLocal
+    };
+    this.emitter.emit('realTimeTextReceived', { realTimeTextInfo });
   }
 
   private isCaptionsActiveChanged(): void {

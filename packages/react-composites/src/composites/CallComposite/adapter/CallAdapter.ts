@@ -3,8 +3,6 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* conditional-compile-remove(rtt) */
-import { RealTimeTextInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
@@ -400,7 +398,7 @@ export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: st
  * Callback for {@link CallAdapterSubscribers} 'realTimeTextReceived' event.
  * @beta
  */
-export type RealTimeTextReceivedListener = (event: { realTimeText: RealTimeTextInfo }) => void;
+export type RealTimeTextReceivedListener = (event: { realTimeText: CaptionsInfo }) => void;
 
 /**
  * Callback for {@link CallAdapterSubscribers} 'transferRequested' event.
