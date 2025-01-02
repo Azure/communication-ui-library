@@ -97,7 +97,9 @@ extends:
                     git config core.autocrlf false
 
                     # Convert CRLF to LF in all strings.json files
-                    sed -i 's/\r/\n/g; s/\n$//' packages/react-components/src/localization/locales/**/strings.json packages/react-composites/src/composites/localization/locales/**/strings.json
+                    Get-ChildItem -Recurse -Filter 'strings.json' | ForEach-Object {
+                        (Get-Content $_.FullName) -replace "`r", "`n" | Set-Content $_.FullName
+                    }
 
                     Write-Host "Creating new branch $newBranchName"
                     git checkout -b $newBranchName
