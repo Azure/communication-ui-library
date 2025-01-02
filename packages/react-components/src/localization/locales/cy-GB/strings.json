@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "Wedi defnyddio'r rhestr bwledi",
     "richTextNumberedListAppliedAnnouncement": "Wedi defnyddio rhestr wedi'i rhifo"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Galluogi’r Moddol RTT",
-    "rttModalTitle": "Galluogi RTT?",
-    "rttModalText": "Bydd teipio mewn amser real (RTT) yn cael ei alluogi ar gyfer pawb yn y cyfarfod.",
-    "rttConfirmButtonLabel": "Galluogi",
-    "rttCancelButtonLabel": "Canslo",
-    "rttCloseModalButtonAriaLabel": "Cau'r Moddol RTT"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Wrthi'n dechrau'r capsiynau..."
+    "captionsBannerSpinnerText": "Wrthi'n dechrau'r capsiynau...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Awgrymiadau"
@@ -86,7 +90,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Lawrlwytho",
     "dismissButtonAriaLabel": "Cau",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Troshaen Manylion Delwedd"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Wedi anfon y neges",
@@ -195,8 +199,8 @@
     "applauseReactionTooltipContent": "Curo Dwylo",
     "surprisedReactionTooltipContent": "Wedi synnu"
   },
-  "rtt": {
-    "isTypingText": "Teipio RTT"
+  "realTimeText": {
+    "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "Gosodiadau Capsiynau",
@@ -291,6 +295,10 @@
     "offLabel": "Analluogi capsiynau",
     "tooltipOnContent": "Analluogi capsiynau",
     "tooltipOffContent": "Galluogi capsiynau"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "Ddoe",
@@ -616,6 +624,14 @@
       "title": "Mae eich meic wedi cael ei analluogi",
       "message": "Does dim modd i chi ddad-dewi bellach.",
       "dismissButtonAriaLabel": "Cau"
+    },
+    "togetherModeStarted": {
+      "title": "Mae Togethermode wedi dechrau",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "togetherModeEnded": {
+      "title": "Mae Togethermode wedi dod i ben",
+      "dismissButtonAriaLabel": "Cau"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "Gwrthod",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Derbyn gyda Fideo",
     "incomingCallNotificationDismissButtonAriaLabel": "Diystyru"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "Mae RTT (testun amser real) wedi'i alluogi ar gyfer yr holl gyfranogwyr ar gyfer cyfnod cyfan y cyfarfod.",
-    "bannerLinkLabel": "Dysgu mwy"
   }
 }

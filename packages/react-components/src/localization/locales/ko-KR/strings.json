@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "글머리 기호 목록 적용됨",
     "richTextNumberedListAppliedAnnouncement": "번호 매기기 목록 적용됨"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "실시가 입력 모달 활성화",
-    "rttModalTitle": "실시간 입력을 활성화할까요?",
-    "rttModalText": "모임의 모든 사용자에 대해 RTT(실시간 텍스트)가 켜집니다.",
-    "rttConfirmButtonLabel": "활성화",
-    "rttCancelButtonLabel": "취소",
-    "rttCloseModalButtonAriaLabel": "실시간 입력 모달 닫기"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "캡션 시작 중..."
+    "captionsBannerSpinnerText": "캡션 시작 중...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
@@ -86,7 +90,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "다운로드",
     "dismissButtonAriaLabel": "닫기",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "이미지 세부 정보 오버레이"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "메시지를 보냄",
@@ -195,8 +199,8 @@
     "applauseReactionTooltipContent": "박수",
     "surprisedReactionTooltipContent": "놀란 표정"
   },
-  "rtt": {
-    "isTypingText": "실시간 입력 입력 중"
+  "realTimeText": {
+    "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "캡션 설정",
@@ -291,6 +295,10 @@
     "offLabel": "캡션 끄기",
     "tooltipOnContent": "캡션 끄기",
     "tooltipOffContent": "캡션 켜기"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "어제",
@@ -616,6 +624,14 @@
       "title": "마이크를 사용할 수 없습니다.",
       "message": "더 이상 음소거 해제할 수 없음",
       "dismissButtonAriaLabel": "닫기"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode가 시작되었습니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode가 종료되었습니다.",
+      "dismissButtonAriaLabel": "닫기"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "거절",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "영상 수락",
     "incomingCallNotificationDismissButtonAriaLabel": "해제"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "전체 모임 기간 동안 모든 참가자에 대해 RTT(실시간 텍스트)를 사용할 수 있습니다.",
-    "bannerLinkLabel": "자세히 알아보기"
   }
 }

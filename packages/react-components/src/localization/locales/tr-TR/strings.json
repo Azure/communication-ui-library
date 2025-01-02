@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "Madde işaretli liste uygulandı",
     "richTextNumberedListAppliedAnnouncement": "Numaralandırılmış liste uygulandı"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "RTT Kalıcı İletişim Kutusunu Aç",
-    "rttModalTitle": "RTT açılsın mı?",
-    "rttModalText": "Gerçek zamanlı metin (RTT) toplantıdaki herkes için açılır.",
-    "rttConfirmButtonLabel": "Aç",
-    "rttCancelButtonLabel": "İptal",
-    "rttCloseModalButtonAriaLabel": "RTT Kalıcı İletişim Kutusunu Kapat"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Alt yazılar başlatılıyor..."
+    "captionsBannerSpinnerText": "Alt yazılar başlatılıyor...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
@@ -86,7 +90,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "İndir",
     "dismissButtonAriaLabel": "Kapat",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Resim Ayrıntıları Katmanı"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "İleti gönderildi",
@@ -195,8 +199,8 @@
     "applauseReactionTooltipContent": "Alkış",
     "surprisedReactionTooltipContent": "Şaşırmış"
   },
-  "rtt": {
-    "isTypingText": "RTT yazma"
+  "realTimeText": {
+    "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "Açıklamalı Alt Yazı Ayarları",
@@ -291,6 +295,10 @@
     "offLabel": "Alt yazıları kapat",
     "tooltipOnContent": "Alt yazıları kapat",
     "tooltipOffContent": "Alt yazıları aç"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "Dün",
@@ -616,6 +624,14 @@
       "title": "Mikrofonunuz devre dışı bırakıldı",
       "message": "Artık sesi açamazsınız.",
       "dismissButtonAriaLabel": "Kapat"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode başlatıldı",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode sona erdi",
+      "dismissButtonAriaLabel": "Kapat"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "Reddet",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Görüntülü Kabul Et",
     "incomingCallNotificationDismissButtonAriaLabel": "Kapat"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (gerçek zamanlı metin) toplantı süresi boyunca tüm katılımcılar için etkindir.",
-    "bannerLinkLabel": "Daha fazla bilgi edinin"
   }
 }

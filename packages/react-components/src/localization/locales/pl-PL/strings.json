@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "Zastosowano listę punktowaną",
     "richTextNumberedListAppliedAnnouncement": "Zastosowano listę numerowaną"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Włącz modalne okno dialogowe pisania w czasie rzeczywistym",
-    "rttModalTitle": "Włączyć pisanie w czasie rzeczywistym?",
-    "rttModalText": "Tekst w czasie rzeczywistym zostanie włączony dla wszystkich uczestników spotkania.",
-    "rttConfirmButtonLabel": "Włącz",
-    "rttCancelButtonLabel": "Anuluj",
-    "rttCloseModalButtonAriaLabel": "Zamknij modalne okno dialogowe pisania w czasie rzeczywistym"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Trwa uruchamianie napisów..."
+    "captionsBannerSpinnerText": "Trwa uruchamianie napisów...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
@@ -86,7 +90,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Pobierz",
     "dismissButtonAriaLabel": "Zamknij",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Nakładka szczegółów obrazu"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Wiadomość została wysłana",
@@ -195,8 +199,8 @@
     "applauseReactionTooltipContent": "Aplauz",
     "surprisedReactionTooltipContent": "Niespodzianka"
   },
-  "rtt": {
-    "isTypingText": "Pisanie w czasie rzeczywistym"
+  "realTimeText": {
+    "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "Ustawienia napisów",
@@ -291,6 +295,10 @@
     "offLabel": "Wyłącz podpisy",
     "tooltipOnContent": "Wyłącz podpisy",
     "tooltipOffContent": "Włącz podpisy"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "Wczoraj",
@@ -616,6 +624,14 @@
       "title": "Twój mikrofon został wyłączony",
       "message": "Nie możesz już wyłączać wyciszenia.",
       "dismissButtonAriaLabel": "Zamknij"
+    },
+    "togetherModeStarted": {
+      "title": "Tryb Togethermode został uruchomiony",
+      "dismissButtonAriaLabel": "Zamknij"
+    },
+    "togetherModeEnded": {
+      "title": "Tryb Togethermode został zakończony",
+      "dismissButtonAriaLabel": "Zamknij"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "Odrzuć",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Odbierz jako połączenie wideo",
     "incomingCallNotificationDismissButtonAriaLabel": "Odrzuć"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "Pisanie w czasie rzeczywistym",
-    "bannerContent": "Funkcja RTT (tekst w czasie rzeczywistym) jest włączona dla wszystkich uczestników przez cały czas trwania spotkania.",
-    "bannerLinkLabel": "Dowiedz się więcej"
   }
 }

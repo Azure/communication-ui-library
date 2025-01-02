@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "Lista com marcadores aplicada",
     "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Ativar Modal RTT",
-    "rttModalTitle": "Ativar o RTT?",
-    "rttModalText": "O texto em tempo real (RTT) será ativado para todos na reunião.",
-    "rttConfirmButtonLabel": "Habilitar",
-    "rttCancelButtonLabel": "Cancelar",
-    "rttCloseModalButtonAriaLabel": "Fechar Modal RTT"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Iniciando legendas..."
+    "captionsBannerSpinnerText": "Iniciando legendas...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestões"
@@ -86,7 +90,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Baixar",
     "dismissButtonAriaLabel": "Fechar",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Sobreposição de Detalhes da Imagem"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Mensagem enviada",
@@ -195,8 +199,8 @@
     "applauseReactionTooltipContent": "Aplausos",
     "surprisedReactionTooltipContent": "Surpreso"
   },
-  "rtt": {
-    "isTypingText": "Digitação RTT"
+  "realTimeText": {
+    "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "Configurações de Legendas",
@@ -291,6 +295,10 @@
     "offLabel": "Desativar legendas",
     "tooltipOnContent": "Desativar legendas",
     "tooltipOffContent": "Ativar legendas"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "Ontem",
@@ -616,6 +624,14 @@
       "title": "O microfone foi desabilitado",
       "message": "Você não pode mais ativar o som.",
       "dismissButtonAriaLabel": "Fechar"
+    },
+    "togetherModeStarted": {
+      "title": "O modo Togethermode foi iniciado",
+      "dismissButtonAriaLabel": "Fechar"
+    },
+    "togetherModeEnded": {
+      "title": "O modo Togethermode foi encerrado",
+      "dismissButtonAriaLabel": "Fechar"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "Recusar",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Aceitar com Vídeo",
     "incomingCallNotificationDismissButtonAriaLabel": "Ignorar"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "O RTT (texto em tempo real) está habilitado para todos os participantes durante toda a reunião.",
-    "bannerLinkLabel": "Saiba mais"
   }
 }

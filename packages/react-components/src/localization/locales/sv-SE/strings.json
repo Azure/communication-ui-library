@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "Punktlista tillämpad",
     "richTextNumberedListAppliedAnnouncement": "Numrerad tillämpad"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Aktivera RTT-modal",
-    "rttModalTitle": "Aktivera RTT?",
-    "rttModalText": "Realtidstext (RTT) aktiveras för alla i mötet.",
-    "rttConfirmButtonLabel": "Aktivera",
-    "rttCancelButtonLabel": "Avbryt",
-    "rttCloseModalButtonAriaLabel": "Stäng RTT-modal"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Startar undertexter ..."
+    "captionsBannerSpinnerText": "Startar undertexter ...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -86,7 +90,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Ladda ner",
     "dismissButtonAriaLabel": "Stäng",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Bilddetaljöverlägg"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Meddelandet har skickats",
@@ -195,8 +199,8 @@
     "applauseReactionTooltipContent": "Applåd",
     "surprisedReactionTooltipContent": "Förvånad"
   },
-  "rtt": {
-    "isTypingText": "RTT-inmatning"
+  "realTimeText": {
+    "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "Inställningar för undertexter",
@@ -291,6 +295,10 @@
     "offLabel": "Stäng av undertexter",
     "tooltipOnContent": "Stäng av undertexter",
     "tooltipOffContent": "Aktivera undertexter"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "I går",
@@ -616,6 +624,14 @@
       "title": "Mikrofonen har inaktiverats",
       "message": "Du kan inte längre slå på ljudet.",
       "dismissButtonAriaLabel": "Stäng"
+    },
+    "togetherModeStarted": {
+      "title": "Tillsammans-läge har startats",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "togetherModeEnded": {
+      "title": "Tillsammans-läge har avslutats",
+      "dismissButtonAriaLabel": "Stäng"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "Avböj",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Acceptera med video",
     "incomingCallNotificationDismissButtonAriaLabel": "Stäng"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (realtidstext) är aktiverat för alla deltagare under hela mötets varaktighet.",
-    "bannerLinkLabel": "Mer information"
   }
 }

@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "Lijst met opsommingstekens toegepast",
     "richTextNumberedListAppliedAnnouncement": "Genummerde lijst is toegepast"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "RTT Modal inschakelen",
-    "rttModalTitle": "RTT inschakelen?",
-    "rttModalText": "Tekst in realtime (RTT) wordt ingeschakeld voor iedereen in de vergadering.",
-    "rttConfirmButtonLabel": "Inschakelen",
-    "rttCancelButtonLabel": "Annuleren",
-    "rttCloseModalButtonAriaLabel": "RTT Modaal sluiten"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Ondertitels starten..."
+    "captionsBannerSpinnerText": "Ondertitels starten...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
@@ -86,7 +90,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Downloaden",
     "dismissButtonAriaLabel": "Sluiten",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Overlay voor details afbeelding"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Bericht verzonden",
@@ -195,8 +199,8 @@
     "applauseReactionTooltipContent": "Applaus",
     "surprisedReactionTooltipContent": "Verrast"
   },
-  "rtt": {
-    "isTypingText": "RTT typen"
+  "realTimeText": {
+    "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "Instellingen voor ondertitels",
@@ -291,6 +295,10 @@
     "offLabel": "Ondertitels uitschakelen",
     "tooltipOnContent": "Ondertitels uitschakelen",
     "tooltipOffContent": "Bijschriften inschakelen"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "Gisteren",
@@ -616,6 +624,14 @@
       "title": "Uw microfoon is uitgeschakeld",
       "message": "U kunt het dempen niet meer opheffen.",
       "dismissButtonAriaLabel": "Sluiten"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode is gestart",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode is beëindigd",
+      "dismissButtonAriaLabel": "Sluiten"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "Weigeren",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepteren met video",
     "incomingCallNotificationDismissButtonAriaLabel": "Sluiten"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (realtime-tekst) is ingeschakeld voor alle deelnemers gedurende de hele duur van de vergadering.",
-    "bannerLinkLabel": "Meer informatie"
   }
 }

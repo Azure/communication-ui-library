@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
     "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Turn on RTT Modal",
-    "rttModalTitle": "Turn on RTT?",
-    "rttModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
-    "rttConfirmButtonLabel": "Turn on",
-    "rttCancelButtonLabel": "Cancel",
-    "rttCloseModalButtonAriaLabel": "Close RTT Modal"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Starting captions..."
+    "captionsBannerSpinnerText": "Starting captions...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -195,7 +199,7 @@
     "applauseReactionTooltipContent": "Applause",
     "surprisedReactionTooltipContent": "Surprised"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
@@ -291,6 +295,10 @@
     "offLabel": "Turn off captions",
     "tooltipOnContent": "Turn off captions",
     "tooltipOffContent": "Turn on captions"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "Yesterday",
@@ -616,6 +624,14 @@
       "title": "Your mic has been disabled",
       "message": "You can no longer unmute.",
       "dismissButtonAriaLabel": "Close"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode has started",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode has ended",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "Decline",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Accept with Video",
     "incomingCallNotificationDismissButtonAriaLabel": "Dismiss"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
-    "bannerLinkLabel": "Learn more"
   }
 }

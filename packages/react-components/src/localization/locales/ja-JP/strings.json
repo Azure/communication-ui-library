@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
     "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "RTT モーダルを有効にする",
-    "rttModalTitle": "RTT を有効にしますか?",
-    "rttModalText": "会議の全員に対してリアルタイム テキスト (RTT) が有効になります。",
-    "rttConfirmButtonLabel": "有効にする",
-    "rttCancelButtonLabel": "キャンセル",
-    "rttCloseModalButtonAriaLabel": "RTT モーダルを閉じる"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "キャプションを開始しています..."
+    "captionsBannerSpinnerText": "キャプションを開始しています...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -86,7 +90,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "ダウンロード",
     "dismissButtonAriaLabel": "閉じる",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "画像の詳細のオーバーレイ"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "メッセージを送信しました",
@@ -195,8 +199,8 @@
     "applauseReactionTooltipContent": "喝采",
     "surprisedReactionTooltipContent": "驚いた"
   },
-  "rtt": {
-    "isTypingText": "RTT 入力"
+  "realTimeText": {
+    "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "ライブ キャプションの設定",
@@ -291,6 +295,10 @@
     "offLabel": "キャプションをオフにする",
     "tooltipOnContent": "キャプションをオフにする",
     "tooltipOffContent": "ライブ キャプションをオンにする"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "昨日",
@@ -616,6 +624,14 @@
       "title": "マイクが無効になっています",
       "message": "ミュートを解除できなくなりました。",
       "dismissButtonAriaLabel": "閉じる"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode が開始しました",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode が終了しました",
+      "dismissButtonAriaLabel": "閉じる"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "拒否",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける",
     "incomingCallNotificationDismissButtonAriaLabel": "閉じる"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (リアルタイム テキスト) は、会議の全期間のすべての参加者に対して有効になっています。",
-    "bannerLinkLabel": "詳しく見る"
   }
 }

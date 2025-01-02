@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "Luettelomerkeillä varustettu luettelo käytössä",
     "richTextNumberedListAppliedAnnouncement": "Numeroitu luettelo käytössä"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Ota RTT-modaalinen käyttöön",
-    "rttModalTitle": "Otetaanko RTT käyttöön?",
-    "rttModalText": "Reaaliaikainen teksti (RTT) otetaan käyttöön kaikille kokouksen osallistuville.",
-    "rttConfirmButtonLabel": "Ota käyttöön",
-    "rttCancelButtonLabel": "Peruuta",
-    "rttCloseModalButtonAriaLabel": "Sulje RTT-modaalinen"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Aloitetaan tekstitystä..."
+    "captionsBannerSpinnerText": "Aloitetaan tekstitystä...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -86,7 +90,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Lataa",
     "dismissButtonAriaLabel": "Sulje",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Kuvan tietojen peittokuva"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Viesti on lähetetty",
@@ -195,8 +199,8 @@
     "applauseReactionTooltipContent": "Suosionosoitus",
     "surprisedReactionTooltipContent": "Yllättynyt"
   },
-  "rtt": {
-    "isTypingText": "RTT-kirjoitus"
+  "realTimeText": {
+    "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "Tekstitysasetukset",
@@ -291,6 +295,10 @@
     "offLabel": "Poista tekstitykset käytöstä",
     "tooltipOnContent": "Poista tekstitykset käytöstä",
     "tooltipOffContent": "Ota tekstitykset käyttöön"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "eilen",
@@ -616,6 +624,14 @@
       "title": "Mikrofonisi on poissa käytöstä",
       "message": "Et voi enää poistaa mykistystä.",
       "dismissButtonAriaLabel": "Sulje"
+    },
+    "togetherModeStarted": {
+      "title": "Yhdessä-tila on alkanut",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "togetherModeEnded": {
+      "title": "Yhdessä-tila on päättynyt",
+      "dismissButtonAriaLabel": "Sulje"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "Hylkää",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla",
     "incomingCallNotificationDismissButtonAriaLabel": "Hylkää"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "Reaaliaikainen kirjoitus",
-    "bannerContent": "RTT (reaaliaikainen teksti) on käytössä kaikille osallistujille koko kokouksen keston ajan.",
-    "bannerLinkLabel": "Lue lisää"
   }
 }

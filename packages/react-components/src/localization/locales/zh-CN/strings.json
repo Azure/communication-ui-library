@@ -69,16 +69,20 @@
     "richTextBulletedListAppliedAnnouncement": "已应用项目符号列表",
     "richTextNumberedListAppliedAnnouncement": "已应用编号列表"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "打开 RTT 模式",
-    "rttModalTitle": "是否启用 RTT?",
-    "rttModalText": "将为会议中的每个人启用实时文本 (RTT)。",
-    "rttConfirmButtonLabel": "启用",
-    "rttCancelButtonLabel": "取消",
-    "rttCloseModalButtonAriaLabel": "关闭 RTT 模式"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "正在启动字幕..."
+    "captionsBannerSpinnerText": "正在启动字幕...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
@@ -86,7 +90,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "下载",
     "dismissButtonAriaLabel": "关闭",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "图像详细信息覆盖"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "已发送消息",
@@ -195,8 +199,8 @@
     "applauseReactionTooltipContent": "鼓掌",
     "surprisedReactionTooltipContent": "惊讶"
   },
-  "rtt": {
-    "isTypingText": "RTT 键入"
+  "realTimeText": {
+    "isTypingText": "RTT typing"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "字幕设置",
@@ -291,6 +295,10 @@
     "offLabel": "关闭辅助字幕",
     "tooltipOnContent": "关闭辅助字幕",
     "tooltipOffContent": "开启字幕"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Turn on RTT for this call",
+    "tooltipOnContent": "RTT is turned on for this call"
   },
   "messageThread": {
     "yesterday": "昨天",
@@ -616,6 +624,14 @@
       "title": "已禁用麦克风",
       "message": "你无法再取消静音。",
       "dismissButtonAriaLabel": "关闭"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode 已启动",
+      "dismissButtonAriaLabel": "关闭"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode 已结束",
+      "dismissButtonAriaLabel": "关闭"
     }
   },
   "videoGallery": {
@@ -813,10 +829,5 @@
     "incomingCallNotificationRejectButtonLabel": "拒绝",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "使用视频接受",
     "incomingCallNotificationDismissButtonAriaLabel": "关闭"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (在会议的整个持续时间内为所有参与者启用实时文本)。",
-    "bannerLinkLabel": "了解详细信息"
   }
 }
