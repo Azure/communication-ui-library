@@ -15,7 +15,6 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { DeclarativeCallAgent } from '@internal/calling-stateful-client';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
-import { isACSCallParticipants } from '../utils/callUtils';
 import { createLocalVideoStream } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
@@ -82,10 +81,6 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
     ...commonCallingHandlers,
     // FIXME: onStartCall API should use string, not the underlying SDK types.
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
-      return callAgent?.startCall(participants, options);
-      if (!isACSCallParticipants(participants)) {
-        throw new Error('TeamsUserIdentifier in Teams call is not supported!');
-      }
       return callAgent?.startCall(participants, options);
     },
     onAddParticipant: async (

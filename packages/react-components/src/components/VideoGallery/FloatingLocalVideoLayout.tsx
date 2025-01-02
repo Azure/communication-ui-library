@@ -240,5 +240,4 @@ const overflowGalleryTrampoline = (
   galleryPosition?: 'horizontalBottom' | 'verticalRight' | 'horizontalTop'
 ): JSX.Element | null => {
   return galleryPosition !== 'horizontalTop' ? gallery : <></>;
-  return gallery;
 };
