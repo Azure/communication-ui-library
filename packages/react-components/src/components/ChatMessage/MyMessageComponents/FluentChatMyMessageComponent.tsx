@@ -133,7 +133,8 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       onInsertInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      inlineImagesWithProgress
+      inlineImagesWithProgress,
+      onEditComplete
     ]
   );
 
