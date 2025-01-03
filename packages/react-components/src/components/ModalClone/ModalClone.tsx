@@ -374,6 +374,7 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
 
     const handleExitKeyboardMoveMode = () => {
       internalState.lastSetCoordinates = ZERO;
+
       internalState.isInKeyboardMoveMode = false;
       internalState.disposeOnKeyDown?.();
     };
