@@ -59,10 +59,10 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     onInsertInlineImage
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
-  const bodyRef = useRef<HTMLDivElement>(null);
+  const fluentMessageBodyRef = useRef<HTMLDivElement>(null);
 
   const onEditComplete = useCallback(() => {
-    bodyRef.current?.focus();
+    fluentMessageBodyRef.current?.focus();
   }, []);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
@@ -198,7 +198,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
   const myMessageBodyProps = useMemo(() => {
     return {
       className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage),
-      ref: bodyRef
+      ref: fluentMessageBodyRef
     };
   }, [chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage]);
 
