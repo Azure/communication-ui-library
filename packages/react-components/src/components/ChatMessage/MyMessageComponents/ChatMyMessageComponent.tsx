@@ -108,13 +108,15 @@ export type ChatMyMessageComponentProps = {
   onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   inlineImagesWithProgress?: AttachmentMetadataInProgress[];
+  // Optional callback called when editing is complete (submitted or cancelled).
+  onEditComplete?: () => void;
 };
 
 /**
  * @private
  */
 export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.Element => {
-  const { onDeleteMessage, onSendMessage, message } = props;
+  const { onDeleteMessage, onSendMessage, message, onEditComplete, onCancelEditMessage, onUpdateMessage } = props;
   const [isEditing, setIsEditing] = useState(false);
 
   const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
@@ -169,28 +171,34 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
       if (`attachments` in message && attachments) {
         message.attachments = attachments;
       }
-      props.onUpdateMessage &&
-        message.messageId &&
-        (await props.onUpdateMessage(
-          message.messageId,
-          text,
-          /* @conditional-compile-remove(file-sharing-acs) */
-          { attachments: attachments }
-        ));
+      await onUpdateMessage?.(
+        message.messageId,
+        text,
+        /* @conditional-compile-remove(file-sharing-acs) */
+        { attachments: attachments }
+      );
       setIsEditing(false);
+      onEditComplete?.();
     },
-    [message, props]
+    [message, onEditComplete, onUpdateMessage]
   );
+
+  const onCancelHandler = useCallback(
+    (messageId: string) => {
+      onCancelEditMessage?.(messageId);
+      setIsEditing(false);
+      onEditComplete?.();
+    },
+    [onEditComplete, onCancelEditMessage]
+  );
+
   if (isEditing && message.messageType === 'chat') {
     return (
       <ChatMessageComponentAsEditBoxPicker
         message={message}
         strings={props.strings}
         onSubmit={onSubmitHandler}
-        onCancel={(messageId) => {
-          props.onCancelEditMessage && props.onCancelEditMessage(messageId);
-          setIsEditing(false);
-        }}
+        onCancel={onCancelHandler}
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
         /* @conditional-compile-remove(rich-text-editor) */
