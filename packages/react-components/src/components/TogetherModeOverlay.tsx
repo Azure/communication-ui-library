@@ -20,7 +20,7 @@ import {
   // REACTION_START_DISPLAY_SIZE
 } from './VideoGallery/utils/reactionUtils';
 /* @conditional-compile-remove(together-mode) */
-import { Icon, Text } from '@fluentui/react';
+import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(together-mode) */
 import { getEmojiResource } from './VideoGallery/utils/videoGalleryLayoutUtils';
 /* @conditional-compile-remove(together-mode) */
@@ -87,52 +87,28 @@ export const TogetherModeOverlay = React.memo(
     const [hoveredParticipantID, setHoveredParticipantID] = useState('');
 
     useMemo(() => {
-      const removedVisibleParticipants = Object.keys(togetherModeParticipantStatus).filter(
-        (participantId) => !togetherModeSeatPositions[participantId]
-      );
-      // Update visible signals state instead of directly mutating it
-      setTogetherModeParticipantStatus((prevSignals) => {
-        const newSignals = { ...prevSignals };
-        removedVisibleParticipants.forEach((participantId) => {
-          delete newSignals[participantId];
-        });
-
-        // Trigger a re-render only if changes occurred
-        const hasChanges = Object.keys(newSignals).length !== Object.keys(prevSignals).length;
-        if (hasChanges) {
-          return newSignals;
-        }
-        return prevSignals;
-      });
-    }, [togetherModeParticipantStatus, togetherModeSeatPositions]);
-
-    useMemo(() => {
       const allParticipants = [...remoteParticipants, localParticipant];
 
-      const participantsWithVideoAvailable = allParticipants.filter(
-        (p) => p.videoStream?.isAvailable && togetherModeSeatPositions[p.userId]
-      );
-      const updatedSignals = participantsWithVideoAvailable.reduce(
-        (acc: { [key: string]: TogetherModeParticipantStatus }, p: VideoGalleryLocalParticipant) => {
-          const { userId, reaction, raisedHand, spotlight, isMuted, displayName } = p;
-          const seatingPosition = togetherModeSeatPositions[userId];
-          if (seatingPosition) {
-            acc[userId] = {
-              id: userId,
-              reaction: reactionResources && reaction,
-              isHandRaised: !!raisedHand,
-              isSpotlighted: !!spotlight,
-              isMuted,
-              displayName: displayName || locale.strings.videoGallery.displayNamePlaceholder,
-              showDisplayName: !!(spotlight || raisedHand || hoveredParticipantID === userId),
-              scaledSize: calculateScaledSize(seatingPosition.width, seatingPosition.height),
-              seatPositionStyle: setTogetherModeSeatPositionStyle(seatingPosition)
-            };
-          }
-          return acc;
-        },
-        {}
-      );
+      const participantsWithVideoAvailable = allParticipants.filter((p) => togetherModeSeatPositions[p.userId]);
+
+      const updatedSignals: { [key: string]: TogetherModeParticipantStatus } = {};
+      for (const p of participantsWithVideoAvailable) {
+        const { userId, reaction, raisedHand, spotlight, isMuted, displayName } = p;
+        const seatingPosition = togetherModeSeatPositions[userId];
+        if (seatingPosition) {
+          updatedSignals[userId] = {
+            id: userId,
+            reaction: reactionResources && reaction,
+            isHandRaised: !!raisedHand,
+            isSpotlighted: !!spotlight,
+            isMuted,
+            displayName: displayName || locale.strings.videoGallery.displayNamePlaceholder,
+            showDisplayName: !!(spotlight || raisedHand || hoveredParticipantID === userId),
+            scaledSize: calculateScaledSize(seatingPosition.width, seatingPosition.height),
+            seatPositionStyle: setTogetherModeSeatPositionStyle(seatingPosition)
+          };
+        }
+      }
 
       const participantsNotInTogetherModeStream = Object.keys(togetherModeParticipantStatus).filter(
         (id) => !updatedSignals[id]
@@ -141,6 +117,7 @@ export const TogetherModeOverlay = React.memo(
       setTogetherModeParticipantStatus((prevSignals) => {
         const newSignals = { ...prevSignals, ...updatedSignals };
         const newSignalsLength = Object.keys(newSignals).length;
+
         participantsNotInTogetherModeStream.forEach((id) => {
           delete newSignals[id];
         });
@@ -163,123 +140,124 @@ export const TogetherModeOverlay = React.memo(
       hoveredParticipantID
     ]);
 
+    // When a 50-participant scene switches to a smaller group in Together Mode, signals for those no longer in the stream are removed
+    useMemo(() => {
+      const removedVisibleParticipants = Object.keys(togetherModeParticipantStatus).filter(
+        (participantId) => !togetherModeSeatPositions[participantId]
+      );
+
+      setTogetherModeParticipantStatus((prevSignals) => {
+        const newSignals = { ...prevSignals };
+        removedVisibleParticipants.forEach((participantId) => {
+          delete newSignals[participantId];
+        });
+
+        // Trigger a re-render only if changes occurred
+        const hasChanges = Object.keys(newSignals).length !== Object.keys(prevSignals).length;
+        return hasChanges ? newSignals : prevSignals;
+      });
+    }, [togetherModeParticipantStatus, togetherModeSeatPositions]);
+
     return (
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
-        {Object.values(togetherModeParticipantStatus).map((participantStatus) => (
-          <div
-            key={participantStatus.id}
-            style={{
-              ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle),
-              border: '1px solid blue'
-            }}
-            onMouseEnter={() => setHoveredParticipantID(participantStatus.id)}
-            onMouseLeave={() => setHoveredParticipantID('')}
-          >
-            <div>
-              {participantStatus.reaction?.reactionType && (
-                <div
-                  style={moveAnimationStyles(
-                    parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * 0.5 * 16,
-                    parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * 0.35 * 16
-                  )}
-                >
-                  <div
-                    style={{
-                      width: `${emojiSize}`,
-                      position: 'absolute',
-                      left: `${
-                        (100 -
-                          ((participantStatus.scaledSize || 1) /
-                            (parseFloat(participantStatus.seatPositionStyle.seatPosition.width) * 16)) *
-                            100) /
-                        2
-                      }%`
-                    }}
-                  >
+        {Object.values(togetherModeParticipantStatus).map(
+          (participantStatus) =>
+            participantStatus.id && (
+              <div
+                key={participantStatus.id}
+                style={{
+                  ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle),
+                  border: '1px solid red'
+                }}
+                onMouseEnter={() => setHoveredParticipantID(participantStatus.id)}
+                onMouseLeave={() => setHoveredParticipantID('')}
+              >
+                <div>
+                  {participantStatus.reaction?.reactionType && (
                     <div
-                      style={spriteAnimationStyles(
-                        REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                        participantStatus.scaledSize || 1,
-                        (participantStatus.reaction &&
-                          getEmojiResource(participantStatus?.reaction.reactionType, reactionResources)) ??
-                          ''
+                      style={moveAnimationStyles(
+                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * 0.5 * 16,
+                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * 0.35 * 16
                       )}
-                    />
-                  </div>
-                </div>
-              )}
-
-              {participantStatus.showDisplayName && (
-                <div
-                  style={{
-                    position: 'absolute',
-                    bottom: `${_pxToRem(2)}`,
-                    width: 'fit-content',
-                    textAlign: 'center',
-                    border: '1px solid white',
-                    transform: 'translate(-50%)',
-                    transition: 'width 0.3s ease, transform 0.3s ease',
-                    left: '50%'
-                  }}
-                >
-                  <div
-                    style={{
-                      ...togetherModeParticipantStatusContainer(
-                        callingPalette.videoTileLabelBackgroundLight,
-                        theme.effects.roundedCorner4
-                      )
-                    }}
-                  >
-                    {participantStatus.isHandRaised && (
-                      <span
+                    >
+                      <div
                         style={{
-                          ...togetherModeIconStyle()
+                          width: `${emojiSize}`,
+                          position: 'absolute',
+                          left: `${
+                            (100 -
+                              ((participantStatus.scaledSize || 1) /
+                                (parseFloat(participantStatus.seatPositionStyle.seatPosition.width) * 16)) *
+                                100) /
+                            2
+                          }%`
                         }}
                       >
-                        <RaisedHandIcon />
-                      </span>
-                    )}
-                    {participantStatus.showDisplayName && (
-                      <Text
+                        <div
+                          style={spriteAnimationStyles(
+                            REACTION_NUMBER_OF_ANIMATION_FRAMES,
+                            participantStatus.scaledSize || 1,
+                            (participantStatus.reaction &&
+                              getEmojiResource(participantStatus?.reaction.reactionType, reactionResources)) ??
+                              ''
+                          )}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {participantStatus.showDisplayName && (
+                    <div
+                      style={{
+                        position: 'absolute',
+                        bottom: `${_pxToRem(2)}`,
+                        width: 'fit-content',
+                        textAlign: 'center',
+                        border: '1px solid white',
+                        transform: 'translate(-50%)',
+                        transition: 'width 0.3s ease, transform 0.3s ease',
+                        left: '50%'
+                      }}
+                    >
+                      <div
                         style={{
-                          ...togetherModeParticipantDisplayName(
-                            hoveredParticipantID === participantStatus.id,
-                            parseFloat(participantStatus.seatPositionStyle.seatPosition.width),
-                            participantStatus.displayName ? theme.palette.neutralSecondary : 'inherit'
+                          ...togetherModeParticipantStatusContainer(
+                            callingPalette.videoTileLabelBackgroundLight,
+                            theme.effects.roundedCorner4
                           )
                         }}
                       >
-                        {participantStatus.displayName}
-                      </Text>
-                    )}
-                    {participantStatus.isMuted && (
-                      <span>
-                        <Icon
-                          iconName="VideoTileMicOff"
-                          style={{
-                            ...togetherModeIconStyle(),
-                            color: participantStatus.displayName ? theme.palette.neutralSecondary : 'inherit'
-                          }}
-                        />
-                      </span>
-                    )}
-                    {participantStatus.isSpotlighted && (
-                      <span>
-                        <Icon
-                          iconName="VideoTileSpotlighted"
-                          style={{
-                            ...togetherModeIconStyle(),
-                            color: participantStatus.displayName ? theme.palette.neutralSecondary : 'inherit'
-                          }}
-                        />
-                      </span>
-                    )}
-                  </div>
+                        {participantStatus.isHandRaised && <RaisedHandIcon />}
+                        {participantStatus.showDisplayName && (
+                          <Text
+                            style={{
+                              ...togetherModeParticipantDisplayName(
+                                hoveredParticipantID === participantStatus.id,
+                                parseFloat(participantStatus.seatPositionStyle.seatPosition.width),
+                                participantStatus.displayName ? theme.palette.neutralSecondary : 'inherit'
+                              )
+                            }}
+                          >
+                            {participantStatus.displayName}
+                          </Text>
+                        )}
+                        {participantStatus.isMuted && (
+                          <Stack className={mergeStyles(togetherModeIconStyle)}>
+                            <Icon iconName="VideoTileMicOff" />
+                          </Stack>
+                        )}
+                        {participantStatus.isSpotlighted && (
+                          <Stack className={mergeStyles(togetherModeIconStyle)}>
+                            <Icon iconName="VideoTileSpotlighted" />
+                          </Stack>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-          </div>
-        ))}
+              </div>
+            )
+        )}
       </div>
     );
   }

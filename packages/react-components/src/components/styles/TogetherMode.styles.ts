@@ -5,7 +5,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(together-mode) */
 import { VideoGalleryTogetherModeSeatingInfo } from '../../types/TogetherModeTypes';
 /* @conditional-compile-remove(together-mode) */
-import { IStackStyles } from '@fluentui/react';
+import { IStackStyles, IStyle } from '@fluentui/react';
 import React from 'react';
 
 /* @conditional-compile-remove(together-mode) */
@@ -163,18 +163,24 @@ export const togetherModeParticipantDisplayName = (
   participantSeatingWidth: number,
   color: string
 ): React.CSSProperties => {
-  console.log(`CHUK ---Paarticipant width == ${participantSeatingWidth}`);
+  const width =
+    isParticipantHovered || participantSeatingWidth * 16 > 100
+      ? 'fit-content'
+      : _pxToRem(0.7 * participantSeatingWidth * 16);
+
+  const display = isParticipantHovered || participantSeatingWidth * 16 > 150 ? 'inline-block' : 'none';
+
   return {
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     textAlign: 'center',
     color,
     overflow: isParticipantHovered ? 'visible' : 'hidden',
-    width: isParticipantHovered ? `100%` : _pxToRem(0.7 * participantSeatingWidth * 16),
-    // border: '1px solid red',
-    display: isParticipantHovered || participantSeatingWidth * 16 > 150 ? 'inline-block' : 'none', // Completely remove the element when hidden
+    width,
+    display,
     fontSize: `${_pxToRem(13)}`,
-    lineHeight: `${_pxToRem(20)}`
+    lineHeight: `${_pxToRem(20)}`,
+    maxWidth: isParticipantHovered ? 'fit-content' : _pxToRem(0.7 * participantSeatingWidth * 16)
   };
 };
 
@@ -182,10 +188,17 @@ export const togetherModeParticipantDisplayName = (
 /**
  * @private
  */
-export const togetherModeIconStyle = (): React.CSSProperties => {
-  return {
-    width: 'fit-content',
-    display: 'flex',
-    alignItems: 'center'
-  };
+export const togetherModeIconStyle: IStyle = {
+  margin: 'auto',
+  alignItems: 'center',
+  '& svg': {
+    display: 'block',
+    // Similar to text color, icon color will be inherited from parent container
+    color: 'inherit'
+  },
+
+  width: 'fit-content',
+  // display: 'flex',
+  size: `${_pxToRem(100)}`,
+  fontSize: `${_pxToRem(100)}`
 };

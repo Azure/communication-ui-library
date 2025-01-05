@@ -54,6 +54,10 @@ export const TogetherModeStream = React.memo(
       onSetTogetherModeSceneSize,
       onDisposeTogetherModeStreamView,
       togetherModeStreams,
+      seatingCoordinates,
+      localParticipant,
+      remoteParticipants,
+      reactionResources,
       containerWidth,
       containerHeight
     } = props;
@@ -86,6 +90,7 @@ export const TogetherModeStream = React.memo(
       }
     }, [onSetTogetherModeSceneSize, containerWidth, containerHeight]);
 
+    console.log(`CHUK seatingCoordinates: ${JSON.stringify(seatingCoordinates)}`);
     const stream = props.togetherModeStreams?.mainVideoStream;
     const showLoadingIndicator = !(stream && stream.isAvailable && stream.isReceiving);
     return containerWidth && containerHeight ? (
@@ -94,17 +99,12 @@ export const TogetherModeStream = React.memo(
           videoStreamElement={stream?.renderElement || null}
           isMirrored={true}
           loadingState={showLoadingIndicator ? 'loading' : 'none'}
-          styles={{
-            root: {
-              border: '2px solid yellow'
-            }
-          }}
         />
         <MeetingReactionOverlay
-          reactionResources={props.reactionResources || ({} as ReactionResources)}
-          localParticipant={props.localParticipant}
-          remoteParticipants={props.remoteParticipants}
-          togetherModeSeatPositions={props.seatingCoordinates}
+          reactionResources={reactionResources || ({} as ReactionResources)}
+          localParticipant={localParticipant}
+          remoteParticipants={remoteParticipants}
+          togetherModeSeatPositions={seatingCoordinates}
           overlayMode="together-mode"
         />
       </Stack>
