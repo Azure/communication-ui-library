@@ -113,7 +113,7 @@ test.describe('VideoGalleryLayout tests', async () => {
     const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     await moreButton.hover();
     await moreButton.click();
-    // await waitForSelector(page, dataUiId('video-tile-permit-audio'));
+    await waitForSelector(page, dataUiId('video-tile-permit-audio'));
     await waitForSelector(page, dataUiId('video-tile-permit-video'));
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-attendee-audio-video-hard-muted.png');
   });
@@ -140,7 +140,7 @@ test.describe('VideoGalleryLayout tests', async () => {
     const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     await moreButton.hover();
     await moreButton.click();
-    // await waitForSelector(page, dataUiId('video-tile-forbid-audio'));
+    await waitForSelector(page, dataUiId('video-tile-forbid-audio'));
     await waitForSelector(page, dataUiId('video-tile-forbid-video'));
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-attendee-audio-video-permitted.png');
   });
