@@ -546,12 +546,12 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   joinBreakoutRooms: { isPresent: true, reason: 'Capable' },
   /* @conditional-compile-remove(calling-beta-sdk) */
   forbidOthersAudio: {
-    isPresent: false,
+    isPresent: true,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
   forbidOthersVideo: {
-    isPresent: false,
+    isPresent: true,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
 };
