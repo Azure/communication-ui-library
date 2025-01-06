@@ -31,6 +31,10 @@ export interface PreparedMoreDrawerProps {
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
   onClickMeetingPhoneInfo?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  onStartRealTimeText?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  startRealTimeTextButtonChecked?: boolean;
 }
 
 /** @private */

@@ -30,8 +30,6 @@ export class RealTimeTextSubscriber {
 
   private realTimeTextReceived: RealTimeTextReceivedEventHandler = (data: RealTimeTextInfo): void => {
     this._context.setIsRealTimeTextActive(this._callIdRef.callId, true);
-    if (data.text !== ' ') {
-      this._context.addRealTimeText(this._callIdRef.callId, data);
-    }
+    this._context.addRealTimeText(this._callIdRef.callId, data);
   };
 }

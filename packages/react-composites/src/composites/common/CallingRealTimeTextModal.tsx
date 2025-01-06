@@ -3,11 +3,9 @@
 /* @conditional-compile-remove(rtt) */
 import React from 'react';
 /* @conditional-compile-remove(rtt) */
-import { RealTimeTextModal, RealTimeTextModalStrings, StartRealTimeTextButton } from '@internal/react-components';
+import { RealTimeTextModal, RealTimeTextModalStrings } from '@internal/react-components';
 /* @conditional-compile-remove(rtt) */
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(rtt) */
-import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 /* @conditional-compile-remove(rtt) */
 /** @private */
 export const CallingRealTimeTextModal = (props: {
@@ -16,9 +14,8 @@ export const CallingRealTimeTextModal = (props: {
   /** The function to dismiss the modal */
   onDismissModal?: () => void;
   /** The function to start RealTimeText */
-  onStartRealTimeText?: () => Promise<void>;
+  onStartRealTimeText?: () => void;
 }): JSX.Element => {
-  const startRealTimeTextProps = usePropsFor(StartRealTimeTextButton);
   const strings = useLocale().strings.call;
   const modalStrings: RealTimeTextModalStrings = {
     realTimeTextModalTitle: strings.realTimeTextModalTitle,
@@ -34,11 +31,7 @@ export const CallingRealTimeTextModal = (props: {
       strings={modalStrings}
       showModal={props.showModal}
       onDismissModal={props.onDismissModal}
-      onStartRealTimeText={() => {
-        startRealTimeTextProps.onStartRealTimeText();
-        props.onStartRealTimeText && props.onStartRealTimeText();
-        return Promise.resolve();
-      }}
+      onStartRealTimeText={props.onStartRealTimeText}
     />
   );
 };

@@ -14,7 +14,7 @@ import {
   CaptionsSettingsModal
 } from '@internal/react-components';
 /* @conditional-compile-remove(rtt) */
-import { StartRealTimeTextButton } from '@internal/react-components';
+import { CaptionsBanner } from '@internal/react-components';
 import { _ReactionDrawerMenuItem } from '@internal/react-components';
 import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
@@ -168,6 +168,10 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onForbidOthersVideo?: () => void;
   /* @conditional-compile-remove(media-access) */
   onPermitOthersVideo?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  onStartRealTimeText?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  startRealTimeTextButtonChecked?: boolean;
 }
 
 const inferCallWithChatControlOptions = (
@@ -191,7 +195,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const localeStrings = useLocale();
   const holdButtonProps = usePropsFor(HoldButton);
   /* @conditional-compile-remove(rtt) */
-  const startRealTimeTextButtonProps = usePropsFor(StartRealTimeTextButton);
+  const realTimeTextProps = usePropsFor(CaptionsBanner);
 
   const callees = useSelector(getTargetCallees);
   const participants = useSelector(getRemoteParticipantsConnectedSelector);
@@ -606,15 +610,19 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         iconName: 'RealTimeTextIcon',
         styles: { root: { lineHeight: 0 } }
       },
-      onItemClick: startRealTimeTextButtonProps.onStartRealTimeText,
-      disabled: props.disableButtonsForHoldScreen || startRealTimeTextButtonProps.isRealTimeTextOn,
+      onItemClick: props.onStartRealTimeText,
+      disabled:
+        props.disableButtonsForHoldScreen || realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked,
       secondaryComponent: (
         <Stack verticalFill verticalAlign="center">
           <Toggle
             id="common-call-composite-rtt-toggle-button"
-            checked={startRealTimeTextButtonProps.isRealTimeTextOn}
-            styles={themedToggleButtonStyle(theme, startRealTimeTextButtonProps.isRealTimeTextOn)}
-            onChange={startRealTimeTextButtonProps.onStartRealTimeText}
+            checked={realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked}
+            styles={themedToggleButtonStyle(
+              theme,
+              realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked
+            )}
+            onChange={props.onStartRealTimeText}
           />
         </Stack>
       )

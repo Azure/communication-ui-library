@@ -863,11 +863,6 @@ export interface CallAdapterCallOperations {
    * @param finalized - Boolean to indicate if the real time text is final
    */
   sendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
-  /* @conditional-compile-remove(rtt) */
-  /**
-   * Start real time text
-   */
-  startRealTimeText: () => Promise<void>;
 }
 
 /**

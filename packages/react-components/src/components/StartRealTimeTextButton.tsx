@@ -17,10 +17,10 @@ import { useLocale } from '../localization';
  */
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
   /**
-   * Utility property for using this component with communication react handlers
-   * Start RealTimeText based on RealTimeText state
+   * Use this function to show RealTimeText UI in the calling experience.
+   * Note that real time text should not be started for everyone in the call until the first real time text is received.
    */
-  onStartRealTimeText: () => Promise<void>;
+  onStartRealTimeText: () => void;
   /**
    * If RealTimeText is on
    */
@@ -30,7 +30,6 @@ export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
    */
   strings?: StartRealTimeTextButtonStrings;
 }
-
 
 /* @conditional-compile-remove(rtt) */
 /**

@@ -106,6 +106,11 @@ export type CaptionsBannerSelector = (
 ) => {
   captions: CaptionsInformation[];
   isCaptionsOn: boolean;
+  startCaptionsInProgress: boolean;
+  /* @conditional-compile-remove(rtt) */
+  isRealTimeTextOn: boolean;
+  /* @conditional-compile-remove(rtt) */
+  latestLocalRealTimeText: CaptionsInformation | undefined;
 };
 
 /**
@@ -170,9 +175,9 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     return {
       captions: captionsInfo ?? [],
       isCaptionsOn: isCaptionsFeatureActive ?? false,
+      startCaptionsInProgress: startCaptionsInProgress ?? false,
       /* @conditional-compile-remove(rtt) */
       isRealTimeTextOn: isRealTimeTextActive ?? false,
-      startCaptionsInProgress: startCaptionsInProgress ?? false,
       /* @conditional-compile-remove(rtt) */
       latestLocalRealTimeText: lastRealTimeText
     };

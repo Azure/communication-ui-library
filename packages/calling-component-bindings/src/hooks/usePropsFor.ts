@@ -56,10 +56,6 @@ import {
   captionsBannerSelector,
   startCaptionsButtonSelector
 } from '../captionsSelector';
-/* @conditional-compile-remove(rtt) */
-import { StartRealTimeTextButtonSelector, startRealTimeTextButtonSelector } from '../realTimeTextSelector';
-/* @conditional-compile-remove(rtt) */
-import { StartRealTimeTextButton } from '@internal/react-components';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -145,12 +141,9 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
                                   ? CaptionsBannerSelector
                                   : AreEqual<Component, typeof StartCaptionsButton> extends true
                                     ? StartCaptionsButtonSelector
-                                    : /* @conditional-compile-remove(rtt) */
-                                      AreEqual<Component, typeof StartRealTimeTextButton> extends true
-                                      ? StartRealTimeTextButtonSelector
-                                      : AreEqual<Component, typeof RaiseHandButton> extends true
-                                        ? EmptySelector
-                                        : undefined;
+                                    : AreEqual<Component, typeof RaiseHandButton> extends true
+                                      ? EmptySelector
+                                      : undefined;
 
 /**
  * Get the selector for a specified component.
@@ -208,9 +201,6 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return captionSettingsSelector;
     case StartCaptionsButton:
       return startCaptionsButtonSelector;
-    /* @conditional-compile-remove(rtt) */
-    case StartRealTimeTextButton:
-      return startRealTimeTextButtonSelector;
   }
   return undefined;
 };

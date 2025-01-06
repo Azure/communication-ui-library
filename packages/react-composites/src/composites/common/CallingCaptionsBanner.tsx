@@ -25,6 +25,8 @@ export const CallingCaptionsBanner = (props: {
   };
   /** Element to return focus to when the Captions Banner is closed */
   returnFocusRef?: React.RefObject<FocusableElement>;
+  /* @conditional-compile-remove(rtt) */
+  isRealTimeTextOn?: boolean;
 }): JSX.Element => {
   const captionsBannerProps = usePropsFor(CaptionsBanner);
   const [isCaptionsSettingsOpen, setIsCaptionsSettingsOpen] = useState<boolean>(false);
@@ -108,6 +110,8 @@ export const CallingCaptionsBanner = (props: {
                 formFactor={props.isMobile ? 'compact' : 'default'}
                 strings={captionsBannerStrings}
                 {...captionsBannerProps}
+                /* @conditional-compile-remove(rtt) */
+                isRealTimeTextOn={props.isRealTimeTextOn || captionsBannerProps.isRealTimeTextOn}
               />
             </Stack.Item>
           </Stack>

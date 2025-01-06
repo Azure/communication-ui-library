@@ -63,7 +63,3 @@ export {
 
 export { _videoGalleryRemoteParticipantsMemo, _dominantSpeakersWithFlatId } from './utils/videoGalleryUtils';
 export type { _VideoGalleryRemoteParticipantsMemoFn } from './utils/videoGalleryUtils';
-/* @conditional-compile-remove(rtt) */
-export type { StartRealTimeTextButtonSelector } from './realTimeTextSelector';
-/* @conditional-compile-remove(rtt) */
-export { startRealTimeTextButtonSelector } from './realTimeTextSelector';

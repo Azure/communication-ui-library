@@ -7,7 +7,7 @@ import { _pxToRem } from '@internal/acs-ui-common';
 /**
  * @private
  */
-export const themedToggleButtonStyle = (theme: Theme, checked: boolean): Partial<IToggleStyles> => {
+export const themedToggleButtonStyle = (theme: Theme, checked?: boolean): Partial<IToggleStyles> => {
   if (checked) {
     return {
       root: {

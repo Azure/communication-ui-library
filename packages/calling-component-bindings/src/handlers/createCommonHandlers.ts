@@ -103,8 +103,6 @@ export interface CommonCallingHandlers {
   onStopCaptions: () => Promise<void>;
   /* @conditional-compile-remove(rtt) */
   onSendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
-  /* @conditional-compile-remove(rtt) */
-  onStartRealTimeText: () => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
   onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
@@ -748,12 +746,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
       await realTimeTextFeature?.sendRealTimeText(text);
     };
-    /* @conditional-compile-remove(rtt) */
-    const onStartRealTimeText = async (): Promise<void> => {
-      const realTimeTextFeature = call?.feature(Features.RealTimeText);
-      await realTimeTextFeature?.sendRealTimeText(' ');
-    };
-
     const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
       await call?.feature(Features.CallSurvey).submitSurvey(survey);
     const onStartSpotlight = async (userIds?: string[]): Promise<void> => {
@@ -967,9 +959,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       /* @conditional-compile-remove(media-access) */
       onPermitOthersVideo,
       /* @conditional-compile-remove(rtt) */
-      onSendRealTimeText,
-      /* @conditional-compile-remove(rtt) */
-      onStartRealTimeText
+      onSendRealTimeText
     };
   }
 );

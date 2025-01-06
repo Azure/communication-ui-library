@@ -538,6 +538,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
 
   const reactionResources = useSelector(getReactionResources);
 
+  const [openRealTimeText, setOpenRealTimeText] = useState<boolean>(false);
+  const onStartRealTimeText = useCallback(() => {
+    setOpenRealTimeText(true);
+  }, []);
+
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
       <Stack verticalFill horizontalAlign="stretch" className={containerClassName} data-ui-id={props.dataUiId}>
@@ -580,6 +585,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
                   /* @conditional-compile-remove(rtt) */
                   isRealTimeTextSupported={hasJoinedCall}
+                  /* @conditional-compile-remove(rtt) */
+                  onStartRealTimeText={onStartRealTimeText}
+                  /* @conditional-compile-remove(rtt) */
+                  startRealTimeTextButtonChecked={openRealTimeText}
                   useTeamsCaptions={useTeamsCaptions}
                   isCaptionsOn={isCaptionsOn}
                   onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
@@ -611,6 +620,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
                 /* @conditional-compile-remove(rtt) */
                 isRealTimeTextSupported={hasJoinedCall}
+                /* @conditional-compile-remove(rtt) */
+                onStartRealTimeText={onStartRealTimeText}
+                /* @conditional-compile-remove(rtt) */
+                startRealTimeTextButtonChecked={openRealTimeText}
                 useTeamsCaptions={useTeamsCaptions}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
                 userSetGalleryLayout={props.userSetGalleryLayout}
@@ -667,6 +680,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
                       useTeamsCaptions={useTeamsCaptions}
                       returnFocusRef={controlBarRef}
+                      /* @conditional-compile-remove(rtt) */
+                      isRealTimeTextOn={openRealTimeText}
                     />
                   )}
                 </Stack>

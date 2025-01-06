@@ -100,6 +100,10 @@ export interface CommonCallControlBarProps {
   onToggleTeamsMeetingConferenceModal?: () => void;
   teamsMeetingConferenceModalPresent?: boolean;
   sidePaneDismissButtonRef?: RefObject<IButton>;
+  /* @conditional-compile-remove(rtt) */
+  onStartRealTimeText?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  startRealTimeTextButtonChecked?: boolean;
 }
 
 const inferCommonCallControlOptions = (
@@ -393,7 +397,11 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
           )}
           {
             /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
-              <CallingRealTimeTextModal showModal={showRealTimeTextModal} onDismissModal={onDismissRealTimeTextModal} />
+              <CallingRealTimeTextModal
+                showModal={showRealTimeTextModal}
+                onDismissModal={onDismissRealTimeTextModal}
+                onStartRealTimeText={props.onStartRealTimeText}
+              />
             )
           }
           {props.teamsMeetingConferenceModalPresent && (
@@ -557,6 +565,8 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                           onCaptionsSettingsClick={openCaptionsSettingsModal}
                           /* @conditional-compile-remove(rtt) */
                           onStartRealTimeTextClick={openRealTimeTextModal}
+                          /* @conditional-compile-remove(rtt) */
+                          startRealTimeTextButtonChecked={props.startRealTimeTextButtonChecked}
                           onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                           onUserSetGalleryLayout={props.onUserSetGalleryLayout}
                           userSetGalleryLayout={props.userSetGalleryLayout}

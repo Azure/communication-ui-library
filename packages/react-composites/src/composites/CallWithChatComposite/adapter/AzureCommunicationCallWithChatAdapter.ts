@@ -367,8 +367,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.setSpokenLanguage.bind(this);
     this.setCaptionLanguage.bind(this);
     /* @conditional-compile-remove(rtt) */
-    this.startRealTimeText.bind(this);
-    /* @conditional-compile-remove(rtt) */
     this.sendRealTimeText.bind(this);
     this.startVideoBackgroundEffect.bind(this);
     this.stopVideoBackgroundEffects.bind(this);
@@ -663,10 +661,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   /* @conditional-compile-remove(rtt) */
   public async sendRealTimeText(text: string, finalized?: boolean): Promise<void> {
     await this.callAdapter.sendRealTimeText(text, finalized);
-  }
-  /* @conditional-compile-remove(rtt) */
-  public async startRealTimeText(): Promise<void> {
-    await this.callAdapter.startRealTimeText();
   }
 
   public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {

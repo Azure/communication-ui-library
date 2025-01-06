@@ -483,7 +483,6 @@ export interface CallAdapterCallOperations {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
     startNoiseSuppressionEffect(): Promise<void>;
-    startRealTimeText: () => Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     // @beta
@@ -1330,7 +1329,6 @@ export interface CallWithChatAdapterManagement {
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
     startNoiseSuppressionEffect(): Promise<void>;
-    startRealTimeText: () => Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
     // @beta
@@ -1906,6 +1904,9 @@ export interface CaptionsBannerProps {
 export type CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     captions: CaptionsInformation[];
     isCaptionsOn: boolean;
+    startCaptionsInProgress: boolean;
+    isRealTimeTextOn: boolean;
+    latestLocalRealTimeText: CaptionsInformation | undefined;
 };
 
 // @public
@@ -2433,8 +2434,6 @@ export interface CommonCallingHandlers {
     onStartLocalVideo: () => Promise<void>;
     // (undocumented)
     onStartNoiseSuppressionEffect: () => Promise<void>;
-    // (undocumented)
-    onStartRealTimeText: () => Promise<void>;
     // (undocumented)
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
@@ -3466,7 +3465,7 @@ export interface FluentThemeProviderProps {
 export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdentifier;
 
 // @public
-export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : AreEqual<Component, typeof ReactionButton> extends true ? RaiseHandButtonSelector : AreEqual<Component, typeof CaptionsSettingsModal> extends true ? CaptionSettingsSelector : AreEqual<Component, typeof CaptionsBanner> extends true ? CaptionsBannerSelector : AreEqual<Component, typeof StartCaptionsButton> extends true ? StartCaptionsButtonSelector : AreEqual<Component, typeof StartRealTimeTextButton> extends true ? StartRealTimeTextButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? EmptySelector : undefined;
+export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : AreEqual<Component, typeof ReactionButton> extends true ? RaiseHandButtonSelector : AreEqual<Component, typeof CaptionsSettingsModal> extends true ? CaptionSettingsSelector : AreEqual<Component, typeof CaptionsBanner> extends true ? CaptionsBannerSelector : AreEqual<Component, typeof StartCaptionsButton> extends true ? StartCaptionsButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? EmptySelector : undefined;
 
 // @public
 export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
@@ -4599,7 +4598,7 @@ export const RealTimeTextModal: (props: RealTimeTextModalProps) => JSX.Element;
 // @beta
 export interface RealTimeTextModalProps {
     onDismissModal?: () => void;
-    onStartRealTimeText?: () => Promise<void>;
+    onStartRealTimeText?: () => void;
     showModal?: boolean;
     strings?: RealTimeTextModalStrings;
 }
@@ -5058,14 +5057,9 @@ export const StartRealTimeTextButton: (props: StartRealTimeTextButtonProps) => J
 // @beta
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
     isRealTimeTextOn: boolean;
-    onStartRealTimeText: () => Promise<void>;
+    onStartRealTimeText: () => void;
     strings?: StartRealTimeTextButtonStrings;
 }
-
-// @public
-export type StartRealTimeTextButtonSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    isRealTimeTextOn: boolean;
-};
 
 // @beta
 export interface StartRealTimeTextButtonStrings {
