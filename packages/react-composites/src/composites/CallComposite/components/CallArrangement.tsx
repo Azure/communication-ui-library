@@ -537,8 +537,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     : latestNotifications;
 
   const reactionResources = useSelector(getReactionResources);
-
+  /* @conditional-compile-remove(rtt) */
   const [openRealTimeText, setOpenRealTimeText] = useState<boolean>(false);
+  /* @conditional-compile-remove(rtt) */
   const onStartRealTimeText = useCallback(() => {
     setOpenRealTimeText(true);
   }, []);
