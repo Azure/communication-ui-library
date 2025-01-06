@@ -388,12 +388,12 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(media-access) */
   forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(media-access) */
   forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
@@ -440,12 +440,12 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(media-access) */
   forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(media-access) */
   forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
@@ -492,12 +492,12 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(media-access) */
   forbidOthersAudio: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(media-access) */
   forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
@@ -544,12 +544,12 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   startTogetherMode: { isPresent: true, reason: 'Capable' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: true, reason: 'Capable' },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(media-access) */
   forbidOthersAudio: {
     isPresent: true,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(media-access) */
   forbidOthersVideo: {
     isPresent: true,
     reason: 'CapabilityNotApplicableForTheCallType'
