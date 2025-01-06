@@ -26,7 +26,7 @@ concurrency:
 
 jobs:
   job-inputs:
-    runs-on: ${{ vars.RUNS_ON }}
+    runs-on: ubuntu-latest
     permissions: read-all
     steps:
       - name: Set branch name
@@ -45,7 +45,7 @@ jobs:
       name: npm
       url: https://www.npmjs.com/package/@azure/communication-react
     name: Publish release
-    runs-on: ${{ vars.RUNS_ON }}
+    runs-on: ubuntu-latest
     permissions:
       packages: write
       contents: write

@@ -14,7 +14,7 @@ jobs:
     name: Build and publish alpha package
     environment:
       name: npm-alpha
-    runs-on: ${{ vars.RUNS_ON }}
+    runs-on: ubuntu-latest
     permissions:
       contents: write
       id-token: write
