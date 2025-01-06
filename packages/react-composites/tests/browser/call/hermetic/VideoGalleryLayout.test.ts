@@ -108,7 +108,7 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${1}`);
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
     await videoTile.hover();
     const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     await moreButton.hover();
@@ -135,7 +135,7 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${1}`);
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
     await videoTile.hover();
     const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     await moreButton.hover();
