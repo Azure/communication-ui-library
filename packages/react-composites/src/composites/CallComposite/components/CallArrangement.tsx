@@ -94,6 +94,8 @@ import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
+/* @conditional-compile-remove(media-access) */
+import { getMediaAccessSetting } from '../selectors/baseSelectors';
 import { FocusableElement } from '../../common/types/FocusableElement';
 import { DtmfDialPadOptions } from '../CallComposite';
 
@@ -160,6 +162,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const controlBarRef = useRef<FocusableElement>(null);
   const peopleButtonRef = useRef<IButton>(null);
   const cameraButtonRef = useRef<IButton>(null);
+  const sidePaneDismissButtonRef = useRef<IButton>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
@@ -202,7 +205,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems,
       mobileView: props.mobileView,
       peopleButtonRef,
-      setParticipantActioned
+      setParticipantActioned,
+      sidePaneDismissButtonRef,
+      chatButtonPresent: !!props.onCloseChatPane
     }),
     [
       updateSidePaneRenderer,
@@ -211,7 +216,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       props.onFetchAvatarPersonaData,
       props.mobileView,
       peopleButtonRef,
-      setParticipantActioned
+      setParticipantActioned,
+      sidePaneDismissButtonRef,
+      props.onCloseChatPane
     ]
   );
 
@@ -228,7 +235,15 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     onMuteParticipant,
     spotlightedParticipants,
     maxParticipantsToSpotlight,
-    localParticipant
+    localParticipant,
+    /* @conditional-compile-remove(media-access) */
+    onForbidAudio,
+    /* @conditional-compile-remove(media-access) */
+    onPermitAudio,
+    /* @conditional-compile-remove(media-access) */
+    onForbidVideo,
+    /* @conditional-compile-remove(media-access) */
+    onPermitVideo
   } = videoGalleryProps;
 
   const [showTeamsMeetingConferenceModal, setShowTeamsMeetingConferenceModal] = useState(false);
@@ -341,11 +356,45 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     spotlightedParticipants
   ]);
 
+  /* @conditional-compile-remove(media-access) */
+  const meetingMediaAccess = useSelector(getMediaAccessSetting);
+  /* @conditional-compile-remove(media-access) */
+  const canForbidOthersAudio = !!capabilities?.forbidOthersAudio?.isPresent;
+  /* @conditional-compile-remove(media-access) */
+  const canForbidOthersVideo = !!capabilities?.forbidOthersVideo?.isPresent;
+  /* @conditional-compile-remove(media-access) */
+  const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
+    return {
+      onForbidAudio: canForbidOthersAudio ? onForbidAudio : undefined,
+      onPermitAudio: canForbidOthersAudio ? onPermitAudio : undefined,
+      onForbidOthersAudio: canForbidOthersAudio ? muteAllHandlers.onForbidOthersAudio : undefined,
+      onPermitOthersAudio: canForbidOthersAudio ? muteAllHandlers.onPermitOthersAudio : undefined,
+      onForbidVideo: canForbidOthersVideo ? onForbidVideo : undefined,
+      onPermitVideo: canForbidOthersVideo ? onPermitVideo : undefined,
+      onForbidOthersVideo: canForbidOthersVideo ? muteAllHandlers.onForbidOthersVideo : undefined,
+      onPermitOthersVideo: canForbidOthersVideo ? muteAllHandlers.onPermitOthersVideo : undefined,
+      meetingMediaAccess
+    };
+  }, [
+    canForbidOthersAudio,
+    onForbidAudio,
+    onPermitAudio,
+    muteAllHandlers.onForbidOthersAudio,
+    muteAllHandlers.onPermitOthersAudio,
+    muteAllHandlers.onForbidOthersVideo,
+    muteAllHandlers.onPermitOthersVideo,
+    canForbidOthersVideo,
+    onForbidVideo,
+    onPermitVideo,
+    meetingMediaAccess
+  ]);
+
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
     ...peoplePaneProps,
     ...spotlightPeoplePaneProps,
     ...onMuteParticipantPeoplePaneProps,
-    ...pinPeoplePaneProps
+    ...pinPeoplePaneProps,
+    /* @conditional-compile-remove(media-access) */ ...onToggleParticipantMicPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {
@@ -544,6 +593,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   }
                   onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
                   teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
+                  sidePaneDismissButtonRef={sidePaneDismissButtonRef}
                 />
               )}
             </Stack>

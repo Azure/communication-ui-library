@@ -64,6 +64,10 @@ export interface RealTimeTextProps {
    */
   isTyping?: boolean;
   /**
+   * Boolean indicating whether the RealTimeText is from the local user
+   */
+  isLocalUser?: boolean;
+  /**
    * Strings for RealTimeText
    */
   strings?: RealTimeTextStrings;
@@ -77,7 +81,7 @@ export interface RealTimeTextProps {
 export const RealTimeText = (props: RealTimeTextProps): JSX.Element => {
   const { displayName, userId, captionText, onRenderAvatar, isTyping } = props;
   const theme = useTheme();
-  const localeStrings = useLocale().strings.rtt;
+  const localeStrings = useLocale().strings.realTimeText;
   const strings = { ...localeStrings, ...props.strings };
 
   const personaOptions: IPersona = {

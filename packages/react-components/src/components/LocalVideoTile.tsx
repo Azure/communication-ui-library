@@ -29,6 +29,8 @@ import {
   overlayStylesTransparent,
   loadSpinnerStyles
 } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccess } from '../types';
 
 /**
  * A memoized version of VideoTile for rendering local participant.
@@ -69,6 +71,8 @@ export const _LocalVideoTile = React.memo(
     reactionResources?: ReactionResources;
     participantsCount?: number;
     isScreenSharingOn?: boolean;
+    /* @conditional-compile-remove(media-access) */
+    mediaAccess?: MediaAccess;
   }) => {
     const {
       isAvailable,
@@ -99,7 +103,9 @@ export const _LocalVideoTile = React.memo(
       menuKind,
       strings,
       reactionResources,
-      isScreenSharingOn
+      isScreenSharingOn,
+      /* @conditional-compile-remove(media-access) */
+      mediaAccess
     } = props;
 
     const theme = useTheme();
@@ -111,7 +117,9 @@ export const _LocalVideoTile = React.memo(
         onCreateLocalStreamView,
         onDisposeLocalStreamView,
         renderElementExists: !!renderElement,
-        scalingMode: localVideoViewOptions?.scalingMode
+        scalingMode: localVideoViewOptions?.scalingMode,
+        /* @conditional-compile-remove(media-access) */
+        isVideoPermitted: mediaAccess ? mediaAccess.isVideoPermitted : true
       }),
       [
         isAvailable,
@@ -119,7 +127,9 @@ export const _LocalVideoTile = React.memo(
         localVideoViewOptions?.scalingMode,
         onCreateLocalStreamView,
         onDisposeLocalStreamView,
-        renderElement
+        renderElement,
+        /* @conditional-compile-remove(media-access) */
+        mediaAccess
       ]
     );
 
@@ -268,6 +278,7 @@ export const _LocalVideoTile = React.memo(
             )
           }
           overlay={videoTileOverlay}
+          /* @conditional-compile-remove(media-access) */ mediaAccess={mediaAccess}
         >
           {drawerMenuItemProps.length > 0 && (
             <Layer hostId={props.drawerMenuHostId}>

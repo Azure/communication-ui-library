@@ -184,8 +184,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId),
       /* @conditional-compile-remove(media-access) */
       mediaAccess: {
-        isAudioPermitted: capabilities ? capabilities.unmuteMic.isPresent : true,
-        isVideoPermitted: capabilities ? capabilities.turnVideoOn.isPresent : true
+        isAudioPermitted: capabilities?.unmuteMic ? capabilities.unmuteMic.isPresent : true,
+        isVideoPermitted: capabilities?.turnVideoOn ? capabilities.turnVideoOn.isPresent : true
       }
     });
     /* @conditional-compile-remove(total-participant-count) */
