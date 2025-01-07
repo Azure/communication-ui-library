@@ -24,7 +24,7 @@ export type {
   VideoStreamRendererViewState,
   CallInfoState
 } from './CallClientState';
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 export type { CallNotification, CallNotifications, NotificationTarget } from './CallClientState';
 export type { TeamsIncomingCallState } from './CallClientState';
 /* @conditional-compile-remove(remote-ufd) */
@@ -32,14 +32,13 @@ export type { RemoteDiagnosticState, RemoteDiagnosticType } from './CallClientSt
 export type { CreateViewResult } from './StreamUtils';
 export type { RaiseHandCallFeatureState as RaiseHandCallFeature } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
-export type { TogetherModeCallFeatureState as TogetherModeCallFeature } from './CallClientState';
-/* @conditional-compile-remove(together-mode) */
 export type {
   CallFeatureStreamState,
   TogetherModeSeatingPositionState,
   CallFeatureStreamName,
   TogetherModeStreamsState,
-  TogetherModeParticipantSeatingState
+  TogetherModeParticipantSeatingState,
+  TogetherModeCallFeatureState
 } from './CallClientState';
 
 export type { RaisedHandState } from './CallClientState';

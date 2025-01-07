@@ -45,8 +45,6 @@ export type {
   CallingHandlersOptions
 } from '../../calling-component-bindings/src';
 
-export type { CaptionsOptions } from '../../calling-component-bindings/src';
-
 export type {
   ChatClientProviderProps,
   ChatThreadClientProviderProps,
@@ -90,8 +88,12 @@ export type {
   ParticipantListSelector,
   MicrophoneButtonSelector,
   ParticipantsButtonSelector,
-  CreateDefaultCallingHandlers
+  CreateDefaultCallingHandlers,
+  CaptionSettingsSelector,
+  CaptionsBannerSelector,
+  StartCaptionsButtonSelector
 } from '../../calling-component-bindings/src';
+
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
@@ -314,7 +316,13 @@ export type {
 } from '../../react-components/src';
 
 /* @conditional-compile-remove(together-mode) */
-export type { TogetherModeStreamViewResult } from '../../react-components/src';
+export type {
+  TogetherModeStreamViewResult,
+  VideoGalleryTogetherModeStreams,
+  VideoGalleryTogetherModeParticipantPosition,
+  VideoGalleryTogetherModeSeatingInfo,
+  TogetherModeStreamOptions
+} from '../../react-components/src';
 
 export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
 export type {
@@ -446,17 +454,33 @@ export type {
 } from '../../react-components/src';
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';
 /* @conditional-compile-remove(rtt) */
-export type { RTTModalStrings, RTTModalProps } from '../../react-components/src';
+export type { RealTimeTextModalStrings, RealTimeTextModalProps } from '../../react-components/src';
 /* @conditional-compile-remove(rtt) */
-export { RTTModal } from '../../react-components/src';
-
-/* @conditional-compile-remove(rtt) */
-export type { RTTDisclosureBannerProps, RTTDisclosureBannerStrings } from '../../react-components/src';
-/* @conditional-compile-remove(rtt) */
-export { RTTDisclosureBanner } from '../../react-components/src';
+export { RealTimeTextModal } from '../../react-components/src';
 /* @conditional-compile-remove(rtt) */
 export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
 /* @conditional-compile-remove(rtt) */
 export { RealTimeText } from '../../react-components/src/components/RealTimeText';
+/* @conditional-compile-remove(rtt) */
+export { StartRealTimeTextButton } from '../../react-components/src/components/StartRealTimeTextButton';
+/* @conditional-compile-remove(rtt) */
+export type {
+  StartRealTimeTextButtonProps,
+  StartRealTimeTextButtonStrings
+} from '../../react-components/src/components/StartRealTimeTextButton';
 /* @conditional-compile-remove(media-access) */
 export type { MediaAccess } from '../../react-components/src';
+export type { CaptionsSettingsModalStrings, CaptionsSettingsModalProps } from '../../react-components/src';
+export { CaptionsSettingsModal } from '../../react-components/src';
+export type { SupportedCaptionLanguage, SupportedSpokenLanguage, CaptionsOptions } from '../../react-components/src';
+export type {
+  CaptionsBannerProps,
+  CaptionsInformation,
+  CaptionsBannerStrings
+} from '../../react-components/src/components/CaptionsBanner';
+export { CaptionsBanner } from '../../react-components/src/components/CaptionsBanner';
+export { StartCaptionsButton } from '../../react-components/src/components/StartCaptionsButton';
+export type {
+  StartCaptionsButtonProps,
+  StartCaptionsButtonStrings
+} from '../../react-components/src/components/StartCaptionsButton';

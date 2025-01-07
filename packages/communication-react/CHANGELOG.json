@@ -2,6 +2,602 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 16 Dec 2024 19:44:14 GMT",
+      "version": "1.22.0",
+      "tag": "@azure/communication-react_v1.22.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b0f99447a431068f8dd907747467e0fad353de0e",
+            "area": "fix",
+            "workstream": "Chat",
+            "comment": "Fix an issue where edited message could be saved without the content and attachments when rich text editor is enabled"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ead604c76cf77a25e8e9530b1c8c35ca2635a9b3",
+            "area": "improvement",
+            "workstream": "Dependency",
+            "comment": "nanoid package update"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "11046b433d02a797c373ba9393e67142e1a5a092",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix screenshare tab outline color when presenting"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b0308baa91b9036916bd0919685f090a739b52fa",
+            "area": "fix",
+            "workstream": "",
+            "comment": "In CallCompsite, return focus to control bar when captions is closed from the captions settings button"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fbe535b6480b569060b51075c08186814e85bbd3",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Update configuration page local preview to show 'Video is loading' while camera is switching on or switching source. Also disable camera button while swiching source."
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2cd508bdc944e44f2381a9baafbc4b912ee0e45d",
+            "area": "fix",
+            "workstream": "Revert changes to add undefined type so we are not introducing a breaking change to the beta release ",
+            "comment": "Revert changes to add undefined type so we are not introducing a breaking change to the beta release"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8e57446a716d9f0bd3f21f899758594c77589b2e",
+            "area": "fix",
+            "workstream": "Error bar",
+            "comment": "Fix error bar icon size for low network quality and local video freeze"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "94e96c1c1d64208e8857e35daa5e74abc2f00bdf",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix regression that caused minor inconsistent padding between connecting and call pages in CallComposite"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b52903558d26b027d3dd824cc3c58b2fd7c86623",
+            "area": "fix",
+            "workstream": "Chat",
+            "comment": "Fix an issue where text editors didn't trigger typing events when using input method editor"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2dfbec59442cadba0843457c92e0092c48ab7f68",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix console error that requested teams conference details in unsupported calls"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a4f322540f3c9eede38d73d644035e1e75c6bb15",
+            "area": "improvement",
+            "workstream": "Automated tests",
+            "comment": "Automate dominant speaker, pinning, and spotlight tests"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e633239bd234c3bd8b9e037962f38a5c7d4e80a7",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix A11y Properties of Participant List More Options to have aria-expanded, aria-controls and aria-label. Correctly apply focus when the CallComposite people pane is opened when no one else has joined the call."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "010645f088eb7bd1d5302d6a4a1814363d58092d",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Update aria-live property of notifications in the notification stack. Update camera button aria-label to indicate loading status to match announcer."
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8c78e6768c08191d10a2a75b3a5d6bc3120189c9",
+            "area": "fix",
+            "workstream": "OnFetchAvatar",
+            "comment": "Fix bug so onfetchavatarpersonadata now allows returning undefined"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2c7254c2e1817036455fef085713a588bc881bc5",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "add aria descriptions to reaction and raise buttons"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5ffbb447689e2f72e4e5bd6ec7e44b0eb2ec62fe",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update `@azure/communication-calling-effects` to 1.1.2"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9acb3c0af6ed11a5ea7096e2d7e22ff79d47b04c",
+            "area": "improvement",
+            "workstream": "Calling dependency",
+            "comment": "Update @azure/communication-calling to 1.31.2-beta.2"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "075b95fef9179f0d70493954021db9f8e01ba81e",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix an issue where system chat messages weren't announced"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "0375bccdf1c722335ee3e91b135096fc2edf22ca",
+            "area": "feature",
+            "workstream": "Hard mute",
+            "comment": "Merge branch 'main' into fuyan/hard_mute_part3_integrate_web_sdk"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9b4a08c92f1b01f9e45235fbf7257dac40767f40",
+            "area": "fix",
+            "workstream": "Audio Context",
+            "comment": "Fix issue where AudioContext for composites is made too early"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c5aaf2db5f95514531b19bf8389cdca49dc8bcc3",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Removed custom styles for scroll bar for ChatComposite and Captions components"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "966d1594a2f2f562010fbd9235d693dcf8c1a6bf",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update Control bar button aria-describedby"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "69ffbf2fc7de470e8bf5c6beec782f4fd705b187",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Add hard mute localization"
+          }
+        ],
+        "minor": [
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f9141ae59730e78f921e1e29554a9d6887f41a0c",
+            "area": "fix",
+            "workstream": "Allow for contoso to hard set the dialer page, on, off, or follow our auto behaviors",
+            "comment": "Allow for contoso to hard set the dialer page, on, off, or follow our behaviors"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "51adc09e66cb6c4538e73f6bdb2cecec6cf17a7f",
+            "area": "fix",
+            "workstream": "Captions and Raised hands",
+            "comment": "Fix string typo for captions dropdown info. Fix usePropsFor return type for RaiseHandButton."
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "46c3e58393aaa4b28d3704303799814e468ecbbd",
+            "area": "improvement",
+            "workstream": "captions",
+            "comment": "Build captions inside caling stateful sample"
+          }
+        ]
+      }
+    },
+    {
+      "date": "Mon, 02 Dec 2024 20:48:59 GMT",
+      "version": "1.22.0-beta.1",
+      "tag": "@azure/communication-react_v1.22.0-beta.1",
+      "comments": {
+        "prerelease": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "840b1882096dcbc3e0101770f437c223da0993a1",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix configuration page dropdown properties when permissions have been blocked"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "ea23b149a529d3d3bcd87518137cfd33ed989ba1",
+            "area": "feature",
+            "workstream": "togetherMode",
+            "comment": "TogetherMode APIs Update"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5ffbb447689e2f72e4e5bd6ec7e44b0eb2ec62fe",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update `@azure/communication-calling` to 1.31.2-beta.1 and `@azure/communication-calling-effects` to 1.1.2"
+          },
+          {
+            "author": "nwankwojustin93@gmail.com",
+            "package": "@azure/communication-react",
+            "commit": "639e504099e6e3db4fdd206e49e9d8dc20a9ccd6",
+            "area": "feature",
+            "workstream": "togetherMode",
+            "comment": "Included a common util method that set call features renderer info"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d473710e6fc52852613d1220bbced86c6755513e",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix call readiness modal being not dismissable by keyboard"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f0bedd722665b12fe7118f018443575bd73a527f",
+            "area": "feature",
+            "workstream": "Hard mute",
+            "comment": "Hard mute feature part1 - stateful client changes"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "059d2de41ecce83d1db7ff056693ffa1ef19de9b",
+            "area": "feature",
+            "workstream": "Hard mute",
+            "comment": "Hard mute part 2 - component binding"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "36c8f34ffe0a13fa05f95a06e3ef99471b7c861d",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Add Close aria label for spotlight prompt"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "639e504099e6e3db4fdd206e49e9d8dc20a9ccd6",
+            "area": "feature",
+            "workstream": "togetherMode",
+            "comment": "Stream utils implementation for call feature streams. This also included the client state for together mode feature"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b40b11601e7e604160c64109f1a5095882986a17",
+            "area": "improvement",
+            "workstream": "Dependency updates",
+            "comment": "Update minimum supported typescript version for node 22 support."
+          },
+          {
+            "author": "nwankwojustin93@gmail.com",
+            "package": "@azure/communication-react",
+            "commit": "7598fc43c9d934fbbbf9d9bf3ff5e30e67750d82",
+            "area": "feature",
+            "workstream": "togetherMode",
+            "comment": "localization string for together mode"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "cdf969597215ef3293640c5b113c17315a0a65c2",
+            "area": "feature",
+            "workstream": "togetherMode",
+            "comment": "Fix conditional compile"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "36c8f34ffe0a13fa05f95a06e3ef99471b7c861d",
+            "area": "fix",
+            "workstream": "a11y",
+            "comment": "Add Close aria label for spotlight prompt"
+          },
+          {
+            "author": "jiangnanhello@live.com",
+            "package": "@azure/communication-react",
+            "commit": "d31d782f8788b299fc722e654c2ab5a6351d8f13",
+            "area": "feature",
+            "workstream": "",
+            "comment": "Add network signal to selector"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "ea23b149a529d3d3bcd87518137cfd33ed989ba1",
+            "area": "feature",
+            "workstream": "togetherMode",
+            "comment": "Together Mode APIs"
+          }
+        ],
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a26f9224e9f65beedd0400e7af371090df27405d",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Update video effects picker to a radio group for better A11y control"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ae93b41827d433bdbff41af7cfe41799f51dde1b",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update configuration screen drop downs to have a button inside enabling users with keyboards to reprompt for the troubleshooting links"
+          },
+          {
+            "author": "73612854+palatter@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "05aab3752b2c6bb3d7bcb9b0bb95170b212b4a6f",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Add enter key support for rich text edit box"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ff7dee770476ec82535265f2271a61ac6deabf57",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix Start Call text color in Desert high contrast mode when a dark theme is applied"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b0f99447a431068f8dd907747467e0fad353de0e",
+            "area": "fix",
+            "workstream": "Chat",
+            "comment": "Fix an issue where edited message could be saved without the content and attachments when rich text editor is enabled"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f06345813086c4349bebacac26a18e45095a73fa",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Remove unnecessary disabled prop from label"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b2107ebda6a186a407a3e3c6904a391c8d8fca1b",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix CallComposite captions to correctly be <li> items nested inside a <ul>"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8364d25175cd8d70149ec1d64fb1c503c7c36817",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix the A11y role of the local video tile in the VideoGallery depending on if it is draggable or not"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "458786efbb0ebbd4dbca7a35ab3f02212eed9b4b",
+            "area": "improvement",
+            "workstream": "sample-app-aad",
+            "comment": "Add AAD sign out capability for sample app"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "11046b433d02a797c373ba9393e67142e1a5a092",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix screenshare tab outline color when presenting"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "727cea5057985f1dad3eb579ddeb634dd09a22c3",
+            "area": "improvement",
+            "workstream": "Update Dependency",
+            "comment": "Update comunication-calling stable version to 1.30.2 and beta to 1.31.1-beta.1"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b0308baa91b9036916bd0919685f090a739b52fa",
+            "area": "fix",
+            "workstream": "",
+            "comment": "In CallCompsite, return focus to control bar when captions is closed from the captions settings button"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "554164789c1fd196ff506e7b4908c0d443900285",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update caption modal styles for 400%"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fbe535b6480b569060b51075c08186814e85bbd3",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Update configuration page local preview to show 'Video is loading' while camera is switching on or switching source. Also disable camera button while swiching source."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6fb5797419ef5daa215606470917b78c00b68ac3",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Add High Contrast borders around video tiles, side pane, and side pane close button in Call Composites"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5c2a765beba09c0eb09075cec65394bf7c23b396",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix device permission comboboxes on Call Composite configuration page to be appropriately labelled"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "94e96c1c1d64208e8857e35daa5e74abc2f00bdf",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix regression that caused minor inconsistent padding between connecting and call pages in CallComposite"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2dfbec59442cadba0843457c92e0092c48ab7f68",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix console error that requested teams conference details in unsupported calls"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c2cc8afa9c8675197fb125c65750cfe7331429da",
+            "area": "fix",
+            "workstream": "a11y",
+            "comment": "Add announcements to hold screen and attempting to reconnect screen"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e633239bd234c3bd8b9e037962f38a5c7d4e80a7",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix A11y Properties of Participant List More Options to have aria-expanded, aria-controls and aria-label. Correctly apply focus when the CallComposite people pane is opened when no one else has joined the call."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "010645f088eb7bd1d5302d6a4a1814363d58092d",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Update aria-live property of notifications in the notification stack. Update camera button aria-label to indicate loading status to match announcer."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c29f20692cf75f693e5ea5db44d215aad3558d44",
+            "area": "fix",
+            "workstream": "",
+            "comment": "In configuration page of call composites, move focus to error bar when an error occurs"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8c78e6768c08191d10a2a75b3a5d6bc3120189c9",
+            "area": "fix",
+            "workstream": "OnFetchAvatar",
+            "comment": "Fix bug so onfetchavatarpersonadata now allows returning undefined"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "885f76c39380c75796fc4362bf70b74d6aab359f",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix troubleshooting links color in high contrast modes"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2c7254c2e1817036455fef085713a588bc881bc5",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "add aria descriptions to reaction and raise buttons"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5ffbb447689e2f72e4e5bd6ec7e44b0eb2ec62fe",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update `@azure/communication-calling-effects` to 1.1.2"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "db134caa58c1466435619ea06c2b15132e35de71",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Add announcement strings for page status"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9acb3c0af6ed11a5ea7096e2d7e22ff79d47b04c",
+            "area": "improvement",
+            "workstream": "Calling dependency",
+            "comment": "Update @azure/communication-calling to 1.31.2-beta.2"
+          }
+        ],
+        "minor": [
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "15b893aaa3a90fe285c019930e3637c7c02ece94",
+            "area": "improvement",
+            "workstream": "Localization",
+            "comment": "Add es-MX and fr-CA locales"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c22fdcd7abb09511234ac60bda3bd5c202372c9c",
+            "area": "improvement",
+            "workstream": "Reactions",
+            "comment": "Export reactions button to enhance our component experience."
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "51adc09e66cb6c4538e73f6bdb2cecec6cf17a7f",
+            "area": "fix",
+            "workstream": "Captions and Raised hands",
+            "comment": "Fix string typo for captions dropdown info. Fix usePropsFor return type for RaiseHandButton."
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 12 Nov 2024 17:20:46 GMT",
       "version": "1.21.0",
       "tag": "@azure/communication-react_v1.21.0",

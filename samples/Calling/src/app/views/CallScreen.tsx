@@ -32,7 +32,6 @@ export interface CallScreenProps {
   targetCallees?: StartCallIdentifier[];
   displayName: string;
   alternateCallerId?: string;
-
   isTeamsIdentityCall?: boolean;
 }
 

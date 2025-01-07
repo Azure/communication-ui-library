@@ -51,8 +51,14 @@ export type VideoGalleryParticipant = {
   /** Signal strength of the participant, range from 1 to 3, lower means better connection **/
   signalStrength?: number;
   /* @conditional-compile-remove(media-access) */
-  /** audio video access states **/
+  /** Media audio video access states **/
   mediaAccess?: MediaAccess;
+  /* @conditional-compile-remove(media-access) */
+  /** Attendee can have audio be forbidden **/
+  canAudioBeForbidden?: boolean;
+  /* @conditional-compile-remove(media-access) */
+  /** Attendee can have video be forbidden **/
+  canVideoBeForbidden?: boolean;
 };
 
 /**
@@ -137,5 +143,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * */
   reaction?: Reaction;
   /* @conditional-compile-remove(media-access) */
+  /** Media audio video access states **/
   mediaAccess?: MediaAccess;
 }
