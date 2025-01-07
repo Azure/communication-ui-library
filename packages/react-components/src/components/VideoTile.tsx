@@ -496,7 +496,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             <Stack horizontal className={tileInfoStyle}>
               {canShowLabel && (
                 <Text
-                  className={mergeStyles(displayNameStyle)}
+                  className={mergeStyles(displayNameStyle(!!participantStateString))}
                   title={displayName}
                   style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
                   data-ui-id="video-tile-display-name"

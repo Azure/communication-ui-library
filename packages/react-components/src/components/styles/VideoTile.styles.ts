@@ -75,7 +75,7 @@ export const disabledVideoHint = mergeStyles({
 /**
  * @private
  */
-export const displayNameStyle: IStyle = {
+export const displayNameStyle = (hasParticipantStateFollowed: boolean): IStyle => ({
   padding: '0.1rem',
   fontSize: '0.75rem',
   fontWeight: 600,
@@ -83,8 +83,9 @@ export const displayNameStyle: IStyle = {
   color: 'inherit',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  maxWidth: '100%'
-};
+  maxWidth: '100%',
+  marginRight: hasParticipantStateFollowed ? 'audo' : '0.2rem'
+});
 
 /**
  * @private
@@ -97,7 +98,7 @@ export const pinIconStyle: IStyle = {
  * @private
  */
 export const iconContainerStyle: IStyle = {
-  margin: '0 0.2em',
+  margin: 'auto 0.2rem',
   alignItems: 'center',
   '& svg': {
     display: 'block',
@@ -118,7 +119,8 @@ export const participantStateStringStyles = (theme: Theme): IStyle => {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    padding: '0.1rem'
+    padding: '0.1rem',
+    marginRight: '0.2rem'
   };
 };
 
