@@ -2,7 +2,7 @@ import { Meta, Source } from '@storybook/addon-docs';
 
 <Meta title="Concepts/TogetherMode" />
 
-import PPTLiveSnippetText from '!!raw-loader!./snippets/TogetherMode.snippet.tsx';
+import TogetherModeSnippetText from '!!raw-loader!./snippets/TogetherMode.snippet.tsx';
 
 # TogetherMode
 
@@ -29,9 +29,21 @@ Mode view.
 
 ## Implementing with the VideoGallery
 
-The VideoGallery component is used to display PowerPoint Live sessions. This multi-functional component also supports video streams and screen sharing. Here’s a brief guide to integrating it:
+The VideoGallery component is used to display together mode stream. This multi-functional component also supports video streams and screen sharing.
+Raisehand, spotlight, mute and reactions performed during together mode are also handled when using the VideoGallery component
 
-<Source code={PPTLiveSnippetText} />
+<img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-raise-hand.png" />
+The above image shows a participant performing raise hand when together mode is active.
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-reactions.png" />
+The above image shows a participant performing reactions when together mode is active.
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-spotlight.png" />
+The above image shows a participant performing spotlight when together mode is active.
+
+Here’s a brief guide to integrating together mode stream in your application using VideoGallery component in CallComposite:
+
+<Source code={TogetherModeSnippetText} />
 
 This code snippet illustrates the utilization of the `usePropsFor` hook from the `@azure/communication-react` package, which dynamically manages the properties of the `VideoGallery`. This ensures that the component reacts appropriately to changes in state or properties.
 
