@@ -3,7 +3,7 @@
 
 import { CallContext } from './CallContext';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-import { CaptionsInfo } from './CallClientState';
+import { CaptionsInfo, RealTimeTextInfo } from './CallClientState';
 
 describe('CallContext', () => {
   let callContext: CallContext;
@@ -15,10 +15,9 @@ describe('CallContext', () => {
 
   describe('processNewCaptionAndNewRealTimeText', () => {
     test('should add new caption if captions array is empty', () => {
-      const captions: CaptionsInfo[] = [];
+      const captions: (CaptionsInfo | RealTimeTextInfo)[] = [];
       const newCaption: CaptionsInfo = {
         resultType: 'Final',
-        isRealTimeText: false,
         speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
         captionText: 'Hello',
         spokenLanguage: 'en-US',
@@ -33,14 +32,16 @@ describe('CallContext', () => {
     });
 
     test('should add new real time text if captions array is empty', () => {
-      const captions: CaptionsInfo[] = [];
-      const newCaption: CaptionsInfo = {
+      const captions: (CaptionsInfo | RealTimeTextInfo)[] = [];
+      const newCaption: RealTimeTextInfo = {
+        id: 1,
         resultType: 'Final',
-        isRealTimeText: true,
-        speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
-        captionText: 'Hello',
-        spokenLanguage: 'en-US',
-        timestamp: new Date()
+        sender: {
+          identifier: { kind: 'communicationUser', communicationUserId: 'user1' },
+          endpointDetails: [{ participantId: '1' }]
+        },
+        message: 'Hello',
+        isMe: false
       };
 
       // @ts-ignore
@@ -51,10 +52,9 @@ describe('CallContext', () => {
     });
 
     test('should add new real time text if it is a new real time text from a new user', () => {
-      const captions: CaptionsInfo[] = [
+      const captions: (CaptionsInfo | RealTimeTextInfo)[] = [
         {
           resultType: 'Final',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user2' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
@@ -62,7 +62,6 @@ describe('CallContext', () => {
         },
         {
           resultType: 'Final',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user2' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
@@ -70,36 +69,41 @@ describe('CallContext', () => {
         },
         {
           resultType: 'Partial',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user3' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
           timestamp: new Date()
         },
         {
+          id: 1,
           resultType: 'Partial',
-          isRealTimeText: true,
-          speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
-          captionText: 'Hel',
-          spokenLanguage: 'en-US',
-          timestamp: new Date()
+          sender: {
+            identifier: { kind: 'communicationUser', communicationUserId: 'user1' },
+            endpointDetails: [{ participantId: '1' }]
+          },
+          message: 'Hello',
+          isMe: false
         },
         {
+          id: 2,
           resultType: 'Partial',
-          isRealTimeText: true,
-          speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user0' } },
-          captionText: 'Hello world Hel',
-          spokenLanguage: 'en-US',
-          timestamp: new Date()
+          sender: {
+            identifier: { kind: 'communicationUser', communicationUserId: 'user0' },
+            endpointDetails: [{ participantId: '1' }]
+          },
+          message: 'Hello world Hel',
+          isMe: false
         }
       ];
-      const newCaption: CaptionsInfo = {
+      const newCaption: RealTimeTextInfo = {
+        id: 3,
         resultType: 'Partial',
-        isRealTimeText: true,
-        speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user3' } },
-        captionText: 'Hello',
-        spokenLanguage: 'en-US',
-        timestamp: new Date()
+        sender: {
+          identifier: { kind: 'communicationUser', communicationUserId: 'user3' },
+          endpointDetails: [{ participantId: '1' }]
+        },
+        message: 'Hello',
+        isMe: false
       };
 
       // @ts-ignore
@@ -110,10 +114,9 @@ describe('CallContext', () => {
     });
 
     test('when receiving a real time text, should try to find the latest partial real time text from the same speaker and update in place', () => {
-      const captions: CaptionsInfo[] = [
+      const captions: (CaptionsInfo | RealTimeTextInfo)[] = [
         {
           resultType: 'Final',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user2' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
@@ -121,7 +124,6 @@ describe('CallContext', () => {
         },
         {
           resultType: 'Final',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user2' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
@@ -129,36 +131,41 @@ describe('CallContext', () => {
         },
         {
           resultType: 'Partial',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user3' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
           timestamp: new Date()
         },
         {
+          id: 1,
           resultType: 'Partial',
-          isRealTimeText: true,
-          speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
-          captionText: 'Hel',
-          spokenLanguage: 'en-US',
-          timestamp: new Date()
+          sender: {
+            identifier: { kind: 'communicationUser', communicationUserId: 'user1' },
+            endpointDetails: [{ participantId: '1' }]
+          },
+          message: 'Hel',
+          isMe: false
         },
         {
+          id: 2,
           resultType: 'Partial',
-          isRealTimeText: true,
-          speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user0' } },
-          captionText: 'Hello world Hel',
-          spokenLanguage: 'en-US',
-          timestamp: new Date()
+          sender: {
+            identifier: { kind: 'communicationUser', communicationUserId: 'user0' },
+            endpointDetails: [{ participantId: '0' }]
+          },
+          message: 'Hello world Hel',
+          isMe: false
         }
       ];
-      const newCaption: CaptionsInfo = {
+      const newCaption: RealTimeTextInfo = {
+        id: 3,
         resultType: 'Final',
-        isRealTimeText: true,
-        speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
-        captionText: 'Hello',
-        spokenLanguage: 'en-US',
-        timestamp: new Date()
+        sender: {
+          identifier: { kind: 'communicationUser', communicationUserId: 'user1' },
+          endpointDetails: [{ participantId: '1' }]
+        },
+        message: 'Hello',
+        isMe: false
       };
 
       // @ts-ignore
@@ -169,35 +176,37 @@ describe('CallContext', () => {
     });
 
     test('should add new caption on top of the last partial real time text', () => {
-      const captions: CaptionsInfo[] = [
+      const captions: (CaptionsInfo | RealTimeTextInfo)[] = [
         {
           resultType: 'Final',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user2' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
           timestamp: new Date()
         },
         {
+          id: 1,
           resultType: 'Partial',
-          isRealTimeText: true,
-          speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
-          captionText: 'Hel',
-          spokenLanguage: 'en-US',
-          timestamp: new Date()
+          sender: {
+            identifier: { kind: 'communicationUser', communicationUserId: 'user1' },
+            endpointDetails: [{ participantId: '1' }]
+          },
+          message: 'Hel',
+          isMe: false
         },
         {
+          id: 2,
           resultType: 'Partial',
-          isRealTimeText: true,
-          speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user0' } },
-          captionText: 'Hello world Hel',
-          spokenLanguage: 'en-US',
-          timestamp: new Date()
+          sender: {
+            identifier: { kind: 'communicationUser', communicationUserId: 'user0' },
+            endpointDetails: [{ participantId: '0' }]
+          },
+          message: 'Hello world Hel',
+          isMe: false
         }
       ];
       const newCaption: CaptionsInfo = {
         resultType: 'Partial',
-        isRealTimeText: false,
         speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user3' } },
         captionText: 'Hel',
         spokenLanguage: 'en-US',
@@ -212,10 +221,9 @@ describe('CallContext', () => {
     });
 
     test('when receiving a new captions, should try to find the latest partial caption from the same speaker and update in place', () => {
-      const captions: CaptionsInfo[] = [
+      const captions: (CaptionsInfo | RealTimeTextInfo)[] = [
         {
           resultType: 'Final',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user2' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
@@ -223,24 +231,24 @@ describe('CallContext', () => {
         },
         {
           resultType: 'Partial',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
           captionText: 'Hel',
           spokenLanguage: 'en-US',
           timestamp: new Date()
         },
         {
+          id: 0,
           resultType: 'Partial',
-          isRealTimeText: true,
-          speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user0' } },
-          captionText: 'Hello world Hel',
-          spokenLanguage: 'en-US',
-          timestamp: new Date()
+          sender: {
+            identifier: { kind: 'communicationUser', communicationUserId: 'user0' },
+            endpointDetails: [{ participantId: '0' }]
+          },
+          message: 'Hello world Hel',
+          isMe: false
         }
       ];
-      const newCaption: CaptionsInfo = {
+      const newCaption: CaptionsInfo | RealTimeTextInfo = {
         resultType: 'Partial',
-        isRealTimeText: false,
         speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
         captionText: 'Hello',
         spokenLanguage: 'en-US',
@@ -255,10 +263,9 @@ describe('CallContext', () => {
     });
 
     test('when receiving a new captions and cannot find the latest partial caption from the same speaker, should append at the bottom', () => {
-      const captions: CaptionsInfo[] = [
+      const captions: (CaptionsInfo | RealTimeTextInfo)[] = [
         {
           resultType: 'Final',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user2' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
@@ -266,24 +273,24 @@ describe('CallContext', () => {
         },
         {
           resultType: 'Final',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
           captionText: 'Hel',
           spokenLanguage: 'en-US',
           timestamp: new Date()
         },
         {
+          id: 0,
           resultType: 'Partial',
-          isRealTimeText: true,
-          speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user0' } },
-          captionText: 'Hello world Hel',
-          spokenLanguage: 'en-US',
-          timestamp: new Date()
+          sender: {
+            identifier: { kind: 'communicationUser', communicationUserId: 'user0' },
+            endpointDetails: [{ participantId: '0' }]
+          },
+          message: 'Hello world Hel',
+          isMe: false
         }
       ];
       const newCaption: CaptionsInfo = {
         resultType: 'Partial',
-        isRealTimeText: false,
         speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
         captionText: 'Hel',
         spokenLanguage: 'en-US',
@@ -298,10 +305,9 @@ describe('CallContext', () => {
     });
 
     test('when receiving 2 partial captions at the same time, should ignore the interjector', () => {
-      const captions: CaptionsInfo[] = [
+      const captions: (CaptionsInfo | RealTimeTextInfo)[] = [
         {
           resultType: 'Final',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user2' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
@@ -309,24 +315,24 @@ describe('CallContext', () => {
         },
         {
           resultType: 'Partial',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
           captionText: 'I should not be replaced',
           spokenLanguage: 'en-US',
           timestamp: new Date()
         },
         {
+          id: 0,
           resultType: 'Partial',
-          isRealTimeText: true,
-          speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user0' } },
-          captionText: 'Hello world Hel',
-          spokenLanguage: 'en-US',
-          timestamp: new Date()
+          sender: {
+            identifier: { kind: 'communicationUser', communicationUserId: 'user0' },
+            endpointDetails: [{ participantId: '0' }]
+          },
+          message: 'Hello world Hel',
+          isMe: false
         }
       ];
       const newCaption: CaptionsInfo = {
         resultType: 'Partial',
-        isRealTimeText: false,
         speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user0' } },
         captionText: 'Hel',
         spokenLanguage: 'en-US',
@@ -337,14 +343,13 @@ describe('CallContext', () => {
       callContext.processNewCaptionAndNewRealTimeText(captions, newCaption, false);
 
       expect(captions).toHaveLength(3);
-      expect(captions[1]?.captionText).toEqual('I should not be replaced');
+      expect((captions[1] as CaptionsInfo)?.captionText).toEqual('I should not be replaced');
     });
 
     test('when receiving 2 partial real time text at the same time, should append them based on the order they come in', () => {
-      const captions: CaptionsInfo[] = [
+      const captions: (CaptionsInfo | RealTimeTextInfo)[] = [
         {
           resultType: 'Final',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user2' } },
           captionText: 'Hello',
           spokenLanguage: 'en-US',
@@ -352,40 +357,45 @@ describe('CallContext', () => {
         },
         {
           resultType: 'Partial',
-          isRealTimeText: false,
           speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
           captionText: 'I should not be replaced',
           spokenLanguage: 'en-US',
           timestamp: new Date()
         },
         {
+          id: 0,
           resultType: 'Partial',
-          isRealTimeText: true,
-          speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user0' } },
-          captionText: 'Hello world Hel',
-          spokenLanguage: 'en-US',
-          timestamp: new Date()
+          sender: {
+            identifier: { kind: 'communicationUser', communicationUserId: 'user0' },
+            endpointDetails: [{ participantId: '0' }]
+          },
+          message: 'Hello world Hel',
+          isMe: false
         }
       ];
-      const newCaption: CaptionsInfo = {
+      const newCaption: RealTimeTextInfo = {
+        id: 1,
         resultType: 'Partial',
-        isRealTimeText: true,
-        speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user1' } },
-        captionText: 'Hel',
-        spokenLanguage: 'en-US',
-        timestamp: new Date()
+        sender: {
+          identifier: { kind: 'communicationUser', communicationUserId: 'user1' },
+          endpointDetails: [{ participantId: '1' }]
+        },
+        message: 'Hel',
+        isMe: false
       };
 
       // @ts-ignore
       callContext.processNewCaptionAndNewRealTimeText(captions, newCaption, true);
 
-      const newCaption2: CaptionsInfo = {
+      const newCaption2: RealTimeTextInfo = {
+        id: 2,
         resultType: 'Partial',
-        isRealTimeText: true,
-        speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user2' } },
-        captionText: 'Hel',
-        spokenLanguage: 'en-US',
-        timestamp: new Date()
+        sender: {
+          identifier: { kind: 'communicationUser', communicationUserId: 'user2' },
+          endpointDetails: [{ participantId: '2' }]
+        },
+        message: 'Hel',
+        isMe: false
       };
 
       // @ts-ignore
@@ -397,17 +407,15 @@ describe('CallContext', () => {
     });
 
     test('should remove the oldest caption if the array length exceeds 50', () => {
-      const captions: CaptionsInfo[] = Array.from({ length: 50 }, (_, i) => ({
+      const captions: (CaptionsInfo | RealTimeTextInfo)[] = Array.from({ length: 50 }, (_, i) => ({
         resultType: 'Final',
-        isRealTimeText: false,
         speaker: { identifier: { kind: 'communicationUser', communicationUserId: `user${i}` } },
         captionText: `Text ${i}`,
         timestamp: new Date(),
         spokenLanguage: 'en-US'
       }));
-      const newCaption: CaptionsInfo = {
+      const newCaption: CaptionsInfo | RealTimeTextInfo = {
         resultType: 'Final',
-        isRealTimeText: false,
         speaker: { identifier: { kind: 'communicationUser', communicationUserId: 'user51' } },
         captionText: 'Hello',
         spokenLanguage: 'en-US',

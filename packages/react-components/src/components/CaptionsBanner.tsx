@@ -41,23 +41,38 @@ export type CaptionsInformation = {
    * id of the speaker
    */
   userId?: string;
-  /* @conditional-compile-remove(rtt) */
-  /**
-   * if the caption received is real time text
-   */
-  isRealTimeText?: boolean;
-  /* @conditional-compile-remove(rtt) */
-  /**
-   * if the caption received is a non finalized caption
-   */
-  isPartial?: boolean;
-  /* @conditional-compile-remove(rtt) */
-  /**
-   * if the caption received is from the local user
-   */
-  isLocalUser?: boolean;
 };
 
+/**
+ * @beta
+ * information required for each line of caption
+ */
+export type RealTimeTextInformation = {
+  /**
+   * The sequence id of the real time text.
+   */
+  id: number;
+  /**
+   * sender's display name
+   */
+  displayName: string;
+  /**
+   * id of the sender
+   */
+  userId?: string;
+  /**
+   * The real time text message.
+   */
+  message: string;
+  /**
+   * if the real time text received is partial
+   */
+  isTyping?: boolean;
+  /**
+   * If message originated from the local participant
+   */
+  isMe: boolean;
+};
 /**
  * @public
  * strings for captions banner
@@ -97,7 +112,7 @@ export interface CaptionsBannerProps {
   /**
    * Array of captions to be displayed
    */
-  captions: CaptionsInformation[];
+  captions: (CaptionsInformation | /* @conditional-compile-remove(rtt) */ RealTimeTextInformation)[];
   /**
    * Flag to indicate if captions are on
    */
@@ -142,7 +157,7 @@ export interface CaptionsBannerProps {
   /**
    * Latest local real time text
    */
-  latestLocalRealTimeText?: CaptionsInformation;
+  latestLocalRealTimeText?: RealTimeTextInformation;
 }
 
 const SCROLL_OFFSET_ALLOWANCE = 20;
@@ -209,7 +224,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   /* @conditional-compile-remove(rtt) */
   useEffect(() => {
     // if the latest real time text sent by myself is final, clear the text field
-    if (latestLocalRealTimeText && !latestLocalRealTimeText.isPartial) {
+    if (latestLocalRealTimeText && !latestLocalRealTimeText.isTyping) {
       setTextFieldValue('');
     }
   }, [latestLocalRealTimeText]);
@@ -253,16 +268,16 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
             >
               {captions.map((caption) => {
                 /* @conditional-compile-remove(rtt) */
-                if (caption.isRealTimeText) {
+                if (!('captionText' in caption)) {
                   return (
                     <li key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
-                      <RealTimeText {...caption} isTyping={caption.isPartial} onRenderAvatar={onRenderAvatar} />
+                      <RealTimeText {...(caption as RealTimeTextInformation)} />
                     </li>
                   );
                 }
                 return (
                   <li key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
-                    <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
+                    <_Caption {...(caption as CaptionsInformation)} onRenderAvatar={onRenderAvatar} />
                   </li>
                 );
               })}

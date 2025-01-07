@@ -60,3 +60,5 @@ export type { ConferencePhoneInfo } from './CallClientState';
 export type { BreakoutRoomsState } from './CallClientState';
 /* @conditional-compile-remove(media-access) */
 export type { MediaAccessState } from './CallClientState';
+/* @conditional-compile-remove(rtt) */
+export type { RealTimeTextInfo } from './CallClientState';

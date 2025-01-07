@@ -22,6 +22,10 @@ import {
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CaptionsInformation, SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInformation } from '@internal/react-components';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@internal/calling-stateful-client';
 
 /**
  * Selector type for the {@link StartCaptionsButton} component.
@@ -104,13 +108,13 @@ export type CaptionsBannerSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  captions: CaptionsInformation[];
+  captions: (CaptionsInformation | /* @conditional-compile-remove(rtt) */ RealTimeTextInformation)[];
   isCaptionsOn: boolean;
   startCaptionsInProgress: boolean;
   /* @conditional-compile-remove(rtt) */
   isRealTimeTextOn: boolean;
   /* @conditional-compile-remove(rtt) */
-  latestLocalRealTimeText: CaptionsInformation | undefined;
+  latestLocalRealTimeText: RealTimeTextInformation | undefined;
 };
 
 /**
@@ -140,7 +144,15 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     identifier
   ) => {
     const captionsInfo = captions?.map((c, index) => {
-      const userId = getCaptionsSpeakerIdentifier(c);
+      let userId = '';
+
+      if ('message' in c) {
+        /* @conditional-compile-remove(rtt) */
+        userId = getRealTimeTextSpeakerIdentifier(c);
+      } else {
+        userId = getCaptionsSpeakerIdentifier(c);
+      }
+
       let finalDisplayName;
       if (userId === identifier) {
         finalDisplayName = displayName;
@@ -150,16 +162,23 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
           finalDisplayName = participant.displayName;
         }
       }
+      /* @conditional-compile-remove(rtt) */
+      if ('message' in c) {
+        return {
+          id: c.id,
+          displayName: finalDisplayName ?? 'Unnamed Participant',
+          message: c.message ?? '',
+          userId,
+          isTyping: c.resultType === 'Partial',
+          isMe: c.isMe
+        };
+      }
+
       return {
         id: (finalDisplayName ?? 'Unnamed Participant') + index,
         displayName: finalDisplayName ?? 'Unnamed Participant',
         captionText: c.captionText ?? '',
-        userId,
-        /* @conditional-compile-remove(rtt) */
-        isRealTimeText: c.isRealTimeText,
-        isPartial: c.resultType === 'Partial',
-        /* @conditional-compile-remove(rtt) */
-        isLocalUser: c.isLocal
+        userId
       };
     });
 
@@ -170,7 +189,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
       captionsInfo
         .slice()
         .reverse()
-        .find((caption) => caption.isRealTimeText && caption.isLocalUser);
+        .find((caption) => 'message' in caption && caption.isMe);
 
     return {
       captions: captionsInfo ?? [],
@@ -179,11 +198,15 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
       /* @conditional-compile-remove(rtt) */
       isRealTimeTextOn: isRealTimeTextActive ?? false,
       /* @conditional-compile-remove(rtt) */
-      latestLocalRealTimeText: lastRealTimeText
+      latestLocalRealTimeText: lastRealTimeText as RealTimeTextInformation
     };
   }
 );
 
 const getCaptionsSpeakerIdentifier = (captions: CaptionsInfo): string => {
   return captions.speaker.identifier ? toFlatCommunicationIdentifier(captions.speaker.identifier) : '';
+};
+/* @conditional-compile-remove(rtt) */
+const getRealTimeTextSpeakerIdentifier = (realTimeText: RealTimeTextInfo): string => {
+  return realTimeText.sender.identifier ? toFlatCommunicationIdentifier(realTimeText.sender.identifier) : '';
 };

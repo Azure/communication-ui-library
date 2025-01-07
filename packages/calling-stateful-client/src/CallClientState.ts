@@ -29,6 +29,8 @@ import type {
   DiagnosticQuality,
   DiagnosticFlag
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(rtt) */
+import { ParticipantInfo, RealTimeTextResultType } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -90,21 +92,41 @@ export interface CaptionsInfo {
    * The original spoken caption text prior to translating to subtitle language
    */
   spokenText?: string;
-  /* @conditional-compile-remove(rtt) */
+}
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @beta
+ */
+export interface RealTimeTextInfo {
   /**
-   * Flag indicating if the caption is a subtitle caption or real time text
+   * The sequence id of the real time text.
    */
-  isRealTimeText?: boolean;
-  /* @conditional-compile-remove(rtt) */
+  id: number;
+  /**
+   * The sender of the real time text.
+   */
+  sender: ParticipantInfo;
+  /**
+   * The real time text message.
+   */
+  message: string;
+  /**
+   * The result type of the real time text message.
+   */
+  resultType: RealTimeTextResultType;
+  /**
+   * The timestamp when the real time text message was created.
+   */
+  receivedTimestamp?: Date;
   /**
    * The timestamp when the real time text message was last updated.
    */
-  realTimeTextUpdatedTimestamp?: Date;
-  /* @conditional-compile-remove(rtt) */
+  updatedTimestamp?: Date;
   /**
    * If message originated from the local participant
    */
-  isLocal?: boolean;
+  isMe: boolean;
 }
 
 /**
@@ -118,7 +140,7 @@ export interface CaptionsCallFeatureState {
   /**
    * array of received captions
    */
-  captions: CaptionsInfo[];
+  captions: (CaptionsInfo | /* @conditional-compile-remove(rtt) */ RealTimeTextInfo)[];
   /**
    * whether captions is on/off
    */

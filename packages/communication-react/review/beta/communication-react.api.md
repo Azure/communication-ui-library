@@ -85,6 +85,7 @@ import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-cal
 import type { NetworkDiagnosticType } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantCapabilities } from '@azure/communication-calling';
+import { ParticipantInfo } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
@@ -95,7 +96,8 @@ import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import { Reaction as Reaction_2 } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
-import { RealTimeTextInfo } from '@azure/communication-calling';
+import { RealTimeTextInfo as RealTimeTextInfo_2 } from '@azure/communication-calling';
+import { RealTimeTextResultType } from '@azure/communication-calling';
 import { RecordingInfo } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -1886,14 +1888,14 @@ export const CaptionsBanner: (props: CaptionsBannerProps) => JSX.Element;
 
 // @public
 export interface CaptionsBannerProps {
-    captions: CaptionsInformation[];
+    captions: (CaptionsInformation | /* @conditional-compile-remove(rtt) */ RealTimeTextInformation)[];
     captionsOptions?: {
         height: 'full' | 'default';
     };
     formFactor?: 'default' | 'compact';
     isCaptionsOn?: boolean;
     isRealTimeTextOn?: boolean;
-    latestLocalRealTimeText?: CaptionsInformation;
+    latestLocalRealTimeText?: RealTimeTextInformation;
     onRenderAvatar?: OnRenderAvatarCallback;
     onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
     startCaptionsInProgress?: boolean;
@@ -1902,11 +1904,11 @@ export interface CaptionsBannerProps {
 
 // @public
 export type CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    captions: CaptionsInformation[];
+    captions: (CaptionsInformation | /* @conditional-compile-remove(rtt) */ RealTimeTextInformation)[];
     isCaptionsOn: boolean;
     startCaptionsInProgress: boolean;
     isRealTimeTextOn: boolean;
-    latestLocalRealTimeText: CaptionsInformation | undefined;
+    latestLocalRealTimeText: RealTimeTextInformation | undefined;
 };
 
 // @public
@@ -1920,7 +1922,7 @@ export interface CaptionsBannerStrings {
 
 // @public (undocumented)
 export interface CaptionsCallFeatureState {
-    captions: CaptionsInfo[];
+    captions: (CaptionsInfo | /* @conditional-compile-remove(rtt) */ RealTimeTextInfo)[];
     captionsKind: CaptionsKind;
     currentCaptionLanguage: string;
     currentSpokenLanguage: string;
@@ -1944,9 +1946,6 @@ export type CaptionSettingsSelector = (state: CallClientState, props: CallingBas
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
-    isLocal?: boolean;
-    isRealTimeText?: boolean;
-    realTimeTextUpdatedTimestamp?: Date;
     resultType: CaptionsResultType;
     speaker: CallerInfo;
     spokenLanguage: string;
@@ -1960,9 +1959,6 @@ export type CaptionsInformation = {
     displayName: string;
     captionText: string;
     userId?: string;
-    isRealTimeText?: boolean;
-    isPartial?: boolean;
-    isLocalUser?: boolean;
 };
 
 // @public
@@ -4592,6 +4588,27 @@ export type ReadReceiptsBySenderId = {
 // @beta
 export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
 
+// @beta (undocumented)
+export interface RealTimeTextInfo {
+    id: number;
+    isMe: boolean;
+    message: string;
+    receivedTimestamp?: Date;
+    resultType: RealTimeTextResultType;
+    sender: ParticipantInfo;
+    updatedTimestamp?: Date;
+}
+
+// @beta
+export type RealTimeTextInformation = {
+    id: number;
+    displayName: string;
+    userId?: string;
+    message: string;
+    isTyping?: boolean;
+    isMe: boolean;
+};
+
 // @beta
 export const RealTimeTextModal: (props: RealTimeTextModalProps) => JSX.Element;
 
@@ -4615,11 +4632,11 @@ export interface RealTimeTextModalStrings {
 
 // @beta
 export interface RealTimeTextProps {
-    captionText: string;
     displayName: string;
-    id: string;
-    isLocalUser?: boolean;
+    id: number;
+    isMe?: boolean;
     isTyping?: boolean;
+    message: string;
     onRenderAvatar?: OnRenderAvatarCallback;
     strings?: RealTimeTextStrings;
     userId?: string;
@@ -4627,7 +4644,7 @@ export interface RealTimeTextProps {
 
 // @beta
 export type RealTimeTextReceivedListener = (event: {
-    realTimeText: RealTimeTextInfo;
+    realTimeText: RealTimeTextInfo_2;
 }) => void;
 
 // @beta

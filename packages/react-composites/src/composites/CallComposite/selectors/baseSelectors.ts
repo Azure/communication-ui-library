@@ -21,6 +21,8 @@ import {
   LocalVideoStreamState,
   RemoteParticipantState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 import { SpotlightedParticipant } from '@azure/communication-calling';
@@ -179,7 +181,9 @@ export const getCaptionsKind = (state: CallAdapterState): CaptionsKind | undefin
 };
 
 /** @private */
-export const getCaptions = (state: CallAdapterState): CaptionsInfo[] | undefined => {
+export const getCaptions = (
+  state: CallAdapterState
+): (CaptionsInfo | /* @conditional-compile-remove(rtt) */ RealTimeTextInfo)[] | undefined => {
   return state.call?.captionsFeature.captions;
 };
 

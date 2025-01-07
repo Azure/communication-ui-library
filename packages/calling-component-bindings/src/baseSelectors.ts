@@ -19,7 +19,8 @@ import {
 import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@internal/calling-stateful-client';
 import { CaptionsKind } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
@@ -223,7 +224,10 @@ export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelect
 };
 
 /** @private */
-export const getCaptions = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsInfo[] | undefined => {
+export const getCaptions = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): (CaptionsInfo | /* @conditional-compile-remove(rtt) */ RealTimeTextInfo)[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.captions;
 };
 

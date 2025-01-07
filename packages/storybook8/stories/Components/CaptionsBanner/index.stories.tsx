@@ -17,7 +17,10 @@ const meta: Meta = {
     strings: hiddenControl,
     onRenderAvatar: hiddenControl,
     formFactor: hiddenControl,
-    captionsOptions: hiddenControl
+    captionsOptions: hiddenControl,
+    isRealTimeTextOn: hiddenControl,
+    onSendRealTimeText: hiddenControl,
+    latestlocalRealTimeText: hiddenControl
   }
 };
 
