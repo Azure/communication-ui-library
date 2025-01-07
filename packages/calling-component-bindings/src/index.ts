@@ -18,19 +18,14 @@ export type { HoldButtonSelector } from './callControlSelectors';
 export type { IncomingCallStackSelector } from './incomingCallStackSelector';
 export { incomingCallStackSelector } from './incomingCallStackSelector';
 
-export type {
-  _StartCaptionsButtonSelector,
-  _CaptionSettingsSelector,
-  _CaptionsBannerSelector
-} from './captionsSelector';
+export type { StartCaptionsButtonSelector, CaptionSettingsSelector, CaptionsBannerSelector } from './captionsSelector';
 
-export { _captionsBannerSelector, _startCaptionsButtonSelector, _captionSettingsSelector } from './captionsSelector';
+export { captionsBannerSelector, startCaptionsButtonSelector, captionSettingsSelector } from './captionsSelector';
 
 export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/createHandlers';
 
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
-export type { CaptionsOptions } from './handlers/createCommonHandlers';
 
 export type {
   DeepNoiseSuppressionEffectDependency,

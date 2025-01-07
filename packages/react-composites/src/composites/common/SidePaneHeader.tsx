@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CommandBarButton, DefaultButton, Stack, concatStyleSets } from '@fluentui/react';
+import { CommandBarButton, DefaultButton, IButton, Stack, concatStyleSets } from '@fluentui/react';
 import { useTheme } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import React, { useMemo, RefObject, useCallback } from 'react';
 import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
 import {
   mobilePaneBackButtonStyles,
@@ -22,6 +22,9 @@ export const SidePaneHeader = (props: {
   dismissSidePaneButtonAriaDescription?: string;
   onClose: () => void;
   mobileView: boolean;
+  paneOpenerButton?: RefObject<IButton>;
+  dismissButtonComponentRef?: RefObject<IButton>;
+  chatButtonPresent?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
   const sidePaneCloseButtonStyles = useMemo(
@@ -43,6 +46,16 @@ export const SidePaneHeader = (props: {
     [theme.palette.neutralSecondary, theme.semanticColors.bodyBackground, theme.effects.roundedCorner4]
   );
 
+  const handleShiftTab = useCallback(
+    (event: React.KeyboardEvent<HTMLElement>) => {
+      if (event.key === 'Tab' && event.shiftKey && !props.chatButtonPresent) {
+        props.paneOpenerButton?.current?.focus();
+        event.preventDefault();
+      }
+    },
+    [props.chatButtonPresent, props.paneOpenerButton]
+  );
+
   if (props.mobileView) {
     return <SidePaneMobileHeader {...props} />;
   }
@@ -57,8 +70,12 @@ export const SidePaneHeader = (props: {
           ariaLabel={props.dismissSidePaneButtonAriaLabel}
           styles={sidePaneCloseButtonStyles}
           iconProps={{ iconName: 'cancel' }}
-          onClick={props.onClose}
-          autoFocus
+          onClick={() => {
+            props.onClose();
+            props.paneOpenerButton?.current?.focus();
+          }}
+          onKeyDown={handleShiftTab}
+          componentRef={props.dismissButtonComponentRef}
         />
       </Stack.Item>
     </Stack>

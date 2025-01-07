@@ -28,6 +28,14 @@ export const useVideoTileContextualMenuProps = (props: {
     stopSpotlightOnSelfVideoTileMenuLabel?: string;
     spotlightLimitReachedMenuTitle?: string;
     muteParticipantMenuItemLabel?: string;
+    /* @conditional-compile-remove(media-access) */
+    forbidAudioTileMenuLabel?: string;
+    /* @conditional-compile-remove(media-access) */
+    permitAudioTileMenuLabel?: string;
+    /* @conditional-compile-remove(media-access) */
+    forbidVideoTileMenuLabel?: string;
+    /* @conditional-compile-remove(media-access) */
+    permitVideoTileMenuLabel?: string;
   };
   view?: { updateScalingMode: (scalingMode: ViewScalingMode) => Promise<void> };
   isPinned?: boolean;
@@ -43,6 +51,14 @@ export const useVideoTileContextualMenuProps = (props: {
   maxParticipantsToSpotlight?: number;
   myUserId?: string;
   onMuteParticipant?: (userId: string) => void;
+  /* @conditional-compile-remove(media-access) */
+  onForbidAudio?: (userIds: string[]) => void;
+  /* @conditional-compile-remove(media-access) */
+  onPermitAudio?: (userIds: string[]) => void;
+  /* @conditional-compile-remove(media-access) */
+  onForbidVideo?: (userIds: string[]) => void;
+  /* @conditional-compile-remove(media-access) */
+  onPermitVideo?: (userIds: string[]) => void;
 }): IContextualMenuProps | undefined => {
   const {
     participant,
@@ -60,7 +76,15 @@ export const useVideoTileContextualMenuProps = (props: {
     onStopSpotlight,
     maxParticipantsToSpotlight,
     myUserId,
-    onMuteParticipant
+    onMuteParticipant,
+    /* @conditional-compile-remove(media-access) */
+    onForbidAudio,
+    /* @conditional-compile-remove(media-access) */
+    onPermitAudio,
+    /* @conditional-compile-remove(media-access) */
+    onForbidVideo,
+    /* @conditional-compile-remove(media-access) */
+    onPermitVideo
   } = props;
   const scalingMode = useMemo(() => {
     return props.participant.videoStream?.scalingMode;
@@ -82,6 +106,75 @@ export const useVideoTileContextualMenuProps = (props: {
         disabled: participant.isMuted
       });
     }
+
+    /* @conditional-compile-remove(media-access) */
+    if (
+      participant.canAudioBeForbidden &&
+      participant.mediaAccess &&
+      !participant.mediaAccess.isAudioPermitted &&
+      onPermitAudio
+    ) {
+      items.push({
+        key: 'permitAudio',
+        text: strings?.permitAudioTileMenuLabel,
+        iconProps: {
+          iconName: 'ControlButtonMicOn',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onPermitAudio([participant.userId]),
+        'data-ui-id': 'audio-tile-permit-audio',
+        ariaLabel: strings?.permitAudioTileMenuLabel
+      });
+    }
+    /* @conditional-compile-remove(media-access) */
+    if (participant.canAudioBeForbidden && participant.mediaAccess?.isAudioPermitted && onForbidAudio) {
+      items.push({
+        key: 'forbidAudio',
+        text: strings?.forbidAudioTileMenuLabel,
+        iconProps: {
+          iconName: 'ControlButtonMicProhibited',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onForbidAudio([participant.userId]),
+        'data-ui-id': 'audio-tile-forbid-audio',
+        ariaLabel: strings?.forbidAudioTileMenuLabel
+      });
+    }
+
+    /* @conditional-compile-remove(media-access) */
+    if (
+      participant.canVideoBeForbidden &&
+      participant.mediaAccess &&
+      !participant.mediaAccess.isVideoPermitted &&
+      onPermitVideo
+    ) {
+      items.push({
+        key: 'permitVideo',
+        text: strings?.permitVideoTileMenuLabel,
+        iconProps: {
+          iconName: 'ControlButtonCameraOn',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onPermitVideo([participant.userId]),
+        'data-ui-id': 'video-tile-permit-video',
+        ariaLabel: strings?.permitVideoTileMenuLabel
+      });
+    }
+    /* @conditional-compile-remove(media-access) */
+    if (participant.canVideoBeForbidden && participant.mediaAccess?.isVideoPermitted && onForbidVideo) {
+      items.push({
+        key: 'forbidVideo',
+        text: strings?.forbidVideoTileMenuLabel,
+        iconProps: {
+          iconName: 'ControlButtonCameraProhibited',
+          styles: { root: { lineHeight: 0 } }
+        },
+        onClick: () => onForbidVideo([participant.userId]),
+        'data-ui-id': 'video-tile-forbid-video',
+        ariaLabel: strings?.forbidVideoTileMenuLabel
+      });
+    }
+
     if (isPinned !== undefined) {
       if (isPinned && onUnpinParticipant && strings?.unpinParticipantForMe) {
         let unpinActionString: string | undefined = undefined;
@@ -209,25 +302,39 @@ export const useVideoTileContextualMenuProps = (props: {
 
     return { items, styles: {}, calloutProps: { preventDismissOnEvent }, shouldFocusOnContainer: false };
   }, [
-    scalingMode,
+    onMuteParticipant,
     strings,
-    view,
-    isPinned,
-    onPinParticipant,
-    onUnpinParticipant,
-    onUpdateScalingMode,
+    participant.isMuted,
     participant.userId,
     participant.displayName,
-    disablePinMenuItem,
-    toggleAnnouncerString,
-    spotlightedParticipantUserIds,
+    isPinned,
     isSpotlighted,
-    onStartSpotlight,
-    onStopSpotlight,
-    maxParticipantsToSpotlight,
+    scalingMode,
+    onUnpinParticipant,
+    onPinParticipant,
+    toggleAnnouncerString,
+    disablePinMenuItem,
     myUserId,
-    onMuteParticipant,
-    participant.isMuted
+    onStopSpotlight,
+    spotlightedParticipantUserIds,
+    maxParticipantsToSpotlight,
+    onStartSpotlight,
+    onUpdateScalingMode,
+    view,
+    /* @conditional-compile-remove(media-access) */
+    participant.canAudioBeForbidden,
+    /* @conditional-compile-remove(media-access) */
+    participant.canVideoBeForbidden,
+    /* @conditional-compile-remove(media-access) */
+    participant.mediaAccess,
+    /* @conditional-compile-remove(media-access) */
+    onPermitAudio,
+    /* @conditional-compile-remove(media-access) */
+    onForbidAudio,
+    /* @conditional-compile-remove(media-access) */
+    onPermitVideo,
+    /* @conditional-compile-remove(media-access) */
+    onForbidVideo
   ]);
 
   return contextualMenuProps;

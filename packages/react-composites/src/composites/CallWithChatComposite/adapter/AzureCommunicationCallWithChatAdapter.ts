@@ -521,10 +521,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     await this.callAdapter.disposeLocalVideoStreamView();
   }
   /* @conditional-compile-remove(together-mode) */
-  public async createTogetherModeStreamViews(
+  public async createTogetherModeStreamView(
     options?: VideoStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> {
-    return await this.callAdapter.createTogetherModeStreamViews(options);
+    return await this.callAdapter.createTogetherModeStreamView(options);
   }
   /* @conditional-compile-remove(together-mode) */
   public async startTogetherMode(): Promise<void> {
@@ -535,8 +535,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.setTogetherModeSceneSize(width, height);
   }
   /* @conditional-compile-remove(together-mode) */
-  public async disposeTogetherModeStreamViews(): Promise<void> {
-    await this.callAdapter.disposeTogetherModeStreamViews();
+  public async disposeTogetherModeStreamView(): Promise<void> {
+    await this.callAdapter.disposeTogetherModeStreamView();
   }
   /** Fetch initial Call and Chat data such as chat messages. */
   public async fetchInitialData(): Promise<void> {
@@ -720,6 +720,40 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
   }
 
+  /* @conditional-compile-remove(media-access) */
+  public async forbidAudio(userIds: string[]): Promise<void> {
+    return this.callAdapter.forbidAudio(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitAudio(userIds: string[]): Promise<void> {
+    return this.callAdapter.permitAudio(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async forbidOthersAudio(): Promise<void> {
+    return this.callAdapter.forbidOthersAudio();
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitOthersAudio(): Promise<void> {
+    return this.callAdapter.permitOthersAudio();
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  public async forbidVideo(userIds: string[]): Promise<void> {
+    return this.callAdapter.forbidVideo(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitVideo(userIds: string[]): Promise<void> {
+    return this.callAdapter.permitVideo(userIds);
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async forbidOthersVideo(): Promise<void> {
+    return this.callAdapter.forbidOthersVideo();
+  }
+  /* @conditional-compile-remove(media-access) */
+  public async permitOthersVideo(): Promise<void> {
+    return this.callAdapter.permitOthersVideo();
+  }
+
   on(event: 'callParticipantsJoined', listener: ParticipantsJoinedListener): void;
   on(event: 'callParticipantsLeft', listener: ParticipantsLeftListener): void;
   on(event: 'callEnded', listener: CallEndedListener): void;
@@ -884,7 +918,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'chatInitialized', listener: ChatInitializedListener): void;
   /* @conditional-compile-remove(breakout-rooms) */
   off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
-
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {
     switch (event as unknown) {

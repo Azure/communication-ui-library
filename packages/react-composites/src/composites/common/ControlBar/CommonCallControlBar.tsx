@@ -1,7 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useMemo, useRef, useEffect, useState, useCallback, useImperativeHandle, forwardRef } from 'react';
+import React, {
+  useMemo,
+  useRef,
+  useEffect,
+  useState,
+  useCallback,
+  useImperativeHandle,
+  forwardRef,
+  RefObject
+} from 'react';
 import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
@@ -39,7 +48,7 @@ import { isDisabled, _isSafari } from '../../CallComposite/utils';
 import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
-import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
+import { CallingCaptionsSettingsModal } from '../CallingCaptionsSettingsModal';
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
@@ -78,17 +87,16 @@ export interface CommonCallControlBarProps {
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
-  peopleButtonRef?: React.RefObject<IButton>;
-  cameraButtonRef?: React.RefObject<IButton>;
-  videoBackgroundPickerRef?: React.RefObject<IButton>;
+  peopleButtonRef?: RefObject<IButton>;
+  cameraButtonRef?: RefObject<IButton>;
+  videoBackgroundPickerRef?: RefObject<IButton>;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
   onStopLocalSpotlight?: () => void;
   useTeamsCaptions?: boolean;
-
   onToggleTeamsMeetingConferenceModal?: () => void;
-
   teamsMeetingConferenceModalPresent?: boolean;
+  sidePaneDismissButtonRef?: RefObject<IButton>;
 }
 
 const inferCommonCallControlOptions = (
@@ -358,7 +366,7 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
       <div ref={controlBarSizeRef}>
         <CallAdapterProvider adapter={props.callAdapter}>
           {showCaptionsSettingsModal && (
-            <CaptionsSettingsModal
+            <CallingCaptionsSettingsModal
               showCaptionsSettingsModal={showCaptionsSettingsModal}
               onDismissCaptionsSettings={onDismissCaptionsSettings}
               changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
@@ -568,11 +576,7 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                   {isEnabled(options?.peopleButton) && (
                     <PeopleButton
                       checked={props.peopleButtonChecked}
-                      ariaLabel={
-                        props.peopleButtonChecked
-                          ? peopleButtonStrings?.tooltipCloseAriaLabel
-                          : peopleButtonStrings?.tooltipOpenAriaLabel
-                      }
+                      ariaLabel={peopleButtonStrings.label}
                       showLabel={options.displayType !== 'compact'}
                       onClick={props.onPeopleButtonClicked}
                       data-ui-id="common-call-composite-people-button"
@@ -584,6 +588,8 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                       strings={peopleButtonStrings}
                       styles={commonButtonStyles}
                       componentRef={props.peopleButtonRef}
+                      chatButtonPresent={isEnabled(options.chatButton)}
+                      peoplePaneDismissButtonRef={props.sidePaneDismissButtonRef}
                     />
                   )}
                   {customButtons['secondary']

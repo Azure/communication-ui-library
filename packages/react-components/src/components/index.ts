@@ -297,7 +297,7 @@ export * from './StartCaptionsButton';
 export * from './CaptionsSettingsModal';
 
 /* @conditional-compile-remove(rtt) */
-export * from './RTTModal';
+export * from './RealTimeTextModal';
 
 export * from './MeetingConferencePhoneInfo';
 export { _formatPhoneNumber } from './utils/formatPhoneNumber';
@@ -315,3 +315,5 @@ export * from './IncomingCallStack';
 export * from './RTTDisclosureBanner';
 /* @conditional-compile-remove(rtt) */
 export * from './RealTimeText';
+/* @conditional-compile-remove(rtt) */
+export * from './StartRealTimeTextButton';

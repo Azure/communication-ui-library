@@ -13,7 +13,7 @@ import {
   ParticipantsRemovedEvent,
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
-} from '@azure/communication-signaling';
+} from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
 import { NetworkEventModel, Thread } from './types';

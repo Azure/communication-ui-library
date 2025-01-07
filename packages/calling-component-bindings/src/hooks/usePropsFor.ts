@@ -9,7 +9,10 @@ import {
   DevicesButton,
   ParticipantList,
   ScreenShareButton,
-  VideoGallery
+  VideoGallery,
+  CaptionsSettingsModal,
+  CaptionsBanner,
+  StartCaptionsButton
 } from '@internal/react-components';
 import { IncomingCallStack } from '@internal/react-components';
 
@@ -45,6 +48,14 @@ import { ReactionButton } from '@internal/react-components';
 import { _ComponentCallingHandlers } from '../handlers/createHandlers';
 import { notificationStackSelector, NotificationStackSelector } from '../notificationStackSelector';
 import { incomingCallStackSelector, IncomingCallStackSelector } from '../incomingCallStackSelector';
+import {
+  CaptionSettingsSelector,
+  CaptionsBannerSelector,
+  StartCaptionsButtonSelector,
+  captionSettingsSelector,
+  captionsBannerSelector,
+  startCaptionsButtonSelector
+} from '../captionsSelector';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -124,9 +135,15 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
                             ? IncomingCallStackSelector
                             : AreEqual<Component, typeof ReactionButton> extends true
                               ? RaiseHandButtonSelector
-                              : AreEqual<Component, typeof RaiseHandButton> extends true
-                                ? EmptySelector
-                                : undefined;
+                              : AreEqual<Component, typeof CaptionsSettingsModal> extends true
+                                ? CaptionSettingsSelector
+                                : AreEqual<Component, typeof CaptionsBanner> extends true
+                                  ? CaptionsBannerSelector
+                                  : AreEqual<Component, typeof StartCaptionsButton> extends true
+                                    ? StartCaptionsButtonSelector
+                                    : AreEqual<Component, typeof RaiseHandButton> extends true
+                                      ? EmptySelector
+                                      : undefined;
 
 /**
  * Get the selector for a specified component.
@@ -178,6 +195,12 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
       return holdButtonSelector;
     case IncomingCallStack:
       return incomingCallStackSelector;
+    case CaptionsBanner:
+      return captionsBannerSelector;
+    case CaptionsSettingsModal:
+      return captionSettingsSelector;
+    case StartCaptionsButton:
+      return startCaptionsButtonSelector;
   }
   return undefined;
 };

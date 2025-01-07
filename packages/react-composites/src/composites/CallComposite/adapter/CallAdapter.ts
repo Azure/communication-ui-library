@@ -40,7 +40,7 @@ import {
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { ReactionResources } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamViewResult } from '@internal/react-components';
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 /**
  * Major UI screens shown in the {@link CallComposite}.
  *
@@ -622,7 +622,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  createTogetherModeStreamViews(options?: VideoStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+  createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
   /**
    * Start Together mode.
@@ -657,7 +657,7 @@ export interface CallAdapterCallOperations {
    *
    * @beta
    */
-  disposeTogetherModeStreamViews(): Promise<void>;
+  disposeTogetherModeStreamView(): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *
@@ -807,6 +807,46 @@ export interface CallAdapterCallOperations {
    * Return to origin call of breakout room
    */
   returnFromBreakoutRoom(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Forbid Teams meeting attendees audio by their user ids.
+   */
+  forbidAudio(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Permit Teams meeting attendees audio by their user ids.
+   */
+  permitAudio(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Forbid Teams meeting audio.
+   */
+  forbidOthersAudio(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Permit Teams meeting audio.
+   */
+  permitOthersAudio(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Forbid Teams meeting attendees video by their user ids.
+   */
+  forbidVideo(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Permit Teams meeting attendees audio by their user ids.
+   */
+  permitVideo(userIds: string[]): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Forbid Teams meeting video.
+   */
+  forbidOthersVideo(): Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Permit Teams meeting video.
+   */
+  permitOthersVideo(): Promise<void>;
 }
 
 /**

@@ -488,7 +488,7 @@ export interface VideoStreamRendererViewState {
 /* @conditional-compile-remove(media-access) */
 /**
  * Media access state
- * @alpha
+ * @public
  */
 export interface MediaAccessState {
   /**
@@ -758,6 +758,12 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#BreakoutRoomsFeature}.
    */
   breakoutRooms?: BreakoutRoomsState;
+
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Proxy of {@link @azure/communication-calling#MediaAccessFeature}.
+   */
+  meetingMediaAccess?: MediaAccessState;
 }
 
 /**
@@ -995,7 +1001,7 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
-  /* @conditional-compile-remove(breakout-rooms) */
+  /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   /**
    * Stores the latest notifications.
    *
@@ -1118,7 +1124,7 @@ export type CallErrorTarget =
   | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /**
  * @public
  */
@@ -1126,7 +1132,7 @@ export type CallNotifications = {
   [target in NotificationTarget]: CallNotification;
 };
 
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /**
  * @public
  */
@@ -1136,14 +1142,20 @@ export interface CallNotification {
   timestamp: Date;
 }
 
-/* @conditional-compile-remove(breakout-rooms) */
+/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /** @public */
 export type NotificationTarget =
   | 'assignedBreakoutRoomOpened'
   | 'assignedBreakoutRoomOpenedPromptJoin'
   | 'assignedBreakoutRoomChanged'
   | 'breakoutRoomJoined'
-  | 'breakoutRoomClosingSoon';
+  | 'breakoutRoomClosingSoon'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent'
+  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent'
+  | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted'
+  | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

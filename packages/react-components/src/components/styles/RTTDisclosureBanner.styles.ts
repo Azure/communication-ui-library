@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(rtt) */
-import { IStackStyles, Theme } from '@fluentui/react';
+import { IIconStyles, IStackStyles, Theme } from '@fluentui/react';
 /* @conditional-compile-remove(rtt) */
 import { _pxToRem } from '@internal/acs-ui-common';
 
@@ -18,5 +18,16 @@ export const rttContainerStyles = (theme: Theme): IStackStyles => ({
     borderRadius: '0.25rem',
     position: 'relative',
     backgroundColor: theme.palette.white
+  }
+});
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
+export const rttIconStyles = (): IIconStyles => ({
+  root: {
+    fontSize: '1.5rem',
+    paddingRight: '0.5rem'
   }
 });
