@@ -97,7 +97,7 @@ export const pinIconStyle: IStyle = {
  * @private
  */
 export const iconContainerStyle: IStyle = {
-  margin: 'auto',
+  margin: '0 0.2em',
   alignItems: 'center',
   '& svg': {
     display: 'block',
