@@ -1,0 +1,16 @@
+import { RealTimeText } from '@internal/react-components';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as RealTimeTextStories from './index.stories';
+import RealTimeTextExampleText from '!!raw-loader!./snippets/ExampleRealTimeText.snippet.tsx';
+
+<Meta of={RealTimeTextStories} />
+
+# Real Time Text
+
+A component for displaying a Real time text message with user icon, displayName and captions text.
+
+<Canvas of={RealTimeTextStories.ExampleRealTimeTextExampleDocsOnly} source={{ code: RealTimeTextExampleText }} />
+
+## Props
+
+<ArgTypes of={RealTimeText} />

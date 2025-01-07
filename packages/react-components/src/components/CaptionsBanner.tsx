@@ -18,7 +18,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(rtt) */
 import { RealTimeText } from './RealTimeText';
 /* @conditional-compile-remove(rtt) */
-import { RTTDisclosureBanner } from './RTTDisclosureBanner';
+import { _RTTDisclosureBanner } from './RTTDisclosureBanner';
 
 /**
  * @public
@@ -72,6 +72,21 @@ export interface CaptionsBannerStrings {
    * Default text for RTT input text box
    */
   realTimeTextInputBoxDefaultText?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Real time text disclosure banner title
+   */
+  realTimeTextBannerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Real time text disclosure banner content
+   */
+  realTimeTextBannerContent?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Real time text disclosure banner link label
+   */
+  realTimeTextBannerLinkLabel?: string;
 }
 
 /**
@@ -210,11 +225,22 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     }
   };
 
+  /* @conditional-compile-remove(rtt) */
+  const realTimeTextDisclosureBannerStrings = {
+    bannerTitle: strings.realTimeTextBannerTitle ?? '',
+    bannerContent: strings.realTimeTextBannerContent ?? '',
+    bannerLinkLabel: strings.realTimeTextBannerLinkLabel ?? ''
+  };
+
   return (
     <>
       {(startCaptionsInProgress || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
         <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
-          {/* @conditional-compile-remove(rtt) */ isRealTimeTextOn && <RTTDisclosureBanner />}
+          {
+            /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
+              <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
+            )
+          }
           {(isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
             <ul
               ref={captionsScrollDivRef}

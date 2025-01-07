@@ -4,8 +4,6 @@
 /* @conditional-compile-remove(rtt) */
 import React from 'react';
 /* @conditional-compile-remove(rtt) */
-import { useLocale } from '../localization';
-/* @conditional-compile-remove(rtt) */
 import { Notification } from './Notification';
 /* @conditional-compile-remove(rtt) */
 import { useTheme } from '@fluentui/react';
@@ -14,10 +12,10 @@ import { rttContainerStyles, rttIconStyles } from './styles/RTTDisclosureBanner.
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @private
  * strings for rtt modal
  */
-export interface RTTDisclosureBannerStrings {
+export interface _RTTDisclosureBannerStrings {
   bannerTitle: string;
   bannerContent: string;
   bannerLinkLabel?: string;
@@ -25,34 +23,33 @@ export interface RTTDisclosureBannerStrings {
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @private
  * Props for RTT Banner
  */
-export interface RTTDisclosureBannerProps {
+export interface _RTTDisclosureBannerProps {
   /**
    * Optional callback to supply users with further troubleshooting steps or more information for the Real Time Text feature.
    */
   onClickLink?: () => void;
   /** RTT Banner strings */
-  strings?: RTTDisclosureBannerStrings;
+  strings?: _RTTDisclosureBannerStrings;
 }
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @private
  * Banner to disclose that RTT is enabled for all participants for the entire duration of the meeting.
  */
-export const RTTDisclosureBanner = (props: RTTDisclosureBannerProps): JSX.Element => {
-  const localeStrings = useLocale().strings.rttDisclosureBanner;
-  const strings = { ...localeStrings, ...props.strings };
+export const _RTTDisclosureBanner = (props: _RTTDisclosureBannerProps): JSX.Element => {
+  const strings = props.strings;
   const theme = useTheme();
 
   return (
     <Notification
       notificationStrings={{
-        title: strings.bannerTitle,
-        message: strings.bannerContent,
-        linkLabel: strings.bannerLinkLabel
+        title: strings?.bannerTitle ?? '',
+        message: strings?.bannerContent,
+        linkLabel: strings?.bannerLinkLabel
       }}
       notificationIconProps={{
         iconName: 'RealTimeTextIcon',
