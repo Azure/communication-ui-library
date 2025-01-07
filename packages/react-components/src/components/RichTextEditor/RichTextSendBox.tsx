@@ -484,6 +484,8 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     const errorMessage =
       uploadErrorMessage || /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadErrorMessage;
+
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
     let errorBarType = SendBoxErrorBarType.error;
     /* @conditional-compile-remove(file-sharing-acs) */
     if (uploadErrorMessage) {
