@@ -345,7 +345,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onStopAllSpotlight: hideSpotlightButtons ? undefined : stopAllSpotlightWithPrompt,
       maxParticipantsToSpotlight
     };
-    return {};
   }, [
     hideSpotlightButtons,
     maxParticipantsToSpotlight,

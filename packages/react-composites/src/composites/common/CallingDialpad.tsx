@@ -84,8 +84,6 @@ export const CallingDialpad = (props: CallingDialpadProps): JSX.Element => {
         />
       </>
     );
-
-    return <></>;
   };
 
   if (isMobile) {
