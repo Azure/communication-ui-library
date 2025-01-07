@@ -24,7 +24,6 @@ export const ScreenShare = (props: {
 
   const screenShareButtonDisabled = (): boolean => {
     return screenShareButtonProps?.disabled ?? isDisabled(props.option);
-    return isDisabled(props.option);
   };
 
   return (
