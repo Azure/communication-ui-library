@@ -85,7 +85,7 @@ jobs:
       - name: Setup bot git information
         # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
         run: |
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
           git config user.name "github-actions[bot]"
       - name: Use Node.js
         uses: actions/setup-node@v4
