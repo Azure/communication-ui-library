@@ -11,7 +11,7 @@ import CustomMediaAccessCompositeText from '!!raw-loader!./snippets/MediaAccessC
 The media access feature in Teams meetings allows the Organizer, Co-organizer, and Presenter to control whether attendees can enable their mic or camera.
 This can be managed through the Teams meeting options “Allow mic/camera for attendees” or on a per-participant basis with the options “Disable mic/camera” and “Enable mic/camera.”
 
-Teams meeting attendees can check their own media access state using the capabilities unMuteMic and turnVideoOn, or view the media states for remote participants.
+Teams meeting attendees can check their own media access state using the capabilities `unMuteMic` and `turnVideoOn`, or view the media states for remote participants.
 
 ACS users must have the Organizer, Co-organizer, or Presenter role to use the media access feature.
 
@@ -47,7 +47,7 @@ The concept of the media access feature is the same in Microsoft Teams which you
 more about here -
 [Manage attendee audio and video permissions in Microsoft Teams meetings](https://support.microsoft.com/en-us/office/manage-attendee-audio-and-video-permissions-in-microsoft-teams-meetings-f9db15e1-f46f-46da-95c6-34f9f39e671a).
 
-## Listening to local participant unmuteMic and turnVideoOn capabilities changes
+## Listening to local participant `unmuteMic` and `turnVideoOn` capabilities changes
 
 You can listen to 'capabilitiesChanged' events on the CallAdapter or CallWithChatAdapter by defining your own
 `capabilitiesChangedListener` callback. The following code snippet shows an example of listening to 'capabilitiesChanged'
@@ -61,6 +61,7 @@ behavior of CallComposite and CallWithChatComposite which places participants in
 VideoGallery.
 
 ## UI component to use remote participant(s) media access state
+
 If you want to build your own UI components using the media access states we suggest using the VideoGallerySelector or creating your own custom selector to pipe in the media access states for remote participants to your UI component.
 Here is an example of how we put to together the VideoGallery component with these media access states.
 
