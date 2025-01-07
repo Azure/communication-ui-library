@@ -2,19 +2,19 @@
 // Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
-import { RTTModal } from '@internal/react-components';
+import { RealTimeTextModal } from '@internal/react-components';
 import React from 'react';
 
-export const RTTModalStory = (): JSX.Element => {
+export const RealTimeTextModalStory = (): JSX.Element => {
   return (
     <Stack>
-      <RTTModal
+      <RealTimeTextModal
         showModal={true}
         onDismissModal={() => {
-          console.log('dismissed');
+          alert('Real Time Text Modal closed');
         }}
-        onStartRTT={() => {
-          console.log('RTT started');
+        onStartRealTimeText={() => {
+          alert('Real Time Text started');
           return Promise.resolve();
         }}
       />{' '}

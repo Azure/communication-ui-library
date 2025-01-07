@@ -50,12 +50,12 @@ import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSen
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
 /* @conditional-compile-remove(rtt) */
-import { RTTDisclosureBannerStrings } from '../components/RTTDisclosureBanner';
-/* @conditional-compile-remove(rtt) */
-import { RTTModalStrings } from '../components/RTTModal';
+import { RealTimeTextModalStrings } from '../components/RealTimeTextModal';
 /* @conditional-compile-remove(rtt) */
 import { RealTimeTextStrings } from '../components/RealTimeText';
 import { CaptionLanguageStrings, SpokenLanguageStrings } from '../types';
+/* @conditional-compile-remove(rtt) */
+import { StartRealTimeTextButtonStrings } from '../components/StartRealTimeTextButton';
 
 /**
  * Locale information for all components exported from this library.
@@ -190,14 +190,11 @@ export interface ComponentStrings {
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
   IncomingCallNotification: IncomingCallNotificationStrings;
   /* @conditional-compile-remove(rtt) */
-  /** Strings for the RTT Disclosure Banner */
-  rttDisclosureBanner: RTTDisclosureBannerStrings;
-  /* @conditional-compile-remove(rtt) */
-  /** Strings for the RTTModal */
-  rttModal: RTTModalStrings;
+  /** Strings for the RealTimeTextModal */
+  realTimeTextModal: RealTimeTextModalStrings;
   /* @conditional-compile-remove(rtt) */
   /** Strings for RealTimeText */
-  rtt: RealTimeTextStrings;
+  realTimeText: RealTimeTextStrings;
   /** Strings for Captions Setting Modal */
   captionsSettingsModal: CaptionsSettingsModalStrings;
   /**
@@ -212,6 +209,9 @@ export interface ComponentStrings {
   captionsBanner: CaptionsBannerStrings;
   /** Strings for Start Captions Button */
   startCaptionsButton: StartCaptionsButtonStrings;
+  /* @conditional-compile-remove(rtt) */
+  /** Strings for Start RealTimeText Button */
+  startRealTimeTextButton: StartRealTimeTextButtonStrings;
 }
 
 /**

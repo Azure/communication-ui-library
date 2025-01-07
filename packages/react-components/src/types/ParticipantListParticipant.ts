@@ -100,7 +100,7 @@ export type ParticipantState =
 /**
  * Audio/Video Media access state
  *
- * @alpha
+ * @public
  */
 export type MediaAccess = {
   isAudioPermitted: boolean;

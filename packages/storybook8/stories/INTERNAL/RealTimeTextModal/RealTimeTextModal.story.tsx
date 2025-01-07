@@ -2,10 +2,10 @@
 // Licensed under the MIT License.
 
 import { mergeStyles, PrimaryButton, Stack } from '@fluentui/react';
-import { RTTModal as RTTModalExample } from '@internal/react-components';
+import { RealTimeTextModal as RealTimeTextModalExample } from '@internal/react-components';
 import React, { useState } from 'react';
 
-const RTTModalStory = (): JSX.Element => {
+const RealTimeTextModalStory = (): JSX.Element => {
   const [showModal, setShowModal] = useState<boolean>(false);
 
   return (
@@ -16,15 +16,16 @@ const RTTModalStory = (): JSX.Element => {
           setShowModal(true);
         }}
       >
-        {'RTT Modal'}
+        {'Real Time Text Modal'}
       </PrimaryButton>
-      <RTTModalExample
+      <RealTimeTextModalExample
         showModal={showModal}
         onDismissModal={() => {
+          alert('Real Time Text Modal closed');
           setShowModal(false);
         }}
-        onStartRTT={() => {
-          console.log('RTT started');
+        onStartRealTimeText={() => {
+          alert('Real Time Text started');
           return Promise.resolve();
         }}
       />{' '}
@@ -34,4 +35,4 @@ const RTTModalStory = (): JSX.Element => {
 
 // This must be the only named export from this module, and must be named to match the storybook path suffix.
 // This ensures that storybook hoists the story instead of creating a folder with a single entry.
-export const RTTModal = RTTModalStory.bind({});
+export const RealTimeTextModal = RealTimeTextModalStory.bind({});

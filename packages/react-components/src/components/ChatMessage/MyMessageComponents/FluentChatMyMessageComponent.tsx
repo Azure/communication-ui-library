@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { MessageProps, _ChatMessageProps } from '../../MessageThread';
 import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -59,6 +59,11 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     onInsertInlineImage
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
+  const fluentMessageBodyRef = useRef<HTMLDivElement>(null);
+
+  const onEditComplete = useCallback(() => {
+    fluentMessageBodyRef.current?.focus();
+  }, []);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
   // needs to be regenerated), the dependency on "new Date().toDateString()"" is added.
@@ -71,6 +76,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
         return (
           <ChatMyMessageComponent
             {...messageProps}
+            onEditComplete={onEditComplete}
             onRenderAttachmentDownloads={onRenderAttachmentDownloads}
             strings={messageProps.strings}
             message={messageProps.message}
@@ -127,7 +133,8 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       onInsertInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      inlineImagesWithProgress
+      inlineImagesWithProgress,
+      onEditComplete
     ]
   );
 
@@ -190,7 +197,8 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
 
   const myMessageBodyProps = useMemo(() => {
     return {
-      className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage)
+      className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage),
+      ref: fluentMessageBodyRef
     };
   }, [chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage]);
 

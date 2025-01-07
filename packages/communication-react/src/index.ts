@@ -93,6 +93,7 @@ export type {
   CaptionsBannerSelector,
   StartCaptionsButtonSelector
 } from '../../calling-component-bindings/src';
+
 export type { HoldButtonSelector } from '../../calling-component-bindings/src';
 
 export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
@@ -453,18 +454,20 @@ export type {
 } from '../../react-components/src';
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';
 /* @conditional-compile-remove(rtt) */
-export type { RTTModalStrings, RTTModalProps } from '../../react-components/src';
+export type { RealTimeTextModalStrings, RealTimeTextModalProps } from '../../react-components/src';
 /* @conditional-compile-remove(rtt) */
-export { RTTModal } from '../../react-components/src';
-
-/* @conditional-compile-remove(rtt) */
-export type { RTTDisclosureBannerProps, RTTDisclosureBannerStrings } from '../../react-components/src';
-/* @conditional-compile-remove(rtt) */
-export { RTTDisclosureBanner } from '../../react-components/src';
+export { RealTimeTextModal } from '../../react-components/src';
 /* @conditional-compile-remove(rtt) */
 export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
 /* @conditional-compile-remove(rtt) */
 export { RealTimeText } from '../../react-components/src/components/RealTimeText';
+/* @conditional-compile-remove(rtt) */
+export { StartRealTimeTextButton } from '../../react-components/src/components/StartRealTimeTextButton';
+/* @conditional-compile-remove(rtt) */
+export type {
+  StartRealTimeTextButtonProps,
+  StartRealTimeTextButtonStrings
+} from '../../react-components/src/components/StartRealTimeTextButton';
 /* @conditional-compile-remove(media-access) */
 export type { MediaAccess } from '../../react-components/src';
 export type { CaptionsSettingsModalStrings, CaptionsSettingsModalProps } from '../../react-components/src';

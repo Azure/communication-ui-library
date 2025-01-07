@@ -10,11 +10,15 @@ import { Locator } from 'playwright-core';
 
 test.describe('VGL - VideoGallery tests', () => {
   test('VideoGallery with only audio participants and dominant speakers', async ({ mount }) => {
-    const localParticipant: VideoGalleryLocalParticipant = { userId: 'test' };
+    const localParticipant: VideoGalleryLocalParticipant = {
+      userId: 'test',
+      mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
+    };
     const remoteParticipants: VideoGalleryRemoteParticipant[] = Array.from({ length: 10 }, (_, i) => i + 1).map(
       (i) => ({
         userId: `${i}`,
-        displayName: `${i}`
+        displayName: `${i}`,
+        mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
       })
     );
     const component = await mount(
@@ -45,11 +49,15 @@ test.describe('VGL - VideoGallery tests', () => {
   });
 
   test('VideoGallery with video participants and dominant speakers', async ({ mount }) => {
-    const localParticipant: VideoGalleryLocalParticipant = { userId: 'test' };
+    const localParticipant: VideoGalleryLocalParticipant = {
+      userId: 'test',
+      mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
+    };
     const remoteParticipants: VideoGalleryRemoteParticipant[] = Array.from({ length: 10 }, (_, i) => i + 1).map(
       (i) => ({
         userId: `${i}`,
-        displayName: `${i}`
+        displayName: `${i}`,
+        mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
       })
     );
     // Assign video stream to some participants
@@ -86,11 +94,15 @@ test.describe('VGL - VideoGallery tests', () => {
   });
 
   test('VideoGallery with screen share on and dominant speakers', async ({ mount }) => {
-    const localParticipant: VideoGalleryLocalParticipant = { userId: 'test' };
+    const localParticipant: VideoGalleryLocalParticipant = {
+      userId: 'test',
+      mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
+    };
     const remoteParticipants: VideoGalleryRemoteParticipant[] = Array.from({ length: 10 }, (_, i) => i + 1).map(
       (i) => ({
         userId: `${i}`,
-        displayName: `${i}`
+        displayName: `${i}`,
+        mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
       })
     );
     remoteParticipants[5].isScreenSharingOn = true;
@@ -122,13 +134,17 @@ test.describe('VGL - VideoGallery tests', () => {
   });
 
   test('VideoGallery spotlight participant test', async ({ mount }) => {
-    const localParticipant: VideoGalleryLocalParticipant = { userId: 'test' };
+    const localParticipant: VideoGalleryLocalParticipant = {
+      userId: 'test',
+      mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
+    };
     const remoteParticipants: VideoGalleryRemoteParticipant[] = Array.from({ length: 10 }, (_, i) => i + 1).map(
-      (i) => ({ userId: `${i}`, displayName: `${i}` })
+      (i) => ({ userId: `${i}`, displayName: `${i}`, mediaAccess: { isAudioPermitted: true, isVideoPermitted: true } })
     );
     const screenSharingParticipant: VideoGalleryRemoteParticipant = {
       userId: '11',
-      displayName: '11'
+      displayName: '11',
+      mediaAccess: { isAudioPermitted: true, isVideoPermitted: true }
     };
     remoteParticipants.push(screenSharingParticipant);
     const component = await mount(
