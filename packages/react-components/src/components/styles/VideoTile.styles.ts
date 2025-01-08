@@ -84,7 +84,7 @@ export const displayNameStyle = (hasParticipantStateFollowed: boolean): IStyle =
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   maxWidth: '100%',
-  marginRight: hasParticipantStateFollowed ? 'audo' : '0.2rem'
+  marginRight: hasParticipantStateFollowed ? 'auto' : '0.2rem'
 });
 
 /**
