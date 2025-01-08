@@ -92,14 +92,12 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const { onPaste, onInsertInlineImage, inlineImagesWithProgress, onRemoveInlineImage } = richTextEditorOptions || {};
 
-  const sendBoxProps = usePropsFor(SendBox);
-
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   const isRichTextEditorEnabled = useMemo(() => {
     return richTextEditorOptions !== undefined;
   }, [richTextEditorOptions]);
 
-  const sendBox = useMemo(() => <SendBox {...sendBoxProps} {...props} />, [props, sendBoxProps]);
+  const sendBox = useMemo(() => <SendBoxWrapper {...props} />, [props]);
 
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   if (isRichTextEditorEnabled) {
@@ -122,4 +120,11 @@ export const SendBoxPicker = (props: SendBoxPickerProps): JSX.Element => {
     );
   }
   return sendBox;
+};
+
+// Move SendBox initialization to a separate component as otherwise it will cause re-render for Suspense and _ErrorBoundary when props and sendBoxProps are updated
+const SendBoxWrapper = (props: SendBoxPickerProps): JSX.Element => {
+  const sendBoxProps = usePropsFor(SendBox);
+
+  return <SendBox {...sendBoxProps} {...props} />;
 };
