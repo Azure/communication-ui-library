@@ -496,7 +496,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             <Stack horizontal className={tileInfoStyle}>
               {canShowLabel && (
                 <Text
-                  className={mergeStyles(displayNameStyle(!!participantStateString))}
+                  className={mergeStyles(displayNameStyle())}
                   title={displayName}
                   style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
                   data-ui-id="video-tile-display-name"
@@ -509,22 +509,24 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
                 </Text>
               )}
-              {getMediaAccessIconsTrampoline(
-                showMuteIndicator,
-                isMuted,
-                /* @conditional-compile-remove(media-access) */
-                mediaAccess
-              )}
-              {isSpotlighted && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTileSpotlighted" />
-                </Stack>
-              )}
-              {isPinned && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
-                </Stack>
-              )}
+              <div style={{ marginLeft: '0.2rem' }}>
+                {getMediaAccessIconsTrampoline(
+                  showMuteIndicator,
+                  isMuted,
+                  /* @conditional-compile-remove(media-access) */
+                  mediaAccess
+                )}
+                {isSpotlighted && (
+                  <Stack className={mergeStyles(iconContainerStyle)}>
+                    <Icon iconName="VideoTileSpotlighted" />
+                  </Stack>
+                )}
+                {isPinned && (
+                  <Stack className={mergeStyles(iconContainerStyle)}>
+                    <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
+                  </Stack>
+                )}
+              </div>
               <VideoTileMoreOptionsButton
                 contextualMenu={contextualMenu}
                 participantDisplayName={displayName}

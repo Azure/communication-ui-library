@@ -75,7 +75,7 @@ export const disabledVideoHint = mergeStyles({
 /**
  * @private
  */
-export const displayNameStyle = (hasParticipantStateFollowed: boolean): IStyle => ({
+export const displayNameStyle = (): IStyle => ({
   padding: '0.1rem',
   fontSize: '0.75rem',
   fontWeight: 600,
@@ -83,8 +83,7 @@ export const displayNameStyle = (hasParticipantStateFollowed: boolean): IStyle =
   color: 'inherit',
   overflow: 'hidden',
   textOverflow: 'ellipsis',
-  maxWidth: '100%',
-  marginRight: hasParticipantStateFollowed ? 'auto' : '0.2rem'
+  maxWidth: '100%'
 });
 
 /**
