@@ -510,7 +510,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
                 </Text>
               )}
-              <Stack horizontal className={mergeStyles(iconsGroupContainerStyle)} id="hi there">
+              <Stack horizontal className={mergeStyles(iconsGroupContainerStyle)}>
                 {getMediaAccessIconsTrampoline(
                   showMuteIndicator,
                   isMuted,
