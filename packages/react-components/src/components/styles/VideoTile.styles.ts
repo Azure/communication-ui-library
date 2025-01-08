@@ -118,8 +118,7 @@ export const participantStateStringStyles = (theme: Theme): IStyle => {
     overflow: 'hidden',
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
-    padding: '0.1rem',
-    marginRight: '0.2rem'
+    padding: '0.1rem'
   };
 };
 
