@@ -1243,7 +1243,23 @@ export class CallContext {
             toFlatCommunicationIdentifier(newCaption.sender.identifier)
       );
     if (lastRealTimeTextIndex !== -1) {
-      captions[captions.length - lastRealTimeTextIndex - 1] = newCaption;
+      if (newCaption.resultType === 'Partial') {
+        // update in place
+        captions[captions.length - lastRealTimeTextIndex - 1] = newCaption;
+      } else {
+        // remove the partial entry
+        captions.splice(captions.length - lastRealTimeTextIndex - 1, 1);
+        // find the index of the first partial rtt
+        const firstPartialIndex = captions.findIndex(
+          (caption) => caption.resultType === 'Partial' && 'sender' in caption
+        );
+        // push the new final entry before all partial entires
+        if (firstPartialIndex !== -1) {
+          captions.splice(firstPartialIndex, 0, newCaption);
+        } else {
+          captions.push(newCaption);
+        }
+      }
     } else {
       captions.push(newCaption);
     }
