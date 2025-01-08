@@ -198,7 +198,6 @@ const VideoEffectsPaneTrampoline = (
       />
     </Stack>
   );
-  return <></>;
 };
 
 const backgroundPickerStyles = {

@@ -508,7 +508,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     const showDisplayNameTrampoline = (): string => {
       return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
-      return isNarrow ? '' : strings.localVideoLabel;
     };
 
     return (

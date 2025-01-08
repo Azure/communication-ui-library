@@ -103,7 +103,6 @@ const defaultOnRenderAttachmentDownloads = (
   ) : (
     <></>
   );
-  return undefined;
 };
 
 /** @private */
