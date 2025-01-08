@@ -75,7 +75,7 @@ export const disabledVideoHint = mergeStyles({
 /**
  * @private
  */
-export const displayNameStyle = (): IStyle => ({
+export const displayNameStyle: IStyle = {
   padding: '0.1rem',
   fontSize: '0.75rem',
   fontWeight: 600,
@@ -84,7 +84,7 @@ export const displayNameStyle = (): IStyle => ({
   overflow: 'hidden',
   textOverflow: 'ellipsis',
   maxWidth: '100%'
-});
+};
 
 /**
  * @private
@@ -264,4 +264,11 @@ export const overlayStylesTransparent = (): IStyle => {
     justifyContent: 'center',
     alignItems: 'center'
   };
+};
+
+/**
+ * @private
+ */
+export const iconsGroupContainerStyle: IStyle = {
+  marginLeft: '0.2rem'
 };

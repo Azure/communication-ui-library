@@ -33,7 +33,8 @@ import {
   videoContainerStyles,
   tileInfoContainerStyle,
   participantStateStringStyles,
-  videoTileHighContrastStyles
+  videoTileHighContrastStyles,
+  iconsGroupContainerStyle
 } from './styles/VideoTile.styles';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
@@ -496,7 +497,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             <Stack horizontal className={tileInfoStyle}>
               {canShowLabel && (
                 <Text
-                  className={mergeStyles(displayNameStyle())}
+                  className={mergeStyles(displayNameStyle)}
                   title={displayName}
                   style={{ color: participantStateString ? theme.palette.neutralSecondary : 'inherit' }}
                   data-ui-id="video-tile-display-name"
@@ -509,7 +510,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
                 </Text>
               )}
-              <div style={{ marginLeft: '0.2rem' }}>
+              <Stack horizontal className={mergeStyles(iconsGroupContainerStyle)} id="hi there">
                 {getMediaAccessIconsTrampoline(
                   showMuteIndicator,
                   isMuted,
@@ -526,7 +527,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                     <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
                   </Stack>
                 )}
-              </div>
+              </Stack>
               <VideoTileMoreOptionsButton
                 contextualMenu={contextualMenu}
                 participantDisplayName={displayName}
