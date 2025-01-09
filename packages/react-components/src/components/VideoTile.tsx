@@ -443,17 +443,21 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
-  const participantMediaAccessIcons =
-    canShowLabel || participantStateString
-      ? getMediaAccessIconsTrampoline(
-          showMuteIndicator,
-          isMuted,
-          /* @conditional-compile-remove(media-access) */
-          props.strings,
-          /* @conditional-compile-remove(media-access) */
-          mediaAccess
-        )
-      : undefined;
+
+  const participantMediaAccessIcons = useMemo(
+    () =>
+      canShowLabel || participantStateString
+        ? getMediaAccessIconsTrampoline(
+            showMuteIndicator,
+            isMuted,
+            /* @conditional-compile-remove(media-access) */
+            props.strings,
+            /* @conditional-compile-remove(media-access) */
+            mediaAccess
+          )
+        : undefined,
+    [canShowLabel, isMuted, mediaAccess, participantStateString, props.strings, showMuteIndicator]
+  );
   const canShowParticipantIcons = participantMediaAccessIcons || isSpotlighted || isPinned;
 
   return (
