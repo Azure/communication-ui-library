@@ -90,4 +90,60 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-unpin.png');
   });
+
+  /* @conditional-compile-remove(media-access) */
+  test('VideoTile attendee audio/video hard muted for Desktop', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    paul.role = 'Attendee';
+    paul.mediaAccess = {
+      isAudioPermitted: false,
+      isVideoPermitted: false
+    };
+    addVideoStream(paul, true);
+
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants, 'Presenter', undefined, undefined, true);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
+    await videoTile.hover();
+    const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+    await moreButton.hover();
+    await moreButton.click();
+    await waitForSelector(page, dataUiId('video-tile-permit-audio'));
+    await waitForSelector(page, dataUiId('video-tile-permit-video'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-attendee-audio-video-hard-muted.png');
+  });
+
+  /* @conditional-compile-remove(media-access) */
+  test('VideoTile attendee audio/video permitted for Desktop', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    paul.role = 'Attendee';
+    paul.mediaAccess = {
+      isAudioPermitted: true,
+      isVideoPermitted: true
+    };
+    addVideoStream(paul, true);
+
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants, 'Presenter', undefined, undefined, true);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
+    await videoTile.hover();
+    const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+    await moreButton.hover();
+    await moreButton.click();
+    await waitForSelector(page, dataUiId('video-tile-forbid-audio'));
+    await waitForSelector(page, dataUiId('video-tile-forbid-video'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-attendee-audio-video-permitted.png');
+  });
 });
