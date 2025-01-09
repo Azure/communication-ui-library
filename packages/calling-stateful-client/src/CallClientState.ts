@@ -1148,6 +1148,7 @@ export type NotificationTarget =
   | 'assignedBreakoutRoomOpened'
   | 'assignedBreakoutRoomOpenedPromptJoin'
   | 'assignedBreakoutRoomChanged'
+  | 'assignedBreakoutRoomClosed'
   | 'breakoutRoomJoined'
   | 'breakoutRoomClosingSoon'
   | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent'

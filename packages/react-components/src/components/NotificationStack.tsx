@@ -260,6 +260,11 @@ export interface NotificationStackStrings {
   assignedBreakoutRoomChanged?: NotificationStrings;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
+   * Message shown in notification when the user is assigned breakout room is closed
+   */
+  assignedBreakoutRoomClosed?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
    * Message shown in notification when breakout room is joined
    */
   breakoutRoomJoined?: NotificationStrings;

@@ -67,7 +67,7 @@ export const RaiseHandButton = (props: RaiseHandButtonProps): JSX.Element => {
   return (
     <ControlBarButton
       {...props}
-      className={mergeStyles(styles, props.styles)}
+      className={mergeStyles(styles)}
       onClick={props.onToggleRaiseHand ?? props.onClick}
       onRenderOnIcon={props.onRenderOnIcon ?? onRenderLowerHandIcon}
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderRaiseHandIcon}

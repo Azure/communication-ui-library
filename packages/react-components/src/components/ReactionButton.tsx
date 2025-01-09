@@ -176,7 +176,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
         <ControlBarButton
           {...props}
           componentRef={reactionButtonRef}
-          className={mergeStyles(styles, props.styles)}
+          className={mergeStyles(styles)}
           onClick={() => setCalloutIsVisible(!calloutIsVisible)}
           onRenderIcon={props.onRenderIcon ?? onRenderIcon}
           strings={strings}

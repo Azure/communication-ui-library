@@ -128,6 +128,7 @@ export class CallContext {
   }
 
   public modifyState(modifier: (draft: CallClientState) => void): void {
+    console.log('DEBUG modifyState');
     const priorState = this._state;
     this._state = produce(this._state, modifier, (patches: Patch[]) => {
       if (getLogLevel() === 'verbose') {
@@ -749,6 +750,7 @@ export class CallContext {
 
   /* @conditional-compile-remove(breakout-rooms) */
   public setBreakoutRoomOriginCallId(callId: string, breakoutRoomCallId: string): void {
+    console.log('DEBUGS setBreakoutRoomOriginCallId breakoutRoomCallId: ', breakoutRoomCallId);
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(breakoutRoomCallId)];
       if (call) {

@@ -417,7 +417,7 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                         !props.mobileView &&
                           assignedBreakoutRoom &&
                           assignedBreakoutRoom.state === 'open' &&
-                          assignedBreakoutRoom.call && (
+                          !breakoutRoomSettings && (
                             <PrimaryButton
                               text={callStrings.joinBreakoutRoomButtonLabel}
                               onClick={async (): Promise<void> => {
