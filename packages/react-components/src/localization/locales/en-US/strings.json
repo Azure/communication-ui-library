@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Unnamed participant",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, More Options",
-    "attendeeRole": "Attendee"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, More Options",
+    "attendeeRole": "Attendee",
+    "micDisabledIconLabel": "Micophone disabled",
+    "cameraDisabledIconLabel": "Camera disabled"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} more"
@@ -684,11 +686,13 @@
     "participantStateRinging": "Calling...",
     "participantReconnecting": "Reconnecting...",
     "participantStateHold": "On hold",
-    "moreOptionsButtonAriaLabel": "More Options {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "More Options {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "muted",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "unmuted",
     "moreOptionsParticipantHandRaisedAriaLabel": "Hand raised",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Speaking"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Speaking",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Microphone disabled",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Camera disabled"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Allow {appName} to use your camera and microphone",
