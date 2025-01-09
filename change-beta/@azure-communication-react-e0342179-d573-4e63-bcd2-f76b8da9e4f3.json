@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Hard mute",
+  "comment": "Add more spacing for Video tile icons",
+  "packageName": "@azure/communication-react",
+  "email": "fuyan@microsoft.com",
+  "dependentChangeType": "patch"
+}

@@ -154,7 +154,6 @@ export const _LocalVideoTile = React.memo(
       return {
         contextualMenu: contextualMenuProps
       };
-      return {};
     }, [contextualMenuProps, menuKind]);
 
     const videoTileStyles = useMemo(() => {
