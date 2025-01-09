@@ -1036,8 +1036,6 @@ export interface CallCompositeStrings {
     tagsSurveyTextFieldDefaultText: string;
     threeParticipantJoinedNoticeString: string;
     threeParticipantLeftNoticeString: string;
-    togetherModeEnded?: string;
-    togetherModeStarted?: string;
     transferPageNoticeString: string;
     transferPageTransferorText: string;
     transferPageTransferTargetText: string;

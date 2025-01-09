@@ -922,18 +922,6 @@ export interface CallCompositeStrings {
    * notification.
    */
   returnFromBreakoutRoomBannerButtonLabel: string;
-  /* @conditional-compile-remove(together-mode) */
-  /**
-   * Label for button in banner to return from breakout room. The banner is shown in mobile view instead of the
-   * notification.
-   */
-  togetherModeStarted?: string;
-  /* @conditional-compile-remove(together-mode) */
-  /**
-   * Label for button in banner to return from breakout room. The banner is shown in mobile view instead of the
-   * notification.
-   */
-  togetherModeEnded?: string;
   /* @conditional-compile-remove(media-access) */
   /**
    * Label for menu item to forbid audio media access
