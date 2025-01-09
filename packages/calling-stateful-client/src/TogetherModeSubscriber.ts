@@ -15,8 +15,6 @@ import { CallIdRef } from './CallIdRef';
 /* @conditional-compile-remove(together-mode) */
 import { InternalCallContext } from './InternalCallContext';
 /* @conditional-compile-remove(together-mode) */
-import { disposeView } from './CallFeatureStreamUtils';
-/* @conditional-compile-remove(together-mode) */
 import { convertSdkCallFeatureStreamToDeclarativeCallFeatureStream } from './Converter';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeVideoStreamSubscriber } from './TogetherModeVideoStreamSubscriber';
@@ -82,12 +80,7 @@ export class TogetherModeSubscriber {
   ): void => {
     for (const stream of removedStreams) {
       this._togetherModeVideoStreamSubscribers.get(stream.id)?.unsubscribe();
-      disposeView(
-        this._context,
-        this._internalContext,
-        this._callIdRef.callId,
-        convertSdkCallFeatureStreamToDeclarativeCallFeatureStream(stream, this._featureName)
-      );
+      this._togetherModeVideoStreamSubscribers.delete(stream.id);
       this._internalContext.deleteCallFeatureRenderInfo(
         this._callIdRef.callId,
         this._featureName,
@@ -115,6 +108,17 @@ export class TogetherModeSubscriber {
         convertSdkCallFeatureStreamToDeclarativeCallFeatureStream(stream, this._featureName)
       )
     );
+    if (this._togetherMode.togetherModeStream.length) {
+      this._context.setLatestNotification(this._callIdRef.callId, {
+        target: 'togetherModeStarted',
+        timestamp: new Date(Date.now())
+      });
+    } else {
+      this._context.setLatestNotification(this._callIdRef.callId, {
+        target: 'togetherModeEnded',
+        timestamp: new Date(Date.now())
+      });
+    }
   };
 
   private onTogetherModeStreamUpdated = (args: {

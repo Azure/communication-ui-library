@@ -5,8 +5,7 @@ import React from 'react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
 import { RichTextSendBox } from '../../src/components/RichTextEditor/RichTextSendBox';
-
-const formatButtonId = 'rich-text-input-box-format-button';
+import { formatButtonId } from './utils/RichTextEditorUtils';
 
 betaTest.describe('RichTextSendBox tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
@@ -41,6 +40,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId(formatButtonId).waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-disabled-without-format-toolbar.png');
   });
 
@@ -54,6 +54,8 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId(formatButtonId).waitFor({ state: 'visible' });
+    await component.getByTestId('send-box-message-bar').first().waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-with-system-message.png');
   });
 
@@ -71,6 +73,8 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId(formatButtonId).waitFor({ state: 'visible' });
+    await component.getByTestId('attachment-card').first().waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-with-attachments-with-progress.png');
   });
 
@@ -84,6 +88,7 @@ betaTest.describe('RichTextSendBox tests', () => {
       />
     );
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId(formatButtonId).waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-send-box-with-auto-focus.png');
   });
 });

@@ -17,6 +17,8 @@ import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
+/* @conditional-compile-remove(media-access) */
+import { MediaAccess } from '../types';
 import { CallingTheme } from '../theming';
 import { RaisedHand } from '../types';
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
@@ -31,7 +33,8 @@ import {
   videoContainerStyles,
   tileInfoContainerStyle,
   participantStateStringStyles,
-  videoTileHighContrastStyles
+  videoTileHighContrastStyles,
+  iconsGroupContainerStyle
 } from './styles/VideoTile.styles';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
@@ -62,6 +65,10 @@ export interface VideoTileStrings {
   moreOptionsParticipantHandRaisedAriaLabel: string;
   /** String for the announcement of whether the participant is speaking or not */
   moreOptionsParticipantIsSpeakingAriaLabel: string;
+  /** String for the announcement of whether the participant microphone disabled */
+  moreOptionsParticipantMicDisabledAriaLabel: string;
+  /** String for the announcement of whether the participant camera disabled */
+  moreOptionsParticipantCameraDisabledAriaLabel: string;
 }
 
 /**
@@ -188,6 +195,11 @@ export interface VideoTileProps {
    * Reactions resources' url and metadata.
    */
   reactionResources?: ReactionResources;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * Media access state of the participant.
+   */
+  mediaAccess?: MediaAccess;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -232,6 +244,8 @@ const VideoTileMoreOptionsButton = (props: {
   participantIsSpeaking: boolean | undefined;
   participantIsMuted: boolean | undefined;
   canShowContextMenuButton: boolean;
+  isMicDisabled?: boolean;
+  isCameraDisabled?: boolean;
 }): JSX.Element => {
   const locale = useLocale().strings.videoTile;
   const theme = useTheme();
@@ -243,7 +257,9 @@ const VideoTileMoreOptionsButton = (props: {
     participantHandRaised,
     participantIsSpeaking,
     participantState,
-    participantIsMuted
+    participantIsMuted,
+    isMicDisabled,
+    isCameraDisabled
   } = props;
   const [moreButtonAiraDescription, setMoreButtonAriaDescription] = useState<string>('');
 
@@ -255,6 +271,8 @@ const VideoTileMoreOptionsButton = (props: {
         participantHandRaised,
         participantState,
         participantIsSpeaking,
+        isMicDisabled,
+        isCameraDisabled,
         locale
       )
     );
@@ -264,7 +282,9 @@ const VideoTileMoreOptionsButton = (props: {
     participantIsMuted,
     participantIsSpeaking,
     participantState,
-    locale
+    locale,
+    isMicDisabled,
+    isCameraDisabled
   ]);
 
   if (!contextualMenu) {
@@ -312,7 +332,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     raisedHand,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
-    contextualMenu
+    contextualMenu,
+    /* @conditional-compile-remove(media-access) */
+    mediaAccess
   } = props;
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -429,6 +451,19 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
+  const participantMediaAccessIcons = useMemo(
+    () =>
+      canShowLabel || participantStateString
+        ? getMediaAccessIconsTrampoline(
+            showMuteIndicator,
+            isMuted,
+            /* @conditional-compile-remove(media-access) */
+            mediaAccess
+          )
+        : undefined,
+    [canShowLabel, isMuted, mediaAccess, participantStateString, showMuteIndicator]
+  );
+  const canShowParticipantIcons = participantMediaAccessIcons || isSpotlighted || isPinned;
 
   return (
     <Stack
@@ -500,19 +535,19 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
                 </Text>
               )}
-              {showMuteIndicator && isMuted && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTileMicOff" />
-                </Stack>
-              )}
-              {isSpotlighted && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTileSpotlighted" />
-                </Stack>
-              )}
-              {isPinned && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
+              {canShowParticipantIcons && (
+                <Stack horizontal className={mergeStyles(iconsGroupContainerStyle)}>
+                  {participantMediaAccessIcons}
+                  {isSpotlighted && (
+                    <Stack className={mergeStyles(iconContainerStyle)}>
+                      <Icon iconName="VideoTileSpotlighted" />
+                    </Stack>
+                  )}
+                  {isPinned && (
+                    <Stack className={mergeStyles(iconContainerStyle)}>
+                      <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
+                    </Stack>
+                  )}
                 </Stack>
               )}
               <VideoTileMoreOptionsButton
@@ -523,6 +558,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 participantState={participantStateString}
                 participantIsSpeaking={isSpeaking}
                 canShowContextMenuButton={canShowContextMenuButton}
+                isMicDisabled={mediaAccess?.isAudioPermitted === false}
+                isCameraDisabled={mediaAccess?.isVideoPermitted === false}
               />
             </Stack>
           </Stack>
@@ -548,6 +585,53 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
       </div>
     </Stack>
   );
+};
+
+const getMediaAccessIconsTrampoline = (
+  showMuteIndicator: boolean,
+  isMuted?: boolean,
+  mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
+): JSX.Element | undefined => {
+  /* @conditional-compile-remove(media-access) */
+  const cameraForbidIcon =
+    mediaAccess && !mediaAccess?.isVideoPermitted ? (
+      <Stack className={mergeStyles(iconContainerStyle)}>
+        <Icon iconName="ControlButtonCameraProhibitedSmall" />
+      </Stack>
+    ) : undefined;
+  /* @conditional-compile-remove(media-access) */
+  const micOffIcon =
+    (mediaAccess ? mediaAccess.isAudioPermitted : true) && showMuteIndicator && isMuted ? (
+      <Stack className={mergeStyles(iconContainerStyle)}>
+        <Icon iconName="VideoTileMicOff" />
+      </Stack>
+    ) : undefined;
+  /* @conditional-compile-remove(media-access) */
+  const micForbidIcon =
+    mediaAccess && !mediaAccess?.isAudioPermitted && showMuteIndicator ? (
+      <Stack className={mergeStyles(iconContainerStyle)}>
+        <Icon iconName="ControlButtonMicProhibitedSmall" />
+      </Stack>
+    ) : undefined;
+  /* @conditional-compile-remove(media-access) */
+  if (!(cameraForbidIcon || micOffIcon || micForbidIcon)) {
+    return undefined;
+  }
+
+  /* @conditional-compile-remove(media-access) */
+  return (
+    <>
+      {cameraForbidIcon}
+      {micOffIcon}
+      {micForbidIcon}
+    </>
+  );
+
+  return showMuteIndicator && isMuted ? (
+    <Stack className={mergeStyles(iconContainerStyle)}>
+      <Icon iconName="VideoTileMicOff" />
+    </Stack>
+  ) : undefined;
 };
 
 const getParticipantStateString = (props: VideoTileProps, locale: ComponentLocale): string | undefined => {

@@ -78,15 +78,13 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.contentSharingStream,
             remoteParticipantReaction,
             spotlight,
+            participant.mediaAccess,
+            participant.role,
             /* @conditional-compile-remove(remote-ufd) */
             Math.max(
               (participant.diagnostics?.networkReceiveQuality?.value ?? 0) as number,
               (participant.diagnostics?.networkSendQuality?.value ?? 0) as number
-            ),
-            /* @conditional-compile-remove(media-access) */
-            participant.mediaAccess,
-            /* @conditional-compile-remove(media-access) */
-            participant.role
+            )
           );
         })
     );
@@ -105,10 +103,9 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
     spotlight?: Spotlight,
-    /* @conditional-compile-remove(remote-ufd) */
-    signalStrength?: number,
     mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess,
-    role?: undefined | /* @conditional-compile-remove(media-access) */ ParticipantRole
+    role?: undefined | /* @conditional-compile-remove(media-access) */ ParticipantRole,
+    signalStrength?: undefined | /* @conditional-compile-remove(remote-ufd) */ number
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -121,11 +118,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       contentSharingStream,
       reaction,
       spotlight,
-      /* @conditional-compile-remove(remote-ufd) */
       signalStrength,
-      /* @conditional-compile-remove(media-access) */
       mediaAccess,
-      /* @conditional-compile-remove(media-access) */
       role
     );
   }
@@ -143,8 +137,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   contentSharingStream?: HTMLElement,
   reaction?: Reaction,
   spotlight?: Spotlight,
-  /* @conditional-compile-remove(remote-ufd) */
-  signalStrength?: number,
+  signalStrength?: undefined | /* @conditional-compile-remove(remote-ufd) */ number,
   mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess,
   role?: undefined | /* @conditional-compile-remove(media-access) */ ParticipantRole
 ): VideoGalleryRemoteParticipant => {
@@ -190,12 +183,13 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     raisedHand,
     reaction,
     spotlight,
-    /* @conditional-compile-remove(remote-ufd) */
-    signalStrength,
-    /* @conditional-compile-remove(media-access) */
     mediaAccess,
     /* @conditional-compile-remove(media-access) */
-    role
+    canAudioBeForbidden: role === 'Attendee',
+    /* @conditional-compile-remove(media-access) */
+    canVideoBeForbidden: role === 'Attendee',
+    /* @conditional-compile-remove(remote-ufd) */
+    signalStrength
   };
 };
 
@@ -255,8 +249,8 @@ export const memoizeLocalParticipant = memoizeOne(
     capabilities,
     /* @conditional-compile-remove(media-access) */
     mediaAccess: {
-      isAudioPermitted: capabilities?.unmuteMic.isPresent,
-      isVideoPermitted: capabilities?.turnVideoOn.isPresent
+      isAudioPermitted: capabilities?.unmuteMic ? capabilities.unmuteMic.isPresent : true,
+      isVideoPermitted: capabilities?.turnVideoOn ? capabilities.turnVideoOn.isPresent : true
     }
   })
 );

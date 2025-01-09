@@ -5,9 +5,12 @@
     "removeButtonLabel": "Remover",
     "sharingIconLabel": "Compartilhamento",
     "mutedIconLabel": "Silenciado",
+    "handRaisedIconLabel": "Mão levantada - Posição {position}",
     "displayNamePlaceholder": "Participante sem nome",
     "participantStateRinging": "Chamando...",
     "participantStateHold": "Em espera",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Mais opções",
     "attendeeRole": "Participante"
   },
   "ParticipantList": {
@@ -74,12 +77,16 @@
     "rttCancelButtonLabel": "Cancelar",
     "rttCloseModalButtonAriaLabel": "Fechar Modal RTT"
   },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Iniciando legendas..."
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestões"
   },
   "imageOverlay": {
     "downloadButtonLabel": "Baixar",
-    "dismissButtonAriaLabel": "Fechar"
+    "dismissButtonAriaLabel": "Fechar",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Mensagem enviada",
@@ -155,6 +162,7 @@
   },
   "participantsButton": {
     "label": "Pessoas",
+    "ariaLabel": "Pessoas",
     "tooltipContent": "Mostrar participantes",
     "menuHeader": "Nesta chamada",
     "participantsListButtonLabel": "{numParticipants} pessoas",
@@ -178,7 +186,7 @@
   },
   "reactionButton": {
     "label": "Reagir",
-    "ariaLabel": "Botão Reagir, Enviar uma reação",
+    "ariaLabel": "Reagir",
     "tooltipDisabledContent": "A ação de reação está desabilitada",
     "tooltipContent": "Enviar uma reação",
     "likeReactionTooltipContent": "Curtir",
@@ -189,6 +197,100 @@
   },
   "rtt": {
     "isTypingText": "Digitação RTT"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Configurações de Legendas",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Idioma falado",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Idioma das legendas",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Idioma que todos nesta chamada estão falando.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "As legendas serão exibidas neste idioma.",
+    "captionsSettingsConfirmButtonLabel": "Confirmar",
+    "captionsSettingsCancelButtonLabel": "Cancelar",
+    "captionsSettingsModalAriaLabel": "Modal de Configuração de Legendas",
+    "captionsSettingsCloseModalButtonAriaLabel": "Fechar Configuração de Legendas"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Árabe - Emirados Árabes Unidos",
+    "ar-sa": "Árabe – Arábia Saudita",
+    "da-dk": "Dinamarquês",
+    "de-de": "Alemão – Alemanha",
+    "en-au": "Inglês – Austrália",
+    "en-ca": "Inglês – Canadá",
+    "en-gb": "Inglês – Reino Unido",
+    "en-in": "Inglês – Índia",
+    "en-nz": "Inglês – Nova Zelândia",
+    "en-us": "Inglês – Estados Unidos",
+    "es-es": "Espanhol - Espanha (Moderno)",
+    "es-mx": "Espanhol – México",
+    "fi-fi": "Finlandês",
+    "fr-ca": "Francês – Canadá",
+    "fr-fr": "Francês – França",
+    "hi-in": "Híndi",
+    "it-it": "Italiano – Itália",
+    "ja-jp": "Japonês",
+    "ko-kr": "Coreano",
+    "nb-no": "Norueguês (Bokmål)",
+    "nl-be": "Holandês – Bélgica",
+    "nl-nl": "Holandês – Países Baixos",
+    "pl-pl": "Polonês",
+    "pt-br": "Português – Brasil",
+    "ru-ru": "Russo",
+    "sv-se": "Sueco",
+    "zh-cn": "Chinês - República Popular da China",
+    "zh-hk": "Chinês - RAE de Hong Kong",
+    "cs-cz": "Tcheco",
+    "pt-pt": "Português – Portugal",
+    "tr-tr": "Turco",
+    "vi-vn": "Vietnamita",
+    "th-th": "Tailandês",
+    "he-il": "Hebraico",
+    "cy-gb": "Galês",
+    "uk-ua": "Ucraniano",
+    "el-gr": "Grego",
+    "hu-hu": "Húngaro",
+    "ro-ro": "Romeno",
+    "sk-sk": "Eslovaco",
+    "zh-tw": "Chinês – Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Árabe",
+    "da": "Dinamarquês",
+    "de": "Alemão",
+    "en": "Inglês",
+    "es": "Espanhol",
+    "fi": "Finlandês",
+    "fr-ca": "Francês – Canadá",
+    "fr": "Francês – França",
+    "hi": "Híndi",
+    "it": "Italiano",
+    "ja": "Japonês",
+    "ko": "Coreano",
+    "nb": "Norueguês (Bokmål)",
+    "nl": "Holandês",
+    "pl": "Polonês",
+    "pt": "Português – Brasil",
+    "ru": "Russo",
+    "sv": "Sueco",
+    "zh-Hans": "Chinês (Simplificado)",
+    "zh-Hant": "Chinês (Tradicional)",
+    "cs": "Tcheco",
+    "pt-pt": "Português – Portugal",
+    "tr": "Turco",
+    "vi": "Vietnamita",
+    "th": "Tailandês",
+    "he": "Hebraico",
+    "cy": "Galês",
+    "uk": "Ucraniano",
+    "el": "Grego",
+    "hu": "Húngaro",
+    "ro": "Romeno",
+    "sk": "Eslovaco"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Ativar legendas",
+    "offLabel": "Desativar legendas",
+    "tooltipOnContent": "Desativar legendas",
+    "tooltipOffContent": "Ativar legendas"
   },
   "messageThread": {
     "yesterday": "Ontem",
@@ -494,6 +596,26 @@
       "title": "Limite de tempo de sala prestes a expirar.",
       "message": "Esta sala será fechada em 30 segundos",
       "dismissButtonAriaLabel": "Fechar"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Sua câmera foi habilitada",
+      "message": "Ativar se quiser compartilhar um vídeo.",
+      "dismissButtonAriaLabel": "Fechar"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Sua câmera foi desabilitada",
+      "message": "Você não pode mais compartilhar vídeo.",
+      "dismissButtonAriaLabel": "Fechar"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Seu microfone foi habilitado",
+      "message": "Desative mudo se quiser falar.",
+      "dismissButtonAriaLabel": "Fechar"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "O microfone foi desabilitado",
+      "message": "Você não pode mais ativar o som.",
+      "dismissButtonAriaLabel": "Fechar"
     }
   },
   "videoGallery": {
@@ -522,7 +644,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Sair de destaque",
     "attendeeRole": "Participante",
     "muteParticipantMenuItemLabel": "Ativar mudo",
-    "waitingScreenText": "Aguardando o ingresso de outros participantes"
+    "waitingScreenText": "Aguardando o ingresso de outros participantes",
+    "forbidAudio": "Desabilitar microfone",
+    "permitAudio": "Permitir microfone",
+    "forbidAudioTileMenuLabel": "Desabilitar microfone",
+    "permitAudioTileMenuLabel": "Permitir microfone",
+    "forbidVideo": "Desabilitar câmera",
+    "permitVideo": "Permitir câmera",
+    "forbidVideoTileMenuLabel": "Desabilitar câmera",
+    "permitVideoTileMenuLabel": "Permitir câmera"
   },
   "dialpad": {
     "placeholderText": "Inserir o número do telefone",

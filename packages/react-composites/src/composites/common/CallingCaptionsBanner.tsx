@@ -56,7 +56,15 @@ export const CallingCaptionsBanner = (props: {
   const strings = useLocale().strings.call;
 
   const captionsBannerStrings: CaptionsBannerStrings = {
-    captionsBannerSpinnerText: strings.captionsBannerSpinnerText
+    captionsBannerSpinnerText: strings.captionsBannerSpinnerText,
+    /* @conditional-compile-remove(rtt) */
+    realTimeTextInputBoxDefaultText: strings.realTimeTextInputBoxDefaultText,
+    /* @conditional-compile-remove(rtt) */
+    realTimeTextBannerContent: strings.realTimeTextBannerContent,
+    /* @conditional-compile-remove(rtt) */
+    realTimeTextBannerTitle: strings.realTimeTextBannerTitle,
+    /* @conditional-compile-remove(rtt) */
+    realTimeTextBannerLinkLabel: strings.realTimeTextBannerLinkLabel
   };
 
   const onRenderAvatar = useCallback(
@@ -91,7 +99,7 @@ export const CallingCaptionsBanner = (props: {
         />
       )}
       {
-        <div className={containerClassName}>
+        <div className={containerClassName} role="region" aria-label={strings.liveCaptionsLabel}>
           <Stack horizontalAlign="center">
             <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
               <CaptionsBanner

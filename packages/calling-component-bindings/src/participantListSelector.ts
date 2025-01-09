@@ -43,7 +43,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         // Filter out MicrosoftBot participants
         .filter((participant: RemoteParticipantState) => {
           return !isMicrosoftTeamsAppIdentifier(participant.identifier);
-          return true;
         })
         /**
          * hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients.
@@ -185,8 +184,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId),
       /* @conditional-compile-remove(media-access) */
       mediaAccess: {
-        isAudioPermitted: capabilities ? capabilities.unmuteMic.isPresent : true,
-        isVideoPermitted: capabilities ? capabilities.turnVideoOn.isPresent : true
+        isAudioPermitted: capabilities?.unmuteMic ? capabilities.unmuteMic.isPresent : true,
+        isVideoPermitted: capabilities?.turnVideoOn ? capabilities.turnVideoOn.isPresent : true
       }
     });
     /* @conditional-compile-remove(total-participant-count) */

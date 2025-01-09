@@ -97,7 +97,7 @@ export const pinIconStyle: IStyle = {
  * @private
  */
 export const iconContainerStyle: IStyle = {
-  margin: 'auto',
+  margin: 'auto 0.2rem',
   alignItems: 'center',
   '& svg': {
     display: 'block',
@@ -263,4 +263,11 @@ export const overlayStylesTransparent = (): IStyle => {
     justifyContent: 'center',
     alignItems: 'center'
   };
+};
+
+/**
+ * @private
+ */
+export const iconsGroupContainerStyle: IStyle = {
+  marginLeft: '0.2rem'
 };

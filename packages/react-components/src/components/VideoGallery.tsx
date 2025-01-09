@@ -313,6 +313,26 @@ export interface VideoGalleryProps {
    * This callback is to mute a remote participant
    */
   onMuteParticipant?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * This callback is to forbid audio for a remote participant(s)
+   */
+  onForbidAudio?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * This callback is to permit audio for a remote participant(s)
+   */
+  onPermitAudio?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * This callback is to forbid video for a remote participant(s)
+   */
+  onForbidVideo?: (userIds: string[]) => Promise<void>;
+  /* @conditional-compile-remove(media-access) */
+  /**
+   * This callback is to permit video for a remote participant(s)
+   */
+  onPermitVideo?: (userIds: string[]) => Promise<void>;
 }
 
 /**
@@ -397,7 +417,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxParticipantsToSpotlight,
     reactionResources,
     videoTilesOptions,
-    onMuteParticipant
+    onMuteParticipant,
+    /* @conditional-compile-remove(media-access) */
+    onForbidAudio,
+    /* @conditional-compile-remove(media-access) */
+    onPermitAudio,
+    /* @conditional-compile-remove(media-access) */
+    onForbidVideo,
+    /* @conditional-compile-remove(media-access) */
+    onPermitVideo
   } = props;
 
   const ids = useIdentifiers();
@@ -480,7 +508,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     const showDisplayNameTrampoline = (): string => {
       return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
-      return isNarrow ? '' : strings.localVideoLabel;
     };
 
     return (
@@ -517,6 +544,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           reactionResources={reactionResources}
           participantsCount={remoteParticipants.length + 1}
           isScreenSharingOn={localParticipant.isScreenSharingOn}
+          /* @conditional-compile-remove(media-access) */
+          mediaAccess={localParticipant.mediaAccess}
         />
       </Stack>
     );
@@ -647,32 +676,48 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           reactionResources={reactionResources}
           onMuteParticipant={onMuteParticipant}
+          /* @conditional-compile-remove(media-access) */
+          onForbidAudio={onForbidAudio}
+          /* @conditional-compile-remove(media-access) */
+          onPermitAudio={onPermitAudio}
+          /* @conditional-compile-remove(media-access) */
+          onForbidVideo={onForbidVideo}
+          /* @conditional-compile-remove(media-access) */
+          onPermitVideo={onPermitVideo}
         />
       );
     },
     [
+      selectedScalingModeState,
+      pinnedParticipants,
+      videoTilesOptions?.alwaysShowLabelBackground,
       onCreateRemoteStreamView,
       onDisposeRemoteVideoStreamView,
-      remoteVideoViewOptions,
-      localParticipant,
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      drawerMenuHostId,
+      localParticipant.userId,
       remoteVideoTileMenu,
-      selectedScalingModeState,
-      pinnedParticipants,
+      drawerMenuHostId,
       onPinParticipant,
       onUnpinParticipant,
-      toggleAnnouncerString,
       onUpdateScalingMode,
+      toggleAnnouncerString,
       spotlightedParticipants,
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       maxParticipantsToSpotlight,
-      onMuteParticipant,
       reactionResources,
-      videoTilesOptions
+      onMuteParticipant,
+      /* @conditional-compile-remove(media-access) */
+      onForbidAudio,
+      /* @conditional-compile-remove(media-access) */
+      onPermitAudio,
+      /* @conditional-compile-remove(media-access) */
+      onForbidVideo,
+      /* @conditional-compile-remove(media-access) */
+      onPermitVideo,
+      remoteVideoViewOptions
     ]
   );
 

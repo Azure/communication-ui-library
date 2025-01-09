@@ -102,16 +102,18 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
  * @private
  */
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
-  public name = 'Recording';
-  public consentToBeingRecordedAndTranscribed(): Promise<void> {
-    this.isRecordingActive = true;
-    this.emitter.emit('isRecordingActiveChanged', this.isRecordingActive);
-    return Promise.resolve();
+  consentToBeingRecordedAndTranscribed(): Promise<void> {
+    throw new Error('Method not implemented.');
   }
   public isConsentRequired = false;
+  public name = 'Recording';
   public isRecordingActive = false;
   public recordings: RecordingInfo[] = [];
   public emitter = new EventEmitter();
+  public isTeamsConsentRequired = false;
+  public grantTeamsConsent(): Promise<void> {
+    return Promise.resolve();
+  }
   on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
   on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -193,27 +195,7 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
   constructor() {
     this.mediaAccesses = [];
   }
-  permitOthersAudio(): Promise<void> {
-    return Promise.resolve();
-  }
-  forbidOthersAudio(): Promise<void> {
-    return Promise.resolve();
-  }
-  forbidOthersVideo(): Promise<void> {
-    return Promise.resolve();
-  }
-  permitOthersVideo(): Promise<void> {
-    return Promise.resolve();
-  }
-  getAllOthersMediaAccess(): MediaAccess[] {
-    return this.mediaAccesses;
-  }
-  getMeetingMediaAccess(): MeetingMediaAccess {
-    return {
-      isAudioPermitted: true,
-      isVideoPermitted: true
-    };
-  }
+
   permitAudio(): Promise<void> {
     return Promise.resolve();
   }
@@ -230,35 +212,39 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
     return Promise.resolve();
   }
 
-  permitRemoteParticipantsAudio(): Promise<void> {
+  permitOthersAudio(): Promise<void> {
     return Promise.resolve();
   }
 
-  forbidRemoteParticipantsAudio(): Promise<void> {
+  forbidOthersAudio(): Promise<void> {
     return Promise.resolve();
   }
 
-  permitRemoteParticipantsVideo(): Promise<void> {
+  permitOthersVideo(): Promise<void> {
     return Promise.resolve();
   }
 
-  forbidRemoteParticipantsVideo(): Promise<void> {
+  forbidOthersVideo(): Promise<void> {
     return Promise.resolve();
   }
 
-  getRemoteParticipantsMediaAccess(): MediaAccess[] {
+  getAllOthersMediaAccess(): MediaAccess[] {
     return this.mediaAccesses;
   }
 
-  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  getMeetingMediaAccess(): MeetingMediaAccess {
+    return { isAudioPermitted: true, isVideoPermitted: true };
+  }
+
   on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
-  on(event: any, listener: any): void {
+  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  on(event: string, listener: (...args: any[]) => void): void {
     this.emitter.on(event, listener);
   }
 
   off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
   off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
-  off(event: any, listener: any): void {
+  off(event: string, listener: (...args: any[]) => void): void {
     this.emitter.off(event, listener);
   }
 
@@ -271,10 +257,17 @@ export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
  * @private
  */
 export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
+  consentForTranscription(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   public name = 'Transcription';
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();
   public isConsentRequired = false;
+  public isTeamsConsentRequired = false;
+  public grantTeamsConsent(): Promise<void> {
+    return Promise.resolve();
+  }
   public consentToBeingRecordedAndTranscribed(): Promise<void> {
     this.isTranscriptionActive = true;
     this.emitter.emit('isTranscriptionActiveChanged', this.isTranscriptionActive);

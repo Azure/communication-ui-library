@@ -625,9 +625,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         onClose={closeChat}
         dismissSidePaneButtonAriaLabel={callWithChatStrings.dismissSidePaneButtonLabel ?? ''}
         mobileView={mobileView}
+        chatButtonPresent={showChatButton}
       />
     ),
-    [chatPaneTitle, callWithChatStrings.dismissSidePaneButtonLabel, closeChat, mobileView]
+    [chatPaneTitle, closeChat, callWithChatStrings.dismissSidePaneButtonLabel, mobileView, showChatButton]
   );
 
   const sidePaneContentRenderer = useMemo(
