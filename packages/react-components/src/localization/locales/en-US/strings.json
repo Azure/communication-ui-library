@@ -319,6 +319,8 @@
     "failToSendTag": "Failed to send",
     "editedTag": "Edited",
     "liveAuthorIntro": "Message from {author}",
+    "editedMessageLiveAuthorIntro": "Edited message from {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Edited message",
     "messageContentAriaText": "{status} {author} said {message}",
     "messageContentMineAriaText": "{status} You said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
