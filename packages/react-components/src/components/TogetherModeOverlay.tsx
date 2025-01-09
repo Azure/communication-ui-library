@@ -90,8 +90,9 @@ export const TogetherModeOverlay = React.memo(
 
     useMemo(() => {
       const allParticipants = [...remoteParticipants, localParticipant];
-
-      const participantsWithVideoAvailable = allParticipants.filter((p) => togetherModeSeatPositions[p.userId]);
+      const participantsWithVideoAvailable = allParticipants.filter(
+        (p) => p.videoStream?.isAvailable && togetherModeSeatPositions[p.userId]
+      );
 
       const updatedSignals: { [key: string]: TogetherModeParticipantStatus } = {};
       for (const p of participantsWithVideoAvailable) {
@@ -118,19 +119,18 @@ export const TogetherModeOverlay = React.memo(
 
       setTogetherModeParticipantStatus((prevSignals) => {
         const newSignals = { ...prevSignals, ...updatedSignals };
-        const newSignalsLength = Object.keys(newSignals).length;
 
         participantsNotInTogetherModeStream.forEach((id) => {
           delete newSignals[id];
         });
 
-        const hasChanges = Object.keys(newSignals).some(
-          (key) =>
-            JSON.stringify(newSignals[key]) !== JSON.stringify(prevSignals[key]) ||
-            newSignalsLength !== Object.keys(prevSignals).length
+        const hasSignalingChange = Object.keys(newSignals).some(
+          (key) => JSON.stringify(newSignals[key]) !== JSON.stringify(prevSignals[key])
         );
 
-        return hasChanges ? newSignals : prevSignals;
+        const updateTogetherModeParticipantStatusState =
+          hasSignalingChange || Object.keys(newSignals).length !== Object.keys(prevSignals).length;
+        return updateTogetherModeParticipantStatusState ? newSignals : prevSignals;
       });
     }, [
       remoteParticipants,
@@ -155,8 +155,9 @@ export const TogetherModeOverlay = React.memo(
         });
 
         // Trigger a re-render only if changes occurred
-        const hasChanges = Object.keys(newSignals).length !== Object.keys(prevSignals).length;
-        return hasChanges ? newSignals : prevSignals;
+        const updateTogetherModeParticipantStatusState =
+          Object.keys(newSignals).length !== Object.keys(prevSignals).length;
+        return updateTogetherModeParticipantStatusState ? newSignals : prevSignals;
       });
     }, [togetherModeParticipantStatus, togetherModeSeatPositions]);
 
@@ -169,7 +170,7 @@ export const TogetherModeOverlay = React.memo(
                 key={participantStatus.id}
                 style={{
                   ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle),
-                  border: '1px solid red'
+                  border: '1px solid blue'
                 }}
                 onMouseEnter={() => setHoveredParticipantID(participantStatus.id)}
                 onMouseLeave={() => setHoveredParticipantID('')}
