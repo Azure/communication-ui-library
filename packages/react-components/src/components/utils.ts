@@ -436,6 +436,8 @@ export const formatMoreButtonAriaDescription = (
   isHandRaised?: boolean,
   state?: string,
   isSpeaking?: boolean,
+  isMicDisabled?: boolean,
+  isCameraDisabled?: boolean,
   strings?: VideoTileStrings
 ): string => {
   const mutedState = isMuted
@@ -443,14 +445,17 @@ export const formatMoreButtonAriaDescription = (
     : strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel;
   const handRaisedState = isHandRaised ? strings?.moreOptionsParticipantHandRaisedAriaLabel : undefined;
   const isSpeakingState = isSpeaking ? strings?.moreOptionsParticipantIsSpeakingAriaLabel : undefined;
-
+  const micDisabledState = isMicDisabled ? strings?.moreOptionsParticipantMicDisabledAriaLabel : undefined;
+  const cameraDisabledState = isCameraDisabled ? strings?.moreOptionsParticipantCameraDisabledAriaLabel : undefined;
   const description = strings?.moreOptionsButtonAriaLabel
     ? _formatString(strings?.moreOptionsButtonAriaLabel, {
         displayName: displayName ?? ' ',
         isMuted: mutedState ?? ' ',
         isHandRaised: handRaisedState ?? ' ',
         state: state ?? ' ',
-        isSpeaking: isSpeakingState ?? ' '
+        isSpeaking: isSpeakingState ?? ' ',
+        micDisabledState: micDisabledState ?? ' ',
+        cameraDisabledState: cameraDisabledState ?? ' '
       })
     : '';
 
