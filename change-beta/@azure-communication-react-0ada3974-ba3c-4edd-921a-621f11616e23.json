@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Chat",
+  "comment": "Fix SendBox initialization that caused MaxListenersExceededWarning logs in the Console tool for ChatComposite with rich text editor enabled.",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
