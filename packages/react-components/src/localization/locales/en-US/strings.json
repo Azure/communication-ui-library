@@ -316,7 +316,7 @@
     "resendMessage": "Try sending again",
     "failToSendTag": "Failed to send",
     "editedTag": "Edited",
-    "liveAuthorIntro": "{author} says",
+    "liveAuthorIntro": "Message from {author}",
     "messageContentAriaText": "{status} {author} said {message}",
     "messageContentMineAriaText": "{status} You said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",

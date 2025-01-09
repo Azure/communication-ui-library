@@ -205,8 +205,12 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
 };
 
 const generateLiveMessage = (props: ChatMessageContentProps): string => {
-  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
-
+  const liveAuthorIntro = props.message.editedOn
+    ? props.strings.liveAuthorIntro.toLowerCase()
+    : props.strings.liveAuthorIntro;
+  const liveAuthor = _formatString(liveAuthorIntro, {
+    author: `${props.message.senderDisplayName}`
+  });
   return `${props.message.editedOn ? props.strings.editedTag : ''} ${
     props.message.mine ? '' : liveAuthor
   } ${extractContentForAllyMessage(props)} `;
