@@ -75,8 +75,14 @@ const REACTION_EMOJI_RESIZE_SCALE_CONSTANT = 3;
  * @internal
  */
 export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.Element => {
-  const { overlayMode, reaction, reactionResources, localParticipant, remoteParticipants, togetherModeSeatPositions } =
-    props;
+  const {
+    overlayMode,
+    reaction,
+    reactionResources,
+    localParticipant,
+    remoteParticipants,
+    /* @conditional-compile-remove(together-mode) */ togetherModeSeatPositions
+  } = props;
   const [emojiSizePx, setEmojiSizePx] = useState(0);
   const [divHeight, setDivHeight] = useState(0);
   const [divWidth, setDivWidth] = useState(0);

@@ -32,7 +32,7 @@ import {
   _dominantSpeakersWithFlatId,
   convertRemoteParticipantToVideoGalleryRemoteParticipant,
   memoizeLocalParticipant,
-  memoizeTogetherModeStreams
+  /* @conditional-compile-remove(together-mode) */ memoizeTogetherModeStreams
 } from './utils/videoGalleryUtils';
 import { memoizeSpotlightedParticipantIds } from './utils/videoGalleryUtils';
 import { getLocalParticipantRaisedHand } from './baseSelectors';

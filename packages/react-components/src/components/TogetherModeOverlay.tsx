@@ -37,8 +37,10 @@ import {
   togetherModeParticipantStatusContainer,
   TogetherModeSeatStyle
 } from './styles/TogetherMode.styles';
+/* @conditional-compile-remove(together-mode) */
 import { CallingTheme, useTheme } from '../theming';
 // import { iconContainerStyle, raiseHandContainerStyles } from './styles/VideoTile.styles';
+/* @conditional-compile-remove(together-mode) */
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(together-mode) */
 import { _pxToRem } from '@internal/acs-ui-common';
