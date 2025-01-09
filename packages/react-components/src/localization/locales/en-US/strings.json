@@ -11,7 +11,9 @@
     "participantStateHold": "On hold",
     "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
     "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, More Options",
-    "attendeeRole": "Attendee"
+    "attendeeRole": "Attendee",
+    "disabledMicIconLabel": "Microphone disabled",
+    "disabledCameraIconLabel": "Camera disabled"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} more"
@@ -688,7 +690,9 @@
     "moreOptionsParticipantMutedStateMutedAriaLabel": "muted",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "unmuted",
     "moreOptionsParticipantHandRaisedAriaLabel": "Hand raised",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Speaking"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Speaking",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Microphone disabled",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Camera disabled"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Allow {appName} to use your camera and microphone",

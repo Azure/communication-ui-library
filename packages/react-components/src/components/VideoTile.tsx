@@ -65,6 +65,10 @@ export interface VideoTileStrings {
   moreOptionsParticipantHandRaisedAriaLabel: string;
   /** String for the announcement of whether the participant is speaking or not */
   moreOptionsParticipantIsSpeakingAriaLabel: string;
+  /** String for the announcement of whether the participant microphone disabled */
+  moreOptionsParticipantMicDisabledAriaLabel: string;
+  /** String for the announcement of whether the participant camera disabled */
+  moreOptionsParticipantCameraDisabledAriaLabel: string;
 }
 
 /**
@@ -445,6 +449,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           showMuteIndicator,
           isMuted,
           /* @conditional-compile-remove(media-access) */
+          props.strings,
+          /* @conditional-compile-remove(media-access) */
           mediaAccess
         )
       : undefined;
@@ -573,40 +579,47 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 const getMediaAccessIconsTrampoline = (
   showMuteIndicator: boolean,
   isMuted?: boolean,
+  videoTileStrings?: undefined | /* @conditional-compile-remove(media-access) */ VideoTileStrings,
   mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
 ): JSX.Element | undefined => {
   /* @conditional-compile-remove(media-access) */
-  const cameraForbidIcon =
+  const cameraForbiddenIcon =
     mediaAccess && !mediaAccess?.isVideoPermitted ? (
       <Stack className={mergeStyles(iconContainerStyle)}>
-        <Icon iconName="ControlButtonCameraProhibitedSmall" />
+        <Icon
+          iconName="ControlButtonCameraProhibitedSmall"
+          ariaLabel={videoTileStrings?.moreOptionsParticipantMicDisabledAriaLabel}
+        />
       </Stack>
     ) : undefined;
   /* @conditional-compile-remove(media-access) */
   const micOffIcon =
     (mediaAccess ? mediaAccess.isAudioPermitted : true) && showMuteIndicator && isMuted ? (
       <Stack className={mergeStyles(iconContainerStyle)}>
-        <Icon iconName="VideoTileMicOff" />
+        <Icon iconName="VideoTileMicOff" ariaLabel={videoTileStrings?.moreOptionsParticipantMutedStateMutedAriaLabel} />
       </Stack>
     ) : undefined;
   /* @conditional-compile-remove(media-access) */
-  const micForbidIcon =
+  const micForbiddenIcon =
     mediaAccess && !mediaAccess?.isAudioPermitted && showMuteIndicator ? (
       <Stack className={mergeStyles(iconContainerStyle)}>
-        <Icon iconName="ControlButtonMicProhibitedSmall" />
+        <Icon
+          iconName="ControlButtonMicProhibitedSmall"
+          ariaLabel={videoTileStrings?.moreOptionsParticipantMicDisabledAriaLabel}
+        />
       </Stack>
     ) : undefined;
   /* @conditional-compile-remove(media-access) */
-  if (!(cameraForbidIcon || micOffIcon || micForbidIcon)) {
+  if (!(cameraForbiddenIcon || micOffIcon || micForbiddenIcon)) {
     return undefined;
   }
 
   /* @conditional-compile-remove(media-access) */
   return (
     <>
-      {cameraForbidIcon}
+      {cameraForbiddenIcon}
       {micOffIcon}
-      {micForbidIcon}
+      {micForbiddenIcon}
     </>
   );
 

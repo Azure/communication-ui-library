@@ -4299,6 +4299,8 @@ export interface ParticipantItemProps {
 // @public
 export interface ParticipantItemStrings {
     attendeeRole: string;
+    disabledCameraIconLabel: string;
+    disabledMicIconLabel: string;
     displayNamePlaceholder?: string;
     handRaisedIconLabel?: string;
     isMeText: string;
@@ -5724,8 +5726,10 @@ export interface VideoTilesOptions {
 // @public
 export interface VideoTileStrings {
     moreOptionsButtonAriaLabel: string;
+    moreOptionsParticipantCameraDisabledAriaLabel: string;
     moreOptionsParticipantHandRaisedAriaLabel: string;
     moreOptionsParticipantIsSpeakingAriaLabel: string;
+    moreOptionsParticipantMicDisabledAriaLabel: string;
     moreOptionsParticipantMutedStateMutedAriaLabel: string;
     moreOptionsParticipantMutedStateUnmutedAriaLabel: string;
     participantReconnecting?: string;

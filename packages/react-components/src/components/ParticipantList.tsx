@@ -212,14 +212,18 @@ const onRenderParticipantDefault = (
               <Icon
                 iconName="ControlButtonCameraProhibited"
                 className={iconStyles}
-                ariaLabel={strings.mutedIconLabel}
+                ariaLabel={strings.disabledCameraIconLabel}
               />
             ) : undefined
           }
           {
             /* @conditional-compile-remove(media-access) */ callingParticipant.mediaAccess &&
             !callingParticipant.mediaAccess?.isAudioPermitted ? (
-              <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+              <Icon
+                iconName="ControlButtonMicProhibited"
+                className={iconStyles}
+                ariaLabel={strings.disabledMicIconLabel}
+              />
             ) : undefined
           }
           {
