@@ -4299,10 +4299,12 @@ export interface ParticipantItemProps {
 // @public
 export interface ParticipantItemStrings {
     attendeeRole: string;
+    cameraDisabledIconLabel: string;
     displayNamePlaceholder?: string;
     handRaisedIconLabel?: string;
     isMeText: string;
     menuTitle: string;
+    micDisabledIconLabel: string;
     mutedIconLabel: string;
     participantItemAriaLabel?: string;
     participantItemWithMoreOptionsAriaLabel?: string;
@@ -5724,8 +5726,10 @@ export interface VideoTilesOptions {
 // @public
 export interface VideoTileStrings {
     moreOptionsButtonAriaLabel: string;
+    moreOptionsParticipantCameraDisabledAriaLabel: string;
     moreOptionsParticipantHandRaisedAriaLabel: string;
     moreOptionsParticipantIsSpeakingAriaLabel: string;
+    moreOptionsParticipantMicDisabledAriaLabel: string;
     moreOptionsParticipantMutedStateMutedAriaLabel: string;
     moreOptionsParticipantMutedStateUnmutedAriaLabel: string;
     participantReconnecting?: string;
