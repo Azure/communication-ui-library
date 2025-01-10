@@ -4967,7 +4967,7 @@ export type SpotlightChangedListener = (args: {
 
 // @public
 export interface SpotlightPromptStrings {
-    closeSpotlightPromptButtonLabel?: string;
+    closeSpotlightPromptButtonLabel: string;
     startSpotlightCancelButtonLabel: string;
     startSpotlightConfirmButtonLabel: string;
     startSpotlightHeading: string;
@@ -5520,7 +5520,6 @@ export type VideoGalleryParticipant = {
     mediaAccess?: MediaAccess;
     canAudioBeForbidden?: boolean;
     canVideoBeForbidden?: boolean;
-    isSpeaking?: boolean;
 };
 
 // @public
@@ -5586,6 +5585,7 @@ export interface VideoGalleryProps {
 
 // @public
 export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
+    isSpeaking?: boolean;
     mediaAccess?: MediaAccess;
     raisedHand?: RaisedHand;
     reaction?: Reaction;
