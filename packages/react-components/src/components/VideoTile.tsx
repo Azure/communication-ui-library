@@ -65,8 +65,10 @@ export interface VideoTileStrings {
   moreOptionsParticipantHandRaisedAriaLabel: string;
   /** String for the announcement of whether the participant is speaking or not */
   moreOptionsParticipantIsSpeakingAriaLabel: string;
+  /* @conditional-compile-remove(media-access) */
   /** String for the announcement of whether the participant microphone disabled */
   moreOptionsParticipantMicDisabledAriaLabel: string;
+  /* @conditional-compile-remove(media-access) */
   /** String for the announcement of whether the participant camera disabled */
   moreOptionsParticipantCameraDisabledAriaLabel: string;
 }
@@ -244,7 +246,9 @@ const VideoTileMoreOptionsButton = (props: {
   participantIsSpeaking: boolean | undefined;
   participantIsMuted: boolean | undefined;
   canShowContextMenuButton: boolean;
+  /* @conditional-compile-remove(media-access) */
   isMicDisabled?: boolean;
+  /* @conditional-compile-remove(media-access) */
   isCameraDisabled?: boolean;
 }): JSX.Element => {
   const locale = useLocale().strings.videoTile;
@@ -258,7 +262,9 @@ const VideoTileMoreOptionsButton = (props: {
     participantIsSpeaking,
     participantState,
     participantIsMuted,
+    /* @conditional-compile-remove(media-access) */
     isMicDisabled,
+    /* @conditional-compile-remove(media-access) */
     isCameraDisabled
   } = props;
   const [moreButtonAiraDescription, setMoreButtonAriaDescription] = useState<string>('');
@@ -271,9 +277,11 @@ const VideoTileMoreOptionsButton = (props: {
         participantHandRaised,
         participantState,
         participantIsSpeaking,
+        locale,
+        /* @conditional-compile-remove(media-access) */
         isMicDisabled,
-        isCameraDisabled,
-        locale
+        /* @conditional-compile-remove(media-access) */
+        isCameraDisabled
       )
     );
   }, [
@@ -283,7 +291,9 @@ const VideoTileMoreOptionsButton = (props: {
     participantIsSpeaking,
     participantState,
     locale,
+    /* @conditional-compile-remove(media-access) */
     isMicDisabled,
+    /* @conditional-compile-remove(media-access) */
     isCameraDisabled
   ]);
 
@@ -461,7 +471,13 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
             mediaAccess
           )
         : undefined,
-    [canShowLabel, isMuted, mediaAccess, participantStateString, showMuteIndicator]
+    [
+      canShowLabel,
+      isMuted,
+      /* @conditional-compile-remove(media-access) */ mediaAccess,
+      participantStateString,
+      showMuteIndicator
+    ]
   );
   const canShowParticipantIcons = participantMediaAccessIcons || isSpotlighted || isPinned;
 
@@ -558,7 +574,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                 participantState={participantStateString}
                 participantIsSpeaking={isSpeaking}
                 canShowContextMenuButton={canShowContextMenuButton}
+                /* @conditional-compile-remove(media-access) */
                 isMicDisabled={mediaAccess?.isAudioPermitted === false}
+                /* @conditional-compile-remove(media-access) */
                 isCameraDisabled={mediaAccess?.isVideoPermitted === false}
               />
             </Stack>
