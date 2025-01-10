@@ -2,7 +2,7 @@
   "type": "minor",
   "area": "feature",
   "workstream": "Hard mute",
-  "comment": "This feature allows organizer, co-organizer and presenter to control the ability of other attendees to send audio and video.  Additionally, users can to determine if your audio or video is enabled or disabled, also can check the media access status of other participants.",
+  "comment": "This feature allows organizer, co-organizer and presenter to control the ability of other attendees to send audio and video.  Additionally, users can determine if your audio or video is enabled or disabled, also can check the media access status of other participants.",
   "packageName": "@azure/communication-react",
   "email": "fuyan@microsoft.com",
   "dependentChangeType": "patch"
