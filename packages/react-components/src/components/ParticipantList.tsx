@@ -254,8 +254,10 @@ const onRenderParticipantDefault = (
     displayName: displayName ?? '',
     connectionState: formatParticipantStateString(callingParticipant, strings) ?? '',
     mutedState: (callingParticipant.isMuted ? strings?.mutedIconLabel : undefined) ?? '',
+    /* @conditional-compile-remove(media-access) */
     micDisabledState:
       (callingParticipant.mediaAccess?.isAudioPermitted === false ? strings?.micDisabledIconLabel : undefined) ?? '',
+    /* @conditional-compile-remove(media-access) */
     cameraDisabledState:
       (callingParticipant.mediaAccess?.isVideoPermitted === false ? strings?.cameraDisabledIconLabel : undefined) ?? '',
     sharingState: (callingParticipant.isScreenSharing ? strings?.sharingIconLabel : undefined) ?? '',
