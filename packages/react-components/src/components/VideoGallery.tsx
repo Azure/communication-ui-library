@@ -315,22 +315,22 @@ export interface VideoGalleryProps {
   onMuteParticipant?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to forbid audio for a remote participant(s)
+   * This callback is to forbid audio for remote participant(s)
    */
   onForbidAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to permit audio for a remote participant(s)
+   * This callback is to permit audio for remote participant(s)
    */
   onPermitAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to forbid video for a remote participant(s)
+   * This callback is to forbid video for remote participant(s)
    */
   onForbidVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to permit video for a remote participant(s)
+   * This callback is to permit video for remote participant(s)
    */
   onPermitVideo?: (userIds: string[]) => Promise<void>;
 }
@@ -508,7 +508,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     const showDisplayNameTrampoline = (): string => {
       return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
-      return isNarrow ? '' : strings.localVideoLabel;
     };
 
     return (

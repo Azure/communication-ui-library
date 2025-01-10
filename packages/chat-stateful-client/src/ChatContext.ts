@@ -16,7 +16,7 @@ import { ChatMessageReadReceipt, ChatParticipant } from '@azure/communication-ch
 import { CommunicationIdentifierKind, UnknownIdentifierKind } from '@azure/communication-common';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { _safeJSONStringify, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-import { Constants } from './Constants';
+import { Constants } from './constants';
 import { TypingIndicatorReceivedEvent } from '@azure/communication-chat';
 import { chatStatefulLogger } from './Logger';
 import type { CommunicationTokenCredential } from '@azure/communication-common';

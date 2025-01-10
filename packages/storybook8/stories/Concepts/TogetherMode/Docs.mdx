@@ -1,0 +1,68 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+<Meta title="Concepts/TogetherMode" />
+
+import TogetherModeSnippetText from '!!raw-loader!./snippets/TogetherMode.snippet.tsx';
+
+# TogetherMode
+
+Together Mode in Teams uses AI to place everyone in a shared virtual background, creating the feeling of being in the same room.
+It’s built to make meetings more engaging and foster stronger connections.
+
+It’s especially effective for training sessions, workshops, or team-building activities.
+A classroom setting, like the one shown below, promotes learning and collaboration, helping participants stay engaged and comfortable in a familiar atmosphere.
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-scenario_example.png" />
+
+## Supported Scenarios
+
+Together Mode is available only in Teams meetings and group calls. It can be started exclusively by Teams users with the roles of Organizer, Co-organizer, or Presenter.
+ACS (Azure Communication Services) users cannot initiate Together Mode themselves, but they can view the Together Mode stream if it’s started by a Teams user.
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-not-active-for-acs-user.png" />
+The option to start or switch to Together Mode is disabled because ACS users do not have permission to initiate Together
+Mode.
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-active-for-acs-user.png" />
+When a Teams user starts Together Mode, the view option becomes enabled, allowing ACS users to switch to the Together
+Mode view.
+
+## Implementing with the VideoGallery
+
+The VideoGallery component is used to display together mode stream. This multi-functional component also supports video streams and screen sharing.
+Raisehand, spotlight, mute and reactions performed during together mode are also handled when using the VideoGallery component
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-raise-hand.png" />
+The above image shows a participant performing raise hand when together mode is active.
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-reactions.png" />
+The above image shows a participant performing reactions when together mode is active.
+
+<img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-spotlight.png" />
+The above image shows a participant performing spotlight when together mode is active.
+
+Here’s a brief guide to integrating together mode stream in your application using VideoGallery component in CallComposite:
+
+<Source code={TogetherModeSnippetText} />
+
+This code snippet illustrates the utilization of the `usePropsFor` hook from the `@azure/communication-react` package, which dynamically manages the properties of the `VideoGallery`. This ensures that the component reacts appropriately to changes in state or properties.
+
+For comprehensive setup instructions, refer to the [VideoGallery](./?path=/docs/components-video-gallery--docs). This component facilitates the seamless integration of video streams or shared content into your application.
+
+## FAQs
+
+### Can I use UI library to change TogetherMode Scene?
+
+No, scene change can only be performed on Teams Desktop client.
+
+### Can I use UI library to change to perform seat reassignment on Together mode stream?
+
+No, seat re-assignment can only be performed on Teams Desktop client.
+
+### Can I use UI library to turn off Together mode?
+
+No, Together Mode automatically stops if none of the participants in the call or meeting have their video turned on.
+
+### If I have found any issues or anything missing with the TogetherMode in the CallComposite where can I go?
+
+Please log a [Github issue](https://github.com/Azure/communication-ui-library/issues), and someone from our team can work with you.

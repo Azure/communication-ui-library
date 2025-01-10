@@ -18,7 +18,7 @@ import {
 import { ChatParticipant as SignalingChatParticipant } from '@azure/communication-signaling';
 import { _createStatefulChatClientWithDeps } from './StatefulChatClient';
 import { ChatClientState, ChatError } from './ChatClientState';
-import { Constants } from './Constants';
+import { Constants } from './constants';
 import {
   StateChangeListener,
   StatefulChatClientWithEventTrigger,

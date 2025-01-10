@@ -122,7 +122,7 @@ export const useVideoTileContextualMenuProps = (props: {
           styles: { root: { lineHeight: 0 } }
         },
         onClick: () => onPermitAudio([participant.userId]),
-        'data-ui-id': 'audio-tile-permit-audio',
+        'data-ui-id': 'video-tile-permit-audio',
         ariaLabel: strings?.permitAudioTileMenuLabel
       });
     }
@@ -136,7 +136,7 @@ export const useVideoTileContextualMenuProps = (props: {
           styles: { root: { lineHeight: 0 } }
         },
         onClick: () => onForbidAudio([participant.userId]),
-        'data-ui-id': 'audio-tile-forbid-audio',
+        'data-ui-id': 'video-tile-forbid-audio',
         ariaLabel: strings?.forbidAudioTileMenuLabel
       });
     }
