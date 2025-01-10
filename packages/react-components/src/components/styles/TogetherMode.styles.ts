@@ -84,6 +84,18 @@ export function setTogetherModeSeatPositionStyle(
 
 /* @conditional-compile-remove(together-mode) */
 /**
+ * The style for the Together Mode meeting overlay.
+ */
+export const togetherModeMeetingOverlayStyle: CSSProperties = {
+  width: '100%',
+  height: '100%',
+  position: 'absolute',
+  top: '0',
+  left: '0'
+};
+
+/* @conditional-compile-remove(together-mode) */
+/**
  * Generates the overlay style for a participant in Together Mode.
  *
  * @param seatingPosition - The seating position information.

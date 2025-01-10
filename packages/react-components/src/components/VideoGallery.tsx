@@ -30,7 +30,10 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
-import { _formatString, _isIdentityMicrosoftTeamsUser } from '@internal/acs-ui-common';
+import {
+  _formatString,
+  /* @conditional-compile-remove(together-mode) */ _isIdentityMicrosoftTeamsUser
+} from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';

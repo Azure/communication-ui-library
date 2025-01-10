@@ -47,4 +47,9 @@ export interface ReactionResources {
  * Options for overlay mode for reaction rendering
  * @internal
  */
-export type OverlayModeTypes = 'grid-tiles' | 'screen-share' | 'content-share' | 'together-mode';
+export type OverlayModeTypes =
+  | 'grid-tiles'
+  | 'screen-share'
+  | 'content-share'
+  /* @conditional-compile-remove(together-mode) */
+  | 'together-mode';
