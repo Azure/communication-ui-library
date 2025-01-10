@@ -436,16 +436,20 @@ export const formatMoreButtonAriaDescription = (
   isHandRaised?: boolean,
   state?: string,
   isSpeaking?: boolean,
+  strings?: VideoTileStrings,
+  /* @conditional-compile-remove(media-access) */
   isMicDisabled?: boolean,
-  isCameraDisabled?: boolean,
-  strings?: VideoTileStrings
+  /* @conditional-compile-remove(media-access) */
+  isCameraDisabled?: boolean
 ): string => {
   const mutedState = isMuted
     ? strings?.moreOptionsParticipantMutedStateMutedAriaLabel
     : strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel;
   const handRaisedState = isHandRaised ? strings?.moreOptionsParticipantHandRaisedAriaLabel : undefined;
   const isSpeakingState = isSpeaking ? strings?.moreOptionsParticipantIsSpeakingAriaLabel : undefined;
+  /* @conditional-compile-remove(media-access) */
   const micDisabledState = isMicDisabled ? strings?.moreOptionsParticipantMicDisabledAriaLabel : undefined;
+  /* @conditional-compile-remove(media-access) */
   const cameraDisabledState = isCameraDisabled ? strings?.moreOptionsParticipantCameraDisabledAriaLabel : undefined;
   const description = strings?.moreOptionsButtonAriaLabel
     ? _formatString(strings?.moreOptionsButtonAriaLabel, {
@@ -454,7 +458,9 @@ export const formatMoreButtonAriaDescription = (
         isHandRaised: handRaisedState ?? ' ',
         state: state ?? ' ',
         isSpeaking: isSpeakingState ?? ' ',
+        /* @conditional-compile-remove(media-access) */
         micDisabledState: micDisabledState ?? ' ',
+        /* @conditional-compile-remove(media-access) */
         cameraDisabledState: cameraDisabledState ?? ' '
       })
     : '';
