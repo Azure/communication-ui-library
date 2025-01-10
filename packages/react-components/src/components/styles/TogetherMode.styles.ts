@@ -6,7 +6,29 @@ import { _pxToRem } from '@internal/acs-ui-common';
 import { VideoGalleryTogetherModeSeatingInfo } from '../../types/TogetherModeTypes';
 /* @conditional-compile-remove(together-mode) */
 import { IStackStyles } from '@fluentui/react';
-import React from 'react';
+/* @conditional-compile-remove(together-mode) */
+import { CSSProperties } from 'react';
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * Multiplier to convert rem units to pixels.
+ */
+export const REM_TO_PX_MULTIPLIER = 16;
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * The travel height for reactions in Together Mode.
+ * The reaction move overlay uses pixel units, so the seat position height, defined in rem, needs to be converted to pixels
+ */
+export const REACTION_TRAVEL_HEIGHT = 0.35 * REM_TO_PX_MULTIPLIER;
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * Defines the maximum travel height for reactions in Together Mode.
+ * Ensures the reaction animation does not exceed the center point from the top.
+ * Since the reaction move overlay uses pixel units, the seat position height (defined in rem) must be converted to pixels.
+ */
+export const REACTION_MAX_TRAVEL_HEIGHT = 0.5 * REM_TO_PX_MULTIPLIER;
 
 /* @conditional-compile-remove(together-mode) */
 /**
@@ -67,31 +89,36 @@ export function setTogetherModeSeatPositionStyle(
  * @param seatingPosition - The seating position information.
  * @returns The style object for the participant overlay.
  */
-export function getTogetherModeParticipantOverlayStyle(
-  seatingPositionStyle: TogetherModeSeatStyle
-): React.CSSProperties {
+export function getTogetherModeParticipantOverlayStyle(seatingPositionStyle: TogetherModeSeatStyle): CSSProperties {
   return {
     ...seatingPositionStyle.seatPosition,
     position: 'absolute'
   };
 }
 
+/* @conditional-compile-remove(together-mode) */
 // Function to map a value from one range to another
 const mapRange = (value: number, inMin: number, inMax: number, outMin: number, outMax: number): number => {
   return outMin + ((value - inMin) * (outMax - outMin)) / (inMax - inMin);
 };
 
+/* @conditional-compile-remove(together-mode) */
 /**
- * Calculate the scaled size based on width and height.
+ * Calculate the reaction emoji scaled size based on width and height of the participant seat width and height.
+ * This is needed when the browser is resized and the participant seat width and height changes.
  *
  * @param width - The width of the element.
  * @param height - The height of the element.
  * @returns The scaled size.
  */
 export const calculateScaledSize = (width: number, height: number): number => {
+  // Maximum participant seat width and height
   const maxSize = 600;
+  // Minimum participant seat width and height
   const minSize = 200;
+  // Minimum scaled width and height of the reaction emoji
   const minScaledSize = 35;
+  // Maximum scaled width and height of the reaction emoji
   const maxScaledSize = 70;
 
   // Use width or height to determine scaling factor
@@ -122,7 +149,7 @@ export const togetherModeStreamRootStyle: IStackStyles = {
 /**
  * @private
  */
-export const togetherModeIconStyle = (): React.CSSProperties => {
+export const togetherModeIconStyle = (): CSSProperties => {
   return {
     width: _pxToRem(20),
     flexShrink: 0
@@ -131,12 +158,13 @@ export const togetherModeIconStyle = (): React.CSSProperties => {
 
 /* @conditional-compile-remove(together-mode) */
 /**
+ * The style for the container holding the display name, raiseHand, spotlight and mute icons.
  * @private
  */
 export const togetherModeParticipantStatusContainer = (
   backgroundColor: string,
   borderRadius: string
-): React.CSSProperties => {
+): CSSProperties => {
   return {
     backgroundColor,
     display: 'flex',
@@ -158,7 +186,8 @@ export const togetherModeParticipantDisplayName = (
   isParticipantHovered: boolean,
   participantSeatingWidth: number,
   color: string
-): React.CSSProperties => {
+): CSSProperties => {
+  const MIN_DISPLAY_NAME_WIDTH = 100;
   return {
     textOverflow: 'ellipsis',
     flexGrow: 1, // Allow text to grow within available space
@@ -166,6 +195,25 @@ export const togetherModeParticipantDisplayName = (
     whiteSpace: 'nowrap',
     textAlign: 'center',
     color,
-    display: isParticipantHovered || participantSeatingWidth > 100 ? 'inline-block' : 'none' // Completely remove the element when hidden
+    display: isParticipantHovered || participantSeatingWidth > MIN_DISPLAY_NAME_WIDTH ? 'inline-block' : 'none' // Completely remove the element when hidden
+  };
+};
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ */
+export const togetherModeParticipantEmojiSpriteStyle = (
+  emojiSize: number,
+  emojiScaledSize: number,
+  participantSeatWidth: string
+): CSSProperties => {
+  const participantSeatWidthInPixel = parseFloat(participantSeatWidth) * REM_TO_PX_MULTIPLIER;
+  const emojiScaledSizeInPercent = (emojiScaledSize / participantSeatWidthInPixel) * 100;
+  return {
+    width: `${emojiSize}`,
+    position: 'absolute',
+    // Center the emoji sprite within the participant seat
+    left: `${emojiScaledSizeInPercent / 2}%`
   };
 };
