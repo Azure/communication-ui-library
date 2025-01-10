@@ -345,7 +345,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onStopAllSpotlight: hideSpotlightButtons ? undefined : stopAllSpotlightWithPrompt,
       maxParticipantsToSpotlight
     };
-    return {};
   }, [
     hideSpotlightButtons,
     maxParticipantsToSpotlight,
@@ -363,8 +362,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const canForbidOthersAudio = !!capabilities?.forbidOthersAudio?.isPresent;
   /* @conditional-compile-remove(media-access) */
   const canForbidOthersVideo = !!capabilities?.forbidOthersVideo?.isPresent;
-  /* @conditional-compile-remove(media-access) */
   const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
+    /* @conditional-compile-remove(media-access) */
     return {
       onForbidAudio: canForbidOthersAudio ? onForbidAudio : undefined,
       onPermitAudio: canForbidOthersAudio ? onPermitAudio : undefined,
@@ -376,18 +375,19 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onPermitOthersVideo: canForbidOthersVideo ? muteAllHandlers.onPermitOthersVideo : undefined,
       meetingMediaAccess
     };
+    return {};
   }, [
-    canForbidOthersAudio,
-    onForbidAudio,
-    onPermitAudio,
-    muteAllHandlers.onForbidOthersAudio,
-    muteAllHandlers.onPermitOthersAudio,
-    muteAllHandlers.onForbidOthersVideo,
-    muteAllHandlers.onPermitOthersVideo,
-    canForbidOthersVideo,
-    onForbidVideo,
-    onPermitVideo,
-    meetingMediaAccess
+    /* @conditional-compile-remove(media-access) */ canForbidOthersAudio,
+    /* @conditional-compile-remove(media-access) */ onForbidAudio,
+    /* @conditional-compile-remove(media-access) */ onPermitAudio,
+    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onForbidOthersAudio,
+    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onPermitOthersAudio,
+    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onForbidOthersVideo,
+    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onPermitOthersVideo,
+    /* @conditional-compile-remove(media-access) */ canForbidOthersVideo,
+    /* @conditional-compile-remove(media-access) */ onForbidVideo,
+    /* @conditional-compile-remove(media-access) */ onPermitVideo,
+    /* @conditional-compile-remove(media-access) */ meetingMediaAccess
   ]);
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
@@ -395,7 +395,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     ...spotlightPeoplePaneProps,
     ...onMuteParticipantPeoplePaneProps,
     ...pinPeoplePaneProps,
-    /* @conditional-compile-remove(media-access) */ ...onToggleParticipantMicPeoplePaneProps
+    ...onToggleParticipantMicPeoplePaneProps
   });
   const togglePeoplePane = useCallback(() => {
     if (isPeoplePaneOpen) {

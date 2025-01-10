@@ -78,6 +78,12 @@ export interface ParticipantItemStrings {
   participantItemWithMoreOptionsAriaLabel?: string;
   /** String for the attendee role */
   attendeeRole: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Label for the disabled microphone icon in participant state stack  */
+  micDisabledIconLabel: string;
+  /* @conditional-compile-remove(media-access) */
+  /** Label for the disabled camera icon in participant state stack  */
+  cameraDisabledIconLabel: string;
 }
 
 /**

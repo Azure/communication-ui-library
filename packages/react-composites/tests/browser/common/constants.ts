@@ -42,7 +42,9 @@ export const IDS = {
   mentionSuggestionItem: 'mention-suggestion-item',
   reactionButton: 'call-composite-reaction-button',
   reactionButtonSubMenu: 'reaction-sub-menu',
-  reactionMobileDrawerMenuItem: 'reaction-mobile-drawer-menu-item'
+  reactionMobileDrawerMenuItem: 'reaction-mobile-drawer-menu-item',
+  cameraButton: 'call-composite-camera-button',
+  microphoneButton: 'call-composite-microphone-button'
 };
 
 export const spokenLanguageStrings = [

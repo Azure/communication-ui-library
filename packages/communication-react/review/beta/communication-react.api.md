@@ -980,6 +980,9 @@ export interface CallCompositeStrings {
     pinParticipantMenuItemAriaLabel: string;
     pinParticipantMenuLabel: string;
     privacyPolicy: string;
+    realTimeTextBannerContent?: string;
+    realTimeTextBannerLinkLabel?: string;
+    realTimeTextBannerTitle?: string;
     realTimeTextInputBoxDefaultText?: string;
     realTimeTextLabel?: string;
     rejoinCallButtonLabel: string;
@@ -1891,6 +1894,9 @@ export type CaptionsBannerSelector = (state: CallClientState, props: CallingBase
 // @public
 export interface CaptionsBannerStrings {
     captionsBannerSpinnerText?: string;
+    realTimeTextBannerContent?: string;
+    realTimeTextBannerLinkLabel?: string;
+    realTimeTextBannerTitle?: string;
     realTimeTextInputBoxDefaultText?: string;
 }
 
@@ -2582,10 +2588,9 @@ export interface ComponentStrings {
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
+    realTimeText: RealTimeTextStrings;
+    realTimeTextModal: RealTimeTextModalStrings;
     richTextSendBox: RichTextSendBoxStrings;
-    rtt: RealTimeTextStrings;
-    rttDisclosureBanner: RTTDisclosureBannerStrings;
-    rttModal: RTTModalStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     spokenLanguages: SpokenLanguageStrings;
@@ -4294,10 +4299,12 @@ export interface ParticipantItemProps {
 // @public
 export interface ParticipantItemStrings {
     attendeeRole: string;
+    cameraDisabledIconLabel: string;
     displayNamePlaceholder?: string;
     handRaisedIconLabel?: string;
     isMeText: string;
     menuTitle: string;
+    micDisabledIconLabel: string;
     mutedIconLabel: string;
     participantItemAriaLabel?: string;
     participantItemWithMoreOptionsAriaLabel?: string;
@@ -4564,6 +4571,27 @@ export type ReadReceiptsBySenderId = {
 export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
 
 // @beta
+export const RealTimeTextModal: (props: RealTimeTextModalProps) => JSX.Element;
+
+// @beta
+export interface RealTimeTextModalProps {
+    onDismissModal?: () => void;
+    onStartRealTimeText?: () => Promise<void>;
+    showModal?: boolean;
+    strings?: RealTimeTextModalStrings;
+}
+
+// @beta
+export interface RealTimeTextModalStrings {
+    realTimeTextCancelButtonLabel?: string;
+    realTimeTextCloseModalButtonAriaLabel?: string;
+    realTimeTextConfirmButtonLabel?: string;
+    realTimeTextModalAriaLabel?: string;
+    realTimeTextModalText?: string;
+    realTimeTextModalTitle?: string;
+}
+
+// @beta
 export interface RealTimeTextProps {
     captionText: string;
     displayName: string;
@@ -4715,46 +4743,6 @@ export interface RichTextStrings {
     richTextToolbarAriaLabel: string;
     richTextToolbarMoreButtonAriaLabel: string;
     richTextUnderlineTooltip: string;
-}
-
-// @beta
-export const RTTDisclosureBanner: (props: RTTDisclosureBannerProps) => JSX.Element;
-
-// @beta
-export interface RTTDisclosureBannerProps {
-    onClickLink?: () => void;
-    strings?: RTTDisclosureBannerStrings;
-}
-
-// @beta
-export interface RTTDisclosureBannerStrings {
-    // (undocumented)
-    bannerContent: string;
-    // (undocumented)
-    bannerLinkLabel?: string;
-    // (undocumented)
-    bannerTitle: string;
-}
-
-// @beta
-export const RTTModal: (props: RTTModalProps) => JSX.Element;
-
-// @beta
-export interface RTTModalProps {
-    onDismissModal?: () => void;
-    onStartRTT?: () => Promise<void>;
-    showModal?: boolean;
-    strings?: RTTModalStrings;
-}
-
-// @beta
-export interface RTTModalStrings {
-    rttCancelButtonLabel?: string;
-    rttCloseModalButtonAriaLabel?: string;
-    rttConfirmButtonLabel?: string;
-    rttModalAriaLabel?: string;
-    rttModalText?: string;
-    rttModalTitle?: string;
 }
 
 // @public
@@ -5753,8 +5741,10 @@ export interface VideoTilesOptions {
 // @public
 export interface VideoTileStrings {
     moreOptionsButtonAriaLabel: string;
+    moreOptionsParticipantCameraDisabledAriaLabel: string;
     moreOptionsParticipantHandRaisedAriaLabel: string;
     moreOptionsParticipantIsSpeakingAriaLabel: string;
+    moreOptionsParticipantMicDisabledAriaLabel: string;
     moreOptionsParticipantMutedStateMutedAriaLabel: string;
     moreOptionsParticipantMutedStateUnmutedAriaLabel: string;
     participantReconnecting?: string;

@@ -564,6 +564,21 @@ export interface CallCompositeStrings {
    * Default text for RTT input text box
    */
   realTimeTextInputBoxDefaultText?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Text to show in the real time text disclosure banner
+   */
+  realTimeTextBannerContent?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title text of the real time text disclosure banner
+   */
+  realTimeTextBannerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Label for the link in the real time text disclosure banner
+   */
+  realTimeTextBannerLinkLabel?: string;
   /**
    * transfer page text when showing the transferor who initiated the transfer
    */
