@@ -18,7 +18,7 @@ permissions: read-all
 jobs:
   calling:
     name: Build and Deploy Calling App
-    runs-on: ${{ vars.RUNS_ON }}
+    runs-on: 'ubuntu-lastest'
     permissions:
       # Needed for Azure login
       id-token: write
@@ -66,7 +66,7 @@ jobs:
 
   chat:
     name: Build and Deploy Chat App
-    runs-on: ${{ vars.RUNS_ON }}
+    runs-on: 'ubuntu-lastest'
     permissions:
       # Needed for Azure login
       id-token: write
@@ -114,7 +114,7 @@ jobs:
 
   callwithchat:
     name: Build and Deploy CallWithChat App
-    runs-on: ${{ vars.RUNS_ON }}
+    runs-on: 'ubuntu-lastest'
     permissions:
       # Needed for Azure login
       id-token: write
