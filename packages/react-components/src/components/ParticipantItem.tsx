@@ -80,8 +80,8 @@ export interface ParticipantItemStrings {
   attendeeRole: string;
   /* @conditional-compile-remove(media-access) */
   /** Label for the disabled microphone icon in participant state stack  */
-  /* @conditional-compile-remove(media-access) */
   micDisabledIconLabel: string;
+  /* @conditional-compile-remove(media-access) */
   /** Label for the disabled camera icon in participant state stack  */
   cameraDisabledIconLabel: string;
 }
