@@ -2,7 +2,7 @@
   "type": "minor",
   "area": "feature",
   "workstream": "Hard mute",
-  "comment": "We are excited to announce that the Azure Communication Services Web UI Library now supports the Media Access feature. This feature allows organizers, co-organizers, and presenters to control the ability of other attendees to send audio and video. Additionally, users can determine if their audio or video is enabled or disabled, and check the media access status of other participants. Developers can integrate this functionality through our composites (e.g., CallComposite, CallWithChatComposite) as well as through components (e.g., VideoGallery).",
+  "comment": "We are excited to announce that the Azure Communication Services Web UI Library now supports the Media Access feature. This feature allows organizers, co-organizers, and presenters to control the ability of other attendees to send audio and video while in a call. Attendees can determine if their audio or video is enabled or disabled and check the media access status of other participants. Developers can integrate this functionality through our composites (e.g., CallComposite, CallWithChatComposite) as well as through components.",
   "packageName": "@azure/communication-react",
   "email": "fuyan@microsoft.com",
   "dependentChangeType": "patch"
