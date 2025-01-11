@@ -1899,7 +1899,7 @@ export interface CaptionsBannerProps {
     latestLocalRealTimeText?: RealTimeTextInformation;
     onRenderAvatar?: OnRenderAvatarCallback;
     onSendRealTimeText?: (text: string, finalized: boolean) => Promise<void>;
-    realTimeTexts: {
+    realTimeTexts?: {
         completedMessages?: RealTimeTextInformation[];
         currentInProgress?: RealTimeTextInformation[];
         myInProgress?: RealTimeTextInformation;

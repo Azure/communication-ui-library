@@ -133,7 +133,7 @@ export interface CaptionsBannerProps {
   /**
    * Array of finalized and partial real time text messages
    */
-  realTimeTexts: {
+  realTimeTexts?: {
     completedMessages?: RealTimeTextInformation[];
     currentInProgress?: RealTimeTextInformation[];
     myInProgress?: RealTimeTextInformation;
@@ -218,11 +218,11 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   // Combine captions and realTimeTexts into one list
   const combinedList: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
     return sortCaptionsAndRealTimeTexts(captions, realTimeTexts?.completedMessages ?? []);
-  }, [captions, realTimeTexts.completedMessages]);
+  }, [captions, realTimeTexts?.completedMessages]);
 
   /* @conditional-compile-remove(rtt) */
   const mergedCaptions: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
-    return [...combinedList, ...(realTimeTexts.currentInProgress ?? []), realTimeTexts?.myInProgress] as (
+    return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress] as (
       | CaptionsInformation
       | RealTimeTextInformation
     )[];

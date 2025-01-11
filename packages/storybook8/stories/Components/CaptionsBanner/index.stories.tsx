@@ -12,6 +12,7 @@ const meta: Meta = {
   component: CaptionsBanner,
   argTypes: {
     captions: hiddenControl,
+    realTimeTexts: hiddenControl,
     isCaptionsOn: hiddenControl,
     startCaptionsInProgress: hiddenControl,
     strings: hiddenControl,
@@ -20,7 +21,7 @@ const meta: Meta = {
     captionsOptions: hiddenControl,
     isRealTimeTextOn: hiddenControl,
     onSendRealTimeText: hiddenControl,
-    latestlocalRealTimeText: hiddenControl
+    latestLocalRealTimeText: hiddenControl
   }
 };
 
