@@ -78,7 +78,7 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Feature for forbid/permit remote participants audio/video access
+    // Feature for forbid/permit Teams meeting/group call attendee' audio/video access
     "media-access"
   ]
 }
