@@ -220,6 +220,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     /* @conditional-compile-remove(rtt) */
     // find the last final local real time text caption if myInProgress is not available
     let latestLocalRealTimeText;
+    /* @conditional-compile-remove(rtt) */
     if (!myInProgress) {
       latestLocalRealTimeText =
         realTimeTexts &&
