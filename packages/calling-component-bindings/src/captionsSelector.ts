@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import { CallClientState, CaptionsInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo, RemoteParticipantState } from '@internal/calling-stateful-client';
 import {
   CallingBaseSelectorProps,
   getDisplayName,
@@ -11,7 +13,7 @@ import {
   getSupportedCaptionLanguages
 } from './baseSelectors';
 /* @conditional-compile-remove(rtt) */
-import { getRealTimeTextStatus } from './baseSelectors';
+import { getRealTimeTextStatus, getRealTimeText } from './baseSelectors';
 import {
   getCaptions,
   getCaptionsStatus,
@@ -24,8 +26,6 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CaptionsInformation, SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
 /* @conditional-compile-remove(rtt) */
 import { RealTimeTextInformation } from '@internal/react-components';
-/* @conditional-compile-remove(rtt) */
-import { RealTimeTextInfo } from '@internal/calling-stateful-client';
 
 /**
  * Selector type for the {@link StartCaptionsButton} component.
@@ -108,13 +108,19 @@ export type CaptionsBannerSelector = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ) => {
-  captions: (CaptionsInformation | /* @conditional-compile-remove(rtt) */ RealTimeTextInformation)[];
+  captions: CaptionsInformation[];
+  /* @conditional-compile-remove(rtt) */
+  realTimeTexts: {
+    completedMessages?: RealTimeTextInformation[];
+    currentInProgress?: RealTimeTextInformation[];
+    myInProgress?: RealTimeTextInformation;
+  };
   isCaptionsOn: boolean;
   startCaptionsInProgress: boolean;
   /* @conditional-compile-remove(rtt) */
   isRealTimeTextOn: boolean;
   /* @conditional-compile-remove(rtt) */
-  latestLocalRealTimeText: RealTimeTextInformation | undefined;
+  latestLocalRealTimeText: RealTimeTextInformation;
 };
 
 /**
@@ -125,6 +131,8 @@ export type CaptionsBannerSelector = (
 export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSelector(
   [
     getCaptions,
+    /* @conditional-compile-remove(rtt) */
+    getRealTimeText,
     getCaptionsStatus,
     /* @conditional-compile-remove(rtt) */
     getRealTimeTextStatus,
@@ -135,6 +143,8 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
   ],
   (
     captions,
+    /* @conditional-compile-remove(rtt) */
+    realTimeTexts,
     isCaptionsFeatureActive,
     /* @conditional-compile-remove(rtt) */
     isRealTimeTextActive,
@@ -144,15 +154,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     identifier
   ) => {
     const captionsInfo = captions?.map((c, index) => {
-      let userId = '';
-
-      if ('message' in c) {
-        /* @conditional-compile-remove(rtt) */
-        userId = getRealTimeTextSpeakerIdentifier(c);
-      } else {
-        userId = getCaptionsSpeakerIdentifier(c);
-      }
-
+      const userId = getCaptionsSpeakerIdentifier(c as CaptionsInfo);
       let finalDisplayName;
       if (userId === identifier) {
         finalDisplayName = displayName;
@@ -162,43 +164,86 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
           finalDisplayName = participant.displayName;
         }
       }
-      /* @conditional-compile-remove(rtt) */
-      if ('message' in c) {
-        return {
-          id: c.id,
-          displayName: finalDisplayName ?? 'Unnamed Participant',
-          message: c.message ?? '',
-          userId,
-          isTyping: c.resultType === 'Partial',
-          isMe: c.isMe
-        };
-      }
 
       return {
         id: (finalDisplayName ?? 'Unnamed Participant') + index,
         displayName: finalDisplayName ?? 'Unnamed Participant',
-        captionText: c.captionText ?? '',
-        userId
+        captionText: c.captionText,
+        userId,
+        createdTimeStamp: c.timestamp
       };
     });
+    /* @conditional-compile-remove(rtt) */
+    const completedRealTimeTexts = realTimeTexts?.completedMessages
+      ?.filter((rtt) => rtt.message !== '')
+      .map((rtt) => {
+        const userId = getRealTimeTextSpeakerIdentifier(rtt);
+        return {
+          id: rtt.id,
+          displayName: getRealTimeTextDisplayName(rtt, identifier, remoteParticipants, displayName, userId),
+          message: rtt.message,
+          userId,
+          isTyping: rtt.resultType === 'Partial',
+          isMe: rtt.isMe,
+          finalizedTimeStamp: rtt.updatedTimestamp
+        };
+      });
+    /* @conditional-compile-remove(rtt) */
+    const inProgressRealTimeTexts = realTimeTexts?.currentInProgress
+      ?.filter((rtt) => rtt.message !== '')
+      .map((rtt) => {
+        const userId = getRealTimeTextSpeakerIdentifier(rtt);
+        return {
+          id: rtt.id,
+          displayName: getRealTimeTextDisplayName(rtt, identifier, remoteParticipants, displayName, userId),
+          message: rtt.message,
+          userId,
+          isTyping: rtt.resultType === 'Partial',
+          isMe: rtt.isMe,
+          finalizedTimeStamp: rtt.updatedTimestamp
+        };
+      });
+    /* @conditional-compile-remove(rtt) */
+    const myInProgress =
+      realTimeTexts?.myInProgress && realTimeTexts.myInProgress.message !== ''
+        ? {
+            id: realTimeTexts.myInProgress.id,
+            displayName: displayName,
+            message: realTimeTexts.myInProgress.message,
+            userId: identifier,
+            isTyping: realTimeTexts.myInProgress.resultType === 'Partial',
+            isMe: true,
+            finalizedTimeStamp: realTimeTexts.myInProgress.updatedTimestamp
+          }
+        : undefined;
 
     /* @conditional-compile-remove(rtt) */
-    // find the last real time text caption
-    const lastRealTimeText =
-      captionsInfo &&
-      captionsInfo
-        .slice()
-        .reverse()
-        .find((caption) => 'message' in caption && caption.isMe);
+    // find the last final local real time text caption if myInProgress is not available
+    let latestLocalRealTimeText;
+    if (!myInProgress) {
+      latestLocalRealTimeText =
+        realTimeTexts &&
+        realTimeTexts.completedMessages &&
+        realTimeTexts.completedMessages
+          .slice()
+          .reverse()
+          .find((rtt) => rtt.isMe);
+    }
 
     return {
-      captions: captionsInfo ?? [],
+      captions: (captionsInfo as CaptionsInformation[]) ?? [],
+      /* @conditional-compile-remove(rtt) */
+      realTimeTexts: {
+        completedMessages: completedRealTimeTexts as RealTimeTextInformation[],
+        currentInProgress: inProgressRealTimeTexts as RealTimeTextInformation[],
+        myInProgress: myInProgress as RealTimeTextInformation
+      },
       isCaptionsOn: isCaptionsFeatureActive ?? false,
       startCaptionsInProgress: startCaptionsInProgress ?? false,
       /* @conditional-compile-remove(rtt) */
       isRealTimeTextOn: isRealTimeTextActive ?? false,
       /* @conditional-compile-remove(rtt) */
-      latestLocalRealTimeText: lastRealTimeText as RealTimeTextInformation
+      latestLocalRealTimeText: (myInProgress ?? latestLocalRealTimeText) as RealTimeTextInformation
     };
   }
 );
@@ -209,4 +254,28 @@ const getCaptionsSpeakerIdentifier = (captions: CaptionsInfo): string => {
 /* @conditional-compile-remove(rtt) */
 const getRealTimeTextSpeakerIdentifier = (realTimeText: RealTimeTextInfo): string => {
   return realTimeText.sender.identifier ? toFlatCommunicationIdentifier(realTimeText.sender.identifier) : '';
+};
+
+/* @conditional-compile-remove(rtt) */
+const getRealTimeTextDisplayName = (
+  realTimeText: RealTimeTextInfo,
+  identifier: string,
+  remoteParticipants:
+    | {
+        [keys: string]: RemoteParticipantState;
+      }
+    | undefined,
+  displayName: string | undefined,
+  userId: string
+): string => {
+  let finalDisplayName;
+  if (userId === identifier) {
+    finalDisplayName = displayName;
+  } else if (remoteParticipants) {
+    const participant = remoteParticipants[userId];
+    if (participant) {
+      finalDisplayName = participant.displayName;
+    }
+  }
+  return finalDisplayName ?? 'Unnamed Participant';
 };

@@ -1157,7 +1157,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onSetSpokenLanguage(language);
   }
   /* @conditional-compile-remove(rtt) */
-  public async sendRealTimeText(text: string, finalized?: boolean): Promise<void> {
+  public async sendRealTimeText(text: string, finalized: boolean): Promise<void> {
     this.handlers.onSendRealTimeText(text, finalized);
   }
   public async submitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined> {

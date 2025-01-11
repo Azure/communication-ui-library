@@ -590,7 +590,7 @@ export interface CallWithChatAdapterManagement {
    * @param text - real time text content
    * @param finalized - Boolean to indicate if the real time text is final
    */
-  sendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
+  sendRealTimeText: (text: string, finalized: boolean) => Promise<void>;
 }
 
 /**

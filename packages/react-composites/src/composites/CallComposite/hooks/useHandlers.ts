@@ -294,7 +294,7 @@ const createCompositeHandlers = memoizeOne(
         return await adapter.disposeTogetherModeStreamView();
       },
       /* @conditional-compile-remove(rtt) */
-      onSendRealTimeText: async (text: string, finalized?: boolean) => {
+      onSendRealTimeText: async (text: string, finalized: boolean) => {
         return await adapter.sendRealTimeText(text, finalized);
       }
     };

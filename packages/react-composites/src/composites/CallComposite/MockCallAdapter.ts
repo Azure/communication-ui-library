@@ -190,7 +190,7 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('stopCaptions not implemented');
   }
   /* @conditional-compile-remove(rtt) */
-  sendRealTimeText(text: string, finalized?: boolean): Promise<void> {
+  sendRealTimeText(text: string, finalized: boolean): Promise<void> {
     throw Error('sendRealTimeText not implemented');
   }
 
@@ -320,6 +320,11 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
         startCaptionsInProgress: false,
 
         captionsKind: 'Captions'
+      },
+      /* @conditional-compile-remove(rtt) */
+      realTimeTextFeature: {
+        realTimeTexts: {},
+        isRealTimeTextFeatureActive: false
       },
       transfer: {
         acceptedTransfers: {}

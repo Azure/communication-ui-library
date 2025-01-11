@@ -659,7 +659,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     await this.callAdapter.setSpokenLanguage(language);
   }
   /* @conditional-compile-remove(rtt) */
-  public async sendRealTimeText(text: string, finalized?: boolean): Promise<void> {
+  public async sendRealTimeText(text: string, finalized: boolean): Promise<void> {
     await this.callAdapter.sendRealTimeText(text, finalized);
   }
 

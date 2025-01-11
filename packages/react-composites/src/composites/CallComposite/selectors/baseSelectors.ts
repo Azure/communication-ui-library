@@ -181,15 +181,33 @@ export const getCaptionsKind = (state: CallAdapterState): CaptionsKind | undefin
 };
 
 /** @private */
-export const getCaptions = (
-  state: CallAdapterState
-): (CaptionsInfo | /* @conditional-compile-remove(rtt) */ RealTimeTextInfo)[] | undefined => {
+export const getCaptions = (state: CallAdapterState): CaptionsInfo[] | undefined => {
   return state.call?.captionsFeature.captions;
+};
+
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeText = (
+  state: CallAdapterState
+):
+  | {
+      completedMessages?: RealTimeTextInfo[];
+      currentInProgress?: RealTimeTextInfo[];
+      myInProgress?: RealTimeTextInfo;
+    }
+  | undefined => {
+  return state.call?.realTimeTextFeature.realTimeTexts;
 };
 
 /** @private */
 export const getCaptionsStatus = (state: CallAdapterState): boolean | undefined => {
   return state.call?.captionsFeature.isCaptionsFeatureActive;
+};
+
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeTextStatus = (state: CallAdapterState): boolean | undefined => {
+  return state.call?.realTimeTextFeature.isRealTimeTextFeatureActive;
 };
 
 /** @private */

@@ -109,6 +109,11 @@ export function defaultMockCallAdapterState(
 
         captionsKind: 'Captions'
       },
+      /* @conditional-compile-remove(rtt) */
+      realTimeTextFeature: {
+        realTimeTexts: {},
+        isRealTimeTextFeatureActive: false
+      },
       transfer: {
         acceptedTransfers: {}
       },

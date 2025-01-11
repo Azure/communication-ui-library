@@ -205,7 +205,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.setSpokenLanguage(language);
   }
   /* @conditional-compile-remove(rtt) */
-  public async sendRealTimeText(text: string, finalized?: boolean): Promise<void> {
+  public async sendRealTimeText(text: string, finalized: boolean): Promise<void> {
     await this.callWithChatAdapter.sendRealTimeText(text, finalized);
   }
 

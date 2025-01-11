@@ -224,10 +224,7 @@ export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelect
 };
 
 /** @private */
-export const getCaptions = (
-  state: CallClientState,
-  props: CallingBaseSelectorProps
-): (CaptionsInfo | /* @conditional-compile-remove(rtt) */ RealTimeTextInfo)[] | undefined => {
+export const getCaptions = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsInfo[] | undefined => {
   return state.calls[props.callId]?.captionsFeature.captions;
 };
 
@@ -314,5 +311,20 @@ export const getAssignedBreakoutRoom = (
 /* @conditional-compile-remove(rtt) */
 /** @private */
 export const getRealTimeTextStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
-  return state.calls[props.callId]?.captionsFeature.isRealTimeTextFeatureActive;
+  return state.calls[props.callId]?.realTimeTextFeature.isRealTimeTextFeatureActive;
+};
+
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeText = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+):
+  | {
+      completedMessages?: RealTimeTextInfo[];
+      currentInProgress?: RealTimeTextInfo[];
+      myInProgress?: RealTimeTextInfo;
+    }
+  | undefined => {
+  return state.calls[props.callId]?.realTimeTextFeature.realTimeTexts;
 };

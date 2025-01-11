@@ -477,7 +477,7 @@ export interface CallAdapterCallOperations {
     resumeCall(): Promise<void>;
     returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
-    sendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
+    sendRealTimeText: (text: string, finalized: boolean) => Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     // @beta
@@ -1232,6 +1232,7 @@ export interface CallState {
     optimalVideoCount: OptimalVideoCountFeatureState;
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
+    realTimeTextFeature: RealTimeTextCallFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -1317,7 +1318,7 @@ export interface CallWithChatAdapterManagement {
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
-    sendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
+    sendRealTimeText: (text: string, finalized: boolean) => Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
@@ -1888,7 +1889,7 @@ export const CaptionsBanner: (props: CaptionsBannerProps) => JSX.Element;
 
 // @public
 export interface CaptionsBannerProps {
-    captions: (CaptionsInformation | /* @conditional-compile-remove(rtt) */ RealTimeTextInformation)[];
+    captions: CaptionsInformation[];
     captionsOptions?: {
         height: 'full' | 'default';
     };
@@ -1897,18 +1898,28 @@ export interface CaptionsBannerProps {
     isRealTimeTextOn?: boolean;
     latestLocalRealTimeText?: RealTimeTextInformation;
     onRenderAvatar?: OnRenderAvatarCallback;
-    onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
+    onSendRealTimeText?: (text: string, finalized: boolean) => Promise<void>;
+    realTimeTexts: {
+        completedMessages?: RealTimeTextInformation[];
+        currentInProgress?: RealTimeTextInformation[];
+        myInProgress?: RealTimeTextInformation;
+    };
     startCaptionsInProgress?: boolean;
     strings?: CaptionsBannerStrings;
 }
 
 // @public
 export type CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
-    captions: (CaptionsInformation | /* @conditional-compile-remove(rtt) */ RealTimeTextInformation)[];
+    captions: CaptionsInformation[];
+    realTimeTexts: {
+        completedMessages?: RealTimeTextInformation[];
+        currentInProgress?: RealTimeTextInformation[];
+        myInProgress?: RealTimeTextInformation;
+    };
     isCaptionsOn: boolean;
     startCaptionsInProgress: boolean;
     isRealTimeTextOn: boolean;
-    latestLocalRealTimeText: RealTimeTextInformation | undefined;
+    latestLocalRealTimeText: RealTimeTextInformation;
 };
 
 // @public
@@ -1922,12 +1933,11 @@ export interface CaptionsBannerStrings {
 
 // @public (undocumented)
 export interface CaptionsCallFeatureState {
-    captions: (CaptionsInfo | /* @conditional-compile-remove(rtt) */ RealTimeTextInfo)[];
+    captions: CaptionsInfo[];
     captionsKind: CaptionsKind;
     currentCaptionLanguage: string;
     currentSpokenLanguage: string;
     isCaptionsFeatureActive: boolean;
-    isRealTimeTextFeatureActive?: boolean;
     startCaptionsInProgress: boolean;
     supportedCaptionLanguages: string[];
     supportedSpokenLanguages: string[];
@@ -1946,6 +1956,7 @@ export type CaptionSettingsSelector = (state: CallClientState, props: CallingBas
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
+    lastUpdatedTimestamp?: Date;
     resultType: CaptionsResultType;
     speaker: CallerInfo;
     spokenLanguage: string;
@@ -1959,6 +1970,7 @@ export type CaptionsInformation = {
     displayName: string;
     captionText: string;
     userId?: string;
+    createdTimeStamp?: Date;
 };
 
 // @public
@@ -2415,7 +2427,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     // (undocumented)
-    onSendRealTimeText: (text: string, finalized?: boolean) => Promise<void>;
+    onSendRealTimeText: (text: string, finalized: boolean) => Promise<void>;
     // (undocumented)
     onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
@@ -4591,6 +4603,16 @@ export type ReadReceiptsBySenderId = {
 export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
 
 // @beta (undocumented)
+export interface RealTimeTextCallFeatureState {
+    isRealTimeTextFeatureActive?: boolean;
+    realTimeTexts: {
+        completedMessages?: RealTimeTextInfo[];
+        currentInProgress?: RealTimeTextInfo[];
+        myInProgress?: RealTimeTextInfo;
+    };
+}
+
+// @beta (undocumented)
 export interface RealTimeTextInfo {
     id: number;
     isMe: boolean;
@@ -4607,8 +4629,9 @@ export type RealTimeTextInformation = {
     displayName: string;
     userId?: string;
     message: string;
-    isTyping?: boolean;
+    isTyping: boolean;
     isMe: boolean;
+    finalizedTimeStamp: Date;
 };
 
 // @beta

@@ -194,8 +194,12 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false,
-
       captionsKind: _isTeamsCall(call) ? 'TeamsCaptions' : 'Captions'
+    },
+    /* @conditional-compile-remove(rtt) */
+    realTimeTextFeature: {
+      realTimeTexts: {},
+      isRealTimeTextFeatureActive: false
     },
     transfer: {
       acceptedTransfers: {}

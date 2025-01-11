@@ -1186,130 +1186,62 @@ export class CallContext {
     return id;
   }
   /* @conditional-compile-remove(rtt) */
-  private processNewCaptionAndNewRealTimeText(
-    captions: (CaptionsInfo | RealTimeTextInfo)[],
-    newCaption: CaptionsInfo | RealTimeTextInfo,
-    isRealTimeText: boolean
+  private processNewRealTimeText(
+    realTimeTexts: {
+      completedMessages?: RealTimeTextInfo[];
+      currentInProgress?: RealTimeTextInfo[];
+      myInProgress?: RealTimeTextInfo;
+    },
+    newRealTimeText: RealTimeTextInfo
   ): void {
-    // if captions array is empty just push it in
-    if (captions.length === 0) {
-      captions.push(newCaption);
-    } else {
-      // partial real time text always stays at the bottom and update in place
-      // captions always go on top of all partial real time text
-      if (isRealTimeText) {
-        this.processNewRealTimeTextHelper(captions, newCaption as RealTimeTextInfo);
-      } else {
-        // look for the first idex of real time text that is partial and split the list in 2 from there
-        const lastRealTimeTextIndex = captions.findIndex(
-          (caption) => caption.resultType === 'Partial' && 'message' in caption
-        );
-        if (lastRealTimeTextIndex !== -1) {
-          // this list containing all captions and completed real time text
-          const completedCaptions = captions.slice(0, lastRealTimeTextIndex);
-          // append the new caption to the completed captions list
-          this.processNewCaptionHelper(completedCaptions, newCaption as CaptionsInfo);
-          // return the completed captions list appended with the partial real time text list
-          captions.splice(0, lastRealTimeTextIndex, ...completedCaptions);
-        } else {
-          // if there is no partial real time text, just push the new caption to the list
-          this.processNewCaptionHelper(captions, newCaption as CaptionsInfo);
-        }
+    // if the new message is final, push it to completed messages
+    if (newRealTimeText.resultType === 'Final') {
+      if (!realTimeTexts.completedMessages) {
+        realTimeTexts.completedMessages = [];
       }
-    }
-
-    // If the array length exceeds 50, remove the oldest caption
-    if (captions.length > 50) {
-      captions.shift();
-    }
-  }
-
-  /* @conditional-compile-remove(rtt) */
-  private processNewRealTimeTextHelper(
-    captions: (CaptionsInfo | RealTimeTextInfo)[],
-    newCaption: RealTimeTextInfo
-  ): void {
-    // find the index of the last real time text from the same speaker that is partial and update to the new real time text
-    const lastRealTimeTextIndex = captions
-      .slice()
-      .reverse()
-      .findIndex(
-        (caption) =>
-          caption.resultType === 'Partial' &&
-          'sender' in caption &&
-          caption.sender.identifier &&
-          newCaption.sender.identifier &&
-          toFlatCommunicationIdentifier(caption.sender.identifier) ===
-            toFlatCommunicationIdentifier(newCaption.sender.identifier)
-      );
-    if (lastRealTimeTextIndex !== -1) {
-      if (newCaption.resultType === 'Partial') {
-        // update in place
-        captions[captions.length - lastRealTimeTextIndex - 1] = newCaption;
+      realTimeTexts.completedMessages?.push(newRealTimeText);
+      // clear the corresponding in progress message
+      if (newRealTimeText.isMe) {
+        realTimeTexts.myInProgress = undefined;
       } else {
-        // remove the partial entry
-        captions.splice(captions.length - lastRealTimeTextIndex - 1, 1);
-        // find the index of the first partial rtt
-        const firstPartialIndex = captions.findIndex(
-          (caption) => caption.resultType === 'Partial' && 'sender' in caption
+        realTimeTexts.currentInProgress = realTimeTexts.currentInProgress?.filter(
+          (message) => message.id !== newRealTimeText.id
         );
-        // push the new final entry before all partial entires
-        if (firstPartialIndex !== -1) {
-          captions.splice(firstPartialIndex, 0, newCaption);
-        } else {
-          captions.push(newCaption);
-        }
       }
     } else {
-      captions.push(newCaption);
-    }
-  }
-
-  /* @conditional-compile-remove(rtt) */
-  private processNewCaptionHelper(captions: (CaptionsInfo | RealTimeTextInfo)[], newCaption: CaptionsInfo): void {
-    // time stamp when new caption comes in
-    newCaption.timestamp = new Date();
-    // if this is the first caption, push it in
-    if (captions.length === 0) {
-      captions.push(newCaption);
-    }
-    // first we need to go through the list and find the last caption
-    else {
-      const lastCaptionIndex = captions
-        .slice()
-        .reverse()
-        .findIndex((caption) => 'captionText' in caption);
-
-      // the most complicated case is when the last caption is partial.
-      if (lastCaptionIndex !== -1 && captions[captions.length - lastCaptionIndex - 1]?.resultType === 'Partial') {
-        const lastCaption: CaptionsInfo = captions[captions.length - lastCaptionIndex - 1] as CaptionsInfo;
-
-        if (
-          lastCaption &&
-          lastCaption.speaker.identifier &&
-          newCaption.speaker.identifier &&
-          toFlatCommunicationIdentifier(lastCaption.speaker.identifier) ===
-            toFlatCommunicationIdentifier(newCaption.speaker.identifier)
-        ) {
-          captions[captions.length - lastCaptionIndex - 1] = newCaption;
-        }
-        // if different speaker, ignore the interjector until the current speaker finishes
-        // edge case: if we dont receive the final caption from the current speaker for 5 secs, we turn the current speaker caption to final and push in the new interjector
-        else if (lastCaption) {
-          if (Date.now() - lastCaption.timestamp.getTime() > 5000) {
-            lastCaption.resultType = 'Final';
-            captions.push(newCaption);
-          }
-        }
-      } else {
-        captions.push(newCaption);
+      // if receive partial real time text
+      // if message is from me, assign it to myInProgress
+      if (newRealTimeText.isMe) {
+        realTimeTexts.myInProgress = newRealTimeText;
       }
+      // if message is from others, assign it to currentInProgress
+      else {
+        if (!realTimeTexts.currentInProgress) {
+          realTimeTexts.currentInProgress = [];
+          realTimeTexts.currentInProgress.push(newRealTimeText);
+          return;
+        }
+        // find the index of the existing in progress message
+        // replace the existing in progress message with the new one
+        const existingIndex = realTimeTexts.currentInProgress?.findIndex(
+          (message) => message.id === newRealTimeText.id
+        );
+        if (existingIndex === -1) {
+          realTimeTexts.currentInProgress?.push(newRealTimeText);
+        } else {
+          realTimeTexts.currentInProgress[existingIndex] = newRealTimeText;
+        }
+      }
+    }
+    // we only want to store up to 50 finalized messages
+    if (realTimeTexts.completedMessages && realTimeTexts.completedMessages?.length > 50) {
+      realTimeTexts.completedMessages.shift();
     }
   }
 
   private processNewCaption(captions: CaptionsInfo[], newCaption: CaptionsInfo): void {
     // time stamp when new caption comes in
-    newCaption.timestamp = new Date();
+    newCaption.lastUpdatedTimestamp = new Date();
     // if this is the first caption, push it in
     if (captions.length === 0) {
       captions.push(newCaption);
@@ -1332,8 +1264,8 @@ export class CallContext {
       }
       // if different speaker, ignore the interjector until the current speaker finishes
       // edge case: if we dont receive the final caption from the current speaker for 5 secs, we turn the current speaker caption to final and push in the new interjector
-      else if (lastCaption) {
-        if (Date.now() - lastCaption.timestamp.getTime() > 5000) {
+      else if (lastCaption?.lastUpdatedTimestamp) {
+        if (Date.now() - lastCaption.lastUpdatedTimestamp.getTime() > 5000) {
           lastCaption.resultType = 'Final';
           captions.push(newCaption);
         }
@@ -1355,18 +1287,7 @@ export class CallContext {
           currentCaptionLanguage === '' ||
           currentCaptionLanguage === undefined
         ) {
-          /* @conditional-compile-remove(rtt) */
-          this.processNewCaptionAndNewRealTimeText(
-            call.captionsFeature.captions,
-            convertFromTeamsSDKToCaptionInfoState(caption),
-            false
-          );
-          /* @conditional-compile-remove(rtt) */
-          return;
-          this.processNewCaption(
-            (call?.captionsFeature.captions as CaptionsInfo[]) ?? [],
-            convertFromTeamsSDKToCaptionInfoState(caption)
-          );
+          this.processNewCaption(call?.captionsFeature.captions ?? [], convertFromTeamsSDKToCaptionInfoState(caption));
         }
       }
     });
@@ -1376,18 +1297,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        /* @conditional-compile-remove(rtt) */
-        this.processNewCaptionAndNewRealTimeText(
-          call.captionsFeature.captions,
-          convertFromSDKToCaptionInfoState(caption),
-          false
-        );
-        /* @conditional-compile-remove(rtt) */
-        return;
-        this.processNewCaption(
-          (call?.captionsFeature.captions as CaptionsInfo[]) ?? [],
-          convertFromSDKToCaptionInfoState(caption)
-        );
+        this.processNewCaption(call?.captionsFeature.captions ?? [], convertFromSDKToCaptionInfoState(caption));
       }
     });
   }
@@ -1396,10 +1306,9 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        this.processNewCaptionAndNewRealTimeText(
-          call.captionsFeature.captions,
-          convertFromSDKRealTimeTextToRealTimeTextInfoState(realTimeText),
-          true
+        this.processNewRealTimeText(
+          call.realTimeTextFeature.realTimeTexts,
+          convertFromSDKRealTimeTextToRealTimeTextInfoState(realTimeText)
         );
       }
     });
@@ -1436,7 +1345,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.captionsFeature.isRealTimeTextFeatureActive = isRealTimeTextActive;
+        call.realTimeTextFeature.isRealTimeTextFeatureActive = isRealTimeTextActive;
       }
     });
   }
