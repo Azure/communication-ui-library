@@ -1,8 +1,36 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 16 Dec 2024 19:44:14 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 13 Jan 2025 19:28:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.23.0](https://github.com/azure/communication-ui-library/tree/1.23.0)
+
+Mon, 13 Jan 2025 19:28:45 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.22.0...1.23.0)
+
+### Features
+- We are excited to announce that the Azure Communication Services Web UI Library now supports the Media Access feature. This feature allows organizers, co-organizers, and presenters to control the ability of other attendees to send audio and video while in a call. Attendees can determine if their audio or video is enabled or disabled and check the media access status of other participants. Developers can integrate this functionality through our composites (e.g., CallComposite, CallWithChatComposite) as well as through components. ([PR #5546](https://github.com/azure/communication-ui-library/pull/5546) by fuyan@microsoft.com)
+- Hard mute feature UI changes ([PR #5452](https://github.com/azure/communication-ui-library/pull/5452) by fuyan@microsoft.com)
+### Improvements
+- Add hermetic test for hard mute ([PR #5531](https://github.com/azure/communication-ui-library/pull/5531) by fuyan@microsoft.com)
+- Add story book for Media access (hard mute) feature ([PR #5456](https://github.com/azure/communication-ui-library/pull/5456) by fuyan@microsoft.com)
+- UI components changes ([PR #5452](https://github.com/azure/communication-ui-library/pull/5452) by fuyan@microsoft.com)
+- Added on several unit tests  to the acs-ui-common packlet ([PR #5457](https://github.com/azure/communication-ui-library/pull/5457) by alkwa@microsoft.com)
+### Bug Fixes
+- Hard mute accessibility ([PR #5539](https://github.com/azure/communication-ui-library/pull/5539) by fuyan@microsoft.com)
+- Change the announcers in the Mic and Camera button to be conditionally rendered to stop them being read in scan mode if the button isn't focused ([PR #5526](https://github.com/azure/communication-ui-library/pull/5526) by dmceachern@microsoft.com)
+- Fix SendBox initialization that caused MaxListenersExceededWarning logs in the Console tool for ChatComposite with rich text editor enabled. ([PR #5537](https://github.com/azure/communication-ui-library/pull/5537) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update people button behavior to meet A11y requirements ([PR #5524](https://github.com/azure/communication-ui-library/pull/5524) by dmceachern@microsoft.com)
+- Update image overlay to announce when visible ([PR #5500](https://github.com/azure/communication-ui-library/pull/5500) by 3941071+emlynmac@users.noreply.github.com)
+- Fix an issue where tab key was ignored by rich text editor at the end of the text ([PR #5533](https://github.com/azure/communication-ui-library/pull/5533) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Define a captions a region and focus on mount on captions region ([PR #5512](https://github.com/azure/communication-ui-library/pull/5512) by edwardlee@microsoft.com)
+- Fix an issue where keyboard focus was lost after message is edited ([PR #5530](https://github.com/azure/communication-ui-library/pull/5530) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Remove unreachable code ([PR #5520](https://github.com/azure/communication-ui-library/pull/5520) by 77021369+jimchou-dev@users.noreply.github.com)
+- Fix condition compile for hard mute. ([PR #5543](https://github.com/azure/communication-ui-library/pull/5543) by fuyan@microsoft.com)
+- Add more spacing for Video tile icons ([PR #5535](https://github.com/azure/communication-ui-library/pull/5535) by fuyan@microsoft.com)
+- Fix RTE .exe attachment disabling SendButton ([PR #5534](https://github.com/azure/communication-ui-library/pull/5534) by 77021369+jimchou-dev@users.noreply.github.com)
+
 
 ## [1.22.0](https://github.com/azure/communication-ui-library/tree/1.22.0)
 
