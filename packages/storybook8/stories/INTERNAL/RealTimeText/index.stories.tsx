@@ -18,7 +18,7 @@ const meta: Meta = {
   argTypes: {
     isTyping: controlsToAdd.isRTTTyping,
     displayName: controlsToAdd.rttDisplayName,
-    captionText: controlsToAdd.rttCaptionText,
+    message: controlsToAdd.rttCaptionText,
     id: hiddenControl,
     onRenderAvatar: hiddenControl,
     strings: hiddenControl,

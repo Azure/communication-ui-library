@@ -4,6 +4,8 @@ import { Stack, FocusZone, Spinner, useTheme } from '@fluentui/react';
 /* @conditional-compile-remove(rtt) */
 import { TextField } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
+/* @conditional-compile-remove(rtt) */
+import { useMemo } from 'react';
 import { _Caption } from './Caption';
 import {
   captionContainerClassName,
@@ -19,6 +21,8 @@ import { useLocale } from '../localization';
 import { RealTimeText } from './RealTimeText';
 /* @conditional-compile-remove(rtt) */
 import { _RTTDisclosureBanner } from './RTTDisclosureBanner';
+/* @conditional-compile-remove(rtt) */
+import { sortCaptionsAndRealTimeTexts } from './utils/sortCaptionsAndRealTimeTexts';
 
 /**
  * @public
@@ -43,21 +47,48 @@ export type CaptionsInformation = {
   userId?: string;
   /* @conditional-compile-remove(rtt) */
   /**
-   * if the caption received is real time text
+   * timestamp when the caption was created
+   * Please note that this value is essential for determining the order of captions and real time text messages
+   * If you are using both captions and real time text, please ensure that the createdTimeStamp is populated
    */
-  isRealTimeText?: boolean;
-  /* @conditional-compile-remove(rtt) */
-  /**
-   * if the caption received is a non finalized caption
-   */
-  isPartial?: boolean;
-  /* @conditional-compile-remove(rtt) */
-  /**
-   * if the caption received is from the local user
-   */
-  isLocalUser?: boolean;
+  createdTimeStamp?: Date;
 };
 
+/* @conditional-compile-remove(rtt) */
+/**
+ * @beta
+ * information required for each line of real time text
+ */
+export type RealTimeTextInformation = {
+  /**
+   * The sequence id of the real time text.
+   */
+  id: number;
+  /**
+   * sender's display name
+   */
+  displayName: string;
+  /**
+   * id of the sender
+   */
+  userId?: string;
+  /**
+   * The real time text message.
+   */
+  message: string;
+  /**
+   * if the real time text received is partial
+   */
+  isTyping: boolean;
+  /**
+   * If message originated from the local participant
+   */
+  isMe: boolean;
+  /**
+   * timestamp when the real time text was finalized
+   */
+  finalizedTimeStamp: Date;
+};
 /**
  * @public
  * strings for captions banner
@@ -98,6 +129,15 @@ export interface CaptionsBannerProps {
    * Array of captions to be displayed
    */
   captions: CaptionsInformation[];
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Array of finalized and partial real time text messages
+   */
+  realTimeTexts?: {
+    completedMessages?: RealTimeTextInformation[];
+    currentInProgress?: RealTimeTextInformation[];
+    myInProgress?: RealTimeTextInformation;
+  };
   /**
    * Flag to indicate if captions are on
    */
@@ -137,12 +177,12 @@ export interface CaptionsBannerProps {
   /**
    * Optional callback to send real time text.
    */
-  onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
+  onSendRealTimeText?: (text: string, finalized: boolean) => Promise<void>;
   /* @conditional-compile-remove(rtt) */
   /**
    * Latest local real time text
    */
-  latestLocalRealTimeText?: CaptionsInformation;
+  latestLocalRealTimeText?: RealTimeTextInformation;
 }
 
 const SCROLL_OFFSET_ALLOWANCE = 20;
@@ -154,6 +194,8 @@ const SCROLL_OFFSET_ALLOWANCE = 20;
 export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   const {
     captions,
+    /* @conditional-compile-remove(rtt) */
+    realTimeTexts,
     isCaptionsOn,
     startCaptionsInProgress,
     onRenderAvatar,
@@ -171,6 +213,20 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   const captionsScrollDivRef = useRef<HTMLUListElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const theme = useTheme();
+  /* @conditional-compile-remove(rtt) */
+  // merge realtimetexts and captions into one array based on timestamp
+  // Combine captions and realTimeTexts into one list
+  const combinedList: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
+    return sortCaptionsAndRealTimeTexts(captions, realTimeTexts?.completedMessages ?? []);
+  }, [captions, realTimeTexts?.completedMessages]);
+
+  /* @conditional-compile-remove(rtt) */
+  const mergedCaptions: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
+    return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress] as (
+      | CaptionsInformation
+      | RealTimeTextInformation
+    )[];
+  }, [combinedList, realTimeTexts]);
 
   const scrollToBottom = (): void => {
     if (captionsScrollDivRef.current) {
@@ -209,7 +265,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   /* @conditional-compile-remove(rtt) */
   useEffect(() => {
     // if the latest real time text sent by myself is final, clear the text field
-    if (latestLocalRealTimeText && !latestLocalRealTimeText.isPartial) {
+    if (latestLocalRealTimeText && !latestLocalRealTimeText.isTyping) {
       setTextFieldValue('');
     }
   }, [latestLocalRealTimeText]);
@@ -232,6 +288,43 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     bannerLinkLabel: strings.realTimeTextBannerLinkLabel ?? ''
   };
 
+  const captionsTrampoline = (): JSX.Element => {
+    /* @conditional-compile-remove(rtt) */
+    return (
+      <>
+        {mergedCaptions.map((caption) => {
+          if (caption) {
+            if ('message' in caption) {
+              return (
+                <li key={`RealTimeText - ${caption.id}`} className={captionContainerClassName} data-is-focusable={true}>
+                  <RealTimeText {...(caption as RealTimeTextInformation)} />
+                </li>
+              );
+            }
+            return (
+              <li key={`Captions - ${caption.id}`} className={captionContainerClassName} data-is-focusable={true}>
+                <_Caption {...(caption as CaptionsInformation)} onRenderAvatar={onRenderAvatar} />
+              </li>
+            );
+          }
+          return <></>;
+        })}
+      </>
+    );
+
+    return (
+      <>
+        {captions.map((caption) => {
+          return (
+            <li key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
+              <_Caption {...(caption as CaptionsInformation)} onRenderAvatar={onRenderAvatar} />
+            </li>
+          );
+        })}
+      </>
+    );
+  };
+
   return (
     <>
       {(startCaptionsInProgress || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
@@ -251,21 +344,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               }
               data-ui-id="captions-banner-inner"
             >
-              {captions.map((caption) => {
-                /* @conditional-compile-remove(rtt) */
-                if (caption.isRealTimeText) {
-                  return (
-                    <li key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
-                      <RealTimeText {...caption} isTyping={caption.isPartial} onRenderAvatar={onRenderAvatar} />
-                    </li>
-                  );
-                }
-                return (
-                  <li key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
-                    <_Caption {...caption} onRenderAvatar={onRenderAvatar} />
-                  </li>
-                );
-              })}
+              {captionsTrampoline()}
             </ul>
           )}
           {
@@ -276,7 +355,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
                 onKeyDown={handleKeyDown}
                 onChange={(_, newValue) => {
                   setTextFieldValue(newValue || '');
-                  onSendRealTimeText(newValue || '');
+                  onSendRealTimeText(newValue || '', false);
                 }}
               />
             )

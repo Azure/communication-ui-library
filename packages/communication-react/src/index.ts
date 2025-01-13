@@ -484,3 +484,5 @@ export type {
   StartCaptionsButtonProps,
   StartCaptionsButtonStrings
 } from '../../react-components/src/components/StartCaptionsButton';
+/* @conditional-compile-remove(rtt) */
+export type { RealTimeTextInformation } from '../../react-components/src/components/CaptionsBanner';
