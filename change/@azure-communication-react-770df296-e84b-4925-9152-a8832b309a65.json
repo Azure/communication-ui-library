@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "feature",
-  "workstream": "Hard mute",
-  "comment": "Hard mute feature UI changes",
-  "packageName": "@azure/communication-react",
-  "email": "fuyan@microsoft.com",
-  "dependentChangeType": "patch"
-}
