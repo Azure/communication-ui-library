@@ -1,9 +1,9 @@
 {
-  "type": "none",
+  "type": "patch",
   "area": "improvement",
   "workstream": "[Test Coverage] Adding additional unit tests for _isValidIdentifier and _toCommunicationIdentifier",
   "comment": "Added on several unit tests  to the acs-ui-common packlet",
   "packageName": "@azure/communication-react",
   "email": "alkwa@microsoft.com",
-  "dependentChangeType": "none"
+  "dependentChangeType": "patch"
 }
