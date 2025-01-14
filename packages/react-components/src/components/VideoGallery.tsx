@@ -30,7 +30,10 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
-import { _formatString, _isIdentityMicrosoftTeamsUser } from '@internal/acs-ui-common';
+import {
+  _formatString,
+  /* @conditional-compile-remove(together-mode) */ _isIdentityMicrosoftTeamsUser
+} from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
@@ -344,22 +347,22 @@ export interface VideoGalleryProps {
   onDisposeTogetherModeStreamView?: () => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to forbid audio for a remote participant(s)
+   * This callback is to forbid audio for remote participant(s)
    */
   onForbidAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to permit audio for a remote participant(s)
+   * This callback is to permit audio for remote participant(s)
    */
   onPermitAudio?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to forbid video for a remote participant(s)
+   * This callback is to forbid video for remote participant(s)
    */
   onForbidVideo?: (userIds: string[]) => Promise<void>;
   /* @conditional-compile-remove(media-access) */
   /**
-   * This callback is to permit video for a remote participant(s)
+   * This callback is to permit video for remote participant(s)
    */
   onPermitVideo?: (userIds: string[]) => Promise<void>;
 }

@@ -15,6 +15,8 @@ import { ParticipantVideoTileOverlay } from './VideoGallery/ParticipantVideoTile
 import { RemoteContentShareReactionOverlay } from './VideoGallery/RemoteContentShareReactionOverlay';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeOverlay } from './TogetherModeOverlay';
+/* @conditional-compile-remove(together-mode) */
+import { togetherModeMeetingOverlayStyle } from './styles/TogetherMode.styles';
 
 /**
  * Reaction overlay component props
@@ -144,11 +146,7 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
     return (
       <div
         style={{
-          width: '100%',
-          height: '100%',
-          position: 'absolute',
-          top: '0',
-          left: '0'
+          ...togetherModeMeetingOverlayStyle
         }}
       >
         <TogetherModeOverlay

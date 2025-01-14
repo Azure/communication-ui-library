@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, memo } from 'react';
 /* @conditional-compile-remove(together-mode) */
 import {
   Reaction,
@@ -14,11 +14,7 @@ import {
 /* @conditional-compile-remove(together-mode) */
 import { moveAnimationStyles, spriteAnimationStyles } from './styles/ReactionOverlay.style';
 /* @conditional-compile-remove(together-mode) */
-import {
-  // getCombinedKey,
-  REACTION_NUMBER_OF_ANIMATION_FRAMES
-  // REACTION_START_DISPLAY_SIZE
-} from './VideoGallery/utils/reactionUtils';
+import { REACTION_NUMBER_OF_ANIMATION_FRAMES } from './VideoGallery/utils/reactionUtils';
 /* @conditional-compile-remove(together-mode) */
 import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
 /* @conditional-compile-remove(together-mode) */
@@ -31,25 +27,25 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import {
   calculateScaledSize,
   getTogetherModeParticipantOverlayStyle,
+  REACTION_MAX_TRAVEL_HEIGHT,
+  REACTION_TRAVEL_HEIGHT,
   setTogetherModeSeatPositionStyle,
   togetherModeIconStyle,
   togetherModeParticipantDisplayName,
+  togetherModeParticipantEmojiSpriteStyle,
   togetherModeParticipantStatusContainer,
   TogetherModeSeatStyle
 } from './styles/TogetherMode.styles';
 /* @conditional-compile-remove(together-mode) */
 import { CallingTheme, useTheme } from '../theming';
-// import { iconContainerStyle, raiseHandContainerStyles } from './styles/VideoTile.styles';
 /* @conditional-compile-remove(together-mode) */
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 /* @conditional-compile-remove(together-mode) */
 import { _pxToRem } from '@internal/acs-ui-common';
+
 /* @conditional-compile-remove(together-mode) */
 /**
  * Signaling action overlay component props
- *
- * Can be used with {@link VideoTile}.
- *
  * @internal
  */
 type TogetherModeParticipantStatus = {
@@ -70,7 +66,7 @@ type TogetherModeParticipantStatus = {
  *
  * @returns {JSX.Element} An empty JSX element.
  */
-export const TogetherModeOverlay = React.memo(
+export const TogetherModeOverlay = memo(
   (props: {
     emojiSize: number;
     reactionResources: ReactionResources;
@@ -88,8 +84,14 @@ export const TogetherModeOverlay = React.memo(
     }>({});
     const [hoveredParticipantID, setHoveredParticipantID] = useState('');
 
+    /*
+     * The useMemo hook is used to calculate the participant status for the Together Mode overlay.
+     * It updates the togetherModeParticipantStatus state when there's a change in the remoteParticipants, localParticipant,
+     * raisedHand, spotlight, isMuted, displayName, or hoveredParticipantID.
+     */
     useMemo(() => {
       const allParticipants = [...remoteParticipants, localParticipant];
+
       const participantsWithVideoAvailable = allParticipants.filter(
         (p) => p.videoStream?.isAvailable && togetherModeSeatPositions[p.userId]
       );
@@ -113,6 +115,7 @@ export const TogetherModeOverlay = React.memo(
         }
       }
 
+      // This is used to remove the participants bounding box from the DOM when they are no longer in the stream
       const participantsNotInTogetherModeStream = Object.keys(togetherModeParticipantStatus).filter(
         (id) => !updatedSignals[id]
       );
@@ -142,7 +145,13 @@ export const TogetherModeOverlay = React.memo(
       hoveredParticipantID
     ]);
 
-    // When a 50-participant scene switches to a smaller group in Together Mode, signals for those no longer in the stream are removed
+    /*
+     * When a larger participant scene switches to a smaller group in Together Mode,
+     * participant video streams remain available because their video is still active,
+     * even though they are not visible in the Together Mode stream.
+     * Therefore, we rely on the updated seating position values to identify who is included in the Together Mode stream.
+     * The Together mode seat position will only contain seat coordinates of participants who are visible in the Together Mode stream.
+     */
     useMemo(() => {
       const removedVisibleParticipants = Object.keys(togetherModeParticipantStatus).filter(
         (participantId) => !togetherModeSeatPositions[participantId]
@@ -169,31 +178,30 @@ export const TogetherModeOverlay = React.memo(
               <div
                 key={participantStatus.id}
                 style={{
-                  ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle),
-                  border: '1px solid blue'
+                  ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle)
                 }}
                 onMouseEnter={() => setHoveredParticipantID(participantStatus.id)}
                 onMouseLeave={() => setHoveredParticipantID('')}
               >
                 <div>
                   {participantStatus.reaction?.reactionType && (
+                    // First div - Section that fixes the travel height and applies the movement animation
+                    // Second div - Responsible for ensuring the sprite emoji is always centered in the participant seat position
+                    // Third div - Play Animation as the other animation applies on the base play animation for the sprite
                     <div
                       style={moveAnimationStyles(
-                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * 0.5 * 16,
-                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * 0.35 * 16
+                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) *
+                          REACTION_MAX_TRAVEL_HEIGHT,
+                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * REACTION_TRAVEL_HEIGHT
                       )}
                     >
                       <div
                         style={{
-                          width: `${emojiSize}`,
-                          position: 'absolute',
-                          left: `${
-                            (100 -
-                              ((participantStatus.scaledSize || 1) /
-                                (parseFloat(participantStatus.seatPositionStyle.seatPosition.width) * 16)) *
-                                100) /
-                            2
-                          }%`
+                          ...togetherModeParticipantEmojiSpriteStyle(
+                            emojiSize,
+                            participantStatus.scaledSize || 1,
+                            participantStatus.seatPositionStyle.seatPosition.width
+                          )
                         }}
                       >
                         <div
@@ -210,18 +218,7 @@ export const TogetherModeOverlay = React.memo(
                   )}
 
                   {participantStatus.showDisplayName && (
-                    <div
-                      style={{
-                        position: 'absolute',
-                        bottom: `${_pxToRem(2)}`,
-                        width: 'fit-content',
-                        textAlign: 'center',
-                        border: '1px solid white',
-                        transform: 'translate(-50%)',
-                        transition: 'width 0.3s ease, transform 0.3s ease',
-                        left: '50%'
-                      }}
-                    >
+                    <div>
                       <div
                         style={{
                           ...togetherModeParticipantStatusContainer(

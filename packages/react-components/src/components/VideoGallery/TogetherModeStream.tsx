@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect, useMemo, memo } from 'react';
 /* @conditional-compile-remove(together-mode) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(together-mode) */
@@ -29,7 +29,7 @@ import { togetherModeStreamRootStyle } from '../styles/TogetherMode.styles';
  * boost by memoizing the same rendered component to avoid rerendering this when the parent component rerenders.
  * https://reactjs.org/docs/react-api.html#reactmemo
  */
-export const TogetherModeStream = React.memo(
+export const TogetherModeStream = memo(
   (props: {
     startTogetherModeEnabled?: boolean;
     isTogetherModeActive?: boolean;
@@ -45,7 +45,7 @@ export const TogetherModeStream = React.memo(
     screenShareComponent?: JSX.Element;
     containerWidth?: number;
     containerHeight?: number;
-  }): React.ReactNode => {
+  }): JSX.Element => {
     const {
       startTogetherModeEnabled,
       isTogetherModeActive,
@@ -54,10 +54,6 @@ export const TogetherModeStream = React.memo(
       onSetTogetherModeSceneSize,
       onDisposeTogetherModeStreamView,
       togetherModeStreams,
-      seatingCoordinates,
-      localParticipant,
-      remoteParticipants,
-      reactionResources,
       containerWidth,
       containerHeight
     } = props;
@@ -90,9 +86,9 @@ export const TogetherModeStream = React.memo(
       }
     }, [onSetTogetherModeSceneSize, containerWidth, containerHeight]);
 
-    console.log(`CHUK seatingCoordinates: ${JSON.stringify(seatingCoordinates)}`);
     const stream = props.togetherModeStreams?.mainVideoStream;
     const showLoadingIndicator = !(stream && stream.isAvailable && stream.isReceiving);
+
     return containerWidth && containerHeight ? (
       <Stack styles={togetherModeStreamRootStyle} horizontalAlign="center" verticalAlign="center">
         <StreamMedia
@@ -101,13 +97,15 @@ export const TogetherModeStream = React.memo(
           loadingState={showLoadingIndicator ? 'loading' : 'none'}
         />
         <MeetingReactionOverlay
-          reactionResources={reactionResources || ({} as ReactionResources)}
-          localParticipant={localParticipant}
-          remoteParticipants={remoteParticipants}
-          togetherModeSeatPositions={seatingCoordinates}
+          reactionResources={props.reactionResources || ({} as ReactionResources)}
+          localParticipant={props.localParticipant}
+          remoteParticipants={props.remoteParticipants}
+          togetherModeSeatPositions={props.seatingCoordinates}
           overlayMode="together-mode"
         />
       </Stack>
-    ) : null;
+    ) : (
+      <></>
+    );
   }
 );

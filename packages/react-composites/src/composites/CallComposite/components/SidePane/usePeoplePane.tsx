@@ -318,9 +318,13 @@ export const usePeoplePane = (props: {
     onStopAllSpotlight,
     spotlightedParticipantUserIds,
     localeStrings.muteAllMenuLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersAudioMenuLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersAudioMenuLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersVideoMenuLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersVideoMenuLabel,
     localeStrings.stopAllSpotlightMenuLabel
   ]);
@@ -553,14 +557,22 @@ export const usePeoplePane = (props: {
       spotlightedParticipantUserIds,
       onMuteParticipant,
       remoteParticipants,
+      /* @conditional-compile-remove(media-access) */
       onPermitAudio,
+      /* @conditional-compile-remove(media-access) */
       onForbidAudio,
+      /* @conditional-compile-remove(media-access) */
       onPermitVideo,
+      /* @conditional-compile-remove(media-access) */
       onForbidVideo,
       onFetchParticipantMenuItems,
+      /* @conditional-compile-remove(media-access) */
       localeStrings.permitAudioMenuLabel,
+      /* @conditional-compile-remove(media-access) */
       localeStrings.forbidAudioMenuLabel,
+      /* @conditional-compile-remove(media-access) */
       localeStrings.permitVideoMenuLabel,
+      /* @conditional-compile-remove(media-access) */
       localeStrings.forbidVideoMenuLabel,
       localeStrings.stopSpotlightOnSelfMenuLabel,
       localeStrings.stopSpotlightMenuLabel,
@@ -668,25 +680,45 @@ export const usePeoplePane = (props: {
   }, [
     muteAllPromptLabels,
     showMuteAllPrompt,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersAudioDialogTitle,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersAudioDialogContent,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersAudioConfirmButtonLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersAudioCancelButtonLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersAudioDialogTitle,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersAudioDialogContent,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersAudioConfirmButtonLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersAudioCancelButtonLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersVideoDialogTitle,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersVideoDialogContent,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersVideoConfirmButtonLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersVideoCancelButtonLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersVideoDialogTitle,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersVideoDialogContent,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersVideoConfirmButtonLabel,
+    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersVideoCancelButtonLabel,
+    /* @conditional-compile-remove(media-access) */
     showForbidOthersAudioPrompt,
+    /* @conditional-compile-remove(media-access) */
     showPermitOthersAudioPrompt,
+    /* @conditional-compile-remove(media-access) */
     showForbidOthersVideoPrompt,
+    /* @conditional-compile-remove(media-access) */
     showPermitOthersVideoPrompt,
     inviteLink,
     onFetchAvatarPersonaData,
@@ -699,9 +731,13 @@ export const usePeoplePane = (props: {
     role,
     alternateCallerId,
     onMuteAllPromptConfirm,
+    /* @conditional-compile-remove(media-access) */
     onForbidAllAttendeesPromptConfirm,
+    /* @conditional-compile-remove(media-access) */
     onPermitAllAttendeesPromptConfirm,
+    /* @conditional-compile-remove(media-access) */
     onForbidOthersVideoPromptConfirm,
+    /* @conditional-compile-remove(media-access) */
     onPermitOthersVideoPromptConfirm
   ]);
 
