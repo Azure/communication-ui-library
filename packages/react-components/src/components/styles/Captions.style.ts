@@ -64,8 +64,7 @@ export const captionsContainerClassName = mergeStyles({
   height: '100%',
   margin: 0,
   overflow: 'auto',
-  padding: 0,
-  paddingTop: _pxToRem(8)
+  padding: 0
 });
 
 /**
