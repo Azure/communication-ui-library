@@ -1,7 +1,7 @@
 {
   "type": "prerelease",
   "area": "feature",
-  "workstream": "Hide together mode icon api",
+  "workstream": "Together Mode",
   "comment": "Hide together mode icon api",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
