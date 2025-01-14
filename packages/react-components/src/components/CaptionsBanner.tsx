@@ -331,7 +331,9 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
         <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
           {
             /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
-              <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
+              <div style={{ paddingTop: '0.5rem' }}>
+                <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
+              </div>
             )
           }
           {(isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
