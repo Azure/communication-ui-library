@@ -27,6 +27,7 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import {
   calculateScaledSize,
   getTogetherModeParticipantOverlayStyle,
+  participantStatusTransitionStyle,
   REACTION_MAX_TRAVEL_HEIGHT,
   REACTION_TRAVEL_HEIGHT,
   setTogetherModeSeatPositionStyle,
@@ -218,7 +219,7 @@ export const TogetherModeOverlay = memo(
                   )}
 
                   {participantStatus.showDisplayName && (
-                    <div>
+                    <div style={{ ...participantStatusTransitionStyle }}>
                       <div
                         style={{
                           ...togetherModeParticipantStatusContainer(
