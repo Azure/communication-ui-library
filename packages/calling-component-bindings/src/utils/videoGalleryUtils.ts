@@ -78,7 +78,9 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.contentSharingStream,
             remoteParticipantReaction,
             spotlight,
+            /* @conditional-compile-remove(media-access) */
             participant.mediaAccess,
+            /* @conditional-compile-remove(media-access) */
             participant.role,
             /* @conditional-compile-remove(remote-ufd) */
             Math.max(
@@ -183,6 +185,7 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     raisedHand,
     reaction,
     spotlight,
+    /* @conditional-compile-remove(media-access) */
     mediaAccess,
     /* @conditional-compile-remove(media-access) */
     canAudioBeForbidden: role === 'Attendee',

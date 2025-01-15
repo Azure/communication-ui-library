@@ -5,13 +5,13 @@ import { Stack } from '@fluentui/react';
 import { RealTimeText as RealTimeTextExample } from '@internal/react-components';
 import React from 'react';
 
-const RealTimeTextStory = (args: { isTyping: boolean; displayName: string; captionText: string }): JSX.Element => {
+const RealTimeTextStory = (args: { isTyping: boolean; displayName: string; message: string }): JSX.Element => {
   return (
     <Stack>
       <RealTimeTextExample
-        id="1"
+        id={1}
         displayName={args.displayName ?? 'Caroline'}
-        captionText={args.captionText ?? 'Hello'}
+        message={args.message ?? 'Hello'}
         isTyping={args.isTyping}
       />
     </Stack>
