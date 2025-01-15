@@ -171,7 +171,7 @@ jobs:
       # Pull requests show details of coverage changes
       - name: Get jest tests coverage of main from gist
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
+        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/alkwa-msft/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
       - name: Calculate coverage change
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         id: coverage
@@ -787,11 +787,11 @@ jobs:
         include:
           # These are gist to track bundle sizes
           - app: Chat
-            gist: https://gist.github.com/communication-ui-bot/db13fa7067b083b7a91d7a95adf28be1
+            gist: https://gist.github.com/alkwa-msft/f19649d941b2739b13402ee4802aa851
           - app: Calling
-            gist: https://gist.github.com/communication-ui-bot/87d57b63bbbaee12273a9a901b67885c
+            gist: https://gist.github.com/alkwa-msft/8160c0362cb05b7b09f3dbf803007c73
           - app: CallWithChat
-            gist: https://gist.github.com/communication-ui-bot/72a7fca0af8a3c5b37f966bb6d4bcd11
+            gist: https://gist.github.com/alkwa-msft/c43393ae31b5b08215f3f49ed327d912
     steps:
       # checkout base bundle stats
       - name: Get bundle stats of main from gist
@@ -867,11 +867,11 @@ jobs:
         include:
           # These are gist to track bundle sizes
           - app: Chat
-            gist_id: db13fa7067b083b7a91d7a95adf28be1
+            gist_id: f19649d941b2739b13402ee4802aa851
           - app: Calling
-            gist_id: 87d57b63bbbaee12273a9a901b67885c
+            gist_id: 8160c0362cb05b7b09f3dbf803007c73
           - app: CallWithChat
-            gist_id: 72a7fca0af8a3c5b37f966bb6d4bcd11
+            gist_id: c43393ae31b5b08215f3f49ed327d912
     steps:
       - uses: actions/download-artifact@v4
         with:

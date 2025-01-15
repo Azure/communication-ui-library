@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 /* @conditional-compile-remove(rtt) */
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 /* @conditional-compile-remove(rtt) */
@@ -16,10 +17,10 @@ import { useLocale } from '../localization';
  */
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
   /**
-   * Utility property for using this component with communication react handlers
-   * Start RealTimeText based on RealTimeText state
+   * Use this function to show RealTimeText UI in the calling experience.
+   * Note that real time text should not be started for everyone in the call until the first real time text is received.
    */
-  onStartRealTimeText: () => Promise<void>;
+  onStartRealTimeText: () => void;
   /**
    * If RealTimeText is on
    */
@@ -45,6 +46,7 @@ export interface StartRealTimeTextButtonStrings {
    */
   tooltipOnContent: string;
 }
+
 /* @conditional-compile-remove(rtt) */
 /**
  * a button to start RealTimeText
