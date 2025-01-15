@@ -24,6 +24,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
       await pageClick(page, dataUiId(IDS.deviceButton));
     } else {
       await waitForSelector(page, dataUiId(IDS.moreButton));
+      await page.waitForTimeout(2000);
       await pageClick(page, dataUiId(IDS.moreButton));
       await waitForSelector(page, dataUiId('call-composite-more-menu-devices-button'));
       await pageClick(page, dataUiId('call-composite-more-menu-devices-button'));
@@ -41,6 +42,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
       await pageClick(page, dataUiId(IDS.deviceButton));
     } else {
       await waitForSelector(page, dataUiId(IDS.moreButton));
+      await page.waitForTimeout(2000);
       await pageClick(page, dataUiId(IDS.moreButton));
       await waitForSelector(page, dataUiId('call-composite-more-menu-devices-button'));
       await pageClick(page, dataUiId('call-composite-more-menu-devices-button'));
@@ -66,6 +68,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     const initialState = defaultMockCallAdapterState([], 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
+    await page.waitForTimeout(2000);
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
     if (isTestProfileMobile(testInfo)) {
       await pageClick(page, dataUiId(IDS.moreButton));
