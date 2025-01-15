@@ -16,7 +16,10 @@ import { IDS } from '../../common/constants';
 
 test.describe('Rooms DeviceButton tests for different roles', async () => {
   test('All devices are shown for Presenter', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState([], 'Presenter', true);
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    const participants = [paul, vasily];
+    const initialState = defaultMockCallAdapterState(participants, 'Presenter', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
@@ -24,7 +27,6 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
       await pageClick(page, dataUiId(IDS.deviceButton));
     } else {
       await waitForSelector(page, dataUiId(IDS.moreButton));
-      await page.waitForTimeout(2000);
       await pageClick(page, dataUiId(IDS.moreButton));
       await waitForSelector(page, dataUiId('call-composite-more-menu-devices-button'));
       await pageClick(page, dataUiId('call-composite-more-menu-devices-button'));
@@ -34,7 +36,10 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
   });
 
   test('All devices are shown for Attendee', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState([], 'Attendee', true);
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    const participants = [paul, vasily];
+    const initialState = defaultMockCallAdapterState(participants, 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
@@ -42,7 +47,6 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
       await pageClick(page, dataUiId(IDS.deviceButton));
     } else {
       await waitForSelector(page, dataUiId(IDS.moreButton));
-      await page.waitForTimeout(2000);
       await pageClick(page, dataUiId(IDS.moreButton));
       await waitForSelector(page, dataUiId('call-composite-more-menu-devices-button'));
       await pageClick(page, dataUiId('call-composite-more-menu-devices-button'));
