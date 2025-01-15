@@ -211,7 +211,7 @@ const generateLiveMessage = (props: ChatMessageContentProps): string => {
     const liveAuthor = _formatString(props.strings.editedMessageLiveAuthorIntro, {
       author: `${props.message.senderDisplayName}`
     });
-    return `${props.message.mine ? props.strings.editedMessageLocalUserLiveAuthorIntro : liveAuthor} ${messageContent} `;
+    return `${props.message.mine ? props.strings.editedMessageLocalUserLiveAuthorIntro : liveAuthor} ${messageContent}`;
   } else {
     const liveAuthor = _formatString(props.strings.liveAuthorIntro, {
       author: `${props.message.senderDisplayName}`
