@@ -17,6 +17,7 @@ import {
   getRole
 } from '../../selectors/baseSelectors';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
+import { FacepileBase } from '@fluentui/react';
 
 /**
  * @private
@@ -62,7 +63,7 @@ export const Microphone = (props: {
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
       disabled={microphoneButtonProps.disabled || props.disabled || !!(isRoomsCall && role === 'Unknown')}
       onRenderOffIcon={
-        unmuteMicCapability && !unmuteMicCapability.isPresent
+        unmuteMicCapability?.isPresent === false
           ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonMicProhibited'} />
           : undefined
       }
