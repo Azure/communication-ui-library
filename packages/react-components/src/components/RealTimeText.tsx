@@ -40,7 +40,7 @@ export interface RealTimeTextProps {
   /**
    * RealTimeText id
    */
-  id: string;
+  id: number;
   /**
    * Display name of the user
    */
@@ -48,7 +48,7 @@ export interface RealTimeTextProps {
   /**
    * RealTimeText content
    */
-  captionText: string;
+  message: string;
   /**
    * user id of the user
    */
@@ -66,7 +66,7 @@ export interface RealTimeTextProps {
   /**
    * Boolean indicating whether the RealTimeText is from the local user
    */
-  isLocalUser?: boolean;
+  isMe?: boolean;
   /**
    * Strings for RealTimeText
    */
@@ -79,7 +79,7 @@ export interface RealTimeTextProps {
  * A component for displaying a single line of RealTimeText
  */
 export const RealTimeText = (props: RealTimeTextProps): JSX.Element => {
-  const { displayName, userId, captionText, onRenderAvatar, isTyping } = props;
+  const { displayName, userId, message, onRenderAvatar, isTyping } = props;
   const theme = useTheme();
   const localeStrings = useLocale().strings.realTimeText;
   const strings = { ...localeStrings, ...props.strings };
@@ -115,7 +115,7 @@ export const RealTimeText = (props: RealTimeTextProps): JSX.Element => {
           {isTyping && <Text className={isTypingClassName(theme)}>{strings?.isTypingText}</Text>}
         </Stack>
         <Stack.Item className={captionClassName} dir="auto">
-          {captionText}
+          {message}
         </Stack.Item>
       </Stack>
     </Stack>

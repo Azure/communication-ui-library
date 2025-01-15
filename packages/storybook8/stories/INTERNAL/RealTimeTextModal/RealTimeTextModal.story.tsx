@@ -26,7 +26,6 @@ const RealTimeTextModalStory = (): JSX.Element => {
         }}
         onStartRealTimeText={() => {
           alert('Real Time Text started');
-          return Promise.resolve();
         }}
       />{' '}
     </Stack>
