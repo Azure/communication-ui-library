@@ -33,7 +33,10 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
   });
 
   test('All devices are shown for Attendee', async ({ page, serverUrl }) => {
-    const initialState = defaultMockCallAdapterState([], 'Attendee', true);
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    const participants = [paul, vasily];
+    const initialState = defaultMockCallAdapterState(participants, 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
 
@@ -63,7 +66,10 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
   });
 
   test('Screen Share is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
-    const initialState = defaultMockCallAdapterState([], 'Attendee', true);
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    const participants = [paul, vasily];
+    const initialState = defaultMockCallAdapterState(participants, 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
