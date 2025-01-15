@@ -32,7 +32,7 @@ test.describe('Rooms DeviceButton tests for different roles', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-devices-presenter.png');
   });
 
-  test.only('All devices are shown for Attendee', async ({ page, serverUrl }) => {
+  test('All devices are shown for Attendee', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState([], 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
@@ -62,7 +62,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     }
   });
 
-  test.only('Screen Share is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
+  test('Screen Share is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState([], 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
