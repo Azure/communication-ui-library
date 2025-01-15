@@ -72,6 +72,8 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     const initialState = defaultMockCallAdapterState(participants, 'Attendee', true);
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
+    page.waitForTimeout(1000);
+    // await page.pause();
     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
     if (isTestProfileMobile(testInfo)) {
       await pageClick(page, dataUiId(IDS.moreButton));
