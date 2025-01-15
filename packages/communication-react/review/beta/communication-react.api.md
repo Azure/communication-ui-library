@@ -4635,6 +4635,17 @@ export type RealTimeTextInformation = {
 };
 
 // @beta
+export type RealTimeTextInformation = {
+    id: number;
+    displayName: string;
+    userId?: string;
+    message: string;
+    isTyping: boolean;
+    isMe: boolean;
+    finalizedTimeStamp: Date;
+};
+
+// @beta
 export const RealTimeTextModal: (props: RealTimeTextModalProps) => JSX.Element;
 
 // @beta
