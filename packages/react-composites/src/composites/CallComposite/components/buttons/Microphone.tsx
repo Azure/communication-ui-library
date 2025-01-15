@@ -17,7 +17,6 @@ import {
   getRole
 } from '../../selectors/baseSelectors';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
-import { FacepileBase } from '@fluentui/react';
 
 /**
  * @private
