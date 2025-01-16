@@ -27,6 +27,18 @@ export class CapabilitiesSubscriber {
       newValue: {},
       reason: 'RoleChanged'
     });
+    /* @conditional-compile-remove(media-access) */
+    if (
+      this._capabilitiesFeature.capabilities.turnVideoOn?.isPresent === false ||
+      this._capabilitiesFeature.capabilities.unmuteMic?.isPresent === false
+    ) {
+      this.setUnmuteMicAndTurnVideoOnNotification({
+        oldValue: {},
+        newValue: this._capabilitiesFeature.capabilities,
+        reason: 'RoleChanged'
+      });
+    }
+
     this.subscribe();
   }
 
