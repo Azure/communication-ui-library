@@ -355,7 +355,7 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   blurBackground: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   hangUpForEveryOne: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   manageLobby: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  unmuteMic: { isPresent: false, reason: 'RoleRestricted' },
+  unmuteMic: { isPresent: true, reason: 'RoleRestricted' },
   pstnDialOut: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   raiseHand: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   removeParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -363,7 +363,7 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
   shareScreen: { isPresent: false, reason: 'RoleRestricted' },
   spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   startLiveCallingCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  turnVideoOn: { isPresent: false, reason: 'RoleRestricted' },
+  turnVideoOn: { isPresent: true, reason: 'RoleRestricted' },
   muteOthers: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
