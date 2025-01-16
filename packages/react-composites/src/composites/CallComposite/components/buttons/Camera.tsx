@@ -42,7 +42,7 @@ export const Camera = (props: {
       disableTooltip={props.disableTooltip}
       disabled={cameraButtonProps.disabled || props.disabled || !!(isRoomsCall && role === 'Unknown')}
       onRenderOffIcon={
-        turnVideoOnCapability && !turnVideoOnCapability.isPresent
+        turnVideoOnCapability?.isPresent === false
           ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonCameraProhibited'} />
           : undefined
       }
