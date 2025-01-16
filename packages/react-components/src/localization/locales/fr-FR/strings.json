@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Participant sans nom",
     "participantStateRinging": "Appel en cours...",
     "participantStateHold": "En attente",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, plus d’options",
-    "attendeeRole": "Participant"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, autres options",
+    "attendeeRole": "Participant",
+    "micDisabledIconLabel": "Microphone désactivé",
+    "cameraDisabledIconLabel": "Caméra désactivée"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} plus"
@@ -69,16 +71,20 @@
     "richTextBulletedListAppliedAnnouncement": "Liste à puces appliquée",
     "richTextNumberedListAppliedAnnouncement": "Liste numérotée appliquée"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Activer la modalité RTT",
-    "rttModalTitle": "Activation de la RTT ?",
-    "rttModalText": "Le texte en temps réel (RTT) sera activé pour tous les participants à la réunion.",
-    "rttConfirmButtonLabel": "Activer",
-    "rttCancelButtonLabel": "Annulez",
-    "rttCloseModalButtonAriaLabel": "Fermer la fenêtre modale RTT"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Activer la boîte de dialogue modale RTT",
+    "realTimeTextModalTitle": "Activation de la RTT ?",
+    "realTimeTextModalText": "Le texte en temps réel (RTT) sera activé pour tous les participants à la réunion.",
+    "realTimeTextConfirmButtonLabel": "Activer",
+    "realTimeTextCancelButtonLabel": "Annuler",
+    "realTimeTextCloseModalButtonAriaLabel": "Fermer la boîte de dialogue modale RTT"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Démarrage des légendes..."
+    "captionsBannerSpinnerText": "Démarrage des légendes...",
+    "realTimeTextInputBoxDefaultText": "Tapez votre message en temps réel",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (texte en temps réel) est activé pour tous les participants pendant toute la durée de la réunion.",
+    "realTimeTextBannerLinkLabel": "En savoir plus"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -86,7 +92,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Télécharger",
     "dismissButtonAriaLabel": "Fermer",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Superposition des détails de l’image"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message envoyé",
@@ -195,8 +201,8 @@
     "applauseReactionTooltipContent": "Acclamation",
     "surprisedReactionTooltipContent": "Surpris"
   },
-  "rtt": {
-    "isTypingText": "RTT typage"
+  "realTimeText": {
+    "isTypingText": "Saisie RTT"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "Paramètres des sous-titres",
@@ -291,6 +297,10 @@
     "offLabel": "Désactiver les sous-titres",
     "tooltipOnContent": "Désactiver les sous-titres",
     "tooltipOffContent": "Activer les sous-titres"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Activer RTT pour cet appel",
+    "tooltipOnContent": "RTT est activé pour cet appel"
   },
   "messageThread": {
     "yesterday": "Hier",
@@ -616,6 +626,14 @@
       "title": "Votre microphone est désactivé",
       "message": "Vous ne pouvez plus activer le son.",
       "dismissButtonAriaLabel": "Fermer"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode a démarré",
+      "dismissButtonAriaLabel": "Fermez"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode est terminé",
+      "dismissButtonAriaLabel": "Fermez"
     }
   },
   "videoGallery": {
@@ -668,11 +686,13 @@
     "participantStateRinging": "Appel en cours...",
     "participantReconnecting": "Reconnexion...",
     "participantStateHold": "En attente",
-    "moreOptionsButtonAriaLabel": "Plus d'options {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Autres options {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "son désactivé",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "désactivé",
     "moreOptionsParticipantHandRaisedAriaLabel": "Main levée",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Parler"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Parler",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Microphone désactivé",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Caméra désactivée"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Autoriser {appName} à utiliser votre caméra et votre microphone",
@@ -813,10 +833,5 @@
     "incomingCallNotificationRejectButtonLabel": "Refuser",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepter avec une vidéo",
     "incomingCallNotificationDismissButtonAriaLabel": "Ignorer"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (texte en temps réel) est activé pour tous les participants pendant toute la durée de la réunion.",
-    "bannerLinkLabel": "En savoir plus"
   }
 }

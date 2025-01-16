@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Nimetön osallistuja",
     "participantStateRinging": "Soitetaan...",
     "participantStateHold": "Pidossa",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, lisää asetuksia",
-    "attendeeRole": "Osallistuja"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, lisää asetuksia",
+    "attendeeRole": "Osallistuja",
+    "micDisabledIconLabel": "Mikrofoni poistettu käytöstä",
+    "cameraDisabledIconLabel": "Kamera poistettu käytöstä"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} lisää"
@@ -69,16 +71,20 @@
     "richTextBulletedListAppliedAnnouncement": "Luettelomerkeillä varustettu luettelo käytössä",
     "richTextNumberedListAppliedAnnouncement": "Numeroitu luettelo käytössä"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Ota RTT-modaalinen käyttöön",
-    "rttModalTitle": "Otetaanko RTT käyttöön?",
-    "rttModalText": "Reaaliaikainen teksti (RTT) otetaan käyttöön kaikille kokouksen osallistuville.",
-    "rttConfirmButtonLabel": "Ota käyttöön",
-    "rttCancelButtonLabel": "Peruuta",
-    "rttCloseModalButtonAriaLabel": "Sulje RTT-modaalinen"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Ota modaalinen RTT-valintaikkuna käyttöön",
+    "realTimeTextModalTitle": "Otetaanko RTT käyttöön?",
+    "realTimeTextModalText": "Reaaliaikainen teksti (RTT) otetaan käyttöön kaikille kokouksen osallistuville.",
+    "realTimeTextConfirmButtonLabel": "Ota käyttöön",
+    "realTimeTextCancelButtonLabel": "Peruuta",
+    "realTimeTextCloseModalButtonAriaLabel": "Sulje modaalinen RTT-valintaikkuna"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Aloitetaan tekstitystä..."
+    "captionsBannerSpinnerText": "Aloitetaan tekstitystä...",
+    "realTimeTextInputBoxDefaultText": "Kirjoita viesti reaaliaikaisesti",
+    "realTimeTextBannerTitle": "Reaaliaikainen kirjoitus",
+    "realTimeTextBannerContent": "RTT (reaaliaikainen teksti) on käytössä kaikille osallistujille koko kokouksen keston ajan.",
+    "realTimeTextBannerLinkLabel": "Lue lisää"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Ehdotuksia"
@@ -86,7 +92,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Lataa",
     "dismissButtonAriaLabel": "Sulje",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Kuvan tietojen peittokuva"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Viesti on lähetetty",
@@ -195,7 +201,7 @@
     "applauseReactionTooltipContent": "Suosionosoitus",
     "surprisedReactionTooltipContent": "Yllättynyt"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "RTT-kirjoitus"
   },
   "captionsSettingsModal": {
@@ -291,6 +297,10 @@
     "offLabel": "Poista tekstitykset käytöstä",
     "tooltipOnContent": "Poista tekstitykset käytöstä",
     "tooltipOffContent": "Ota tekstitykset käyttöön"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Ota reaaliaikainen kirjoitus käyttöön tässä puhelussa",
+    "tooltipOnContent": "RTT on käytössä tässä puhelussa"
   },
   "messageThread": {
     "yesterday": "eilen",
@@ -616,6 +626,14 @@
       "title": "Mikrofonisi on poissa käytöstä",
       "message": "Et voi enää poistaa mykistystä.",
       "dismissButtonAriaLabel": "Sulje"
+    },
+    "togetherModeStarted": {
+      "title": "Yhdessä-tila on alkanut",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "togetherModeEnded": {
+      "title": "Yhdessä-tila on päättynyt",
+      "dismissButtonAriaLabel": "Sulje"
     }
   },
   "videoGallery": {
@@ -668,11 +686,13 @@
     "participantStateRinging": "Soitetaan...",
     "participantReconnecting": "Yhdistetään uudelleen...",
     "participantStateHold": "Pidossa",
-    "moreOptionsButtonAriaLabel": "Lisää asetuksia {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Lisää {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "vaimennettu",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "vaimennus poistettu",
     "moreOptionsParticipantHandRaisedAriaLabel": "Käsi nostettuna",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Puhuminen"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Puhuminen",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Mikrofoni poistettu käytöstä",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Kamera poistettu käytöstä"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Salli {appName} käyttää kameraa ja mikrofonia",
@@ -813,10 +833,5 @@
     "incomingCallNotificationRejectButtonLabel": "Hylkää",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Vastaa videopuhelulla",
     "incomingCallNotificationDismissButtonAriaLabel": "Hylkää"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "Reaaliaikainen kirjoitus",
-    "bannerContent": "RTT (reaaliaikainen teksti) on käytössä kaikille osallistujille koko kokouksen keston ajan.",
-    "bannerLinkLabel": "Lue lisää"
   }
 }

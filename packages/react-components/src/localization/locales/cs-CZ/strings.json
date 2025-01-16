@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Nepojmenovaný účastník",
     "participantStateRinging": "Volání…",
     "participantStateHold": "Pozastavený hovor",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Další možnosti",
-    "attendeeRole": "Účastník"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, Další možnosti",
+    "attendeeRole": "Účastník",
+    "micDisabledIconLabel": "Mikrofon zakázán",
+    "cameraDisabledIconLabel": "Kamera zakázána"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} další(ch)"
@@ -69,16 +71,20 @@
     "richTextBulletedListAppliedAnnouncement": "Byl použit seznam s odrážkami",
     "richTextNumberedListAppliedAnnouncement": "Použil se číslovaný seznam."
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Zapnout modální okno RTT",
-    "rttModalTitle": "Zapnout RTT?",
-    "rttModalText": "Text v reálném čase (RTT) se zapne pro všechny účastníky schůzky.",
-    "rttConfirmButtonLabel": "Zapnout",
-    "rttCancelButtonLabel": "Zrušit",
-    "rttCloseModalButtonAriaLabel": "Zavřít modální okno RTT"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Zapnout modální okno psaní v reálném čase",
+    "realTimeTextModalTitle": "Zapnout psaní v reálném čase?",
+    "realTimeTextModalText": "Text v reálném čase (RTT) se zapne pro všechny účastníky schůzky.",
+    "realTimeTextConfirmButtonLabel": "Zapnout",
+    "realTimeTextCancelButtonLabel": "Zrušit",
+    "realTimeTextCloseModalButtonAriaLabel": "Zavřít modální okno psaní v reálném čase"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Spouští se titulky..."
+    "captionsBannerSpinnerText": "Spouští se titulky...",
+    "realTimeTextInputBoxDefaultText": "Napište zprávu v reálném čase",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (psaní v reálném čase) je povolené pro všechny účastníky po celou dobu trvání schůzky.",
+    "realTimeTextBannerLinkLabel": "Další informace"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
@@ -86,7 +92,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Stáhnout",
     "dismissButtonAriaLabel": "Zavřít",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Překrytí podrobností obrázku"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Zpráva byla odeslána",
@@ -195,8 +201,8 @@
     "applauseReactionTooltipContent": "Aplaus",
     "surprisedReactionTooltipContent": "Překvapení"
   },
-  "rtt": {
-    "isTypingText": "Psaní textu v reálném čase"
+  "realTimeText": {
+    "isTypingText": "Probíhá psaní v reálném čase"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "Nastavení titulků",
@@ -291,6 +297,10 @@
     "offLabel": "Vypnout titulky",
     "tooltipOnContent": "Vypnout titulky",
     "tooltipOffContent": "Zapnout titulky"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Zapnout RTT pro tento hovor",
+    "tooltipOnContent": "Pro tento hovor je zapnutá funkce RTT"
   },
   "messageThread": {
     "yesterday": "Včera",
@@ -616,6 +626,14 @@
       "title": "Váš mikrofon je vypnutý.",
       "message": "Už nemůžete zrušit ztlumení.",
       "dismissButtonAriaLabel": "Zavřít"
+    },
+    "togetherModeStarted": {
+      "title": "Režim Togethermode byl spuštěn",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "togetherModeEnded": {
+      "title": "Režim Togethermode skončil",
+      "dismissButtonAriaLabel": "Zavřít"
     }
   },
   "videoGallery": {
@@ -668,11 +686,13 @@
     "participantStateRinging": "Volání…",
     "participantReconnecting": "Obnovuje se připojení...",
     "participantStateHold": "Pozastavený hovor",
-    "moreOptionsButtonAriaLabel": "Další možnosti {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Další možnosti {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "ztlumeno",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "ztlumení zrušeno",
     "moreOptionsParticipantHandRaisedAriaLabel": "Zvednutá ruka",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Mluví"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Mluví",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Mikrofon zakázán",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Kamera zakázána"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Povolit aplikaci {appName} používat kameru a mikrofon",
@@ -813,10 +833,5 @@
     "incomingCallNotificationRejectButtonLabel": "Odmítnout",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Přijmout s videem",
     "incomingCallNotificationDismissButtonAriaLabel": "Zavřít"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (psaní v reálném čase) je povolené pro všechny účastníky po celou dobu trvání schůzky.",
-    "bannerLinkLabel": "Další informace"
   }
 }

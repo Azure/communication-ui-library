@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "名前のない参加者",
     "participantStateRinging": "呼び出し中...",
     "participantStateHold": "保留中",
-    "participantItemAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{sharingState}、{connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{sharingState}、{connectionState}、その他のオプション",
-    "attendeeRole": "出席者"
+    "participantItemAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{micDisabledState}、{cameraDisabledState}、{sharingState}、{connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{micDisabledState}、{cameraDisabledState}、{sharingState}、{connectionState}、その他のオプション",
+    "attendeeRole": "出席者",
+    "micDisabledIconLabel": "マイクが無効になっています",
+    "cameraDisabledIconLabel": "カメラが無効になっています"
   },
   "ParticipantList": {
     "overflowParticipantCount": "その他 {overflowCount} 個"
@@ -69,16 +71,20 @@
     "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
     "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "RTT モーダルを有効にする",
-    "rttModalTitle": "RTT を有効にしますか?",
-    "rttModalText": "会議の全員に対してリアルタイム テキスト (RTT) が有効になります。",
-    "rttConfirmButtonLabel": "有効にする",
-    "rttCancelButtonLabel": "キャンセル",
-    "rttCloseModalButtonAriaLabel": "RTT モーダルを閉じる"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "RTT モーダルを有効にする",
+    "realTimeTextModalTitle": "RTT を有効にしますか?",
+    "realTimeTextModalText": "会議の全員に対してリアルタイム テキスト (RTT) が有効になります。",
+    "realTimeTextConfirmButtonLabel": "有効にする",
+    "realTimeTextCancelButtonLabel": "キャンセル",
+    "realTimeTextCloseModalButtonAriaLabel": "RTT モーダルを閉じる"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "キャプションを開始しています..."
+    "captionsBannerSpinnerText": "キャプションを開始しています...",
+    "realTimeTextInputBoxDefaultText": "リアルタイムにメッセージを入力",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (リアルタイム テキスト) は、会議の全期間のすべての参加者に対して有効になっています。",
+    "realTimeTextBannerLinkLabel": "詳細情報"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
@@ -86,7 +92,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "ダウンロード",
     "dismissButtonAriaLabel": "閉じる",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "画像の詳細のオーバーレイ"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "メッセージを送信しました",
@@ -195,7 +201,7 @@
     "applauseReactionTooltipContent": "喝采",
     "surprisedReactionTooltipContent": "驚いた"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "RTT 入力"
   },
   "captionsSettingsModal": {
@@ -291,6 +297,10 @@
     "offLabel": "キャプションをオフにする",
     "tooltipOnContent": "キャプションをオフにする",
     "tooltipOffContent": "ライブ キャプションをオンにする"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "この呼び出しの RTT を有効にする",
+    "tooltipOnContent": "RTT はこの呼び出しに対して有効になっています"
   },
   "messageThread": {
     "yesterday": "昨日",
@@ -616,6 +626,14 @@
       "title": "マイクが無効になっています",
       "message": "ミュートを解除できなくなりました。",
       "dismissButtonAriaLabel": "閉じる"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode が開始しました",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode が終了しました",
+      "dismissButtonAriaLabel": "閉じる"
     }
   },
   "videoGallery": {
@@ -668,11 +686,13 @@
     "participantStateRinging": "呼び出し中...",
     "participantReconnecting": "再接続中...",
     "participantStateHold": "保留中",
-    "moreOptionsButtonAriaLabel": "その他のオプション {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "その他のオプションの {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "ミュート中",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "ミュート解除",
     "moreOptionsParticipantHandRaisedAriaLabel": "挙手しました",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "話し中"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "話し中",
+    "moreOptionsParticipantMicDisabledAriaLabel": "マイクが無効になっています",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "カメラが無効になっています"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName}にカメラとマイクの使用を許可する",
@@ -813,10 +833,5 @@
     "incomingCallNotificationRejectButtonLabel": "拒否",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "ビデオで受ける",
     "incomingCallNotificationDismissButtonAriaLabel": "閉じる"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (リアルタイム テキスト) は、会議の全期間のすべての参加者に対して有効になっています。",
-    "bannerLinkLabel": "詳しく見る"
   }
 }
