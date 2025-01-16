@@ -73,22 +73,22 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     }
   });
 
-  // test('Only few CallControls are enabled for Consumer with remote participants', async ({
-  //   page,
-  //   serverUrl
-  // }, testInfo) => {
-  //   const paul = defaultMockRemoteParticipant('Paul Bridges');
-  //   const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
-  //   const participants = [paul, vasily];
-  //   const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
-  //   await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
-  //   await waitForSelector(page, dataUiId(IDS.videoGallery));
-  //   expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-remote-participants.png');
-  //   if (isTestProfileMobile(testInfo)) {
-  //     await pageClick(page, dataUiId(IDS.moreButton));
-  //     expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-click-more-button.png');
-  //   }
-  // });
+  test('Only few CallControls are enabled for Consumer with remote participants', async ({
+    page,
+    serverUrl
+  }, testInfo) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    const participants = [paul, vasily];
+    const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-remote-participants.png');
+    if (isTestProfileMobile(testInfo)) {
+      await pageClick(page, dataUiId(IDS.moreButton));
+      expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-consumer-click-more-button.png');
+    }
+  });
 });
 
 test.describe('Rooms Participant ParticipantItem tests for different roles', async () => {
@@ -127,21 +127,21 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
     await expectNoMuteAllMenuItem(page);
   });
 
-  // test('No Mute button for remote participant items for Consumer', async ({ page, serverUrl }) => {
-  //   const paul = defaultMockRemoteParticipant('Paul Bridges');
-  //   const participants = [paul];
-  //   const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
-  //   await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
-  //   await expectNoMuteAllMenuItem(page);
-  // });
+  test('No Mute button for remote participant items for Consumer', async ({ page, serverUrl }) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
+    await expectNoMuteAllMenuItem(page);
+  });
 
-  // test('No Mute All for Consumer', async ({ page, serverUrl }) => {
-  //   const paul = defaultMockRemoteParticipant('Paul Bridges');
-  //   const participants = [paul];
-  //   const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
-  //   await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
-  //   await expectNoMuteParticipantMenuItem(page);
-  // });
+  test('No Mute All for Consumer', async ({ page, serverUrl }) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
+    await expectNoMuteParticipantMenuItem(page);
+  });
 
   test('Mute button present for remote participant items for Presenter', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -192,13 +192,13 @@ test.describe('Rooms Participant ParticipantItem tests for different roles', asy
     );
   });
 
-  // test('No ellipses button for remote participant items for Consumer', async ({ page, serverUrl }) => {
-  //   const paul = defaultMockRemoteParticipant('Paul Bridges');
-  //   const participants = [paul];
-  //   const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
-  //   await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
-  //   await expectNoRemoveParticipantMenuItem(page);
-  // });
+  test('No ellipses button for remote participant items for Consumer', async ({ page, serverUrl }) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants, 'Consumer', true);
+    await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
+    await expectNoRemoveParticipantMenuItem(page);
+  });
 });
 
 const openRemoveParticipantMenu = async (page: Page): Promise<void> => {
