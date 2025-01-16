@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Hard mute",
+  "comment": "Fix acs room audio video enabled notifications. when acs user just joined room, should not show the audio video enabled notifications",
+  "packageName": "@azure/communication-react",
+  "email": "fuyan@microsoft.com",
+  "dependentChangeType": "patch"
+}

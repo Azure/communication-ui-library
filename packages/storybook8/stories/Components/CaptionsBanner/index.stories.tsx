@@ -12,12 +12,16 @@ const meta: Meta = {
   component: CaptionsBanner,
   argTypes: {
     captions: hiddenControl,
+    realTimeTexts: hiddenControl,
     isCaptionsOn: hiddenControl,
     startCaptionsInProgress: hiddenControl,
     strings: hiddenControl,
     onRenderAvatar: hiddenControl,
     formFactor: hiddenControl,
-    captionsOptions: hiddenControl
+    captionsOptions: hiddenControl,
+    isRealTimeTextOn: hiddenControl,
+    onSendRealTimeText: hiddenControl,
+    latestLocalRealTimeText: hiddenControl
   }
 };
 

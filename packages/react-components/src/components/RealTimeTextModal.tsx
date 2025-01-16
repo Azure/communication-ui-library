@@ -50,8 +50,11 @@ export interface RealTimeTextModalProps {
   showModal?: boolean;
   /** The function to dismiss the modal */
   onDismissModal?: () => void;
-  /** The function to start RealTimeText */
-  onStartRealTimeText?: () => Promise<void>;
+  /**
+   * Use this function to show RealTimeText UI in the calling experience.
+   * Note that real time text should not be started for everyone in the call until the first real time text is received.
+   */
+  onStartRealTimeText?: () => void;
 }
 /* @conditional-compile-remove(rtt) */
 /**
