@@ -13,7 +13,7 @@ permissions: read-all
 jobs:
   update_composite_snapshot:
     name: Update all API files
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     strategy:
       matrix:
         include:

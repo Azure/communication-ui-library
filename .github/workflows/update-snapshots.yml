@@ -13,7 +13,7 @@ concurrency:
 jobs:
   precondition:
     name: Determine if this workflow is applicable
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       pull-requests: write
     outputs:
@@ -45,7 +45,7 @@ jobs:
     name: Set CI flavors
     needs: precondition
     if: needs.precondition.outputs.met
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
@@ -64,7 +64,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update component examples snapshots
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -160,7 +160,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update embed html bundle snapshots
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -256,7 +256,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites CallComposite browser test snapshots
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -352,7 +352,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites ChatComposite browser test snapshots
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -448,7 +448,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites CallWithChatComposite browser test snapshots
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -544,7 +544,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-components browser test snapshots
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -637,7 +637,7 @@ jobs:
     needs: [component_examples, html_bundle, call_composite, chat_composite, callwithchat_composite]
     if: needs.precondition.outputs.met
     name: Push all updated snapshots to branch
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     steps:
       - uses: actions/checkout@v4

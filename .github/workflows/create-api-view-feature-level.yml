@@ -15,7 +15,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it

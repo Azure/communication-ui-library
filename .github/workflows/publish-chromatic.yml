@@ -19,7 +19,7 @@ concurrency:
 jobs:
   chromatic_deployment:
     name: Publish Chromatic Storybook 8
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       packages: write
       pull-requests: write

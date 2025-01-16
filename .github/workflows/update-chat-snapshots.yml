@@ -12,7 +12,7 @@ concurrency:
 jobs:
   precondition:
     name: Determine if this workflow is applicable
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       pull-requests: write
     outputs:
@@ -40,7 +40,7 @@ jobs:
     name: Set CI flavors
     needs: precondition
     if: needs.precondition.outputs.met
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
@@ -59,7 +59,7 @@ jobs:
     needs: [precondition, get_matrix]
     if: needs.precondition.outputs.met
     name: Update packages/react-composites ChatComposite browser test snapshots
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
@@ -150,7 +150,7 @@ jobs:
     needs: [chat_composite]
     if: needs.precondition.outputs.met
     name: Push all updated snapshots to branch
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     steps:
       - uses: actions/checkout@v4

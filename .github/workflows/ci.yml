@@ -23,7 +23,7 @@ jobs:
   # get matrix for ci-jobs
   get_matrix:
     name: Load CI Matrix Details
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
@@ -43,7 +43,7 @@ jobs:
   build_packages:
     needs: get_matrix
     name: 'Build Packages (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -123,7 +123,7 @@ jobs:
   jest-test-coverage:
     needs: [get_matrix, build_packages]
     name: 'Jest Test Coverage (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       pull-requests: write
     strategy:
@@ -220,7 +220,7 @@ jobs:
     name: Check if in progress feature can be removed separately (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
@@ -269,7 +269,7 @@ jobs:
   call_composite_automation_test:
     needs: get_matrix
     name: 'Call Composite automation test (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       pull-requests: write
     strategy:
@@ -336,7 +336,7 @@ jobs:
   chat_composite_automation_test:
     needs: get_matrix
     name: 'Chat Composite automation test (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       pull-requests: write
     strategy:
@@ -403,7 +403,7 @@ jobs:
   call_with_chat_composite_automation_test:
     needs: get_matrix
     name: 'Call With Chat Composite automation test (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       pull-requests: write
     strategy:
@@ -469,7 +469,7 @@ jobs:
   components_automation_test:
     needs: get_matrix
     name: 'Components automation test (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       pull-requests: write
     strategy:
@@ -527,7 +527,7 @@ jobs:
     name: Build Storybook v8 (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -556,7 +556,7 @@ jobs:
   build_calling_sample:
     needs: get_matrix
     name: 'Build Calling Sample (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -588,7 +588,7 @@ jobs:
   build_chat_sample:
     needs: get_matrix
     name: 'Build Chat Sample (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -620,7 +620,7 @@ jobs:
   build_call_with_chat_sample:
     needs: get_matrix
     name: 'Build CallWithChat Sample (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -652,7 +652,7 @@ jobs:
   build_calling_stateful_samples:
     needs: get_matrix
     name: 'Build Calling Stateful Samples (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -678,7 +678,7 @@ jobs:
   build_static_html_composites_sample:
     needs: get_matrix
     name: 'Build And Test Static HTML Composites Sample (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       pull-requests: write
     strategy:
@@ -728,7 +728,7 @@ jobs:
   build_component_examples:
     needs: get_matrix
     name: 'Build And Test Component+Binding Examples (${{ matrix.flavor }})'
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       pull-requests: write
     strategy:
@@ -776,7 +776,7 @@ jobs:
             })
 
   compare_base_bundle_stats:
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       pull-requests: write
     if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
@@ -858,7 +858,7 @@ jobs:
           fi
           echo "Bundle size diff for $app is below the threshold of $significantBundleSizeThreshold. All is good!"
   update_base_bundle_report:
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     name: Upload bundle size report to gist - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     if: github.ref == 'refs/heads/main'
@@ -886,7 +886,7 @@ jobs:
           file_path: report.json
 
   check_failure:
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions:
       issues: write
     needs:

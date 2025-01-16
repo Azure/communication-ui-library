@@ -11,7 +11,7 @@ concurrency:
 jobs:
   stress_test_ui_tests:
     name: Stress test UI tests
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: read-all
     steps:
       - uses: actions/checkout@v4

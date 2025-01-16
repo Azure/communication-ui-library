@@ -12,7 +12,7 @@ concurrency:
 jobs:
   build-and-deploy-storybook:
     name: Build and Deploy Storybook
-    runs-on: 'ubuntu-lastest'
+    runs-on: 'ubuntu-latest'
     permissions: # permissions needed for the deploy-storybook script
       pages: write
       id-token: write
