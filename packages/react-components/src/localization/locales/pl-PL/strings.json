@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Uczestnik bez nazwy",
     "participantStateRinging": "Trwa łączenie…",
     "participantStateHold": "Zawieszony",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Więcej opcji",
-    "attendeeRole": "Uczestnik"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, więcej opcji",
+    "attendeeRole": "Uczestnik",
+    "micDisabledIconLabel": "Mikrofon jest wyłączony",
+    "cameraDisabledIconLabel": "Kamera wyłączona"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} więcej"
@@ -69,16 +71,20 @@
     "richTextBulletedListAppliedAnnouncement": "Zastosowano listę punktowaną",
     "richTextNumberedListAppliedAnnouncement": "Zastosowano listę numerowaną"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Włącz modalne okno dialogowe pisania w czasie rzeczywistym",
-    "rttModalTitle": "Włączyć pisanie w czasie rzeczywistym?",
-    "rttModalText": "Tekst w czasie rzeczywistym zostanie włączony dla wszystkich uczestników spotkania.",
-    "rttConfirmButtonLabel": "Włącz",
-    "rttCancelButtonLabel": "Anuluj",
-    "rttCloseModalButtonAriaLabel": "Zamknij modalne okno dialogowe pisania w czasie rzeczywistym"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Włącz modalne okno dialogowe pisania w czasie rzeczywistym",
+    "realTimeTextModalTitle": "Włączyć pisanie w czasie rzeczywistym?",
+    "realTimeTextModalText": "Tekst w czasie rzeczywistym zostanie włączony dla wszystkich uczestników spotkania.",
+    "realTimeTextConfirmButtonLabel": "Włącz",
+    "realTimeTextCancelButtonLabel": "Anuluj",
+    "realTimeTextCloseModalButtonAriaLabel": "Zamknij modalne okno dialogowe pisania w czasie rzeczywistym"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Trwa uruchamianie napisów..."
+    "captionsBannerSpinnerText": "Trwa uruchamianie napisów...",
+    "realTimeTextInputBoxDefaultText": "Pisz wiadomości w czasie rzeczywistym",
+    "realTimeTextBannerTitle": "Pisanie w czasie rzeczywistym",
+    "realTimeTextBannerContent": "Funkcja RTT (tekst w czasie rzeczywistym) jest włączona dla wszystkich uczestników przez cały czas trwania spotkania.",
+    "realTimeTextBannerLinkLabel": "Dowiedz się więcej"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestie"
@@ -86,7 +92,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Pobierz",
     "dismissButtonAriaLabel": "Zamknij",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Nakładka szczegółów obrazu"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Wiadomość została wysłana",
@@ -195,7 +201,7 @@
     "applauseReactionTooltipContent": "Aplauz",
     "surprisedReactionTooltipContent": "Niespodzianka"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "Pisanie w czasie rzeczywistym"
   },
   "captionsSettingsModal": {
@@ -291,6 +297,10 @@
     "offLabel": "Wyłącz podpisy",
     "tooltipOnContent": "Wyłącz podpisy",
     "tooltipOffContent": "Włącz podpisy"
+  },
+  "startRealTimeTextButton": {
+    "onLabel": "Włącz funkcję Pisanie w czasie rzeczywistym dla tego połączenia",
+    "tooltipOnContent": "Funkcja pisania w czasie rzeczywistym jest włączona dla tego połączenia"
   },
   "messageThread": {
     "yesterday": "Wczoraj",
@@ -616,6 +626,14 @@
       "title": "Twój mikrofon został wyłączony",
       "message": "Nie możesz już wyłączać wyciszenia.",
       "dismissButtonAriaLabel": "Zamknij"
+    },
+    "togetherModeStarted": {
+      "title": "Tryb Togethermode został uruchomiony",
+      "dismissButtonAriaLabel": "Zamknij"
+    },
+    "togetherModeEnded": {
+      "title": "Tryb Togethermode został zakończony",
+      "dismissButtonAriaLabel": "Zamknij"
     }
   },
   "videoGallery": {
@@ -668,11 +686,13 @@
     "participantStateRinging": "Trwa łączenie…",
     "participantReconnecting": "Trwa ponowne łączenie...",
     "participantStateHold": "Zawieszony",
-    "moreOptionsButtonAriaLabel": "Więcej opcji {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Więcej opcji {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "wyciszony",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "wyciszenie wyłączone",
     "moreOptionsParticipantHandRaisedAriaLabel": "Podniesiona ręka",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Mówi"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Mówi",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Mikrofon jest wyłączony",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Kamera wyłączona"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Zezwalaj {appName} na używanie kamery i mikrofonu",
@@ -813,10 +833,5 @@
     "incomingCallNotificationRejectButtonLabel": "Odrzuć",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Odbierz jako połączenie wideo",
     "incomingCallNotificationDismissButtonAriaLabel": "Odrzuć"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "Pisanie w czasie rzeczywistym",
-    "bannerContent": "Funkcja RTT (tekst w czasie rzeczywistym) jest włączona dla wszystkich uczestników przez cały czas trwania spotkania.",
-    "bannerLinkLabel": "Dowiedz się więcej"
   }
 }
