@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Hard mute",
+  "comment": "Fix acs room capability issue.",
+  "packageName": "@azure/communication-react",
+  "email": "fuyan@microsoft.com",
+  "dependentChangeType": "patch"
+}
