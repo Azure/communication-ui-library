@@ -983,8 +983,14 @@ export interface CallCompositeStrings {
     realTimeTextBannerContent?: string;
     realTimeTextBannerLinkLabel?: string;
     realTimeTextBannerTitle?: string;
+    realTimeTextCancelButtonLabel: string;
+    realTimeTextCloseModalButtonAriaLabel: string;
+    realTimeTextConfirmButtonLabel: string;
     realTimeTextInputBoxDefaultText?: string;
     realTimeTextLabel?: string;
+    realTimeTextModalAriaLabel: string;
+    realTimeTextModalText: string;
+    realTimeTextModalTitle: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
     removeBackgroundTooltip?: string;
@@ -1878,9 +1884,14 @@ export interface CaptionsBannerProps {
     formFactor?: 'default' | 'compact';
     isCaptionsOn?: boolean;
     isRealTimeTextOn?: boolean;
-    latestLocalRealTimeText?: CaptionsInformation;
+    latestLocalRealTimeText?: RealTimeTextInformation;
     onRenderAvatar?: OnRenderAvatarCallback;
-    onSendRealTimeText?: (text: string, finalized?: boolean) => Promise<void>;
+    onSendRealTimeText?: (text: string, finalized: boolean) => Promise<void>;
+    realTimeTexts?: {
+        completedMessages?: RealTimeTextInformation[];
+        currentInProgress?: RealTimeTextInformation[];
+        myInProgress?: RealTimeTextInformation;
+    };
     startCaptionsInProgress?: boolean;
     strings?: CaptionsBannerStrings;
 }
@@ -1938,9 +1949,7 @@ export type CaptionsInformation = {
     displayName: string;
     captionText: string;
     userId?: string;
-    isRealTimeText?: boolean;
-    isPartial?: boolean;
-    isLocalUser?: boolean;
+    createdTimeStamp?: Date;
 };
 
 // @public
@@ -4571,12 +4580,23 @@ export type ReadReceiptsBySenderId = {
 export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
 
 // @beta
+export type RealTimeTextInformation = {
+    id: number;
+    displayName: string;
+    userId?: string;
+    message: string;
+    isTyping: boolean;
+    isMe: boolean;
+    finalizedTimeStamp: Date;
+};
+
+// @beta
 export const RealTimeTextModal: (props: RealTimeTextModalProps) => JSX.Element;
 
 // @beta
 export interface RealTimeTextModalProps {
     onDismissModal?: () => void;
-    onStartRealTimeText?: () => Promise<void>;
+    onStartRealTimeText?: () => void;
     showModal?: boolean;
     strings?: RealTimeTextModalStrings;
 }
@@ -4593,11 +4613,11 @@ export interface RealTimeTextModalStrings {
 
 // @beta
 export interface RealTimeTextProps {
-    captionText: string;
     displayName: string;
-    id: string;
-    isLocalUser?: boolean;
+    id: number;
+    isMe?: boolean;
     isTyping?: boolean;
+    message: string;
     onRenderAvatar?: OnRenderAvatarCallback;
     strings?: RealTimeTextStrings;
     userId?: string;
@@ -5030,7 +5050,7 @@ export const StartRealTimeTextButton: (props: StartRealTimeTextButtonProps) => J
 // @beta
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
     isRealTimeTextOn: boolean;
-    onStartRealTimeText: () => Promise<void>;
+    onStartRealTimeText: () => void;
     strings?: StartRealTimeTextButtonStrings;
 }
 
