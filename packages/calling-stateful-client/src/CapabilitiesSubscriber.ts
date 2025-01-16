@@ -21,23 +21,6 @@ export class CapabilitiesSubscriber {
     this._callIdRef = callIdRef;
     this._context = context;
     this._capabilitiesFeature = capabilities;
-    /* @conditional-compile-remove(media-access) */
-    this._context.setCapabilities(this._callIdRef.callId, this._capabilitiesFeature.capabilities, {
-      oldValue: {},
-      newValue: {},
-      reason: 'RoleChanged'
-    });
-    /* @conditional-compile-remove(media-access) */
-    if (
-      this._capabilitiesFeature.capabilities.turnVideoOn?.isPresent === false ||
-      this._capabilitiesFeature.capabilities.unmuteMic?.isPresent === false
-    ) {
-      this.setUnmuteMicAndTurnVideoOnNotification({
-        oldValue: {},
-        newValue: this._capabilitiesFeature.capabilities,
-        reason: 'RoleChanged'
-      });
-    }
 
     this.subscribe();
   }
