@@ -14,8 +14,6 @@ export class CapabilitiesSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _capabilitiesFeature: CapabilitiesFeature;
-  /* @conditional-compile-remove(media-access) */
-  private _capabilitiesInitialized: boolean = false;
 
   constructor(callIdRef: CallIdRef, context: CallContext, capabilities: CapabilitiesFeature) {
     this._callIdRef = callIdRef;
@@ -40,19 +38,12 @@ export class CapabilitiesSubscriber {
     }
     /* @conditional-compile-remove(media-access) */
     this.setUnmuteMicAndTurnVideoOnNotification(data);
-
-    /* @conditional-compile-remove(media-access) */
-    this._capabilitiesInitialized = true;
   };
 
   /* @conditional-compile-remove(media-access) */
   private setUnmuteMicAndTurnVideoOnNotification = (data: CapabilitiesChangeInfo): void => {
     if (data.oldValue.turnVideoOn?.isPresent !== data.newValue.turnVideoOn?.isPresent) {
-      if (
-        data.oldValue.turnVideoOn?.isPresent === false &&
-        data.newValue.turnVideoOn?.isPresent &&
-        this._capabilitiesInitialized
-      ) {
+      if (data.oldValue.turnVideoOn?.isPresent === false && data.newValue.turnVideoOn?.isPresent) {
         const capabilityTurnVideoOnAbsent = this._context.getState().latestNotifications.capabilityTurnVideoOnAbsent;
         if (capabilityTurnVideoOnAbsent) {
           this._context.deleteLatestNotification(this._callIdRef.callId, 'capabilityTurnVideoOnAbsent');
@@ -81,11 +72,7 @@ export class CapabilitiesSubscriber {
       }
     }
     if (data.oldValue.unmuteMic?.isPresent !== data.newValue.unmuteMic?.isPresent) {
-      if (
-        data.oldValue.unmuteMic?.isPresent === false &&
-        data.newValue.unmuteMic?.isPresent &&
-        this._capabilitiesInitialized
-      ) {
+      if (data.oldValue.unmuteMic?.isPresent === false && data.newValue.unmuteMic?.isPresent) {
         const capabilityUnmuteMicAbsent = this._context.getState().latestNotifications.capabilityUnmuteMicAbsent;
         if (capabilityUnmuteMicAbsent) {
           this._context.deleteLatestNotification(this._callIdRef.callId, 'capabilityUnmuteMicAbsent');
