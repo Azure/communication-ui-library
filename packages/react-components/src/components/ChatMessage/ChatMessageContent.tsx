@@ -205,11 +205,19 @@ const extractContentForAllyMessage = (props: ChatMessageContentProps): string =>
 };
 
 const generateLiveMessage = (props: ChatMessageContentProps): string => {
-  const liveAuthor = _formatString(props.strings.liveAuthorIntro, { author: `${props.message.senderDisplayName}` });
+  const messageContent = extractContentForAllyMessage(props);
 
-  return `${props.message.editedOn ? props.strings.editedTag : ''} ${
-    props.message.mine ? '' : liveAuthor
-  } ${extractContentForAllyMessage(props)} `;
+  if (props.message.editedOn) {
+    const liveAuthor = _formatString(props.strings.editedMessageLiveAuthorIntro, {
+      author: `${props.message.senderDisplayName}`
+    });
+    return `${props.message.mine ? props.strings.editedMessageLocalUserLiveAuthorIntro : liveAuthor} ${messageContent}`;
+  } else {
+    const liveAuthor = _formatString(props.strings.liveAuthorIntro, {
+      author: `${props.message.senderDisplayName}`
+    });
+    return `${props.message.mine ? '' : liveAuthor} ${messageContent} `;
+  }
 };
 
 const messageContentAriaText = (props: ChatMessageContentProps): string | undefined => {

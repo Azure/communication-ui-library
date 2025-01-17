@@ -196,6 +196,10 @@ export interface MessageThreadStrings {
   failToSendTag?: string;
   /** String for LiveMessage introduction for the Chat Message */
   liveAuthorIntro: string;
+  /** String for LiveMessage introduction for the edited Chat Message by remote user */
+  editedMessageLiveAuthorIntro: string;
+  /** String for LiveMessage introduction for the edited Chat Message sent by local user */
+  editedMessageLocalUserLiveAuthorIntro: string;
   /** String for aria text of remote user's message content */
   messageContentAriaText: string;
   /** String for aria text of local user's message content */
