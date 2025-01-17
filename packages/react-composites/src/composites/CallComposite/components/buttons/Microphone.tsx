@@ -38,6 +38,8 @@ export const Microphone = (props: {
   const role = useSelector(getRole);
   const unmuteMicCapability = useSelector(getCapabilites)?.unmuteMic;
 
+  console.error('Microphone.tsx: ', role, unmuteMicCapability);
+
   /**
    * When call is in connecting state, microphone button should be disabled.
    * This is due to to headless limitation where a call can not be muted/unmuted in lobby.
