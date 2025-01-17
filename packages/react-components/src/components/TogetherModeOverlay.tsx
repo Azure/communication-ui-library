@@ -85,10 +85,9 @@ export const TogetherModeOverlay = memo(
     }>({});
     const [hoveredParticipantID, setHoveredParticipantID] = useState('');
     const [tabbedParticipantID, setTabbedParticipantID] = useState('');
-    // const [tabFocused, setTabFocused] = useState(false);
 
     // Reset the Tab key tracking on any other key press
-    const handleKeyUp = (e, participantId: string) => {
+    const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>, participantId: string) => {
       if (e.key === 'Tab') {
         setTabbedParticipantID(participantId);
       }
