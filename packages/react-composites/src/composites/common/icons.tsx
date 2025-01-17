@@ -255,6 +255,7 @@ export type CallCompositeIcons = {
   JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
   PeoplePaneMoreButton?: JSX.Element;
   StopAllSpotlightMenuButton?: JSX.Element;
+  /* @conditional-compile-remove(together-mode) */
   TogetherModeLayout?: JSX.Element;
 };
 
