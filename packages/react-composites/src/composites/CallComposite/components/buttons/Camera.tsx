@@ -31,6 +31,7 @@ export const Camera = (props: {
   const role = useSelector(getRole);
 
   const turnVideoOnCapability = useSelector(getCapabilites)?.turnVideoOn;
+  console.log('hi there from camera.tsx', turnVideoOnCapability, _HighContrastAwareIcon);
 
   return (
     <CameraButton
@@ -41,11 +42,7 @@ export const Camera = (props: {
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
       disableTooltip={props.disableTooltip}
       disabled={cameraButtonProps.disabled || props.disabled || !!(isRoomsCall && role === 'Unknown')}
-      onRenderOffIcon={
-        turnVideoOnCapability && !turnVideoOnCapability.isPresent
-          ? () => <_HighContrastAwareIcon disabled={true} iconName={'ControlButtonCameraProhibited'} />
-          : undefined
-      }
+      onRenderOffIcon={undefined}
       onClickVideoEffects={props.onClickVideoEffects}
       componentRef={props.componentRef}
     />
