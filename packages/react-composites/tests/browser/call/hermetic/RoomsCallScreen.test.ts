@@ -64,9 +64,12 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
 
   test('Screen Share is disabled for Attendee', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState([], 'Attendee', true);
+    if (initialState.call) {
+      initialState.call.state = 'Connected';
+    }
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee1.png');
     if (isTestProfileMobile(testInfo)) {
       await pageClick(page, dataUiId(IDS.moreButton));
       expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee-click-more-button.png');
