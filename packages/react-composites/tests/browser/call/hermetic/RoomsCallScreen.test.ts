@@ -69,7 +69,7 @@ test.describe('Rooms CallScreen tests for different roles', async () => {
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, { ...initialState }));
     await waitForSelector(page, dataUiId(IDS.videoGallery));
-    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee1.png');
+    expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee.png');
     if (isTestProfileMobile(testInfo)) {
       await pageClick(page, dataUiId(IDS.moreButton));
       expect(await stableScreenshot(page)).toMatchSnapshot('rooms-call-screen-attendee-click-more-button.png');
