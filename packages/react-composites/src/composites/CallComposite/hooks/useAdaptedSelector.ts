@@ -134,7 +134,8 @@ const adaptCompositeState = (compositeState: CallAdapterState): CallClientState 
     // just displaying them in some UI surface) will continue to work for these operations. Handling of
     // specific operations (e.g., acting on errors related to permission issues) will ignore these operations.
     compositeState.latestErrors as CallErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ compositeState.latestNotifications as CallNotifications,
+    undefined ||
+      /* @conditional-compile-remove(breakout-rooms) */ (compositeState.latestNotifications as CallNotifications),
     compositeState.displayName,
     compositeState.alternateCallerId,
     compositeState.environmentInfo
