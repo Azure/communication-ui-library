@@ -107,7 +107,7 @@ const memoizeState = memoizeOne(
 );
 
 const isCallEqual = (newArgs: any[], lastArgs: any[]): boolean => {
-  return _safeJSONStringify(newArgs) === _safeJSONStringify(lastArgs);
+  return JSON.stringify(newArgs) === JSON.stringify(lastArgs);
 };
 
 const memoizeCalls = memoizeOne(
