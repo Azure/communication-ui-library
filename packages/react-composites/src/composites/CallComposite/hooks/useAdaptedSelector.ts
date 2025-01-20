@@ -13,6 +13,7 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 import { CallNotifications } from '@internal/calling-stateful-client';
+import { _safeJSONStringify } from '@internal/acs-ui-common';
 /**
  * @private
  */
@@ -105,7 +106,14 @@ const memoizeState = memoizeOne(
   })
 );
 
-const memoizeCalls = memoizeOne((call?: CallState): { [key: string]: CallState } => (call ? { [call.id]: call } : {}));
+const isCallEqual = (newArgs: any[], lastArgs: any[]): boolean => {
+  return _safeJSONStringify(newArgs) === _safeJSONStringify(lastArgs);
+};
+
+const memoizeCalls = memoizeOne(
+  (call?: CallState): { [key: string]: CallState } => (call ? { [call.id]: call } : {}),
+  isCallEqual
+);
 
 const adaptCompositeState = (compositeState: CallAdapterState): CallClientState => {
   return memoizeState(
