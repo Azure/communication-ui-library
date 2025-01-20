@@ -39,13 +39,8 @@ test.describe('Media access mic/camera forbid/permit tests', async () => {
   }, testInfo) => {
     const Paul = defaultMockRemoteParticipant('Paul Blurt');
     const participants = [Paul];
-    const initialState = defaultMockCallAdapterState(participants, 'Attendee');
-    if (initialState.call?.capabilitiesFeature?.capabilities) {
-      initialState.call.capabilitiesFeature.capabilities.unmuteMic.isPresent = false;
-      initialState.call.capabilitiesFeature.capabilities.unmuteMic.reason = 'MeetingRestricted';
-      initialState.call.capabilitiesFeature.capabilities.turnVideoOn.isPresent = false;
-      initialState.call.capabilitiesFeature.capabilities.turnVideoOn.reason = 'MeetingRestricted';
-      initialState.call.state = 'Connected';
+    const initialState = defaultMockCallAdapterState(participants, 'Attendee', false, undefined, undefined, true);
+    if (initialState.call) {
       initialState.call.isMuted = true;
     }
 

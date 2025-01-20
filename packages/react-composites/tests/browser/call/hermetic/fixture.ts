@@ -57,7 +57,8 @@ export function defaultMockCallAdapterState(
   role?: ParticipantRole,
   isRoomsCall?: boolean,
   callEndReasonSubCode?: number,
-  isReactionCapability?: boolean
+  isReactionCapability?: boolean,
+  isAttendeeHardmuted?: boolean
 ): MockCallAdapterState {
   const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
   participants?.forEach((p) => {
@@ -117,7 +118,7 @@ export function defaultMockCallAdapterState(
         maxRemoteVideoStreams: 4
       },
 
-      capabilitiesFeature: getCapabilitiesFromRole(role, isReactionCapability)
+      capabilitiesFeature: getCapabilitiesFromRole(role, isReactionCapability, isAttendeeHardmuted)
     },
     endedCall: callEndReasonSubCode
       ? {
@@ -319,11 +320,19 @@ export const stubLocalCameraName = async (page: Page): Promise<void> => {
 
 const getCapabilitiesFromRole = (
   role?: ParticipantRole,
-  isReactionCapability?: boolean
+  isReactionCapability?: boolean,
+  isAttendeeHardmuted?: boolean
 ): CapabilitiesFeatureState | undefined => {
   if (isReactionCapability) {
     return {
       capabilities: presenterCapabilitiesInTeamsCall,
+      latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
+    };
+  }
+
+  if (isAttendeeHardmuted) {
+    return {
+      capabilities: attendeeCapabilitiesInTeamsCallHardmuted,
       latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
     };
   }
@@ -553,6 +562,58 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
   /* @conditional-compile-remove(media-access) */
   forbidOthersVideo: {
     isPresent: true,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  }
+};
+
+const attendeeCapabilitiesInTeamsCallHardmuted: ParticipantCapabilities = {
+  unmuteMic: { isPresent: false, reason: 'MeetingRestricted' },
+  turnVideoOn: { isPresent: false, reason: 'MeetingRestricted' },
+  addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  addTeamsUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  blurBackground: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  hangUpForEveryOne: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  manageLobby: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  pstnDialOut: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  raiseHand: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  removeParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  removeParticipantsSpotlight: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  shareScreen: { isPresent: false, reason: 'RoleRestricted' },
+  spotlightParticipant: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveCallingCaptions: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  startLiveMeetingCaptions: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  muteOthers: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  useReactions: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  viewAttendeeNames: {
+    isPresent: true,
+    reason: 'Capable'
+  },
+  setCaptionLanguage: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(breakout-rooms) */
+  joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersAudio: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  /* @conditional-compile-remove(media-access) */
+  forbidOthersVideo: {
+    isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
 };
