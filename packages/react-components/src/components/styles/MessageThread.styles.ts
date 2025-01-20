@@ -31,6 +31,11 @@ const NEW_MESSAGE_BUTTON_ZINDEX = 2;
 /**
  * @private
  */
+export const chatMyMessageActionMenuClassName = 'ChatMyMessage__actions';
+
+/**
+ * @private
+ */
 export const messageThreadContainerStyle = mergeStyles({
   height: '100%',
   width: '100%',
@@ -152,15 +157,11 @@ export const useChatMessageRenderStyles = makeStyles({
  */
 export const useChatMyMessageStyles = makeStyles({
   root: {
-    // The first column's width should be set to  1fr
-    // because otherwise rich text editor's width will grow indefinitely
-    gridTemplateColumns: '1fr auto',
+    gridTemplateColumns: 'auto',
     gridTemplateAreas: `
-        ". actions"
-        "body body"
+        "body"
       `,
     gridGap: '0',
-    columnGap: '0',
     paddingTop: '0',
     marginLeft: '0'
   },
@@ -173,10 +174,10 @@ export const useChatMyMessageStyles = makeStyles({
     // This makes message bubble show border in high contrast mode making each message distinguishable
     ...shorthands.border('1px', 'solid', 'transparent'),
 
-    '&:hover ~ .fui-ChatMyMessage__actions': {
+    '&:hover .ChatMyMessage__actions': {
       visibility: 'visible'
     },
-    '&:focus ~ .fui-ChatMyMessage__actions': {
+    '&:focus .ChatMyMessage__actions': {
       visibility: 'visible'
     },
     '& msft-mention': {
@@ -208,7 +209,7 @@ export const useChatMyMessageStyles = makeStyles({
     backgroundColor: tokens.colorNeutralBackground1,
     marginRight: '1px',
     position: 'absolute',
-    top: '-2px',
+    top: '-18px',
     right: '0',
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
     zIndex: 1,
@@ -219,9 +220,6 @@ export const useChatMyMessageStyles = makeStyles({
       cursor: 'pointer',
       visibility: 'visible'
     }
-  },
-  menuAttached: {
-    top: '-18px'
   },
   menuHidden: {
     visibility: 'hidden'

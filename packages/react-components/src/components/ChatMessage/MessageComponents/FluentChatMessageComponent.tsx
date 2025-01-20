@@ -13,7 +13,10 @@ import { IPersona, PersonaSize, mergeStyles, Persona } from '@fluentui/react';
 import { mergeClasses } from '@fluentui/react-components';
 import { createStyleFromV8Style } from '../../styles/v8StyleShim';
 import { ChatMessage as FluentChatMessage } from '@fluentui-contrib/react-chat';
-import { getFluentUIAttachedValue } from '../../utils/ChatMessageComponentUtils';
+import {
+  getFluentUIAttachedValue,
+  removeFluentUIKeyboardNavigationStyles
+} from '../../utils/ChatMessageComponentUtils';
 import { ChatMessageComponentWrapperProps } from '../ChatMessageComponentWrapper';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types/ChatMessage';
@@ -140,41 +143,38 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     );
   }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar]);
 
-  const messageBodyProps = useMemo(() => {
-    return {
-      // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
-      className: mergeClasses(
-        chatMessageRenderStyles.bodyCommon,
-        !shouldShowAvatar
-          ? avatar
-            ? chatMessageRenderStyles.bodyWithoutAvatar
-            : chatMessageRenderStyles.bodyHiddenAvatar
-          : chatMessageRenderStyles.bodyWithAvatar,
-        shouldOverlapAvatarAndMessage ? chatMessageRenderStyles.avatarOverlap : chatMessageRenderStyles.avatarNoOverlap,
-        mergeStyles(styles?.chatItemMessageContainer)
-      ),
-      style:
-        styles?.chatItemMessageContainer !== undefined ? createStyleFromV8Style(styles?.chatItemMessageContainer) : {}
-    };
-  }, [
-    chatMessageRenderStyles.bodyCommon,
-    chatMessageRenderStyles.bodyWithoutAvatar,
-    chatMessageRenderStyles.bodyHiddenAvatar,
-    chatMessageRenderStyles.bodyWithAvatar,
-    chatMessageRenderStyles.avatarOverlap,
-    chatMessageRenderStyles.avatarNoOverlap,
-    shouldShowAvatar,
-    avatar,
-    shouldOverlapAvatarAndMessage,
-    styles?.chatItemMessageContainer
-  ]);
+  const setMessageContainerRef = useCallback((node: HTMLDivElement | null) => {
+    removeFluentUIKeyboardNavigationStyles(node);
+  }, []);
 
   // Fluent UI message components are used here as for default message renderer,
   // timestamp and author name should be shown but they aren't shown for custom renderer.
   // More investigations are needed to check if this can be simplified with states.
   // Avatar should be shown for both custom and default renderers.
   return (
-    <FluentChatMessage attached={attached} root={messageRootProps} body={messageBodyProps} avatar={avatar}>
+    <FluentChatMessage
+      attached={attached}
+      root={messageRootProps}
+      body={{
+        ref: setMessageContainerRef,
+        // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
+        className: mergeClasses(
+          chatMessageRenderStyles.bodyCommon,
+          !shouldShowAvatar
+            ? avatar
+              ? chatMessageRenderStyles.bodyWithoutAvatar
+              : chatMessageRenderStyles.bodyHiddenAvatar
+            : chatMessageRenderStyles.bodyWithAvatar,
+          shouldOverlapAvatarAndMessage
+            ? chatMessageRenderStyles.avatarOverlap
+            : chatMessageRenderStyles.avatarNoOverlap,
+          mergeStyles(styles?.chatItemMessageContainer)
+        ),
+        style:
+          styles?.chatItemMessageContainer !== undefined ? createStyleFromV8Style(styles?.chatItemMessageContainer) : {}
+      }}
+      avatar={avatar}
+    >
       {messageRenderer({ ...props })}
     </FluentChatMessage>
   );
