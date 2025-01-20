@@ -15,6 +15,7 @@ import type {
 import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
 import type { ParticipantCapabilities } from '@azure/communication-calling';
 import { CallState, CapabilitiesFeatureState } from '@internal/calling-stateful-client';
+import { v4 as uuidv4 } from 'uuid';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -72,7 +73,7 @@ export function defaultMockCallAdapterState(
     isLocalPreviewMicrophoneEnabled: true,
     page: callEndReasonSubCode ? 'leftCall' : 'call',
     call: {
-      id: 'call1',
+      id: `callId-${uuidv4()}`,
 
       kind: 'Call' as CallKind,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
