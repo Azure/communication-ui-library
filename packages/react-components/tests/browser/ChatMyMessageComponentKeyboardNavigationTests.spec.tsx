@@ -80,7 +80,7 @@ const showMoreMenuButton = async (component: Locator, page: Page): Promise<void>
 
 const openMoreMenu = async (component: Locator, page: Page): Promise<void> => {
   // navigate to message menu
-  await page.keyboard.press('Tab');
+  await page.keyboard.press('Enter');
   await expect(component.getByTestId('chat-composite-message-action-icon')).toBeFocused();
 
   // open message menu
