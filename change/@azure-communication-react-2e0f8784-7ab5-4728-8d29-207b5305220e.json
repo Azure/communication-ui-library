@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Hard mute",
+  "comment": "fix media access hermetic test",
+  "packageName": "@azure/communication-react",
+  "email": "fuyan@microsoft.com",
+  "dependentChangeType": "patch"
+}
