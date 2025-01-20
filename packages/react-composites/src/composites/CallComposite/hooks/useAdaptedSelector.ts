@@ -106,14 +106,7 @@ const memoizeState = memoizeOne(
   })
 );
 
-const isCallEqual = (newArgs: any[], lastArgs: any[]): boolean => {
-  return JSON.stringify(newArgs) === JSON.stringify(lastArgs);
-};
-
-const memoizeCalls = memoizeOne(
-  (call?: CallState): { [key: string]: CallState } => (call ? { [call.id]: call } : {}),
-  isCallEqual
-);
+const memoizeCalls = memoizeOne((call?: CallState): { [key: string]: CallState } => (call ? { [call.id]: call } : {}));
 
 const adaptCompositeState = (compositeState: CallAdapterState): CallClientState => {
   return memoizeState(
