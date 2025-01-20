@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { MessageProps, _ChatMessageProps } from '../../MessageThread';
 import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
