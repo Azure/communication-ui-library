@@ -207,7 +207,6 @@ export const useChatMyMessageStyles = makeStyles({
   menu: {
     boxShadow: tokens.shadow4,
     backgroundColor: tokens.colorNeutralBackground1,
-    marginRight: '1px',
     position: 'absolute',
     top: '-18px',
     right: '0',

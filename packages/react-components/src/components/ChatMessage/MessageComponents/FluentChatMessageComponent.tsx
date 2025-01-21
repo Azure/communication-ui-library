@@ -147,34 +147,43 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     removeFluentUIKeyboardNavigationStyles(node);
   }, []);
 
+  const messageBodyProps = useMemo(() => {
+    return {
+      ref: setMessageContainerRef,
+      // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
+      className: mergeClasses(
+        chatMessageRenderStyles.bodyCommon,
+        !shouldShowAvatar
+          ? avatar
+            ? chatMessageRenderStyles.bodyWithoutAvatar
+            : chatMessageRenderStyles.bodyHiddenAvatar
+          : chatMessageRenderStyles.bodyWithAvatar,
+        shouldOverlapAvatarAndMessage ? chatMessageRenderStyles.avatarOverlap : chatMessageRenderStyles.avatarNoOverlap,
+        mergeStyles(styles?.chatItemMessageContainer)
+      ),
+      style:
+        styles?.chatItemMessageContainer !== undefined ? createStyleFromV8Style(styles?.chatItemMessageContainer) : {}
+    };
+  }, [
+    setMessageContainerRef,
+    chatMessageRenderStyles.bodyCommon,
+    chatMessageRenderStyles.bodyWithoutAvatar,
+    chatMessageRenderStyles.bodyHiddenAvatar,
+    chatMessageRenderStyles.bodyWithAvatar,
+    chatMessageRenderStyles.avatarOverlap,
+    chatMessageRenderStyles.avatarNoOverlap,
+    shouldShowAvatar,
+    avatar,
+    shouldOverlapAvatarAndMessage,
+    styles?.chatItemMessageContainer
+  ]);
+
   // Fluent UI message components are used here as for default message renderer,
   // timestamp and author name should be shown but they aren't shown for custom renderer.
   // More investigations are needed to check if this can be simplified with states.
   // Avatar should be shown for both custom and default renderers.
   return (
-    <FluentChatMessage
-      attached={attached}
-      root={messageRootProps}
-      body={{
-        ref: setMessageContainerRef,
-        // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
-        className: mergeClasses(
-          chatMessageRenderStyles.bodyCommon,
-          !shouldShowAvatar
-            ? avatar
-              ? chatMessageRenderStyles.bodyWithoutAvatar
-              : chatMessageRenderStyles.bodyHiddenAvatar
-            : chatMessageRenderStyles.bodyWithAvatar,
-          shouldOverlapAvatarAndMessage
-            ? chatMessageRenderStyles.avatarOverlap
-            : chatMessageRenderStyles.avatarNoOverlap,
-          mergeStyles(styles?.chatItemMessageContainer)
-        ),
-        style:
-          styles?.chatItemMessageContainer !== undefined ? createStyleFromV8Style(styles?.chatItemMessageContainer) : {}
-      }}
-      avatar={avatar}
-    >
+    <FluentChatMessage attached={attached} root={messageRootProps} body={messageBodyProps} avatar={avatar}>
       {messageRenderer({ ...props })}
     </FluentChatMessage>
   );
