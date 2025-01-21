@@ -155,7 +155,11 @@ const notificationOptions: NotificationType[] = [
   'recordingAndTranscriptionStarted',
   'recordingAndTranscriptionStopped',
   'recordingStoppedStillTranscribing',
-  'transcriptionStoppedStillRecording'
+  'transcriptionStoppedStillRecording',
+  'capabilityTurnVideoOnAbsent',
+  'capabilityTurnVideoOnPresent',
+  'capabilityUnmuteMicAbsent',
+  'capabilityUnmuteMicPresent'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];
