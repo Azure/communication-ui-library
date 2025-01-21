@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "improvement",
+  "workstream": "Updating test server dependencies",
+  "comment": "updating express to 4.21.2 so we can fix a dependnecy issue with path-to-regexp",
+  "packageName": "@azure/communication-react",
+  "email": "79329532+alkwa-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
