@@ -208,7 +208,7 @@ export const useChatMyMessageStyles = makeStyles({
     boxShadow: tokens.shadow4,
     backgroundColor: tokens.colorNeutralBackground1,
     position: 'absolute',
-    top: '-18px',
+    top: '-19px',
     right: '0',
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
     zIndex: 1,
