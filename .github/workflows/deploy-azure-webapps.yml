@@ -20,7 +20,7 @@ permissions: read-all
 jobs:
   build-and-deploy-samples:
     name: Build and Deploy samples
-    runs-on: 'ubuntu-latest'
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       # Needed for Azure login
       id-token: write
@@ -95,7 +95,7 @@ jobs:
           package: ./samples/CallWithChat/dist
 
   check_failure:
-    runs-on: 'ubuntu-latest'
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       issues: write
     needs: [build-and-deploy-samples]

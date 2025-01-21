@@ -18,7 +18,7 @@ jobs:
   create_release:
     if: ${{ startsWith(github.event.inputs.branch, 'prerelease') }}
     name: Create release branch
-    runs-on: 'ubuntu-latest'
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     steps:
       # Check-out repo
