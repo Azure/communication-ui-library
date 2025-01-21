@@ -4,46 +4,16 @@
 import React from 'react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
-import {
-  ChatMyMessageComponent,
-  ChatMyMessageComponentProps
-} from '../../src/components/ChatMessage/MyMessageComponents/ChatMyMessageComponent';
-import { COMPONENT_LOCALE_EN_US, MessageContentType } from '../../src';
 import { Locator, Page } from 'playwright-core';
+import { TestChatMyMessageComponent } from './TestingComponents/TestChatMyMessageComponent';
 
 betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
-  const localeStrings = COMPONENT_LOCALE_EN_US.strings;
-
-  const props = (content: string, contentType: MessageContentType): ChatMyMessageComponentProps => {
-    return {
-      shouldOverlapAvatarAndMessage: false,
-      onActionButtonClick: () => {},
-      strings: localeStrings.messageThread,
-      message: {
-        messageType: 'chat',
-        senderId: 'user2',
-        senderDisplayName: 'Test user 2',
-        messageId: Math.random().toString(),
-        content: content,
-        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
-        mine: true,
-        attached: false,
-        contentType: contentType,
-        attachments: [
-          {
-            url: '',
-            name: 'image.png',
-            id: '1'
-          }
-        ]
-      },
-      userId: '1'
-    };
-  };
 
   betaTest('Edit box should not allow to save empty text when attachments are deleted', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props('', 'text')} isRichTextEditorEnabled={true} />);
+    const component = await mount(
+      <TestChatMyMessageComponent content={''} contentType={'text'} isRichTextEditorEnabled={true} />
+    );
 
     await startMessageEditing(component, page);
     await removeAttachmentAndSubmit(component, true);
@@ -62,7 +32,7 @@ betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', ()
     'Edit box should not allow to save empty html text when attachments are deleted',
     async ({ mount, page }) => {
       const component = await mount(
-        <ChatMyMessageComponent {...props('<div><br></div>', 'html')} isRichTextEditorEnabled={true} />
+        <TestChatMyMessageComponent content={'<div><br></div>'} contentType={'html'} isRichTextEditorEnabled={true} />
       );
 
       await startMessageEditing(component, page);
@@ -83,7 +53,7 @@ betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', ()
     'Edit box should allow to save the message when content exists but attachments are deleted',
     async ({ mount, page }) => {
       const component = await mount(
-        <ChatMyMessageComponent {...props('test', 'text')} isRichTextEditorEnabled={true} />
+        <TestChatMyMessageComponent content={'test'} contentType={'text'} isRichTextEditorEnabled={true} />
       );
 
       await startMessageEditing(component, page);
@@ -102,37 +72,10 @@ betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', ()
 betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
   betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
-  const localeStrings = COMPONENT_LOCALE_EN_US.strings;
-
-  const props = (content: string, contentType: MessageContentType): ChatMyMessageComponentProps => {
-    return {
-      shouldOverlapAvatarAndMessage: false,
-      onActionButtonClick: () => {},
-      strings: localeStrings.messageThread,
-      message: {
-        messageType: 'chat',
-        senderId: 'user2',
-        senderDisplayName: 'Test user 2',
-        messageId: Math.random().toString(),
-        content: content,
-        createdOn: new Date('2019-04-13T00:00:00.000+08:10'),
-        mine: true,
-        attached: false,
-        contentType: contentType,
-        attachments: [
-          {
-            url: '',
-            name: 'image.png',
-            id: '1'
-          }
-        ]
-      },
-      userId: '1'
-    };
-  };
-
   betaTest('Edit box should not allow to save empty text when attachments are deleted', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props('', 'text')} isRichTextEditorEnabled={false} />);
+    const component = await mount(
+      <TestChatMyMessageComponent content={''} contentType={'text'} isRichTextEditorEnabled={false} />
+    );
 
     await startMessageEditing(component, page);
     await removeAttachmentAndSubmit(component, false);
@@ -146,8 +89,9 @@ betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
   });
 
   betaTest('Edit box should allow to save empty html text when attachments are deleted', async ({ mount, page }) => {
+    await page.evaluate(() => document.fonts.ready);
     const component = await mount(
-      <ChatMyMessageComponent {...props('<div><br></div>', 'html')} isRichTextEditorEnabled={false} />
+      <TestChatMyMessageComponent content={'<div><br></div>'} contentType={'html'} isRichTextEditorEnabled={false} />
     );
 
     await startMessageEditing(component, page);
@@ -165,7 +109,7 @@ betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
     'Edit box should allow to save the message when content exists but attachments are deleted',
     async ({ mount, page }) => {
       const component = await await mount(
-        <ChatMyMessageComponent {...props('test', 'text')} isRichTextEditorEnabled={false} />
+        <TestChatMyMessageComponent content={'test'} contentType={'text'} isRichTextEditorEnabled={false} />
       );
       await startMessageEditing(component, page);
       await removeAttachmentAndSubmit(component, false);

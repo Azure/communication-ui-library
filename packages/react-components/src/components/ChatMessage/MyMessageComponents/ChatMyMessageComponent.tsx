@@ -108,18 +108,20 @@ export type ChatMyMessageComponentProps = {
   onInsertInlineImage?: (imageAttributes: Record<string, string>, messageId: string) => void;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   inlineImagesWithProgress?: AttachmentMetadataInProgress[];
-  // Optional callback called when editing is complete (submitted or cancelled).
-  onEditComplete?: () => void;
 };
 
 /**
  * @private
  */
 export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.Element => {
-  const { onDeleteMessage, onSendMessage, message, onEditComplete, onCancelEditMessage, onUpdateMessage } = props;
+  const { onDeleteMessage, onSendMessage, message, onCancelEditMessage, onUpdateMessage } = props;
   const [isEditing, setIsEditing] = useState(false);
+  const [focusMessageAfterEditing, setFocusMessageAfterEditing] = useState(false);
 
-  const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
+  const onEditClick = useCallback(() => {
+    setIsEditing(true);
+    setFocusMessageAfterEditing(false);
+  }, []);
 
   const clientMessageId = 'clientMessageId' in message ? message.clientMessageId : undefined;
   const content = 'content' in message ? message.content : undefined;
@@ -178,18 +180,20 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         { attachments: attachments }
       );
       setIsEditing(false);
-      onEditComplete?.();
+
+      setFocusMessageAfterEditing(true);
     },
-    [message, onEditComplete, onUpdateMessage]
+    [message, onUpdateMessage]
   );
 
   const onCancelHandler = useCallback(
     (messageId: string) => {
       onCancelEditMessage?.(messageId);
       setIsEditing(false);
-      onEditComplete?.();
+
+      setFocusMessageAfterEditing(true);
     },
-    [onEditComplete, onCancelEditMessage]
+    [onCancelEditMessage]
   );
 
   if (isEditing && message.messageType === 'chat') {
@@ -227,6 +231,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         inlineImageOptions={props.inlineImageOptions}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}
+        shouldFocusFluentMessageBody={focusMessageAfterEditing}
       />
     );
   }
