@@ -96,6 +96,8 @@ export class CallContext {
   private _timeOutId: { [key: string]: ReturnType<typeof setTimeout> } = {};
   /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
+  /* @conditional-compile-remove(breakout-rooms) */
+  private _originCallIdsOfJoinedBreakoutRooms = new Set<string>();
 
   constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._logger = createClientLogger('communication-react:calling-context');
@@ -777,6 +779,21 @@ export class CallContext {
         call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomDisplayName };
       }
     });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public addOriginCallIdOfJoinedBreakoutRoom(callId: string): void {
+    this._originCallIdsOfJoinedBreakoutRooms.add(callId);
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public deleteOriginCallIdOfJoinedBreakoutRoom(callId: string): void {
+    this._originCallIdsOfJoinedBreakoutRooms.delete(callId);
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public getOriginCallIdsOfJoinedBreakoutRooms(): Set<string> {
+    return this._originCallIdsOfJoinedBreakoutRooms;
   }
 
   public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {

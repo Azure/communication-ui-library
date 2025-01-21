@@ -455,6 +455,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       // return to main meeting if in breakout room
       const callState = this.call?.id ? this.callClient.getState().callsEnded[this.call.id] : undefined;
       const assignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
+      console.log(`DEBUGJ onCallEnded this.originCall.id: ${this.originCall?.id}, this.call.id: ${this.call?.id}`);
       if (this.originCall && this.originCall.id !== this.call?.id && callState?.breakoutRooms?.breakoutRoomSettings) {
         assignedBreakoutRoom?.returnToMainMeeting().then((call: Call | TeamsCall) => {
           this.originCall = call;
@@ -1221,7 +1222,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
     const callState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
-    console.log('DEBUG returnFromBreakoutRoom callState?.breakoutRooms: ', callState?.breakoutRooms);
+    console.log('DEBUGJ returnFromBreakoutRoom callState?.breakoutRooms: ', callState?.breakoutRooms);
     const assignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
 
     if (!assignedBreakoutRoom) {
