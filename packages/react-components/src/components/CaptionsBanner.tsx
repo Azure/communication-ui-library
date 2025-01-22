@@ -81,13 +81,14 @@ export type RealTimeTextInformation = {
    */
   isTyping: boolean;
   /**
-   * If message originated from the local participant
-   */
-  isMe: boolean;
-  /**
    * timestamp when the real time text was finalized
    */
   finalizedTimeStamp: Date;
+  /**
+   * If message originated from the local participant
+   * default value is false
+   */
+  isMe?: boolean;
 };
 /**
  * @public
@@ -177,7 +178,7 @@ export interface CaptionsBannerProps {
   /**
    * Optional callback to send real time text.
    */
-  onSendRealTimeText?: (text: string, finalized: boolean) => Promise<void>;
+  onSendRealTimeText?: (text: string, isFinalized: boolean) => Promise<void>;
   /* @conditional-compile-remove(rtt) */
   /**
    * Latest local real time text

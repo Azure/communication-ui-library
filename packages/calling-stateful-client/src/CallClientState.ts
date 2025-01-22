@@ -129,8 +129,9 @@ export interface RealTimeTextInfo {
   updatedTimestamp?: Date;
   /**
    * If message originated from the local participant
+   * default is false
    */
-  isMe: boolean;
+  isMe?: boolean;
 }
 
 /**

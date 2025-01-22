@@ -190,7 +190,7 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('stopCaptions not implemented');
   }
   /* @conditional-compile-remove(rtt) */
-  sendRealTimeText(text: string, finalized: boolean): Promise<void> {
+  sendRealTimeText(text: string, isFinalized: boolean): Promise<void> {
     throw Error('sendRealTimeText not implemented');
   }
 

@@ -477,7 +477,7 @@ export interface CallAdapterCallOperations {
     resumeCall(): Promise<void>;
     returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
-    sendRealTimeText: (text: string, finalized: boolean) => Promise<void>;
+    sendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     // @beta
@@ -1318,7 +1318,7 @@ export interface CallWithChatAdapterManagement {
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
-    sendRealTimeText: (text: string, finalized: boolean) => Promise<void>;
+    sendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
@@ -1898,7 +1898,7 @@ export interface CaptionsBannerProps {
     isRealTimeTextOn?: boolean;
     latestLocalRealTimeText?: RealTimeTextInformation;
     onRenderAvatar?: OnRenderAvatarCallback;
-    onSendRealTimeText?: (text: string, finalized: boolean) => Promise<void>;
+    onSendRealTimeText?: (text: string, isFinalized: boolean) => Promise<void>;
     realTimeTexts?: {
         completedMessages?: RealTimeTextInformation[];
         currentInProgress?: RealTimeTextInformation[];
@@ -2427,7 +2427,7 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     // (undocumented)
-    onSendRealTimeText: (text: string, finalized: boolean) => Promise<void>;
+    onSendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
     // (undocumented)
     onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
@@ -4615,7 +4615,7 @@ export interface RealTimeTextCallFeatureState {
 // @beta (undocumented)
 export interface RealTimeTextInfo {
     id: number;
-    isMe: boolean;
+    isMe?: boolean;
     message: string;
     receivedTimestamp?: Date;
     resultType: RealTimeTextResultType;
@@ -4630,19 +4630,8 @@ export type RealTimeTextInformation = {
     userId?: string;
     message: string;
     isTyping: boolean;
-    isMe: boolean;
     finalizedTimeStamp: Date;
-};
-
-// @beta
-export type RealTimeTextInformation = {
-    id: number;
-    displayName: string;
-    userId?: string;
-    message: string;
-    isTyping: boolean;
-    isMe: boolean;
-    finalizedTimeStamp: Date;
+    isMe?: boolean;
 };
 
 // @beta
