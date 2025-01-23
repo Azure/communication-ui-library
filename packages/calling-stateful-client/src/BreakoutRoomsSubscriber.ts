@@ -64,11 +64,6 @@ export class BreakoutRoomsSubscriber {
   private onAssignedBreakoutRoomUpdated = (breakoutRoom?: BreakoutRoom): void => {
     const callState = this._context.getState().calls[this._callIdRef.callId];
     const currentAssignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
-    console.log(
-      'DEBUGR this._context.getOriginCallIdsOfJoinedBreakoutRooms(): ',
-      this._context.getOriginCallIdsOfJoinedBreakoutRooms()
-    );
-    console.log('DEBUGR this._callIdRef.callId: ', this._callIdRef.callId);
 
     // This call won't exist in the calls array in state if this call is a breakout room that was re-assigned.
     // If so, do nothing.
@@ -99,14 +94,14 @@ export class BreakoutRoomsSubscriber {
     } else if (
       breakoutRoom.state === 'open' &&
       !callState?.breakoutRooms?.breakoutRoomSettings &&
-      !this._context.getOriginCallIdsOfJoinedBreakoutRooms().has(this._callIdRef.callId)
+      this._context.getOpenBreakoutRoom() === undefined
     ) {
       const target: NotificationTarget =
         breakoutRoom.autoMoveParticipantToBreakoutRoom === false
           ? 'assignedBreakoutRoomOpenedPromptJoin'
           : 'assignedBreakoutRoomOpened';
       this._context.setLatestNotification(this._callIdRef.callId, { target, timestamp: new Date(Date.now()) });
-    } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.state === 'closed') {
+    } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.state === 'open') {
       // This scenario covers the case where the breakout room is opened but then closed before the user joins.
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpened');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpenedPromptJoin');
@@ -124,21 +119,15 @@ export class BreakoutRoomsSubscriber {
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomChanged');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomJoined');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomClosingSoon');
-      // Show notification that the assigned breakout room was closed if the user is in that breakout room.
-      if (this._context.getOriginCallIdsOfJoinedBreakoutRooms()) {
+      const openBreakoutRoomId = this._context.getOpenBreakoutRoom();
+      if (openBreakoutRoomId && this._context.getState().calls[openBreakoutRoomId]) {
+        // Show notification that the assigned breakout room was closed if the user is in that breakout room.
         this._context.setLatestNotification(this._callIdRef.callId, {
           target: 'assignedBreakoutRoomClosed',
           timestamp: new Date(Date.now())
         });
       }
-      if (callState.breakoutRooms?.breakoutRoomOriginCallId) {
-        // TODO: NEED TO MAKE SURE WE CALL THIS IN THE RIGHT SITUATIONS WITH THE RIGHT CALL ID
-        console.log('DEBUGGG BRO');
-        this._context.deleteOriginCallIdOfJoinedBreakoutRoom(callState.breakoutRooms.breakoutRoomOriginCallId);
-      } else {
-        console.log('DEBUGGG BRO2');
-        this._context.deleteOriginCallIdOfJoinedBreakoutRoom(this._callIdRef.callId);
-      }
+      this._context.deleteOpenBreakoutRoom();
     }
 
     this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
@@ -146,8 +135,6 @@ export class BreakoutRoomsSubscriber {
 
   private onBreakoutRoomsJoined = (call: Call | TeamsCall): void => {
     this._context.setBreakoutRoomOriginCallId(this._callIdRef.callId, call.id);
-    console.log('DEBUGR onBreakoutRoomsJoined this._callIdRef.callId: ', this._callIdRef.callId);
-    console.log('DEBUGR onBreakoutRoomsJoined call.id: ', call.id);
     this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpened');
     this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpenedPromptJoin');
     this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomChanged');
@@ -158,7 +145,7 @@ export class BreakoutRoomsSubscriber {
       timestamp: new Date(Date.now())
     });
 
-    this._context.addOriginCallIdOfJoinedBreakoutRoom(this._callIdRef.callId);
+    this._context.setOpenBreakoutRoom(call.id);
 
     // If assigned breakout room has a display name, set the display name for its call state.
     const assignedBreakoutRoomDisplayName =

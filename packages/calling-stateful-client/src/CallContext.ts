@@ -97,7 +97,7 @@ export class CallContext {
   /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
   /* @conditional-compile-remove(breakout-rooms) */
-  private _originCallIdsOfJoinedBreakoutRooms = new Set<string>();
+  private _openBreakoutRoom: string | undefined;
 
   constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._logger = createClientLogger('communication-react:calling-context');
@@ -261,6 +261,12 @@ export class CallContext {
           call.breakoutRooms?.breakoutRoomOriginCallId === newCallId;
         }
       });
+
+      /* @conditional-compile-remove(breakout-rooms) */
+      // Update the open breakout room call id if it matches the old call id
+      if (this._openBreakoutRoom === oldCallId) {
+        this._openBreakoutRoom = newCallId;
+      }
     });
   }
 
@@ -752,7 +758,6 @@ export class CallContext {
 
   /* @conditional-compile-remove(breakout-rooms) */
   public setBreakoutRoomOriginCallId(callId: string, breakoutRoomCallId: string): void {
-    console.log('DEBUGS setBreakoutRoomOriginCallId breakoutRoomCallId: ', breakoutRoomCallId);
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(breakoutRoomCallId)];
       if (call) {
@@ -782,18 +787,18 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public addOriginCallIdOfJoinedBreakoutRoom(callId: string): void {
-    this._originCallIdsOfJoinedBreakoutRooms.add(callId);
+  public setOpenBreakoutRoom(callId: string): void {
+    this._openBreakoutRoom = callId;
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public deleteOriginCallIdOfJoinedBreakoutRoom(callId: string): void {
-    this._originCallIdsOfJoinedBreakoutRooms.delete(callId);
+  public deleteOpenBreakoutRoom(): void {
+    this._openBreakoutRoom = undefined;
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public getOriginCallIdsOfJoinedBreakoutRooms(): Set<string> {
-    return this._originCallIdsOfJoinedBreakoutRooms;
+  public getOpenBreakoutRoom(): string | undefined {
+    return this._openBreakoutRoom;
   }
 
   public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
@@ -1424,11 +1429,16 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
-  public deleteLatestNotification(callId: string, notificationTarget: NotificationTarget): void {
+  public deleteLatestNotification(callId: string | undefined, notificationTarget: NotificationTarget): void {
     let callIdToPushLatestNotification = this._latestCallIdsThatPushedNotifications[notificationTarget];
     callIdToPushLatestNotification = callIdToPushLatestNotification
       ? this._callIdHistory.latestCallId(callIdToPushLatestNotification)
       : undefined;
+    if (callId === undefined) {
+      this.modifyState((draft: CallClientState) => {
+        delete draft.latestNotifications[notificationTarget];
+      });
+    }
     // Only delete the notification if the call that pushed the notification is the same as the call that is trying
     // to delete it.
     if (callIdToPushLatestNotification !== callId) {

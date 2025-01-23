@@ -267,7 +267,8 @@ type GetCallCompositePageFunction = ((
     /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
-    }
+    },
+    hasActiveCalls?: boolean
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -290,7 +291,8 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo?: EnvironmentInfo;
     unsupportedBrowserVersionOptedIn?: boolean;
-  }
+  },
+  hasActiveCalls?: boolean
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (
@@ -308,11 +310,13 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
 
   console.log('DEBUGS call?.id ', call?.id);
   console.log('DEBUGS call?.state ', call?.state);
+  console.log('DEBUGS call?.breakoutRooms ', call?.breakoutRooms);
   console.log('DEBUGS previousCall?.breakoutRooms ', previousCall?.breakoutRooms);
   /* @conditional-compile-remove(breakout-rooms) */
   if (
     (call?.state === 'Disconnecting' || call?.state === 'Disconnected' || !call) &&
-    previousCall?.breakoutRooms?.assignedBreakoutRoom
+    previousCall?.breakoutRooms?.assignedBreakoutRoom &&
+    hasActiveCalls
   ) {
     return 'call';
   }

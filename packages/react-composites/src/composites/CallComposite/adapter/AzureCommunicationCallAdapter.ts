@@ -275,11 +275,14 @@ class CallContext {
       : undefined;
     const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
+    const hasActiveCalls = clientState.calls ? Object.keys(clientState.calls).length > 0 : true;
+
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
       transferCall,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
+      hasActiveCalls
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -452,16 +455,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     );
 
     this.context.onCallEnded((endCallData) => {
-      // return to main meeting if in breakout room
-      const callState = this.call?.id ? this.callClient.getState().callsEnded[this.call.id] : undefined;
-      const assignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
-      console.log(`DEBUGJ onCallEnded this.originCall.id: ${this.originCall?.id}, this.call.id: ${this.call?.id}`);
-      if (this.originCall && this.originCall.id !== this.call?.id && callState?.breakoutRooms?.breakoutRoomSettings) {
-        assignedBreakoutRoom?.returnToMainMeeting().then((call: Call | TeamsCall) => {
-          this.originCall = call;
-          this.processNewCall(call);
-        });
-      }
       this.emitter.emit('callEnded', endCallData);
     });
 
@@ -481,7 +474,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       }
 
       console.log(
-        'DEBUG clientState.calls: ',
+        'DEBUGV clientState.calls: ',
         Object.values(clientState.calls)
           .map((c) => `id:${c.id}-state:${c.state}-assignedBR:${c.breakoutRooms?.assignedBreakoutRoom?.call?.id}`)
           .join(', ')
