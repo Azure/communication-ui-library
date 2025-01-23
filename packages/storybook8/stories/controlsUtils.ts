@@ -206,7 +206,11 @@ const notificationOptions: NotificationType[] = [
   'recordingAndTranscriptionStarted',
   'recordingAndTranscriptionStopped',
   'recordingStoppedStillTranscribing',
-  'transcriptionStoppedStillRecording'
+  'transcriptionStoppedStillRecording',
+  'capabilityTurnVideoOnAbsent',
+  'capabilityTurnVideoOnPresent',
+  'capabilityUnmuteMicAbsent',
+  'capabilityUnmuteMicPresent'
 ];
 
 export const defaultActiveNotifications = ['callNoSpeakerFound'];
