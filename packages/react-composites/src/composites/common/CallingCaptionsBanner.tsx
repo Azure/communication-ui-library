@@ -62,6 +62,8 @@ export const CallingCaptionsBanner = (props: {
     /* @conditional-compile-remove(rtt) */
     realTimeTextInputBoxDefaultText: strings.realTimeTextInputBoxDefaultText,
     /* @conditional-compile-remove(rtt) */
+    realTimeTextInputErrorMessage: strings.realTimeTextInputErrorMessage,
+    /* @conditional-compile-remove(rtt) */
     realTimeTextBannerContent: strings.realTimeTextBannerContent,
     /* @conditional-compile-remove(rtt) */
     realTimeTextBannerTitle: strings.realTimeTextBannerTitle,

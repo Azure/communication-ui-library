@@ -993,6 +993,7 @@ export interface CallCompositeStrings {
     realTimeTextCloseModalButtonAriaLabel: string;
     realTimeTextConfirmButtonLabel: string;
     realTimeTextInputBoxDefaultText?: string;
+    realTimeTextInputErrorMessage?: string;
     realTimeTextLabel?: string;
     realTimeTextModalAriaLabel: string;
     realTimeTextModalText: string;
@@ -1929,6 +1930,7 @@ export interface CaptionsBannerStrings {
     realTimeTextBannerLinkLabel?: string;
     realTimeTextBannerTitle?: string;
     realTimeTextInputBoxDefaultText?: string;
+    realTimeTextInputErrorMessage?: string;
 }
 
 // @public (undocumented)
