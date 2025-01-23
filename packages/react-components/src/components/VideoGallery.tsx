@@ -909,6 +909,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(together-mode) */ canSwitchToTogetherModeLayout,
     layout,
     layoutProps,
+    screenShareComponent,
     screenShareParticipant
   ]);
 
