@@ -1886,7 +1886,7 @@ export interface CaptionsBannerProps {
     isRealTimeTextOn?: boolean;
     latestLocalRealTimeText?: RealTimeTextInformation;
     onRenderAvatar?: OnRenderAvatarCallback;
-    onSendRealTimeText?: (text: string, finalized: boolean) => Promise<void>;
+    onSendRealTimeText?: (text: string, isFinalized: boolean) => Promise<void>;
     realTimeTexts?: {
         completedMessages?: RealTimeTextInformation[];
         currentInProgress?: RealTimeTextInformation[];
@@ -4588,8 +4588,8 @@ export type RealTimeTextInformation = {
     userId?: string;
     message: string;
     isTyping: boolean;
-    isMe: boolean;
     finalizedTimeStamp: Date;
+    isMe?: boolean;
 };
 
 // @beta
