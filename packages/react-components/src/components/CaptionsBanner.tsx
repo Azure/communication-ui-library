@@ -223,7 +223,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
 
   /* @conditional-compile-remove(rtt) */
   const mergedCaptions: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
-    return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress].slice(-10) as (
+    return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress].slice(-50) as (
       | CaptionsInformation
       | RealTimeTextInformation
     )[];
