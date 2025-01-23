@@ -4,7 +4,7 @@
 import { Text, mergeStyles } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { _formatString } from '@internal/acs-ui-common';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import {
   chatMessageDateStyle,
   chatMessageFailedTagStyle,
@@ -28,7 +28,11 @@ import { useLocale } from '../../../localization';
 import { MentionDisplayOptions } from '../../MentionPopover';
 import { createStyleFromV8Style } from '../../styles/v8StyleShim';
 import { mergeClasses } from '@fluentui/react-components';
-import { useChatMyMessageStyles, useChatMessageCommonStyles } from '../../styles/MessageThread.styles';
+import {
+  useChatMyMessageStyles,
+  useChatMessageCommonStyles,
+  chatMyMessageActionMenuClassName
+} from '../../styles/MessageThread.styles';
 import {
   generateCustomizedTimestamp,
   generateDefaultTimestamp,
@@ -53,6 +57,8 @@ type ChatMyMessageComponentAsMessageBubbleProps = {
    * Whether the status indicator for each message is displayed or not.
    */
   showMessageStatus?: boolean;
+  // Focus on the message body after the message is edited
+  shouldFocusFluentMessageBody: boolean;
   remoteParticipantsCount?: number;
   onActionButtonClick: (
     message: ChatMessage,
@@ -116,7 +122,8 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     mentionDisplayOptions,
     onDisplayDateTimeString,
     onRenderAttachmentDownloads,
-    actionsForAttachment
+    actionsForAttachment,
+    shouldFocusFluentMessageBody
   } = props;
 
   const formattedTimestamp = useMemo(() => {
@@ -166,6 +173,15 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     theme
   });
 
+  useEffect(() => {
+    if (shouldFocusFluentMessageBody) {
+      // set focus in the next render cycle to avoid focus being stolen by other components
+      setTimeout(() => {
+        messageRef.current?.focus();
+      });
+    }
+  }, [shouldFocusFluentMessageBody]);
+
   const onActionFlyoutDismiss = useCallback((): void => {
     // When the flyout dismiss is called, since we control if the action flyout is visible
     // or not we need to set the target to undefined here to actually hide the action flyout
@@ -185,19 +201,57 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     }
   }, [message, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
+  const isBlockedMessage =
+    false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
+  const chatMyMessageStyles = useChatMyMessageStyles();
+  const chatMessageCommonStyles = useChatMessageCommonStyles();
+
+  const attached = message.attached === true ? 'center' : message.attached === 'bottom' ? 'bottom' : 'top';
+
+  const getActionsMenu = useCallback(() => {
+    return (
+      <div
+        className={mergeClasses(
+          // add the static class name to use it in useChatMyMessageStyles
+          chatMyMessageActionMenuClassName,
+          chatMyMessageStyles.menu,
+          // Make actions menu visible when the message is focused or the flyout is shown
+          focused || chatMessageActionFlyoutTarget?.current
+            ? chatMyMessageStyles.menuVisible
+            : chatMyMessageStyles.menuHidden
+        )}
+      >
+        {actionMenuProps?.children}
+      </div>
+    );
+  }, [
+    actionMenuProps?.children,
+    chatMessageActionFlyoutTarget,
+    chatMyMessageStyles.menu,
+    chatMyMessageStyles.menuHidden,
+    chatMyMessageStyles.menuVisible,
+    focused
+  ]);
+
   const getContent = useCallback(() => {
-    return getMessageBubbleContent(
-      message,
-      strings,
-      userId,
-      inlineImageOptions,
-      /* @conditional-compile-remove(mention) */
-      mentionDisplayOptions,
-      onRenderAttachmentDownloads,
-      actionsForAttachment
+    return (
+      <div>
+        {getMessageBubbleContent(
+          message,
+          strings,
+          userId,
+          inlineImageOptions,
+          /* @conditional-compile-remove(mention) */
+          mentionDisplayOptions,
+          onRenderAttachmentDownloads,
+          actionsForAttachment
+        )}
+        {getActionsMenu()}
+      </div>
     );
   }, [
     actionsForAttachment,
+    getActionsMenu,
     inlineImageOptions,
     /* @conditional-compile-remove(mention) */ mentionDisplayOptions,
     message,
@@ -206,12 +260,6 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
     userId
   ]);
 
-  const isBlockedMessage =
-    false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
-  const chatMyMessageStyles = useChatMyMessageStyles();
-  const chatMessageCommonStyles = useChatMessageCommonStyles();
-
-  const attached = message.attached === true ? 'center' : message.attached === 'bottom' ? 'bottom' : 'top';
   const chatMessage = (
     <>
       <div key={props.message.messageId}>
@@ -271,17 +319,6 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
             </Text>
           }
           details={getMessageDetails()}
-          actions={{
-            children: actionMenuProps?.children,
-            className: mergeClasses(
-              chatMyMessageStyles.menu,
-              // Make actions menu visible when the message is focused or the flyout is shown
-              focused || chatMessageActionFlyoutTarget?.current
-                ? chatMyMessageStyles.menuVisible
-                : chatMyMessageStyles.menuHidden,
-              attached !== 'top' ? chatMyMessageStyles.menuAttached : undefined
-            )
-          }}
           onTouchStart={() => setWasInteractionByTouch(true)}
           onPointerDown={() => setWasInteractionByTouch(false)}
           onKeyDown={() => setWasInteractionByTouch(false)}

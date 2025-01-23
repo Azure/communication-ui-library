@@ -4,20 +4,23 @@
 import React from 'react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
-import {
-  ChatMyMessageComponent,
-  ChatMyMessageComponentProps
-} from '../../src/components/ChatMessage/MyMessageComponents/ChatMyMessageComponent';
 import { COMPONENT_LOCALE_EN_US } from '../../src';
 import { Locator, Page } from 'playwright-core';
+import { FluentChatMyMessageComponent } from '../../src/components/ChatMessage/MyMessageComponents/FluentChatMyMessageComponent';
+import { FluentChatMessageComponentWrapperProps } from '../../src/components/ChatMessage/MessageComponents/FluentChatMessageComponent';
 
-betaTest.describe('ChatMyMessageComponent keyboard navigation tests', () => {
+betaTest.describe('FluentChatMyMessageComponent keyboard navigation tests', () => {
   const localeStrings = COMPONENT_LOCALE_EN_US.strings;
 
-  const props: ChatMyMessageComponentProps = {
+  const props: FluentChatMessageComponentWrapperProps = {
+    key: '1',
+    statusToRender: undefined,
     shouldOverlapAvatarAndMessage: false,
     onActionButtonClick: () => {},
     strings: localeStrings.messageThread,
+    onRenderMessageStatus: undefined,
+    styles: undefined,
+    defaultStatusRenderer: () => <></>,
     message: {
       content: 'Hello World!',
       messageId: '1',
@@ -30,40 +33,50 @@ betaTest.describe('ChatMyMessageComponent keyboard navigation tests', () => {
     userId: '1'
   };
 
-  betaTest('User can navigate to message using keyboard', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props} />);
-    await showMoreMenuButton(component, page);
-  });
+  betaTest('User can navigate to message and edit message using keyboard', async ({ mount, page }) => {
+    const component = await mount(<FluentChatMyMessageComponent {...props} />);
 
-  betaTest('Users can start editing messages using keyboard', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props} />);
     await showMoreMenuButton(component, page);
-
     await openMoreMenu(component, page);
 
     // start editing
     await page.keyboard.press('Enter');
     await expect(component.getByTestId('chat-message-edit-box-cancel-button')).toBeVisible();
     await expect(component.getByTestId('chat-message-edit-box-submit-button')).toBeVisible();
+
+    await page.keyboard.press('Tab');
+    await expect(component.getByTestId('chat-message-edit-box-cancel-button')).toBeFocused();
+    await page.keyboard.press('Tab');
+    await expect(component.getByTestId('chat-message-edit-box-submit-button')).toBeFocused();
+    await page.keyboard.press('Enter');
+
+    const messageBody = component.getByTestId('chat-composite-message');
+    await expect(messageBody).toBeVisible();
+    await expect(messageBody).toBeFocused();
+
+    await expect(component.getByTestId('chat-composite-message-action-icon')).toBeVisible();
   });
 
-  betaTest('Users can select delete option for a message using keyboard', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props} />);
-    await showMoreMenuButton(component, page);
+  betaTest('User can navigate to message and cancel message editing using keyboard', async ({ mount, page }) => {
+    const component = await mount(<FluentChatMyMessageComponent {...props} />);
 
+    await showMoreMenuButton(component, page);
     await openMoreMenu(component, page);
 
-    const removeButton = page.getByTestId('chat-composite-message-contextual-menu-remove-action');
-
-    //navigate to delete button
-    await page.keyboard.press('ArrowDown');
-    await expect(removeButton).toBeFocused();
-
-    // select delete
+    // start editing
     await page.keyboard.press('Enter');
-    await expect(removeButton).not.toBeFocused();
-    // more menu isn't open
-    await expect(removeButton).not.toBeVisible();
+    await expect(component.getByTestId('chat-message-edit-box-cancel-button')).toBeVisible();
+    await expect(component.getByTestId('chat-message-edit-box-submit-button')).toBeVisible();
+
+    await page.keyboard.press('Tab');
+    await expect(component.getByTestId('chat-message-edit-box-cancel-button')).toBeFocused();
+    await page.keyboard.press('Enter');
+
+    const messageBody = component.getByTestId('chat-composite-message');
+    await expect(messageBody).toBeVisible();
+    await expect(messageBody).toBeFocused();
+
+    await expect(component.getByTestId('chat-composite-message-action-icon')).toBeVisible();
   });
 });
 
