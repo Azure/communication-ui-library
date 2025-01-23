@@ -1246,6 +1246,7 @@ export class CallContext {
     }
   }
 
+  /* @conditional-compile-remove(rtt) */
   private findTimeoutRealTimeText(
     inProgressRealTimeTexts: RealTimeTextInfo[] | RealTimeTextInfo | undefined,
     completedRealTimeTexts: RealTimeTextInfo[]
