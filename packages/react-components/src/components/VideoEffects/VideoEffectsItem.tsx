@@ -128,7 +128,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
   const backgroundImage = props.backgroundProps?.url;
   const iconContainerStyles = mergeStyles({ height: '1.25rem' }, props.styles?.iconContainer);
   const textContainerStyles = mergeStyles(
-    { height: '1.25rem', maxWidth: '4.375rem', overflow: 'hidden' },
+    { height: '1.25rem', maxWidth: '4.5rem', overflow: 'hidden' },
     props.styles?.textContainer
   );
 
