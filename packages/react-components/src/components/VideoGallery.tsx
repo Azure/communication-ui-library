@@ -815,7 +815,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
         reactionResources={reactionResources}
-        screenShareComponent={screenShareComponent}
         containerWidth={containerWidth}
         containerHeight={containerHeight}
       />
@@ -832,7 +831,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localParticipant,
       remoteParticipants,
       reactionResources,
-      screenShareComponent,
       containerWidth,
       containerHeight
     ]
@@ -903,7 +901,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(together-mode) */
     // Teams users can switch to Together mode layout only if they have the capability,
     // while ACS users can do so only if Together mode is enabled.
-    if (layout === 'togetherMode' && canSwitchToTogetherModeLayout) {
+    if (!screenShareComponent && layout === 'togetherMode' && canSwitchToTogetherModeLayout) {
       return <TogetherModeLayout {...layoutProps} />;
     }
     return <DefaultLayout {...layoutProps} />;

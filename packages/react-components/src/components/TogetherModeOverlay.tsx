@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import React, { useMemo, useState, memo } from 'react';
+import React, { useMemo, useState, memo, useEffect } from 'react';
 /* @conditional-compile-remove(together-mode) */
 import {
   Reaction,
@@ -27,6 +27,7 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import {
   calculateScaledSize,
   getTogetherModeParticipantOverlayStyle,
+  participantStatusTransitionStyle,
   REACTION_MAX_TRAVEL_HEIGHT,
   REACTION_TRAVEL_HEIGHT,
   setTogetherModeSeatPositionStyle,
@@ -83,13 +84,21 @@ export const TogetherModeOverlay = memo(
       [key: string]: TogetherModeParticipantStatus;
     }>({});
     const [hoveredParticipantID, setHoveredParticipantID] = useState('');
+    const [tabbedParticipantID, setTabbedParticipantID] = useState('');
+
+    // Reset the Tab key tracking on any other key press
+    const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>, participantId: string) => {
+      if (e.key === 'Tab') {
+        setTabbedParticipantID(participantId);
+      }
+    };
 
     /*
      * The useMemo hook is used to calculate the participant status for the Together Mode overlay.
      * It updates the togetherModeParticipantStatus state when there's a change in the remoteParticipants, localParticipant,
      * raisedHand, spotlight, isMuted, displayName, or hoveredParticipantID.
      */
-    useMemo(() => {
+    const updatedParticipantStatus = useMemo(() => {
       const allParticipants = [...remoteParticipants, localParticipant];
 
       const participantsWithVideoAvailable = allParticipants.filter(
@@ -108,7 +117,12 @@ export const TogetherModeOverlay = memo(
             isSpotlighted: !!spotlight,
             isMuted,
             displayName: displayName || locale.strings.videoGallery.displayNamePlaceholder,
-            showDisplayName: !!(spotlight || raisedHand || hoveredParticipantID === userId),
+            showDisplayName: !!(
+              spotlight ||
+              raisedHand ||
+              hoveredParticipantID === userId ||
+              tabbedParticipantID === userId
+            ),
             scaledSize: calculateScaledSize(seatingPosition.width, seatingPosition.height),
             seatPositionStyle: setTogetherModeSeatPositionStyle(seatingPosition)
           };
@@ -120,22 +134,19 @@ export const TogetherModeOverlay = memo(
         (id) => !updatedSignals[id]
       );
 
-      setTogetherModeParticipantStatus((prevSignals) => {
-        const newSignals = { ...prevSignals, ...updatedSignals };
-        const newSignalsLength = Object.keys(newSignals).length;
+      const newSignals = { ...togetherModeParticipantStatus, ...updatedSignals };
 
-        participantsNotInTogetherModeStream.forEach((id) => {
-          delete newSignals[id];
-        });
-
-        const hasChanges = Object.keys(newSignals).some(
-          (key) =>
-            JSON.stringify(newSignals[key]) !== JSON.stringify(prevSignals[key]) ||
-            newSignalsLength !== Object.keys(prevSignals).length
-        );
-
-        return hasChanges ? newSignals : prevSignals;
+      participantsNotInTogetherModeStream.forEach((id) => {
+        delete newSignals[id];
       });
+
+      const hasSignalingChange = Object.keys(newSignals).some(
+        (key) => JSON.stringify(newSignals[key]) !== JSON.stringify(togetherModeParticipantStatus[key])
+      );
+
+      const updateTogetherModeParticipantStatusState =
+        hasSignalingChange || Object.keys(newSignals).length !== Object.keys(togetherModeParticipantStatus).length;
+      return updateTogetherModeParticipantStatusState ? newSignals : togetherModeParticipantStatus;
     }, [
       remoteParticipants,
       localParticipant,
@@ -143,45 +154,38 @@ export const TogetherModeOverlay = memo(
       togetherModeSeatPositions,
       reactionResources,
       locale.strings.videoGallery.displayNamePlaceholder,
-      hoveredParticipantID
+      hoveredParticipantID,
+      tabbedParticipantID
     ]);
 
-    /*
-     * When a larger participant scene switches to a smaller group in Together Mode,
-     * participant video streams remain available because their video is still active,
-     * even though they are not visible in the Together Mode stream.
-     * Therefore, we rely on the updated seating position values to identify who is included in the Together Mode stream.
-     * The Together mode seat position will only contain seat coordinates of participants who are visible in the Together Mode stream.
-     */
-    useMemo(() => {
-      const removedVisibleParticipants = Object.keys(togetherModeParticipantStatus).filter(
-        (participantId) => !togetherModeSeatPositions[participantId]
-      );
+    useEffect(() => {
+      if (hoveredParticipantID && !updatedParticipantStatus[hoveredParticipantID]) {
+        setHoveredParticipantID('');
+      }
 
-      setTogetherModeParticipantStatus((prevSignals) => {
-        const newSignals = { ...prevSignals };
-        removedVisibleParticipants.forEach((participantId) => {
-          delete newSignals[participantId];
-        });
+      if (tabbedParticipantID && !updatedParticipantStatus[tabbedParticipantID]) {
+        setTabbedParticipantID('');
+      }
 
-        // Trigger a re-render only if changes occurred
-        const hasChanges = Object.keys(newSignals).length !== Object.keys(prevSignals).length;
-        return hasChanges ? newSignals : prevSignals;
-      });
-    }, [togetherModeParticipantStatus, togetherModeSeatPositions]);
+      setTogetherModeParticipantStatus(updatedParticipantStatus);
+    }, [hoveredParticipantID, tabbedParticipantID, updatedParticipantStatus]);
 
     return (
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
         {Object.values(togetherModeParticipantStatus).map(
-          (participantStatus) =>
+          (participantStatus, index) =>
             participantStatus.id && (
               <div
                 key={participantStatus.id}
                 style={{
                   ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle)
+                  // border: '1px solid yellow'
                 }}
                 onMouseEnter={() => setHoveredParticipantID(participantStatus.id)}
                 onMouseLeave={() => setHoveredParticipantID('')}
+                onKeyUp={(e) => handleKeyUp(e, participantStatus.id)}
+                onBlur={() => setTabbedParticipantID('')}
+                tabIndex={index}
               >
                 <div>
                   {participantStatus.reaction?.reactionType && (
@@ -218,7 +222,7 @@ export const TogetherModeOverlay = memo(
                   )}
 
                   {participantStatus.showDisplayName && (
-                    <div>
+                    <div style={{ ...participantStatusTransitionStyle }} tabIndex={index}>
                       <div
                         style={{
                           ...togetherModeParticipantStatusContainer(

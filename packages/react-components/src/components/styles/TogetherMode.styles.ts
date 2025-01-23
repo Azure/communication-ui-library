@@ -198,16 +198,26 @@ export const togetherModeParticipantDisplayName = (
   isParticipantHovered: boolean,
   participantSeatingWidth: number,
   color: string
-): CSSProperties => {
-  const MIN_DISPLAY_NAME_WIDTH = 100;
+): React.CSSProperties => {
+  const width =
+    isParticipantHovered || participantSeatingWidth * REM_TO_PX_MULTIPLIER > 100
+      ? 'fit-content'
+      : _pxToRem(0.7 * participantSeatingWidth * REM_TO_PX_MULTIPLIER);
+
+  const display =
+    isParticipantHovered || participantSeatingWidth * REM_TO_PX_MULTIPLIER > 150 ? 'inline-block' : 'none';
+
   return {
     textOverflow: 'ellipsis',
-    flexGrow: 1, // Allow text to grow within available space
-    overflow: isParticipantHovered ? 'visible' : 'hidden',
     whiteSpace: 'nowrap',
     textAlign: 'center',
     color,
-    display: isParticipantHovered || participantSeatingWidth > MIN_DISPLAY_NAME_WIDTH ? 'inline-block' : 'none' // Completely remove the element when hidden
+    overflow: isParticipantHovered ? 'visible' : 'hidden',
+    width,
+    display,
+    fontSize: `${_pxToRem(13)}`,
+    lineHeight: `${_pxToRem(20)}`,
+    maxWidth: isParticipantHovered ? 'fit-content' : _pxToRem(0.7 * participantSeatingWidth * REM_TO_PX_MULTIPLIER)
   };
 };
 
@@ -221,11 +231,28 @@ export const togetherModeParticipantEmojiSpriteStyle = (
   participantSeatWidth: string
 ): CSSProperties => {
   const participantSeatWidthInPixel = parseFloat(participantSeatWidth) * REM_TO_PX_MULTIPLIER;
-  const emojiScaledSizeInPercent = (emojiScaledSize / participantSeatWidthInPixel) * 100;
+  const emojiScaledSizeInPercent = 100 - (emojiScaledSize / participantSeatWidthInPixel) * 100;
   return {
     width: `${emojiSize}`,
     position: 'absolute',
     // Center the emoji sprite within the participant seat
-    left: `${emojiScaledSizeInPercent / 2}%`
+    left: `${emojiScaledSizeInPercent / 2}%`,
+    zIndex: 3
   };
+};
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * The style for the transition of the participant status container in Together Mode.
+ * @private
+ */
+export const participantStatusTransitionStyle: CSSProperties = {
+  position: 'absolute',
+  bottom: `${_pxToRem(2)}`,
+  width: 'fit-content',
+  textAlign: 'center',
+  transform: 'translate(-50%)',
+  transition: 'width 0.3s ease, transform 0.3s ease',
+  left: '50%',
+  zIndex: 0
 };

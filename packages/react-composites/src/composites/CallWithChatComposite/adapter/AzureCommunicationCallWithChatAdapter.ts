@@ -27,7 +27,7 @@ import { MessageOptions } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(breakout-rooms) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamViewResult } from '@internal/react-components';
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
   ParticipantsLeftListener,
@@ -522,7 +522,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   }
   /* @conditional-compile-remove(together-mode) */
   public async createTogetherModeStreamView(
-    options?: VideoStreamOptions
+    options?: TogetherModeStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> {
     return await this.callAdapter.createTogetherModeStreamView(options);
   }
