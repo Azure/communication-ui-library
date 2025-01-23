@@ -500,7 +500,7 @@ export class CallContext {
       if (call) {
         const stream = call.togetherMode.streams.mainVideoStream;
         if (stream && stream?.id === streamId) {
-          stream.isReceiving = isAvailable;
+          stream.isAvailable = isAvailable;
         }
       }
     });
