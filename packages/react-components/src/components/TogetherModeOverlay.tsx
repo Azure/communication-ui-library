@@ -179,7 +179,6 @@ export const TogetherModeOverlay = memo(
                 key={participantStatus.id}
                 style={{
                   ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle)
-                  // border: '1px solid yellow'
                 }}
                 onMouseEnter={() => setHoveredParticipantID(participantStatus.id)}
                 onMouseLeave={() => setHoveredParticipantID('')}
