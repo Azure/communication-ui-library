@@ -223,7 +223,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
 
   /* @conditional-compile-remove(rtt) */
   const mergedCaptions: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
-    return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress] as (
+    return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress].slice(-10) as (
       | CaptionsInformation
       | RealTimeTextInformation
     )[];
@@ -330,13 +330,6 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     <>
       {(startCaptionsInProgress || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
         <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
-          {
-            /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
-              <div style={{ paddingTop: '0.5rem' }}>
-                <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
-              </div>
-            )
-          }
           {(isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
             <ul
               ref={captionsScrollDivRef}
@@ -347,6 +340,13 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               }
               data-ui-id="captions-banner-inner"
             >
+              {
+                /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
+                  <div style={{ paddingTop: '0.5rem' }}>
+                    <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
+                  </div>
+                )
+              }
               {captionsTrampoline()}
             </ul>
           )}

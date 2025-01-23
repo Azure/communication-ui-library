@@ -1233,9 +1233,50 @@ export class CallContext {
         }
       }
     }
+    // edge case check for in progress messages time out
+    if (!realTimeTexts.completedMessages) {
+      realTimeTexts.completedMessages = [];
+    }
+    this.findTimeoutRealTimeText(realTimeTexts.currentInProgress, realTimeTexts.completedMessages);
+    this.findTimeoutRealTimeText(realTimeTexts.myInProgress, realTimeTexts.completedMessages);
+
     // we only want to store up to 50 finalized messages
     if (realTimeTexts.completedMessages && realTimeTexts.completedMessages?.length > 50) {
       realTimeTexts.completedMessages.shift();
+    }
+  }
+
+  private findTimeoutRealTimeText(
+    inProgressRealTimeTexts: RealTimeTextInfo[] | RealTimeTextInfo | undefined,
+    completedRealTimeTexts: RealTimeTextInfo[]
+  ): void {
+    // if inProgressRealTimeTexts is an array
+    if (inProgressRealTimeTexts && Array.isArray(inProgressRealTimeTexts)) {
+      // find the in progress real time text that has not been updated for 5 seconds
+      inProgressRealTimeTexts.forEach((realTimeText, index) => {
+        if (realTimeText.updatedTimestamp && Date.now() - realTimeText.updatedTimestamp.getTime() > 5000) {
+          // turn the in progress real time text to final
+          realTimeText.resultType = 'Final';
+          // move the in progress real time text to completed
+          completedRealTimeTexts.push(realTimeText);
+          // remove the in progress real time text from in progress
+          inProgressRealTimeTexts && (inProgressRealTimeTexts as RealTimeTextInfo[]).splice(index, 1);
+        }
+      });
+    } else {
+      // if inProgressRealTimeTexts is a single object
+      if (
+        inProgressRealTimeTexts &&
+        inProgressRealTimeTexts.updatedTimestamp &&
+        Date.now() - inProgressRealTimeTexts.updatedTimestamp.getTime() > 5000
+      ) {
+        // turn the in progress real time text to final
+        inProgressRealTimeTexts.resultType = 'Final';
+        // move the in progress real time text to completed
+        completedRealTimeTexts.push(inProgressRealTimeTexts);
+        // remove the in progress real time text from in progress
+        inProgressRealTimeTexts = undefined;
+      }
     }
   }
 
