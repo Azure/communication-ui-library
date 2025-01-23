@@ -566,6 +566,11 @@ export interface CallCompositeStrings {
   realTimeTextInputBoxDefaultText?: string;
   /* @conditional-compile-remove(rtt) */
   /**
+   * Error message for RTT input text box when the size exceeds the limit 2000
+   */
+  realTimeTextInputErrorMessage?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
    * Text to show in the real time text disclosure banner
    */
   realTimeTextBannerContent?: string;
