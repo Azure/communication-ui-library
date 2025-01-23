@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "Hard mute",
+  "comment": "Add sdk references to story book",
+  "packageName": "@azure/communication-react",
+  "email": "fuyan@microsoft.com",
+  "dependentChangeType": "patch"
+}

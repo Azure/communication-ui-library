@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { MessageStatus, _formatString } from '@internal/acs-ui-common';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { MessageProps, _ChatMessageProps } from '../../MessageThread';
 import { ChatMessage } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
@@ -14,7 +14,10 @@ import { createStyleFromV8Style } from '../../styles/v8StyleShim';
 import { MessageStatusIndicatorProps } from '../../MessageStatusIndicator';
 import { ChatMyMessageComponent } from './ChatMyMessageComponent';
 import { ChatMyMessage as FluentChatMyMessage } from '@fluentui-contrib/react-chat';
-import { getFluentUIAttachedValue } from '../../utils/ChatMessageComponentUtils';
+import {
+  getFluentUIAttachedValue,
+  removeFluentUIKeyboardNavigationStyles
+} from '../../utils/ChatMessageComponentUtils';
 import type { FluentChatMessageComponentWrapperProps } from '../MessageComponents/FluentChatMessageComponent';
 
 /**
@@ -59,11 +62,6 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     onInsertInlineImage
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
-  const fluentMessageBodyRef = useRef<HTMLDivElement>(null);
-
-  const onEditComplete = useCallback(() => {
-    fluentMessageBodyRef.current?.focus();
-  }, []);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
   // needs to be regenerated), the dependency on "new Date().toDateString()"" is added.
@@ -76,7 +74,6 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
         return (
           <ChatMyMessageComponent
             {...messageProps}
-            onEditComplete={onEditComplete}
             onRenderAttachmentDownloads={onRenderAttachmentDownloads}
             strings={messageProps.strings}
             message={messageProps.message}
@@ -133,8 +130,7 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       onInsertInlineImage,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
-      inlineImagesWithProgress,
-      onEditComplete
+      inlineImagesWithProgress
     ]
   );
 
@@ -195,12 +191,16 @@ export const FluentChatMyMessageComponent = (props: FluentChatMessageComponentWr
     };
   }, [chatMessageRenderStyles.rootCommon, chatMessageRenderStyles.rootMyMessage, styles?.myChatItemMessageContainer]);
 
+  const setMessageContainerRef = useCallback((node: HTMLDivElement | null) => {
+    removeFluentUIKeyboardNavigationStyles(node);
+  }, []);
+
   const myMessageBodyProps = useMemo(() => {
     return {
       className: mergeClasses(chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage),
-      ref: fluentMessageBodyRef
+      ref: setMessageContainerRef
     };
-  }, [chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage]);
+  }, [chatMessageRenderStyles.bodyCommon, chatMessageRenderStyles.bodyMyMessage, setMessageContainerRef]);
 
   const myMessageStatusIcon = useMemo(() => {
     return (

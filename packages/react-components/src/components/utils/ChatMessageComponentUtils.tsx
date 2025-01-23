@@ -150,3 +150,19 @@ export const getMessageEditedDetails = (
   }
   return undefined;
 };
+
+/**
+ * Removes Fluent UI keyboard navigation styles from the given HTMLDivElement.
+ *
+ * This function removes the 'tabindex' and 'data-tabster' attributes from the provided
+ * HTMLDivElement, making it non-focusable and removing any associated keyboard navigation styles.
+ *
+ * @param node - The HTMLDivElement from which to remove the keyboard navigation styles. If null, the function does nothing.
+ */
+export const removeFluentUIKeyboardNavigationStyles = (node: HTMLDivElement | null): void => {
+  if (node) {
+    // Remove tabindex to make the div element non-focusable
+    node.removeAttribute('tabindex');
+    node.removeAttribute('data-tabster');
+  }
+};

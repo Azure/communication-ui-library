@@ -327,7 +327,7 @@ const getCapabilitiesFromRole = (
 ): CapabilitiesFeatureState | undefined => {
   if (isReactionCapability) {
     return {
-      capabilities: presenterCapabilitiesInTeamsCall,
+      capabilities: presenterCapabilitiesInTeamsCall(),
       latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
     };
   }
@@ -335,17 +335,17 @@ const getCapabilitiesFromRole = (
   switch (role) {
     case 'Attendee':
       return {
-        capabilities: attendeeCapabilitiesInRoomsCall,
+        capabilities: attendeeCapabilitiesInRoomsCall(),
         latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
       };
     case 'Consumer':
       return {
-        capabilities: consumerCapabilitiesInRoomsCall,
+        capabilities: consumerCapabilitiesInRoomsCall(),
         latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
       };
     case 'Presenter':
       return {
-        capabilities: presenterCapabilitiesInRoomsCall,
+        capabilities: presenterCapabilitiesInRoomsCall(),
         latestCapabilitiesChangeInfo: { oldValue: {}, newValue: {}, reason: 'RoleChanged' }
       };
     default:
@@ -353,7 +353,7 @@ const getCapabilitiesFromRole = (
   }
 };
 
-const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
+const consumerCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addTeamsUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -403,9 +403,9 @@ const consumerCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
-};
+});
 
-const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
+const attendeeCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addTeamsUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -455,9 +455,9 @@ const attendeeCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
-};
+});
 
-const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
+const presenterCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addTeamsUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -507,9 +507,9 @@ const presenterCapabilitiesInRoomsCall: ParticipantCapabilities = {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
-};
+});
 
-const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
+const presenterCapabilitiesInTeamsCall = (): ParticipantCapabilities => ({
   addCommunicationUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addPhoneNumber: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   addTeamsUser: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -559,7 +559,7 @@ const presenterCapabilitiesInTeamsCall: ParticipantCapabilities = {
     isPresent: true,
     reason: 'CapabilityNotApplicableForTheCallType'
   }
-};
+});
 
 const defaultEndedCallState: CallState = {
   id: 'call0',

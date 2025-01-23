@@ -29,7 +29,8 @@ import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 import { CallNotifications } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(media-access) */
 import { CapabilitiesChangeInfo } from '@azure/communication-calling';
-
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeCallFeatureState } from '@internal/calling-stateful-client';
 /**
  * Common props used to reference calling declarative client state.
  *
@@ -328,3 +329,12 @@ export const getRealTimeText = (
   | undefined => {
   return state.calls[props.callId]?.realTimeTextFeature.realTimeTexts;
 };
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ */
+export const getTogetherModeCallFeature = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): TogetherModeCallFeatureState | undefined => state.calls[props.callId]?.togetherMode;

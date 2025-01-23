@@ -4004,6 +4004,8 @@ export interface MessageThreadStrings {
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
     editBoxTextLimit: string;
+    editedMessageLiveAuthorIntro: string;
+    editedMessageLocalUserLiveAuthorIntro: string;
     editedTag: string;
     editMessage: string;
     failToSendTag?: string;
@@ -5673,6 +5675,10 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     optimalVideoCount?: number;
     spotlightedParticipants?: string[];
     maxParticipantsToSpotlight?: number;
+    isTogetherModeActive?: boolean;
+    startTogetherModeEnabled?: boolean;
+    togetherModeStreams?: VideoGalleryTogetherModeStreams;
+    togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 };
 
 // @public

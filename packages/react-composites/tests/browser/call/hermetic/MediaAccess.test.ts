@@ -17,7 +17,7 @@ test.describe('Media access mic/camera forbid/permit tests', async () => {
     const initialState = defaultMockCallAdapterState(participants, 'Presenter', false, undefined, true);
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
-    await page.pause();
+
     if (isTestProfileMobile(testInfo)) {
       await waitForSelector(page, dataUiId(IDS.microphoneButton));
       await waitForSelector(page, dataUiId(IDS.cameraButton));
@@ -51,7 +51,7 @@ test.describe('Media access mic/camera forbid/permit tests', async () => {
     }
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
-    await page.pause();
+
     if (isTestProfileMobile(testInfo)) {
       await waitForSelector(page, dataUiId(IDS.microphoneButton));
       await waitForSelector(page, dataUiId(IDS.cameraButton));
