@@ -105,6 +105,11 @@ export interface CaptionsBannerStrings {
   realTimeTextInputBoxDefaultText?: string;
   /* @conditional-compile-remove(rtt) */
   /**
+   * Error message for RTT input text box when the size exceeds the limit 2000
+   */
+  realTimeTextInputErrorMessage?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
    * Real time text disclosure banner title
    */
   realTimeTextBannerTitle?: string;
@@ -359,6 +364,8 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
                   setTextFieldValue(newValue || '');
                   onSendRealTimeText(newValue || '', false);
                 }}
+                maxLength={2000}
+                errorMessage={textFieldValue.length >= 2000 ? strings.realTimeTextInputErrorMessage : undefined}
               />
             )
           }
