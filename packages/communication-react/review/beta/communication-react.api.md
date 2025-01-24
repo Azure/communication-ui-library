@@ -987,6 +987,7 @@ export interface CallCompositeStrings {
     realTimeTextCloseModalButtonAriaLabel: string;
     realTimeTextConfirmButtonLabel: string;
     realTimeTextInputBoxDefaultText?: string;
+    realTimeTextInputErrorMessage?: string;
     realTimeTextLabel?: string;
     realTimeTextModalAriaLabel: string;
     realTimeTextModalText: string;
@@ -1909,6 +1910,7 @@ export interface CaptionsBannerStrings {
     realTimeTextBannerLinkLabel?: string;
     realTimeTextBannerTitle?: string;
     realTimeTextInputBoxDefaultText?: string;
+    realTimeTextInputErrorMessage?: string;
 }
 
 // @public (undocumented)
@@ -5624,6 +5626,10 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     optimalVideoCount?: number;
     spotlightedParticipants?: string[];
     maxParticipantsToSpotlight?: number;
+    isTogetherModeActive?: boolean;
+    startTogetherModeEnabled?: boolean;
+    togetherModeStreams?: VideoGalleryTogetherModeStreams;
+    togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 };
 
 // @public
