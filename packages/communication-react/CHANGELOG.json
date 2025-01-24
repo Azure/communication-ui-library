@@ -2,6 +2,163 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 13 Jan 2025 19:28:45 GMT",
+      "version": "1.23.0",
+      "tag": "@azure/communication-react_v1.23.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f9f3d6413ac30d712e7cf9dec0102124e2544d60",
+            "area": "fix",
+            "workstream": "Hard mute",
+            "comment": "Hard mute accessibility"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9f581b317ef65d4b95947f27c933f61261c492e5",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Change the announcers in the Mic and Camera button to be conditionally rendered to stop them being read in scan mode if the button isn't focused"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d71776a825d696f6742bf71e6952cdfe9b44292a",
+            "area": "fix",
+            "workstream": "Chat",
+            "comment": "Fix SendBox initialization that caused MaxListenersExceededWarning logs in the Console tool for ChatComposite with rich text editor enabled."
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "175381bc1a97d50d1f755eb855e79635b32c9130",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Add hermetic test for hard mute"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "bbb1ac1671497b4e3308bbfa1f46bba7b2781fc7",
+            "area": "fix",
+            "workstream": "Ezra",
+            "comment": "Update people button behavior to meet A11y requirements"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5eaf920ab83062a5731d0e8c0c60147a68c1e4c9",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update image overlay to announce when visible"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a5f896475791f578f1940ee37a8adc5a3a53c1e9",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix an issue where tab key was ignored by rich text editor at the end of the text"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f35e7a0f86f5e86075133878104666aa56eb0317",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Define a captions a region and focus on mount on captions region"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b427e2dcdcc65d8a9061e3f31fa59ca335e5b09e",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix an issue where keyboard focus was lost after message is edited"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0bb81dfade9d89418939dd4b05ae8eca719a4ee1",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Remove unreachable code"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "716282b30b63a5881caab08a7a824506734cfcf1",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Add story book for Media access (hard mute) feature"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "28586d83625285a0eeb2cf6b7f416c5b8a29200f",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "UI components changes"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "713582e108caf9c22266f9511abd7c999810bdf1",
+            "area": "fix",
+            "workstream": "Hard mute",
+            "comment": "Fix condition compile for hard mute."
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5e1a3f6fe3e3db9e24da4e3aba5110d4d4cc7a24",
+            "area": "fix",
+            "workstream": "Hard mute",
+            "comment": "Add more spacing for Video tile icons"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "09f71d2f875bc5ca8fb170ac2ec99b323cf7543c",
+            "area": "fix",
+            "workstream": "RTE",
+            "comment": "Fix RTE .exe attachment disabling SendButton"
+          }
+        ],
+        "minor": [
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "94662ceea5de49292779a1ecd507c23a2fadb06d",
+            "area": "feature",
+            "workstream": "Hard mute",
+            "comment": "We are excited to announce that the Azure Communication Services Web UI Library now supports the Media Access feature. This feature allows organizers, co-organizers, and presenters to control the ability of other attendees to send audio and video while in a call. Attendees can determine if their audio or video is enabled or disabled and check the media access status of other participants. Developers can integrate this functionality through our composites (e.g., CallComposite, CallWithChatComposite) as well as through components."
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "28586d83625285a0eeb2cf6b7f416c5b8a29200f",
+            "area": "feature",
+            "workstream": "Hard mute",
+            "comment": "Hard mute feature UI changes"
+          }
+        ],
+        "none": [
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "02306f83cd0b40513cd3dad5b44dced98d7c0121",
+            "area": "improvement",
+            "workstream": "[Test Coverage] Adding additional unit tests for _isValidIdentifier and _toCommunicationIdentifier",
+            "comment": "Added on several unit tests  to the acs-ui-common packlet"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Dec 2024 19:44:14 GMT",
       "version": "1.22.0",
       "tag": "@azure/communication-react_v1.22.0",
