@@ -187,3 +187,10 @@ describe('Sort Captions and Real Time Text List', () => {
     expect(sortCaptionsAndRealTimeTexts(mockCaptions, mockRealTimeTexts)).toEqual(result);
   });
 });
+
+// for cc
+describe('Place holder test for cc', () => {
+  test('place holder', async () => {
+    expect(true).toEqual(true);
+  });
+});
