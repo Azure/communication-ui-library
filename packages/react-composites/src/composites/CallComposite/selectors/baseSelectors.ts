@@ -325,9 +325,9 @@ export const getIsTogetherModeActive = (state: CallAdapterState): boolean | unde
 /* @conditional-compile-remove(together-mode) */
 /**
  * @private
- * Gets the together mode streams state.
+ * Gets local participant's user id.
  * @param state - The current state of the call adapter.
- * @returns The together mode streams state or undefined.
+ * @returns The local participant's user id or undefined.
  */
 export const getLocalUserId = (state: CallAdapterState): CommunicationIdentifierKind | undefined => state.userId;
 /* @conditional-compile-remove(media-access) */

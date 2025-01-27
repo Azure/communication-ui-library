@@ -173,7 +173,7 @@ export const TogetherModeOverlay = memo(
     return (
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
         {Object.values(togetherModeParticipantStatus).map(
-          (participantStatus, index) =>
+          (participantStatus) =>
             participantStatus.id && (
               <div
                 key={participantStatus.id}
@@ -184,44 +184,11 @@ export const TogetherModeOverlay = memo(
                 onMouseLeave={() => setHoveredParticipantID('')}
                 onKeyUp={(e) => handleKeyUp(e, participantStatus.id)}
                 onBlur={() => setTabbedParticipantID('')}
-                tabIndex={index}
+                tabIndex={0}
               >
                 <div>
-                  {participantStatus.reaction?.reactionType && (
-                    // First div - Section that fixes the travel height and applies the movement animation
-                    // Second div - Responsible for ensuring the sprite emoji is always centered in the participant seat position
-                    // Third div - Play Animation as the other animation applies on the base play animation for the sprite
-                    <div
-                      style={moveAnimationStyles(
-                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) *
-                          REACTION_MAX_TRAVEL_HEIGHT,
-                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * REACTION_TRAVEL_HEIGHT
-                      )}
-                    >
-                      <div
-                        style={{
-                          ...togetherModeParticipantEmojiSpriteStyle(
-                            emojiSize,
-                            participantStatus.scaledSize || 1,
-                            participantStatus.seatPositionStyle.seatPosition.width
-                          )
-                        }}
-                      >
-                        <div
-                          style={spriteAnimationStyles(
-                            REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                            participantStatus.scaledSize || 1,
-                            (participantStatus.reaction &&
-                              getEmojiResource(participantStatus?.reaction.reactionType, reactionResources)) ??
-                              ''
-                          )}
-                        />
-                      </div>
-                    </div>
-                  )}
-
                   {participantStatus.showDisplayName && (
-                    <div style={{ ...participantStatusTransitionStyle }} tabIndex={index}>
+                    <div style={{ ...participantStatusTransitionStyle }} tabIndex={0}>
                       <div
                         style={{
                           ...togetherModeParticipantStatusContainer(
@@ -254,6 +221,39 @@ export const TogetherModeOverlay = memo(
                             <Icon iconName="VideoTileSpotlighted" />
                           </Stack>
                         )}
+                      </div>
+                    </div>
+                  )}
+
+                  {participantStatus.reaction?.reactionType && (
+                    // First div - Section that fixes the travel height and applies the movement animation
+                    // Second div - Responsible for ensuring the sprite emoji is always centered in the participant seat position
+                    // Third div - Play Animation as the other animation applies on the base play animation for the sprite
+                    <div
+                      style={moveAnimationStyles(
+                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) *
+                          REACTION_MAX_TRAVEL_HEIGHT,
+                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * REACTION_TRAVEL_HEIGHT
+                      )}
+                    >
+                      <div
+                        style={{
+                          ...togetherModeParticipantEmojiSpriteStyle(
+                            emojiSize,
+                            participantStatus.scaledSize || 1,
+                            participantStatus.seatPositionStyle.seatPosition.width
+                          )
+                        }}
+                      >
+                        <div
+                          style={spriteAnimationStyles(
+                            REACTION_NUMBER_OF_ANIMATION_FRAMES,
+                            participantStatus.scaledSize || 1,
+                            (participantStatus.reaction &&
+                              getEmojiResource(participantStatus?.reaction.reactionType, reactionResources)) ??
+                              ''
+                          )}
+                        />
                       </div>
                     </div>
                   )}

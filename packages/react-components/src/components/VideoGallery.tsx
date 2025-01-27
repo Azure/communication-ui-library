@@ -857,9 +857,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       pinnedParticipantUserIds: pinnedParticipants,
       overflowGalleryPosition,
       localVideoTileSize,
-      spotlightedParticipantUserIds: spotlightedParticipants,
-      /* @conditional-compile-remove(together-mode) */
-      togetherModeStreamComponent
+      spotlightedParticipantUserIds: spotlightedParticipants
     }),
     [
       remoteParticipants,
@@ -877,9 +875,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       pinnedParticipants,
       overflowGalleryPosition,
       localVideoTileSize,
-      spotlightedParticipants,
-      /* @conditional-compile-remove(together-mode) */
-      togetherModeStreamComponent
+      spotlightedParticipants
     ]
   );
 
@@ -902,7 +898,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     // Teams users can switch to Together mode layout only if they have the capability,
     // while ACS users can do so only if Together mode is enabled.
     if (!screenShareComponent && layout === 'togetherMode' && canSwitchToTogetherModeLayout) {
-      return <TogetherModeLayout {...layoutProps} />;
+      return <TogetherModeLayout togetherModeStreamComponent={togetherModeStreamComponent} />;
     }
     return <DefaultLayout {...layoutProps} />;
   }, [
@@ -910,7 +906,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     layout,
     layoutProps,
     screenShareComponent,
-    screenShareParticipant
+    screenShareParticipant,
+    /* @conditional-compile-remove(together-mode) */ togetherModeStreamComponent
   ]);
 
   return (

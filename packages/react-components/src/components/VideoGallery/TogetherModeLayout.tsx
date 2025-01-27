@@ -6,8 +6,6 @@ import React from 'react';
 /* @conditional-compile-remove(together-mode) */
 import { _formatString } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(together-mode) */
-import { LayoutProps } from './Layout';
-/* @conditional-compile-remove(together-mode) */
 import { Stack } from '@fluentui/react';
 
 /* @conditional-compile-remove(together-mode) */
@@ -16,8 +14,7 @@ import { Stack } from '@fluentui/react';
  * boost by memoizing the same rendered component to avoid rerendering this when the parent component rerenders.
  * https://reactjs.org/docs/react-api.html#reactmemo
  */
-export const TogetherModeLayout = (props: LayoutProps): JSX.Element => {
+export const TogetherModeLayout = (props: { togetherModeStreamComponent: JSX.Element }): JSX.Element => {
   const { togetherModeStreamComponent } = props;
-  console.log(`TogetherModeLayout: CHUK-1`);
   return <Stack>{togetherModeStreamComponent}</Stack>;
 };

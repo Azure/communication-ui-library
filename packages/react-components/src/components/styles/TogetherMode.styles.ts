@@ -199,12 +199,14 @@ export const togetherModeParticipantDisplayName = (
   participantSeatingWidth: number,
   color: string
 ): React.CSSProperties => {
+  // expands the display name width when participant is hovered or clicked on else make it 70% of the participant seating width
   const width =
     isParticipantHovered || participantSeatingWidth * REM_TO_PX_MULTIPLIER > 100
       ? 'fit-content'
       : _pxToRem(0.7 * participantSeatingWidth * REM_TO_PX_MULTIPLIER);
 
-  const display =
+  // For smaller displays, the display name is hidden only participant is hovered or clicked on for mobile view
+  const showDisplayName =
     isParticipantHovered || participantSeatingWidth * REM_TO_PX_MULTIPLIER > 150 ? 'inline-block' : 'none';
 
   return {
@@ -214,7 +216,7 @@ export const togetherModeParticipantDisplayName = (
     color,
     overflow: isParticipantHovered ? 'visible' : 'hidden',
     width,
-    display,
+    display: showDisplayName,
     fontSize: `${_pxToRem(13)}`,
     lineHeight: `${_pxToRem(20)}`,
     maxWidth: isParticipantHovered ? 'fit-content' : _pxToRem(0.7 * participantSeatingWidth * REM_TO_PX_MULTIPLIER)
@@ -236,8 +238,7 @@ export const togetherModeParticipantEmojiSpriteStyle = (
     width: `${emojiSize}`,
     position: 'absolute',
     // Center the emoji sprite within the participant seat
-    left: `${emojiScaledSizeInPercent / 2}%`,
-    zIndex: 3
+    left: `${emojiScaledSizeInPercent / 2}%`
   };
 };
 
@@ -253,6 +254,5 @@ export const participantStatusTransitionStyle: CSSProperties = {
   textAlign: 'center',
   transform: 'translate(-50%)',
   transition: 'width 0.3s ease, transform 0.3s ease',
-  left: '50%',
-  zIndex: 0
+  left: '50%'
 };
