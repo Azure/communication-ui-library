@@ -75,7 +75,7 @@ import {
 /* @conditional-compile-remove(together-mode) */
 import { PeopleAudience20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rtt) */
-import { SlideTextCall20Regular } from '@fluentui/react-icons';
+import { SlideTextCall20Regular, ArrowMaximize20Regular, ArrowMinimize20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
   TextBold20Regular,
@@ -419,5 +419,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(together-mode) */
   NotificationBarTogetherModeIcon: <PeopleAudience20Regular />,
   /* @conditional-compile-remove(rtt) */
-  RealTimeTextIcon: <SlideTextCall20Regular />
+  RealTimeTextIcon: <SlideTextCall20Regular />,
+  /* @conditional-compile-remove(rtt) */
+  ExpandIcon: <ArrowMaximize20Regular />,
+  /* @conditional-compile-remove(rtt) */
+  MinimizeIcon: <ArrowMinimize20Regular />
 };
