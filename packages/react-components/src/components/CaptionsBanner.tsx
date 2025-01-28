@@ -15,6 +15,8 @@ import {
   loadingBannerFullHeightStyles,
   loadingBannerStyles
 } from './styles/Captions.style';
+/* @conditional-compile-remove(rtt) */
+import { rttDisclosureBannerClassName } from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(rtt) */
@@ -347,9 +349,9 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
             >
               {
                 /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
-                  <div style={{ paddingTop: '0.5rem' }}>
+                  <Stack className={rttDisclosureBannerClassName()}>
                     <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
-                  </div>
+                  </Stack>
                 )
               }
               {captionsTrampoline()}
