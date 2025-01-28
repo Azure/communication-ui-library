@@ -26,9 +26,9 @@ import { _RTTDisclosureBanner } from './RTTDisclosureBanner';
 /* @conditional-compile-remove(rtt) */
 import { sortCaptionsAndRealTimeTexts } from './utils/sortCaptionsAndRealTimeTexts';
 /* @conditional-compile-remove(rtt) */
-import { expandIconClassName } from './styles/Captions.style';
+import { expandIconClassName, bannerTitleContainerClassName } from './styles/Captions.style';
 /* @conditional-compile-remove(rtt) */
-import { titleClassName, titleContainerClassName } from './styles/CaptionsSettingsModal.styles';
+import { titleClassName } from './styles/CaptionsSettingsModal.styles';
 /* @conditional-compile-remove(rtt) */
 import { Text, IconButton } from '@fluentui/react';
 
@@ -387,7 +387,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
                 horizontal
                 horizontalAlign="space-between"
                 verticalAlign="center"
-                className={titleContainerClassName}
+                className={bannerTitleContainerClassName}
               >
                 <Text className={titleClassName}>{getTitle()}</Text>
                 <IconButton

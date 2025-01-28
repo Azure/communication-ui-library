@@ -26,6 +26,14 @@ export const displayNameClassName = mergeStyles({
 /**
  * @private
  */
+export const bannerTitleContainerClassName = mergeStyles({
+  paddingBottom: _pxToRem(10)
+});
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
 export const isTypingClassName = (theme: ITheme): string => {
   return mergeStyles({
     backgroundColor: theme.palette.themeLighter,
