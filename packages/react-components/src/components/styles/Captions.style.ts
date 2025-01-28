@@ -47,6 +47,17 @@ export const rttContainerClassName = (theme: ITheme, isTyping: boolean): string 
   });
 };
 
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
+export const rttDisclosureBannerClassName = (): string => {
+  return mergeStyles({
+    paddingTop: '0.5rem'
+  });
+};
+
 /**
  * @private
  */
