@@ -82,10 +82,11 @@ export class BreakoutRoomsSubscriber {
       return;
     }
 
+    // TODO: Fix the condition in this if statement to check for different breakout room ID instead of the display name
     if (
       breakoutRoom.state === 'open' &&
-      currentAssignedBreakoutRoom?.state === 'open' &&
-      currentAssignedBreakoutRoom?.call?.id !== breakoutRoom.call?.id
+      callState.breakoutRooms?.breakoutRoomDisplayName &&
+      callState.breakoutRooms.breakoutRoomDisplayName !== breakoutRoom.displayName
     ) {
       this._context.setLatestNotification(this._callIdRef.callId, {
         target: 'assignedBreakoutRoomChanged',
@@ -107,11 +108,6 @@ export class BreakoutRoomsSubscriber {
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpenedPromptJoin');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomChanged');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomJoined');
-    } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.call?.id) {
-      // This scenario covers the case where the breakout room is changed to a closed breakout room.
-      this._context.deleteLatestNotification(currentAssignedBreakoutRoom.call.id, 'breakoutRoomJoined');
-      this._context.deleteLatestNotification(currentAssignedBreakoutRoom.call.id, 'breakoutRoomClosingSoon');
-      clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
     } else if (breakoutRoom.state === 'closed') {
       // This scenario covers the case where the breakout room is closed
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpened');
@@ -119,6 +115,7 @@ export class BreakoutRoomsSubscriber {
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomChanged');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomJoined');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomClosingSoon');
+      clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
       const openBreakoutRoomId = this._context.getOpenBreakoutRoom();
       if (openBreakoutRoomId && this._context.getState().calls[openBreakoutRoomId]) {
         // Show notification that the assigned breakout room was closed if the user is in that breakout room.

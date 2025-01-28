@@ -203,7 +203,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         await this.breakoutRoomJoined(eventData.data);
       } else if (eventData.type === 'assignedBreakoutRooms') {
         if (!eventData.data || eventData.data.state === 'closed') {
-          await this.returnFromBreakoutRoom();
+          if (
+            this.originCallChatAdapter &&
+            this.originCallChatAdapter?.getState().thread.threadId !== this.chatAdapter?.getState().thread.threadId
+          ) {
+            this.updateChatAdapter(this.originCallChatAdapter);
+          }
         }
       }
     });

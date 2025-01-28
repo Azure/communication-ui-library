@@ -417,7 +417,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   ]);
 
   const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
-  let page = useSelector(getPage);
+  const page = useSelector(getPage);
   const endedCall = useSelector(getEndedCall);
 
   const [sidePaneRenderer, setSidePaneRenderer] = React.useState<SidePaneRenderer | undefined>();
@@ -560,19 +560,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
   const [pinnedParticipants, setPinnedParticipants] = useState<string[]>([]);
-
-  /* @conditional-compile-remove(breakout-rooms) */
-  const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
-  /* @conditional-compile-remove(breakout-rooms) */
-  const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
-  /* @conditional-compile-remove(breakout-rooms) */
-  if (
-    (assignedBreakoutRoom?.state === 'closed' && breakoutRoomSettings) ||
-    (endedCall?.breakoutRooms?.assignedBreakoutRoom?.state === 'closed' &&
-      endedCall?.breakoutRooms?.breakoutRoomSettings)
-  ) {
-    page = 'call';
-  }
 
   switch (page) {
     case 'configuration':

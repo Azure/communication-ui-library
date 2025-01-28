@@ -95,7 +95,7 @@ export class CallContext {
   private _callIdHistory: CallIdHistory = new CallIdHistory();
   private _timeOutId: { [key: string]: ReturnType<typeof setTimeout> } = {};
   /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
-  private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
+  private _latestCallIdOfNotification: Partial<Record<NotificationTarget, string>> = {};
   /* @conditional-compile-remove(breakout-rooms) */
   private _openBreakoutRoom: string | undefined;
 
@@ -259,6 +259,14 @@ export class CallContext {
       Object.values(draft.calls).forEach((call) => {
         if (call.breakoutRooms?.breakoutRoomOriginCallId === oldCallId) {
           call.breakoutRooms?.breakoutRoomOriginCallId === newCallId;
+        }
+      });
+
+      /* @conditional-compile-remove(breakout-rooms) */
+      // Update call ids in latestCallIdsThatPushedNotifications
+      Object.keys(this._latestCallIdOfNotification).forEach((key: string) => {
+        if (this._latestCallIdOfNotification[key as NotificationTarget] === oldCallId) {
+          this._latestCallIdOfNotification[key as NotificationTarget] = newCallId;
         }
       });
 
@@ -1422,7 +1430,7 @@ export class CallContext {
 
   /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   public setLatestNotification(callId: string, notification: CallNotification): void {
-    this._latestCallIdsThatPushedNotifications[notification.target] = callId;
+    this._latestCallIdOfNotification[notification.target] = callId;
     this.modifyState((draft: CallClientState) => {
       draft.latestNotifications[notification.target] = notification;
     });
@@ -1430,18 +1438,11 @@ export class CallContext {
 
   /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   public deleteLatestNotification(callId: string | undefined, notificationTarget: NotificationTarget): void {
-    let callIdToPushLatestNotification = this._latestCallIdsThatPushedNotifications[notificationTarget];
-    callIdToPushLatestNotification = callIdToPushLatestNotification
-      ? this._callIdHistory.latestCallId(callIdToPushLatestNotification)
-      : undefined;
-    if (callId === undefined) {
-      this.modifyState((draft: CallClientState) => {
-        delete draft.latestNotifications[notificationTarget];
-      });
-    }
-    // Only delete the notification if the call that pushed the notification is the same as the call that is trying
-    // to delete it.
-    if (callIdToPushLatestNotification !== callId) {
+    const callIdOfNotification = this._latestCallIdOfNotification[notificationTarget];
+
+    // Only delete the notification if the call that pushed the notification is the same as the callId specified if it
+    // is provided
+    if (callId && callIdOfNotification !== callId) {
       return;
     }
 
