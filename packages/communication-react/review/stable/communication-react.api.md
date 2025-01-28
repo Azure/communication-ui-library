@@ -3706,7 +3706,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent';
+export type NotificationTarget = 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;

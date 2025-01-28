@@ -4270,7 +4270,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent' | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted' | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
+export type NotificationTarget = /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpened' | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpenedPromptJoin' | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomJoined' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent' | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted' | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;

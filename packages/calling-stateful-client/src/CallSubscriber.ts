@@ -32,7 +32,6 @@ import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
-/* @conditional-compile-remove(media-access) */
 import { MediaAccessSubscriber } from './MediaAccessSubscriber';
 import { _isTeamsMeeting } from './TypeGuards';
 /* @conditional-compile-remove(rtt) */
@@ -71,7 +70,6 @@ export class CallSubscriber {
   private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
   /* @conditional-compile-remove(together-mode) */
   private _togetherModeSubscriber: TogetherModeSubscriber;
-  /* @conditional-compile-remove(media-access) */
   private _mediaAccessSubscriber: MediaAccessSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
@@ -140,7 +138,6 @@ export class CallSubscriber {
       this._call.feature(Features.TogetherMode)
     );
 
-    /* @conditional-compile-remove(media-access) */
     this._mediaAccessSubscriber = new MediaAccessSubscriber(
       this._callIdRef,
       this._context,
@@ -263,7 +260,6 @@ export class CallSubscriber {
     this._breakoutRoomsSubscriber.unsubscribe();
     /* @conditional-compile-remove(together-mode) */
     this._togetherModeSubscriber.unsubscribe();
-    /* @conditional-compile-remove(media-access) */
     this._mediaAccessSubscriber.unsubscribe();
   };
 

@@ -14,7 +14,6 @@ export class CapabilitiesSubscriber {
   private _callIdRef: CallIdRef;
   private _context: CallContext;
   private _capabilitiesFeature: CapabilitiesFeature;
-  /* @conditional-compile-remove(media-access) */
   private _capabilitiesInitialized: boolean = false;
 
   constructor(callIdRef: CallIdRef, context: CallContext, capabilities: CapabilitiesFeature) {
@@ -38,14 +37,11 @@ export class CapabilitiesSubscriber {
     if (data.oldValue.viewAttendeeNames !== data.newValue.viewAttendeeNames) {
       this._context.setHideAttendeeNames(this._callIdRef.callId, data);
     }
-    /* @conditional-compile-remove(media-access) */
-    this.setUnmuteMicAndTurnVideoOnNotification(data);
 
-    /* @conditional-compile-remove(media-access) */
+    this.setUnmuteMicAndTurnVideoOnNotification(data);
     this._capabilitiesInitialized = true;
   };
 
-  /* @conditional-compile-remove(media-access) */
   private setUnmuteMicAndTurnVideoOnNotification = (data: CapabilitiesChangeInfo): void => {
     if (data.oldValue.turnVideoOn?.isPresent !== data.newValue.turnVideoOn?.isPresent) {
       if (
