@@ -32,6 +32,12 @@ export const REACTION_MAX_TRAVEL_HEIGHT = 0.5 * REM_TO_PX_MULTIPLIER;
 
 /* @conditional-compile-remove(together-mode) */
 /**
+ * The maximum width for displaying the participant's display name.
+ */
+export const MAX_DISPLAY_NAME_WIDTH = 150;
+
+/* @conditional-compile-remove(together-mode) */
+/**
  * Interface for defining the coordinates of a seat in Together Mode.
  */
 export interface TogetherModeParticipantSeatPosition {
@@ -201,13 +207,15 @@ export const togetherModeParticipantDisplayName = (
 ): React.CSSProperties => {
   // expands the display name width when participant is hovered or clicked on else make it 70% of the participant seating width
   const width =
-    isParticipantHovered || participantSeatingWidth * REM_TO_PX_MULTIPLIER > 100
+    isParticipantHovered || participantSeatingWidth * REM_TO_PX_MULTIPLIER > MAX_DISPLAY_NAME_WIDTH
       ? 'fit-content'
       : _pxToRem(0.7 * participantSeatingWidth * REM_TO_PX_MULTIPLIER);
 
   // For smaller displays, the display name is hidden only participant is hovered or clicked on for mobile view
   const showDisplayName =
-    isParticipantHovered || participantSeatingWidth * REM_TO_PX_MULTIPLIER > 150 ? 'inline-block' : 'none';
+    isParticipantHovered || participantSeatingWidth * REM_TO_PX_MULTIPLIER > MAX_DISPLAY_NAME_WIDTH
+      ? 'inline-block'
+      : 'none';
 
   return {
     textOverflow: 'ellipsis',
