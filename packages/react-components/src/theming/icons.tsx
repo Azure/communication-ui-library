@@ -6,8 +6,6 @@ import { mergeStyles } from '@fluentui/react';
 import { Stack } from '@fluentui/react';
 import {
   ArrowClockwise16Regular,
-  ArrowMaximize20Regular,
-  ArrowMinimize20Regular,
   Backspace20Regular,
   Call20Filled,
   CallEnd20Filled,
@@ -77,7 +75,7 @@ import {
 /* @conditional-compile-remove(together-mode) */
 import { PeopleAudience20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rtt) */
-import { SlideTextCall20Regular } from '@fluentui/react-icons';
+import { SlideTextCall20Regular, ArrowMaximize20Regular, ArrowMinimize20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
   TextBold20Regular,
