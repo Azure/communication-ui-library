@@ -204,6 +204,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async setSpokenLanguage(language: string): Promise<void> {
     await this.callWithChatAdapter.setSpokenLanguage(language);
   }
+  /* @conditional-compile-remove(rtt) */
+  public async sendRealTimeText(text: string, isFinalized: boolean): Promise<void> {
+    await this.callWithChatAdapter.sendRealTimeText(text, isFinalized);
+  }
 
   public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
     await this.callWithChatAdapter.startVideoBackgroundEffect(videoBackgroundEffect);
