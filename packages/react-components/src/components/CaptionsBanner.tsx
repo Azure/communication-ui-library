@@ -349,7 +349,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
             >
               {
                 /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
-                  <Stack className={rttDisclosureBannerClassName}>
+                  <Stack className={rttDisclosureBannerClassName()}>
                     <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
                   </Stack>
                 )
