@@ -47,7 +47,6 @@ export const rttContainerClassName = (theme: ITheme, isTyping: boolean): string 
   });
 };
 
-
 /* @conditional-compile-remove(rtt) */
 /**
  * @private
