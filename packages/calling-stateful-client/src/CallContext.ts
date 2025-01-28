@@ -130,7 +130,6 @@ export class CallContext {
   }
 
   public modifyState(modifier: (draft: CallClientState) => void): void {
-    console.log('DEBUG modifyState');
     const priorState = this._state;
     this._state = produce(this._state, modifier, (patches: Patch[]) => {
       if (getLogLevel() === 'verbose') {

@@ -473,13 +473,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         this.context.setCurrentCallId(this.call.id);
       }
 
-      console.log(
-        'DEBUGV clientState.calls: ',
-        Object.values(clientState.calls)
-          .map((c) => `id:${c.id}-state:${c.state}-assignedBR:${c.breakoutRooms?.assignedBreakoutRoom?.call?.id}`)
-          .join(', ')
-      );
-
       // if the call hits the connected state we want to pause all calling sounds if playing.
       if (this.call?.state === 'Connected' && this.callingSoundSubscriber?.playingSounds) {
         this.callingSoundSubscriber.pauseSounds();
@@ -1215,7 +1208,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
     const callState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
-    console.log('DEBUGJ returnFromBreakoutRoom callState?.breakoutRooms: ', callState?.breakoutRooms);
     const assignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
 
     if (!assignedBreakoutRoom) {
@@ -1500,11 +1492,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (!this.call?.id) {
       return;
     }
-    console.log(
-      `DEBUGJ assignedBreakoutRoomUpdated this.originCall?.id: ${this.originCall?.id}, this.call?.id: ${this.call?.id}, breakoutRoom.state: ${breakoutRoom?.state}`
-    );
     if (this.originCall?.id !== this.call?.id && (!breakoutRoom || breakoutRoom.state === 'closed')) {
-      console.log('DEBUGJ breakout room closed!!!');
       this.returnFromBreakoutRoom();
     }
   }

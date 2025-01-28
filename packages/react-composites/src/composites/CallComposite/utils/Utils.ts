@@ -308,10 +308,6 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
     return 'transferring';
   }
 
-  console.log('DEBUGS call?.id ', call?.id);
-  console.log('DEBUGS call?.state ', call?.state);
-  console.log('DEBUGS call?.breakoutRooms ', call?.breakoutRooms);
-  console.log('DEBUGS previousCall?.breakoutRooms ', previousCall?.breakoutRooms);
   /* @conditional-compile-remove(breakout-rooms) */
   if (
     (call?.state === 'Disconnecting' || call?.state === 'Disconnected' || !call) &&
