@@ -25,6 +25,12 @@ import { RealTimeText } from './RealTimeText';
 import { _RTTDisclosureBanner } from './RTTDisclosureBanner';
 /* @conditional-compile-remove(rtt) */
 import { sortCaptionsAndRealTimeTexts } from './utils/sortCaptionsAndRealTimeTexts';
+/* @conditional-compile-remove(rtt) */
+import { expandIconClassName, bannerTitleContainerClassName } from './styles/Captions.style';
+/* @conditional-compile-remove(rtt) */
+import { titleClassName } from './styles/CaptionsSettingsModal.styles';
+/* @conditional-compile-remove(rtt) */
+import { Text, IconButton } from '@fluentui/react';
 
 /**
  * @public
@@ -126,6 +132,31 @@ export interface CaptionsBannerStrings {
    * Real time text disclosure banner link label
    */
   realTimeTextBannerLinkLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when only captions is enabled
+   */
+  captionsOnlyContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when only real time text is enabled
+   */
+  realTimeTextOnlyContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when both captions and real time text is enabled
+   */
+  captionsAndRealTimeTextContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Expand button aria label
+   */
+  expandButtonAriaLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Minimize button aria label
+   */
+  minimizeButtonAriaLabel?: string;
 }
 
 /**
@@ -221,6 +252,19 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   const captionsScrollDivRef = useRef<HTMLUListElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const theme = useTheme();
+  /* @conditional-compile-remove(rtt) */
+  const [expandBannerHeight, setExpandBannerHeight] = useState<boolean>(false);
+  /* @conditional-compile-remove(rtt) */
+  const getTitle = (): string => {
+    if (isCaptionsOn && isRealTimeTextOn) {
+      return strings.captionsAndRealTimeTextContainerTitle ?? '';
+    } else if (isCaptionsOn) {
+      return strings.captionsOnlyContainerTitle ?? '';
+    } else if (isRealTimeTextOn) {
+      return strings.realTimeTextOnlyContainerTitle ?? '';
+    }
+    return '';
+  };
   /* @conditional-compile-remove(rtt) */
   // merge realtimetexts and captions into one array based on timestamp
   // Combine captions and realTimeTexts into one list
@@ -337,13 +381,31 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     <>
       {(startCaptionsInProgress || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
         <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
+          {
+            /* @conditional-compile-remove(rtt) */ (isCaptionsOn || isRealTimeTextOn) && formFactor === 'compact' && (
+              <Stack
+                horizontal
+                horizontalAlign="space-between"
+                verticalAlign="center"
+                className={bannerTitleContainerClassName}
+              >
+                <Text className={titleClassName}>{getTitle()}</Text>
+                <IconButton
+                  iconProps={{ iconName: expandBannerHeight ? 'MinimizeIcon' : 'ExpandIcon' }}
+                  ariaLabel={expandBannerHeight ? strings.minimizeButtonAriaLabel : strings.expandButtonAriaLabel}
+                  onClick={() => setExpandBannerHeight(!expandBannerHeight)}
+                  styles={expandIconClassName(theme)}
+                />
+              </Stack>
+            )
+          }
           {(isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
             <ul
               ref={captionsScrollDivRef}
               className={
                 captionsOptions?.height === 'full'
                   ? captionsBannerFullHeightClassName(theme)
-                  : captionsBannerClassName(formFactor)
+                  : captionsBannerClassName(formFactor, /* @conditional-compile-remove(rtt) */ expandBannerHeight)
               }
               data-ui-id="captions-banner-inner"
             >
