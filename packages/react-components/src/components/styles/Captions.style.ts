@@ -3,6 +3,8 @@
 
 import { IStackStyles, ITheme, mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
+/* @conditional-compile-remove(rtt) */
+import { IButtonStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -57,6 +59,23 @@ export const rttDisclosureBannerClassName = (): string => {
   });
 };
 
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
+export const expandIconClassName = (theme: ITheme): IButtonStyles => {
+  return {
+    root: {
+      color: theme.palette.neutralPrimary,
+      width: '1rem',
+      height: '1rem'
+    },
+    rootHovered: {
+      color: theme.palette.neutralDark
+    }
+  };
+};
+
 /**
  * @private
  */
@@ -74,7 +93,8 @@ export const captionsContainerClassName = mergeStyles({
   height: '100%',
   margin: 0,
   overflow: 'auto',
-  padding: 0
+  padding: 0,
+  overflowX: 'hidden'
 });
 
 /**
@@ -97,11 +117,11 @@ const resetUlStyling = {
 /**
  * @private
  */
-export const captionsBannerClassName = (formFactor: 'default' | 'compact'): string => {
+export const captionsBannerClassName = (formFactor: 'default' | 'compact', isExpanded?: boolean): string => {
   return mergeStyles({
     ...resetUlStyling,
     overflowX: 'hidden',
-    height: formFactor === 'compact' ? '4.5rem' : '8.75rem',
+    height: formFactor === 'compact' ? (isExpanded ? '40vh' : '4.5rem') : '8.75rem',
     overflowY: 'auto'
   });
 };

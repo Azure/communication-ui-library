@@ -6,6 +6,8 @@ import { mergeStyles } from '@fluentui/react';
 import { Stack } from '@fluentui/react';
 import {
   ArrowClockwise16Regular,
+  ArrowMaximize20Regular,
+  ArrowMinimize20Regular,
   Backspace20Regular,
   Call20Filled,
   CallEnd20Filled,
@@ -419,5 +421,9 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(together-mode) */
   NotificationBarTogetherModeIcon: <PeopleAudience20Regular />,
   /* @conditional-compile-remove(rtt) */
-  RealTimeTextIcon: <SlideTextCall20Regular />
+  RealTimeTextIcon: <SlideTextCall20Regular />,
+  /* @conditional-compile-remove(rtt) */
+  ExpandIcon: <ArrowMaximize20Regular />,
+  /* @conditional-compile-remove(rtt) */
+  MinimizeIcon: <ArrowMinimize20Regular />
 };
