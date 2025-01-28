@@ -1138,11 +1138,11 @@ export interface CallNotification {
 
 /** @public */
 export type NotificationTarget =
-  | 'assignedBreakoutRoomOpened'
-  | 'assignedBreakoutRoomOpenedPromptJoin'
-  | 'assignedBreakoutRoomChanged'
-  | 'breakoutRoomJoined'
-  | 'breakoutRoomClosingSoon'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpened'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpenedPromptJoin'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomChanged'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomJoined'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomClosingSoon'
   | 'capabilityTurnVideoOnPresent'
   | 'capabilityTurnVideoOnAbsent'
   | 'capabilityUnmuteMicPresent'
