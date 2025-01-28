@@ -872,6 +872,7 @@ export interface CallCompositeStrings {
     dialpadModalAriaLabel?: string;
     dialpadModalTitle?: string;
     dialpadStartCallButtonLabel?: string;
+    disabledStartRealTimeTextLabel?: string;
     dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialerButtonLabel?: string;

@@ -185,6 +185,8 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   /* @conditional-compile-remove(rtt) */
   if (props.isRealTimeTextSupported) {
     const realTimeTextContextualMenuItems: IContextualMenuItem[] = [];
+    const rttDisabled =
+      props.disableButtonsForHoldScreen || realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked;
 
     moreButtonContextualMenuItems.push({
       key: 'realTimeTextKey',
@@ -212,6 +214,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       key: 'StartRealTimeTextKey',
       id: 'common-call-composite-rtt-start-button',
       text: localeStrings.strings.call.startRealTimeTextLabel,
+      ariaLabel: rttDisabled
+        ? localeStrings.strings.call.disabledStartRealTimeTextLabel
+        : localeStrings.strings.call.startRealTimeTextLabel,
       onClick: props.onStartRealTimeTextClick,
       iconProps: {
         iconName: 'RealTimeTextIcon',
@@ -220,8 +225,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       itemProps: {
         styles: buttonFlyoutIncreasedSizeStyles
       },
-      disabled:
-        props.disableButtonsForHoldScreen || realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked
+      disabled: rttDisabled
     });
   }
 

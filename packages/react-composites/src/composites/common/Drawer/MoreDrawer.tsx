@@ -589,6 +589,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     }
   }
 
+  /* @conditional-compile-remove(rtt) */
+  const rttDisabled =
+    props.disableButtonsForHoldScreen || realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked;
   // rtt
   /* @conditional-compile-remove(rtt) */
   if (showRealTimeTextButton) {
@@ -606,13 +609,15 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     realTimeTextDrawerItems.push({
       itemKey: 'ToggleRTTKey',
       text: localeStrings.strings.call.startRealTimeTextLabel,
+      ariaLabel: rttDisabled
+        ? localeStrings.strings.call.disabledStartRealTimeTextLabel
+        : localeStrings.strings.call.startRealTimeTextLabel,
       iconProps: {
         iconName: 'RealTimeTextIcon',
         styles: { root: { lineHeight: 0 } }
       },
       onItemClick: props.onStartRealTimeText,
-      disabled:
-        props.disableButtonsForHoldScreen || realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked,
+      disabled: rttDisabled,
       secondaryComponent: (
         <Stack verticalFill verticalAlign="center">
           <Toggle
