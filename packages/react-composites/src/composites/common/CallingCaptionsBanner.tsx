@@ -68,7 +68,17 @@ export const CallingCaptionsBanner = (props: {
     /* @conditional-compile-remove(rtt) */
     realTimeTextBannerTitle: strings.realTimeTextBannerTitle,
     /* @conditional-compile-remove(rtt) */
-    realTimeTextBannerLinkLabel: strings.realTimeTextBannerLinkLabel
+    realTimeTextBannerLinkLabel: strings.realTimeTextBannerLinkLabel,
+    /* @conditional-compile-remove(rtt) */
+    captionsOnlyContainerTitle: strings.captionsOnlyContainerTitle,
+    /* @conditional-compile-remove(rtt) */
+    realTimeTextOnlyContainerTitle: strings.realTimeTextOnlyContainerTitle,
+    /* @conditional-compile-remove(rtt) */
+    captionsAndRealTimeTextContainerTitle: strings.captionsAndRealTimeTextContainerTitle,
+    /* @conditional-compile-remove(rtt) */
+    expandButtonAriaLabel: strings.expandButtonAriaLabel,
+    /* @conditional-compile-remove(rtt) */
+    minimizeButtonAriaLabel: strings.minimizeButtonAriaLabel
   };
 
   const onRenderAvatar = useCallback(

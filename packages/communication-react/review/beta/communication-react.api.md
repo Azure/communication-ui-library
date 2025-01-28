@@ -833,9 +833,11 @@ export interface CallCompositeStrings {
     cameraTurnedOff: string;
     capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
+    captionsAndRealTimeTextContainerTitle?: string;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
     captionsBannerSpinnerText?: string;
+    captionsOnlyContainerTitle?: string;
     captionsSettingsCancelButtonLabel?: string;
     captionsSettingsCaptionLanguageDropdownInfoText?: string;
     captionsSettingsCaptionLanguageDropdownLabel?: string;
@@ -887,6 +889,7 @@ export interface CallCompositeStrings {
     endOfSurveyText: string;
     exitSpotlightButtonLabel: string;
     exitSpotlightButtonTooltip: string;
+    expandButtonAriaLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -930,6 +933,7 @@ export interface CallCompositeStrings {
     manyUnnamedParticipantsLeft: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
+    minimizeButtonAriaLabel?: string;
     moreButtonCallingLabel: string;
     moreButtonGalleryControlLabel?: string;
     moreButtonGalleryDefaultLayoutLabel?: string;
@@ -999,6 +1003,7 @@ export interface CallCompositeStrings {
     realTimeTextModalAriaLabel: string;
     realTimeTextModalText: string;
     realTimeTextModalTitle: string;
+    realTimeTextOnlyContainerTitle?: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
     removeBackgroundTooltip?: string;
@@ -1926,12 +1931,17 @@ export type CaptionsBannerSelector = (state: CallClientState, props: CallingBase
 
 // @public
 export interface CaptionsBannerStrings {
+    captionsAndRealTimeTextContainerTitle?: string;
     captionsBannerSpinnerText?: string;
+    captionsOnlyContainerTitle?: string;
+    expandButtonAriaLabel?: string;
+    minimizeButtonAriaLabel?: string;
     realTimeTextBannerContent?: string;
     realTimeTextBannerLinkLabel?: string;
     realTimeTextBannerTitle?: string;
     realTimeTextInputBoxDefaultText?: string;
     realTimeTextInputErrorMessage?: string;
+    realTimeTextOnlyContainerTitle?: string;
 }
 
 // @public (undocumented)
@@ -3051,6 +3061,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
     NotificationBarTogetherModeIcon: React_2.JSX.Element;
     RealTimeTextIcon: React_2.JSX.Element;
+    ExpandIcon: React_2.JSX.Element;
+    MinimizeIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -3237,6 +3249,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
     NotificationBarTogetherModeIcon: React_2.JSX.Element;
     RealTimeTextIcon: React_2.JSX.Element;
+    ExpandIcon: React_2.JSX.Element;
+    MinimizeIcon: React_2.JSX.Element;
 };
 
 // @beta
