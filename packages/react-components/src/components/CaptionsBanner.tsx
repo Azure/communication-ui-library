@@ -15,6 +15,8 @@ import {
   loadingBannerFullHeightStyles,
   loadingBannerStyles
 } from './styles/Captions.style';
+/* @conditional-compile-remove(rtt) */
+import { rttDisclosureBannerClassName } from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(rtt) */
@@ -81,13 +83,14 @@ export type RealTimeTextInformation = {
    */
   isTyping: boolean;
   /**
-   * If message originated from the local participant
-   */
-  isMe: boolean;
-  /**
    * timestamp when the real time text was finalized
    */
   finalizedTimeStamp: Date;
+  /**
+   * If message originated from the local participant
+   * default value is false
+   */
+  isMe?: boolean;
 };
 /**
  * @public
@@ -182,7 +185,7 @@ export interface CaptionsBannerProps {
   /**
    * Optional callback to send real time text.
    */
-  onSendRealTimeText?: (text: string, finalized: boolean) => Promise<void>;
+  onSendRealTimeText?: (text: string, isFinalized: boolean) => Promise<void>;
   /* @conditional-compile-remove(rtt) */
   /**
    * Latest local real time text
@@ -227,7 +230,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
 
   /* @conditional-compile-remove(rtt) */
   const mergedCaptions: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
-    return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress] as (
+    return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress].slice(-50) as (
       | CaptionsInformation
       | RealTimeTextInformation
     )[];
@@ -334,13 +337,6 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     <>
       {(startCaptionsInProgress || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
         <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
-          {
-            /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
-              <div style={{ paddingTop: '0.5rem' }}>
-                <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
-              </div>
-            )
-          }
           {(isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
             <ul
               ref={captionsScrollDivRef}
@@ -351,6 +347,13 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               }
               data-ui-id="captions-banner-inner"
             >
+              {
+                /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
+                  <Stack className={rttDisclosureBannerClassName()}>
+                    <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
+                  </Stack>
+                )
+              }
               {captionsTrampoline()}
             </ul>
           )}
