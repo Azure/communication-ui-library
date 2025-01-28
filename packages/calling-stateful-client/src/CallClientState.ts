@@ -485,7 +485,6 @@ export interface VideoStreamRendererViewState {
   target: HTMLElement;
 }
 
-/* @conditional-compile-remove(media-access) */
 /**
  * Media access state
  * @public
@@ -562,7 +561,6 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
   spotlight?: SpotlightState;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.MediaAccessCallFeature.MediaAccess}.
    */
@@ -759,7 +757,6 @@ export interface CallState {
    */
   breakoutRooms?: BreakoutRoomsState;
 
-  /* @conditional-compile-remove(media-access) */
   /**
    * Proxy of {@link @azure/communication-calling#MediaAccessFeature}.
    */
@@ -1001,7 +998,6 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
-  /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   /**
    * Stores the latest notifications.
    *
@@ -1124,7 +1120,6 @@ export type CallErrorTarget =
   | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 
-/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /**
  * @public
  */
@@ -1132,7 +1127,6 @@ export type CallNotifications = {
   [target in NotificationTarget]: CallNotification;
 };
 
-/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /**
  * @public
  */
@@ -1142,18 +1136,17 @@ export interface CallNotification {
   timestamp: Date;
 }
 
-/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /** @public */
 export type NotificationTarget =
-  | 'assignedBreakoutRoomOpened'
-  | 'assignedBreakoutRoomOpenedPromptJoin'
-  | 'assignedBreakoutRoomChanged'
-  | 'breakoutRoomJoined'
-  | 'breakoutRoomClosingSoon'
-  | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent'
-  | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent'
-  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent'
-  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpened'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpenedPromptJoin'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomChanged'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomJoined'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomClosingSoon'
+  | 'capabilityTurnVideoOnPresent'
+  | 'capabilityTurnVideoOnAbsent'
+  | 'capabilityUnmuteMicPresent'
+  | 'capabilityUnmuteMicAbsent'
   | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted'
   | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
 
