@@ -51,38 +51,17 @@ const useVideoStreamLifecycleMaintainer = (
     renderElementExists,
     scalingMode,
     streamId,
-    /* @conditional-compile-remove(media-access) */
     isVideoPermitted
   } = props;
 
   const [videoStreamViewResult, setVideoStreamViewResult] = useState<CreateVideoStreamViewResult | undefined>();
 
-  const createStreamViewTrampoline = useCallback(
-    (
-      isStreamAvailable?: boolean,
-      renderElementExists?: boolean,
-      /* @conditional-compile-remove(media-access) */ isVideoPermitted?: boolean
-    ) => {
-      /* @conditional-compile-remove(media-access) */
-      if (isVideoPermitted === false) {
-        return;
-      }
-
-      if (isStreamAvailable && !renderElementExists) {
-        onCreateStreamView?.({ isMirrored, scalingMode })?.then((result) => {
-          result && setVideoStreamViewResult(result);
-        });
-      }
-    },
-    [isMirrored, onCreateStreamView, scalingMode]
-  );
-
   useEffect(() => {
-    createStreamViewTrampoline(
-      isStreamAvailable,
-      renderElementExists,
-      /* @conditional-compile-remove(media-access) */ isVideoPermitted
-    );
+    if (isVideoPermitted !== false && isStreamAvailable && !renderElementExists) {
+      onCreateStreamView?.({ isMirrored, scalingMode })?.then((result) => {
+        result && setVideoStreamViewResult(result);
+      });
+    }
 
     // Always clean up element to make tile up to date and be able to dispose correctly
     return () => {
@@ -104,8 +83,6 @@ const useVideoStreamLifecycleMaintainer = (
     renderElementExists,
     scalingMode,
     streamId,
-    createStreamViewTrampoline,
-    /* @conditional-compile-remove(media-access) */
     isVideoPermitted
   ]);
 
