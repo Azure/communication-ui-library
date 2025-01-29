@@ -29,6 +29,8 @@ import type {
   DiagnosticQuality,
   DiagnosticFlag
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(rtt) */
+import { ParticipantInfo, RealTimeTextResultType } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -83,6 +85,10 @@ export interface CaptionsInfo {
    */
   timestamp: Date;
   /**
+   * Timestamp of when the captions were last updated.
+   */
+  lastUpdatedTimestamp?: Date;
+  /**
    * The language that the captions are presented in. Corresponds to the captionLanguage specified in startCaptions / setCaptionLanguage.
    */
   captionLanguage?: string;
@@ -90,6 +96,42 @@ export interface CaptionsInfo {
    * The original spoken caption text prior to translating to subtitle language
    */
   spokenText?: string;
+}
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @beta
+ */
+export interface RealTimeTextInfo {
+  /**
+   * The sequence id of the real time text.
+   */
+  id: number;
+  /**
+   * The sender of the real time text.
+   */
+  sender: ParticipantInfo;
+  /**
+   * The real time text message.
+   */
+  message: string;
+  /**
+   * The result type of the real time text message.
+   */
+  resultType: RealTimeTextResultType;
+  /**
+   * The timestamp when the real time text message was created.
+   */
+  receivedTimestamp?: Date;
+  /**
+   * The timestamp when the real time text message was last updated.
+   */
+  updatedTimestamp?: Date;
+  /**
+   * If message originated from the local participant
+   * default is false
+   */
+  isMe?: boolean;
 }
 
 /**
@@ -124,11 +166,29 @@ export interface CaptionsCallFeatureState {
    * current caption language
    */
   currentCaptionLanguage: string;
-
   /**
    * current caption kind: teams or acs captions
    */
   captionsKind: CaptionsKind;
+}
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @beta
+ */
+export interface RealTimeTextCallFeatureState {
+  /**
+   * array of received captions
+   */
+  realTimeTexts: {
+    completedMessages?: RealTimeTextInfo[];
+    currentInProgress?: RealTimeTextInfo[];
+    myInProgress?: RealTimeTextInfo;
+  };
+  /**
+   * whether real time text is on/off
+   */
+  isRealTimeTextFeatureActive?: boolean;
 }
 
 /**
@@ -639,9 +699,14 @@ export interface CallState {
    */
   transcription: TranscriptionCallFeatureState;
   /**
-   * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
+   * Proxy of {@link @azure/communication-calling#CaptionsCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Proxy of {@link @azure/communication-calling#RealTimeTextCallFeature}.
+   */
+  realTimeTextFeature: RealTimeTextCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
    */

@@ -491,6 +491,11 @@ export interface CallCompositeStrings {
    * string to be used to start real time text
    */
   startRealTimeTextLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * string to be used to when start real time text button is disabled
+   */
+  disabledStartRealTimeTextLabel?: string;
   /**
    * string to be used to stop captions
    */
