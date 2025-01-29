@@ -3,6 +3,8 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
@@ -392,6 +394,13 @@ export type IsCaptionLanguageChangedListener = (event: { activeCaptionLanguage: 
  * @public
  */
 export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'realTimeTextReceived' event.
+ * @beta
+ */
+export type RealTimeTextReceivedListener = (event: { realTimeText: RealTimeTextInfo }) => void;
 
 /**
  * Callback for {@link CallAdapterSubscribers} 'transferRequested' event.
@@ -847,6 +856,13 @@ export interface CallAdapterCallOperations {
    * Permit Teams meeting video.
    */
   permitOthersVideo(): Promise<void>;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Send real time text
+   * @param text - real time text content
+   * @param finalized - Boolean to indicate if the real time text is final
+   */
+  sendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
 }
 
 /**
@@ -998,6 +1014,7 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'captionsReceived' event.
    */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+
   /**
    * Subscribe function for 'isCaptionsActiveChanged' event.
    */
@@ -1012,6 +1029,12 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'isSpokenLanguageChanged' event.
    */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Subscribe function for 'realTimeTextReceived' event.
+   */
+  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
 
   /**
    * Subscribe function for 'transferRequested' event.
@@ -1103,6 +1126,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isSpokenLanguageChanged' event.
    */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Unsubscribe function for 'realTimeTextReceived' event.
+   */
+  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   /**
    * Unsubscribe function for 'transferRequested' event.
    */

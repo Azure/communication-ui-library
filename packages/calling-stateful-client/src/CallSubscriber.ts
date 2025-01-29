@@ -34,6 +34,8 @@ import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
 import { MediaAccessSubscriber } from './MediaAccessSubscriber';
 import { _isTeamsMeeting } from './TypeGuards';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextSubscriber } from './RealTimeTextSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -55,6 +57,8 @@ export class CallSubscriber {
   private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
+  /* @conditional-compile-remove(rtt) */
+  private _realTimeTextSubscriber?: RealTimeTextSubscriber;
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   private _reactionSubscriber?: ReactionSubscriber;
 
@@ -138,6 +142,12 @@ export class CallSubscriber {
       this._callIdRef,
       this._context,
       this._call.feature(Features.MediaAccess)
+    );
+    /* @conditional-compile-remove(rtt) */
+    this._realTimeTextSubscriber = new RealTimeTextSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.RealTimeText)
     );
 
     this.subscribe();
@@ -239,6 +249,8 @@ export class CallSubscriber {
     this._optimalVideoCountSubscriber.unsubscribe();
     this._pptLiveSubscriber.unsubscribe();
     this._CaptionsFeatureSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(rtt) */
+    this._realTimeTextSubscriber?.unsubscribe();
     this._raiseHandSubscriber?.unsubscribe();
 
     this._capabilitiesSubscriber.unsubscribe();

@@ -127,6 +127,7 @@
     "captionsBannerMoreButtonTooltip": "More options",
     "realTimeTextLabel": "Real-time text (RTT)",
     "startRealTimeTextLabel": "Turn on RTT for this call",
+    "disabledStartRealTimeTextLabel": "RTT is currently turned on, it cannot be turned off",
     "dismissModalAriaLabel": "Local and remote picture and picture, press enter to return to call",
     "callRejectedTitle": "The call could not be completed",
     "callRejectedMoreDetails": "The person you are trying to reach is unavailable. Please try again later.",
