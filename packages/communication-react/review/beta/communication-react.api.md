@@ -5124,7 +5124,7 @@ export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
 
 // @beta
 export interface StartRealTimeTextButtonStrings {
-    onLabel: string;
+    label: string;
     tooltipOnContent: string;
 }
 

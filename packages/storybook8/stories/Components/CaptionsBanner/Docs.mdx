@@ -1,5 +1,6 @@
 import { CaptionsBanner } from '@azure/communication-react';
 import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 import * as CaptionsBannerStories from './index.stories';
 import CaptionsBannerExampleText from '!!raw-loader!./snippets/CaptionsBanner.snippet.tsx';
 
@@ -7,7 +8,9 @@ import CaptionsBannerExampleText from '!!raw-loader!./snippets/CaptionsBanner.sn
 
 # CaptionsBanner
 
-A component for displaying a CaptionsBanner with user icon, displayName and captions text.
+A component to display list of captions or/and Real-Time Text, and contains a textfield to send Real-Time Text. Will show maximum 50 entries.
+
+<SingleLineBetaBanner content="Real-Time Text functionality is currently in Public Preview" />
 
 <Canvas of={CaptionsBannerStories.CaptionsBanner} source={{ code: CaptionsBannerExampleText }} />
 
