@@ -11,7 +11,7 @@ export const StartRealTimeTextButtonStory = (): JSX.Element => {
       isRealTimeTextOn={isRealTimeTextOn}
       showLabel
       onStartRealTimeText={() => {
-        alert('Real Time Text started');
+        alert('Real-Time Text started');
         setIsRealTimeTextOn(true);
       }}
     />
