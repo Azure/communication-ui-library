@@ -4633,12 +4633,12 @@ export interface RealTimeTextCallFeatureState {
 
 // @beta (undocumented)
 export interface RealTimeTextInfo {
-    id: number;
     isMe?: boolean;
     message: string;
     receivedTimestamp?: Date;
     resultType: RealTimeTextResultType;
     sender: ParticipantInfo;
+    sequenceId: number;
     updatedTimestamp?: Date;
 }
 
