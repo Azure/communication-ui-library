@@ -255,12 +255,12 @@ export interface NotificationStackStrings {
   assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
-   * Message shown in notification when the user is assigned breakout room is changed
+   * Message shown in notification when the user's assigned breakout room is changed
    */
   assignedBreakoutRoomChanged?: NotificationStrings;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
-   * Message shown in notification when the user is assigned breakout room is closed
+   * Message shown in notification when the user's assigned breakout room is closed
    */
   assignedBreakoutRoomClosed?: NotificationStrings;
   /* @conditional-compile-remove(breakout-rooms) */
