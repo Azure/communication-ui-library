@@ -69,7 +69,7 @@ export type CaptionsInformation = {
  */
 export type RealTimeTextInformation = {
   /**
-   * The sequence id of the real time text.
+   * The id of the real time text.
    */
   id: number;
   /**
