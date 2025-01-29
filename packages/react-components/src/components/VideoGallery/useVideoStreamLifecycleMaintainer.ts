@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
 import { callingComponentLogger } from '../utils/Logger';
 
