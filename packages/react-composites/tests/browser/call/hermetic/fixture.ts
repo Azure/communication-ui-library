@@ -106,7 +106,6 @@ export function defaultMockCallAdapterState(
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false,
-
         captionsKind: 'Captions'
       },
       /* @conditional-compile-remove(rtt) */
@@ -594,6 +593,11 @@ const defaultEndedCallState: CallState = {
     startCaptionsInProgress: false,
 
     captionsKind: 'Captions'
+  },
+  /* @conditional-compile-remove(rtt) */
+  realTimeTextFeature: {
+    realTimeTexts: {},
+    isRealTimeTextFeatureActive: false
   },
   transfer: {
     acceptedTransfers: {}
