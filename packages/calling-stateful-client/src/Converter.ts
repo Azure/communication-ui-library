@@ -9,7 +9,10 @@ import {
   IncomingCall,
   IncomingCallCommon
 } from '@azure/communication-calling';
-
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo as ACSRealTimeTextInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeVideoStream as SdkTogetherModeVideoStream } from '@azure/communication-calling';
 import { TeamsIncomingCall } from '@azure/communication-calling';
@@ -118,7 +121,7 @@ export function convertSdkParticipantToDeclarativeParticipant(
     raisedHand: undefined,
     role: participant.role,
     spotlight: undefined,
-    /* @conditional-compile-remove(media-access) */ mediaAccess: undefined
+    mediaAccess: undefined
   };
 }
 
@@ -191,8 +194,12 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       currentSpokenLanguage: '',
       isCaptionsFeatureActive: false,
       startCaptionsInProgress: false,
-
       captionsKind: _isTeamsCall(call) ? 'TeamsCaptions' : 'Captions'
+    },
+    /* @conditional-compile-remove(rtt) */
+    realTimeTextFeature: {
+      realTimeTexts: {},
+      isRealTimeTextFeatureActive: false
     },
     transfer: {
       acceptedTransfers: {}
@@ -270,6 +277,18 @@ export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): Capt
   return {
     captionText: caption.spokenText,
     ...caption
+  };
+}
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
+export function convertFromSDKRealTimeTextToRealTimeTextInfoState(realTimeText: ACSRealTimeTextInfo): RealTimeTextInfo {
+  return {
+    id: realTimeText.sequenceId,
+    message: realTimeText.text,
+    isMe: realTimeText.isLocal,
+    ...realTimeText
   };
 }
 

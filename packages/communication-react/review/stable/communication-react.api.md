@@ -1651,6 +1651,7 @@ export interface CaptionsBannerProps {
 export type CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     captions: CaptionsInformation[];
     isCaptionsOn: boolean;
+    startCaptionsInProgress: boolean;
 };
 
 // @public
@@ -1683,6 +1684,7 @@ export type CaptionSettingsSelector = (state: CallClientState, props: CallingBas
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
+    lastUpdatedTimestamp?: Date;
     resultType: CaptionsResultType;
     speaker: CallerInfo;
     spokenLanguage: string;
