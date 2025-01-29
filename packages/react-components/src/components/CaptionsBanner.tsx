@@ -304,14 +304,14 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     return () => {
       captionsScrollDiv?.removeEventListener('scroll', handleScrollToTheBottom);
     };
-  }, [handleScrollToTheBottom, isCaptionsOn, isRealTimeTextOn]);
+  }, [handleScrollToTheBottom, isCaptionsOn, /* @conditional-compile-remove(rtt) */ isRealTimeTextOn]);
 
   useEffect(() => {
     // only auto scroll to bottom is already is at bottom of scroll before new caption comes in
     if (isAtBottomOfScroll) {
       scrollToBottom();
     }
-  }, [mergedCaptions, isAtBottomOfScroll]);
+  }, [captions, /* @conditional-compile-remove(rtt) */ realTimeTexts, isAtBottomOfScroll]);
   /* @conditional-compile-remove(rtt) */
   const [textFieldValue, setTextFieldValue] = useState<string>('');
   /* @conditional-compile-remove(rtt) */
