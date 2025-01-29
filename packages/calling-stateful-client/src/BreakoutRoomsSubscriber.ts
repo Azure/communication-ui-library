@@ -83,6 +83,7 @@ export class BreakoutRoomsSubscriber {
     }
 
     // TODO: Fix the condition in this if statement to check for different breakout room ID instead of the display name
+    // when Calling SDK fixes the breakout room call id to be correct
     if (
       breakoutRoom.state === 'open' &&
       callState.breakoutRooms?.breakoutRoomDisplayName &&
