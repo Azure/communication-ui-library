@@ -85,6 +85,7 @@ import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-cal
 import type { NetworkDiagnosticType } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantCapabilities } from '@azure/communication-calling';
+import { ParticipantInfo } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
@@ -95,6 +96,8 @@ import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import { Reaction as Reaction_2 } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
+import { RealTimeTextInfo as RealTimeTextInfo_2 } from '@azure/communication-calling';
+import { RealTimeTextResultType } from '@azure/communication-calling';
 import { RecordingInfo } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
@@ -474,6 +477,7 @@ export interface CallAdapterCallOperations {
     resumeCall(): Promise<void>;
     returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
+    sendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     // @beta
@@ -562,6 +566,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
@@ -584,6 +589,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
@@ -827,9 +833,11 @@ export interface CallCompositeStrings {
     cameraTurnedOff: string;
     capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
+    captionsAndRealTimeTextContainerTitle?: string;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
     captionsBannerSpinnerText?: string;
+    captionsOnlyContainerTitle?: string;
     captionsSettingsCancelButtonLabel?: string;
     captionsSettingsCaptionLanguageDropdownInfoText?: string;
     captionsSettingsCaptionLanguageDropdownLabel?: string;
@@ -866,6 +874,7 @@ export interface CallCompositeStrings {
     dialpadModalAriaLabel?: string;
     dialpadModalTitle?: string;
     dialpadStartCallButtonLabel?: string;
+    disabledStartRealTimeTextLabel?: string;
     dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialerButtonLabel?: string;
@@ -880,6 +889,7 @@ export interface CallCompositeStrings {
     endOfSurveyText: string;
     exitSpotlightButtonLabel: string;
     exitSpotlightButtonTooltip: string;
+    expandButtonAriaLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -923,6 +933,7 @@ export interface CallCompositeStrings {
     manyUnnamedParticipantsLeft: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
+    minimizeButtonAriaLabel?: string;
     moreButtonCallingLabel: string;
     moreButtonGalleryControlLabel?: string;
     moreButtonGalleryDefaultLayoutLabel?: string;
@@ -992,6 +1003,7 @@ export interface CallCompositeStrings {
     realTimeTextModalAriaLabel: string;
     realTimeTextModalText: string;
     realTimeTextModalTitle: string;
+    realTimeTextOnlyContainerTitle?: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
     removeBackgroundTooltip?: string;
@@ -1227,6 +1239,7 @@ export interface CallState {
     optimalVideoCount: OptimalVideoCountFeatureState;
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
+    realTimeTextFeature: RealTimeTextCallFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -1312,6 +1325,7 @@ export interface CallWithChatAdapterManagement {
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
+    sendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
@@ -1383,6 +1397,8 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     // (undocumented)
+    off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
+    // (undocumented)
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
     off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -1436,6 +1452,8 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     // (undocumented)
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    // (undocumented)
+    on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     // (undocumented)
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
@@ -1689,7 +1707,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | /* @conditional-compile-remove(rtt) */ 'realTimeTextReceived' | 'capabilitiesChanged' | 'spotlightChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -1900,17 +1918,30 @@ export interface CaptionsBannerProps {
 // @public
 export type CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     captions: CaptionsInformation[];
+    realTimeTexts: {
+        completedMessages?: RealTimeTextInformation[];
+        currentInProgress?: RealTimeTextInformation[];
+        myInProgress?: RealTimeTextInformation;
+    };
     isCaptionsOn: boolean;
+    startCaptionsInProgress: boolean;
+    isRealTimeTextOn: boolean;
+    latestLocalRealTimeText: RealTimeTextInformation;
 };
 
 // @public
 export interface CaptionsBannerStrings {
+    captionsAndRealTimeTextContainerTitle?: string;
     captionsBannerSpinnerText?: string;
+    captionsOnlyContainerTitle?: string;
+    expandButtonAriaLabel?: string;
+    minimizeButtonAriaLabel?: string;
     realTimeTextBannerContent?: string;
     realTimeTextBannerLinkLabel?: string;
     realTimeTextBannerTitle?: string;
     realTimeTextInputBoxDefaultText?: string;
     realTimeTextInputErrorMessage?: string;
+    realTimeTextOnlyContainerTitle?: string;
 }
 
 // @public (undocumented)
@@ -1938,6 +1969,7 @@ export type CaptionSettingsSelector = (state: CallClientState, props: CallingBas
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
+    lastUpdatedTimestamp?: Date;
     resultType: CaptionsResultType;
     speaker: CallerInfo;
     spokenLanguage: string;
@@ -2407,6 +2439,8 @@ export interface CommonCallingHandlers {
     onSelectSpeaker: (device: AudioDeviceInfo) => Promise<void>;
     // (undocumented)
     onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
+    // (undocumented)
+    onSendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
     // (undocumented)
     onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
@@ -3027,6 +3061,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
     NotificationBarTogetherModeIcon: React_2.JSX.Element;
     RealTimeTextIcon: React_2.JSX.Element;
+    ExpandIcon: React_2.JSX.Element;
+    MinimizeIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -3213,6 +3249,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
     NotificationBarTogetherModeIcon: React_2.JSX.Element;
     RealTimeTextIcon: React_2.JSX.Element;
+    ExpandIcon: React_2.JSX.Element;
+    MinimizeIcon: React_2.JSX.Element;
 };
 
 // @beta
@@ -4232,7 +4270,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent' | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent' | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted' | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
+export type NotificationTarget = /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpened' | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpenedPromptJoin' | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomJoined' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent' | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted' | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
@@ -4583,6 +4621,27 @@ export type ReadReceiptsBySenderId = {
 // @beta
 export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
 
+// @beta (undocumented)
+export interface RealTimeTextCallFeatureState {
+    isRealTimeTextFeatureActive?: boolean;
+    realTimeTexts: {
+        completedMessages?: RealTimeTextInfo[];
+        currentInProgress?: RealTimeTextInfo[];
+        myInProgress?: RealTimeTextInfo;
+    };
+}
+
+// @beta (undocumented)
+export interface RealTimeTextInfo {
+    id: number;
+    isMe?: boolean;
+    message: string;
+    receivedTimestamp?: Date;
+    resultType: RealTimeTextResultType;
+    sender: ParticipantInfo;
+    updatedTimestamp?: Date;
+}
+
 // @beta
 export type RealTimeTextInformation = {
     id: number;
@@ -4626,6 +4685,11 @@ export interface RealTimeTextProps {
     strings?: RealTimeTextStrings;
     userId?: string;
 }
+
+// @beta
+export type RealTimeTextReceivedListener = (event: {
+    realTimeText: RealTimeTextInfo_2;
+}) => void;
 
 // @beta
 export interface RealTimeTextStrings {
