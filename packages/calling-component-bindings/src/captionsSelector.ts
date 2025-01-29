@@ -232,7 +232,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     }
 
     return {
-      captions: (captionsInfo as CaptionsInformation[]) ?? [],
+      captions: captionsInfo ?? [],
       /* @conditional-compile-remove(rtt) */
       realTimeTexts: {
         completedMessages: completedRealTimeTexts as RealTimeTextInformation[],
