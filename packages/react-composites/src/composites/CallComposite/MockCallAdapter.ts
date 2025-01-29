@@ -319,7 +319,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false,
-
         captionsKind: 'Captions'
       },
       /* @conditional-compile-remove(rtt) */
