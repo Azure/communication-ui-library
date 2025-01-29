@@ -6,12 +6,7 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
-import {
-  VideoGalleryRemoteParticipant,
-  VideoGalleryStream,
-  /* @conditional-compile-remove(media-access) */
-  MediaAccess
-} from '@internal/react-components';
+import { VideoGalleryRemoteParticipant, VideoGalleryStream, MediaAccess } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _convertParticipantState, ParticipantConnectionState } from './callUtils';
 import { maskDisplayNameWithRole } from './callUtils';
@@ -78,9 +73,7 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.contentSharingStream,
             remoteParticipantReaction,
             spotlight,
-            /* @conditional-compile-remove(media-access) */
             participant.mediaAccess,
-            /* @conditional-compile-remove(media-access) */
             participant.role,
             /* @conditional-compile-remove(remote-ufd) */
             Math.max(
@@ -105,8 +98,8 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
     spotlight?: Spotlight,
-    mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess,
-    role?: undefined | /* @conditional-compile-remove(media-access) */ ParticipantRole,
+    mediaAccess?: MediaAccess,
+    role?: ParticipantRole,
     signalStrength?: undefined | /* @conditional-compile-remove(remote-ufd) */ number
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
@@ -140,8 +133,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   reaction?: Reaction,
   spotlight?: Spotlight,
   signalStrength?: undefined | /* @conditional-compile-remove(remote-ufd) */ number,
-  mediaAccess?: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess,
-  role?: undefined | /* @conditional-compile-remove(media-access) */ ParticipantRole
+  mediaAccess?: MediaAccess,
+  role?: ParticipantRole
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -185,11 +178,8 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     raisedHand,
     reaction,
     spotlight,
-    /* @conditional-compile-remove(media-access) */
     mediaAccess,
-    /* @conditional-compile-remove(media-access) */
     canAudioBeForbidden: role === 'Attendee',
-    /* @conditional-compile-remove(media-access) */
     canVideoBeForbidden: role === 'Attendee',
     /* @conditional-compile-remove(remote-ufd) */
     signalStrength
@@ -250,7 +240,6 @@ export const memoizeLocalParticipant = memoizeOne(
     reaction,
     spotlight: localSpotlight,
     capabilities,
-    /* @conditional-compile-remove(media-access) */
     mediaAccess: {
       isAudioPermitted: capabilities?.unmuteMic ? capabilities.unmuteMic.isPresent : true,
       isVideoPermitted: capabilities?.turnVideoOn ? capabilities.turnVideoOn.isPresent : true
