@@ -153,7 +153,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   let galleryContentWhenNotInCall = <></>;
   /* @conditional-compile-remove(breakout-rooms) */
-  if (_isInCall(callStatus) && breakoutRooms?.assignedBreakoutRoom) {
+  if (!_isInCall(callStatus) && breakoutRooms?.assignedBreakoutRoom) {
     galleryContentWhenNotInCall = (
       <VideoTile
         userId={toFlatCommunicationIdentifier(userId)}

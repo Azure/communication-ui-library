@@ -139,6 +139,8 @@ class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallContextState;
   private callId: string | undefined;
+  /* @conditional-compile-remove(breakout-rooms) */
+  private isReturningFromBreakoutRoom: boolean = false;
   private displayNameModifier: AdapterStateModifier | undefined;
 
   constructor(
@@ -251,6 +253,11 @@ class CallContext {
     this.setState({ ...this.state, targetCallees });
   }
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setIsReturningFromBreakoutRoom(isReturningFromBreakoutRoom: boolean): void {
+    this.isReturningFromBreakoutRoom = isReturningFromBreakoutRoom;
+  }
+
   public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
     this.emitter.on('callEnded', handler);
   }
@@ -275,14 +282,21 @@ class CallContext {
       : undefined;
     const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
-    const hasActiveCalls = clientState.calls ? Object.keys(clientState.calls).length > 0 : true;
+    /* @conditional-compile-remove(breakout-rooms) */
+    if (call?.state === 'Connected' || call?.state === 'Connecting') {
+      this.setIsReturningFromBreakoutRoom(false);
+    }
+
+    let isReturningFromBreakoutRoom = false;
+    /* @conditional-compile-remove(breakout-rooms) */
+    isReturningFromBreakoutRoom = this.isReturningFromBreakoutRoom;
 
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
       transferCall,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
-      hasActiveCalls
+      isReturningFromBreakoutRoom
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
@@ -1215,6 +1229,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         'Could not return from breakout room because assigned breakout room state could not be retrieved.'
       );
     }
+
+    this.context.setIsReturningFromBreakoutRoom(true);
 
     const mainMeeting = await assignedBreakoutRoom.returnToMainMeeting();
     this.originCall = mainMeeting;

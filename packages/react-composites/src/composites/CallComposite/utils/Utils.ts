@@ -292,7 +292,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
     environmentInfo?: EnvironmentInfo;
     unsupportedBrowserVersionOptedIn?: boolean;
   },
-  hasActiveCalls?: boolean
+  isReturningFromBreakoutRoom?: boolean
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (
@@ -310,11 +310,16 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
 
   /* @conditional-compile-remove(breakout-rooms) */
   if (
-    (call?.state === 'Disconnecting' || call?.state === 'Disconnected' || !call) &&
-    previousCall?.breakoutRooms?.assignedBreakoutRoom &&
-    hasActiveCalls
+    (call?.state === 'Disconnecting' || call?.state === 'Disconnected') &&
+    call?.breakoutRooms?.assignedBreakoutRoom
   ) {
-    return 'call';
+    if (isReturningFromBreakoutRoom) {
+      return 'call';
+    } else if (call?.state === 'Disconnecting') {
+      return 'leaving';
+    } else {
+      return 'leftCall';
+    }
   }
 
   if (call) {
