@@ -20,14 +20,10 @@ import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 
-import { CaptionsKind } from '@azure/communication-calling';
+import { CaptionsKind, CapabilitiesChangeInfo } from '@azure/communication-calling';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
-import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
-import { CallNotifications } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(media-access) */
-import { CapabilitiesChangeInfo } from '@azure/communication-calling';
+import { ConferencePhoneInfo, CallNotifications } from '@internal/calling-stateful-client';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeCallFeatureState } from '@internal/calling-stateful-client';
 /**
@@ -66,7 +62,6 @@ export const getCapabilities = (
   props: CallingBaseSelectorProps
 ): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesFeature?.capabilities;
 
-/* @conditional-compile-remove(media-access) */
 /**
  * @private
  */
@@ -184,7 +179,6 @@ export const getIdentifier = (state: CallClientState): string => toFlatCommunica
  */
 export const getLatestErrors = (state: CallClientState): CallErrors => state.latestErrors;
 
-/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /**
  * @private
  */
