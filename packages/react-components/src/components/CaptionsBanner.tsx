@@ -304,14 +304,14 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     return () => {
       captionsScrollDiv?.removeEventListener('scroll', handleScrollToTheBottom);
     };
-  }, [handleScrollToTheBottom, isCaptionsOn]);
+  }, [handleScrollToTheBottom, isCaptionsOn, isRealTimeTextOn]);
 
   useEffect(() => {
     // only auto scroll to bottom is already is at bottom of scroll before new caption comes in
     if (isAtBottomOfScroll) {
       scrollToBottom();
     }
-  }, [captions, isAtBottomOfScroll]);
+  }, [mergedCaptions, isAtBottomOfScroll]);
   /* @conditional-compile-remove(rtt) */
   const [textFieldValue, setTextFieldValue] = useState<string>('');
   /* @conditional-compile-remove(rtt) */
@@ -379,7 +379,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
 
   return (
     <>
-      {(startCaptionsInProgress || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
+      {(startCaptionsInProgress || isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
         <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
           {
             /* @conditional-compile-remove(rtt) */ (isCaptionsOn || isRealTimeTextOn) && formFactor === 'compact' && (
@@ -422,7 +422,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
           {
             /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && onSendRealTimeText && (
               <TextField
-                label={strings.realTimeTextInputBoxDefaultText}
+                placeholder={strings.realTimeTextInputBoxDefaultText}
                 value={textFieldValue}
                 onKeyDown={handleKeyDown}
                 onChange={(_, newValue) => {

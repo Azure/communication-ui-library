@@ -1,11 +1,14 @@
-import { RealTimeTextModal } from '@internal/react-components';
+import { RealTimeTextModal } from '@azure/communication-react';
 import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
 import * as RealTimeTextModalStories from './index.stories';
 import RealTimeTextModalExampleText from '!!raw-loader!./snippets/RealTimeTextModal.snippet.tsx';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
 
 <Meta of={RealTimeTextModalStories} />
 
-# RealTimeText Modal
+# RealTimeTextModal
+
+<SingleLineBetaBanner />
 
 A component for displaying a modal showing contents related to RealTimeText
 

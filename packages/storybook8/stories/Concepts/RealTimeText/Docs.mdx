@@ -1,0 +1,62 @@
+import { Stack, PrimaryButton } from '@fluentui/react';
+import { Meta, Source } from '@storybook/addon-docs';
+import { overviewPageImagesStackStyle } from '../../constants';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+
+<Meta title="Concepts/Real-Time Text" />
+
+# Real-Time Text
+
+<SingleLineBetaBanner />
+
+Azure Communication Services UI Library is adding support for Real-Time Text. Real-Time Text is a powerful tool that enables developers to enhance the accessibility of their videos.
+Real-Time Text (RTT) is a new accessibility feature that enables live transmission of text as it is typed, enhancing communication during voice and video calls. RTT displays text instantly, character by character, creating a natural and dynamic communication experience that mirrors spoken conversation.
+
+Real-Time Text is supported by default and are automatically included within the CallComposite and CallWithChatComposite experiences.
+
+Real-Time Text is also supported for component only users.
+
+List of components exported for Real-Time Text:
+
+[RealTimeText](./?path=/docs/components-real-time-text--docs) is a single line of Real Time Text Message. It will display an 'isTyping' badge when the real time text message is still ongoing.
+
+[RealTimeTextModal](./?path=/docs/components-real-time-text-modal--docs) is a component showing a disclaimer warning that real time text is enabled for everyone in the call once turned on. This is important as real time text can not be turned off once it is started.
+
+[StartRealTimeTextButton](./?path=/docs/components-start-real-time-text-button--docs) is a component that can be used to turn on real time text. Note that Real-Time Text will not be started for everyone in the call until a message is sent.
+
+[CaptionsBanner](./?path=/docs/components-captions-banner--docs) is a component that combines and displays captions and real time text in one banner. Developers and use 'usePropsFor' to gather all the information required to power this component, including the list of real time text and captions messages in the call. User can also use this component for captions only or real time text only.
+
+## How to use Real-Time Text
+
+Real-Time Text is automatically included within the CallComposite and CallWithChatComposite experiences.
+
+To turn on Real-Time Text, users need to navigate to the control bar after call is connected, and click on more button. Inside the menu pop up, click on Real-Time Text, then click on Turn on RTT for this call.
+
+Note that Real-Time Text will be enabled for all participants in the call once the first message is sent. It cannot be turned off.
+
+<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
+  <Stack.Item align="center">
+    <>Using the more menu to turn on Real-Time Text</>
+    <img
+      style={{ width: '100%' }}
+      src="images/StartRTT.png"
+      alt="example of component that can be used for starting RTT"
+    />
+  </Stack.Item>
+  <Stack.Item align="center">
+    <>Real-Time Text Modal showing the disclaimer warning</>
+    <img
+      style={{ width: '100%' }}
+      src="images/RTTModal.png"
+      alt="example of component that can be used for showing a disclaimer warning that real time text is enabled for everyone in the call once turned on"
+    />
+  </Stack.Item>
+  <Stack.Item align="center">
+    <>Captions Banner with Real-Time Text Enabled</>
+    <img
+      style={{ width: '100%' }}
+      src="images/CaptionsBannerRTT.png"
+      alt="example of Captions Banner with Real-Time Text Enabled"
+    />
+  </Stack.Item>
+</Stack>

@@ -1,0 +1,22 @@
+import { StartRealTimeTextButton } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as StartRealTimeTextButtonStories from './index.stories';
+import StartRealTimeTextButtonExampleText from '!!raw-loader!./snippets/StartRealTimeTextButton.snippet.tsx';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+
+<Meta of={StartRealTimeTextButtonStories} />
+
+# StartRealTimeTextButton
+
+<SingleLineBetaBanner />
+
+A component to show Real Time Text UI locally. Note that real time text will only be started for everyone in the call when the first message is sent.
+
+<Canvas
+  of={StartRealTimeTextButtonStories.StartRealTimeTextButton}
+  source={{ code: StartRealTimeTextButtonExampleText }}
+/>
+
+## Props
+
+<ArgTypes of={StartRealTimeTextButton} />
