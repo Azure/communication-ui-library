@@ -154,7 +154,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     identifier
   ) => {
     const captionsInfo = captions?.map((c, index) => {
-      const userId = getCaptionsSpeakerIdentifier(c as CaptionsInfo);
+      const userId = getCaptionsSpeakerIdentifier(c);
       let finalDisplayName;
       if (userId === identifier) {
         finalDisplayName = displayName;
