@@ -179,7 +179,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
       .map((rtt) => {
         const userId = getRealTimeTextSpeakerIdentifier(rtt);
         return {
-          id: rtt.id,
+          id: rtt.sequenceId,
           displayName: getRealTimeTextDisplayName(rtt, identifier, remoteParticipants, displayName, userId),
           message: rtt.message,
           userId,
@@ -194,7 +194,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
       .map((rtt) => {
         const userId = getRealTimeTextSpeakerIdentifier(rtt);
         return {
-          id: rtt.id,
+          id: rtt.sequenceId,
           displayName: getRealTimeTextDisplayName(rtt, identifier, remoteParticipants, displayName, userId),
           message: rtt.message,
           userId,
@@ -207,7 +207,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     const myInProgress =
       realTimeTexts?.myInProgress && realTimeTexts.myInProgress.message !== ''
         ? {
-            id: realTimeTexts.myInProgress.id,
+            id: realTimeTexts.myInProgress.sequenceId,
             displayName: displayName,
             message: realTimeTexts.myInProgress.message,
             userId: identifier,

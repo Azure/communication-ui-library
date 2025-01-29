@@ -285,7 +285,6 @@ export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): Capt
  */
 export function convertFromSDKRealTimeTextToRealTimeTextInfoState(realTimeText: ACSRealTimeTextInfo): RealTimeTextInfo {
   return {
-    id: realTimeText.sequenceId,
     message: realTimeText.text,
     isMe: realTimeText.isLocal,
     ...realTimeText
