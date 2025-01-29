@@ -1200,7 +1200,7 @@ export class CallContext {
         realTimeTexts.myInProgress = undefined;
       } else {
         realTimeTexts.currentInProgress = realTimeTexts.currentInProgress?.filter(
-          (message) => message.id !== newRealTimeText.id
+          (message) => message.sequenceId !== newRealTimeText.sequenceId
         );
       }
     } else {
@@ -1219,7 +1219,7 @@ export class CallContext {
         // find the index of the existing in progress message
         // replace the existing in progress message with the new one
         const existingIndex = realTimeTexts.currentInProgress?.findIndex(
-          (message) => message.id === newRealTimeText.id
+          (message) => message.sequenceId === newRealTimeText.sequenceId
         );
         if (existingIndex === -1) {
           realTimeTexts.currentInProgress?.push(newRealTimeText);
