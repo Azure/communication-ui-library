@@ -1,5 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+
 /* @conditional-compile-remove(rtt) */
 import { RealTimeTextFeature, RealTimeTextInfo, RealTimeTextReceivedEventHandler } from '@azure/communication-calling';
 /* @conditional-compile-remove(rtt) */
