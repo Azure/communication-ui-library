@@ -552,7 +552,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const leavePageStyle = useMemo(() => leavingPageStyle(palette), [palette]);
   let pageElement: JSX.Element | undefined;
   const [pinnedParticipants, setPinnedParticipants] = useState<string[]>([]);
-
   switch (page) {
     case 'configuration':
       pageElement = (

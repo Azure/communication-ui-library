@@ -31,7 +31,13 @@ export const BreakoutRoomsBanner = (props: {
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
   const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
 
-  if (assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && assignedBreakoutRoom.call) {
+  if (
+    assignedBreakoutRoom &&
+    assignedBreakoutRoom.state === 'open' &&
+    // Breakout room settings are only defined in a breakout room so we use this to ensure
+    // the button is not shown when already in a breakout room
+    !breakoutRoomSettings
+  ) {
     return (
       <Stack styles={bannerNotificationStyles}>
         <Banner

@@ -417,6 +417,8 @@ export const CommonCallControlBar = forwardRef<FocusableElement, CommonCallContr
                         !props.mobileView &&
                           assignedBreakoutRoom &&
                           assignedBreakoutRoom.state === 'open' &&
+                          // Breakout room settings are only defined in a breakout room so we use this to ensure
+                          // the button is not shown when already in a breakout room
                           !breakoutRoomSettings && (
                             <PrimaryButton
                               text={callStrings.joinBreakoutRoomButtonLabel}

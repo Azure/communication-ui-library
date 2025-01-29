@@ -472,9 +472,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
       this.targetCallees
     );
 
-    this.context.onCallEnded((endCallData) => {
-      this.emitter.emit('callEnded', endCallData);
-    });
+    this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
     const onStateChange = (clientState: CallClientState): void => {
       // unsubscribe when the instance gets disposed

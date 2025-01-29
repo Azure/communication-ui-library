@@ -364,13 +364,9 @@ export interface BlockedMessage extends MessageCommon {
 
 // @public
 export interface BreakoutRoomsState {
-    // (undocumented)
     assignedBreakoutRoom?: BreakoutRoom;
-    // (undocumented)
     breakoutRoomDisplayName?: string;
-    // (undocumented)
     breakoutRoomOriginCallId?: string;
-    // (undocumented)
     breakoutRoomSettings?: BreakoutRoomsSettings;
 }
 

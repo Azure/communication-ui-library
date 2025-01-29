@@ -268,7 +268,7 @@ type GetCallCompositePageFunction = ((
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
     },
-    hasActiveCalls?: boolean
+    isReturningFromBreakoutRoom?: boolean
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
