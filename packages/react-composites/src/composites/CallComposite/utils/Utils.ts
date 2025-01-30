@@ -264,11 +264,11 @@ type GetCallCompositePageFunction = ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
     transferCall?: CallState,
+    isReturningFromBreakoutRoom?: boolean,
     /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
-    },
-    isReturningFromBreakoutRoom?: boolean
+    }
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -287,12 +287,12 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall?,
   transferCall?: CallState,
+  isReturningFromBreakoutRoom?: boolean,
   unsupportedBrowserInfo?: {
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo?: EnvironmentInfo;
     unsupportedBrowserVersionOptedIn?: boolean;
-  },
-  isReturningFromBreakoutRoom?: boolean
+  }
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (

@@ -299,8 +299,8 @@ class CallContext {
       call,
       latestEndedCall,
       transferCall,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo,
-      isReturningFromBreakoutRoom
+      isReturningFromBreakoutRoom,
+      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
       this.emitter.emit('callEnded', { callId: this.callId });
