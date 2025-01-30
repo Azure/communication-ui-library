@@ -124,8 +124,8 @@ test.describe('Captions buttons in call control', () => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
+      initialState.call.capabilitiesFeature.setCaptionLanguage = true;
       initialState.call.captionsFeature = captionsFeatureState;
-
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
