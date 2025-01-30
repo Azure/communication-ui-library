@@ -46,7 +46,7 @@
     "@internal/calling-stateful-client": "1.24.0-beta.0",
     "@internal/react-components": "1.24.0-beta.0",
     "@internal/react-composites": "1.24.0-beta.0",
-    "@fluentui/react": "^8.121.11",
+    "@fluentui/react": "^8.122.9",
     "@fluentui/react-file-type-icons": "8.12.7",
     "@fluentui/react-icons": "^2.0.270",
     "merge": "^2.1.1",
