@@ -351,7 +351,6 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
         if (previousCall.diagnostics.network.latest.noNetwork) {
           return 'joinCallFailedDueToNoNetwork';
         }
-        console.log('DEBUGV LEFT CALL 2');
         return 'leftCall';
     }
   }
