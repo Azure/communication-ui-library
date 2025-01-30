@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { RealTimeText } from '@internal/react-components';
+import { RealTimeText } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
 import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 import { ExampleRealTimeText } from './snippets/ExampleRealTimeText.snippet';
@@ -13,7 +13,7 @@ export const ExampleRealTimeTextExampleDocsOnly = {
 export { RealTimeText } from './RealTimeText.story';
 
 const meta: Meta = {
-  title: 'Components/Internal/Real Time Text',
+  title: 'Components/Real Time Text',
   component: RealTimeText,
   argTypes: {
     isTyping: controlsToAdd.isRTTTyping,
@@ -22,7 +22,8 @@ const meta: Meta = {
     id: hiddenControl,
     onRenderAvatar: hiddenControl,
     strings: hiddenControl,
-    userId: hiddenControl
+    userId: hiddenControl,
+    isMe: hiddenControl
   }
 };
 

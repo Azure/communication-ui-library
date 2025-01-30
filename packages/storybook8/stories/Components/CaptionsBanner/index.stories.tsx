@@ -3,7 +3,7 @@
 
 import { CaptionsBanner } from '@azure/communication-react';
 import { Meta } from '@storybook/react';
-import { hiddenControl } from '../../controlsUtils';
+import { controlsToAdd, hiddenControl } from '../../controlsUtils';
 
 export { CaptionsBanner } from './CaptionsBanner.story';
 
@@ -13,15 +13,21 @@ const meta: Meta = {
   argTypes: {
     captions: hiddenControl,
     realTimeTexts: hiddenControl,
-    isCaptionsOn: hiddenControl,
-    startCaptionsInProgress: hiddenControl,
     strings: hiddenControl,
     onRenderAvatar: hiddenControl,
-    formFactor: hiddenControl,
     captionsOptions: hiddenControl,
-    isRealTimeTextOn: hiddenControl,
     onSendRealTimeText: hiddenControl,
-    latestLocalRealTimeText: hiddenControl
+    latestLocalRealTimeText: hiddenControl,
+    isCaptionsOn: controlsToAdd.isCaptionsOn,
+    formFactor: controlsToAdd.captionsFormFactor,
+    isRealTimeTextOn: controlsToAdd.isRealTimeTextOn,
+    startCaptionsInProgress: controlsToAdd.startCaptionsInProgress
+  },
+  args: {
+    isCaptionsOn: true,
+    formFactor: 'default',
+    isRealTimeTextOn: true,
+    startCaptionsInProgress: false
   }
 };
 
