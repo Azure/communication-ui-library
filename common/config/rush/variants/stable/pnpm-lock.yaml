@@ -4895,7 +4895,7 @@ packages:
     resolution: {integrity: sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==}
     dev: false
 
-  /@rollup/plugin-commonjs@25.0.8(rollup@4.32.0):
+  /@rollup/plugin-commonjs@25.0.8(rollup@4.32.1):
     resolution: {integrity: sha512-ZEZWTK5n6Qde0to4vS9Mr5x/0UZoqCxPVR9KRUjU4kA2sO7GEUn1fop0DAwpO6z0Nw/kJON9bDmSxdWxO/TT1A==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -4904,16 +4904,16 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@rollup/pluginutils': 5.1.4(rollup@4.32.0)
+      '@rollup/pluginutils': 5.1.4(rollup@4.32.1)
       commondir: 1.0.1
       estree-walker: 2.0.2
       glob: 8.1.0
       is-reference: 1.2.1
       magic-string: 0.30.17
-      rollup: 4.32.0
+      rollup: 4.32.1
     dev: false
 
-  /@rollup/plugin-json@6.1.0(rollup@4.32.0):
+  /@rollup/plugin-json@6.1.0(rollup@4.32.1):
     resolution: {integrity: sha512-EGI2te5ENk1coGeADSIwZ7G2Q8CJS2sF120T7jLw4xFw9n7wIOXHo+kIYRAoVpJAN+kmqZSoO3Fp4JtoNF4ReA==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -4922,11 +4922,11 @@ packages:
       rollup:
         optional: true
     dependencies:
-      '@rollup/pluginutils': 5.1.4(rollup@4.32.0)
-      rollup: 4.32.0
+      '@rollup/pluginutils': 5.1.4(rollup@4.32.1)
+      rollup: 4.32.1
     dev: false
 
-  /@rollup/pluginutils@3.1.0(rollup@4.32.0):
+  /@rollup/pluginutils@3.1.0(rollup@4.32.1):
     resolution: {integrity: sha512-GksZ6pr6TpIjHm8h9lSQ8pi8BE9VeubNT0OMJ3B5uZJ8pz73NPiqOtCog/x2/QzM1ENChPKxMDhiQuRHsqc+lg==}
     engines: {node: '>= 8.0.0'}
     peerDependencies:
@@ -4935,10 +4935,10 @@ packages:
       '@types/estree': 0.0.39
       estree-walker: 1.0.1
       picomatch: 2.3.1
-      rollup: 4.32.0
+      rollup: 4.32.1
     dev: false
 
-  /@rollup/pluginutils@5.1.4(rollup@4.32.0):
+  /@rollup/pluginutils@5.1.4(rollup@4.32.1):
     resolution: {integrity: sha512-USm05zrsFxYLPdWWq+K3STlWiT/3ELn3RcV5hJMghpeAIhxfsUIg6mt12CBJBInWMV4VneoV7SfGv8xIwo2qNQ==}
     engines: {node: '>=14.0.0'}
     peerDependencies:
@@ -4950,155 +4950,155 @@ packages:
       '@types/estree': 1.0.6
       estree-walker: 2.0.2
       picomatch: 4.0.2
-      rollup: 4.32.0
+      rollup: 4.32.1
     dev: false
 
-  /@rollup/rollup-android-arm-eabi@4.32.0:
-    resolution: {integrity: sha512-G2fUQQANtBPsNwiVFg4zKiPQyjVKZCUdQUol53R8E71J7AsheRMV/Yv/nB8giOcOVqP7//eB5xPqieBYZe9bGg==}
+  /@rollup/rollup-android-arm-eabi@4.32.1:
+    resolution: {integrity: sha512-/pqA4DmqyCm8u5YIDzIdlLcEmuvxb0v8fZdFhVMszSpDTgbQKdw3/mB3eMUHIbubtJ6F9j+LtmyCnHTEqIHyzA==}
     cpu: [arm]
     os: [android]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-android-arm64@4.32.0:
-    resolution: {integrity: sha512-qhFwQ+ljoymC+j5lXRv8DlaJYY/+8vyvYmVx074zrLsu5ZGWYsJNLjPPVJJjhZQpyAKUGPydOq9hRLLNvh1s3A==}
+  /@rollup/rollup-android-arm64@4.32.1:
+    resolution: {integrity: sha512-If3PDskT77q7zgqVqYuj7WG3WC08G1kwXGVFi9Jr8nY6eHucREHkfpX79c0ACAjLj3QIWKPJR7w4i+f5EdLH5Q==}
     cpu: [arm64]
     os: [android]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-darwin-arm64@4.32.0:
-    resolution: {integrity: sha512-44n/X3lAlWsEY6vF8CzgCx+LQaoqWGN7TzUfbJDiTIOjJm4+L2Yq+r5a8ytQRGyPqgJDs3Rgyo8eVL7n9iW6AQ==}
+  /@rollup/rollup-darwin-arm64@4.32.1:
+    resolution: {integrity: sha512-zCpKHioQ9KgZToFp5Wvz6zaWbMzYQ2LJHQ+QixDKq52KKrF65ueu6Af4hLlLWHjX1Wf/0G5kSJM9PySW9IrvHA==}
     cpu: [arm64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-darwin-x64@4.32.0:
-    resolution: {integrity: sha512-F9ct0+ZX5Np6+ZDztxiGCIvlCaW87HBdHcozUfsHnj1WCUTBUubAoanhHUfnUHZABlElyRikI0mgcw/qdEm2VQ==}
+  /@rollup/rollup-darwin-x64@4.32.1:
+    resolution: {integrity: sha512-sFvF+t2+TyUo/ZQqUcifrJIgznx58oFZbdHS9TvHq3xhPVL9nOp+yZ6LKrO9GWTP+6DbFtoyLDbjTpR62Mbr3Q==}
     cpu: [x64]
     os: [darwin]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-freebsd-arm64@4.32.0:
-    resolution: {integrity: sha512-JpsGxLBB2EFXBsTLHfkZDsXSpSmKD3VxXCgBQtlPcuAqB8TlqtLcbeMhxXQkCDv1avgwNjF8uEIbq5p+Cee0PA==}
+  /@rollup/rollup-freebsd-arm64@4.32.1:
+    resolution: {integrity: sha512-NbOa+7InvMWRcY9RG+B6kKIMD/FsnQPH0MWUvDlQB1iXnF/UcKSudCXZtv4lW+C276g3w5AxPbfry5rSYvyeYA==}
     cpu: [arm64]
     os: [freebsd]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-freebsd-x64@4.32.0:
-    resolution: {integrity: sha512-wegiyBT6rawdpvnD9lmbOpx5Sph+yVZKHbhnSP9MqUEDX08G4UzMU+D87jrazGE7lRSyTRs6NEYHtzfkJ3FjjQ==}
+  /@rollup/rollup-freebsd-x64@4.32.1:
+    resolution: {integrity: sha512-JRBRmwvHPXR881j2xjry8HZ86wIPK2CcDw0EXchE1UgU0ubWp9nvlT7cZYKc6bkypBt745b4bglf3+xJ7hXWWw==}
     cpu: [x64]
     os: [freebsd]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-linux-arm-gnueabihf@4.32.0:
-    resolution: {integrity: sha512-3pA7xecItbgOs1A5H58dDvOUEboG5UfpTq3WzAdF54acBbUM+olDJAPkgj1GRJ4ZqE12DZ9/hNS2QZk166v92A==}
+  /@rollup/rollup-linux-arm-gnueabihf@4.32.1:
+    resolution: {integrity: sha512-PKvszb+9o/vVdUzCCjL0sKHukEQV39tD3fepXxYrHE3sTKrRdCydI7uldRLbjLmDA3TFDmh418XH19NOsDRH8g==}
     cpu: [arm]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-linux-arm-musleabihf@4.32.0:
-    resolution: {integrity: sha512-Y7XUZEVISGyge51QbYyYAEHwpGgmRrAxQXO3siyYo2kmaj72USSG8LtlQQgAtlGfxYiOwu+2BdbPjzEpcOpRmQ==}
+  /@rollup/rollup-linux-arm-musleabihf@4.32.1:
+    resolution: {integrity: sha512-9WHEMV6Y89eL606ReYowXuGF1Yb2vwfKWKdD1A5h+OYnPZSJvxbEjxTRKPgi7tkP2DSnW0YLab1ooy+i/FQp/Q==}
     cpu: [arm]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-linux-arm64-gnu@4.32.0:
-    resolution: {integrity: sha512-r7/OTF5MqeBrZo5omPXcTnjvv1GsrdH8a8RerARvDFiDwFpDVDnJyByYM/nX+mvks8XXsgPUxkwe/ltaX2VH7w==}
+  /@rollup/rollup-linux-arm64-gnu@4.32.1:
+    resolution: {integrity: sha512-tZWc9iEt5fGJ1CL2LRPw8OttkCBDs+D8D3oEM8mH8S1ICZCtFJhD7DZ3XMGM8kpqHvhGUTvNUYVDnmkj4BDXnw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-linux-arm64-musl@4.32.0:
-    resolution: {integrity: sha512-HJbifC9vex9NqnlodV2BHVFNuzKL5OnsV2dvTw6e1dpZKkNjPG6WUq+nhEYV6Hv2Bv++BXkwcyoGlXnPrjAKXw==}
+  /@rollup/rollup-linux-arm64-musl@4.32.1:
+    resolution: {integrity: sha512-FTYc2YoTWUsBz5GTTgGkRYYJ5NGJIi/rCY4oK/I8aKowx1ToXeoVVbIE4LGAjsauvlhjfl0MYacxClLld1VrOw==}
     cpu: [arm64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-linux-loongarch64-gnu@4.32.0:
-    resolution: {integrity: sha512-VAEzZTD63YglFlWwRj3taofmkV1V3xhebDXffon7msNz4b14xKsz7utO6F8F4cqt8K/ktTl9rm88yryvDpsfOw==}
+  /@rollup/rollup-linux-loongarch64-gnu@4.32.1:
+    resolution: {integrity: sha512-F51qLdOtpS6P1zJVRzYM0v6MrBNypyPEN1GfMiz0gPu9jN8ScGaEFIZQwteSsGKg799oR5EaP7+B2jHgL+d+Kw==}
     cpu: [loong64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-linux-powerpc64le-gnu@4.32.0:
-    resolution: {integrity: sha512-Sts5DST1jXAc9YH/iik1C9QRsLcCoOScf3dfbY5i4kH9RJpKxiTBXqm7qU5O6zTXBTEZry69bGszr3SMgYmMcQ==}
+  /@rollup/rollup-linux-powerpc64le-gnu@4.32.1:
+    resolution: {integrity: sha512-wO0WkfSppfX4YFm5KhdCCpnpGbtgQNj/tgvYzrVYFKDpven8w2N6Gg5nB6w+wAMO3AIfSTWeTjfVe+uZ23zAlg==}
     cpu: [ppc64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-linux-riscv64-gnu@4.32.0:
-    resolution: {integrity: sha512-qhlXeV9AqxIyY9/R1h1hBD6eMvQCO34ZmdYvry/K+/MBs6d1nRFLm6BOiITLVI+nFAAB9kUB6sdJRKyVHXnqZw==}
+  /@rollup/rollup-linux-riscv64-gnu@4.32.1:
+    resolution: {integrity: sha512-iWswS9cIXfJO1MFYtI/4jjlrGb/V58oMu4dYJIKnR5UIwbkzR0PJ09O0PDZT0oJ3LYWXBSWahNf/Mjo6i1E5/g==}
     cpu: [riscv64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-linux-s390x-gnu@4.32.0:
-    resolution: {integrity: sha512-8ZGN7ExnV0qjXa155Rsfi6H8M4iBBwNLBM9lcVS+4NcSzOFaNqmt7djlox8pN1lWrRPMRRQ8NeDlozIGx3Omsw==}
+  /@rollup/rollup-linux-s390x-gnu@4.32.1:
+    resolution: {integrity: sha512-RKt8NI9tebzmEthMnfVgG3i/XeECkMPS+ibVZjZ6mNekpbbUmkNWuIN2yHsb/mBPyZke4nlI4YqIdFPgKuoyQQ==}
     cpu: [s390x]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-linux-x64-gnu@4.32.0:
-    resolution: {integrity: sha512-VDzNHtLLI5s7xd/VubyS10mq6TxvZBp+4NRWoW+Hi3tgV05RtVm4qK99+dClwTN1McA6PHwob6DEJ6PlXbY83A==}
+  /@rollup/rollup-linux-x64-gnu@4.32.1:
+    resolution: {integrity: sha512-WQFLZ9c42ECqEjwg/GHHsouij3pzLXkFdz0UxHa/0OM12LzvX7DzedlY0SIEly2v18YZLRhCRoHZDxbBSWoGYg==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-linux-x64-musl@4.32.0:
-    resolution: {integrity: sha512-qcb9qYDlkxz9DxJo7SDhWxTWV1gFuwznjbTiov289pASxlfGbaOD54mgbs9+z94VwrXtKTu+2RqwlSTbiOqxGg==}
+  /@rollup/rollup-linux-x64-musl@4.32.1:
+    resolution: {integrity: sha512-BLoiyHDOWoS3uccNSADMza6V6vCNiphi94tQlVIL5de+r6r/CCQuNnerf+1g2mnk2b6edp5dk0nhdZ7aEjOBsA==}
     cpu: [x64]
     os: [linux]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-win32-arm64-msvc@4.32.0:
-    resolution: {integrity: sha512-pFDdotFDMXW2AXVbfdUEfidPAk/OtwE/Hd4eYMTNVVaCQ6Yl8et0meDaKNL63L44Haxv4UExpv9ydSf3aSayDg==}
+  /@rollup/rollup-win32-arm64-msvc@4.32.1:
+    resolution: {integrity: sha512-w2l3UnlgYTNNU+Z6wOR8YdaioqfEnwPjIsJ66KxKAf0p+AuL2FHeTX6qvM+p/Ue3XPBVNyVSfCrfZiQh7vZHLQ==}
     cpu: [arm64]
     os: [win32]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-win32-ia32-msvc@4.32.0:
-    resolution: {integrity: sha512-/TG7WfrCAjeRNDvI4+0AAMoHxea/USWhAzf9PVDFHbcqrQ7hMMKp4jZIy4VEjk72AAfN5k4TiSMRXRKf/0akSw==}
+  /@rollup/rollup-win32-ia32-msvc@4.32.1:
+    resolution: {integrity: sha512-Am9H+TGLomPGkBnaPWie4F3x+yQ2rr4Bk2jpwy+iV+Gel9jLAu/KqT8k3X4jxFPW6Zf8OMnehyutsd+eHoq1WQ==}
     cpu: [ia32]
     os: [win32]
     requiresBuild: true
     dev: false
     optional: true
 
-  /@rollup/rollup-win32-x64-msvc@4.32.0:
-    resolution: {integrity: sha512-5hqO5S3PTEO2E5VjCePxv40gIgyS2KvO7E7/vvC/NbIW4SIRamkMr1hqj+5Y67fbBWv/bQLB6KelBQmXlyCjWA==}
+  /@rollup/rollup-win32-x64-msvc@4.32.1:
+    resolution: {integrity: sha512-ar80GhdZb4DgmW3myIS9nRFYcpJRSME8iqWgzH2i44u+IdrzmiXVxeFnExQ5v4JYUSpg94bWjevMG8JHf1Da5Q==}
     cpu: [x64]
     os: [win32]
     requiresBuild: true
@@ -7084,10 +7084,8 @@ packages:
       ajv: 8.13.0
     dev: false
 
-  /ajv-formats@2.1.1(ajv@8.17.1):
+  /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependencies:
-      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -9690,8 +9688,8 @@ packages:
       - supports-color
     dev: false
 
-  /eslint-plugin-prettier@5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2):
-    resolution: {integrity: sha512-gH3iR3g4JfF+yYPaJYkN7jEl9QbweL/YfkoRlNnuIEHEz1vHVlCmWOS+eGGiRuzHQXdJFCOTxRgvju9b8VUmrw==}
+  /eslint-plugin-prettier@5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2):
+    resolution: {integrity: sha512-qJ+y0FfCp/mQYQ/vWQ3s7eUlFEL4PyKfAJxsnYTJ4YT73nsJBWqmEpFryxV9OeUiqmsTsYJ5Y+KDNaeP31wrRw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       '@types/eslint': '>=8.0.0'
@@ -15229,7 +15227,7 @@ packages:
       glob: 7.2.3
     dev: false
 
-  /rollup-plugin-sourcemaps@0.6.3(@types/node@22.10.10)(rollup@4.32.0):
+  /rollup-plugin-sourcemaps@0.6.3(@types/node@22.10.10)(rollup@4.32.1):
     resolution: {integrity: sha512-paFu+nT1xvuO1tPFYXGe+XnQvg4Hjqv/eIhG8i5EspfYYPBKL57X7iVbfv55aNVASg3dzWvES9dmWsL2KhfByw==}
     engines: {node: '>=10.0.0'}
     peerDependencies:
@@ -15239,9 +15237,9 @@ packages:
       '@types/node':
         optional: true
     dependencies:
-      '@rollup/pluginutils': 3.1.0(rollup@4.32.0)
+      '@rollup/pluginutils': 3.1.0(rollup@4.32.1)
       '@types/node': 22.10.10
-      rollup: 4.32.0
+      rollup: 4.32.1
       source-map-resolve: 0.6.0
     dev: false
 
@@ -15258,32 +15256,32 @@ packages:
       minimatch: 3.1.2
     dev: false
 
-  /rollup@4.32.0:
-    resolution: {integrity: sha512-JmrhfQR31Q4AuNBjjAX4s+a/Pu/Q8Q9iwjWBsjRH1q52SPFE2NqRMK6fUZKKnvKO6id+h7JIRf0oYsph53eATg==}
+  /rollup@4.32.1:
+    resolution: {integrity: sha512-z+aeEsOeEa3mEbS1Tjl6sAZ8NE3+AalQz1RJGj81M+fizusbdDMoEJwdJNHfaB40Scr4qNu+welOfes7maKonA==}
     engines: {node: '>=18.0.0', npm: '>=8.0.0'}
     hasBin: true
     dependencies:
       '@types/estree': 1.0.6
     optionalDependencies:
-      '@rollup/rollup-android-arm-eabi': 4.32.0
-      '@rollup/rollup-android-arm64': 4.32.0
-      '@rollup/rollup-darwin-arm64': 4.32.0
-      '@rollup/rollup-darwin-x64': 4.32.0
-      '@rollup/rollup-freebsd-arm64': 4.32.0
-      '@rollup/rollup-freebsd-x64': 4.32.0
-      '@rollup/rollup-linux-arm-gnueabihf': 4.32.0
-      '@rollup/rollup-linux-arm-musleabihf': 4.32.0
-      '@rollup/rollup-linux-arm64-gnu': 4.32.0
-      '@rollup/rollup-linux-arm64-musl': 4.32.0
-      '@rollup/rollup-linux-loongarch64-gnu': 4.32.0
-      '@rollup/rollup-linux-powerpc64le-gnu': 4.32.0
-      '@rollup/rollup-linux-riscv64-gnu': 4.32.0
-      '@rollup/rollup-linux-s390x-gnu': 4.32.0
-      '@rollup/rollup-linux-x64-gnu': 4.32.0
-      '@rollup/rollup-linux-x64-musl': 4.32.0
-      '@rollup/rollup-win32-arm64-msvc': 4.32.0
-      '@rollup/rollup-win32-ia32-msvc': 4.32.0
-      '@rollup/rollup-win32-x64-msvc': 4.32.0
+      '@rollup/rollup-android-arm-eabi': 4.32.1
+      '@rollup/rollup-android-arm64': 4.32.1
+      '@rollup/rollup-darwin-arm64': 4.32.1
+      '@rollup/rollup-darwin-x64': 4.32.1
+      '@rollup/rollup-freebsd-arm64': 4.32.1
+      '@rollup/rollup-freebsd-x64': 4.32.1
+      '@rollup/rollup-linux-arm-gnueabihf': 4.32.1
+      '@rollup/rollup-linux-arm-musleabihf': 4.32.1
+      '@rollup/rollup-linux-arm64-gnu': 4.32.1
+      '@rollup/rollup-linux-arm64-musl': 4.32.1
+      '@rollup/rollup-linux-loongarch64-gnu': 4.32.1
+      '@rollup/rollup-linux-powerpc64le-gnu': 4.32.1
+      '@rollup/rollup-linux-riscv64-gnu': 4.32.1
+      '@rollup/rollup-linux-s390x-gnu': 4.32.1
+      '@rollup/rollup-linux-x64-gnu': 4.32.1
+      '@rollup/rollup-linux-x64-musl': 4.32.1
+      '@rollup/rollup-win32-arm64-msvc': 4.32.1
+      '@rollup/rollup-win32-ia32-msvc': 4.32.1
+      '@rollup/rollup-win32-x64-msvc': 4.32.1
       fsevents: 2.3.3
     dev: false
 
@@ -15433,7 +15431,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.17.1)
     dev: false
 
@@ -17325,7 +17323,7 @@ packages:
       '@types/node': 22.10.10
       esbuild: 0.21.5
       postcss: 8.5.1
-      rollup: 4.32.0
+      rollup: 4.32.1
     optionalDependencies:
       fsevents: 2.3.3
     dev: false
@@ -18036,7 +18034,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-3PFhziS9ShoHFxUZVUstXjNuCbUjxbkJMFJDBHzFcLOEvRrHxHK5yWuZsqkKwt6D0qH4r71n60WlS9d6e1S3Rg==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-1xIzs/1KwY6FFn1aKvj2fe9MNazOs3TL/AOkjy8si6/dSCpVM1RG282eY1DbWglXa2RMksgImH+O2P7bxfTtDQ==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -18057,13 +18055,13 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.10.10)(ts-node@10.9.2)
       prettier: 3.3.2
       react: 18.3.1
       rimraf: 2.7.1
-      rollup: 4.32.0
+      rollup: 4.32.1
       ts-jest: 29.2.5(@babel/core@7.26.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -18080,7 +18078,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-IFCupSJhU4oNrKq3ck63vJG+FHujamgyRVVkz40wyAIm9wmrowORyQ3BbTp0b4+Q4CuJvUhV2c7Ul07BDy6YDw==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-l/uNJVI4hiH7W+/A64ITXowPF2NSsA3j7mufHSHdOXCCaYcTkydh4RptGPHyfejhUl0hiwkYdmp4UPxujb2tMQ==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -18103,14 +18101,14 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.10.10)(ts-node@10.9.2)
       prettier: 3.3.2
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       rimraf: 2.7.1
-      rollup: 4.32.0
+      rollup: 4.32.1
       ts-jest: 29.2.5(@babel/core@7.26.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -18127,7 +18125,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-93zf7lc7yBFDLXgZ3FBOyGCosNWriTyq36+KncWpGWdhAG+cibNLzYnQWc2BYOB6KWC0ADqUR48/f10j7SlmAw==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-A9S29aFxd7+S6ndU8J/I2xH0ezHQIiRHzZX+mlyGz4J8S+CU3wZsf9tEC5VUu9LHOkK4pEbUHWFV7Uc/6apB3Q==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -18149,7 +18147,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.10.10)(ts-node@10.9.2)
       memoize-one: 5.2.1
@@ -18157,7 +18155,7 @@ packages:
       react: 18.3.1
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 4.32.0
+      rollup: 4.32.1
       ts-jest: 29.2.5(@babel/core@7.26.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -18174,7 +18172,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-ku9STJrsDKLL7sXKUWLVj8dnyMb45ZMpDZxbGOjOwfoLnNTzCbvWZf9gqTSwM6lXeokHn8RUgpVGnAVyYjm6LQ==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-66p8ElWQogI8BCRrEZq/vMpy7eNj98CvbJrt3/AFH89Fr0byQuBCZGHcO+R3cUkmj0dOyMyNPNaITQSLQEIHMA==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -18198,14 +18196,14 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       events: 3.3.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@22.10.10)(ts-node@10.9.2)
       prettier: 3.3.2
       rimraf: 2.7.1
-      rollup: 4.32.0
+      rollup: 4.32.1
       ts-jest: 29.2.5(@babel/core@7.26.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -18222,7 +18220,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-samples.tgz:
-    resolution: {integrity: sha512-iIDtV9didCXjKywqv+Z7LdVzZJMp0VxRvXa/ReHHT0jqTTgyDVVeWYnjTkjXhNenwDYj8FPCLsPIlABcUvX8bQ==, tarball: file:projects/calling-stateful-samples.tgz}
+    resolution: {integrity: sha512-TK+fh2DaEcIjs+biuc7/xZ54+7xHVzBO2n3hkKl8m25k/ZsddM5eZMYZhoicUEBgIKX8cwBBX+RSdvbcvoVcPA==, tarball: file:projects/calling-stateful-samples.tgz}
     name: '@rush-temp/calling-stateful-samples'
     version: 0.0.0
     dependencies:
@@ -18261,7 +18259,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       follow-redirects: 1.15.6
@@ -18316,7 +18314,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-VNhN+AkFGnIcY4LXHnwq37SDvP+ly4swoAbmoMuOEqF/8/aSCeaogwaN1Ze2Ns24Y9zqYBZssdOPIY+D3m40Yg==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-wW7gK2wUUn3q/m0nIhR8/jJz4ViKrUM2BFc0eRVgQftiMYVyXWEvGuXIsy70hs+l1y9f00T5lnhH17w0xBcdQg==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -18355,7 +18353,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       follow-redirects: 1.15.6
@@ -18410,7 +18408,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-udoNcsMvXLzRiljnKDo4Zy4TY4/wFkauZZXbzDo323bHFPH//zj03+heCHes7dx0OuWjhqT2xF3+NEI8F7KktA==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-mWfBJbUFhx9bGS83S86LrCoU1gk/40r1gVWDBXaGKw/CZhY1jqOkzoISlW4NTlav6vXTT6RtP4sh10t2kCP18w==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -18451,7 +18449,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       html-webpack-plugin: 5.6.3(webpack@5.95.0)
@@ -18502,7 +18500,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-yXN3CYGRmmraoiOda08KkUN2ZvWv9r78Y+VFk3+IZoJIXj+NSU9Dp7Kst1/yCgsP1Qq+ltp/aulJ+svVA6iNdg==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-5gdXugFtHImniVAIrsjjwxp/KdNZGBRvqjkiKPeMDfn/VZspl9IQhdzgS7zCqU+n1roBC8veBB7/4C0dF5H0ig==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -18524,7 +18522,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.10.10)(ts-node@10.9.2)
       memoize-one: 5.2.1
@@ -18532,7 +18530,7 @@ packages:
       react: 18.3.1
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 4.32.0
+      rollup: 4.32.1
       typescript: 5.4.5
       uuid: 9.0.1
     transitivePeerDependencies:
@@ -18548,7 +18546,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-rWZikAGnRbbITyf9Krvv/xEBoeTHEAnrcF5mFmxPqRvEbNSLuH7ezrvHzW0czuSI4Tk6e+MftFmktc4NNfaX6A==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-5SnbhEgEekRvmLko+pAPzP5OAdeA3Se5tUckJO33J9iCVPTpO+RVaA6Tiy0iPNbmeTa1G+0H6rb9MfQHWt/Mjw==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -18574,7 +18572,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       events: 3.3.0
       if-env: 1.0.4
       immer: 10.1.1
@@ -18582,7 +18580,7 @@ packages:
       nanoid: 3.3.8
       prettier: 3.3.2
       rimraf: 2.7.1
-      rollup: 4.32.0
+      rollup: 4.32.1
       ts-jest: 29.2.5(@babel/core@7.26.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
     transitivePeerDependencies:
@@ -18598,7 +18596,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-gEc3ZYcs/SNwzLcx3PusVQxOWsN3gU7okrGN9IMK0SjM7j2UkcNyDLO7BrQ42J9D4DPKr9vRXcTSYWDnmMFT6Q==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-5eTkWy6EXBs7U9fI/QjRWg9Wo1120HIMEWxaAa2OS0rg3v3PHG9wLw6B7Y6zY1cG2TCN8NX0x5trUbzgUplZHQ==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -18634,7 +18632,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       form-data: 4.0.1
@@ -18687,7 +18685,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-Us3yy8TAUA24lJkpu64NMLKNIRhBdB+GvqFZSD2EMfcaE1kJY4xETcpnc4nrYHSevSjEn37lpBWt42XQB1md8w==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-3NRe+naLq2FNn2Eefuij6ZmxN63iOu2k9rb1u/4kP/sW0qSva5FBoFHYsxY+IIsdTmJWlrIvmybamT99W4Uvxg==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -18698,7 +18696,7 @@ packages:
       eslint-config-prettier: 9.1.0(eslint@8.57.1)
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       prettier: 3.3.2
       rimraf: 2.7.1
       webpack: 5.95.0(webpack-cli@5.1.4)
@@ -18715,7 +18713,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-HK9A8MVFRQUg6IdPTFZHvHPok4Pn62gNdcUOUMc2UzHdYm+wHrv/yR50nK95HMqN+XXoCA9ZgjW4Bh0TbMCRXg==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-k4arxiWUj6P5QdcsQRwzTtltvpl3ygE0gqWFVV45pKwrXOulIsEhmC3XAkFAtFg0tb06e4Lz876Me4rc2W55pw==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -18723,7 +18721,7 @@ packages:
       eslint-config-prettier: 9.1.0(eslint@8.57.1)
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       prettier: 3.3.2
       rimraf: 2.7.1
       typescript: 4.8.4
@@ -18733,7 +18731,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-rTY6fCylanzgaJZ81AZbcwl8QHRnzLtPjWOJ8b5AFh2XjwvYz1G6/vR04E8OyHnYZ/BdXSk9GoWWBQ/iKhNPWA==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-spB9GS7da3w/EILeaQXOTpUgdQnb2XpYCTZo60DcTVfRaTBZ0y2I95L0uogBkXxi7pDnxnaSKzJDyxXLwZcoUw==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -18756,7 +18754,7 @@ packages:
       '@griffel/react': 1.5.29(react@18.3.1)
       '@microsoft/api-documenter': 7.26.5(@types/node@22.10.10)
       '@microsoft/api-extractor': 7.48.1(@types/node@22.10.10)
-      '@rollup/plugin-json': 6.1.0(rollup@4.32.0)
+      '@rollup/plugin-json': 6.1.0(rollup@4.32.1)
       '@testing-library/jest-dom': 6.6.3
       '@testing-library/react': 16.2.0(@testing-library/dom@9.3.4)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@types/dompurify': 3.2.0
@@ -18782,7 +18780,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       events: 3.3.0
@@ -18805,7 +18803,7 @@ packages:
       renamer: 4.0.0
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 4.32.0
+      rollup: 4.32.1
       roosterjs-content-model-api: 9.18.0
       roosterjs-content-model-core: 9.18.0
       roosterjs-content-model-dom: 9.18.0
@@ -18838,7 +18836,7 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-H2JBn/4R0GgaxSMwo/fjJvK9hPg52kzXeLu9RE+XPr3YcvtRDmIDGxPpFlNMFMwcROB+hv1HJJ8oLu2gdrEpFw==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-/b5wa++QFGIpR4tRbsi/IN2ttAjLkM0CNdBUjsf++k8faaB7qu3vvxqoBXvfdNVv1gdjgF7qsTmj+TQFe5EKyw==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
@@ -18866,7 +18864,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       html-webpack-plugin: 5.6.3(webpack@5.95.0)
@@ -18904,19 +18902,19 @@ packages:
     dev: false
 
   file:projects/config.tgz:
-    resolution: {integrity: sha512-07JNMP7nUu91Bf6xbm816rrBj8bIT4ePCt0oCTafsaqtNqNJJ4Bez3wyjDf9M6xaXvyAwsFLNN+e1G5g0uahzg==, tarball: file:projects/config.tgz}
+    resolution: {integrity: sha512-lD92XLZEsqNnj/XOkZlBluowh4z5wiBN4L41ZcP3TFK8jtqXrz/W6pYE2QmGmvGDpLNlEa6mN40Yd1MLwGHrwg==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
       '@actions/core': 1.11.1
       '@octokit/rest': 19.0.13
       '@playwright/test': 1.49.1
-      '@rollup/plugin-commonjs': 25.0.8(rollup@4.32.0)
-      '@rollup/plugin-json': 6.1.0(rollup@4.32.0)
+      '@rollup/plugin-commonjs': 25.0.8(rollup@4.32.1)
+      '@rollup/plugin-json': 6.1.0(rollup@4.32.1)
       '@types/node': 22.10.10
       beachball: 2.51.0(typescript@5.4.5)
-      rollup: 4.32.0
-      rollup-plugin-sourcemaps: 0.6.3(@types/node@22.10.10)(rollup@4.32.0)
+      rollup: 4.32.1
+      rollup-plugin-sourcemaps: 0.6.3(@types/node@22.10.10)(rollup@4.32.1)
       rollup-plugin-svg: 2.0.0
       ts-node: 10.9.2(@types/node@22.10.10)(typescript@5.4.5)
       typescript: 5.4.5
@@ -18937,7 +18935,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-JnnROe4j07W6QOXS43/ddclkZJW5YzRtIWZWfihwKmuEhgK5N5nZC+OeBjM7apE/fTzTFElyb2BIL5k22adVXg==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-R6jBZzfHhtNB8S0pkXpa9IVYXs2FZUhXH3Iz/AiYrUfH0OsfeH1FI/Wff38kVtFHv0PlQ62BqcQLCn92ESijLw==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -18964,7 +18962,7 @@ packages:
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       events: 3.3.0
       if-env: 1.0.4
       immer: 10.1.1
@@ -18972,7 +18970,7 @@ packages:
       nanoid: 3.3.8
       prettier: 3.3.2
       rimraf: 2.7.1
-      rollup: 4.32.0
+      rollup: 4.32.1
       ts-jest: 29.2.5(@babel/core@7.26.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
       typescript: 5.4.5
       webpack: 5.95.0(webpack-cli@5.1.4)
@@ -18992,7 +18990,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-02ZQXdn4QSrdfNgLCAvaLEW6J5f3zdJw1DgYjBM2kVBFr+FT+iMaDQUJU7C/lbNyKQmskj/aDOIHXP1VwySjBw==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-+Wo8hjQSlwkFTT1vrSfts4E1UWgcs/3IJ3BZmPiq6d80xuRf/I553OYZEgP6OXjNI5QO4Y4SkHejfINwZ3O+ZA==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -19009,7 +19007,7 @@ packages:
       '@fluentui/react-window-provider': 2.2.28(@types/react@18.3.12)(react@18.3.1)
       '@griffel/react': 1.5.29(react@18.3.1)
       '@playwright/experimental-ct-react': 1.49.1(@types/node@22.10.10)
-      '@rollup/plugin-json': 6.1.0(rollup@4.32.0)
+      '@rollup/plugin-json': 6.1.0(rollup@4.32.1)
       '@testing-library/dom': 9.3.4
       '@testing-library/jest-dom': 6.6.3
       '@testing-library/react': 16.2.0(@testing-library/dom@9.3.4)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
@@ -19042,7 +19040,7 @@ packages:
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       html-react-parser: 5.2.2(@types/react@18.3.12)(react@18.3.1)
@@ -19065,7 +19063,7 @@ packages:
       react-use-draggable-scroll: 0.4.7(react@18.3.1)
       regenerator-runtime: 0.14.1
       rimraf: 2.7.1
-      rollup: 4.32.0
+      rollup: 4.32.1
       roosterjs-content-model-api: 9.18.0
       roosterjs-content-model-core: 9.18.0
       roosterjs-content-model-dom: 9.18.0
@@ -19108,7 +19106,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-NY5fzEMiHxDW+NrVjOxjUwAmTFFUh0111jwOCMmBFCDlmFUTuam7x14leBrrBqdW22O9NeieruSl8fre1f/X+A==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-tUbQfA/WCh3qLzmS61u7Mf+wJUxmIqtkcylNTnHHhuCzpwSCjQM4KQn3+Q1UZWfoZ2gjznFXG+7AiFH95p5PeA==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -19164,7 +19162,7 @@ packages:
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsdoc: 36.1.1(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       events: 3.3.0
@@ -19191,7 +19189,7 @@ packages:
       regenerator-runtime: 0.14.1
       reselect: 4.1.8
       rimraf: 2.7.1
-      rollup: 4.32.0
+      rollup: 4.32.1
       shell-quote: 1.8.1
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.95.0)
@@ -19227,7 +19225,7 @@ packages:
     dev: false
 
   file:projects/sample-automation-tests.tgz:
-    resolution: {integrity: sha512-MORbw+c7G2RrpOxecNZ9jjRBnOInWYJFj5JqsnfDvFKP2SunbCO3k+zKi6kGnQc0uKidSmSPLoOEsEZG6CYVbg==, tarball: file:projects/sample-automation-tests.tgz}
+    resolution: {integrity: sha512-843OiVFVDL9ZhSSG2Nk7qVr3UkbvxAa7eZ2lGk0qpG0mSmAE4ldHr2Kkxgn2mAkjccSd3Q+t3rz19Eo5YnrsJA==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
@@ -19251,7 +19249,7 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-P/lQW/XOlOEJz0Lt/+/7E9aDvuAexRFqQyzFseqtylLDB4kM+Bs6RdGNXNerhmuVCW/MYZtlsvVrM0imBUWLQQ==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-K2SLU6mXtYKMCCsOr0VRxNp6KsrJIK5sYZmt8ZiwwpK2CqxlH05GwnnAaTrOMm2TfSPku0RL69VYeT2kkp0Oaw==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
@@ -19318,7 +19316,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-M0HjqgH9LMuzIJwAZjNfoKoFbiXdua6jzYq1iiUiz2yzHWIm1Dmur16/5ygiUjJBKHEdju20dOWs+Nv7KErjbg==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-AyjDNVSRLrdgwSmrYdTWuAGxdqQBIUvtNXPtVBwDFN8aDoViFnc4oUwvK2LVrk8yztnd1H4AxecC+RB0f2pqUg==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -19349,7 +19347,7 @@ packages:
       eslint-plugin-flowtype: 8.0.3(eslint@8.57.1)
       eslint-plugin-header: 3.1.1(eslint@8.57.1)
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       express: 4.21.2
       http-errors: 1.8.1
       husky: 8.0.3
@@ -19399,7 +19397,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-dYOAYebTHdYzJkofKe0X/BceJKAc54jsIpBposYixbGR5kz0bGdWYx7GfrnLgO3TojEkrw+kYIWeTu8W3RPKAA==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-3KrlXNGpUXahd4yr/gZnX0j+IQYycPpjl3CD6vx1tdgO0FbWlb86qWIVF6r2Nbbzu2ANOqyoUmoiQD1V4vp02g==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
@@ -19461,7 +19459,7 @@ packages:
       eslint-plugin-import: 2.31.0(eslint@8.57.1)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@8.57.1)
       eslint-plugin-mdx: 3.1.5(eslint@8.57.1)
-      eslint-plugin-prettier: 5.2.1(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
+      eslint-plugin-prettier: 5.2.3(eslint-config-prettier@9.1.0)(eslint@8.57.1)(prettier@3.3.2)
       eslint-plugin-react: 7.37.4(eslint@8.57.1)
       eslint-plugin-react-hooks: 4.6.2(eslint@8.57.1)
       husky: 8.0.3
