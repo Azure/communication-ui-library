@@ -84,14 +84,6 @@ export const TogetherModeOverlay = memo(
       [key: string]: TogetherModeParticipantStatus;
     }>({});
     const [hoveredParticipantID, setHoveredParticipantID] = useState('');
-    const [tabbedParticipantID, setTabbedParticipantID] = useState('');
-
-    // Reset the Tab key tracking on any other key press
-    const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>, participantId: string) => {
-      if (e.key === 'Tab') {
-        setTabbedParticipantID(participantId);
-      }
-    };
 
     /*
      * The useMemo hook is used to calculate the participant status for the Together Mode overlay.
@@ -117,12 +109,7 @@ export const TogetherModeOverlay = memo(
             isSpotlighted: !!spotlight,
             isMuted,
             displayName: displayName || locale.strings.videoGallery.displayNamePlaceholder,
-            showDisplayName: !!(
-              spotlight ||
-              raisedHand ||
-              hoveredParticipantID === userId ||
-              tabbedParticipantID === userId
-            ),
+            showDisplayName: !!(spotlight || raisedHand || hoveredParticipantID === userId),
             scaledSize: calculateScaledSize(seatingPosition.width, seatingPosition.height),
             seatPositionStyle: setTogetherModeSeatPositionStyle(seatingPosition)
           };
@@ -154,8 +141,7 @@ export const TogetherModeOverlay = memo(
       togetherModeSeatPositions,
       reactionResources,
       locale.strings.videoGallery.displayNamePlaceholder,
-      hoveredParticipantID,
-      tabbedParticipantID
+      hoveredParticipantID
     ]);
 
     useEffect(() => {
@@ -163,12 +149,8 @@ export const TogetherModeOverlay = memo(
         setHoveredParticipantID('');
       }
 
-      if (tabbedParticipantID && !updatedParticipantStatus[tabbedParticipantID]) {
-        setTabbedParticipantID('');
-      }
-
       setTogetherModeParticipantStatus(updatedParticipantStatus);
-    }, [hoveredParticipantID, tabbedParticipantID, updatedParticipantStatus]);
+    }, [hoveredParticipantID, updatedParticipantStatus]);
 
     return (
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
@@ -182,13 +164,10 @@ export const TogetherModeOverlay = memo(
                 }}
                 onMouseEnter={() => setHoveredParticipantID(participantStatus.id)}
                 onMouseLeave={() => setHoveredParticipantID('')}
-                onKeyUp={(e) => handleKeyUp(e, participantStatus.id)}
-                onBlur={() => setTabbedParticipantID('')}
-                tabIndex={0}
               >
                 <div>
                   {participantStatus.showDisplayName && (
-                    <div style={{ ...participantStatusTransitionStyle }} tabIndex={0}>
+                    <div style={{ ...participantStatusTransitionStyle }}>
                       <div
                         style={{
                           ...togetherModeParticipantStatusContainer(
