@@ -104,7 +104,6 @@ export const TogetherModeOverlay = memo(
       const participantsWithVideoAvailable = allParticipants.filter(
         (p) => p.videoStream?.isAvailable && togetherModeSeatPositions[p.userId]
       );
-
       const updatedSignals: { [key: string]: TogetherModeParticipantStatus } = {};
       for (const p of participantsWithVideoAvailable) {
         const { userId, reaction, raisedHand, spotlight, isMuted, displayName } = p;
@@ -177,6 +176,7 @@ export const TogetherModeOverlay = memo(
             participantStatus.id && (
               <div
                 key={participantStatus.id}
+                data-ui-group="together-mode-participant"
                 style={{
                   ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle)
                 }}
@@ -230,6 +230,7 @@ export const TogetherModeOverlay = memo(
                     // Second div - Responsible for ensuring the sprite emoji is always centered in the participant seat position
                     // Third div - Play Animation as the other animation applies on the base play animation for the sprite
                     <div
+                      data-ui-group="together-mode-participant-reaction"
                       style={moveAnimationStyles(
                         parseFloat(participantStatus.seatPositionStyle.seatPosition.height) *
                           REACTION_MAX_TRAVEL_HEIGHT,
