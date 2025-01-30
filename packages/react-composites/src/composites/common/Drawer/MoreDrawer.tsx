@@ -13,6 +13,8 @@ import {
   CaptionLanguageStrings,
   CaptionsSettingsModal
 } from '@internal/react-components';
+/* @conditional-compile-remove(rtt) */
+import { CaptionsBanner } from '@internal/react-components';
 import { _ReactionDrawerMenuItem } from '@internal/react-components';
 import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
@@ -149,6 +151,8 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   callControls?: boolean | CommonCallControlOptions;
   onClickShowDialpad?: () => void;
   isCaptionsSupported?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  isRealTimeTextSupported?: boolean;
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
   useTeamsCaptions?: boolean;
@@ -164,6 +168,10 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onForbidOthersVideo?: () => void;
   /* @conditional-compile-remove(media-access) */
   onPermitOthersVideo?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  onStartRealTimeText?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  startRealTimeTextButtonChecked?: boolean;
 }
 
 const inferCallWithChatControlOptions = (
@@ -186,6 +194,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const localeStrings = useLocale();
   const holdButtonProps = usePropsFor(HoldButton);
+  /* @conditional-compile-remove(rtt) */
+  const realTimeTextProps = usePropsFor(CaptionsBanner);
 
   const callees = useSelector(getTargetCallees);
   const participants = useSelector(getRemoteParticipantsConnectedSelector);
@@ -214,6 +224,8 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const showCaptionsButton =
     props.isCaptionsSupported && drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions.captionsButton);
+  /* @conditional-compile-remove(rtt) */
+  const showRealTimeTextButton = props.isRealTimeTextSupported;
 
   if (props.reactionResources !== undefined) {
     drawerMenuItems.push({
@@ -575,6 +587,51 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         }
       });
     }
+  }
+
+  /* @conditional-compile-remove(rtt) */
+  const rttDisabled =
+    props.disableButtonsForHoldScreen || realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked;
+  // rtt
+  /* @conditional-compile-remove(rtt) */
+  if (showRealTimeTextButton) {
+    const realTimeTextDrawerItems: DrawerMenuItemProps[] = [];
+
+    drawerMenuItems.push({
+      itemKey: 'realTimeText',
+      id: 'common-call-composite-rtt-button',
+      disabled: props.disableButtonsForHoldScreen,
+      text: localeStrings.strings.call.realTimeTextLabel,
+      iconProps: { iconName: 'RealTimeTextIcon' },
+      subMenuProps: realTimeTextDrawerItems
+    });
+
+    realTimeTextDrawerItems.push({
+      itemKey: 'ToggleRTTKey',
+      text: localeStrings.strings.call.startRealTimeTextLabel,
+      ariaLabel: rttDisabled
+        ? localeStrings.strings.call.disabledStartRealTimeTextLabel
+        : localeStrings.strings.call.startRealTimeTextLabel,
+      iconProps: {
+        iconName: 'RealTimeTextIcon',
+        styles: { root: { lineHeight: 0 } }
+      },
+      onItemClick: props.onStartRealTimeText,
+      disabled: rttDisabled,
+      secondaryComponent: (
+        <Stack verticalFill verticalAlign="center">
+          <Toggle
+            id="common-call-composite-rtt-toggle-button"
+            checked={realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked}
+            styles={themedToggleButtonStyle(
+              theme,
+              realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked
+            )}
+            onChange={props.onStartRealTimeText}
+          />
+        </Stack>
+      )
+    });
   }
 
   const customDrawerButtons = useMemo(

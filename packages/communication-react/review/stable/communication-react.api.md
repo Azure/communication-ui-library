@@ -1604,6 +1604,7 @@ export interface CaptionsBannerProps {
 export type CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     captions: CaptionsInformation[];
     isCaptionsOn: boolean;
+    startCaptionsInProgress: boolean;
 };
 
 // @public
@@ -1636,6 +1637,7 @@ export type CaptionSettingsSelector = (state: CallClientState, props: CallingBas
 export interface CaptionsInfo {
     captionLanguage?: string;
     captionText: string;
+    lastUpdatedTimestamp?: Date;
     resultType: CaptionsResultType;
     speaker: CallerInfo;
     spokenLanguage: string;
@@ -3706,7 +3708,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent';
+export type NotificationTarget = 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;

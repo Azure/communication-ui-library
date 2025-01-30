@@ -32,9 +32,10 @@ import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
-/* @conditional-compile-remove(media-access) */
 import { MediaAccessSubscriber } from './MediaAccessSubscriber';
 import { _isTeamsMeeting } from './TypeGuards';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextSubscriber } from './RealTimeTextSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -56,6 +57,8 @@ export class CallSubscriber {
   private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
+  /* @conditional-compile-remove(rtt) */
+  private _realTimeTextSubscriber?: RealTimeTextSubscriber;
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   private _reactionSubscriber?: ReactionSubscriber;
 
@@ -67,7 +70,6 @@ export class CallSubscriber {
   private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
   /* @conditional-compile-remove(together-mode) */
   private _togetherModeSubscriber: TogetherModeSubscriber;
-  /* @conditional-compile-remove(media-access) */
   private _mediaAccessSubscriber: MediaAccessSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
@@ -136,11 +138,16 @@ export class CallSubscriber {
       this._call.feature(Features.TogetherMode)
     );
 
-    /* @conditional-compile-remove(media-access) */
     this._mediaAccessSubscriber = new MediaAccessSubscriber(
       this._callIdRef,
       this._context,
       this._call.feature(Features.MediaAccess)
+    );
+    /* @conditional-compile-remove(rtt) */
+    this._realTimeTextSubscriber = new RealTimeTextSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.RealTimeText)
     );
 
     this.subscribe();
@@ -242,6 +249,8 @@ export class CallSubscriber {
     this._optimalVideoCountSubscriber.unsubscribe();
     this._pptLiveSubscriber.unsubscribe();
     this._CaptionsFeatureSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(rtt) */
+    this._realTimeTextSubscriber?.unsubscribe();
     this._raiseHandSubscriber?.unsubscribe();
 
     this._capabilitiesSubscriber.unsubscribe();
@@ -251,7 +260,6 @@ export class CallSubscriber {
     this._breakoutRoomsSubscriber.unsubscribe();
     /* @conditional-compile-remove(together-mode) */
     this._togetherModeSubscriber.unsubscribe();
-    /* @conditional-compile-remove(media-access) */
     this._mediaAccessSubscriber.unsubscribe();
   };
 

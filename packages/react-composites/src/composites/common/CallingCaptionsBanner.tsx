@@ -25,6 +25,8 @@ export const CallingCaptionsBanner = (props: {
   };
   /** Element to return focus to when the Captions Banner is closed */
   returnFocusRef?: React.RefObject<FocusableElement>;
+  /* @conditional-compile-remove(rtt) */
+  isRealTimeTextOn?: boolean;
 }): JSX.Element => {
   const captionsBannerProps = usePropsFor(CaptionsBanner);
   const [isCaptionsSettingsOpen, setIsCaptionsSettingsOpen] = useState<boolean>(false);
@@ -66,7 +68,17 @@ export const CallingCaptionsBanner = (props: {
     /* @conditional-compile-remove(rtt) */
     realTimeTextBannerTitle: strings.realTimeTextBannerTitle,
     /* @conditional-compile-remove(rtt) */
-    realTimeTextBannerLinkLabel: strings.realTimeTextBannerLinkLabel
+    realTimeTextBannerLinkLabel: strings.realTimeTextBannerLinkLabel,
+    /* @conditional-compile-remove(rtt) */
+    captionsOnlyContainerTitle: strings.captionsOnlyContainerTitle,
+    /* @conditional-compile-remove(rtt) */
+    realTimeTextOnlyContainerTitle: strings.realTimeTextOnlyContainerTitle,
+    /* @conditional-compile-remove(rtt) */
+    captionsAndRealTimeTextContainerTitle: strings.captionsAndRealTimeTextContainerTitle,
+    /* @conditional-compile-remove(rtt) */
+    expandButtonAriaLabel: strings.expandButtonAriaLabel,
+    /* @conditional-compile-remove(rtt) */
+    minimizeButtonAriaLabel: strings.minimizeButtonAriaLabel
   };
 
   const onRenderAvatar = useCallback(
@@ -110,6 +122,8 @@ export const CallingCaptionsBanner = (props: {
                 formFactor={props.isMobile ? 'compact' : 'default'}
                 strings={captionsBannerStrings}
                 {...captionsBannerProps}
+                /* @conditional-compile-remove(rtt) */
+                isRealTimeTextOn={props.isRealTimeTextOn || captionsBannerProps.isRealTimeTextOn}
               />
             </Stack.Item>
           </Stack>

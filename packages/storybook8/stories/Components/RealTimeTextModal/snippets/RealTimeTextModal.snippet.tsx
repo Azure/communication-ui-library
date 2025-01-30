@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { RealTimeTextModal } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import { RealTimeTextModal } from '@internal/react-components';
 import React from 'react';
 
 export const RealTimeTextModalStory = (): JSX.Element => {
