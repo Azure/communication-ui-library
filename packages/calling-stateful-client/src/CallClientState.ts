@@ -29,6 +29,8 @@ import type {
   DiagnosticQuality,
   DiagnosticFlag
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(rtt) */
+import { ParticipantInfo, RealTimeTextResultType } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
@@ -83,6 +85,10 @@ export interface CaptionsInfo {
    */
   timestamp: Date;
   /**
+   * Timestamp of when the captions were last updated.
+   */
+  lastUpdatedTimestamp?: Date;
+  /**
    * The language that the captions are presented in. Corresponds to the captionLanguage specified in startCaptions / setCaptionLanguage.
    */
   captionLanguage?: string;
@@ -90,6 +96,42 @@ export interface CaptionsInfo {
    * The original spoken caption text prior to translating to subtitle language
    */
   spokenText?: string;
+}
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @beta
+ */
+export interface RealTimeTextInfo {
+  /**
+   * The sequence id of the real time text.
+   */
+  sequenceId: number;
+  /**
+   * The sender of the real time text.
+   */
+  sender: ParticipantInfo;
+  /**
+   * The real time text message.
+   */
+  message: string;
+  /**
+   * The result type of the real time text message.
+   */
+  resultType: RealTimeTextResultType;
+  /**
+   * The timestamp when the real time text message was created.
+   */
+  receivedTimestamp?: Date;
+  /**
+   * The timestamp when the real time text message was last updated.
+   */
+  updatedTimestamp?: Date;
+  /**
+   * If message originated from the local participant
+   * default is false
+   */
+  isMe?: boolean;
 }
 
 /**
@@ -124,11 +166,29 @@ export interface CaptionsCallFeatureState {
    * current caption language
    */
   currentCaptionLanguage: string;
-
   /**
    * current caption kind: teams or acs captions
    */
   captionsKind: CaptionsKind;
+}
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @beta
+ */
+export interface RealTimeTextCallFeatureState {
+  /**
+   * array of received captions
+   */
+  realTimeTexts: {
+    completedMessages?: RealTimeTextInfo[];
+    currentInProgress?: RealTimeTextInfo[];
+    myInProgress?: RealTimeTextInfo;
+  };
+  /**
+   * whether real time text is on/off
+   */
+  isRealTimeTextFeatureActive?: boolean;
 }
 
 /**
@@ -485,7 +545,6 @@ export interface VideoStreamRendererViewState {
   target: HTMLElement;
 }
 
-/* @conditional-compile-remove(media-access) */
 /**
  * Media access state
  * @public
@@ -562,7 +621,6 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
   spotlight?: SpotlightState;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Proxy of {@link @azure/communication-calling#Call.MediaAccessCallFeature.MediaAccess}.
    */
@@ -641,9 +699,14 @@ export interface CallState {
    */
   transcription: TranscriptionCallFeatureState;
   /**
-   * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
+   * Proxy of {@link @azure/communication-calling#CaptionsCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Proxy of {@link @azure/communication-calling#RealTimeTextCallFeature}.
+   */
+  realTimeTextFeature: RealTimeTextCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
    */
@@ -759,7 +822,6 @@ export interface CallState {
    */
   breakoutRooms?: BreakoutRoomsState;
 
-  /* @conditional-compile-remove(media-access) */
   /**
    * Proxy of {@link @azure/communication-calling#MediaAccessFeature}.
    */
@@ -1001,7 +1063,6 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
-  /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
   /**
    * Stores the latest notifications.
    *
@@ -1124,7 +1185,6 @@ export type CallErrorTarget =
   | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 
-/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /**
  * @public
  */
@@ -1132,7 +1192,6 @@ export type CallNotifications = {
   [target in NotificationTarget]: CallNotification;
 };
 
-/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /**
  * @public
  */
@@ -1142,18 +1201,17 @@ export interface CallNotification {
   timestamp: Date;
 }
 
-/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
 /** @public */
 export type NotificationTarget =
-  | 'assignedBreakoutRoomOpened'
-  | 'assignedBreakoutRoomOpenedPromptJoin'
-  | 'assignedBreakoutRoomChanged'
-  | 'breakoutRoomJoined'
-  | 'breakoutRoomClosingSoon'
-  | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnPresent'
-  | /* @conditional-compile-remove(media-access) */ 'capabilityTurnVideoOnAbsent'
-  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicPresent'
-  | /* @conditional-compile-remove(media-access) */ 'capabilityUnmuteMicAbsent'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpened'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpenedPromptJoin'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomChanged'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomJoined'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomClosingSoon'
+  | 'capabilityTurnVideoOnPresent'
+  | 'capabilityTurnVideoOnAbsent'
+  | 'capabilityUnmuteMicPresent'
+  | 'capabilityUnmuteMicAbsent'
   | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted'
   | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
 

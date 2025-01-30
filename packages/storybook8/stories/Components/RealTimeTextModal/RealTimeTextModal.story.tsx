@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { RealTimeTextModal as RealTimeTextModalExample } from '@azure/communication-react';
 import { mergeStyles, PrimaryButton, Stack } from '@fluentui/react';
-import { RealTimeTextModal as RealTimeTextModalExample } from '@internal/react-components';
 import React, { useState } from 'react';
 
 const RealTimeTextModalStory = (): JSX.Element => {

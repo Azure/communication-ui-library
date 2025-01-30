@@ -22,9 +22,7 @@ module.exports = {
     // Feature for remote UFD
     "remote-ufd",
     // Feature for together mode
-    "together-mode",
-    // Feature for RTT
-    "rtt"
+    "together-mode"
   ],
   beta: [
     "call-readiness",
@@ -73,6 +71,8 @@ module.exports = {
     "call-participants-locator",
     // feature for breakout rooms
     "breakout-rooms",
+    // Feature for RTT
+    "rtt"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
