@@ -6,5 +6,11 @@ import React from 'react';
 
 export const CaptionsBannerStory = (): JSX.Element => {
   const captionsBannerProps = usePropsFor(CaptionsBanner);
-  return <>{captionsBannerProps?.isCaptionsOn && <CaptionsBanner {...captionsBannerProps} />}</>;
+  return (
+    <>
+      {(captionsBannerProps?.isCaptionsOn || captionsBannerProps?.isRealTimeTextOn) && (
+        <CaptionsBanner {...captionsBannerProps} />
+      )}
+    </>
+  );
 };
