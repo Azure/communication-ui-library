@@ -42,9 +42,10 @@ export interface StartRealTimeTextButtonStrings {
    */
   label: string;
   /**
-   * Content for when button is checked, RealTimeText is on
+   * Content for when button is not checked, Real-Time Text is off.
+   * We don't need to supply a tooltip string when RealTimeText is on, because the button will be disabled when Real-Time Text is on.
    */
-  tooltipOnContent: string;
+  tooltipOffContent: string;
 }
 
 /* @conditional-compile-remove(rtt) */
@@ -70,7 +71,7 @@ export const StartRealTimeTextButton = (props: StartRealTimeTextButtonProps): JS
       strings={strings}
       onClick={onStartRealTimeText}
       onRenderOffIcon={onRenderStartIcon}
-      disabled={isRealTimeTextOn}
+      disabled={props.disabled || isRealTimeTextOn}
     />
   );
 };
