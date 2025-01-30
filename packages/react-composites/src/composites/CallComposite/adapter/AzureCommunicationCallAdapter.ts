@@ -1242,12 +1242,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     const mainMeeting = await assignedBreakoutRoom.returnToMainMeeting();
     this.originCall = mainMeeting;
-    const breakoutRoomCall = this.call;
     this.processNewCall(mainMeeting);
-    await this.resumeCall();
-    if (breakoutRoomCall?.state && !['Disconnecting', 'Disconnected'].includes(breakoutRoomCall.state)) {
-      breakoutRoomCall.hangUp();
-    }
   }
 
   public getState(): CallAdapterState {
