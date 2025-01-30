@@ -129,7 +129,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const [promptProps, setPromptProps] = useState<PromptProps>();
 
   /* @conditional-compile-remove(breakout-rooms) */
-  const breakoutRooms = useSelector((state) => state.call?.breakoutRooms);
+  const page = useSelector((state) => state.page);
   /* @conditional-compile-remove(breakout-rooms) */
   const userId = useSelector((state) => state.userId);
   /* @conditional-compile-remove(breakout-rooms) */
@@ -153,7 +153,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
 
   let galleryContentWhenNotInCall = <></>;
   /* @conditional-compile-remove(breakout-rooms) */
-  if (!_isInCall(callStatus) && breakoutRooms?.assignedBreakoutRoom) {
+  if (!_isInCall(callStatus) && page === 'returningFromBreakoutRoom') {
     galleryContentWhenNotInCall = (
       <VideoTile
         userId={toFlatCommunicationIdentifier(userId)}

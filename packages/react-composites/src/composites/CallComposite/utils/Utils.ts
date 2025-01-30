@@ -309,17 +309,8 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  if (
-    (call?.state === 'Disconnecting' || call?.state === 'Disconnected') &&
-    call?.breakoutRooms?.assignedBreakoutRoom
-  ) {
-    if (isReturningFromBreakoutRoom) {
-      return 'call';
-    } else if (call?.state === 'Disconnecting') {
-      return 'leaving';
-    } else {
-      return 'leftCall';
-    }
+  if (isReturningFromBreakoutRoom) {
+    return 'returningFromBreakoutRoom';
   }
 
   if (call) {
@@ -360,6 +351,7 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
         if (previousCall.diagnostics.network.latest.noNetwork) {
           return 'joinCallFailedDueToNoNetwork';
         }
+        console.log('DEBUGV LEFT CALL 2');
         return 'leftCall';
     }
   }
