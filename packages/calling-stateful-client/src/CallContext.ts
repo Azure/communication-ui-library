@@ -95,7 +95,9 @@ export class CallContext {
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
   private _timeOutId: { [key: string]: ReturnType<typeof setTimeout> } = {};
-  private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
+  private _latestCallIdOfNotification: Partial<Record<NotificationTarget, string>> = {};
+  /* @conditional-compile-remove(breakout-rooms) */
+  private _openBreakoutRoom: string | undefined;
 
   constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._logger = createClientLogger('communication-react:calling-context');
@@ -257,6 +259,20 @@ export class CallContext {
           call.breakoutRooms?.breakoutRoomOriginCallId === newCallId;
         }
       });
+
+      /* @conditional-compile-remove(breakout-rooms) */
+      // Update call ids in latestCallIdsThatPushedNotifications
+      Object.keys(this._latestCallIdOfNotification).forEach((key: string) => {
+        if (this._latestCallIdOfNotification[key as NotificationTarget] === oldCallId) {
+          this._latestCallIdOfNotification[key as NotificationTarget] = newCallId;
+        }
+      });
+
+      /* @conditional-compile-remove(breakout-rooms) */
+      // Update the open breakout room call id if it matches the old call id
+      if (this._openBreakoutRoom === oldCallId) {
+        this._openBreakoutRoom = newCallId;
+      }
     });
   }
 
@@ -774,6 +790,21 @@ export class CallContext {
         call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomDisplayName };
       }
     });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setOpenBreakoutRoom(callId: string): void {
+    this._openBreakoutRoom = callId;
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public deleteOpenBreakoutRoom(): void {
+    this._openBreakoutRoom = undefined;
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public getOpenBreakoutRoom(): string | undefined {
+    return this._openBreakoutRoom;
   }
 
   public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
@@ -1510,20 +1541,18 @@ export class CallContext {
   }
 
   public setLatestNotification(callId: string, notification: CallNotification): void {
-    this._latestCallIdsThatPushedNotifications[notification.target] = callId;
+    this._latestCallIdOfNotification[notification.target] = callId;
     this.modifyState((draft: CallClientState) => {
       draft.latestNotifications[notification.target] = notification;
     });
   }
 
-  public deleteLatestNotification(callId: string, notificationTarget: NotificationTarget): void {
-    let callIdToPushLatestNotification = this._latestCallIdsThatPushedNotifications[notificationTarget];
-    callIdToPushLatestNotification = callIdToPushLatestNotification
-      ? this._callIdHistory.latestCallId(callIdToPushLatestNotification)
-      : undefined;
-    // Only delete the notification if the call that pushed the notification is the same as the call that is trying
-    // to delete it.
-    if (callIdToPushLatestNotification !== callId) {
+  public deleteLatestNotification(callId: string | undefined, notificationTarget: NotificationTarget): void {
+    const callIdOfNotification = this._latestCallIdOfNotification[notificationTarget];
+
+    // Only delete the notification if the call that pushed the notification is the same as the callId specified if it
+    // is provided
+    if (callId && callIdOfNotification !== callId) {
       return;
     }
 

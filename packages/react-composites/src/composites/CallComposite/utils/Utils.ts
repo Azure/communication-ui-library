@@ -264,11 +264,11 @@ type GetCallCompositePageFunction = ((
     call: CallState | undefined,
     previousCall: CallState | undefined,
     transferCall?: CallState,
-    originCall?: CallState,
     /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserInfo?: {
       environmentInfo?: EnvironmentInfo;
       unsupportedBrowserVersionOptedIn?: boolean;
-    }
+    },
+    isReturningFromBreakoutRoom?: boolean
   ) => CallCompositePage);
 /**
  * Get the current call composite page based on the current call composite state
@@ -287,12 +287,12 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
   call,
   previousCall?,
   transferCall?: CallState,
-  originCall?: CallState,
   unsupportedBrowserInfo?: {
     /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo?: EnvironmentInfo;
     unsupportedBrowserVersionOptedIn?: boolean;
-  }
+  },
+  isReturningFromBreakoutRoom?: boolean
 ): CallCompositePage => {
   /* @conditional-compile-remove(unsupported-browser) */
   if (
@@ -306,6 +306,11 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
 
   if (transferCall !== undefined) {
     return 'transferring';
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  if (isReturningFromBreakoutRoom) {
+    return 'returningFromBreakoutRoom';
   }
 
   if (call) {
@@ -331,11 +336,6 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
       // transitional state.
       return 'configuration';
     }
-  }
-
-  // /* @conditional-compile-remove(breakout-rooms) */
-  if (previousCall?.breakoutRooms?.breakoutRoomOriginCallId && originCall) {
-    return 'call';
   }
 
   if (previousCall) {

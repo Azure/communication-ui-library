@@ -4,7 +4,7 @@
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { DefaultPalette, IButtonStyles, mergeStyles, Theme, useTheme } from '@fluentui/react';
+import { concatStyleSets, DefaultPalette, IButtonStyles, Theme, useTheme } from '@fluentui/react';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
@@ -67,7 +67,7 @@ export const RaiseHandButton = (props: RaiseHandButtonProps): JSX.Element => {
   return (
     <ControlBarButton
       {...props}
-      className={mergeStyles(styles, props.styles)}
+      styles={concatStyleSets(styles, props.styles)}
       onClick={props.onToggleRaiseHand ?? props.onClick}
       onRenderOnIcon={props.onRenderOnIcon ?? onRenderLowerHandIcon}
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderRaiseHandIcon}

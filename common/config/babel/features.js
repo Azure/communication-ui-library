@@ -71,14 +71,14 @@ module.exports = {
     "teams-identity-support-beta",
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
-    // feature for breakout rooms
-    "breakout-rooms",
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-    // Feature for forbid/permit Teams meeting/group call attendee' audio/video access
-    "media-access"
+    // Feature for forbid/permit remote participants audio/video access
+    "media-access",
+    // Feature for breakout rooms
+    "breakout-rooms"
   ]
 }

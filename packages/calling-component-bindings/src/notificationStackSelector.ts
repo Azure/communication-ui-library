@@ -254,6 +254,13 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       });
     }
     /* @conditional-compile-remove(breakout-rooms) */
+    if (latestNotifications['assignedBreakoutRoomClosed']) {
+      activeNotifications.push({
+        type: 'assignedBreakoutRoomClosed',
+        timestamp: latestNotifications['assignedBreakoutRoomClosed'].timestamp
+      });
+    }
+    /* @conditional-compile-remove(breakout-rooms) */
     if (latestNotifications['breakoutRoomJoined']) {
       activeNotifications.push({
         type: 'breakoutRoomJoined',

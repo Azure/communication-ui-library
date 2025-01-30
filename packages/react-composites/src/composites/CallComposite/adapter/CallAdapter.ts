@@ -60,7 +60,8 @@ export type CallCompositePage =
   | 'removedFromCall'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
   | 'transferring'
-  | 'badRequest';
+  | 'badRequest'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'returningFromBreakoutRoom';
 
 /**
  * Subset of CallCompositePages that represent an end call state.

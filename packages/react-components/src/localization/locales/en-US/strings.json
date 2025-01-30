@@ -599,6 +599,11 @@
       "message": "We'll move you to your assigned room in 5 seconds.",
       "dismissButtonAriaLabel": "Close"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Your breakout room has closed",
+      "message": "We'll move you back to your meeting in 5 seconds.",
+      "dismissButtonAriaLabel": "Close"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Join breakout room?",
       "message": "You've been assigned to a breakout room.",

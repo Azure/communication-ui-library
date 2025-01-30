@@ -82,39 +82,52 @@ export class BreakoutRoomsSubscriber {
       return;
     }
 
+    // TODO: Fix the condition in this if statement to check for different breakout room ID instead of the display name
+    // when Calling SDK fixes the breakout room call id to be correct
     if (
       breakoutRoom.state === 'open' &&
-      currentAssignedBreakoutRoom?.state === 'open' &&
-      currentAssignedBreakoutRoom?.call?.id !== breakoutRoom.call?.id
+      callState.breakoutRooms?.breakoutRoomDisplayName &&
+      callState.breakoutRooms.breakoutRoomDisplayName !== breakoutRoom.displayName
     ) {
-      if (
-        !this._context.getState().latestNotifications['assignedBreakoutRoomOpened'] &&
-        !this._context.getState().latestNotifications['assignedBreakoutRoomOpenedPromptJoin']
-      ) {
-        this._context.setLatestNotification(this._callIdRef.callId, {
-          target: 'assignedBreakoutRoomChanged',
-          timestamp: new Date(Date.now())
-        });
-      }
-    } else if (breakoutRoom.state === 'open') {
-      if (!this._context.getState().latestNotifications['assignedBreakoutRoomChanged']) {
-        const target: NotificationTarget =
-          breakoutRoom.autoMoveParticipantToBreakoutRoom === false
-            ? 'assignedBreakoutRoomOpenedPromptJoin'
-            : 'assignedBreakoutRoomOpened';
-        this._context.setLatestNotification(this._callIdRef.callId, { target, timestamp: new Date(Date.now()) });
-      }
-    } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.state === 'closed') {
+      this._context.setLatestNotification(this._callIdRef.callId, {
+        target: 'assignedBreakoutRoomChanged',
+        timestamp: new Date(Date.now())
+      });
+    } else if (
+      breakoutRoom.state === 'open' &&
+      !callState?.breakoutRooms?.breakoutRoomSettings &&
+      this._context.getOpenBreakoutRoom() === undefined
+    ) {
+      const target: NotificationTarget =
+        breakoutRoom.autoMoveParticipantToBreakoutRoom === false
+          ? 'assignedBreakoutRoomOpenedPromptJoin'
+          : 'assignedBreakoutRoomOpened';
+      this._context.setLatestNotification(this._callIdRef.callId, { target, timestamp: new Date(Date.now()) });
+    } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.state === 'open') {
       // This scenario covers the case where the breakout room is opened but then closed before the user joins.
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpened');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpenedPromptJoin');
       this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomChanged');
-    } else if (breakoutRoom.state === 'closed' && currentAssignedBreakoutRoom?.call?.id) {
-      // This scenario covers the case where the breakout room is changed to a closed breakout room.
-      this._context.deleteLatestNotification(currentAssignedBreakoutRoom.call.id, 'breakoutRoomJoined');
-      this._context.deleteLatestNotification(currentAssignedBreakoutRoom.call.id, 'breakoutRoomClosingSoon');
+      this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomJoined');
+    } else if (breakoutRoom.state === 'closed') {
+      // This scenario covers the case where the breakout room is closed
+      this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpened');
+      this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomOpenedPromptJoin');
+      this._context.deleteLatestNotification(this._callIdRef.callId, 'assignedBreakoutRoomChanged');
+      this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomJoined');
+      this._context.deleteLatestNotification(this._callIdRef.callId, 'breakoutRoomClosingSoon');
       clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
+      const openBreakoutRoomId = this._context.getOpenBreakoutRoom();
+      if (openBreakoutRoomId && this._context.getState().calls[openBreakoutRoomId]) {
+        // Show notification that the assigned breakout room was closed if the user is in that breakout room.
+        this._context.setLatestNotification(this._callIdRef.callId, {
+          target: 'assignedBreakoutRoomClosed',
+          timestamp: new Date(Date.now())
+        });
+      }
+      this._context.deleteOpenBreakoutRoom();
     }
+
     this._context.setAssignedBreakoutRoom(this._callIdRef.callId, breakoutRoom);
   };
 
@@ -129,6 +142,8 @@ export class BreakoutRoomsSubscriber {
       target: 'breakoutRoomJoined',
       timestamp: new Date(Date.now())
     });
+
+    this._context.setOpenBreakoutRoom(call.id);
 
     // If assigned breakout room has a display name, set the display name for its call state.
     const assignedBreakoutRoomDisplayName =
