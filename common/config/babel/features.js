@@ -77,8 +77,6 @@ module.exports = {
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
-    "stabilizedDemo",
-    // Feature for forbid/permit Teams meeting/group call attendee' audio/video access
-    "media-access"
+    "stabilizedDemo"
   ]
 }

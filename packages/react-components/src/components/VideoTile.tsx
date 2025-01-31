@@ -17,10 +17,8 @@ import { useIdentifiers } from '../identifiers';
 import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
-/* @conditional-compile-remove(media-access) */
-import { MediaAccess } from '../types';
 import { CallingTheme } from '../theming';
-import { RaisedHand } from '../types';
+import { RaisedHand, MediaAccess } from '../types';
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 
 import { ParticipantState } from '../types';

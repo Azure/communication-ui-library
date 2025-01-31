@@ -43,11 +43,9 @@ import { RaisedHandState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { CaptionsKind } from '@azure/communication-calling';
-import { ReactionResources } from '@internal/react-components';
+import { ReactionResources, MediaAccess } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-/* @conditional-compile-remove(media-access) */
-import { MediaAccess } from '@internal/react-components';
 
 /**
  * @private
@@ -352,7 +350,7 @@ export const getIsTogetherModeActive = (state: CallAdapterState): boolean | unde
  * @returns The local participant's user id or undefined.
  */
 export const getLocalUserId = (state: CallAdapterState): CommunicationIdentifierKind | undefined => state.userId;
-/* @conditional-compile-remove(media-access) */
+
 /** @private */
 export const getMediaAccessSetting = (state: CallAdapterState): MediaAccess | undefined =>
   state.call?.meetingMediaAccess;
