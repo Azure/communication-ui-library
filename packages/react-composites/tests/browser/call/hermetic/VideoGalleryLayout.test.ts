@@ -91,7 +91,6 @@ test.describe('VideoGalleryLayout tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-unpin.png');
   });
 
-  /* @conditional-compile-remove(media-access) */
   test('VideoTile attendee audio/video hard muted for Desktop', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');
@@ -119,7 +118,6 @@ test.describe('VideoGalleryLayout tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-attendee-audio-video-hard-muted.png');
   });
 
-  /* @conditional-compile-remove(media-access) */
   test('VideoTile attendee audio/video permitted for Desktop', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges');

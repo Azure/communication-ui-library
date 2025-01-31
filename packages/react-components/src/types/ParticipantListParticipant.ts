@@ -95,7 +95,6 @@ export type ParticipantState =
   | 'Disconnected'
   | 'Reconnecting';
 
-/* @conditional-compile-remove(media-access) */
 /**
  * Audio/Video Media access state
  *
