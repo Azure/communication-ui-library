@@ -87,10 +87,10 @@ const memoizeState = memoizeOne(
     deviceManager: DeviceManagerState,
     calls: { [key: string]: CallState },
     latestErrors: CallErrors,
-    latestNotifications?: undefined | CallNotifications,
+    latestNotifications?: CallNotifications,
     displayName?: string,
     alternateCallerId?: string,
-    environmentInfo?: undefined | EnvironmentInfo
+    environmentInfo?: EnvironmentInfo
   ): CallClientState => ({
     userId,
     incomingCalls: {},
