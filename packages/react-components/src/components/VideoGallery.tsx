@@ -345,22 +345,18 @@ export interface VideoGalleryProps {
   togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
   /* @conditional-compile-remove(together-mode) */
   onDisposeTogetherModeStreamView?: () => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * This callback is to forbid audio for remote participant(s)
    */
   onForbidAudio?: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * This callback is to permit audio for remote participant(s)
    */
   onPermitAudio?: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * This callback is to forbid video for remote participant(s)
    */
   onForbidVideo?: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * This callback is to permit video for remote participant(s)
    */
@@ -466,13 +462,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     togetherModeSeatingCoordinates,
     /* @conditional-compile-remove(together-mode) */
     onDisposeTogetherModeStreamView,
-    /* @conditional-compile-remove(media-access) */
     onForbidAudio,
-    /* @conditional-compile-remove(media-access) */
     onPermitAudio,
-    /* @conditional-compile-remove(media-access) */
     onForbidVideo,
-    /* @conditional-compile-remove(media-access) */
     onPermitVideo
   } = props;
 
@@ -592,7 +584,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           reactionResources={reactionResources}
           participantsCount={remoteParticipants.length + 1}
           isScreenSharingOn={localParticipant.isScreenSharingOn}
-          /* @conditional-compile-remove(media-access) */
           mediaAccess={localParticipant.mediaAccess}
         />
       </Stack>
@@ -724,13 +715,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           reactionResources={reactionResources}
           onMuteParticipant={onMuteParticipant}
-          /* @conditional-compile-remove(media-access) */
           onForbidAudio={onForbidAudio}
-          /* @conditional-compile-remove(media-access) */
           onPermitAudio={onPermitAudio}
-          /* @conditional-compile-remove(media-access) */
           onForbidVideo={onForbidVideo}
-          /* @conditional-compile-remove(media-access) */
           onPermitVideo={onPermitVideo}
         />
       );
@@ -757,13 +744,9 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       maxParticipantsToSpotlight,
       reactionResources,
       onMuteParticipant,
-      /* @conditional-compile-remove(media-access) */
       onForbidAudio,
-      /* @conditional-compile-remove(media-access) */
       onPermitAudio,
-      /* @conditional-compile-remove(media-access) */
       onForbidVideo,
-      /* @conditional-compile-remove(media-access) */
       onPermitVideo,
       remoteVideoViewOptions
     ]
@@ -815,7 +798,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         localParticipant={localParticipant}
         remoteParticipants={remoteParticipants}
         reactionResources={reactionResources}
-        screenShareComponent={screenShareComponent}
         containerWidth={containerWidth}
         containerHeight={containerHeight}
       />
@@ -832,7 +814,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       localParticipant,
       remoteParticipants,
       reactionResources,
-      screenShareComponent,
       containerWidth,
       containerHeight
     ]
@@ -859,9 +840,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       pinnedParticipantUserIds: pinnedParticipants,
       overflowGalleryPosition,
       localVideoTileSize,
-      spotlightedParticipantUserIds: spotlightedParticipants,
-      /* @conditional-compile-remove(together-mode) */
-      togetherModeStreamComponent
+      spotlightedParticipantUserIds: spotlightedParticipants
     }),
     [
       remoteParticipants,
@@ -879,9 +858,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       pinnedParticipants,
       overflowGalleryPosition,
       localVideoTileSize,
-      spotlightedParticipants,
-      /* @conditional-compile-remove(together-mode) */
-      togetherModeStreamComponent
+      spotlightedParticipants
     ]
   );
 
@@ -903,15 +880,17 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(together-mode) */
     // Teams users can switch to Together mode layout only if they have the capability,
     // while ACS users can do so only if Together mode is enabled.
-    if (layout === 'togetherMode' && canSwitchToTogetherModeLayout) {
-      return <TogetherModeLayout {...layoutProps} />;
+    if (!screenShareComponent && layout === 'togetherMode' && canSwitchToTogetherModeLayout) {
+      return <TogetherModeLayout togetherModeStreamComponent={togetherModeStreamComponent} />;
     }
     return <DefaultLayout {...layoutProps} />;
   }, [
     /* @conditional-compile-remove(together-mode) */ canSwitchToTogetherModeLayout,
     layout,
     layoutProps,
-    screenShareParticipant
+    screenShareComponent,
+    screenShareParticipant,
+    /* @conditional-compile-remove(together-mode) */ togetherModeStreamComponent
   ]);
 
   return (

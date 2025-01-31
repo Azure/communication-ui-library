@@ -71,7 +71,6 @@ export const _LocalVideoTile = React.memo(
     reactionResources?: ReactionResources;
     participantsCount?: number;
     isScreenSharingOn?: boolean;
-    /* @conditional-compile-remove(media-access) */
     mediaAccess?: MediaAccess;
   }) => {
     const {
@@ -104,7 +103,6 @@ export const _LocalVideoTile = React.memo(
       strings,
       reactionResources,
       isScreenSharingOn,
-      /* @conditional-compile-remove(media-access) */
       mediaAccess
     } = props;
 
@@ -118,7 +116,6 @@ export const _LocalVideoTile = React.memo(
         onDisposeLocalStreamView,
         renderElementExists: !!renderElement,
         scalingMode: localVideoViewOptions?.scalingMode,
-        /* @conditional-compile-remove(media-access) */
         isVideoPermitted: mediaAccess ? mediaAccess.isVideoPermitted : true
       }),
       [
@@ -128,7 +125,6 @@ export const _LocalVideoTile = React.memo(
         onCreateLocalStreamView,
         onDisposeLocalStreamView,
         renderElement,
-        /* @conditional-compile-remove(media-access) */
         mediaAccess
       ]
     );
@@ -278,7 +274,7 @@ export const _LocalVideoTile = React.memo(
             )
           }
           overlay={videoTileOverlay}
-          /* @conditional-compile-remove(media-access) */ mediaAccess={mediaAccess}
+          mediaAccess={mediaAccess}
         >
           {drawerMenuItemProps.length > 0 && (
             <Layer hostId={props.drawerMenuHostId}>
