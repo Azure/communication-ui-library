@@ -91,7 +91,7 @@ type CallWithChatClientStateInternal = Omit<
   | 'sounds'
   | 'isRoomsCall'
   | 'targetCallees'
-  | /* @conditional-compile-remove(media-access) */ 'mediaAccess'
+  | 'mediaAccess'
 >;
 
 const CallWithChatClientStateTypeAssertion = (value: CallWithChatClientState): CallWithChatClientStateInternal => value;
