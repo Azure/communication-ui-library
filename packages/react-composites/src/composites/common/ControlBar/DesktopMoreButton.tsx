@@ -25,6 +25,13 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(together-mode) */
+import {
+  getIsTogetherModeActive,
+  getCapabilites,
+  getLocalUserId,
+  getIsTeamsCall
+} from '../../CallComposite/selectors/baseSelectors';
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 import { CallControlOptions } from '../../CallComposite';
 
@@ -78,6 +85,14 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   const isTeamsMeeting = useSelector(getIsTeamsMeeting);
   const teamsMeetingCoordinates = useSelector(getTeamsMeetingCoordinates);
+  /* @conditional-compile-remove(together-mode) */
+  const isTogetherModeActive = useSelector(getIsTogetherModeActive);
+  /* @conditional-compile-remove(together-mode) */
+  const participantCapability = useSelector(getCapabilites);
+  /* @conditional-compile-remove(together-mode) */
+  const participantId = useSelector(getLocalUserId);
+  /* @conditional-compile-remove(together-mode) */
+  const isTeamsCall = useSelector(getIsTeamsCall);
 
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
@@ -394,6 +409,29 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       }
     };
 
+    /* @conditional-compile-remove(together-mode) */
+    const togetherModeOption = {
+      key: 'togetherModeSelectionKey',
+      text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,
+      canCheck: true,
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      isChecked: props.userSetGalleryLayout === 'togetherMode',
+      onClick: () => {
+        props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
+        setFocusedContentOn(false);
+      },
+      disabled: !(
+        (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
+        isTogetherModeActive
+      ),
+      iconProps: {
+        iconName: 'TogetherModeLayout',
+        styles: { root: { lineHeight: 0 } }
+      }
+    };
+
     /* @conditional-compile-remove(overflow-top-composite) */
     const overflowGalleryOption = {
       key: 'topKey',
@@ -424,6 +462,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     galleryOptions.subMenuProps?.items?.push(galleryOption);
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
+    /* @conditional-compile-remove(together-mode) */
+    if (isTeamsCall || isTeamsMeeting) {
+      galleryOptions.subMenuProps?.items?.push(togetherModeOption);
+    }
     if (props.callControls === true || (props.callControls as CallControlOptions)?.galleryControlsButton !== false) {
       moreButtonContextualMenuItems.push(galleryOptions);
     }

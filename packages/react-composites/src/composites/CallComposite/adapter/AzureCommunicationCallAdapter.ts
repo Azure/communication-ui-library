@@ -121,7 +121,7 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 import { CallingSoundSubscriber } from './CallingSoundSubscriber';
 import { CallingSounds } from './CallAdapter';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamViewResult } from '@internal/react-components';
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 
 type CallTypeOf<AgentType extends CallAgent | TeamsCallAgent> = AgentType extends CallAgent ? Call : TeamsCall;
 
@@ -820,7 +820,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(together-mode) */
   public async createTogetherModeStreamView(
-    options?: VideoStreamOptions
+    options?: TogetherModeStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> {
     return await this.handlers.onCreateTogetherModeStreamView(options);
   }
