@@ -152,7 +152,7 @@ test.describe('Captions buttons in call control', () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, `[id="common-call-composite-captions-button"]`);
-    expect(await stableScreenshot(page)).toMatchSnapshot(`teams-caption-toggle-button.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`teams-caption-toggle-button-no-premium-license.png`);
   });
 
   test('Captions toggle button renders correctly when caption disabled', async ({ page, serverUrl }) => {
@@ -166,6 +166,6 @@ test.describe('Captions buttons in call control', () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, `[id="common-call-composite-captions-button"]`);
-    expect(await stableScreenshot(page)).toMatchSnapshot(`teams-caption-toggle-button-disabled.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`teams-caption-toggle-button-disabled-no-premium-license.png`);
   });
 });
