@@ -491,6 +491,11 @@ export interface CallCompositeStrings {
    * string to be used to start real time text
    */
   startRealTimeTextLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * string to be used to when start real time text button is disabled
+   */
+  disabledStartRealTimeTextLabel?: string;
   /**
    * string to be used to stop captions
    */
@@ -584,6 +589,31 @@ export interface CallCompositeStrings {
    * Label for the link in the real time text disclosure banner
    */
   realTimeTextBannerLinkLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when only captions is enabled
+   */
+  captionsOnlyContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when only real time text is enabled
+   */
+  realTimeTextOnlyContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when both captions and real time text is enabled
+   */
+  captionsAndRealTimeTextContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Expand button aria label
+   */
+  expandButtonAriaLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Minimize button aria label
+   */
+  minimizeButtonAriaLabel?: string;
   /**
    * transfer page text when showing the transferor who initiated the transfer
    */

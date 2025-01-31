@@ -2,6 +2,21 @@
   "name": "@internal/check-typescript-regression",
   "entries": [
     {
+      "date": "Mon, 13 Jan 2025 19:28:47 GMT",
+      "version": "0.1.0",
+      "tag": "@internal/check-typescript-regression_v0.1.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@internal/check-typescript-regression",
+            "comment": "Bump @azure/communication-react to v1.23.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 16 Dec 2024 19:44:16 GMT",
       "version": "0.1.0",
       "tag": "@internal/check-typescript-regression_v0.1.0",
