@@ -89,7 +89,12 @@ export const TogetherModeStream = memo(
     const showLoadingIndicator = !(stream && stream.isAvailable && stream.isReceiving);
 
     return containerWidth && containerHeight ? (
-      <Stack styles={togetherModeStreamRootStyle} horizontalAlign="center" verticalAlign="center">
+      <Stack
+        styles={togetherModeStreamRootStyle}
+        horizontalAlign="center"
+        verticalAlign="center"
+        data-ui-id="together-mode-layout"
+      >
         <StreamMedia
           videoStreamElement={stream?.renderElement || null}
           isMirrored={true}
