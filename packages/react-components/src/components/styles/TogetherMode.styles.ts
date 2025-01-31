@@ -32,6 +32,12 @@ export const REACTION_MAX_TRAVEL_HEIGHT = 0.5 * REM_TO_PX_MULTIPLIER;
 
 /* @conditional-compile-remove(together-mode) */
 /**
+ * The maximum width for displaying the participant's display name.
+ */
+export const MAX_DISPLAY_NAME_WIDTH = 150;
+
+/* @conditional-compile-remove(together-mode) */
+/**
  * Interface for defining the coordinates of a seat in Together Mode.
  */
 export interface TogetherModeParticipantSeatPosition {
@@ -198,16 +204,30 @@ export const togetherModeParticipantDisplayName = (
   isParticipantHovered: boolean,
   participantSeatingWidth: number,
   color: string
-): CSSProperties => {
-  const MIN_DISPLAY_NAME_WIDTH = 100;
+): React.CSSProperties => {
+  // expands the display name width when participant is hovered or clicked on else make it 70% of the participant seating width
+  const width =
+    isParticipantHovered || participantSeatingWidth * REM_TO_PX_MULTIPLIER > MAX_DISPLAY_NAME_WIDTH
+      ? 'fit-content'
+      : _pxToRem(0.7 * participantSeatingWidth * REM_TO_PX_MULTIPLIER);
+
+  // For smaller displays, the display name is hidden only participant is hovered or clicked on for mobile view
+  const showDisplayName =
+    isParticipantHovered || participantSeatingWidth * REM_TO_PX_MULTIPLIER > MAX_DISPLAY_NAME_WIDTH
+      ? 'inline-block'
+      : 'none';
+
   return {
     textOverflow: 'ellipsis',
-    flexGrow: 1, // Allow text to grow within available space
-    overflow: isParticipantHovered ? 'visible' : 'hidden',
     whiteSpace: 'nowrap',
     textAlign: 'center',
     color,
-    display: isParticipantHovered || participantSeatingWidth > MIN_DISPLAY_NAME_WIDTH ? 'inline-block' : 'none' // Completely remove the element when hidden
+    overflow: isParticipantHovered ? 'visible' : 'hidden',
+    width,
+    display: showDisplayName,
+    fontSize: `${_pxToRem(13)}`,
+    lineHeight: `${_pxToRem(20)}`,
+    maxWidth: isParticipantHovered ? 'fit-content' : _pxToRem(0.7 * participantSeatingWidth * REM_TO_PX_MULTIPLIER)
   };
 };
 
@@ -221,11 +241,26 @@ export const togetherModeParticipantEmojiSpriteStyle = (
   participantSeatWidth: string
 ): CSSProperties => {
   const participantSeatWidthInPixel = parseFloat(participantSeatWidth) * REM_TO_PX_MULTIPLIER;
-  const emojiScaledSizeInPercent = (emojiScaledSize / participantSeatWidthInPixel) * 100;
+  const emojiScaledSizeInPercent = 100 - (emojiScaledSize / participantSeatWidthInPixel) * 100;
   return {
     width: `${emojiSize}`,
     position: 'absolute',
     // Center the emoji sprite within the participant seat
     left: `${emojiScaledSizeInPercent / 2}%`
   };
+};
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * The style for the transition of the participant status container in Together Mode.
+ * @private
+ */
+export const participantStatusTransitionStyle: CSSProperties = {
+  position: 'absolute',
+  bottom: `${_pxToRem(2)}`,
+  width: 'fit-content',
+  textAlign: 'center',
+  transform: 'translate(-50%)',
+  transition: 'width 0.3s ease, transform 0.3s ease',
+  left: '50%'
 };

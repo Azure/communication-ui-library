@@ -44,6 +44,8 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { CaptionsKind } from '@azure/communication-calling';
 import { ReactionResources, MediaAccess } from '@internal/react-components';
+/* @conditional-compile-remove(together-mode) */
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 
 /**
  * @private
@@ -329,6 +331,25 @@ export const getIsRoomsCall = (state: CallAdapterState): boolean => state.isRoom
 /** @private */
 export const getVideoBackgroundImages = (state: CallAdapterState): VideoBackgroundImage[] | undefined =>
   state.videoBackgroundImages;
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ * Gets the together mode streams state.
+ * @param state - The current state of the call adapter.
+ * @returns The together mode streams state or undefined.
+ */
+export const getIsTogetherModeActive = (state: CallAdapterState): boolean | undefined =>
+  state.call?.togetherMode.isActive;
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ * Gets local participant's user id.
+ * @param state - The current state of the call adapter.
+ * @returns The local participant's user id or undefined.
+ */
+export const getLocalUserId = (state: CallAdapterState): CommunicationIdentifierKind | undefined => state.userId;
 
 /** @private */
 export const getMediaAccessSetting = (state: CallAdapterState): MediaAccess | undefined =>
