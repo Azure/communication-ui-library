@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Namnlös deltagare",
     "participantStateRinging": "Ringer...",
     "participantStateHold": "Parkerat",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Fler alternativ",
-    "attendeeRole": "Deltagare"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, fler alternativ",
+    "attendeeRole": "Deltagare",
+    "micDisabledIconLabel": "Mikrofonen är inaktiverad",
+    "cameraDisabledIconLabel": "Kameran är inaktiverad"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} till"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "Punktlista tillämpad",
     "richTextNumberedListAppliedAnnouncement": "Numrerad tillämpad"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Aktivera RTT-modal",
-    "rttModalTitle": "Aktivera RTT?",
-    "rttModalText": "Realtidstext (RTT) aktiveras för alla i mötet.",
-    "rttConfirmButtonLabel": "Aktivera",
-    "rttCancelButtonLabel": "Avbryt",
-    "rttCloseModalButtonAriaLabel": "Stäng RTT-modal"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Aktivera RTT-modal",
+    "realTimeTextModalTitle": "Aktivera RTT?",
+    "realTimeTextModalText": "Realtidstext (RTT) aktiveras för alla i mötet.",
+    "realTimeTextConfirmButtonLabel": "Aktivera",
+    "realTimeTextCancelButtonLabel": "Avbryt",
+    "realTimeTextCloseModalButtonAriaLabel": "Stäng RTT-modal"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Startar undertexter ..."
+    "captionsBannerSpinnerText": "Startar undertexter ...",
+    "realTimeTextInputBoxDefaultText": "Skriv meddelande i realtid",
+    "realTimeTextInputErrorMessage": "Meddelandet får inte överstiga 2 000 tecken",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (realtidstext) är aktiverat för alla deltagare under hela mötets varaktighet.",
+    "realTimeTextBannerLinkLabel": "Mer information",
+    "captionsOnlyContainerTitle": "Undertext",
+    "realTimeTextOnlyContainerTitle": "Text i realtid",
+    "captionsAndRealTimeTextContainerTitle": "Undertexter och text i realtid",
+    "expandButtonAriaLabel": "Visa",
+    "minimizeButtonAriaLabel": "Dölj"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Ladda ner",
     "dismissButtonAriaLabel": "Stäng",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Bilddetaljöverlägg"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Meddelandet har skickats",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "Applåd",
     "surprisedReactionTooltipContent": "Förvånad"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "RTT-inmatning"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "Stäng av undertexter",
     "tooltipOffContent": "Aktivera undertexter"
   },
+  "startRealTimeTextButton": {
+    "label": "Turn on RTT for this call",
+    "tooltipOffContent": "Turn on RTT for this call"
+  },
   "messageThread": {
     "yesterday": "I går",
     "sunday": "Söndag",
@@ -308,7 +324,9 @@
     "resendMessage": "Försök skicka igen",
     "failToSendTag": "Inte skickat",
     "editedTag": "Redigerad",
-    "liveAuthorIntro": "{author} säger",
+    "liveAuthorIntro": "Meddelande från {author}",
+    "editedMessageLiveAuthorIntro": "Redigerat meddelande från {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Redigerat meddelande",
     "messageContentAriaText": "{status} {author} sa {message}",
     "messageContentMineAriaText": "{status} Du sa {message}",
     "editBoxTextLimit": "Meddelandet överskrider gränsen på {limitNumber} tecken",
@@ -616,6 +634,14 @@
       "title": "Mikrofonen har inaktiverats",
       "message": "Du kan inte längre slå på ljudet.",
       "dismissButtonAriaLabel": "Stäng"
+    },
+    "togetherModeStarted": {
+      "title": "Tillsammans-läge har startats",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "togetherModeEnded": {
+      "title": "Tillsammans-läge har avslutats",
+      "dismissButtonAriaLabel": "Stäng"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "Ringer...",
     "participantReconnecting": "Ansluter igen...",
     "participantStateHold": "Parkerat",
-    "moreOptionsButtonAriaLabel": "Fler alternativ {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Fler alternativ {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "ljud av",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "ljud på",
     "moreOptionsParticipantHandRaisedAriaLabel": "Uppräckt hand",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Talar"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Talar",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Mikrofonen är inaktiverad",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Kameran är inaktiverad"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Tillåt {appName} använda kameran och mikrofonen",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "Avböj",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Acceptera med video",
     "incomingCallNotificationDismissButtonAriaLabel": "Stäng"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (realtidstext) är aktiverat för alla deltagare under hela mötets varaktighet.",
-    "bannerLinkLabel": "Mer information"
   }
 }
