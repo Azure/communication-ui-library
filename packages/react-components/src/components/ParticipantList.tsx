@@ -151,29 +151,17 @@ const onRenderParticipantDefault = (
   const displayName = formatDisplayName(participant.displayName);
 
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
-
   const isPinned = pinnedParticipants && pinnedParticipants?.includes(participant.userId);
+  const isScreenSharing = callingParticipant?.isScreenSharing;
+  const isMuted = callingParticipant?.isMuted;
+  const hasRaisedHand = callingParticipant?.raisedHand;
+  const isAudioPermitted = callingParticipant?.mediaAccess ? callingParticipant.mediaAccess.isAudioPermitted : true;
+  const isVideoPermitted = callingParticipant?.mediaAccess ? callingParticipant.mediaAccess.isVideoPermitted : true;
 
-  const showRenderIconTrampoline = (): boolean => {
-    /* @conditional-compile-remove(media-access) */
-    return !!(
-      callingParticipant?.isScreenSharing ||
-      callingParticipant?.isMuted ||
-      callingParticipant?.raisedHand ||
-      isPinned ||
-      !(callingParticipant?.mediaAccess ? callingParticipant.mediaAccess.isAudioPermitted : true) ||
-      !(callingParticipant?.mediaAccess ? callingParticipant.mediaAccess.isVideoPermitted : true)
-    );
+  const shouldRenderParticipantIcon =
+    isScreenSharing || isMuted || hasRaisedHand || isPinned || !isAudioPermitted || !isVideoPermitted;
 
-    return !!(
-      callingParticipant?.isScreenSharing ||
-      callingParticipant?.isMuted ||
-      callingParticipant?.raisedHand ||
-      isPinned
-    );
-  };
-
-  const onRenderIcon = showRenderIconTrampoline()
+  const onRenderIcon = shouldRenderParticipantIcon
     ? () => (
         <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
           {callingParticipant.raisedHand && (
@@ -206,29 +194,16 @@ const onRenderParticipantDefault = (
           )}
           {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
           {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
-          {
-            /* @conditional-compile-remove(media-access) */ callingParticipant.mediaAccess &&
-            !callingParticipant.mediaAccess.isVideoPermitted ? (
-              <Icon
-                iconName="ControlButtonCameraProhibited"
-                className={iconStyles}
-                ariaLabel={strings.mutedIconLabel}
-              />
-            ) : undefined
-          }
-          {
-            /* @conditional-compile-remove(media-access) */ callingParticipant.mediaAccess &&
-            !callingParticipant.mediaAccess?.isAudioPermitted ? (
-              <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
-            ) : undefined
-          }
-          {
-            /* @conditional-compile-remove(media-access) */ (callingParticipant.mediaAccess
-              ? callingParticipant.mediaAccess.isAudioPermitted
-              : true) && callingParticipant.isMuted ? (
-              <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
-            ) : undefined
-          }
+          {callingParticipant.mediaAccess && !callingParticipant.mediaAccess.isVideoPermitted ? (
+            <Icon iconName="ControlButtonCameraProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+          ) : undefined}
+          {callingParticipant.mediaAccess && !callingParticipant.mediaAccess?.isAudioPermitted ? (
+            <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+          ) : undefined}
+          {(callingParticipant.mediaAccess ? callingParticipant.mediaAccess.isAudioPermitted : true) &&
+          callingParticipant.isMuted ? (
+            <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+          ) : undefined}
         </Stack>
       )
     : () => null;
@@ -254,10 +229,8 @@ const onRenderParticipantDefault = (
     displayName: displayName ?? '',
     connectionState: formatParticipantStateString(callingParticipant, strings) ?? '',
     mutedState: (callingParticipant.isMuted ? strings?.mutedIconLabel : undefined) ?? '',
-    /* @conditional-compile-remove(media-access) */
     micDisabledState:
       (callingParticipant.mediaAccess?.isAudioPermitted === false ? strings?.micDisabledIconLabel : undefined) ?? '',
-    /* @conditional-compile-remove(media-access) */
     cameraDisabledState:
       (callingParticipant.mediaAccess?.isVideoPermitted === false ? strings?.cameraDisabledIconLabel : undefined) ?? '',
     sharingState: (callingParticipant.isScreenSharing ? strings?.sharingIconLabel : undefined) ?? '',
