@@ -42,7 +42,6 @@ export const TogetherModeStream = memo(
     reactionResources?: ReactionResources;
     localParticipant?: VideoGalleryLocalParticipant;
     remoteParticipants?: VideoGalleryRemoteParticipant[];
-    screenShareComponent?: JSX.Element;
     containerWidth?: number;
     containerHeight?: number;
   }): JSX.Element => {

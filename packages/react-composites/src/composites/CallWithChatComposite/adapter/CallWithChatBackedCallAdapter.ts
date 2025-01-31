@@ -7,7 +7,7 @@ import { CallAdapter, CallAdapterState } from '../../CallComposite';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamViewResult } from '@internal/react-components';
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 import {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -139,7 +139,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   /* @conditional-compile-remove(together-mode) */
   public createTogetherModeStreamView = async (
-    options?: VideoStreamOptions
+    options?: TogetherModeStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> =>
     await this.callWithChatAdapter.createTogetherModeStreamView(options);
   /* @conditional-compile-remove(together-mode) */
