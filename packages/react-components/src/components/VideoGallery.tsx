@@ -20,7 +20,8 @@ import {
 import {
   VideoGalleryTogetherModeParticipantPosition,
   VideoGalleryTogetherModeStreams,
-  TogetherModeStreamViewResult
+  TogetherModeStreamViewResult,
+  TogetherModeStreamOptions
 } from '../types/TogetherModeTypes';
 import { ViewScalingMode } from '../types';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
@@ -342,7 +343,9 @@ export interface VideoGalleryProps {
   /**
    * Callback to create a together mode stream view
    */
-  onCreateTogetherModeStreamView?: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
+  onCreateTogetherModeStreamView?: (
+    options?: TogetherModeStreamOptions
+  ) => Promise<void | TogetherModeStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
   /**
    * This callback is to start together mode
