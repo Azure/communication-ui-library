@@ -107,7 +107,7 @@
     "regenerator-runtime": "^0.14.0",
     "require-from-string": "^2.0.2",
     "scheduler": "^0.23.0",
-    "shell-quote": "1.8.1",
+    "shell-quote": "1.8.2",
     "source-map-explorer": "^2.5.0",
     "storybook": "8.2.6",
     "styled-components": "^5.2.1",

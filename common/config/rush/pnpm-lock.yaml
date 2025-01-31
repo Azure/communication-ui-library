@@ -4436,15 +4436,15 @@ packages:
       react: 18.3.1
     dev: false
 
-  /@microsoft/api-documenter@7.26.5(@types/node@22.10.10):
-    resolution: {integrity: sha512-E1V8FIHd1ePefbvCZoQfusBPMyKqIq/VqgfJGeZKjOYluwQMlZEgJT18t0XH8zPMO5/rB/PWAVkv4fKrsnoYjw==}
+  /@microsoft/api-documenter@7.26.7(@types/node@22.10.10):
+    resolution: {integrity: sha512-VruYlHYAhQfuBNyndvyD9GBmCRWSOZ8D9+eXicygycNPMC/SPM71WWu2OwP98CTBvq/OhG/uRvUGGdL4QvgiFQ==}
     hasBin: true
     dependencies:
-      '@microsoft/api-extractor-model': 7.30.2(@types/node@22.10.10)
+      '@microsoft/api-extractor-model': 7.30.3(@types/node@22.10.10)
       '@microsoft/tsdoc': 0.15.1
-      '@rushstack/node-core-library': 5.10.2(@types/node@22.10.10)
-      '@rushstack/terminal': 0.14.5(@types/node@22.10.10)
-      '@rushstack/ts-command-line': 4.23.3(@types/node@22.10.10)
+      '@rushstack/node-core-library': 5.11.0(@types/node@22.10.10)
+      '@rushstack/terminal': 0.14.6(@types/node@22.10.10)
+      '@rushstack/ts-command-line': 4.23.4(@types/node@22.10.10)
       js-yaml: 3.13.1
       resolve: 1.22.10
     transitivePeerDependencies:
@@ -4461,12 +4461,12 @@ packages:
       - '@types/node'
     dev: false
 
-  /@microsoft/api-extractor-model@7.30.2(@types/node@22.10.10):
-    resolution: {integrity: sha512-3/t2F+WhkJgBzSNwlkTIL0tBgUoBqDqL66pT+nh2mPbM0NIDGVGtpqbGWPgHIzn/mn7kGS/Ep8D8po58e8UUIw==}
+  /@microsoft/api-extractor-model@7.30.3(@types/node@22.10.10):
+    resolution: {integrity: sha512-yEAvq0F78MmStXdqz9TTT4PZ05Xu5R8nqgwI5xmUmQjWBQ9E6R2n8HB/iZMRciG4rf9iwI2mtuQwIzDXBvHn1w==}
     dependencies:
       '@microsoft/tsdoc': 0.15.1
       '@microsoft/tsdoc-config': 0.17.1
-      '@rushstack/node-core-library': 5.10.2(@types/node@22.10.10)
+      '@rushstack/node-core-library': 5.11.0(@types/node@22.10.10)
     transitivePeerDependencies:
       - '@types/node'
     dev: false
@@ -5175,8 +5175,8 @@ packages:
       semver: 7.5.4
     dev: false
 
-  /@rushstack/node-core-library@5.10.2(@types/node@22.10.10):
-    resolution: {integrity: sha512-xOF/2gVJZTfjTxbo4BDj9RtQq/HFnrrKdtem4JkyRLnwsRz2UDTg8gA1/et10fBx5RxmZD9bYVGST69W8ME5OQ==}
+  /@rushstack/node-core-library@5.11.0(@types/node@22.10.10):
+    resolution: {integrity: sha512-I8+VzG9A0F3nH2rLpPd7hF8F7l5Xb7D+ldrWVZYegXM6CsKkvWc670RlgK3WX8/AseZfXA/vVrh0bpXe2Y2UDQ==}
     peerDependencies:
       '@types/node': '*'
     peerDependenciesMeta:
@@ -5187,7 +5187,7 @@ packages:
       ajv: 8.13.0
       ajv-draft-04: 1.0.0(ajv@8.13.0)
       ajv-formats: 3.0.1(ajv@8.13.0)
-      fs-extra: 7.0.1
+      fs-extra: 11.3.0
       import-lazy: 4.0.0
       jju: 1.4.0
       resolve: 1.22.10
@@ -5214,15 +5214,15 @@ packages:
       supports-color: 8.1.1
     dev: false
 
-  /@rushstack/terminal@0.14.5(@types/node@22.10.10):
-    resolution: {integrity: sha512-TEOpNwwmsZVrkp0omnuTUTGZRJKTr6n6m4OITiNjkqzLAkcazVpwR1SOtBg6uzpkIBLgrcNHETqI8rbw3uiUfw==}
+  /@rushstack/terminal@0.14.6(@types/node@22.10.10):
+    resolution: {integrity: sha512-4nMUy4h0u5PGXVG71kEA9uYI3l8GjVqewoHOFONiM6fuqS51ORdaJZ5ZXB2VZEGUyfg1TOTSy88MF2cdAy+lqA==}
     peerDependencies:
       '@types/node': '*'
     peerDependenciesMeta:
       '@types/node':
         optional: true
     dependencies:
-      '@rushstack/node-core-library': 5.10.2(@types/node@22.10.10)
+      '@rushstack/node-core-library': 5.11.0(@types/node@22.10.10)
       '@types/node': 22.10.10
       supports-color: 8.1.1
     dev: false
@@ -5238,10 +5238,10 @@ packages:
       - '@types/node'
     dev: false
 
-  /@rushstack/ts-command-line@4.23.3(@types/node@22.10.10):
-    resolution: {integrity: sha512-HazKL8fv4HMQMzrKJCrOrhyBPPdzk7iajUXgsASwjQ8ROo1cmgyqxt/k9+SdmrNLGE1zATgRqMUH3s/6smbRMA==}
+  /@rushstack/ts-command-line@4.23.4(@types/node@22.10.10):
+    resolution: {integrity: sha512-pqmzDJCm0TS8VyeqnzcJ7ncwXgiLDQ6LVmXXfqv2nPL6VIz+UpyTpNVfZRJpyyJ+UDxqob1vIj2liaUfBjv8/A==}
     dependencies:
-      '@rushstack/terminal': 0.14.5(@types/node@22.10.10)
+      '@rushstack/terminal': 0.14.6(@types/node@22.10.10)
       '@types/argparse': 1.0.38
       argparse: 1.0.10
       string-argv: 0.3.2
@@ -7144,10 +7144,8 @@ packages:
       ajv: 8.13.0
     dev: false
 
-  /ajv-formats@2.1.1(ajv@8.17.1):
+  /ajv-formats@2.1.1:
     resolution: {integrity: sha512-Wx0Kx52hxE7C18hkMEggYlEifqWZtYaRgouJor+WMdPnQyEK13vgEWyVNup7SoeeoLMsr4kf5h6dOW11I15MUA==}
-    peerDependencies:
-      ajv: ^8.0.0
     peerDependenciesMeta:
       ajv:
         optional: true
@@ -15445,7 +15443,7 @@ packages:
     dependencies:
       '@types/json-schema': 7.0.15
       ajv: 8.17.1
-      ajv-formats: 2.1.1(ajv@8.17.1)
+      ajv-formats: 2.1.1
       ajv-keywords: 5.1.0(ajv@8.17.1)
     dev: false
 
@@ -15605,10 +15603,6 @@ packages:
   /shebang-regex@3.0.0:
     resolution: {integrity: sha512-7++dFhtcx3353uBaq8DDR4NuxBetBzC7ZQOhmTQInHEd6bSrXdiEyzCvG07Z44UYdLShWUyXt5M/yhz8ekcb1A==}
     engines: {node: '>=8'}
-    dev: false
-
-  /shell-quote@1.8.1:
-    resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
     dev: false
 
   /shell-quote@1.8.2:
@@ -18753,7 +18747,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-e+oNMWIuy1HOTV49vJtdzEVNf/gXeML9RT8S72EcDM/p3awJQsR19JD+HDq0e9fFrERgqsg6wxa/oXxUnIpq0A==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-jzALFONOp9ZYHMnzUJXrBEO0rEH1pA/HUT/RY8dYHFupSCHH/jKK2//YDuZAbMrb9Hw5QlRzEiAwS9OlowKklg==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -18774,7 +18768,7 @@ packages:
       '@fluentui/react-icons': 2.0.271(react@18.3.1)
       '@fluentui/react-window-provider': 2.2.28(@types/react@18.3.12)(react@18.3.1)
       '@griffel/react': 1.5.29(react@18.3.1)
-      '@microsoft/api-documenter': 7.26.5(@types/node@22.10.10)
+      '@microsoft/api-documenter': 7.26.7(@types/node@22.10.10)
       '@microsoft/api-extractor': 7.48.1(@types/node@22.10.10)
       '@rollup/plugin-json': 6.1.0(rollup@4.32.1)
       '@testing-library/jest-dom': 6.6.3
@@ -19131,7 +19125,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-oMb38hbTn4SZPW8RkbFc5djulm0EutCMvcbySsBOGbxebHeRxsxbBsB/X2hy3hewlKSocSOS2lr17NNEPH/A5A==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-4zs1c6y0v/ZIro7X8T9hxp4tTZOV4DxYVKOTuSSrAQlqU7eBPeiMtx/EwlVv0pELjFutaDuvWAxTjE782g12hw==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -19150,7 +19144,7 @@ packages:
       '@fluentui/react-file-type-icons': 8.12.7(@types/react@18.3.12)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.16(@types/react@18.3.12)(react@18.3.1)
       '@fluentui/react-icons': 2.0.271(react@18.3.1)
-      '@microsoft/api-documenter': 7.26.5(@types/node@22.10.10)
+      '@microsoft/api-documenter': 7.26.7(@types/node@22.10.10)
       '@microsoft/api-extractor': 7.48.1(@types/node@22.10.10)
       '@playwright/test': 1.49.1
       '@testing-library/jest-dom': 6.6.3
@@ -19215,7 +19209,7 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.32.1
-      shell-quote: 1.8.1
+      shell-quote: 1.8.2
       source-map-explorer: 2.5.3
       style-loader: 2.0.0(webpack@5.95.0)
       ts-jest: 29.2.5(@babel/core@7.26.7)(babel-jest@29.7.0)(jest@29.7.0)(typescript@5.4.5)
@@ -19424,7 +19418,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-CeHeqyaxaiIfoQFuYto2MB6p/spBjQFNixwJZXrPrYuhghhsW5B4B7NpfOB8YYvVxNPrBfwthHkCza+JjbN4IA==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-SDWcICn1QjoHyDdDBRTzTGP6pTz3AoIJeXE36UH7kyJEwc8eacOMorDtWfNcCIy1optNwqMdfLveL3OFlxJYWw==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
@@ -19508,7 +19502,7 @@ packages:
       require-from-string: 2.0.2
       resize-observer-polyfill: 1.5.1
       scheduler: 0.23.2
-      shell-quote: 1.8.1
+      shell-quote: 1.8.2
       source-map-explorer: 2.5.3
       storybook: 8.2.6(@babel/preset-env@7.23.9)
       styled-components: 5.3.11(@babel/core@7.26.7)(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)
