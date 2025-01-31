@@ -6,14 +6,12 @@ import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvide
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 import { PeoplePaneContent } from '../../../common/PeoplePaneContent';
 import { useLocale } from '../../../localization';
-import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
+import { ParticipantMenuItemsCallback, _DrawerMenuItemProps, MediaAccess } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 import { IButton, IContextualMenuProps, IContextualMenuItem } from '@fluentui/react';
 import { useSelector } from '../../hooks/useSelector';
 import { getAlternateCallerId, getRemoteParticipants, getRole } from '../../selectors/baseSelectors';
 import { Prompt } from '../Prompt';
-/* @conditional-compile-remove(media-access) */
-import { MediaAccess } from '@internal/react-components';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
 
@@ -40,23 +38,14 @@ export const usePeoplePane = (props: {
   onPinParticipant?: (userId: string) => void;
   onUnpinParticipant?: (userId: string) => void;
   disablePinMenuItem?: boolean;
-  /* @conditional-compile-remove(media-access) */
   onForbidAudio?: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   onPermitAudio?: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   onForbidOthersAudio?: () => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   onPermitOthersAudio?: () => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   onForbidVideo?: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   onPermitVideo?: (userIds: string[]) => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   onForbidOthersVideo?: () => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   onPermitOthersVideo?: () => Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   meetingMediaAccess?: MediaAccess;
   sidePaneDismissButtonRef?: RefObject<IButton>;
   chatButtonPresent?: boolean;
@@ -87,23 +76,14 @@ export const usePeoplePane = (props: {
     onUnpinParticipant,
     disablePinMenuItem,
     onMuteAllRemoteParticipants,
-    /* @conditional-compile-remove(media-access) */
     onForbidAudio,
-    /* @conditional-compile-remove(media-access) */
     onPermitAudio,
-    /* @conditional-compile-remove(media-access) */
     onForbidOthersAudio,
-    /* @conditional-compile-remove(media-access) */
     onPermitOthersAudio,
-    /* @conditional-compile-remove(media-access) */
     onForbidVideo,
-    /* @conditional-compile-remove(media-access) */
     onPermitVideo,
-    /* @conditional-compile-remove(media-access) */
     onForbidOthersVideo,
-    /* @conditional-compile-remove(media-access) */
     onPermitOthersVideo,
-    /* @conditional-compile-remove(media-access) */
     meetingMediaAccess,
     sidePaneDismissButtonRef,
     chatButtonPresent
@@ -137,31 +117,26 @@ export const usePeoplePane = (props: {
     setShowMuteAllPrompt(false);
   }, [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
 
-  /* @conditional-compile-remove(media-access) */
   const [showForbidOthersAudioPrompt, setShowForbidOthersAudioPrompt] = useState(false);
-  /* @conditional-compile-remove(media-access) */
   const [showPermitOthersAudioPrompt, setShowPermitOthersAudioPrompt] = useState(false);
-  /* @conditional-compile-remove(media-access) */
   const [showForbidOthersVideoPrompt, setShowForbidOthersVideoPrompt] = useState(false);
-  /* @conditional-compile-remove(media-access) */
   const [showPermitOthersVideoPrompt, setShowPermitOthersVideoPrompt] = useState(false);
 
-  /* @conditional-compile-remove(media-access) */
   const onForbidAllAttendeesPromptConfirm = useCallback(() => {
     onForbidOthersAudio && onForbidOthersAudio();
     setShowForbidOthersAudioPrompt(false);
   }, [onForbidOthersAudio, setShowForbidOthersAudioPrompt]);
-  /* @conditional-compile-remove(media-access) */
+
   const onPermitAllAttendeesPromptConfirm = useCallback(() => {
     onPermitOthersAudio && onPermitOthersAudio();
     setShowPermitOthersAudioPrompt(false);
   }, [onPermitOthersAudio, setShowPermitOthersAudioPrompt]);
-  /* @conditional-compile-remove(media-access) */
+
   const onForbidOthersVideoPromptConfirm = useCallback(() => {
     onForbidOthersVideo && onForbidOthersVideo();
     setShowForbidOthersVideoPrompt(false);
   }, [onForbidOthersVideo, setShowForbidOthersVideoPrompt]);
-  /* @conditional-compile-remove(media-access) */
+
   const onPermitOthersVideoPromptConfirm = useCallback(() => {
     onPermitOthersVideo && onPermitOthersVideo();
     setShowPermitOthersVideoPrompt(false);
@@ -195,9 +170,7 @@ export const usePeoplePane = (props: {
       });
     }
 
-    /* @conditional-compile-remove(media-access) */
     let hasAttendee = false;
-    /* @conditional-compile-remove(media-access) */
     if (remoteParticipants) {
       for (const participant of Object.values(remoteParticipants)) {
         if (participant.role && participant.role === 'Attendee') {
@@ -206,11 +179,9 @@ export const usePeoplePane = (props: {
         }
       }
     }
-    /* @conditional-compile-remove(media-access) */
+
     const isMeetingAudioPermitted = meetingMediaAccess ? meetingMediaAccess.isAudioPermitted : true;
-    /* @conditional-compile-remove(media-access) */
     const isMeetingVideoPermitted = meetingMediaAccess ? meetingMediaAccess.isVideoPermitted : true;
-    /* @conditional-compile-remove(media-access) */
     if (onForbidOthersAudio && remoteParticipants) {
       hasAttendee &&
         isMeetingAudioPermitted &&
@@ -229,7 +200,7 @@ export const usePeoplePane = (props: {
           disabled: !hasAttendee
         });
     }
-    /* @conditional-compile-remove(media-access) */
+
     if (onPermitOthersAudio && remoteParticipants) {
       hasAttendee &&
         !isMeetingAudioPermitted &&
@@ -249,7 +220,6 @@ export const usePeoplePane = (props: {
         });
     }
 
-    /* @conditional-compile-remove(media-access) */
     if (onForbidOthersVideo && remoteParticipants) {
       hasAttendee &&
         isMeetingVideoPermitted &&
@@ -268,7 +238,7 @@ export const usePeoplePane = (props: {
           disabled: !hasAttendee
         });
     }
-    /* @conditional-compile-remove(media-access) */
+
     if (onPermitOthersVideo && remoteParticipants) {
       hasAttendee &&
         !isMeetingVideoPermitted &&
@@ -305,26 +275,17 @@ export const usePeoplePane = (props: {
   }, [
     onMuteAllRemoteParticipants,
     remoteParticipants,
-    /* @conditional-compile-remove(media-access) */
     meetingMediaAccess,
-    /* @conditional-compile-remove(media-access) */
     onForbidOthersAudio,
-    /* @conditional-compile-remove(media-access) */
     onPermitOthersAudio,
-    /* @conditional-compile-remove(media-access) */
     onForbidOthersVideo,
-    /* @conditional-compile-remove(media-access) */
     onPermitOthersVideo,
     onStopAllSpotlight,
     spotlightedParticipantUserIds,
     localeStrings.muteAllMenuLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersAudioMenuLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersAudioMenuLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersVideoMenuLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersVideoMenuLabel,
     localeStrings.stopAllSpotlightMenuLabel
   ]);
@@ -378,9 +339,8 @@ export const usePeoplePane = (props: {
         });
       }
 
-      /* @conditional-compile-remove(media-access) */
       const remoteParticipant = remoteParticipants?.[participantId];
-      /* @conditional-compile-remove(media-access) */
+
       if (
         remoteParticipant?.mediaAccess &&
         !remoteParticipant.mediaAccess.isAudioPermitted &&
@@ -401,7 +361,7 @@ export const usePeoplePane = (props: {
           ariaLabel: localeStrings.permitAudioMenuLabel
         });
       }
-      /* @conditional-compile-remove(media-access) */
+
       if (remoteParticipant?.mediaAccess?.isAudioPermitted && remoteParticipant?.role === 'Attendee' && onForbidAudio) {
         _defaultMenuItems.push({
           key: 'forbid-audio',
@@ -417,7 +377,7 @@ export const usePeoplePane = (props: {
           ariaLabel: localeStrings.forbidAudioMenuLabel
         });
       }
-      /* @conditional-compile-remove(media-access) */
+
       if (
         remoteParticipant?.mediaAccess &&
         !remoteParticipant.mediaAccess.isVideoPermitted &&
@@ -438,7 +398,7 @@ export const usePeoplePane = (props: {
           ariaLabel: localeStrings.permitVideoMenuLabel
         });
       }
-      /* @conditional-compile-remove(media-access) */
+
       if (remoteParticipant?.mediaAccess?.isVideoPermitted && remoteParticipant?.role === 'Attendee' && onForbidVideo) {
         _defaultMenuItems.push({
           key: 'forbid-video',
@@ -557,22 +517,14 @@ export const usePeoplePane = (props: {
       spotlightedParticipantUserIds,
       onMuteParticipant,
       remoteParticipants,
-      /* @conditional-compile-remove(media-access) */
       onPermitAudio,
-      /* @conditional-compile-remove(media-access) */
       onForbidAudio,
-      /* @conditional-compile-remove(media-access) */
       onPermitVideo,
-      /* @conditional-compile-remove(media-access) */
       onForbidVideo,
       onFetchParticipantMenuItems,
-      /* @conditional-compile-remove(media-access) */
       localeStrings.permitAudioMenuLabel,
-      /* @conditional-compile-remove(media-access) */
       localeStrings.forbidAudioMenuLabel,
-      /* @conditional-compile-remove(media-access) */
       localeStrings.permitVideoMenuLabel,
-      /* @conditional-compile-remove(media-access) */
       localeStrings.forbidVideoMenuLabel,
       localeStrings.stopSpotlightOnSelfMenuLabel,
       localeStrings.stopSpotlightMenuLabel,
@@ -611,7 +563,6 @@ export const usePeoplePane = (props: {
           />
         }
         {
-          /* @conditional-compile-remove(media-access) */
           <Prompt
             heading={localeStrings.forbidOthersAudioDialogTitle}
             text={localeStrings.forbidOthersAudioDialogContent}
@@ -624,7 +575,6 @@ export const usePeoplePane = (props: {
           />
         }
         {
-          /* @conditional-compile-remove(media-access) */
           <Prompt
             heading={localeStrings.permitOthersAudioDialogTitle}
             text={localeStrings.permitOthersAudioDialogContent}
@@ -637,7 +587,6 @@ export const usePeoplePane = (props: {
           />
         }
         {
-          /* @conditional-compile-remove(media-access) */
           <Prompt
             heading={localeStrings.forbidOthersVideoDialogTitle}
             text={localeStrings.forbidOthersVideoDialogContent}
@@ -650,7 +599,6 @@ export const usePeoplePane = (props: {
           />
         }
         {
-          /* @conditional-compile-remove(media-access) */
           <Prompt
             heading={localeStrings.permitOthersVideoDialogTitle}
             text={localeStrings.permitOthersVideoDialogContent}
@@ -680,45 +628,25 @@ export const usePeoplePane = (props: {
   }, [
     muteAllPromptLabels,
     showMuteAllPrompt,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersAudioDialogTitle,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersAudioDialogContent,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersAudioConfirmButtonLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersAudioCancelButtonLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersAudioDialogTitle,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersAudioDialogContent,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersAudioConfirmButtonLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersAudioCancelButtonLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersVideoDialogTitle,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersVideoDialogContent,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersVideoConfirmButtonLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.forbidOthersVideoCancelButtonLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersVideoDialogTitle,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersVideoDialogContent,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersVideoConfirmButtonLabel,
-    /* @conditional-compile-remove(media-access) */
     localeStrings.permitOthersVideoCancelButtonLabel,
-    /* @conditional-compile-remove(media-access) */
     showForbidOthersAudioPrompt,
-    /* @conditional-compile-remove(media-access) */
     showPermitOthersAudioPrompt,
-    /* @conditional-compile-remove(media-access) */
     showForbidOthersVideoPrompt,
-    /* @conditional-compile-remove(media-access) */
     showPermitOthersVideoPrompt,
     inviteLink,
     onFetchAvatarPersonaData,
@@ -731,13 +659,9 @@ export const usePeoplePane = (props: {
     role,
     alternateCallerId,
     onMuteAllPromptConfirm,
-    /* @conditional-compile-remove(media-access) */
     onForbidAllAttendeesPromptConfirm,
-    /* @conditional-compile-remove(media-access) */
     onPermitAllAttendeesPromptConfirm,
-    /* @conditional-compile-remove(media-access) */
     onForbidOthersVideoPromptConfirm,
-    /* @conditional-compile-remove(media-access) */
     onPermitOthersVideoPromptConfirm
   ]);
 

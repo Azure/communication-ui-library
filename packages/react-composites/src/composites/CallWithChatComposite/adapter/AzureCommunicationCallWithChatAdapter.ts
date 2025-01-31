@@ -727,36 +727,34 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async forbidAudio(userIds: string[]): Promise<void> {
     return this.callAdapter.forbidAudio(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitAudio(userIds: string[]): Promise<void> {
     return this.callAdapter.permitAudio(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async forbidOthersAudio(): Promise<void> {
     return this.callAdapter.forbidOthersAudio();
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitOthersAudio(): Promise<void> {
     return this.callAdapter.permitOthersAudio();
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async forbidVideo(userIds: string[]): Promise<void> {
     return this.callAdapter.forbidVideo(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitVideo(userIds: string[]): Promise<void> {
     return this.callAdapter.permitVideo(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async forbidOthersVideo(): Promise<void> {
     return this.callAdapter.forbidOthersVideo();
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitOthersVideo(): Promise<void> {
     return this.callAdapter.permitOthersVideo();
   }

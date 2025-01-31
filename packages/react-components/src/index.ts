@@ -96,5 +96,4 @@ export type {
   TogetherModeStreamOptions
 } from './types';
 
-/* @conditional-compile-remove(media-access) */
 export type { MediaAccess } from './types';

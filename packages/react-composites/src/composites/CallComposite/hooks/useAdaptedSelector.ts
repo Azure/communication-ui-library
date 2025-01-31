@@ -8,11 +8,15 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
-import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
+import {
+  CallErrors,
+  CallState,
+  CallClientState,
+  DeviceManagerState,
+  CallNotifications
+} from '@internal/calling-stateful-client';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
-import { CallNotifications } from '@internal/calling-stateful-client';
 /**
  * @private
  */
@@ -83,9 +87,7 @@ const memoizeState = memoizeOne(
     deviceManager: DeviceManagerState,
     calls: { [key: string]: CallState },
     latestErrors: CallErrors,
-    latestNotifications?:
-      | undefined
-      | /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ CallNotifications,
+    latestNotifications?: undefined | CallNotifications,
     displayName?: string,
     alternateCallerId?: string,
     environmentInfo?: undefined | EnvironmentInfo
@@ -98,7 +100,6 @@ const memoizeState = memoizeOne(
     callAgent: { displayName },
     calls,
     latestErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
     latestNotifications: latestNotifications ?? ({} as CallNotifications),
     alternateCallerId,
     environmentInfo
