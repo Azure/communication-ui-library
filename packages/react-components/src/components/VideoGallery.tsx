@@ -467,6 +467,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onForbidVideo,
     onPermitVideo
   } = props;
+
   const ids = useIdentifiers();
   const theme = useTheme();
   const localeStrings = useLocale().strings.videoGallery;
@@ -783,12 +784,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       : undefined;
 
   /* @conditional-compile-remove(together-mode) */
-  const togetherModeStreamComponent = useMemo(() => {
-    if (layout !== 'togetherMode' || screenShareComponent) {
-      return null;
-    }
-
-    return (
+  const togetherModeStreamComponent = useMemo(
+    () => (
       <TogetherModeStream
         startTogetherModeEnabled={startTogetherModeEnabled}
         isTogetherModeActive={isTogetherModeActive}
@@ -804,24 +801,23 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         containerWidth={containerWidth}
         containerHeight={containerHeight}
       />
-    );
-  }, [
-    layout,
-    screenShareComponent,
-    startTogetherModeEnabled,
-    isTogetherModeActive,
-    onCreateTogetherModeStreamView,
-    onStartTogetherMode,
-    onDisposeTogetherModeStreamView,
-    onSetTogetherModeSceneSize,
-    togetherModeStreams,
-    togetherModeSeatingCoordinates,
-    localParticipant,
-    remoteParticipants,
-    reactionResources,
-    containerWidth,
-    containerHeight
-  ]);
+    ),
+    [
+      startTogetherModeEnabled,
+      isTogetherModeActive,
+      onCreateTogetherModeStreamView,
+      onStartTogetherMode,
+      onDisposeTogetherModeStreamView,
+      onSetTogetherModeSceneSize,
+      togetherModeStreams,
+      togetherModeSeatingCoordinates,
+      localParticipant,
+      remoteParticipants,
+      reactionResources,
+      containerWidth,
+      containerHeight
+    ]
+  );
   /* @conditional-compile-remove(together-mode) */
   // Current implementation of capabilities is only based on user role.
   // This logic checks for the user role and if the user is a Teams user.
@@ -884,7 +880,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(together-mode) */
     // Teams users can switch to Together mode layout only if they have the capability,
     // while ACS users can do so only if Together mode is enabled.
-    if (layout === 'togetherMode' && togetherModeStreamComponent && canSwitchToTogetherModeLayout) {
+    if (!screenShareComponent && layout === 'togetherMode' && canSwitchToTogetherModeLayout) {
       return <TogetherModeLayout togetherModeStreamComponent={togetherModeStreamComponent} />;
     }
     return <DefaultLayout {...layoutProps} />;
@@ -892,6 +888,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(together-mode) */ canSwitchToTogetherModeLayout,
     layout,
     layoutProps,
+    screenShareComponent,
     screenShareParticipant,
     /* @conditional-compile-remove(together-mode) */ togetherModeStreamComponent
   ]);
