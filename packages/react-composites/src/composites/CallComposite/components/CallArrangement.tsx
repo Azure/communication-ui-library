@@ -86,8 +86,7 @@ import {
   useRemoteSpotlightCallbacksWithPrompt,
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
-
-import { getCaptionsKind, getIsTeamsCall, getMediaAccessSetting } from '../selectors/baseSelectors';
+import { getIsTeamsCall, getMediaAccessSetting } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 /* @conditional-compile-remove(breakout-rooms) */
@@ -477,11 +476,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     );
   }
 
-  const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
   const isTeamsMeeting = useSelector(getIsTeamsMeeting);
-
   const isTeamsCall = useSelector(getIsTeamsCall);
-  const useTeamsCaptions = isTeamsMeeting || isTeamsCall || isTeamsCaptions;
+  // Teams captions are only available in Teams meetings or Teams calls.
+  // For Teams Meetings, we need to check if the capability is present.
+  const useTeamsCaptions = (isTeamsMeeting && capabilities?.setCaptionLanguage?.isPresent) || isTeamsCall;
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
   const isCaptionsOn = useSelector(getCaptionsStatus);
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);
