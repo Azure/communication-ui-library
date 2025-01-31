@@ -210,7 +210,9 @@ const notificationOptions: NotificationType[] = [
   'capabilityTurnVideoOnAbsent',
   'capabilityTurnVideoOnPresent',
   'capabilityUnmuteMicAbsent',
-  'capabilityUnmuteMicPresent'
+  'capabilityUnmuteMicPresent',
+  'togetherModeStarted',
+  'togetherModeEnded'
 ];
 
 export const defaultActiveNotifications = ['callNoSpeakerFound'];
