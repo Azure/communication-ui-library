@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Teilnehmer ohne Namen",
     "participantStateRinging": "Anrufen...",
     "participantStateHold": "In der Warteschleife",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Weitere Optionen",
-    "attendeeRole": "Teilnehmer"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, weitere Optionen",
+    "attendeeRole": "Teilnehmer",
+    "micDisabledIconLabel": "Micophone deaktiviert",
+    "cameraDisabledIconLabel": "Kamera deaktiviert"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} weitere"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "Aufzählung angewendet",
     "richTextNumberedListAppliedAnnouncement": "\"Nummerierte Liste\" angewendet."
   },
-  "rttModal": {
-    "rttModalAriaLabel": "RTT Modal aktivieren",
-    "rttModalTitle": "RTT aktivieren?",
-    "rttModalText": "Echtzeittext (RTT) wird für alle Teilnehmer der Besprechung aktiviert.",
-    "rttConfirmButtonLabel": "Aktivieren",
-    "rttCancelButtonLabel": "Abbrechen",
-    "rttCloseModalButtonAriaLabel": "RTT Modal schließen"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "RTT Modal aktivieren",
+    "realTimeTextModalTitle": "RTT aktivieren?",
+    "realTimeTextModalText": "Echtzeittext (RTT) wird für alle Teilnehmer der Besprechung aktiviert.",
+    "realTimeTextConfirmButtonLabel": "Aktivieren",
+    "realTimeTextCancelButtonLabel": "Abbrechen",
+    "realTimeTextCloseModalButtonAriaLabel": "RTT Modal schließen"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Untertitel werden gestartet..."
+    "captionsBannerSpinnerText": "Untertitel werden gestartet...",
+    "realTimeTextInputBoxDefaultText": "Nachricht in Echtzeit eingeben",
+    "realTimeTextInputErrorMessage": "Die Nachricht darf 2000 Zeichen nicht überschreiten.",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (Echtzeittext) ist für alle Teilnehmer für die gesamte Dauer der Besprechung aktiviert.",
+    "realTimeTextBannerLinkLabel": "Weitere Informationen",
+    "captionsOnlyContainerTitle": "Untertitel",
+    "realTimeTextOnlyContainerTitle": "Echtzeittext",
+    "captionsAndRealTimeTextContainerTitle": "Untertitel und Echtzeittext",
+    "expandButtonAriaLabel": "Erweitern",
+    "minimizeButtonAriaLabel": "Reduzieren"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Vorschläge"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Herunterladen",
     "dismissButtonAriaLabel": "Schließen",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Bilddetailsüberlagerung"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Nachricht gesendet",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "Applaus",
     "surprisedReactionTooltipContent": "Überrascht"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "RTT-Eingabe"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "Untertitel deaktivieren",
     "tooltipOffContent": "Beschriftungen aktivieren"
   },
+  "startRealTimeTextButton": {
+    "label": "Turn on RTT for this call",
+    "tooltipOffContent": "Turn on RTT for this call"
+  },
   "messageThread": {
     "yesterday": "Gestern",
     "sunday": "Sonntag",
@@ -308,7 +324,9 @@
     "resendMessage": "Erneut senden",
     "failToSendTag": "Fehler beim Senden",
     "editedTag": "Bearbeitet",
-    "liveAuthorIntro": "{author} sagt",
+    "liveAuthorIntro": "Nachricht von {author}",
+    "editedMessageLiveAuthorIntro": "Nachricht von {author} bearbeitet",
+    "editedMessageLocalUserLiveAuthorIntro": "Nachricht bearbeitet",
     "messageContentAriaText": "{status} {author} hat {message} gesagt",
     "messageContentMineAriaText": "{status} Sie haben {message} gesagt",
     "editBoxTextLimit": "Ihre Nachricht überschreitet das Limit von {limitNumber} Zeichen.",
@@ -616,6 +634,14 @@
       "title": "Ihr Mikro wurde deaktiviert",
       "message": "Sie können die Stummschaltung nicht mehr aufheben.",
       "dismissButtonAriaLabel": "Schließen"
+    },
+    "togetherModeStarted": {
+      "title": "Der Togethermode wurde gestartet",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "togetherModeEnded": {
+      "title": "Der Togethermode wurde beendet",
+      "dismissButtonAriaLabel": "Schließen"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "Anrufen...",
     "participantReconnecting": "Verbindung wird wiederhergestellt...",
     "participantStateHold": "In der Warteschleife",
-    "moreOptionsButtonAriaLabel": "Weitere Optionen {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Weitere Optionen {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "stummgeschaltet",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "Stummschaltung aufgehoben",
     "moreOptionsParticipantHandRaisedAriaLabel": "Hand erhoben",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Sprechen"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Sprechen",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Mikrofon deaktiviert",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Kamera deaktiviert"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Zulassen, dass {appName} Ihre Kamera und Ihr Mikrofon verwendet",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "Ablehnen",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Mit Video annehmen",
     "incomingCallNotificationDismissButtonAriaLabel": "Verwerfen"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (Echtzeittext) ist für alle Teilnehmer für die gesamte Dauer der Besprechung aktiviert.",
-    "bannerLinkLabel": "Mehr erfahren"
   }
 }

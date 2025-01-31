@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "未命名的参与者",
     "participantStateRinging": "正在呼叫...",
     "participantStateHold": "保留",
-    "participantItemAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{sharingState}、{connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{sharingState}、{connectionState}、更多选项",
-    "attendeeRole": "与会者"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{micDisabledState}、{cameraDisabledState}、{sharingState}、{connectionState}、更多选项",
+    "attendeeRole": "与会者",
+    "micDisabledIconLabel": "麦克风已禁用",
+    "cameraDisabledIconLabel": "相机已禁用"
   },
   "ParticipantList": {
     "overflowParticipantCount": "和另外 {overflowCount} 人"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "已应用项目符号列表",
     "richTextNumberedListAppliedAnnouncement": "已应用编号列表"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "打开 RTT 模式",
-    "rttModalTitle": "是否启用 RTT?",
-    "rttModalText": "将为会议中的每个人启用实时文本 (RTT)。",
-    "rttConfirmButtonLabel": "启用",
-    "rttCancelButtonLabel": "取消",
-    "rttCloseModalButtonAriaLabel": "关闭 RTT 模式"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "打开 RTT 模式",
+    "realTimeTextModalTitle": "是否启用 RTT?",
+    "realTimeTextModalText": "将为会议中的每个人启用实时文本 (RTT)。",
+    "realTimeTextConfirmButtonLabel": "启用",
+    "realTimeTextCancelButtonLabel": "取消",
+    "realTimeTextCloseModalButtonAriaLabel": "关闭 RTT 模式"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "正在启动字幕..."
+    "captionsBannerSpinnerText": "正在启动字幕...",
+    "realTimeTextInputBoxDefaultText": "实时键入消息",
+    "realTimeTextInputErrorMessage": "消息不能超过 2000 个字符",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (在会议的整个持续时间内为所有参与者启用实时文本)。",
+    "realTimeTextBannerLinkLabel": "了解详情",
+    "captionsOnlyContainerTitle": "字幕",
+    "realTimeTextOnlyContainerTitle": "实时文本",
+    "captionsAndRealTimeTextContainerTitle": "字幕和实时文本",
+    "expandButtonAriaLabel": "展开",
+    "minimizeButtonAriaLabel": "折叠"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建议"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "下载",
     "dismissButtonAriaLabel": "关闭",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "图像详细信息覆盖"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "已发送消息",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "鼓掌",
     "surprisedReactionTooltipContent": "惊讶"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "RTT 键入"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "关闭辅助字幕",
     "tooltipOffContent": "开启字幕"
   },
+  "startRealTimeTextButton": {
+    "label": "Turn on RTT for this call",
+    "tooltipOffContent": "Turn on RTT for this call"
+  },
   "messageThread": {
     "yesterday": "昨天",
     "sunday": "星期日",
@@ -308,7 +324,9 @@
     "resendMessage": "尝试再次发送",
     "failToSendTag": "发送失败",
     "editedTag": "已编辑",
-    "liveAuthorIntro": "{author} 说",
+    "liveAuthorIntro": "来自 {author} 的消息",
+    "editedMessageLiveAuthorIntro": "已编辑来自 {author} 的消息",
+    "editedMessageLocalUserLiveAuthorIntro": "编辑的消息",
     "messageContentAriaText": "{status}{author} 说 {message}",
     "messageContentMineAriaText": "{status}你说了 {message}",
     "editBoxTextLimit": "你的消息超过了{limitNumber}个字符的限制",
@@ -616,6 +634,14 @@
       "title": "已禁用麦克风",
       "message": "你无法再取消静音。",
       "dismissButtonAriaLabel": "关闭"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode 已启动",
+      "dismissButtonAriaLabel": "关闭"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode 已结束",
+      "dismissButtonAriaLabel": "关闭"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "正在呼叫...",
     "participantReconnecting": "正在重新连接...",
     "participantStateHold": "保留",
-    "moreOptionsButtonAriaLabel": "更多选项 {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "更多选项 {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "已静音",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "已取消静音",
     "moreOptionsParticipantHandRaisedAriaLabel": "已举手",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "讲话"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "讲话",
+    "moreOptionsParticipantMicDisabledAriaLabel": "麦克风已禁用",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "相机已禁用"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允许{appName}使用你的相机和麦克风",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "拒绝",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "使用视频接受",
     "incomingCallNotificationDismissButtonAriaLabel": "关闭"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (在会议的整个持续时间内为所有参与者启用实时文本)。",
-    "bannerLinkLabel": "了解详细信息"
   }
 }

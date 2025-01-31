@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Cyfranogwr dienw",
     "participantStateRinging": "Wrthi'n galw...",
     "participantStateHold": "Galwad yn aros",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Mwy o Ddewisiadau",
-    "attendeeRole": "Mynychwr"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, Mwy o Ddewisiadau",
+    "attendeeRole": "Mynychwr",
+    "micDisabledIconLabel": "Meicroffon wedi'i analluogi",
+    "cameraDisabledIconLabel": "Camera wedi'i analluogi"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} arall"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "Wedi defnyddio'r rhestr bwledi",
     "richTextNumberedListAppliedAnnouncement": "Wedi defnyddio rhestr wedi'i rhifo"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Galluogi’r Moddol RTT",
-    "rttModalTitle": "Galluogi RTT?",
-    "rttModalText": "Bydd teipio mewn amser real (RTT) yn cael ei alluogi ar gyfer pawb yn y cyfarfod.",
-    "rttConfirmButtonLabel": "Galluogi",
-    "rttCancelButtonLabel": "Canslo",
-    "rttCloseModalButtonAriaLabel": "Cau'r Moddol RTT"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Rhoi Moddol RTT ar waith",
+    "realTimeTextModalTitle": "Rhoi RTT ar waith?",
+    "realTimeTextModalText": "Bydd teipio mewn amser real (RTT) yn cael ei alluogi ar gyfer pawb yn y cyfarfod.",
+    "realTimeTextConfirmButtonLabel": "Rhoi ar waith",
+    "realTimeTextCancelButtonLabel": "Canslo",
+    "realTimeTextCloseModalButtonAriaLabel": "Cau'r Moddol RTT"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Wrthi'n dechrau'r capsiynau..."
+    "captionsBannerSpinnerText": "Wrthi'n dechrau'r capsiynau...",
+    "realTimeTextInputBoxDefaultText": "Teipiwch neges mewn amser go iawn",
+    "realTimeTextInputErrorMessage": "All y neges ddim bod yn fwy na 2000 o nodau",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "Mae RTT (testun amser real) wedi'i alluogi ar gyfer yr holl gyfranogwyr ar gyfer cyfnod cyfan y cyfarfod.",
+    "realTimeTextBannerLinkLabel": "Dysgu mwy",
+    "captionsOnlyContainerTitle": "Capsiynau",
+    "realTimeTextOnlyContainerTitle": "Testun Amser Real",
+    "captionsAndRealTimeTextContainerTitle": "Capsiynau a Thestun Amser Real",
+    "expandButtonAriaLabel": "Ehangu",
+    "minimizeButtonAriaLabel": "Crebachu"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Awgrymiadau"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Lawrlwytho",
     "dismissButtonAriaLabel": "Cau",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Troshaen Manylion Delwedd"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Wedi anfon y neges",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "Curo Dwylo",
     "surprisedReactionTooltipContent": "Wedi synnu"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "Teipio RTT"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "Analluogi capsiynau",
     "tooltipOffContent": "Galluogi capsiynau"
   },
+  "startRealTimeTextButton": {
+    "label": "Turn on RTT for this call",
+    "tooltipOffContent": "Turn on RTT for this call"
+  },
   "messageThread": {
     "yesterday": "Ddoe",
     "sunday": "Dydd Sul",
@@ -308,7 +324,9 @@
     "resendMessage": "Rhowch gynnig arall ar anfon",
     "failToSendTag": "Wedi methu â'i hanfon",
     "editedTag": "Golygwyd",
-    "liveAuthorIntro": "Mae {author} yn dweud",
+    "liveAuthorIntro": "Neges gan {author}",
+    "editedMessageLiveAuthorIntro": "Neges wedi'i golygu gan {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Neges wedi’i golygu",
     "messageContentAriaText": "{status} Dywedodd {author} {message}",
     "messageContentMineAriaText": "{status} Dywedoch chi {message}",
     "editBoxTextLimit": "Mae eich neges dros y terfyn o {limitNumber} nodau",
@@ -616,6 +634,14 @@
       "title": "Mae eich meic wedi cael ei analluogi",
       "message": "Does dim modd i chi ddad-dewi bellach.",
       "dismissButtonAriaLabel": "Cau"
+    },
+    "togetherModeStarted": {
+      "title": "Mae Togethermode wedi dechrau",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "togetherModeEnded": {
+      "title": "Mae Togethermode wedi dod i ben",
+      "dismissButtonAriaLabel": "Cau"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "Wrthi'n galw...",
     "participantReconnecting": "Wrthi'n ailgysylltu...",
     "participantStateHold": "Galwad yn aros",
-    "moreOptionsButtonAriaLabel": "Mwy o Ddewisiadau {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Mwy o Ddewisiadau {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "wedi tewi",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "wedi dad-dewi",
     "moreOptionsParticipantHandRaisedAriaLabel": "Llaw wedi’i chodi",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Siarad"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Siarad",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Meicroffon wedi'i analluogi",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Camera wedi'i analluogi"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Caniatáu i {appName} ddefnyddio eich camera a'ch meicroffon",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "Gwrthod",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Derbyn gyda Fideo",
     "incomingCallNotificationDismissButtonAriaLabel": "Diystyru"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "Mae RTT (testun amser real) wedi'i alluogi ar gyfer yr holl gyfranogwyr ar gyfer cyfnod cyfan y cyfarfod.",
-    "bannerLinkLabel": "Dysgu mwy"
   }
 }

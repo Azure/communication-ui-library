@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Deltaker uten navn",
     "participantStateRinging": "Ringer ...",
     "participantStateHold": "På vent",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, flere alternativer",
-    "attendeeRole": "Deltaker"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, flere alternativer",
+    "attendeeRole": "Deltaker",
+    "micDisabledIconLabel": "Mikrofon deaktivert",
+    "cameraDisabledIconLabel": "Kamera deaktivert"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} flere"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "Punktliste er brukt",
     "richTextNumberedListAppliedAnnouncement": "Nummerert liste brukes"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Aktiver RTT-modal",
-    "rttModalTitle": "Aktivere RTT?",
-    "rttModalText": "Sanntidstekst (RTT) aktiveres for alle i møtet.",
-    "rttConfirmButtonLabel": "Aktiver",
-    "rttCancelButtonLabel": "Avslutt",
-    "rttCloseModalButtonAriaLabel": "Lukk RTT-modal"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Aktiver sperrende dialogboks for skriving i sanntid",
+    "realTimeTextModalTitle": "Aktiver skriving i sanntid?",
+    "realTimeTextModalText": "Sanntidstekst (RTT) aktiveres for alle i møtet.",
+    "realTimeTextConfirmButtonLabel": "Aktiver",
+    "realTimeTextCancelButtonLabel": "Avbryt",
+    "realTimeTextCloseModalButtonAriaLabel": "Lukk sperrende dialogboks for skriving i sanntid"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Starter teksting ..."
+    "captionsBannerSpinnerText": "Starter teksting ...",
+    "realTimeTextInputBoxDefaultText": "Skriv inn meldingen i sanntid",
+    "realTimeTextInputErrorMessage": "Meldingen kan ikke overskride 2000 tegn",
+    "realTimeTextBannerTitle": "Skriving i sanntid",
+    "realTimeTextBannerContent": "RTT (sanntidstekst) er aktivert for alle deltakere hele varigheten for møtet.",
+    "realTimeTextBannerLinkLabel": "Mer informasjon",
+    "captionsOnlyContainerTitle": "Undertekster",
+    "realTimeTextOnlyContainerTitle": "Tekst i sanntid",
+    "captionsAndRealTimeTextContainerTitle": "Teksting og sanntidstekst",
+    "expandButtonAriaLabel": "Utvid",
+    "minimizeButtonAriaLabel": "Skjul"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Forslag"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Last ned",
     "dismissButtonAriaLabel": "Lukk",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Detaljoverlegg for bilde"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Melding sendt",
@@ -195,8 +207,8 @@
     "applauseReactionTooltipContent": "Applaus",
     "surprisedReactionTooltipContent": "Overrasket"
   },
-  "rtt": {
-    "isTypingText": "RTT-skriving"
+  "realTimeText": {
+    "isTypingText": "Skriving i sanntid"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "Undertekstinnstillinger",
@@ -292,6 +304,10 @@
     "tooltipOnContent": "Deaktiver undertekster",
     "tooltipOffContent": "Slå på undertekster"
   },
+  "startRealTimeTextButton": {
+    "label": "Turn on RTT for this call",
+    "tooltipOffContent": "Turn on RTT for this call"
+  },
   "messageThread": {
     "yesterday": "I går",
     "sunday": "Søndag",
@@ -308,7 +324,9 @@
     "resendMessage": "Prøv å sende på nytt",
     "failToSendTag": "Kan ikke sende",
     "editedTag": "Redigert",
-    "liveAuthorIntro": "{author} sier",
+    "liveAuthorIntro": "Melding fra {author}",
+    "editedMessageLiveAuthorIntro": "Redigert melding fra {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Redigert melding",
     "messageContentAriaText": "{status} {author} sa {message}",
     "messageContentMineAriaText": "{status} Du sa {message}",
     "editBoxTextLimit": "Meldingen er over grensen på {limitNumber} tegn",
@@ -616,6 +634,14 @@
       "title": "Mikrofonen er deaktivert",
       "message": "Du kan ikke lenger oppheve dempingen.",
       "dismissButtonAriaLabel": "Lukk"
+    },
+    "togetherModeStarted": {
+      "title": "Sammenmodus er startet",
+      "dismissButtonAriaLabel": "Lukk"
+    },
+    "togetherModeEnded": {
+      "title": "Sammenmodus er avsluttet",
+      "dismissButtonAriaLabel": "Lukk"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "Ringer ...",
     "participantReconnecting": "Kobler til på nytt ...",
     "participantStateHold": "På vent",
-    "moreOptionsButtonAriaLabel": "Flere alternativer {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Flere alternativer {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "varsler er deaktivert",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "opphevet demping",
     "moreOptionsParticipantHandRaisedAriaLabel": "Hånd rakt opp",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Snakke"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Snakke",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Mikrofon deaktivert",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Kamera deaktivert"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Tillat {appName} å bruke kameraet og mikrofonen",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "Avslå",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Svar med video",
     "incomingCallNotificationDismissButtonAriaLabel": "Lukk"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (sanntidstekst) er aktivert for alle deltakere hele varigheten for møtet.",
-    "bannerLinkLabel": "Finn ut mer"
   }
 }

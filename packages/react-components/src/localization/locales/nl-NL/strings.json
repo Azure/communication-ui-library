@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Naamloze deelnemer",
     "participantStateRinging": "Bellen...",
     "participantStateHold": "In de wacht",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, meer opties",
-    "attendeeRole": "Genodigde"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, meer opties",
+    "attendeeRole": "Genodigde",
+    "micDisabledIconLabel": "Microfoon uitgeschakeld",
+    "cameraDisabledIconLabel": "Camera uitgeschakeld"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} meer"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "Lijst met opsommingstekens toegepast",
     "richTextNumberedListAppliedAnnouncement": "Genummerde lijst is toegepast"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "RTT Modal inschakelen",
-    "rttModalTitle": "RTT inschakelen?",
-    "rttModalText": "Tekst in realtime (RTT) wordt ingeschakeld voor iedereen in de vergadering.",
-    "rttConfirmButtonLabel": "Inschakelen",
-    "rttCancelButtonLabel": "Annuleren",
-    "rttCloseModalButtonAriaLabel": "RTT Modaal sluiten"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "RTT Modal inschakelen",
+    "realTimeTextModalTitle": "RTT inschakelen?",
+    "realTimeTextModalText": "Tekst in realtime (RTT) wordt ingeschakeld voor iedereen in de vergadering.",
+    "realTimeTextConfirmButtonLabel": "Inschakelen",
+    "realTimeTextCancelButtonLabel": "Annuleren",
+    "realTimeTextCloseModalButtonAriaLabel": "RTT Modaal sluiten"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Ondertitels starten..."
+    "captionsBannerSpinnerText": "Ondertitels starten...",
+    "realTimeTextInputBoxDefaultText": "Bericht in realtime typen",
+    "realTimeTextInputErrorMessage": "Het bericht mag niet langer zijn dan 2000 tekens",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (realtime-tekst) is ingeschakeld voor alle deelnemers gedurende de hele duur van de vergadering.",
+    "realTimeTextBannerLinkLabel": "Meer informatie",
+    "captionsOnlyContainerTitle": "Ondertitels",
+    "realTimeTextOnlyContainerTitle": "Real-time tekst",
+    "captionsAndRealTimeTextContainerTitle": "Ondertitels en realtime tekst",
+    "expandButtonAriaLabel": "Uitvouwen",
+    "minimizeButtonAriaLabel": "Samenvouwen"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggesties"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Downloaden",
     "dismissButtonAriaLabel": "Sluiten",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Overlay voor details afbeelding"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Bericht verzonden",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "Applaus",
     "surprisedReactionTooltipContent": "Verrast"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "RTT typen"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "Ondertitels uitschakelen",
     "tooltipOffContent": "Bijschriften inschakelen"
   },
+  "startRealTimeTextButton": {
+    "label": "Turn on RTT for this call",
+    "tooltipOffContent": "Turn on RTT for this call"
+  },
   "messageThread": {
     "yesterday": "Gisteren",
     "sunday": "Zondag",
@@ -308,7 +324,9 @@
     "resendMessage": "Probeer opnieuw te verzenden",
     "failToSendTag": "Verzenden mislukt",
     "editedTag": "Bewerkt",
-    "liveAuthorIntro": "{author} zegt",
+    "liveAuthorIntro": "Bericht van {author}",
+    "editedMessageLiveAuthorIntro": "Bewerkt bericht van {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Bewerkt bericht",
     "messageContentAriaText": "{status} {author} zei {message}",
     "messageContentMineAriaText": "{status} U zei {message}",
     "editBoxTextLimit": "Uw bericht heeft de limiet van {limitNumber} tekens overschreden",
@@ -616,6 +634,14 @@
       "title": "Uw microfoon is uitgeschakeld",
       "message": "U kunt het dempen niet meer opheffen.",
       "dismissButtonAriaLabel": "Sluiten"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode is gestart",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode is beëindigd",
+      "dismissButtonAriaLabel": "Sluiten"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "Bellen...",
     "participantReconnecting": "Opnieuw verbinding maken...",
     "participantStateHold": "In de wacht",
-    "moreOptionsButtonAriaLabel": "Meer opties {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Meer opties {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "gedempt",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "niet gedempt",
     "moreOptionsParticipantHandRaisedAriaLabel": "Opgestoken hand",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Spreken"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Spreken",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Microfoon uitgeschakeld",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Camera uitgeschakeld"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Toestaan dat {appName} uw camera en microfoon gebruikt",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "Weigeren",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Accepteren met video",
     "incomingCallNotificationDismissButtonAriaLabel": "Sluiten"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (realtime-tekst) is ingeschakeld voor alle deelnemers gedurende de hele duur van de vergadering.",
-    "bannerLinkLabel": "Meer informatie"
   }
 }

@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Adsız katılımcı",
     "participantStateRinging": "Arıyor...",
     "participantStateHold": "Beklemede",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Diğer Seçenekler",
-    "attendeeRole": "Katılımcı"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, Diğer Seçenekler",
+    "attendeeRole": "Katılımcı",
+    "micDisabledIconLabel": "Mikrofon devre dışı",
+    "cameraDisabledIconLabel": "Kamera devre dışı"
   },
   "ParticipantList": {
     "overflowParticipantCount": "{overflowCount} tane daha"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "Madde işaretli liste uygulandı",
     "richTextNumberedListAppliedAnnouncement": "Numaralandırılmış liste uygulandı"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "RTT Kalıcı İletişim Kutusunu Aç",
-    "rttModalTitle": "RTT açılsın mı?",
-    "rttModalText": "Gerçek zamanlı metin (RTT) toplantıdaki herkes için açılır.",
-    "rttConfirmButtonLabel": "Aç",
-    "rttCancelButtonLabel": "İptal",
-    "rttCloseModalButtonAriaLabel": "RTT Kalıcı İletişim Kutusunu Kapat"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "RTT Kalıcı İletişim Kutusunu Aç",
+    "realTimeTextModalTitle": "RTT açılsın mı?",
+    "realTimeTextModalText": "Gerçek zamanlı metin (RTT) toplantıdaki herkes için açılır.",
+    "realTimeTextConfirmButtonLabel": "Aç",
+    "realTimeTextCancelButtonLabel": "İptal",
+    "realTimeTextCloseModalButtonAriaLabel": "RTT Kalıcı İletişim Kutusunu Kapat"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Alt yazılar başlatılıyor..."
+    "captionsBannerSpinnerText": "Alt yazılar başlatılıyor...",
+    "realTimeTextInputBoxDefaultText": "İletiyi gerçek zamanlı yazın",
+    "realTimeTextInputErrorMessage": "İleti 2000 karakteri geçemez",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (gerçek zamanlı metin) toplantı süresi boyunca tüm katılımcılar için etkindir.",
+    "realTimeTextBannerLinkLabel": "Daha fazla bilgi edinin",
+    "captionsOnlyContainerTitle": "Alt yazılar",
+    "realTimeTextOnlyContainerTitle": "Gerçek Zamanlı Metin",
+    "captionsAndRealTimeTextContainerTitle": "Altyazılar ve Gerçek Zamanlı Metin",
+    "expandButtonAriaLabel": "Genişlet",
+    "minimizeButtonAriaLabel": "Daralt"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "İndir",
     "dismissButtonAriaLabel": "Kapat",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Resim Ayrıntıları Katmanı"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "İleti gönderildi",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "Alkış",
     "surprisedReactionTooltipContent": "Şaşırmış"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "RTT yazma"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "Alt yazıları kapat",
     "tooltipOffContent": "Alt yazıları aç"
   },
+  "startRealTimeTextButton": {
+    "label": "Turn on RTT for this call",
+    "tooltipOffContent": "Turn on RTT for this call"
+  },
   "messageThread": {
     "yesterday": "Dün",
     "sunday": "Pazar",
@@ -308,7 +324,9 @@
     "resendMessage": "Yeniden göndermeyi deneyin",
     "failToSendTag": "Gönderilemedi",
     "editedTag": "Düzenlendi",
-    "liveAuthorIntro": "{author} şöyle diyor:",
+    "liveAuthorIntro": "{author} tarafından gönderilen ileti",
+    "editedMessageLiveAuthorIntro": "{author} tarafından düzenlenen ileti",
+    "editedMessageLocalUserLiveAuthorIntro": "Düzenlenmiş ileti",
     "messageContentAriaText": "{status} {author} şunu dedi: {message}",
     "messageContentMineAriaText": "{status} {message} dediniz",
     "editBoxTextLimit": "İletiniz en fazla {limitNumber} aşıyor",
@@ -616,6 +634,14 @@
       "title": "Mikrofonunuz devre dışı bırakıldı",
       "message": "Artık sesi açamazsınız.",
       "dismissButtonAriaLabel": "Kapat"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode başlatıldı",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode sona erdi",
+      "dismissButtonAriaLabel": "Kapat"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "Aranıyor...",
     "participantReconnecting": "Yeniden bağlanıyor...",
     "participantStateHold": "Beklemede",
-    "moreOptionsButtonAriaLabel": "Diğer Seçenekler {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Diğer Seçenekler {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "sesi kapalı",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "sesi açık",
     "moreOptionsParticipantHandRaisedAriaLabel": "El kaldırdı",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Konuşuyor"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Konuşuyor",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Mikrofon devre dışı",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Kamera devre dışı"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName} uygulamasının kameranızı ve mikrofonunuzu kullanmasına izin verin",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "Reddet",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Görüntülü Kabul Et",
     "incomingCallNotificationDismissButtonAriaLabel": "Kapat"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (gerçek zamanlı metin) toplantı süresi boyunca tüm katılımcılar için etkindir.",
-    "bannerLinkLabel": "Daha fazla bilgi edinin"
   }
 }
