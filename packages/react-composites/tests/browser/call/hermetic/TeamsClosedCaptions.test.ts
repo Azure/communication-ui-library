@@ -124,7 +124,9 @@ test.describe('Captions buttons in call control', () => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
-      initialState.call.capabilitiesFeature.setCaptionLanguage = true;
+      if (initialState.call.capabilitiesFeature) {
+        initialState.call.capabilitiesFeature.capabilities.setCaptionLanguage.isPresent = true;
+      }
       initialState.call.captionsFeature = captionsFeatureState;
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
