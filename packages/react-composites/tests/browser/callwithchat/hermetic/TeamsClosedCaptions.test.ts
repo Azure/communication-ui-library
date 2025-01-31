@@ -91,12 +91,18 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (isTestProfileMobile(testInfo)) {
       test.skip();
     }
-    const initialState = defaultMockCallAdapterState([defaultMockRemoteParticipant('Paul Bridges')]);
+    const initialState = defaultMockCallAdapterState(
+      [defaultMockRemoteParticipant('Paul Bridges')],
+      'Presenter',
+      false
+    );
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
+      if (initialState.call.capabilitiesFeature) {
+        initialState.call.capabilitiesFeature.capabilities.setCaptionLanguage.isPresent = true;
+      }
     }
     await loadCallPage(page, serverUrl, initialState);
     await pageClick(page, dataUiId('captions-banner-more-button'));
