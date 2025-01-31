@@ -90,12 +90,14 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (isTestProfileMobile(testInfo)) {
       test.skip();
     }
-    const initialState = defaultMockCallAdapterState();
+    const initialState = defaultMockCallAdapterState([], 'Presenter', false);
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
+      if (initialState.call.capabilitiesFeature) {
+        initialState.call.capabilitiesFeature.capabilities.setCaptionLanguage.isPresent = true;
+      }
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('captions-banner-more-button'));
@@ -121,7 +123,7 @@ test.describe('Captions buttons in call control', () => {
   });
 
   test('Captions settings renders normally', async ({ page, serverUrl }, testInfo) => {
-    const initialState = defaultMockCallAdapterState();
+    const initialState = defaultMockCallAdapterState([], 'Presenter', false);
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       if (initialState.call.capabilitiesFeature) {
