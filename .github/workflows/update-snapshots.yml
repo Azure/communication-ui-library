@@ -56,7 +56,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -90,7 +90,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -186,7 +186,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -282,7 +282,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -378,7 +378,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -474,7 +474,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -570,7 +570,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:

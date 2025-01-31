@@ -4632,12 +4632,12 @@ export interface RealTimeTextCallFeatureState {
 
 // @beta (undocumented)
 export interface RealTimeTextInfo {
-    id: number;
     isMe?: boolean;
     message: string;
     receivedTimestamp?: Date;
     resultType: RealTimeTextResultType;
     sender: ParticipantInfo;
+    sequenceId: number;
     updatedTimestamp?: Date;
 }
 
@@ -5123,8 +5123,8 @@ export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
 
 // @beta
 export interface StartRealTimeTextButtonStrings {
-    onLabel: string;
-    tooltipOnContent: string;
+    label: string;
+    tooltipOffContent: string;
 }
 
 // @beta

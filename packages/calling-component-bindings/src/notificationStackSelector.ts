@@ -10,7 +10,7 @@ import {
 } from './baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
 import { getAssignedBreakoutRoom } from './baseSelectors';
-/* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */
+
 import { getLatestNotifications } from './baseSelectors';
 
 import { getMeetingConferencePhones } from './baseSelectors';
@@ -22,9 +22,6 @@ import { createSelector } from 'reselect';
 import { CallClientState, CallErrors, CallErrorTarget } from '@internal/calling-stateful-client';
 
 import { DiagnosticQuality } from '@azure/communication-calling';
-
-/* @conditional-compile-remove(media-access) */
-import { CallNotifications } from '@internal/calling-stateful-client';
 
 /**
  * Selector type for {@link Notification} component.
@@ -51,7 +48,7 @@ export type NotificationStackSelector = (
 export const notificationStackSelector: NotificationStackSelector = createSelector(
   [
     getLatestErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ getLatestNotifications,
+    getLatestNotifications,
     getDiagnostics,
     getDeviceManager,
     getEnvironmentInfo,
@@ -60,7 +57,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
   ],
   (
     latestErrors: CallErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ /* @conditional-compile-remove(media-access) */ /* @conditional-compile-remove(together-mode) */ latestNotifications,
+    latestNotifications,
     diagnostics,
     deviceManager,
     environmentInfo,
@@ -185,11 +182,14 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-    appendMuteByOthersNotificationTrampoline(
-      activeErrorMessages,
-      latestErrors,
-      /* @conditional-compile-remove(media-access) */ latestNotifications
-    );
+    if (
+      latestNotifications &&
+      !latestNotifications['capabilityUnmuteMicAbsent'] &&
+      !latestNotifications['capabilityUnmuteMicPresent']
+    ) {
+      appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
+    }
+
     appendActiveErrorIfDefined(
       activeErrorMessages,
       latestErrors,
@@ -275,7 +275,6 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       });
     }
 
-    /* @conditional-compile-remove(media-access) */
     if (latestNotifications['capabilityTurnVideoOnPresent']) {
       activeNotifications.push({
         type: 'capabilityTurnVideoOnPresent',
@@ -283,7 +282,6 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       });
     }
 
-    /* @conditional-compile-remove(media-access) */
     if (latestNotifications['capabilityTurnVideoOnAbsent']) {
       activeNotifications.push({
         type: 'capabilityTurnVideoOnAbsent',
@@ -291,7 +289,6 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       });
     }
 
-    /* @conditional-compile-remove(media-access) */
     if (latestNotifications['capabilityUnmuteMicPresent']) {
       activeNotifications.push({
         type: 'capabilityUnmuteMicPresent',
@@ -299,7 +296,6 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       });
     }
 
-    /* @conditional-compile-remove(media-access) */
     if (latestNotifications['capabilityUnmuteMicAbsent']) {
       activeNotifications.push({
         type: 'capabilityUnmuteMicAbsent',
@@ -341,23 +337,4 @@ const appendActiveErrorIfDefined = (
     type: activeErrorType,
     timestamp: latestErrors[target].timestamp
   });
-};
-
-const appendMuteByOthersNotificationTrampoline = (
-  activeErrorMessages: ActiveNotification[],
-  latestErrors: CallErrors,
-  latestNotifications?: undefined | /* @conditional-compile-remove(media-access) */ CallNotifications
-): void => {
-  /* @conditional-compile-remove(media-access) */
-  if (
-    latestNotifications &&
-    !latestNotifications['capabilityUnmuteMicAbsent'] &&
-    !latestNotifications['capabilityUnmuteMicPresent']
-  ) {
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
-  }
-  /* @conditional-compile-remove(media-access) */
-  return;
-
-  appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
 };

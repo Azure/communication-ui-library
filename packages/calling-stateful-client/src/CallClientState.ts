@@ -106,7 +106,7 @@ export interface RealTimeTextInfo {
   /**
    * The sequence id of the real time text.
    */
-  id: number;
+  sequenceId: number;
   /**
    * The sender of the real time text.
    */

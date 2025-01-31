@@ -1,7 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CaptionsInformation, CaptionsBanner as CaptionsBannerComponent } from '@azure/communication-react';
+import {
+  CaptionsInformation,
+  CaptionsBanner as CaptionsBannerComponent,
+  RealTimeTextInformation
+} from '@azure/communication-react';
 import { PrimaryButton, Stack } from '@fluentui/react';
 import React, { useState } from 'react';
 import {
@@ -11,8 +15,11 @@ import {
   GenerateMockNewShortCaption
 } from './mockCaptions';
 
-const CaptionsBannerStory = (): JSX.Element => {
+const CaptionsBannerStory = (args: any): JSX.Element => {
   const [captions, setCaptions] = useState<CaptionsInformation[]>(GenerateMockNewCaptions());
+
+  const [realTimeTexts, setRealTimeTexts] = useState<RealTimeTextInformation[]>([]);
+  const [finalizedRealTimeTexts, setFinalizedRealTimeTexts] = useState<RealTimeTextInformation[]>([]);
 
   const addNewCaption = (): void => {
     setCaptions([...captions, GenerateMockNewCaption()]);
@@ -37,11 +44,34 @@ const CaptionsBannerStory = (): JSX.Element => {
     padding: '2rem'
   };
 
+  const sendRealTimeText = async (text: string, isFinalized: boolean): Promise<void> => {
+    if (!isFinalized) {
+      setRealTimeTexts([{ message: text, id: 1, displayName: 'John', isTyping: true, finalizedTimeStamp: new Date() }]);
+      return Promise.resolve();
+    }
+    if (isFinalized) {
+      setFinalizedRealTimeTexts([
+        ...finalizedRealTimeTexts,
+        { message: text, id: 1, displayName: 'John', isTyping: false, finalizedTimeStamp: new Date() }
+      ]);
+      setRealTimeTexts([]);
+      return Promise.resolve();
+    }
+  };
+
   return (
     <Stack verticalFill tokens={{ childrenGap: '5rem' }} style={containerStyles} verticalAlign="space-between">
       <Stack style={{ border: 'solid grey 0.1rem' }} horizontalAlign="center">
-        <Stack.Item style={{ width: '60%' }}>
-          <CaptionsBannerComponent captions={captions} isCaptionsOn startCaptionsInProgress />
+        <Stack.Item style={{ width: '90%' }}>
+          <CaptionsBannerComponent
+            captions={captions}
+            realTimeTexts={{ currentInProgress: realTimeTexts, completedMessages: finalizedRealTimeTexts }}
+            onSendRealTimeText={sendRealTimeText}
+            isCaptionsOn={args.isCaptionsOn}
+            isRealTimeTextOn={args.isRealTimeTextOn}
+            startCaptionsInProgress={args.startCaptionsInProgress}
+            formFactor={args.formFactor}
+          />
         </Stack.Item>
       </Stack>
 

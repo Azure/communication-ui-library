@@ -22,9 +22,7 @@ module.exports = {
     // Feature for remote UFD
     "remote-ufd",
     // Feature for together mode
-    "together-mode",
-    // Feature for RTT
-    "rtt"
+    "together-mode"
   ],
   beta: [
     "call-readiness",
@@ -71,6 +69,8 @@ module.exports = {
     "teams-identity-support-beta",
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
+    // Feature for RTT
+    "rtt"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.

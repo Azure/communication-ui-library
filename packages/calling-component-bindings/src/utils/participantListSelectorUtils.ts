@@ -10,9 +10,7 @@ import { CallParticipantListParticipant } from '@internal/react-components';
 import { Spotlight } from '@internal/react-components';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
-import { Reaction } from '@internal/react-components';
-/* @conditional-compile-remove(media-access) */
-import { MediaAccess } from '@internal/react-components';
+import { Reaction, MediaAccess } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 
 const convertRemoteParticipantToParticipantListParticipant = (
@@ -26,7 +24,7 @@ const convertRemoteParticipantToParticipantListParticipant = (
   localUserCanRemoveOthers: boolean,
   reaction: undefined | Reaction,
   spotlight: undefined | Spotlight,
-  mediaAccess: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
+  mediaAccess: MediaAccess
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
   return {
@@ -45,7 +43,6 @@ const convertRemoteParticipantToParticipantListParticipant = (
       localUserCanRemoveOthers,
     reaction,
     spotlight,
-    /* @conditional-compile-remove(media-access) */
     mediaAccess
   };
 };
@@ -65,7 +62,7 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     localUserCanRemoveOthers: boolean,
     reaction: undefined | Reaction,
     spotlight: undefined | Spotlight,
-    mediaAccess: undefined | /* @conditional-compile-remove(media-access) */ MediaAccess
+    mediaAccess: MediaAccess
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
       userId,

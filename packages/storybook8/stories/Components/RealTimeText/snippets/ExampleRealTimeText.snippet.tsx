@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { RealTimeText } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import { RealTimeText } from '@internal/react-components';
 import React from 'react';
 
 export const ExampleRealTimeText = (): JSX.Element => {
