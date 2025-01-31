@@ -26,7 +26,12 @@ import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(together-mode) */
-import { getIsTogetherModeActive, getCapabilites, getLocalUserId } from '../../CallComposite/selectors/baseSelectors';
+import {
+  getIsTogetherModeActive,
+  getCapabilites,
+  getLocalUserId,
+  getIsTeamsCall
+} from '../../CallComposite/selectors/baseSelectors';
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 import { CallControlOptions } from '../../CallComposite';
 
@@ -86,6 +91,8 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   const participantCapability = useSelector(getCapabilites);
   /* @conditional-compile-remove(together-mode) */
   const participantId = useSelector(getLocalUserId);
+  /* @conditional-compile-remove(together-mode) */
+  const isTeamsCall = useSelector(getIsTeamsCall);
 
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
@@ -456,7 +463,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
     /* @conditional-compile-remove(together-mode) */
-    galleryOptions.subMenuProps?.items?.push(togetherModeOption);
+    if (isTeamsCall || isTeamsMeeting) {
+      galleryOptions.subMenuProps?.items?.push(togetherModeOption);
+    }
     if (props.callControls === true || (props.callControls as CallControlOptions)?.galleryControlsButton !== false) {
       moreButtonContextualMenuItems.push(galleryOptions);
     }

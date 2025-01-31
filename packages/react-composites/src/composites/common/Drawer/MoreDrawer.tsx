@@ -46,7 +46,12 @@ import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
 import { DtmfDialPadOptions } from '../../CallComposite';
 import { getRemoteParticipantsConnectedSelector } from '../../CallComposite/selectors/mediaGallerySelector';
 /* @conditional-compile-remove(together-mode) */
-import { getCapabilites, getIsTogetherModeActive, getLocalUserId } from '../../CallComposite/selectors/baseSelectors';
+import {
+  getCapabilites,
+  getIsTogetherModeActive,
+  getLocalUserId,
+  getIsTeamsCall
+} from '../../CallComposite/selectors/baseSelectors';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -211,7 +216,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const participantId = useSelector(getLocalUserId);
   /* @conditional-compile-remove(together-mode) */
   const isTogetherModeActive = useSelector(getIsTogetherModeActive);
+  /* @conditional-compile-remove(together-mode) */
+  const isTeamsCall = useSelector(getIsTeamsCall);
 
+  const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
   const onSpeakerItemClick = useCallback(
     (
       _ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined,
@@ -419,7 +427,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
   /* @conditional-compile-remove(together-mode) */
-  galleryLayoutOptions.subMenuProps?.push(togetherModeOption);
+  if (isTeamsCall || isTeamsMeeting) {
+    galleryLayoutOptions.subMenuProps?.push(togetherModeOption);
+  }
 
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.galleryControlsButton)) {
     drawerMenuItems.push(galleryLayoutOptions);
@@ -476,8 +486,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       }
     });
   }
-
-  const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
 
   const teamsMeetingCoordinates = getTeamsMeetingCoordinates(callAdapter.getState());
 
