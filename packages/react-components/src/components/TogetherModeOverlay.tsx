@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import React, { useMemo, useState, memo } from 'react';
+import React, { useMemo, useState, memo, useEffect } from 'react';
 /* @conditional-compile-remove(together-mode) */
 import {
   Reaction,
@@ -27,6 +27,7 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import {
   calculateScaledSize,
   getTogetherModeParticipantOverlayStyle,
+  participantStatusTransitionStyle,
   REACTION_MAX_TRAVEL_HEIGHT,
   REACTION_TRAVEL_HEIGHT,
   setTogetherModeSeatPositionStyle,
@@ -89,7 +90,7 @@ export const TogetherModeOverlay = memo(
      * It updates the togetherModeParticipantStatus state when there's a change in the remoteParticipants, localParticipant,
      * raisedHand, spotlight, isMuted, displayName, or hoveredParticipantID.
      */
-    useMemo(() => {
+    const updatedParticipantStatus = useMemo(() => {
       const allParticipants = [...remoteParticipants, localParticipant];
 
       const participantsWithVideoAvailable = allParticipants.filter(
@@ -120,22 +121,19 @@ export const TogetherModeOverlay = memo(
         (id) => !updatedSignals[id]
       );
 
-      setTogetherModeParticipantStatus((prevSignals) => {
-        const newSignals = { ...prevSignals, ...updatedSignals };
-        const newSignalsLength = Object.keys(newSignals).length;
+      const newSignals = { ...togetherModeParticipantStatus, ...updatedSignals };
 
-        participantsNotInTogetherModeStream.forEach((id) => {
-          delete newSignals[id];
-        });
-
-        const hasChanges = Object.keys(newSignals).some(
-          (key) =>
-            JSON.stringify(newSignals[key]) !== JSON.stringify(prevSignals[key]) ||
-            newSignalsLength !== Object.keys(prevSignals).length
-        );
-
-        return hasChanges ? newSignals : prevSignals;
+      participantsNotInTogetherModeStream.forEach((id) => {
+        delete newSignals[id];
       });
+
+      const hasSignalingChange = Object.keys(newSignals).some(
+        (key) => JSON.stringify(newSignals[key]) !== JSON.stringify(togetherModeParticipantStatus[key])
+      );
+
+      const updateTogetherModeParticipantStatusState =
+        hasSignalingChange || Object.keys(newSignals).length !== Object.keys(togetherModeParticipantStatus).length;
+      return updateTogetherModeParticipantStatusState ? newSignals : togetherModeParticipantStatus;
     }, [
       remoteParticipants,
       localParticipant,
@@ -146,29 +144,13 @@ export const TogetherModeOverlay = memo(
       hoveredParticipantID
     ]);
 
-    /*
-     * When a larger participant scene switches to a smaller group in Together Mode,
-     * participant video streams remain available because their video is still active,
-     * even though they are not visible in the Together Mode stream.
-     * Therefore, we rely on the updated seating position values to identify who is included in the Together Mode stream.
-     * The Together mode seat position will only contain seat coordinates of participants who are visible in the Together Mode stream.
-     */
-    useMemo(() => {
-      const removedVisibleParticipants = Object.keys(togetherModeParticipantStatus).filter(
-        (participantId) => !togetherModeSeatPositions[participantId]
-      );
+    useEffect(() => {
+      if (hoveredParticipantID && !updatedParticipantStatus[hoveredParticipantID]) {
+        setHoveredParticipantID('');
+      }
 
-      setTogetherModeParticipantStatus((prevSignals) => {
-        const newSignals = { ...prevSignals };
-        removedVisibleParticipants.forEach((participantId) => {
-          delete newSignals[participantId];
-        });
-
-        // Trigger a re-render only if changes occurred
-        const hasChanges = Object.keys(newSignals).length !== Object.keys(prevSignals).length;
-        return hasChanges ? newSignals : prevSignals;
-      });
-    }, [togetherModeParticipantStatus, togetherModeSeatPositions]);
+      setTogetherModeParticipantStatus(updatedParticipantStatus);
+    }, [hoveredParticipantID, updatedParticipantStatus]);
 
     return (
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
@@ -184,41 +166,8 @@ export const TogetherModeOverlay = memo(
                 onMouseLeave={() => setHoveredParticipantID('')}
               >
                 <div>
-                  {participantStatus.reaction?.reactionType && (
-                    // First div - Section that fixes the travel height and applies the movement animation
-                    // Second div - Responsible for ensuring the sprite emoji is always centered in the participant seat position
-                    // Third div - Play Animation as the other animation applies on the base play animation for the sprite
-                    <div
-                      style={moveAnimationStyles(
-                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) *
-                          REACTION_MAX_TRAVEL_HEIGHT,
-                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * REACTION_TRAVEL_HEIGHT
-                      )}
-                    >
-                      <div
-                        style={{
-                          ...togetherModeParticipantEmojiSpriteStyle(
-                            emojiSize,
-                            participantStatus.scaledSize || 1,
-                            participantStatus.seatPositionStyle.seatPosition.width
-                          )
-                        }}
-                      >
-                        <div
-                          style={spriteAnimationStyles(
-                            REACTION_NUMBER_OF_ANIMATION_FRAMES,
-                            participantStatus.scaledSize || 1,
-                            (participantStatus.reaction &&
-                              getEmojiResource(participantStatus?.reaction.reactionType, reactionResources)) ??
-                              ''
-                          )}
-                        />
-                      </div>
-                    </div>
-                  )}
-
                   {participantStatus.showDisplayName && (
-                    <div>
+                    <div style={{ ...participantStatusTransitionStyle }}>
                       <div
                         style={{
                           ...togetherModeParticipantStatusContainer(
@@ -251,6 +200,39 @@ export const TogetherModeOverlay = memo(
                             <Icon iconName="VideoTileSpotlighted" />
                           </Stack>
                         )}
+                      </div>
+                    </div>
+                  )}
+
+                  {participantStatus.reaction?.reactionType && (
+                    // First div - Section that fixes the travel height and applies the movement animation
+                    // Second div - Responsible for ensuring the sprite emoji is always centered in the participant seat position
+                    // Third div - Play Animation as the other animation applies on the base play animation for the sprite
+                    <div
+                      style={moveAnimationStyles(
+                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) *
+                          REACTION_MAX_TRAVEL_HEIGHT,
+                        parseFloat(participantStatus.seatPositionStyle.seatPosition.height) * REACTION_TRAVEL_HEIGHT
+                      )}
+                    >
+                      <div
+                        style={{
+                          ...togetherModeParticipantEmojiSpriteStyle(
+                            emojiSize,
+                            participantStatus.scaledSize || 1,
+                            participantStatus.seatPositionStyle.seatPosition.width
+                          )
+                        }}
+                      >
+                        <div
+                          style={spriteAnimationStyles(
+                            REACTION_NUMBER_OF_ANIMATION_FRAMES,
+                            participantStatus.scaledSize || 1,
+                            (participantStatus.reaction &&
+                              getEmojiResource(participantStatus?.reaction.reactionType, reactionResources)) ??
+                              ''
+                          )}
+                        />
                       </div>
                     </div>
                   )}

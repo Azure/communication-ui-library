@@ -86,16 +86,13 @@ import {
   useRemoteSpotlightCallbacksWithPrompt,
   useStopAllSpotlightCallbackWithPrompt
 } from '../utils/spotlightUtils';
-
-import { getCaptionsKind, getIsTeamsCall } from '../selectors/baseSelectors';
+import { getIsTeamsCall, getMediaAccessSetting } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 /* @conditional-compile-remove(breakout-rooms) */
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
-/* @conditional-compile-remove(media-access) */
-import { getMediaAccessSetting } from '../selectors/baseSelectors';
 import { FocusableElement } from '../../common/types/FocusableElement';
 import { DtmfDialPadOptions } from '../CallComposite';
 
@@ -236,13 +233,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     spotlightedParticipants,
     maxParticipantsToSpotlight,
     localParticipant,
-    /* @conditional-compile-remove(media-access) */
     onForbidAudio,
-    /* @conditional-compile-remove(media-access) */
     onPermitAudio,
-    /* @conditional-compile-remove(media-access) */
     onForbidVideo,
-    /* @conditional-compile-remove(media-access) */
     onPermitVideo
   } = videoGalleryProps;
 
@@ -356,14 +349,10 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     spotlightedParticipants
   ]);
 
-  /* @conditional-compile-remove(media-access) */
   const meetingMediaAccess = useSelector(getMediaAccessSetting);
-  /* @conditional-compile-remove(media-access) */
   const canForbidOthersAudio = !!capabilities?.forbidOthersAudio?.isPresent;
-  /* @conditional-compile-remove(media-access) */
   const canForbidOthersVideo = !!capabilities?.forbidOthersVideo?.isPresent;
   const onToggleParticipantMicPeoplePaneProps = useMemo(() => {
-    /* @conditional-compile-remove(media-access) */
     return {
       onForbidAudio: canForbidOthersAudio ? onForbidAudio : undefined,
       onPermitAudio: canForbidOthersAudio ? onPermitAudio : undefined,
@@ -375,19 +364,18 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       onPermitOthersVideo: canForbidOthersVideo ? muteAllHandlers.onPermitOthersVideo : undefined,
       meetingMediaAccess
     };
-    return {};
   }, [
-    /* @conditional-compile-remove(media-access) */ canForbidOthersAudio,
-    /* @conditional-compile-remove(media-access) */ onForbidAudio,
-    /* @conditional-compile-remove(media-access) */ onPermitAudio,
-    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onForbidOthersAudio,
-    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onPermitOthersAudio,
-    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onForbidOthersVideo,
-    /* @conditional-compile-remove(media-access) */ muteAllHandlers.onPermitOthersVideo,
-    /* @conditional-compile-remove(media-access) */ canForbidOthersVideo,
-    /* @conditional-compile-remove(media-access) */ onForbidVideo,
-    /* @conditional-compile-remove(media-access) */ onPermitVideo,
-    /* @conditional-compile-remove(media-access) */ meetingMediaAccess
+    canForbidOthersAudio,
+    onForbidAudio,
+    onPermitAudio,
+    muteAllHandlers.onForbidOthersAudio,
+    muteAllHandlers.onPermitOthersAudio,
+    muteAllHandlers.onForbidOthersVideo,
+    muteAllHandlers.onPermitOthersVideo,
+    canForbidOthersVideo,
+    onForbidVideo,
+    onPermitVideo,
+    meetingMediaAccess
   ]);
 
   const { isPeoplePaneOpen, openPeoplePane, closePeoplePane } = usePeoplePane({
@@ -488,11 +476,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     );
   }
 
-  const isTeamsCaptions = useSelector(getCaptionsKind) === 'TeamsCaptions';
   const isTeamsMeeting = useSelector(getIsTeamsMeeting);
-
   const isTeamsCall = useSelector(getIsTeamsCall);
-  const useTeamsCaptions = isTeamsMeeting || isTeamsCall || isTeamsCaptions;
+  // Teams captions are only available in Teams meetings or Teams calls.
+  // For Teams Meetings, we need to check if the capability is present.
+  const useTeamsCaptions = (isTeamsMeeting && capabilities?.setCaptionLanguage?.isPresent) || isTeamsCall;
   const hasJoinedCall = useSelector(getCallStatus) === 'Connected';
   const isCaptionsOn = useSelector(getCaptionsStatus);
   const minMaxDragPosition = useMinMaxDragPosition(props.modalLayerHostId);

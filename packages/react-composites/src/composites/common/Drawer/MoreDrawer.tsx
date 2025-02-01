@@ -45,6 +45,13 @@ import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
 import { DtmfDialPadOptions } from '../../CallComposite';
 import { getRemoteParticipantsConnectedSelector } from '../../CallComposite/selectors/mediaGallerySelector';
+/* @conditional-compile-remove(together-mode) */
+import {
+  getCapabilites,
+  getIsTogetherModeActive,
+  getLocalUserId,
+  getIsTeamsCall
+} from '../../CallComposite/selectors/baseSelectors';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -160,13 +167,9 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onReactionClick?: (reaction: string) => Promise<void>;
   onClickMeetingPhoneInfo?: () => void;
   onMuteAllRemoteParticipants?: () => void;
-  /* @conditional-compile-remove(media-access) */
   onForbidOthersAudio?: () => void;
-  /* @conditional-compile-remove(media-access) */
   onPermitOthersAudio?: () => void;
-  /* @conditional-compile-remove(media-access) */
   onForbidOthersVideo?: () => void;
-  /* @conditional-compile-remove(media-access) */
   onPermitOthersVideo?: () => void;
   /* @conditional-compile-remove(rtt) */
   onStartRealTimeText?: () => void;
@@ -203,7 +206,16 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
+  /* @conditional-compile-remove(together-mode) */
+  const participantCapability = useSelector(getCapabilites);
+  /* @conditional-compile-remove(together-mode) */
+  const participantId = useSelector(getLocalUserId);
+  /* @conditional-compile-remove(together-mode) */
+  const isTogetherModeActive = useSelector(getIsTogetherModeActive);
+  /* @conditional-compile-remove(together-mode) */
+  const isTeamsCall = useSelector(getIsTeamsCall);
 
+  const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
   const onSpeakerItemClick = useCallback(
     (
       _ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined,
@@ -389,8 +401,31 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
   };
 
+  /* @conditional-compile-remove(together-mode) */
+  const togetherModeOption = {
+    itemKey: 'togetherModeSelectionKey',
+    text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,
+    onItemClick: () => {
+      props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
+      onLightDismiss();
+    },
+    iconProps: {
+      iconName: 'TogetherModeLayout',
+      styles: { root: { lineHeight: 0 } }
+    },
+    disabled: !(
+      (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
+      isTogetherModeActive
+    ),
+    secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
+  };
+
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
+  /* @conditional-compile-remove(together-mode) */
+  if (isTeamsCall || isTeamsMeeting) {
+    galleryLayoutOptions.subMenuProps?.push(togetherModeOption);
+  }
 
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.galleryControlsButton)) {
     drawerMenuItems.push(galleryLayoutOptions);
@@ -447,8 +482,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
       }
     });
   }
-
-  const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
 
   const teamsMeetingCoordinates = getTeamsMeetingCoordinates(callAdapter.getState());
 

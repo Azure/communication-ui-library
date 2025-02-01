@@ -61,7 +61,6 @@ export const LocalScreenShare = React.memo(
           ) : undefined
         }
         onRenderPlaceholder={() => <LoadingSpinner loadingMessage={loadingMessage} />}
-        /* @conditional-compile-remove(media-access) */
         mediaAccess={localParticipant.mediaAccess}
       />
     );
