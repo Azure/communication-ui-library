@@ -1,9 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
 import { RichTextToolbarPlugin } from '../Plugins/RichTextToolbarPlugin';
 import { CommandBar, ContextualMenuItemType, Icon } from '@fluentui/react';
-import type { ICommandBarItemProps, Theme } from '@fluentui/react';
+import type { ICommandBarItemProps, ICommandBar, Theme } from '@fluentui/react';
 import {
   toolbarButtonStyle,
   ribbonDividerStyle,
@@ -27,6 +27,13 @@ import { richTextInsertTableCommandBarItem } from './Table/RichTextInsertTableCo
 const MaxRowsNumber = 5;
 const MaxColumnsNumber = 5;
 
+export interface IRichTextToolbar {
+  /**
+   * Sets focus to the command bar.
+   */
+  focusCommandBar(): void;
+}
+
 /**
  * Props for {@link RichTextToolbar}.
  *
@@ -44,11 +51,21 @@ export interface RichTextToolbarProps {
  *
  * @beta
  */
-export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
+export const RichTextToolbar = forwardRef<IRichTextToolbar, RichTextToolbarProps>((props, ref) => {
   const { plugin, strings } = props;
   const theme = useTheme();
   // need to re-render the buttons when format state changes
   const [formatState, setFormatState] = React.useState<ContentModelFormatState | undefined>(undefined);
+
+  const commandBarRef = useRef<ICommandBar>(null);
+
+  useImperativeHandle(ref, () => ({
+    focusCommandBar: () => {
+      setTimeout(() => {
+        commandBarRef.current?.focus();
+      }, 25);
+    }
+  }));
 
   useEffect(() => {
     // update the format state on editor events
@@ -258,10 +275,11 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
       data-testid={'rich-text-editor-toolbar'}
       styles={richTextToolbarStyle}
       overflowButtonProps={overflowButtonProps}
+      componentRef={commandBarRef}
       aria-label={strings.richTextToolbarAriaLabel}
     />
   );
-};
+});
 
 const getCommandBarItem = ({
   key,
