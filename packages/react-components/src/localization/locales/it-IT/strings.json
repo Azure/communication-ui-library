@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Partecipante senza nome",
     "participantStateRinging": "Chiamata in corso...",
     "participantStateHold": "Per l'attesa",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, More Options",
-    "attendeeRole": "Partecipante"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, altre opzioni",
+    "attendeeRole": "Partecipante",
+    "micDisabledIconLabel": "Microfono disabilitato",
+    "cameraDisabledIconLabel": "Fotocamera disabilitata"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} altro"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "Elenco puntato applicato",
     "richTextNumberedListAppliedAnnouncement": "Elenco numerato applicato"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Attivare la finestra modale scrittura in tempo reale",
-    "rttModalTitle": "Attivare la scrittura in tempo reale?",
-    "rttModalText": "Il testo in tempo reale verrà attivato per tutti gli utenti della riunione.",
-    "rttConfirmButtonLabel": "Abilita",
-    "rttCancelButtonLabel": "Annulla",
-    "rttCloseModalButtonAriaLabel": "Chiudi finestra modale scrittura in tempo reale"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Abilita finestra modale scrittura in tempo reale",
+    "realTimeTextModalTitle": "Abilitare la scrittura in tempo reale?",
+    "realTimeTextModalText": "Il testo in tempo reale verrà attivato per tutti gli utenti della riunione.",
+    "realTimeTextConfirmButtonLabel": "Abilita",
+    "realTimeTextCancelButtonLabel": "Annulla",
+    "realTimeTextCloseModalButtonAriaLabel": "Chiudi finestra modale scrittura in tempo reale"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Avvio dei sottotitoli in corso..."
+    "captionsBannerSpinnerText": "Avvio dei sottotitoli in corso...",
+    "realTimeTextInputBoxDefaultText": "Digita messaggio in tempo reale",
+    "realTimeTextInputErrorMessage": "Il messaggio non può superare i 2000 caratteri",
+    "realTimeTextBannerTitle": "Scrittura in tempo reale",
+    "realTimeTextBannerContent": "RTT (testo in tempo reale) è abilitato per tutti i partecipanti per l'intera durata della riunione.",
+    "realTimeTextBannerLinkLabel": "Scopri di più",
+    "captionsOnlyContainerTitle": "Sottotitoli",
+    "realTimeTextOnlyContainerTitle": "Testo in tempo reale",
+    "captionsAndRealTimeTextContainerTitle": "Sottotitoli e testo in tempo reale",
+    "expandButtonAriaLabel": "Espandi",
+    "minimizeButtonAriaLabel": "Comprimi"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggerimenti"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Scarica",
     "dismissButtonAriaLabel": "Chiudi",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Sovrapposizione dettagli immagine"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Il messaggio è stato inviato",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "Applauso",
     "surprisedReactionTooltipContent": "Sorpresa"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "Digitazione scrittura in tempo reale"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "Disabilita sottotitoli",
     "tooltipOffContent": "Abilita sottotitoli"
   },
+  "startRealTimeTextButton": {
+    "label": "Attiva la scrittura in tempo reale per questa chiamata",
+    "tooltipOffContent": "Attiva la scrittura in tempo reale per questa chiamata"
+  },
   "messageThread": {
     "yesterday": "Ieri",
     "sunday": "Domenica",
@@ -308,7 +324,9 @@
     "resendMessage": "Riprova a inviare",
     "failToSendTag": "Invio non riuscito",
     "editedTag": "Modificato",
-    "liveAuthorIntro": "{author} dice",
+    "liveAuthorIntro": "Messaggio da {author}",
+    "editedMessageLiveAuthorIntro": "Messaggio modificato da {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Messaggio modificato",
     "messageContentAriaText": "{status} {author} ha detto {message}",
     "messageContentMineAriaText": "{status} Hai detto {message}",
     "editBoxTextLimit": "Il messaggio ha superato il limite di caratteri {limitNumber}",
@@ -616,6 +634,14 @@
       "title": "Il tuo microfono è stato disattivato.",
       "message": "Non puoi più riattivare l'audio.",
       "dismissButtonAriaLabel": "Chiudi"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode è stato avviato",
+      "dismissButtonAriaLabel": "Chiudi"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode è terminato",
+      "dismissButtonAriaLabel": "Chiudi"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "Chiamata in corso...",
     "participantReconnecting": "Riconnessione in corso...",
     "participantStateHold": "Per l'attesa",
-    "moreOptionsButtonAriaLabel": "Altre opzioni {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Altre opzioni {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "audio disattivato",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "audio riattivato",
     "moreOptionsParticipantHandRaisedAriaLabel": "Mano alzata",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Impegnato in una conversazione"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Impegnato in una conversazione",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Microfono disabilitato",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Fotocamera disabilitata"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Consenti a {appName} di usare la fotocamera e il microfono",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "Rifiuta",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Accetta con video",
     "incomingCallNotificationDismissButtonAriaLabel": "Ignora"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "Scrittura in tempo reale",
-    "bannerContent": "RTT (testo in tempo reale) è abilitato per tutti i partecipanti per l'intera durata della riunione.",
-    "bannerLinkLabel": "Scopri di più"
   }
 }

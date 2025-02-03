@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "משתתף ללא שם",
     "participantStateRinging": "מתקשר...",
     "participantStateHold": "בהמתנה",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, אפשרויות נוספות",
-    "attendeeRole": "משתתף"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, אפשרויות נוספות",
+    "attendeeRole": "משתתף",
+    "micDisabledIconLabel": "המיקרופון לא זמין",
+    "cameraDisabledIconLabel": "המצלמה לא זמינה"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} נוספים"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "הוחלה רשימה עם תבליטים",
     "richTextNumberedListAppliedAnnouncement": "רשימה ממוספרת הוחלה"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "הפעל תיבת דו-שיח מודאלית של RTT",
-    "rttModalTitle": "להפעיל RTT?",
-    "rttModalText": "טקסט בזמן אמת (RTT) יופעל עבור כל האנשים בפגישה.",
-    "rttConfirmButtonLabel": "הפעל",
-    "rttCancelButtonLabel": "ביטול",
-    "rttCloseModalButtonAriaLabel": "סגור תיבת דו-שיח מודאלית של RTT"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "הפעל תיבת דו-שיח מודאלית של RTT",
+    "realTimeTextModalTitle": "להפעיל RTT?",
+    "realTimeTextModalText": "טקסט בזמן אמת (RTT) יופעל עבור כל האנשים בפגישה.",
+    "realTimeTextConfirmButtonLabel": "הפעל",
+    "realTimeTextCancelButtonLabel": "ביטול",
+    "realTimeTextCloseModalButtonAriaLabel": "סגור תיבת דו-שיח מודאלית של RTT"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "מאתחל כתוביות..."
+    "captionsBannerSpinnerText": "מאתחל כתוביות...",
+    "realTimeTextInputBoxDefaultText": "הקלד הודעה בזמן אמת",
+    "realTimeTextInputErrorMessage": "ההודעה אינה יכולה לחרוג מ- 2,000 תווים",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (טקסט בזמן אמת) זמין עבור כל המשתתפים למשך הזמן כולו של הפגישה.",
+    "realTimeTextBannerLinkLabel": "מידע נוסף",
+    "captionsOnlyContainerTitle": "כתוביות",
+    "realTimeTextOnlyContainerTitle": "טקסט בזמן אמת",
+    "captionsAndRealTimeTextContainerTitle": "כתוביות וטקסט בזמן אמת",
+    "expandButtonAriaLabel": "הרחב",
+    "minimizeButtonAriaLabel": "כווץ"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "הורד",
     "dismissButtonAriaLabel": "סגור",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "שכבת-על של פרטי תמונה"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "ההודעה נשלחה",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "תשואות",
     "surprisedReactionTooltipContent": "מופתע"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "הקלדת RTT"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "כבה כתוביות",
     "tooltipOffContent": "הפעל כתוביות"
   },
+  "startRealTimeTextButton": {
+    "label": "הפעל RTT עבור שיחה זו",
+    "tooltipOffContent": "הפעל RTT עבור שיחה זו"
+  },
   "messageThread": {
     "yesterday": "אתמול",
     "sunday": "יום ראשון",
@@ -308,7 +324,9 @@
     "resendMessage": "נסה לשלוח שוב",
     "failToSendTag": "השליחה נכשלה",
     "editedTag": "נערך",
-    "liveAuthorIntro": "{author} אומר",
+    "liveAuthorIntro": "הודעה מאת {author}",
+    "editedMessageLiveAuthorIntro": "הודעה ערוכה מ- {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "הודעה ערוכה",
     "messageContentAriaText": "{status} {author} אמר {message}",
     "messageContentMineAriaText": "{status} אמרת {message}",
     "editBoxTextLimit": "ההודעה שלך נמצאת מעבר למגבלה של {limitNumber} תווים",
@@ -616,6 +634,14 @@
       "title": "המיקרופון שלך הפך ללא זמין",
       "message": "לא תוכל עוד לבטל השתקה.",
       "dismissButtonAriaLabel": "סגור"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode התחיל",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode הסתיים",
+      "dismissButtonAriaLabel": "סגור"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "מתקשר...",
     "participantReconnecting": "מתחבר מחדש...",
     "participantStateHold": "בהמתנה",
-    "moreOptionsButtonAriaLabel": "אפשרויות נוספות {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "אפשרויות נוספות {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "מושתק",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "לא מושתק",
     "moreOptionsParticipantHandRaisedAriaLabel": "‫כף יד מורמת",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "מדבר"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "מדבר",
+    "moreOptionsParticipantMicDisabledAriaLabel": "המיקרופון לא זמין",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "המצלמה לא זמינה"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "אפשר {appName} להשתמש במצלמה ובמיקרופון שלך",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "דחה",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "קבל עם וידאו",
     "incomingCallNotificationDismissButtonAriaLabel": "בטל"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "RTT (טקסט בזמן אמת) זמין עבור כל המשתתפים למשך הזמן כולו של הפגישה.",
-    "bannerLinkLabel": "מידע נוסף"
   }
 }
