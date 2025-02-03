@@ -2,6 +2,572 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 03 Feb 2025 22:02:22 GMT",
+      "version": "1.24.0-beta.1",
+      "tag": "@azure/communication-react_v1.24.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6624fa7d8a62976029bf8025ac495808f2ac76c9",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Remove conditional compile for media access - Part 4"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f9f3d6413ac30d712e7cf9dec0102124e2544d60",
+            "area": "fix",
+            "workstream": "Hard mute",
+            "comment": "Hard mute accessibility"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9f581b317ef65d4b95947f27c933f61261c492e5",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Change the announcers in the Mic and Camera button to be conditionally rendered to stop them being read in scan mode if the button isn't focused"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ead604c76cf77a25e8e9530b1c8c35ca2635a9b3",
+            "area": "improvement",
+            "workstream": "Dependency",
+            "comment": "nanoid package update"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d71776a825d696f6742bf71e6952cdfe9b44292a",
+            "area": "fix",
+            "workstream": "Chat",
+            "comment": "Fix SendBox initialization that caused MaxListenersExceededWarning logs in the Console tool for ChatComposite with rich text editor enabled."
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "7cdaf40c616db5dc48845de00dfc8d608f0ba2fe",
+            "area": "fix",
+            "workstream": "Hard mute",
+            "comment": "Fix acs room audio video enabled notifications. when acs user just joined room, should not show the audio video enabled notifications"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "175381bc1a97d50d1f755eb855e79635b32c9130",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Add hermetic test for hard mute"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "bbb1ac1671497b4e3308bbfa1f46bba7b2781fc7",
+            "area": "fix",
+            "workstream": "Ezra",
+            "comment": "Update people button behavior to meet A11y requirements"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "357b99182b006c8fd72ebbff4d63cde0ebd9c9ca",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Remove hard mute conditional compile part 2"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9ae565856b6e70f69f22cf50e07d37ac085d6bbd",
+            "area": "fix",
+            "workstream": "Hard mute",
+            "comment": "fix media access hermetic test"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5eaf920ab83062a5731d0e8c0c60147a68c1e4c9",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update image overlay to announce when visible"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2cd508bdc944e44f2381a9baafbc4b912ee0e45d",
+            "area": "fix",
+            "workstream": "Revert changes to add undefined type so we are not introducing a breaking change to the beta release ",
+            "comment": "Revert changes to add undefined type so we are not introducing a breaking change to the beta release"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a5f896475791f578f1940ee37a8adc5a3a53c1e9",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix an issue where tab key was ignored by rich text editor at the end of the text"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f35e7a0f86f5e86075133878104666aa56eb0317",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Define a captions a region and focus on mount on captions region"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b427e2dcdcc65d8a9061e3f31fa59ca335e5b09e",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix an issue where keyboard focus was lost after message is edited"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b52903558d26b027d3dd824cc3c58b2fd7c86623",
+            "area": "fix",
+            "workstream": "Chat",
+            "comment": "Fix an issue where text editors didn't trigger typing events when using input method editor"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a4f322540f3c9eede38d73d644035e1e75c6bb15",
+            "area": "improvement",
+            "workstream": "Automated tests",
+            "comment": "Automate dominant speaker, pinning, and spotlight tests"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "49a8a0dc02efea0b9be2092467f9e62917ae357c",
+            "area": "fix",
+            "workstream": "Video Effects",
+            "comment": "update text container width to cap text for longer locale strings"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0bb81dfade9d89418939dd4b05ae8eca719a4ee1",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Remove unreachable code"
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "72b4f8b9585a03e5975c267093c300a6fd87c658",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Hide read by in chat action flyout when participants is 20 or more, as read count is not supported."
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "716282b30b63a5881caab08a7a824506734cfcf1",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Add story book for Media access (hard mute) feature"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e77a53b9eea5f6a30a36e551a58fd9c61252ccf2",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Live announcement update when a message is received/edited from/by other users"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c4773cb0426e31b45b5cc8670f2c891b36f35eeb",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "Check capability to determine if set caption language should be shown for teams meeting"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d9f22aaab01ef7cccd5ae88c1e301a1703665858",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Remove hard mute conditional compile - part 3"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "28586d83625285a0eeb2cf6b7f416c5b8a29200f",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "UI components changes"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c2198c933f0d0b9938df8bca86e673a0eccada48",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Add sdk references to story book"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "765d226a3a62f1642158a200d75a094818840da8",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix keyboard navigation for message menu button"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "075b95fef9179f0d70493954021db9f8e01ba81e",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix an issue where system chat messages weren't announced"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "167e634121b6b438a064bcec7ef64eaee7396acd",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Remove conditional compile media access part 1"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "713582e108caf9c22266f9511abd7c999810bdf1",
+            "area": "fix",
+            "workstream": "Hard mute",
+            "comment": "Fix condition compile for hard mute."
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "0375bccdf1c722335ee3e91b135096fc2edf22ca",
+            "area": "feature",
+            "workstream": "Hard mute",
+            "comment": "Merge branch 'main' into fuyan/hard_mute_part3_integrate_web_sdk"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5e1a3f6fe3e3db9e24da4e3aba5110d4d4cc7a24",
+            "area": "fix",
+            "workstream": "Hard mute",
+            "comment": "Add more spacing for Video tile icons"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9b4a08c92f1b01f9e45235fbf7257dac40767f40",
+            "area": "fix",
+            "workstream": "Audio Context",
+            "comment": "Fix issue where AudioContext for composites is made too early"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c5aaf2db5f95514531b19bf8389cdca49dc8bcc3",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Removed custom styles for scroll bar for ChatComposite and Captions components"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "966d1594a2f2f562010fbd9235d693dcf8c1a6bf",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update Control bar button aria-describedby"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "09f71d2f875bc5ca8fb170ac2ec99b323cf7543c",
+            "area": "fix",
+            "workstream": "RTE",
+            "comment": "Fix RTE .exe attachment disabling SendButton"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "69ffbf2fc7de470e8bf5c6beec782f4fd705b187",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Add hard mute localization"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "60bded3fd8c845b62047d776446b6a081123a21c",
+            "area": "feature",
+            "workstream": "Captions",
+            "comment": "Stablize Captions Banner Component"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "46692aa1b9517a6c98f49733768374ad6cb58c43",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "Change id to sequenceId for RTT feature state"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8eefe6caaa51dd5462d4371c1b0b5639c336ba92",
+            "area": "feature",
+            "workstream": "Real Time Text",
+            "comment": "Components for real time text"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9aa690f0c68435ad0f1787efe73864729d43ac11",
+            "area": "improvement",
+            "workstream": "Communication-Calling",
+            "comment": "Update to 1.33.1-beta.1 communication calling version"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "288b9cdcc2873b2d53026dc1ad306e291dda817f",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "Caption Banner API update, and update the merged caption list to only store 50 entries. Also added tests for the sorting logic"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "2b3201a2280f9a462d0752c742aaf56dbd51b702",
+            "area": "feature",
+            "workstream": "together-mode",
+            "comment": "together mode component"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "394fe1917f0227ff5148820c3022ce4a74488528",
+            "area": "feature",
+            "workstream": "together-mode",
+            "comment": "Included together mode icon"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e1f4f49ac79238528d38d6bb0122bfb3561bcaee",
+            "area": "improvement",
+            "workstream": "Updating Calling stable/beta dependencies",
+            "comment": "updating stable/beta dependencies for calling sdk"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b1c1e67880ce966c80508765acf5a9a1612c2f7d",
+            "area": "feature",
+            "workstream": "HardMute",
+            "comment": "Update Calling SDK's"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f76b85718d0c18347900d4071356bef38ddfd3f5",
+            "area": "feature",
+            "workstream": "Real time text",
+            "comment": "RTT disclosure banner should be a private component"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2bd2199592ebf428e4cbb6072923c2916ab49666",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "RTT API changes"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0d6afddb0b589ae5d0085922db96157ee262c843",
+            "area": "feature",
+            "workstream": "Captions",
+            "comment": "Make captions setting modal public component"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8904b0644ebc82b0c1fb475d075d5ffd4368a1de",
+            "area": "improvement",
+            "workstream": "Updating test server dependencies",
+            "comment": "updating express to 4.21.2 so we can fix a dependnecy issue with path-to-regexp"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "47e7280eeb0c5492dbc57098a8c0783339715573",
+            "area": "feature",
+            "workstream": "together-mode",
+            "comment": "Cleanup code logic"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "e3b496ec0f76a3f567052a5798aa0b02603bed2c",
+            "area": "feature",
+            "workstream": "together-mode",
+            "comment": "Included code snippets about signaling events"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5464a3a590b40b657b7a8e55e996a21d4dc64a2f",
+            "area": "improvement",
+            "workstream": "Repairing Bundle Size Gist download/upload for CI",
+            "comment": "temporary change to get bundle size updates to work again"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "45c73a7d4e6a0441fa0bbaca13c440b9d0cd5f2b",
+            "area": "feature",
+            "workstream": "Real Time Text",
+            "comment": "Real Time Text component changes and strings"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "eb8b42ed1989299e96e001b308421abb20f60889",
+            "area": "feature",
+            "workstream": "rtt",
+            "comment": "Fixed some component bugs and completed RTT storybook"
+          },
+          {
+            "author": "nwankwojustin93@gmail.com",
+            "package": "@azure/communication-react",
+            "commit": "3d412afec56c44b91a59810ecbd2aadc76c2c8c5",
+            "area": "feature",
+            "workstream": "together-mode",
+            "comment": "updated together mode subscriber and included notification when together mode starts or stops"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b0f2c1fadf8ce3ff329b88680f5b45cec05c9486",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "Add expand button for mobile "
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5dcd4c3ed1cfd7952afbdd0c25bc8360cc83b82e",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "Add RTT to composite experience"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0d6afddb0b589ae5d0085922db96157ee262c843",
+            "area": "feature",
+            "workstream": "Captions",
+            "comment": "make captions settings modal public"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "78dfafcc95f37f2fe4c9ae406a27d7fa43eb6775",
+            "area": "feature",
+            "workstream": "together-mode",
+            "comment": "Updated together mode types"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ef79009a98518bec8bca88cbdb9a33ed7cdaa2d8",
+            "area": "feature",
+            "workstream": "Captions",
+            "comment": "Make Start Captions Button Public"
+          },
+          {
+            "author": "carolinecao@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9f8eff91697ec1408232163583c4fbb863607c77",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "Add RTT to calling stateful sample. Fix bug in start RTT button"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "0426a16587123f0e3e284998bcbef6487563aba4",
+            "area": "feature",
+            "workstream": "together-mode",
+            "comment": "Updated apis naming"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "050c4ab6911de1c704a2e676780838a2b852de95",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "Rename rtt to real time text"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "32a688c60169fdf4bac6a587ac717a7261046d8f",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "Display warning message when RTT length exceed 2000"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "62684a9026340d6f9e835eb6c00f7127d1573da6",
+            "area": "feature",
+            "workstream": "together-mode",
+            "comment": "Promote togethermode to beta"
+          }
+        ],
+        "minor": [
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "94662ceea5de49292779a1ecd507c23a2fadb06d",
+            "area": "feature",
+            "workstream": "Hard mute",
+            "comment": "We are excited to announce that the Azure Communication Services Web UI Library now supports the Media Access feature. This feature allows organizers, co-organizers, and presenters to control the ability of other attendees to send audio and video while in a call. Attendees can determine if their audio or video is enabled or disabled and check the media access status of other participants. Developers can integrate this functionality through our composites (e.g., CallComposite, CallWithChatComposite) as well as through components."
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "f9141ae59730e78f921e1e29554a9d6887f41a0c",
+            "area": "fix",
+            "workstream": "Allow for contoso to hard set the dialer page, on, off, or follow our auto behaviors",
+            "comment": "Allow for contoso to hard set the dialer page, on, off, or follow our behaviors"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "28586d83625285a0eeb2cf6b7f416c5b8a29200f",
+            "area": "feature",
+            "workstream": "Hard mute",
+            "comment": "Hard mute feature UI changes"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "46c3e58393aaa4b28d3704303799814e468ecbbd",
+            "area": "improvement",
+            "workstream": "captions",
+            "comment": "Build captions inside caling stateful sample"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 13 Jan 2025 19:28:45 GMT",
       "version": "1.23.0",
       "tag": "@azure/communication-react_v1.23.0",

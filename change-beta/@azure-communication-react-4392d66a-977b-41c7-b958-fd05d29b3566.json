@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "improvement",
-  "workstream": "Communication-Calling",
-  "comment": "Update to 1.33.1-beta.1 communication calling version",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}
