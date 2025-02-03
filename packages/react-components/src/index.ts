@@ -96,5 +96,4 @@ export type { SurveyIssuesHeadingStrings } from './types';
 
 export type { CallSurveyImprovementSuggestions } from './types';
 
-/* @conditional-compile-remove(media-access) */
 export type { MediaAccess } from './types';

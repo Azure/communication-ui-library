@@ -29,7 +29,6 @@ import {
   overlayStylesTransparent,
   loadSpinnerStyles
 } from './styles/VideoTile.styles';
-/* @conditional-compile-remove(media-access) */
 import { MediaAccess } from '../types';
 
 /**

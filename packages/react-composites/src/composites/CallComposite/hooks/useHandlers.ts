@@ -229,49 +229,41 @@ const createCompositeHandlers = memoizeOne(
       onMuteAllRemoteParticipants: async (): Promise<void> => {
         await adapter.muteAllRemoteParticipants();
       },
-      /* @conditional-compile-remove(media-access) */
       onForbidAudio: capabilities?.forbidOthersAudio?.isPresent
         ? async (userIds: string[]): Promise<void> => {
             await adapter.forbidAudio(userIds);
           }
         : undefined,
-      /* @conditional-compile-remove(media-access) */
       onPermitAudio: capabilities?.forbidOthersAudio?.isPresent
         ? async (userIds: string[]): Promise<void> => {
             await adapter.permitAudio(userIds);
           }
         : undefined,
-      /* @conditional-compile-remove(media-access) */
       onForbidOthersAudio: capabilities?.forbidOthersAudio?.isPresent
         ? async (): Promise<void> => {
             await adapter.forbidOthersAudio();
           }
         : undefined,
-      /* @conditional-compile-remove(media-access) */
       onPermitOthersAudio: capabilities?.forbidOthersAudio?.isPresent
         ? async (): Promise<void> => {
             await adapter.permitOthersAudio();
           }
         : undefined,
-      /* @conditional-compile-remove(media-access) */
       onForbidVideo: capabilities?.forbidOthersVideo?.isPresent
         ? async (userIds: string[]): Promise<void> => {
             await adapter.forbidVideo(userIds);
           }
         : undefined,
-      /* @conditional-compile-remove(media-access) */
       onPermitVideo: capabilities?.forbidOthersVideo?.isPresent
         ? async (userIds: string[]): Promise<void> => {
             await adapter.permitVideo(userIds);
           }
         : undefined,
-      /* @conditional-compile-remove(media-access) */
       onForbidOthersVideo: capabilities?.forbidOthersVideo?.isPresent
         ? async (): Promise<void> => {
             await adapter.forbidOthersVideo();
           }
         : undefined,
-      /* @conditional-compile-remove(media-access) */
       onPermitOthersVideo: capabilities?.forbidOthersVideo?.isPresent
         ? async (): Promise<void> => {
             await adapter.permitOthersVideo();

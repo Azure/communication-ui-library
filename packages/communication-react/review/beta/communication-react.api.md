@@ -3220,13 +3220,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CaptionsSettingsIcon: React_2.JSX.Element;
     ChangeSpokenLanguageIcon: React_2.JSX.Element;
     ChangeCaptionLanguageIcon: React_2.JSX.Element;
-    ContextMenuCameraIcon: React_2.JSX.Element; /**
-    * Icons that can be overridden in one of the composites exported by this library.
-    *
-    * See {@link ChatCompositeIcons}, {@link CallCompositeIcons} and {@link CallWithChatCompositeIcons} for more targeted types.
-    *
-    * @public
-    */
+    ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;
     ContextMenuSpeakerIcon: React_2.JSX.Element;
     ContextMenuRemoveParticipant: React_2.JSX.Element;
