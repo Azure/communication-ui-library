@@ -311,7 +311,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomClosingSoon: <DoorArrowLeft16Regular />,
   /* @conditional-compile-remove(breakout-rooms) */
-  NotificationBarBreakoutRoomClosed: <ConferenceRoom16Regular />,
+  NotificationBarBreakoutRoomClosed: <DoorArrowLeft16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,
