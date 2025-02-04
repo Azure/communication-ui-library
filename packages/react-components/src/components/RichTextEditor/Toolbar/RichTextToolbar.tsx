@@ -61,9 +61,7 @@ export const RichTextToolbar = forwardRef<IRichTextToolbar, RichTextToolbarProps
 
   useImperativeHandle(ref, () => ({
     focusCommandBar: () => {
-      setTimeout(() => {
-        commandBarRef.current?.focus();
-      }, 25);
+      commandBarRef.current?.focus();
     }
   }));
 

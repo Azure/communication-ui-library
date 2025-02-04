@@ -156,7 +156,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   useEffect(() => {
     if (editor.current) {
       if (showRichTextEditorFormatting) {
-        toolbarRef.current?.focusCommandBar();
+        setTimeout(() => {
+          // Delay focus to ensure the toolbar is rendered
+          toolbarRef.current?.focusCommandBar();
+        });
       } else {
         editor.current?.focus();
       }
