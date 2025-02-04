@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { RemoteParticipant, RemoteVideoStream } from '@azure/communication-calling';
+import { DisplayNameChangedReason, RemoteParticipant, RemoteVideoStream } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallContext } from './CallContext';
 import { CallIdRef } from './CallIdRef';
@@ -111,7 +111,12 @@ export class ParticipantSubscriber {
     this._context.setParticipantRole(this._callIdRef.callId, this._participantKey, this._participant.role);
   };
 
-  private displayNameChanged = (): void => {
+  private displayNameChanged = (args: {
+    newValue?: string;
+    oldValue?: string;
+    reason?: DisplayNameChangedReason;
+  }): void => {
+    console.log(`display name changed from ${args.oldValue} to ${args.newValue} due to ${args.reason}`);
     this._context.setParticipantDisplayName(
       this._callIdRef.callId,
       this._participantKey,
