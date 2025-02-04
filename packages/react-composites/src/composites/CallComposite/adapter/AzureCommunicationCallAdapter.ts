@@ -258,11 +258,6 @@ class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public getIsReturningFromBreakoutRoom(): boolean {
-    return this.isReturningFromBreakoutRoom;
-  }
-
-  /* @conditional-compile-remove(breakout-rooms) */
   public setIsReturningFromBreakoutRoom(isReturningFromBreakoutRoom: boolean): void {
     this.isReturningFromBreakoutRoom = isReturningFromBreakoutRoom;
   }
@@ -537,19 +532,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         const removedCallState = this.callClient.getState().callsEnded[removedCall.id];
         if (!removedCallState) {
           return;
-        }
-
-        /* @conditional-compile-remove(breakout-rooms) */
-        if (
-          removedCallState.breakoutRooms?.assignedBreakoutRoom &&
-          removedCallState.breakoutRooms.breakoutRoomSettings &&
-          !this.context.getIsReturningFromBreakoutRoom()
-        ) {
-          this.context.setIsReturningFromBreakoutRoom(true);
-          this.context.updateClientState(this.callClient.getState());
-          removedCallState.breakoutRooms.assignedBreakoutRoom.returnToMainMeeting().then((call) => {
-            this.processNewCall(call);
-          });
         }
 
         const latestAcceptedTransfer = findLatestAcceptedTransfer(removedCallState.transfer.acceptedTransfers);
