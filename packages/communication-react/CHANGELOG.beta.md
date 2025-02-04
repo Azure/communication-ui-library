@@ -22,7 +22,6 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 We are excited to announce that the Azure Communication Services Web UI Library now supports Together Mode in Teams interop scenarios. Together Mode is a feature that creates a virtual shared space for meeting participants. By using AI segmentation technology, it places participants in a common background, such as a conference room or auditorium, making it look like everyone is sitting together. This mode is designed to make meetings feel more engaging and reduce virtual meeting fatigue. It can help improve participants' sense of connection and collaboration by mimicking the experience of being in the same physical location. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). 
 
 * Receive together Mode in Teams Interop Meetings 
-* Change views to and from Together mode 
 * View reactions and raised hands in the Together mode view 
 
 ### Improvements
