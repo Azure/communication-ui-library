@@ -20,7 +20,6 @@ import {
   CallFeature
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
-/* @conditional-compile-remove(media-access) */
 import {
   MediaAccessCallFeature,
   MediaAccessChangedListener,
@@ -183,7 +182,6 @@ export class MockRaiseHandCallFeatureImpl implements RaiseHandCallFeature {
     /* No state to clean up */
   }
 }
-/* @conditional-compile-remove(media-access) */
 /**
  * @private
  */
@@ -496,9 +494,7 @@ export function createMockApiFeatures(
       name: 'Default',
       isRecordingActive: false,
       isTranscriptionActive: false,
-      /* @conditional-compile-remove(media-access) */
       getAllOthersMediaAccess: () => [],
-      /* @conditional-compile-remove(media-access) */
       getMeetingMediaAccess: () => ({ isAudioPermitted: true, isVideoPermitted: true })
     });
     return generic;

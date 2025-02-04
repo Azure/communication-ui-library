@@ -21,6 +21,8 @@ import {
   LocalVideoStreamState,
   RemoteParticipantState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 import { SpotlightedParticipant } from '@azure/communication-calling';
@@ -41,11 +43,9 @@ import { RaisedHandState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { CaptionsKind } from '@azure/communication-calling';
-import { ReactionResources } from '@internal/react-components';
+import { ReactionResources, MediaAccess } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-/* @conditional-compile-remove(media-access) */
-import { MediaAccess } from '@internal/react-components';
 
 /**
  * @private
@@ -185,9 +185,29 @@ export const getCaptions = (state: CallAdapterState): CaptionsInfo[] | undefined
   return state.call?.captionsFeature.captions;
 };
 
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeText = (
+  state: CallAdapterState
+):
+  | {
+      completedMessages?: RealTimeTextInfo[];
+      currentInProgress?: RealTimeTextInfo[];
+      myInProgress?: RealTimeTextInfo;
+    }
+  | undefined => {
+  return state.call?.realTimeTextFeature.realTimeTexts;
+};
+
 /** @private */
 export const getCaptionsStatus = (state: CallAdapterState): boolean | undefined => {
   return state.call?.captionsFeature.isCaptionsFeatureActive;
+};
+
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeTextStatus = (state: CallAdapterState): boolean | undefined => {
+  return state.call?.realTimeTextFeature.isRealTimeTextFeatureActive;
 };
 
 /** @private */
@@ -330,7 +350,6 @@ export const getIsTogetherModeActive = (state: CallAdapterState): boolean | unde
  * @returns The local participant's user id or undefined.
  */
 export const getLocalUserId = (state: CallAdapterState): CommunicationIdentifierKind | undefined => state.userId;
-/* @conditional-compile-remove(media-access) */
 /** @private */
 export const getMediaAccessSetting = (state: CallAdapterState): MediaAccess | undefined =>
   state.call?.meetingMediaAccess;

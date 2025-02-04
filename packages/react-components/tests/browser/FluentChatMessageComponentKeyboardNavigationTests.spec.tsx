@@ -36,10 +36,10 @@ betaTest.describe('FluentChatMessageComponent keyboard navigation tests', () => 
 
   betaTest('User can navigate to message using keyboard', async ({ mount, page }) => {
     const component = await mount(<FluentChatMessageComponent {...props} />);
+    const messageBody = component.getByTestId('chat-composite-message');
+    await messageBody.waitFor({ state: 'visible' });
 
     await page.keyboard.press('Tab');
-    const messageBody = component.getByTestId('chat-composite-message');
-    await expect(messageBody).toBeVisible();
     await expect(messageBody).toBeFocused();
 
     // check that focus stays on the message and not moved anywhere after additional Enter key press

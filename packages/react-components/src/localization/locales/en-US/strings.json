@@ -85,7 +85,12 @@
     "realTimeTextInputErrorMessage": "Message can not exceed 2000 characters",
     "realTimeTextBannerTitle": "RTT",
     "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
-    "realTimeTextBannerLinkLabel": "Learn more"
+    "realTimeTextBannerLinkLabel": "Learn more",
+    "captionsOnlyContainerTitle": "Captions",
+    "realTimeTextOnlyContainerTitle": "Real-Time Text",
+    "captionsAndRealTimeTextContainerTitle": "Captions and Real-Time Text",
+    "expandButtonAriaLabel": "Expand",
+    "minimizeButtonAriaLabel": "Collapse"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
@@ -300,8 +305,8 @@
     "tooltipOffContent": "Turn on captions"
   },
   "startRealTimeTextButton": {
-    "onLabel": "Turn on RTT for this call",
-    "tooltipOnContent": "RTT is turned on for this call"
+    "label": "Turn on RTT for this call",
+    "tooltipOffContent": "Turn on RTT for this call"
   },
   "messageThread": {
     "yesterday": "Yesterday",
@@ -592,6 +597,11 @@
     "assignedBreakoutRoomChanged": {
       "title": "Your breakout room has changed",
       "message": "We'll move you to your assigned room in 5 seconds.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "assignedBreakoutRoomClosed": {
+      "title": "Your breakout room has closed",
+      "message": "We'll move you back to your meeting in 5 seconds.",
       "dismissButtonAriaLabel": "Close"
     },
     "assignedBreakoutRoomOpenedPromptJoin": {

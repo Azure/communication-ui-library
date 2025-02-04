@@ -27,7 +27,6 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   reaction?: Reaction;
   /** Whether calling participant is spotlighted **/
   spotlight?: Spotlight;
-  /* @conditional-compile-remove(media-access) */
   /** Whether calling participant has audio/video media access blocked **/
   mediaAccess?: MediaAccess;
 };
@@ -96,7 +95,6 @@ export type ParticipantState =
   | 'Disconnected'
   | 'Reconnecting';
 
-/* @conditional-compile-remove(media-access) */
 /**
  * Audio/Video Media access state
  *

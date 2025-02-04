@@ -1,0 +1,19 @@
+import { RealTimeText } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import * as RealTimeTextStories from './index.stories';
+import RealTimeTextExampleText from '!!raw-loader!./snippets/ExampleRealTimeText.snippet.tsx';
+
+<Meta of={RealTimeTextStories} />
+
+# RealTimeText
+
+<SingleLineBetaBanner />
+
+A component for displaying a Real-time text message with user icon, displayName and captions text.
+
+<Canvas of={RealTimeTextStories.ExampleRealTimeTextExampleDocsOnly} source={{ code: RealTimeTextExampleText }} />
+
+## Props
+
+<ArgTypes of={RealTimeText} />

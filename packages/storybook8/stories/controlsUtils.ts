@@ -210,7 +210,9 @@ const notificationOptions: NotificationType[] = [
   'capabilityTurnVideoOnAbsent',
   'capabilityTurnVideoOnPresent',
   'capabilityUnmuteMicAbsent',
-  'capabilityUnmuteMicPresent'
+  'capabilityUnmuteMicPresent',
+  'togetherModeStarted',
+  'togetherModeEnded'
 ];
 
 export const defaultActiveNotifications = ['callNoSpeakerFound'];
@@ -571,7 +573,16 @@ export const controlsToAdd = {
   richTextEditor: { control: 'boolean', name: 'Enable rich text editor' },
   isRTTTyping: { control: 'boolean', name: 'Is RTT typing' },
   rttDisplayName: { control: 'text', name: 'RTT display name' },
-  rttCaptionText: { control: 'text', name: 'RTT caption text' }
+  rttCaptionText: { control: 'text', name: 'RTT caption text' },
+  isCaptionsOn: { control: 'boolean', name: 'Is captions on' },
+  isRealTimeTextOn: { control: 'boolean', name: 'Is real time text on' },
+  startCaptionsInProgress: { control: 'boolean', name: 'Start captions in progress' },
+  captionsFormFactor: {
+    control: 'radio',
+    options: ['default', 'compact'],
+    defaultValue: 'default',
+    name: 'Form factor'
+  }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };

@@ -15,6 +15,8 @@ import {
   loadingBannerFullHeightStyles,
   loadingBannerStyles
 } from './styles/Captions.style';
+/* @conditional-compile-remove(rtt) */
+import { rttDisclosureBannerClassName } from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
 import { useLocale } from '../localization';
 /* @conditional-compile-remove(rtt) */
@@ -23,6 +25,12 @@ import { RealTimeText } from './RealTimeText';
 import { _RTTDisclosureBanner } from './RTTDisclosureBanner';
 /* @conditional-compile-remove(rtt) */
 import { sortCaptionsAndRealTimeTexts } from './utils/sortCaptionsAndRealTimeTexts';
+/* @conditional-compile-remove(rtt) */
+import { expandIconClassName, bannerTitleContainerClassName } from './styles/Captions.style';
+/* @conditional-compile-remove(rtt) */
+import { titleClassName } from './styles/CaptionsSettingsModal.styles';
+/* @conditional-compile-remove(rtt) */
+import { Text, IconButton } from '@fluentui/react';
 
 /**
  * @public
@@ -61,7 +69,7 @@ export type CaptionsInformation = {
  */
 export type RealTimeTextInformation = {
   /**
-   * The sequence id of the real time text.
+   * The id of the real time text.
    */
   id: number;
   /**
@@ -81,13 +89,14 @@ export type RealTimeTextInformation = {
    */
   isTyping: boolean;
   /**
-   * If message originated from the local participant
-   */
-  isMe: boolean;
-  /**
    * timestamp when the real time text was finalized
    */
   finalizedTimeStamp: Date;
+  /**
+   * If message originated from the local participant
+   * default value is false
+   */
+  isMe?: boolean;
 };
 /**
  * @public
@@ -123,6 +132,31 @@ export interface CaptionsBannerStrings {
    * Real time text disclosure banner link label
    */
   realTimeTextBannerLinkLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when only captions is enabled
+   */
+  captionsOnlyContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when only real time text is enabled
+   */
+  realTimeTextOnlyContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when both captions and real time text is enabled
+   */
+  captionsAndRealTimeTextContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Expand button aria label
+   */
+  expandButtonAriaLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Minimize button aria label
+   */
+  minimizeButtonAriaLabel?: string;
 }
 
 /**
@@ -182,7 +216,7 @@ export interface CaptionsBannerProps {
   /**
    * Optional callback to send real time text.
    */
-  onSendRealTimeText?: (text: string, finalized: boolean) => Promise<void>;
+  onSendRealTimeText?: (text: string, isFinalized: boolean) => Promise<void>;
   /* @conditional-compile-remove(rtt) */
   /**
    * Latest local real time text
@@ -219,6 +253,19 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const theme = useTheme();
   /* @conditional-compile-remove(rtt) */
+  const [expandBannerHeight, setExpandBannerHeight] = useState<boolean>(false);
+  /* @conditional-compile-remove(rtt) */
+  const getTitle = (): string => {
+    if (isCaptionsOn && isRealTimeTextOn) {
+      return strings.captionsAndRealTimeTextContainerTitle ?? '';
+    } else if (isCaptionsOn) {
+      return strings.captionsOnlyContainerTitle ?? '';
+    } else if (isRealTimeTextOn) {
+      return strings.realTimeTextOnlyContainerTitle ?? '';
+    }
+    return '';
+  };
+  /* @conditional-compile-remove(rtt) */
   // merge realtimetexts and captions into one array based on timestamp
   // Combine captions and realTimeTexts into one list
   const combinedList: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
@@ -227,7 +274,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
 
   /* @conditional-compile-remove(rtt) */
   const mergedCaptions: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
-    return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress] as (
+    return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress].slice(-50) as (
       | CaptionsInformation
       | RealTimeTextInformation
     )[];
@@ -257,14 +304,14 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     return () => {
       captionsScrollDiv?.removeEventListener('scroll', handleScrollToTheBottom);
     };
-  }, [handleScrollToTheBottom, isCaptionsOn]);
+  }, [handleScrollToTheBottom, isCaptionsOn, /* @conditional-compile-remove(rtt) */ isRealTimeTextOn]);
 
   useEffect(() => {
     // only auto scroll to bottom is already is at bottom of scroll before new caption comes in
     if (isAtBottomOfScroll) {
       scrollToBottom();
     }
-  }, [captions, isAtBottomOfScroll]);
+  }, [captions, /* @conditional-compile-remove(rtt) */ realTimeTexts, isAtBottomOfScroll]);
   /* @conditional-compile-remove(rtt) */
   const [textFieldValue, setTextFieldValue] = useState<string>('');
   /* @conditional-compile-remove(rtt) */
@@ -332,13 +379,24 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
 
   return (
     <>
-      {(startCaptionsInProgress || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
+      {(startCaptionsInProgress || isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
         <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
           {
-            /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
-              <div style={{ paddingTop: '0.5rem' }}>
-                <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
-              </div>
+            /* @conditional-compile-remove(rtt) */ (isCaptionsOn || isRealTimeTextOn) && formFactor === 'compact' && (
+              <Stack
+                horizontal
+                horizontalAlign="space-between"
+                verticalAlign="center"
+                className={bannerTitleContainerClassName}
+              >
+                <Text className={titleClassName}>{getTitle()}</Text>
+                <IconButton
+                  iconProps={{ iconName: expandBannerHeight ? 'MinimizeIcon' : 'ExpandIcon' }}
+                  ariaLabel={expandBannerHeight ? strings.minimizeButtonAriaLabel : strings.expandButtonAriaLabel}
+                  onClick={() => setExpandBannerHeight(!expandBannerHeight)}
+                  styles={expandIconClassName(theme)}
+                />
+              </Stack>
             )
           }
           {(isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
@@ -347,17 +405,24 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               className={
                 captionsOptions?.height === 'full'
                   ? captionsBannerFullHeightClassName(theme)
-                  : captionsBannerClassName(formFactor)
+                  : captionsBannerClassName(formFactor, /* @conditional-compile-remove(rtt) */ expandBannerHeight)
               }
               data-ui-id="captions-banner-inner"
             >
+              {
+                /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
+                  <Stack className={rttDisclosureBannerClassName()}>
+                    <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
+                  </Stack>
+                )
+              }
               {captionsTrampoline()}
             </ul>
           )}
           {
             /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && onSendRealTimeText && (
               <TextField
-                label={strings.realTimeTextInputBoxDefaultText}
+                placeholder={strings.realTimeTextInputBoxDefaultText}
                 value={textFieldValue}
                 onKeyDown={handleKeyDown}
                 onChange={(_, newValue) => {

@@ -102,7 +102,8 @@ import {
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from '../../CallComposite/adapter/CallAdapter';
-
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
@@ -203,18 +204,29 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         await this.breakoutRoomJoined(eventData.data);
       } else if (eventData.type === 'assignedBreakoutRooms') {
         if (!eventData.data || eventData.data.state === 'closed') {
-          await this.returnFromBreakoutRoom();
+          if (
+            this.originCallChatAdapter &&
+            this.originCallChatAdapter?.getState().thread.threadId !== this.chatAdapter?.getState().thread.threadId
+          ) {
+            this.updateChatAdapter(this.originCallChatAdapter);
+          }
         }
       }
     });
     /* @conditional-compile-remove(breakout-rooms) */
     this.callAdapter.on('callEnded', () => {
-      const originCallId = this.context.getState().call?.breakoutRooms?.breakoutRoomOriginCallId;
-
-      // If the call ended is a breakout room call, return to the origin call chat adapter
-      if (originCallId && this.originCallChatAdapter) {
-        this.breakoutRoomChatAdapter?.dispose();
-        this.updateChatAdapter(this.originCallChatAdapter);
+      // If the call ended is a breakout room call with breakout room settings then update the chat adapter to the
+      // origin call
+      if (this.context.getState().call?.breakoutRooms?.breakoutRoomSettings) {
+        // Unsubscribe from chat adapter state changes
+        this.chatAdapter?.offStateChange(this.onChatStateChange);
+        // Unassign chat adapter
+        this.chatAdapter = undefined;
+        // Set chat state to undefined to prevent showing chat thread of origin call
+        this.context.unsetChatState();
+        if (this.originCallChatAdapter) {
+          this.updateChatAdapter(this.originCallChatAdapter);
+        }
       }
     });
     this.onCallStateChange = onCallStateChange;
@@ -365,6 +377,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.stopCaptions.bind(this);
     this.setSpokenLanguage.bind(this);
     this.setCaptionLanguage.bind(this);
+    /* @conditional-compile-remove(rtt) */
+    this.sendRealTimeText.bind(this);
     this.startVideoBackgroundEffect.bind(this);
     this.stopVideoBackgroundEffects.bind(this);
     this.updateBackgroundPickerImages.bind(this);
@@ -655,6 +669,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async setSpokenLanguage(language: string): Promise<void> {
     await this.callAdapter.setSpokenLanguage(language);
   }
+  /* @conditional-compile-remove(rtt) */
+  public async sendRealTimeText(text: string, isFinalized: boolean): Promise<void> {
+    await this.callAdapter.sendRealTimeText(text, isFinalized);
+  }
 
   public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
     await this.callAdapter.startVideoBackgroundEffect(videoBackgroundEffect);
@@ -720,36 +738,34 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async forbidAudio(userIds: string[]): Promise<void> {
     return this.callAdapter.forbidAudio(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitAudio(userIds: string[]): Promise<void> {
     return this.callAdapter.permitAudio(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async forbidOthersAudio(): Promise<void> {
     return this.callAdapter.forbidOthersAudio();
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitOthersAudio(): Promise<void> {
     return this.callAdapter.permitOthersAudio();
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async forbidVideo(userIds: string[]): Promise<void> {
     return this.callAdapter.forbidVideo(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitVideo(userIds: string[]): Promise<void> {
     return this.callAdapter.permitVideo(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async forbidOthersVideo(): Promise<void> {
     return this.callAdapter.forbidOthersVideo();
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitOthersVideo(): Promise<void> {
     return this.callAdapter.permitOthersVideo();
   }
@@ -777,7 +793,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-
+  /* @conditional-compile-remove(rtt) */
+  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(breakout-rooms) */
@@ -819,6 +836,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'captionsReceived':
         this.callAdapter.on('captionsReceived', listener);
+        break;
+      /* @conditional-compile-remove(rtt) */
+      case 'realTimeTextReceived':
+        this.callAdapter.on('realTimeTextReceived', listener);
         break;
       case 'isCaptionsActiveChanged':
         this.callAdapter.on('isCaptionsActiveChanged', listener);
@@ -913,6 +934,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* @conditional-compile-remove(rtt) */
+  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   off(event: 'chatInitialized', listener: ChatInitializedListener): void;
@@ -953,6 +976,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         break;
       case 'captionsReceived':
         this.callAdapter.off('captionsReceived', listener);
+        break;
+      /* @conditional-compile-remove(rtt) */
+      case 'realTimeTextReceived':
+        this.callAdapter.off('realTimeTextReceived', listener);
         break;
       case 'isCaptionsActiveChanged':
         this.callAdapter.off('isCaptionsActiveChanged', listener);

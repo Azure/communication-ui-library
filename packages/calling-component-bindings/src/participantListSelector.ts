@@ -9,7 +9,6 @@ import {
   getIsScreenSharingOn,
   getIsMuted,
   CallingBaseSelectorProps,
-  /* @conditional-compile-remove(media-access) */
   getCapabilities
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
@@ -86,7 +85,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             localUserCanRemoveOthers,
             remoteParticipantReaction,
             spotlight,
-            /* @conditional-compile-remove(media-access) */
             participant.mediaAccess
           );
         })
@@ -139,7 +137,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     isHideAttendeeNamesEnabled,
     getLocalParticipantReactionState,
     getSpotlightCallFeature,
-    /* @conditional-compile-remove(media-access) */
     getCapabilities
   ],
   (
@@ -154,7 +151,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     isHideAttendeeNamesEnabled,
     localParticipantReactionState,
     spotlightCallFeature,
-    /* @conditional-compile-remove(media-access) */
     capabilities
   ): {
     participants: CallParticipantListParticipant[];
@@ -182,7 +178,6 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       isRemovable: false,
       reaction: memoizedConvertToVideoTileReaction(localParticipantReactionState),
       spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId),
-      /* @conditional-compile-remove(media-access) */
       mediaAccess: {
         isAudioPermitted: capabilities?.unmuteMic ? capabilities.unmuteMic.isPresent : true,
         isVideoPermitted: capabilities?.turnVideoOn ? capabilities.turnVideoOn.isPresent : true

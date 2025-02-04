@@ -162,12 +162,8 @@ export const TogetherModeOverlay = memo(
         setHoveredParticipantID('');
       }
 
-      if (tabbedParticipantID && !updatedParticipantStatus[tabbedParticipantID]) {
-        setTabbedParticipantID('');
-      }
-
       setTogetherModeParticipantStatus(updatedParticipantStatus);
-    }, [hoveredParticipantID, tabbedParticipantID, updatedParticipantStatus]);
+    }, [hoveredParticipantID, updatedParticipantStatus]);
 
     return (
       <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
@@ -188,7 +184,7 @@ export const TogetherModeOverlay = memo(
               >
                 <div>
                   {participantStatus.showDisplayName && (
-                    <div style={{ ...participantStatusTransitionStyle }} tabIndex={0}>
+                    <div style={{ ...participantStatusTransitionStyle }}>
                       <div
                         style={{
                           ...togetherModeParticipantStatusContainer(

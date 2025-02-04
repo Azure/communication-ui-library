@@ -357,16 +357,14 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomChanged: 'NotificationBarBreakoutRoomChanged',
   /* @conditional-compile-remove(breakout-rooms) */
+  assignedBreakoutRoomClosed: 'NotificationBarBreakoutRoomClosed',
+  /* @conditional-compile-remove(breakout-rooms) */
   breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
   /* @conditional-compile-remove(breakout-rooms) */
   breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon',
-  /* @conditional-compile-remove(media-access) */
   capabilityTurnVideoOnPresent: 'ControlButtonCameraOff',
-  /* @conditional-compile-remove(media-access) */
   capabilityTurnVideoOnAbsent: 'ControlButtonCameraProhibited',
-  /* @conditional-compile-remove(media-access) */
   capabilityUnmuteMicPresent: 'ControlButtonMicOff',
-  /* @conditional-compile-remove(media-access) */
   capabilityUnmuteMicAbsent: 'ControlButtonMicProhibited',
   /* @conditional-compile-remove(together-mode) */
   togetherModeStarted: 'NotificationBarTogetherModeIcon',
@@ -437,9 +435,7 @@ export const formatMoreButtonAriaDescription = (
   state?: string,
   isSpeaking?: boolean,
   strings?: VideoTileStrings,
-  /* @conditional-compile-remove(media-access) */
   isMicDisabled?: boolean,
-  /* @conditional-compile-remove(media-access) */
   isCameraDisabled?: boolean
 ): string => {
   const mutedState = isMuted
@@ -447,9 +443,7 @@ export const formatMoreButtonAriaDescription = (
     : strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel;
   const handRaisedState = isHandRaised ? strings?.moreOptionsParticipantHandRaisedAriaLabel : undefined;
   const isSpeakingState = isSpeaking ? strings?.moreOptionsParticipantIsSpeakingAriaLabel : undefined;
-  /* @conditional-compile-remove(media-access) */
   const micDisabledState = isMicDisabled ? strings?.moreOptionsParticipantMicDisabledAriaLabel : undefined;
-  /* @conditional-compile-remove(media-access) */
   const cameraDisabledState = isCameraDisabled ? strings?.moreOptionsParticipantCameraDisabledAriaLabel : undefined;
   const description = strings?.moreOptionsButtonAriaLabel
     ? _formatString(strings?.moreOptionsButtonAriaLabel, {
@@ -458,9 +452,7 @@ export const formatMoreButtonAriaDescription = (
         isHandRaised: handRaisedState ?? ' ',
         state: state ?? ' ',
         isSpeaking: isSpeakingState ?? ' ',
-        /* @conditional-compile-remove(media-access) */
         micDisabledState: micDisabledState ?? ' ',
-        /* @conditional-compile-remove(media-access) */
         cameraDisabledState: cameraDisabledState ?? ' '
       })
     : '';

@@ -38,13 +38,14 @@ export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
  */
 export interface StartRealTimeTextButtonStrings {
   /**
-   * Label for when action is to start RealTimeText
+   * Label for the start Real Time Text button
    */
-  onLabel: string;
+  label: string;
   /**
-   * Content for when button is checked, RealTimeText is on
+   * Content for when button is not checked, Real-Time Text is off.
+   * We don't need to supply a tooltip string when RealTimeText is on, because the button will be disabled when Real-Time Text is on.
    */
-  tooltipOnContent: string;
+  tooltipOffContent: string;
 }
 
 /* @conditional-compile-remove(rtt) */
@@ -64,14 +65,13 @@ export const StartRealTimeTextButton = (props: StartRealTimeTextButtonProps): JS
   const onRenderStartIcon = (): JSX.Element => {
     return <_HighContrastAwareIcon disabled={props.disabled} iconName="RealTimeTextIcon" />;
   };
-
   return (
     <ControlBarButton
       {...props}
       strings={strings}
       onClick={onStartRealTimeText}
       onRenderOffIcon={onRenderStartIcon}
-      disabled={isRealTimeTextOn}
+      disabled={props.disabled || isRealTimeTextOn}
     />
   );
 };

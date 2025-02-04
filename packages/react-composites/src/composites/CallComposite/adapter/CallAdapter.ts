@@ -3,6 +3,8 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
@@ -58,7 +60,8 @@ export type CallCompositePage =
   | 'removedFromCall'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
   | 'transferring'
-  | 'badRequest';
+  | 'badRequest'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'returningFromBreakoutRoom';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -392,6 +395,13 @@ export type IsCaptionLanguageChangedListener = (event: { activeCaptionLanguage: 
  * @public
  */
 export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * Callback for {@link CallAdapterSubscribers} 'realTimeTextReceived' event.
+ * @beta
+ */
+export type RealTimeTextReceivedListener = (event: { realTimeText: RealTimeTextInfo }) => void;
 
 /**
  * Callback for {@link CallAdapterSubscribers} 'transferRequested' event.
@@ -807,46 +817,45 @@ export interface CallAdapterCallOperations {
    * Return to origin call of breakout room
    */
   returnFromBreakoutRoom(): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Forbid Teams meeting attendees audio by their user ids.
    */
   forbidAudio(userIds: string[]): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Permit Teams meeting attendees audio by their user ids.
    */
   permitAudio(userIds: string[]): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Forbid Teams meeting audio.
    */
   forbidOthersAudio(): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Permit Teams meeting audio.
    */
   permitOthersAudio(): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Forbid Teams meeting attendees video by their user ids.
    */
   forbidVideo(userIds: string[]): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Permit Teams meeting attendees audio by their user ids.
    */
   permitVideo(userIds: string[]): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Forbid Teams meeting video.
    */
   forbidOthersVideo(): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Permit Teams meeting video.
    */
   permitOthersVideo(): Promise<void>;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Send real time text
+   * @param text - real time text content
+   * @param finalized - Boolean to indicate if the real time text is final
+   */
+  sendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
 }
 
 /**
@@ -998,6 +1007,7 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'captionsReceived' event.
    */
   on(event: 'captionsReceived', listener: CaptionsReceivedListener): void;
+
   /**
    * Subscribe function for 'isCaptionsActiveChanged' event.
    */
@@ -1012,6 +1022,12 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'isSpokenLanguageChanged' event.
    */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Subscribe function for 'realTimeTextReceived' event.
+   */
+  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
 
   /**
    * Subscribe function for 'transferRequested' event.
@@ -1103,6 +1119,11 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isSpokenLanguageChanged' event.
    */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Unsubscribe function for 'realTimeTextReceived' event.
+   */
+  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   /**
    * Unsubscribe function for 'transferRequested' event.
    */

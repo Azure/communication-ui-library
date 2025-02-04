@@ -255,9 +255,14 @@ export interface NotificationStackStrings {
   assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
-   * Message shown in notification when the user is assigned breakout room is changed
+   * Message shown in notification when the user's assigned breakout room is changed
    */
   assignedBreakoutRoomChanged?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when the user's assigned breakout room is closed
+   */
+  assignedBreakoutRoomClosed?: NotificationStrings;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Message shown in notification when breakout room is joined
@@ -268,26 +273,18 @@ export interface NotificationStackStrings {
    * Message shown in notification when breakout room is closing soon
    */
   breakoutRoomClosingSoon?: NotificationStrings;
-
-  /* @conditional-compile-remove(media-access) */
   /**
    * Message shown in notification when capability turnVideoOn is present
    */
   capabilityTurnVideoOnPresent?: NotificationStrings;
-
-  /* @conditional-compile-remove(media-access) */
   /**
    * Message shown in notification when capability turnVideoOn is absent
    */
   capabilityTurnVideoOnAbsent?: NotificationStrings;
-
-  /* @conditional-compile-remove(media-access) */
   /**
    * Message shown in notification when capability unMuteMic is present
    */
   capabilityUnmuteMicPresent?: NotificationStrings;
-
-  /* @conditional-compile-remove(media-access) */
   /**
    * Message shown in notification when capability unMuteMic is absent
    */
