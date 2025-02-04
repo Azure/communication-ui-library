@@ -14,11 +14,11 @@ Azure Communication Services UI Library is adding support for media access.
 This feature allows organizers, co-organizers, and presenters to control the ability of other attendees to send audio and video.
 Additionally, users can determine if their audio or video is enabled or disabled and check the media access status of other participants.
 This feature allows greater control over meeting environments, minimizing disruptions from unexpected background noise or a disruptive participant.
-Here are some example scenarios where hard mute and video mute are useful:
+Here are some example scenarios where Disable mic and Disable camera are useful:
 
-During a large virtual visit with multiple doctors, the host can use hard mute to ensure that only the speaker is heard, reducing interruptions.
+During a large virtual visit with multiple doctors, the host can use Disable mic to ensure that only the speaker is heard, reducing interruptions.
 
-In a virtual banking session, the host can video mute participants to maintain focus on the presentation, ensuring no distractions from video feeds.
+In a virtual banking session, the host can disable participants' cameras to maintain focus on the presentation, ensuring no distractions from video feeds.
 
 The supported scenarios for the media access feature are:
 
@@ -61,7 +61,7 @@ The concept of the media access feature is the same in Microsoft Teams which you
 more about here -
 [Manage attendee audio and video permissions in Microsoft Teams meetings](https://support.microsoft.com/en-us/office/manage-attendee-audio-and-video-permissions-in-microsoft-teams-meetings-f9db15e1-f46f-46da-95c6-34f9f39e671a).
 
-## Incorporating Hard Mute and Video Mute into your experience:
+## Incorporating Disable mic and Disable camera into your experience:
 
 The UI library includes the media access by default within the CallComposite and CallWithChat Composite experiences, so no additional work is required.
 
@@ -96,14 +96,14 @@ for remote participants from an added dropdown that is populated by remote parti
 
 ## FAQ:
 
-### When recording a call or meeting, will the hard Mute or video mute status be included in the recording?
+### When recording a call or meeting, will the Disable mic or Disable camera status be included in the recording?
 
 The recording bot subscribes to the overall audio and video streams, so the muted status will not impact the recording as it is based on the live state during the meeting.
 
-### What happens when a user is hard muted or video-muted?
+### What happens when a user's mic or video is disabled?
 
-When a user is hard muted, they receive a notification informing them of their muted status. Similarly, when a user is video muted, they receive a notification. Icons indicating the mute status appear next to their name in the participant list and video gallery tile.
+When a user's mic is disabled, they receive a notification informing them of their muted status. Similarly, when a user's camera is disabled, they receive a notification. Icons indicating the mute status appear next to their name in the participant list and video gallery tile.
 
 ### Can users see who has been muted?
 
-Yes, users can see muted icons next to the names of participants who have been hard muted, or video muted in the participant list and video gallery tile.
+Yes, users can see muted icons next to the names of participants whose mic or camera has been disabled in the participant list and video gallery tile.
