@@ -230,6 +230,9 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         horizontalAlign="end"
         className={mergeStyles(menuButtonContainerStyle, { color: theme.palette.neutralPrimary })}
         title={strings.menuTitle}
+        aria-haspopup={true}
+        aria-expanded={!menuHidden}
+        aria-controls={participantItemFlyoutId}
         data-ui-id={ids.participantItemMenuButton}
       >
         <Icon
@@ -238,7 +241,14 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         />
       </Stack>
     ),
-    [theme.palette.neutralPrimary, strings.menuTitle, ids.participantItemMenuButton, showMenuIcon]
+    [
+      theme.palette.neutralPrimary,
+      strings.menuTitle,
+      menuHidden,
+      participantItemFlyoutId,
+      ids.participantItemMenuButton,
+      showMenuIcon
+    ]
   );
 
   return (
