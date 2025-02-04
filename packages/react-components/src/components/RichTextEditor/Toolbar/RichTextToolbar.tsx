@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import React, { forwardRef, useCallback, useEffect, useImperativeHandle, useMemo, useRef } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { RichTextToolbarPlugin } from '../Plugins/RichTextToolbarPlugin';
 import { CommandBar, ContextualMenuItemType, Icon } from '@fluentui/react';
 import type { ICommandBarItemProps, ICommandBar, Theme } from '@fluentui/react';
@@ -27,13 +27,6 @@ import { richTextInsertTableCommandBarItem } from './Table/RichTextInsertTableCo
 const MaxRowsNumber = 5;
 const MaxColumnsNumber = 5;
 
-export interface IRichTextToolbar {
-  /**
-   * Sets focus to the command bar.
-   */
-  focusCommandBar(): void;
-}
-
 /**
  * Props for {@link RichTextToolbar}.
  *
@@ -51,19 +44,13 @@ export interface RichTextToolbarProps {
  *
  * @beta
  */
-export const RichTextToolbar = forwardRef<IRichTextToolbar, RichTextToolbarProps>((props, ref) => {
+export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
   const { plugin, strings } = props;
   const theme = useTheme();
   // need to re-render the buttons when format state changes
   const [formatState, setFormatState] = React.useState<ContentModelFormatState | undefined>(undefined);
 
   const commandBarRef = useRef<ICommandBar>(null);
-
-  useImperativeHandle(ref, () => ({
-    focusCommandBar: () => {
-      commandBarRef.current?.focus();
-    }
-  }));
 
   useEffect(() => {
     // update the format state on editor events
@@ -72,6 +59,16 @@ export const RichTextToolbar = forwardRef<IRichTextToolbar, RichTextToolbarProps
     // call update format function to ensure the format state is set
     plugin.updateFormat();
   }, [plugin]);
+
+  // useLayoutEffect(() => {
+  //   if (editor.current) {
+  //     if (showRichTextEditorFormatting) {
+  //         toolbarRef.current?.focusCommandBar();
+  //     } else {
+  //       editor.current?.focus();
+  //     }
+  //   }
+  // }, [showRichTextEditorFormatting]);
 
   const boldButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
@@ -267,6 +264,13 @@ export const RichTextToolbar = forwardRef<IRichTextToolbar, RichTextToolbarProps
     };
   }, [strings.richTextToolbarMoreButtonAriaLabel, theme]);
 
+  useEffect(() => {
+    // delay focus to ensure the command bar is rendered
+    setTimeout(() => {
+      commandBarRef.current?.focus();
+    }, 50);
+  });
+
   return (
     <CommandBar
       items={buttons}
@@ -277,7 +281,7 @@ export const RichTextToolbar = forwardRef<IRichTextToolbar, RichTextToolbarProps
       aria-label={strings.richTextToolbarAriaLabel}
     />
   );
-});
+};
 
 const getCommandBarItem = ({
   key,

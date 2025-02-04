@@ -32,7 +32,7 @@ import {
   DefaultSanitizers
 } from 'roosterjs-content-model-plugins';
 import { UpdateContentPlugin, UpdateEvent } from './Plugins/UpdateContentPlugin';
-import { IRichTextToolbar, RichTextToolbar } from './Toolbar/RichTextToolbar';
+import { RichTextToolbar } from './Toolbar/RichTextToolbar';
 import { RichTextToolbarPlugin } from './Plugins/RichTextToolbarPlugin';
 import { ContextMenuPlugin } from './Plugins/ContextMenuPlugin';
 import { TableEditContextMenuProvider } from './Plugins/TableEditContextMenuProvider';
@@ -133,7 +133,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
-  const toolbarRef = useRef<IRichTextToolbar>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
   const previousThemeDirection = useRef(themeDirection(theme));
@@ -155,12 +154,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   useEffect(() => {
     if (editor.current) {
-      if (showRichTextEditorFormatting) {
-        setTimeout(() => {
-          // Delay focus to ensure the toolbar is rendered
-          toolbarRef.current?.focusCommandBar();
-        }, 25);
-      } else {
+      if (!showRichTextEditorFormatting) {
         editor.current?.focus();
       }
     }
@@ -226,7 +220,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   }, [placeholderPlugin, placeholderText]);
 
   const toolbar = useMemo(() => {
-    return <RichTextToolbar ref={toolbarRef} plugin={toolbarPlugin} strings={strings} />;
+    return <RichTextToolbar plugin={toolbarPlugin} strings={strings} />;
   }, [strings, toolbarPlugin]);
 
   const updatePlugin = useMemo(() => {
