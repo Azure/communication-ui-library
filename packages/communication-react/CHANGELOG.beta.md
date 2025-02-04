@@ -7,65 +7,41 @@
 ## [1.24.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.24.0-beta.1)
 
 Mon, 03 Feb 2025 22:02:22 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.23.0...1.24.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.22.0-beta.1...1.24.0-beta.1)
 
 ### Features
-- Merge branch 'main' into fuyan/hard_mute_part3_integrate_web_sdk ([PR #5437](https://github.com/azure/communication-ui-library/pull/5437) by fuyan@microsoft.com)
-- Change id to sequenceId for RTT feature state ([PR #5592](https://github.com/azure/communication-ui-library/pull/5592) by 96077406+carocao-msft@users.noreply.github.com)
-- Components for real time text ([PR #5525](https://github.com/azure/communication-ui-library/pull/5525) by 96077406+carocao-msft@users.noreply.github.com)
-- Caption Banner API update, and update the merged caption list to only store 50 entries. Also added tests for the sorting logic ([PR #5580](https://github.com/azure/communication-ui-library/pull/5580) by 96077406+carocao-msft@users.noreply.github.com)
-- together mode component ([PR #5517](https://github.com/azure/communication-ui-library/pull/5517) by undefined)
-- Included together mode icon ([PR #5513](https://github.com/azure/communication-ui-library/pull/5513) by undefined)
-- Update Calling SDK's ([PR #5475](https://github.com/azure/communication-ui-library/pull/5475) by dmceachern@microsoft.com)
-- RTT disclosure banner should be a private component ([PR #5527](https://github.com/azure/communication-ui-library/pull/5527) by 96077406+carocao-msft@users.noreply.github.com)
-- RTT API changes ([PR #5590](https://github.com/azure/communication-ui-library/pull/5590) by 96077406+carocao-msft@users.noreply.github.com)
-- Cleanup code logic ([PR #5568](https://github.com/azure/communication-ui-library/pull/5568) by undefined)
-- Included code snippets about signaling events ([PR #5466](https://github.com/azure/communication-ui-library/pull/5466) by undefined)
-- Real Time Text component changes and strings ([PR #5555](https://github.com/azure/communication-ui-library/pull/5555) by 96077406+carocao-msft@users.noreply.github.com)
-- Fixed some component bugs and completed RTT storybook ([PR #5593](https://github.com/azure/communication-ui-library/pull/5593) by 96077406+carocao-msft@users.noreply.github.com)
-- updated together mode subscriber and included notification when together mode starts or stops ([PR #5489](https://github.com/azure/communication-ui-library/pull/5489) by nwankwojustin93@gmail.com)
-- Add expand button for mobile  ([PR #5586](https://github.com/azure/communication-ui-library/pull/5586) by 96077406+carocao-msft@users.noreply.github.com)
-- Add RTT to composite experience ([PR #5522](https://github.com/azure/communication-ui-library/pull/5522) by 96077406+carocao-msft@users.noreply.github.com)
-- Updated together mode types ([PR #5483](https://github.com/azure/communication-ui-library/pull/5483) by undefined)
-- Add RTT to calling stateful sample. Fix bug in start RTT button ([PR #5596](https://github.com/azure/communication-ui-library/pull/5596) by carolinecao@microsoft.com)
-- Updated apis naming ([PR #5482](https://github.com/azure/communication-ui-library/pull/5482) by undefined)
-- Rename rtt to real time text ([PR #5528](https://github.com/azure/communication-ui-library/pull/5528) by 96077406+carocao-msft@users.noreply.github.com)
-- Display warning message when RTT length exceed 2000 ([PR #5578](https://github.com/azure/communication-ui-library/pull/5578) by 96077406+carocao-msft@users.noreply.github.com)
-- Promote togethermode to beta ([PR #5608](https://github.com/azure/communication-ui-library/pull/5608) by undefined)
-- Hard mute feature UI changes ([PR #5452](https://github.com/azure/communication-ui-library/pull/5452) by fuyan@microsoft.com)
+
+#### Real Time Text
+We are excited to announce that the Azure Communication Services Web UI Library now supports RTT (Real Time Text). In an RTT enabled audio or video call, end-users augment the call with text. RTT text communications are transmitted immediately as they are typed, character-by-character, without the user hitting “send.” Users can enable RTT in a call, type to send real time text, or receive real time text from other users. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). This feature is a required by the EU as a core accessibility feature, with implementation needed by June 2025.
+
+* Receive and send Real Time Text messages
+* Seamless integration of real-time text with captions, allowing you to view both simultaneously
+* In our composites, Real Time Text turns on automatically for everyone when a message is first received/sent
+
+#### TogetherMode
+We are excited to announce that the Azure Communication Services Web UI Library now supports Together Mode in Teams interop scenarios. Together Mode is a feature that creates a virtual shared space for meeting participants. By using AI segmentation technology, it places participants in a common background, such as a conference room or auditorium, making it look like everyone is sitting together. This mode is designed to make meetings feel more engaging and reduce virtual meeting fatigue. It can help improve participants' sense of connection and collaboration by mimicking the experience of being in the same physical location. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). 
+
+* Receive together Mode in Teams Interop Meetings 
+* Change views to and from Together mode 
+* View reactions and raised hands in the Together mode view 
+
 ### Improvements
-- Remove conditional compile for media access - Part 4 ([PR #5603](https://github.com/azure/communication-ui-library/pull/5603) by fuyan@microsoft.com)
-- Add hermetic test for hard mute ([PR #5531](https://github.com/azure/communication-ui-library/pull/5531) by fuyan@microsoft.com)
-- Remove hard mute conditional compile part 2 ([PR #5591](https://github.com/azure/communication-ui-library/pull/5591) by fuyan@microsoft.com)
-- Automate dominant speaker, pinning, and spotlight tests ([PR #5173](https://github.com/azure/communication-ui-library/pull/5173) by miguelgamis@microsoft.com)
-- Add story book for Media access (hard mute) feature ([PR #5456](https://github.com/azure/communication-ui-library/pull/5456) by fuyan@microsoft.com)
-- Remove hard mute conditional compile - part 3 ([PR #5594](https://github.com/azure/communication-ui-library/pull/5594) by fuyan@microsoft.com)
-- UI components changes ([PR #5452](https://github.com/azure/communication-ui-library/pull/5452) by fuyan@microsoft.com)
-- Add sdk references to story book ([PR #5544](https://github.com/azure/communication-ui-library/pull/5544) by fuyan@microsoft.com)
-- Remove conditional compile media access part 1 ([PR #5587](https://github.com/azure/communication-ui-library/pull/5587) by fuyan@microsoft.com)
-- Add hard mute localization ([PR #5485](https://github.com/azure/communication-ui-library/pull/5485) by fuyan@microsoft.com)
-- Update to 1.33.1-beta.1 communication calling version ([PR #5588](https://github.com/azure/communication-ui-library/pull/5588) by edwardlee@microsoft.com)
-- updating stable/beta dependencies for calling sdk ([PR #5508](https://github.com/azure/communication-ui-library/pull/5508) by 79329532+alkwa-msft@users.noreply.github.com)
-- updating express to 4.21.2 so we can fix a dependnecy issue with path-to-regexp ([PR #5577](https://github.com/azure/communication-ui-library/pull/5577) by 79329532+alkwa-msft@users.noreply.github.com)
-- temporary change to get bundle size updates to work again ([PR #5547](https://github.com/azure/communication-ui-library/pull/5547) by 79329532+alkwa-msft@users.noreply.github.com)
 - Build captions inside caling stateful sample ([PR #5502](https://github.com/azure/communication-ui-library/pull/5502) by 96077406+carocao-msft@users.noreply.github.com)
+- Update to 1.33.1-beta.1 communication calling version ([PR #5588](https://github.com/azure/communication-ui-library/pull/5588) by edwardlee@microsoft.com)
+- Update stable/beta dependencies for communication-calling ([PR #5508](https://github.com/azure/communication-ui-library/pull/5508) by 79329532+alkwa-msft@users.noreply.github.com)
+
 ### Bug Fixes
-- Hard mute accessibility ([PR #5539](https://github.com/azure/communication-ui-library/pull/5539) by fuyan@microsoft.com)
-- Fix acs room audio video enabled notifications. when acs user just joined room, should not show the audio video enabled notifications ([PR #5563](https://github.com/azure/communication-ui-library/pull/5563) by fuyan@microsoft.com)
-- fix media access hermetic test ([PR #5574](https://github.com/azure/communication-ui-library/pull/5574) by fuyan@microsoft.com)
-- Revert changes to add undefined type so we are not introducing a breaking change to the beta release ([PR #5461](https://github.com/azure/communication-ui-library/pull/5461) by 96077406+carocao-msft@users.noreply.github.com)
-- update text container width to cap text for longer locale strings ([PR #5579](https://github.com/azure/communication-ui-library/pull/5579) by 94866715+dmceachernmsft@users.noreply.github.com)
-- Hide read by in chat action flyout when participants is 20 or more, as read count is not supported. ([PR #5585](https://github.com/azure/communication-ui-library/pull/5585) by palatter@microsoft.com)
+- Update text container width to cap text for longer locale strings ([PR #5579](https://github.com/azure/communication-ui-library/pull/5579) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Hide read by in chat action flyout when participants is 20 or more, as read count is not supported ([PR #5585](https://github.com/azure/communication-ui-library/pull/5585) by palatter@microsoft.com)
 - Live announcement update when a message is received/edited from/by other users ([PR #5540](https://github.com/azure/communication-ui-library/pull/5540) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Check capability to determine if set caption language should be shown for teams meeting ([PR #5600](https://github.com/azure/communication-ui-library/pull/5600) by 96077406+carocao-msft@users.noreply.github.com)
 - Fix keyboard navigation for message menu button ([PR #5576](https://github.com/azure/communication-ui-library/pull/5576) by 98852890+vhuseinova-msft@users.noreply.github.com)
-- Fix condition compile for hard mute. ([PR #5543](https://github.com/azure/communication-ui-library/pull/5543) by fuyan@microsoft.com)
 
 
 ## [1.22.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.22.0-beta.1)
 
 Mon, 02 Dec 2024 20:48:59 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0...1.22.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0-beta.1...1.22.0-beta.1)
 
 ### Improvements
 - Add AAD sign out capability for sample app ([PR #5310](https://github.com/azure/communication-ui-library/pull/5310) by 77021369+jimchou-dev@users.noreply.github.com)
