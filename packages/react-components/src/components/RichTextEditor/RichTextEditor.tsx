@@ -159,7 +159,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
         setTimeout(() => {
           // Delay focus to ensure the toolbar is rendered
           toolbarRef.current?.focusCommandBar();
-        });
+        }, 25);
       } else {
         editor.current?.focus();
       }
