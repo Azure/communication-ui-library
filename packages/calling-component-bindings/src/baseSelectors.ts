@@ -51,6 +51,12 @@ export const getRole = (state: CallClientState, props: CallingBaseSelectorProps)
 /**
  * @private
  */
+export const getCallId = (state: CallClientState, props: CallingBaseSelectorProps): string | undefined =>
+  state.calls[props.callId]?.id;
+
+/**
+ * @private
+ */
 export const isHideAttendeeNamesEnabled = (state: CallClientState, props: CallingBaseSelectorProps): boolean => {
   return state.calls[props.callId]?.hideAttendeeNames ?? false;
 };

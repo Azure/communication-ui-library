@@ -7,6 +7,7 @@ import * as reselect from 'reselect';
 import {
   CallingBaseSelectorProps,
   getCallExists,
+  getCallId,
   getDeviceManager,
   getIsMuted,
   getIsScreenSharingOn,
@@ -41,13 +42,19 @@ export type MicrophoneButtonSelector = (
  * @public
  */
 export const microphoneButtonSelector: MicrophoneButtonSelector = reselect.createSelector(
-  [getCallExists, getIsMuted, getDeviceManager, getCapabilities, getRole, getCallState],
-  (callExists, isMuted, deviceManager, capabilities, role, callState) => {
+  [getCallExists, getIsMuted, getDeviceManager, getCapabilities, getRole, getCallState, getCallId],
+  (callExists, isMuted, deviceManager, capabilities, role, callState, callId) => {
     const permission = deviceManager.deviceAccess ? deviceManager.deviceAccess.audio : true;
-
+    console.log('------------------- selector -------------------');
+    console.log('permission', permission);
     const incapable =
       (capabilities?.unmuteMic.isPresent === false && capabilities?.unmuteMic.reason !== 'NotInitialized') ||
       role === 'Consumer';
+    console.log('incapable', incapable);
+    console.log('callState', callState);
+    console.log('callExists', callExists);
+    console.log('disabled', !callExists || !permission || incapable || callState === 'LocalHold');
+    console.log('CallId', callId);
     return {
       disabled: !callExists || !permission || incapable || callState === 'LocalHold',
       checked: callExists ? !isMuted : false,
