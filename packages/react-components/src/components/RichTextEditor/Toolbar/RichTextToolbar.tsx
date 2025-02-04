@@ -268,8 +268,8 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
     // delay focus to ensure the command bar is rendered
     setTimeout(() => {
       commandBarRef.current?.focus();
-    }, 50);
-  });
+    }, 25);
+  }, []);
 
   return (
     <CommandBar
