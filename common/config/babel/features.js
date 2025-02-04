@@ -67,8 +67,6 @@ module.exports = {
     "teams-identity-support-beta",
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
-    // feature for breakout rooms
-    "breakout-rooms",
     // Feature for RTT
     "rtt",
     // Feature for together mode
@@ -77,6 +75,8 @@ module.exports = {
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
-    "stabilizedDemo"
+    "stabilizedDemo",
+    // Feature for breakout rooms
+    "breakout-rooms"
   ]
 }
