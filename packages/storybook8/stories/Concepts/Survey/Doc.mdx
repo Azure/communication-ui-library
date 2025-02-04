@@ -19,6 +19,28 @@ Participants will be able to submit feedback based on four categories:
 
 They can rate their call experience on a star based numerical survey and provide additional detail as to the specifics of each category if they wish. The feedback feature will enable developers to collect subjective customer feedback on call quality and reliability and enable the creation of more definite metrics.
 
+With the ACS UI Library adding UI support for end of call survey, developers will be able to use a prebuilt UI to create a survey at the end of their calls to receive feedback and improve their audio and video quality.
+
+## Use Cases
+
+Here are some example scenarios where the end of call survey is useful:
+
+Feedback on Technical Issues: Customers can share when they have issues such as poor audio or video quality, dropped calls, or lag. An end of call survey can provide customers with a way to report any technical issues they experienced during the call. This feedback can help companies identify and address technical issues that may be impacting the quality of their video calls.
+
+Overall feedback: a 5-star ranking system is useful in an end of call survey for video calls because it provides a simple and easy-to-use scale for customers to rate their experience. It allows for more nuanced feedback than a simple yes or no question and can be used to track customer satisfaction over time. It also allows for more feedback points that would be lost with only a longer survey.
+
+## Incorporating End of Call Survey into your experience:
+
+The UI Library enables users to enhance their video conferencing experiences by providing the end of Call Survey by default within the CallComposite and CallWithChatComposite experiences.
+
+The end of call survey is enabled by default in the composite, but developers can disable/enable the feature if they wish.
+
+## Disabling End of Call Survey
+
+The UI Library enables users to display surveys at end of call by providing the option to use end of call survey within the CallComposite and CallWithChatComposite experience. End of Call Survey are enabled by default both in Mobile Web sessions and in Desktop Web sessions. If you wish to disable the end of call survey, you have the option to remove this feature from the composites.
+
+<Source code={exampleDisableSurvey} />
+
 ## Handling Survey Results
 
 Survey feedback is automatically sent to Azure Monitor. To send survey results to your own service, you can also gain access to the survey results by passing in a custom function utilizing the `onSurveySubmitted` prop inside `surveyOptions`.
@@ -29,12 +51,6 @@ With `onSurveySubmitted` populated, a free form text survey is available to the 
 
 <Source code={exampleOnSurveySubmitted} />
 
-## Disabling End of Call Survey
-
-The UI Library enables users to display surveys at end of call by providing the option to use end of call survey within the CallComposite and CallWithChatComposite experience. End of Call Survey are enabled by default both in Mobile Web sessions and in Desktop Web sessions. If you wish to disable the end of call survey, you have the option to remove this feature from the composites.
-
-<Source code={exampleDisableSurvey} />
-
 ## Redirect to your own experience after end of call survey
 
 The UI Library enables users to redirect to their own experience when end of call survey is skipped, submitted, or has an issue sending. This is done by passing in a custom function utilizing the `onSurveyClosed` prop inside `surveyOptions`.
@@ -42,3 +58,9 @@ The UI Library enables users to redirect to their own experience when end of cal
 - Note that by writing to this function, the default screens shown after survey is closed are overwritten. Users can choose to redirect to a specific screen after survey is closed, or redirect to different screens based on surveyState
 
 <Source code={exampleOnSurveyClosed} />
+
+## Best Practices:
+
+- To best utilize the survey, we recommend only surveying a subset of Users.
+- When free form text survey is enabled, the free form text data collected is not sent to Azure monitoring. We suggest setting up your own service for handling free form text data.
+- To track your survey results in Azure monitoring, please follow this guidance [End of Call Survey Logs](https://learn.microsoft.com/en-us/azure/communication-services/concepts/analytics/logs/end-of-call-survey-logs).

@@ -10,6 +10,12 @@ Azure Communication Services (ACS) integrate PowerPoint Live into Teams meetings
 
 ## Overview
 
+Azure Communication Services UI Library is adding support for receiving PowerPoint Live video stream.
+
+PowerPoint Live in Teams gives both the presenter and audience an inclusive and engaging experience, combining the best parts of presenting in PowerPoint with the connection and collaboration of a Microsoft Teams meeting.
+ACS UI Library is now able to receive such streams, allowing for better Spresentations and more personalized experiences.
+Enabling this feature will enable greater productivity and allow for a better experience for ACS based participants in interop calls.
+
 In the ACS UI library, users participate as attendees to view PowerPoint Live sessions. The interaction capabilities for attendees are set and controlled by the lead presenter of the session.
 
 For a detailed breakdown of the capabilities available to each role during a PowerPoint Live session, please refer to the [PowerPoint Live documentation](https://support.microsoft.com/en-us/office/present-from-powerpoint-live-in-microsoft-teams-28b20e74-7165-499c-9bd4-0ad975d448ad). For more technical details on how to implement these features using the web calling SDK, consult the [Calling SDK documentation](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/calling-sdk-features).
@@ -26,6 +32,16 @@ Some of the best use cases for PowerPoint Live are:
 <sub>
   <sup>Figure: PowerPoint Live interface comparison. Left: Teams app. Right: ACS UI library.</sup>
 </sub>
+
+## Incorporating PowerPoint Live into your experience:
+
+The UI Library enables users to enhance their video conferencing experiences by providing the receive PowerPoint live video stream by default within the CallComposite and CallWithChat experiences.
+
+Important notes:
+
+Currently, this feature is only supports receiving a non interactive PowerPoint Live feed. ACS users will not be able to interact with the video stream in the same manner a user on the Teams client will able to, nor will ACS users be able to send a PowerPoint Live feed.
+
+This feature is only available for ACS/Teams Interop calls
 
 ## Implementing with the VideoGallery
 
@@ -50,3 +66,15 @@ No, our support is limited to Teams meetings where the presenter can share the P
 ### If I have found any issues or anything missing with the PowerPoint live in the CallComposite where can I go?
 
 Please log a [Github issue](https://github.com/Azure/communication-ui-library/issues), and someone from our team can work with you.
+
+## Tips to Investigate cases:
+
+- For pptlive initialization: Web Calling SDK has telemetry with initialize, success, failure.
+
+- ACS takes this first responsibility when the issue is raised.
+
+- Use callId to Locate the Call: Begin the debugging process by identifying the call with issues, using the callId. This ID is your entry point for tracing the problem.
+
+- Examine contentId for Specific Content Issues: Once the call is located, look for the contentId. The contentId is a unique identifier for a sharing session within that call, pinpointing the content that is causing problems.
+
+- Check featureDetails_step for Detailed Insights: Investigate the featureDetails_step to uncover detailed information about the steps taken during the PPTLive session. This can include both the operational steps Contoso performed and any error steps that occurred.

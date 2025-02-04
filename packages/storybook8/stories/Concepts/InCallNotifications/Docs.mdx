@@ -1,0 +1,26 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Concepts/In Call Notifications" />
+
+# In Call Notifications
+
+Azure Communication Services UI Library is adding support for improved notifications
+
+In call notifications are essential for providing users with timely and relevant information about their calling experience.
+Whether it is an error message, a mute status, or a network quality indicator, notifications can help users troubleshoot issues and improve their communication.
+The new feature of ACS UI Library simplifies the display and management of multiple notifications in a consistent and user-friendly way.
+The in-call notification feature introduces a streamlined UI experience for displaying errors and notifications in the calling environment.
+
+## Incorporating In Call Notifications into your Experience
+
+The UI Library enables users to enhance their video conferencing experiences by providing improved notifications by default within the CallComposite and CallWithChat experiences.
+
+There are also two Components that have been exposed for this feature:
+
+[Notification](./?path=/docs/components-notification--doc)
+
+Notification is a container that shows a notification in a bar format with an icon, title, message, and button. The icon and title are necessary while a message and button are optional. See the example below:
+
+[NotificationStack](./?path=/docs/components-notificationstack--doc)
+
+NotificationStack is a wrapper on the Notification component with additional features for surfacing Azure Communication Services notifications on the UI consistently.
