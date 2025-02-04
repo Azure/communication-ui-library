@@ -404,8 +404,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private emitter: EventEmitter = new EventEmitter();
   private callingSoundSubscriber: CallingSoundSubscriber | undefined;
   private onClientStateChange: (clientState: CallClientState) => void;
-  /* @conditional-compile-remove(breakout-rooms) */
-  private originCall: CallCommon | undefined;
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   private onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
 
@@ -735,8 +733,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           : {};
       const call = this._joinCall(audioOptions, videoOptions);
 
-      /* @conditional-compile-remove(breakout-rooms) */
-      this.originCall = call;
       this.processNewCall(call);
       return call;
     });
@@ -1235,7 +1231,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.context.setIsReturningFromBreakoutRoom(true);
 
     const mainMeeting = await assignedBreakoutRoom.returnToMainMeeting();
-    this.originCall = mainMeeting;
     this.processNewCall(mainMeeting);
   }
 
@@ -1506,7 +1501,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (!this.call?.id) {
       return;
     }
-    if (this.originCall?.id !== this.call?.id && (!breakoutRoom || breakoutRoom.state === 'closed')) {
+    if (!breakoutRoom || breakoutRoom.state === 'closed') {
       this.returnFromBreakoutRoom();
     }
   }
