@@ -133,7 +133,6 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
   } = props;
   const editor = useRef<IEditor | null>(null);
   const editorDiv = useRef<HTMLDivElement>(null);
-  const toolbarRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
   const previousThemeDirection = useRef(themeDirection(theme));
@@ -155,9 +154,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   useEffect(() => {
     if (editor.current) {
-      if (showRichTextEditorFormatting) {
-        toolbarRef.current?.focus();
-      } else {
+      if (!showRichTextEditorFormatting) {
         editor.current?.focus();
       }
     }
@@ -479,7 +476,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
 
   return (
     <div data-testid={'rich-text-editor-wrapper'}>
-      <div ref={toolbarRef}>{showRichTextEditorFormatting && toolbar}</div>
+      {showRichTextEditorFormatting && toolbar}
       <div className={richTextEditorWrapperStyle(theme)}>
         {/* div that is used by Rooster JS as a parent of the editor */}
         <div
