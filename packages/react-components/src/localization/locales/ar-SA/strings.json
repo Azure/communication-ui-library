@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "مشارك غير مسمى",
     "participantStateRinging": "يتم الآن الاتصال...",
     "participantStateHold": "قيد الانتظار",
-    "participantItemAriaLabel": "{displayName}، {handRaisedState}، {mutedState}، {sharingState}، {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}، {handRaisedState}، {mutedState}، {sharingState}، {connectionState}، المزيد من الخيارات",
-    "attendeeRole": "الحضور"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}، {handRaisedState}، {mutedState}، {micDisabledState}، {cameraDisabledState}، {sharingState}، {connectionState}، خيارات إضافية",
+    "attendeeRole": "الحضور",
+    "micDisabledIconLabel": "تم تعطيل الميكروفون",
+    "cameraDisabledIconLabel": "تم تعطيل الكاميرا"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} من الأشخاص الإضافيين"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "تم تطبيق قائمة نقطية",
     "richTextNumberedListAppliedAnnouncement": "تطبيق قائمة ذات تعداد رقمي"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "تشغيل مربع حوار عرض الكتابة في الوقت الحقيقي المشروط",
-    "rttModalTitle": "هل تريد تشغيل عرض الكتابة في الوقت الحقيقي؟",
-    "rttModalText": "سيتم تشغيل النص في الوقت الحقيقي (RTT) لكل شخص في الاجتماع.",
-    "rttConfirmButtonLabel": "تشغيل",
-    "rttCancelButtonLabel": "إلغاء الأمر",
-    "rttCloseModalButtonAriaLabel": "إغلاق مربع حوار عرض الكتابة في الوقت الحقيقي المشروط"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "تشغيل مربع حوار عرض الكتابة في الوقت الحقيقي (RTT) المشروط",
+    "realTimeTextModalTitle": "هل تريد تشغيل عرض الكتابة في الوقت الحقيقي؟",
+    "realTimeTextModalText": "سيتم تشغيل النص في الوقت الحقيقي (RTT) لكل شخص في الاجتماع.",
+    "realTimeTextConfirmButtonLabel": "تشغيل",
+    "realTimeTextCancelButtonLabel": "إلغاء الأمر",
+    "realTimeTextCloseModalButtonAriaLabel": "إغلاق مربع حوار عرض الكتابة في الوقت الحقيقي (RTT) المشروط"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "يتم الآن بدء التسميات التوضيحية..."
+    "captionsBannerSpinnerText": "يتم الآن بدء التسميات التوضيحية...",
+    "realTimeTextInputBoxDefaultText": "اكتب رسالة في الوقت الحقيقي",
+    "realTimeTextInputErrorMessage": "لا يمكن أن تتجاوز الرسالة 2000 حرف",
+    "realTimeTextBannerTitle": "عرض الكتابة في الوقت الحقيقي (RTT)",
+    "realTimeTextBannerContent": "تم تمكين RTT (نص الوقت الحقيقي) لجميع المشاركين طوال مدة الاجتماع.",
+    "realTimeTextBannerLinkLabel": "تعرّف على المزيد",
+    "captionsOnlyContainerTitle": "نص الكلام",
+    "realTimeTextOnlyContainerTitle": "نص حقيقي",
+    "captionsAndRealTimeTextContainerTitle": "التسميات التوضيحية والنص في الوقت الحقيقي",
+    "expandButtonAriaLabel": "توسيع",
+    "minimizeButtonAriaLabel": "طي"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "تنزيل",
     "dismissButtonAriaLabel": "إغلاق",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "تراكب تفاصيل الصور"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "تم إرسال الرسالة",
@@ -195,8 +207,8 @@
     "applauseReactionTooltipContent": "تصفيق",
     "surprisedReactionTooltipContent": "مندهش"
   },
-  "rtt": {
-    "isTypingText": "يكتب في عرض الكتابة في الوقت الحقيقي"
+  "realTimeText": {
+    "isTypingText": "عرض الكتابة في الوقت الحقيقي (RTT) قيد الكتابة"
   },
   "captionsSettingsModal": {
     "captionsSettingsModalTitle": "إعدادات التسميات التوضيحية",
@@ -292,6 +304,10 @@
     "tooltipOnContent": "تعطيل نص الكلام",
     "tooltipOffContent": "تمكين نص الكلام"
   },
+  "startRealTimeTextButton": {
+    "label": "تشغيل RTT لهذه المكالمة",
+    "tooltipOffContent": "تشغيل RTT لهذه المكالمة"
+  },
   "messageThread": {
     "yesterday": "أمس",
     "sunday": "الأحد",
@@ -308,7 +324,9 @@
     "resendMessage": "محاولة الإرسال مرة أخرى",
     "failToSendTag": "فشل الإرسال",
     "editedTag": "تم التحرير",
-    "liveAuthorIntro": "قال {author}",
+    "liveAuthorIntro": "رسالة من {author}",
+    "editedMessageLiveAuthorIntro": "تم تحرير الرسالة من {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "رسالة محررة",
     "messageContentAriaText": "{status} {author} قال {message}",
     "messageContentMineAriaText": "{status} أنت قولت {message}",
     "editBoxTextLimit": "تجاوزت رسالتك الحد الأقصى لعدد الأحرف {limitNumber}",
@@ -616,6 +634,14 @@
       "title": "تم تعطيل الميكروفون",
       "message": "لم يعد بإمكانك إلغاء كتم الصوت.",
       "dismissButtonAriaLabel": "إغلاق"
+    },
+    "togetherModeStarted": {
+      "title": "تم بدء وضع التجميع",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "togetherModeEnded": {
+      "title": "تم إنهاء وضع التجميع",
+      "dismissButtonAriaLabel": "إغلاق"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "يتم الآن الاتصال...",
     "participantReconnecting": "يتم الآن إعادة الاتصال...",
     "participantStateHold": "قيد الانتظار",
-    "moreOptionsButtonAriaLabel": "خيارات إضافية {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "خيارات إضافية {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "مكتوم الصوت",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "غير مكتوم الصوت",
     "moreOptionsParticipantHandRaisedAriaLabel": "يد مرفوعة",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "يتحدث"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "يتحدث",
+    "moreOptionsParticipantMicDisabledAriaLabel": "تم تعطيل الميكروفون",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "تم تعطيل الكاميرا"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "السماح {appName} باستخدام الكاميرا والميكروفون لديك",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "رفض",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "قبول مع الفيديو",
     "incomingCallNotificationDismissButtonAriaLabel": "تجاهل"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "عرض الكتابة في الوقت الحقيقي (RTT)",
-    "bannerContent": "تم تمكين RTT (نص الوقت الحقيقي) لجميع المشاركين طوال مدة الاجتماع.",
-    "bannerLinkLabel": "تعرّف على المزيد"
   }
 }

@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "未命名的參與者",
     "participantStateRinging": "撥號中...",
     "participantStateHold": "電話保留",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, 更多選項",
-    "attendeeRole": "出席者"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{micDisabledState}、{cameraDisabledState}、{sharingState}、{connectionState}、其他選項",
+    "attendeeRole": "出席者",
+    "micDisabledIconLabel": "已停用麥克風",
+    "cameraDisabledIconLabel": "已停用相機"
   },
   "ParticipantList": {
     "overflowParticipantCount": "多出 {overflowCount} 個"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "已套用項目符號清單",
     "richTextNumberedListAppliedAnnouncement": "已套用編號清單"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "開啟 RTT 強制回應",
-    "rttModalTitle": "開啟 RTT?",
-    "rttModalText": "將為會議中的每個人開啟即時文字 (RTT)。",
-    "rttConfirmButtonLabel": "開啟",
-    "rttCancelButtonLabel": "取消",
-    "rttCloseModalButtonAriaLabel": "關閉 RTT 強制回應"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "開啟 RTT 強制回應",
+    "realTimeTextModalTitle": "開啟 RTT?",
+    "realTimeTextModalText": "將為會議中的每個人開啟即時文字 (RTT)。",
+    "realTimeTextConfirmButtonLabel": "開啟",
+    "realTimeTextCancelButtonLabel": "取消",
+    "realTimeTextCloseModalButtonAriaLabel": "關閉 RTT 強制回應"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "正在啟動輔助字幕..."
+    "captionsBannerSpinnerText": "正在啟動輔助字幕...",
+    "realTimeTextInputBoxDefaultText": "即時輸入訊息",
+    "realTimeTextInputErrorMessage": "訊息不得超過 2000 個字元",
+    "realTimeTextBannerTitle": "即時輸入",
+    "realTimeTextBannerContent": "已為整個會議期間的所有參與者啟用 RTT (即時文字)。",
+    "realTimeTextBannerLinkLabel": "深入了解",
+    "captionsOnlyContainerTitle": "輔助字幕",
+    "realTimeTextOnlyContainerTitle": "即時文字",
+    "captionsAndRealTimeTextContainerTitle": "輔助字幕與即時文字",
+    "expandButtonAriaLabel": "展開",
+    "minimizeButtonAriaLabel": "摺疊"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "建議"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "下載",
     "dismissButtonAriaLabel": "關閉",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "影像詳細資料覆疊"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "訊息已傳送",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "鼓掌",
     "surprisedReactionTooltipContent": "驚訝"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "RTT 輸入"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "關閉字幕",
     "tooltipOffContent": "開啟字幕"
   },
+  "startRealTimeTextButton": {
+    "label": "開啟此通話的即時輸入",
+    "tooltipOffContent": "開啟此通話的即時輸入"
+  },
   "messageThread": {
     "yesterday": "昨天",
     "sunday": "星期日",
@@ -308,7 +324,9 @@
     "resendMessage": "請嘗試再次傳送",
     "failToSendTag": "無法傳送",
     "editedTag": "已編輯",
-    "liveAuthorIntro": "{author} 說",
+    "liveAuthorIntro": "來自 {author} 的訊息",
+    "editedMessageLiveAuthorIntro": "已編輯來自 {author} 的訊息",
+    "editedMessageLocalUserLiveAuthorIntro": "已編輯訊息",
     "messageContentAriaText": "{status} {author} 說 {message}",
     "messageContentMineAriaText": "{status} 您說 {message}",
     "editBoxTextLimit": "您的訊息超過 {limitNumber} 個字元的限制",
@@ -616,6 +634,14 @@
       "title": "您的麥克風已停用",
       "message": "您無法再取消靜音。",
       "dismissButtonAriaLabel": "關閉"
+    },
+    "togetherModeStarted": {
+      "title": "[在一起模式] 已啟動",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "togetherModeEnded": {
+      "title": "[在一起模式] 已結束",
+      "dismissButtonAriaLabel": "關閉"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "撥號中...",
     "participantReconnecting": "正在重新連線...",
     "participantStateHold": "電話保留",
-    "moreOptionsButtonAriaLabel": "其他選項 {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "其他選項 {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "已靜音",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "已取消靜音",
     "moreOptionsParticipantHandRaisedAriaLabel": "已舉手",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "說話"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "說話",
+    "moreOptionsParticipantMicDisabledAriaLabel": "已停用麥克風",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "已停用相機"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "允許 {appName} 使用您的相機和麥克風",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "拒絕",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "接受並開啟視訊",
     "incomingCallNotificationDismissButtonAriaLabel": "關閉"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "即時輸入",
-    "bannerContent": "已為整個會議期間的所有參與者啟用 RTT (即時文字)。",
-    "bannerLinkLabel": "深入了解"
   }
 }
