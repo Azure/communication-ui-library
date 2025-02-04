@@ -60,16 +60,6 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
     plugin.updateFormat();
   }, [plugin]);
 
-  // useLayoutEffect(() => {
-  //   if (editor.current) {
-  //     if (showRichTextEditorFormatting) {
-  //         toolbarRef.current?.focusCommandBar();
-  //     } else {
-  //       editor.current?.focus();
-  //     }
-  //   }
-  // }, [showRichTextEditorFormatting]);
-
   const boldButton: ICommandBarItemProps = useMemo(() => {
     return getCommandBarItem({
       dataTestId: 'rich-text-toolbar-bold-button',
