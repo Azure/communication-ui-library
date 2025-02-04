@@ -11,8 +11,7 @@ import {
   StatefulCallClient,
   StatefulDeviceManager,
   TeamsCall,
-  _isACSCall,
-  _isTeamsCall
+  _isACSCall
 } from '@internal/calling-stateful-client';
 import { AcceptedTransfer } from '@internal/calling-stateful-client';
 import { _isTeamsCallAgent } from '@internal/calling-stateful-client';
@@ -90,7 +89,16 @@ import {
   VideoBackgroundReplacementEffect
 } from './CallAdapter';
 import { TeamsCallAdapter } from './CallAdapter';
-import { getCallCompositePage, getLocatorOrTargetCallees, IsCallEndedPage, isCameraOn } from '../utils';
+import {
+  getCallCompositePage,
+  isCall,
+  IsCallEndedPage,
+  isCameraOn,
+  isDetectedAsRoomsCall,
+  isDetectedAsTeamsCallKind,
+  isDetectedAsTeamsMeeting,
+  isTargetCallees
+} from '../utils';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 import { toFlatCommunicationIdentifier, _toCommunicationIdentifier, _isValidIdentifier } from '@internal/acs-ui-common';
 import {
@@ -100,8 +108,7 @@ import {
   MicrosoftTeamsUserIdentifier,
   isMicrosoftTeamsUserIdentifier,
   MicrosoftTeamsAppIdentifier,
-  UnknownIdentifier,
-  isMicrosoftTeamsAppIdentifier
+  UnknownIdentifier
 } from '@azure/communication-common';
 import { isCommunicationUserIdentifier } from '@azure/communication-common';
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
@@ -143,13 +150,12 @@ class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallContextState;
   private callId: string | undefined;
+  private locator: CallAdapterLocator | undefined;
   private displayNameModifier: AdapterStateModifier | undefined;
 
   constructor(
     clientState: CallClientState,
-    isTeamsCall: boolean,
-    isTeamsMeeting: boolean,
-    isRoomsCall: boolean,
+    locator: CallAdapterLocator | undefined,
     options?: {
       maxListeners?: number;
       onFetchProfile?: OnFetchProfileCallback;
@@ -168,19 +174,20 @@ class CallContext {
     },
     targetCallees?: StartCallIdentifier[]
   ) {
+    this.locator = locator;
     this.state = {
       isLocalPreviewMicrophoneEnabled: false,
       userId: clientState.userId,
       displayName: clientState.callAgent?.displayName,
       devices: clientState.deviceManager,
       call: undefined,
+      isTeamsMeeting: isDetectedAsTeamsMeeting(locator, undefined),
+      isTeamsCall: isDetectedAsTeamsCallKind(targetCallees, undefined),
+      isRoomsCall: isDetectedAsRoomsCall(locator, undefined),
       targetCallees: targetCallees as CommunicationIdentifier[],
       page: 'configuration',
       latestErrors: clientState.latestErrors,
       /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: clientState.latestNotifications,
-      isTeamsCall,
-      isTeamsMeeting,
-      isRoomsCall,
       alternateCallerId: options?.alternateCallerId,
       environmentInfo: clientState.environmentInfo,
       /* @conditional-compile-remove(unsupported-browser) */ unsupportedBrowserVersionsAllowed: false,
@@ -273,6 +280,7 @@ class CallContext {
       environmentInfo: this.state.environmentInfo,
       unsupportedBrowserVersionOptedIn: this.state.unsupportedBrowserVersionsAllowed
     };
+    const targetCallees = this.state.targetCallees;
 
     const latestAcceptedTransfer = call?.transfer.acceptedTransfers
       ? findLatestAcceptedTransfer(call.transfer.acceptedTransfers)
@@ -317,7 +325,10 @@ class CallContext {
           clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
             ? 'On'
             : 'Off',
-        acceptedTransferCallState: transferCall
+        acceptedTransferCallState: transferCall,
+        isTeamsMeeting: isDetectedAsTeamsMeeting(this.locator, call),
+        isTeamsCall: isDetectedAsTeamsCallKind(targetCallees, call),
+        isRoomsCall: isDetectedAsRoomsCall(this.locator, call)
       });
     }
   }
@@ -424,7 +435,14 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   );
   constructor(
     callClient: StatefulCallClient,
-    locatorOrTargetCalless: CallAdapterLocator | StartCallIdentifier[],
+    call: Call,
+    callAgent: AgentType,
+    deviceManager: StatefulDeviceManager,
+    options?: AzureCommunicationCallAdapterOptions | TeamsAdapterOptions
+  );
+  constructor(
+    callClient: StatefulCallClient,
+    overloadedParam: CallAdapterLocator | StartCallIdentifier[] | Call,
     callAgent: AgentType,
     deviceManager: StatefulDeviceManager,
     options?: AzureCommunicationCallAdapterOptions | TeamsAdapterOptions
@@ -432,36 +450,22 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.bindPublicMethods();
     this.callClient = callClient;
     this.callAgent = callAgent;
-    this.targetCallees =
-      getLocatorOrTargetCallees(locatorOrTargetCalless) === true
-        ? (locatorOrTargetCalless as StartCallIdentifier[])
-        : undefined;
-    this.locator =
-      getLocatorOrTargetCallees(locatorOrTargetCalless) === false
-        ? (locatorOrTargetCalless as CallAdapterLocator)
-        : undefined;
-    this.deviceManager = deviceManager;
-    const isTeamsMeeting = this.locator ? 'meetingLink' in this.locator || 'meetingId' in this.locator : false;
-    let isTeamsCall: boolean | undefined;
-    this.targetCallees?.forEach((callee) => {
-      if (isMicrosoftTeamsUserIdentifier(callee) || isMicrosoftTeamsAppIdentifier(callee)) {
-        isTeamsCall = true;
-      }
-    });
 
-    const isRoomsCall = this.locator ? 'roomId' in this.locator : false;
+    let overloadedParamAsCall: Call | undefined = undefined;
+    if (isTargetCallees(overloadedParam)) {
+      this.targetCallees = overloadedParam;
+    } else if (isCall(overloadedParam)) {
+      overloadedParamAsCall = overloadedParam;
+    } else {
+      this.locator = overloadedParam;
+    }
+
+    this.deviceManager = deviceManager;
 
     this.onResolveVideoBackgroundEffectsDependency = options?.videoBackgroundOptions?.onResolveDependency;
     this.onResolveDeepNoiseSuppressionDependency = options?.deepNoiseSuppressionOptions?.onResolveDependency;
 
-    this.context = new CallContext(
-      callClient.getState(),
-      !!isTeamsCall,
-      isTeamsMeeting,
-      isRoomsCall,
-      options,
-      this.targetCallees
-    );
+    this.context = new CallContext(callClient.getState(), this.locator, options, this.targetCallees);
 
     this.context.onCallEnded((endCallData) => this.emitter.emit('callEnded', endCallData));
 
@@ -563,6 +567,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
         this.processNewCall(transferCall);
       };
       (this.callAgent as TeamsCallAgent).on('callsUpdated', onTeamsCallsUpdated);
+    }
+
+    if (overloadedParamAsCall) {
+      this.processNewCall(overloadedParamAsCall);
     }
   }
 
@@ -2227,7 +2235,18 @@ export async function createAzureCommunicationCallAdapterFromClient(
 export async function createAzureCommunicationCallAdapterFromClient(
   callClient: StatefulCallClient,
   callAgent: CallAgent,
-  locatorOrtargetCallees: CallAdapterLocator | StartCallIdentifier[],
+  call: Call,
+  options?: AzureCommunicationCallAdapterOptions
+): Promise<CallAdapter>;
+/**
+ * Implementation of overloads for {@link createAzureCommunicationCallAdapterFromClient}.
+ *
+ * @private
+ */
+export async function createAzureCommunicationCallAdapterFromClient(
+  callClient: StatefulCallClient,
+  callAgent: CallAgent,
+  overloadedParam: CallAdapterLocator | StartCallIdentifier[] | Call,
   options?: AzureCommunicationCallAdapterOptions
 ): Promise<CallAdapter> {
   const deviceManager = (await callClient.getDeviceManager()) as StatefulDeviceManager;
@@ -2235,22 +2254,14 @@ export async function createAzureCommunicationCallAdapterFromClient(
   if (deviceManager.isSpeakerSelectionAvailable) {
     await deviceManager.getSpeakers();
   }
-  if (getLocatorOrTargetCallees(locatorOrtargetCallees)) {
-    return new AzureCommunicationCallAdapter(
-      callClient,
-      locatorOrtargetCallees as StartCallIdentifier[],
-      callAgent,
-      deviceManager,
-      options
-    );
+  /* @conditional-compile-remove(unsupported-browser) */
+  await callClient.feature(Features.DebugInfo).getEnvironmentInfo();
+  if (isTargetCallees(overloadedParam)) {
+    return new AzureCommunicationCallAdapter(callClient, overloadedParam, callAgent, deviceManager, options);
+  } else if (isCall(overloadedParam)) {
+    return new AzureCommunicationCallAdapter(callClient, overloadedParam, callAgent, deviceManager, options);
   } else {
-    return new AzureCommunicationCallAdapter(
-      callClient,
-      locatorOrtargetCallees as CallAdapterLocator,
-      callAgent,
-      deviceManager,
-      options
-    );
+    return new AzureCommunicationCallAdapter(callClient, overloadedParam, callAgent, deviceManager, options);
   }
 }
 
