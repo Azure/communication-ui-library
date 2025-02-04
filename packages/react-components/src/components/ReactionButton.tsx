@@ -3,6 +3,7 @@
 
 import {
   Callout,
+  concatStyleSets,
   DefaultButton,
   FocusZone,
   IButton,
@@ -176,7 +177,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
         <ControlBarButton
           {...props}
           componentRef={reactionButtonRef}
-          className={mergeStyles(styles, props.styles)}
+          styles={concatStyleSets(styles, props.styles)}
           onClick={() => setCalloutIsVisible(!calloutIsVisible)}
           onRenderIcon={props.onRenderIcon ?? onRenderIcon}
           strings={strings}

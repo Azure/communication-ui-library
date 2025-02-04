@@ -204,18 +204,29 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         await this.breakoutRoomJoined(eventData.data);
       } else if (eventData.type === 'assignedBreakoutRooms') {
         if (!eventData.data || eventData.data.state === 'closed') {
-          await this.returnFromBreakoutRoom();
+          if (
+            this.originCallChatAdapter &&
+            this.originCallChatAdapter?.getState().thread.threadId !== this.chatAdapter?.getState().thread.threadId
+          ) {
+            this.updateChatAdapter(this.originCallChatAdapter);
+          }
         }
       }
     });
     /* @conditional-compile-remove(breakout-rooms) */
     this.callAdapter.on('callEnded', () => {
-      const originCallId = this.context.getState().call?.breakoutRooms?.breakoutRoomOriginCallId;
-
-      // If the call ended is a breakout room call, return to the origin call chat adapter
-      if (originCallId && this.originCallChatAdapter) {
-        this.breakoutRoomChatAdapter?.dispose();
-        this.updateChatAdapter(this.originCallChatAdapter);
+      // If the call ended is a breakout room call with breakout room settings then update the chat adapter to the
+      // origin call
+      if (this.context.getState().call?.breakoutRooms?.breakoutRoomSettings) {
+        // Unsubscribe from chat adapter state changes
+        this.chatAdapter?.offStateChange(this.onChatStateChange);
+        // Unassign chat adapter
+        this.chatAdapter = undefined;
+        // Set chat state to undefined to prevent showing chat thread of origin call
+        this.context.unsetChatState();
+        if (this.originCallChatAdapter) {
+          this.updateChatAdapter(this.originCallChatAdapter);
+        }
       }
     });
     this.onCallStateChange = onCallStateChange;
