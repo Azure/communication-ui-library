@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { RealTimeText as RealTimeTextExample } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
-import { RealTimeText as RealTimeTextExample } from '@internal/react-components';
 import React from 'react';
 
 const RealTimeTextStory = (args: { isTyping: boolean; displayName: string; message: string }): JSX.Element => {

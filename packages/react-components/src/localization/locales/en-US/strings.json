@@ -305,8 +305,8 @@
     "tooltipOffContent": "Turn on captions"
   },
   "startRealTimeTextButton": {
-    "onLabel": "Turn on RTT for this call",
-    "tooltipOnContent": "RTT is turned on for this call"
+    "label": "Turn on RTT for this call",
+    "tooltipOffContent": "Turn on RTT for this call"
   },
   "messageThread": {
     "yesterday": "Yesterday",

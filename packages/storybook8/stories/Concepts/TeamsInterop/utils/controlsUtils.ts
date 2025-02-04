@@ -159,7 +159,9 @@ const notificationOptions: NotificationType[] = [
   'capabilityTurnVideoOnAbsent',
   'capabilityTurnVideoOnPresent',
   'capabilityUnmuteMicAbsent',
-  'capabilityUnmuteMicPresent'
+  'capabilityUnmuteMicPresent',
+  'togetherModeStarted',
+  'togetherModeEnded'
 ];
 
 const themeChoices = ['Default', 'Dark', 'Teams', 'Word'];

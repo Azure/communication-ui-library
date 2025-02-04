@@ -7,7 +7,7 @@ import { CallAdapter, CallAdapterState } from '../../CallComposite';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeStreamViewResult } from '@internal/react-components';
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 import {
   AudioDeviceInfo,
   VideoDeviceInfo,
@@ -139,7 +139,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
   /* @conditional-compile-remove(together-mode) */
   public createTogetherModeStreamView = async (
-    options?: VideoStreamOptions
+    options?: TogetherModeStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> =>
     await this.callWithChatAdapter.createTogetherModeStreamView(options);
   /* @conditional-compile-remove(together-mode) */
@@ -262,42 +262,34 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.returnFromBreakoutRoom();
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async forbidAudio(userIds: string[]): Promise<void> {
     return this.callWithChatAdapter.forbidAudio(userIds);
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async permitAudio(userIds: string[]): Promise<void> {
     return this.callWithChatAdapter.permitAudio(userIds);
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async forbidOthersAudio(): Promise<void> {
     return this.callWithChatAdapter.forbidOthersAudio();
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async permitOthersAudio(): Promise<void> {
     return this.callWithChatAdapter.permitOthersAudio();
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async forbidVideo(userIds: string[]): Promise<void> {
     return this.callWithChatAdapter.forbidAudio(userIds);
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async permitVideo(userIds: string[]): Promise<void> {
     return this.callWithChatAdapter.permitAudio(userIds);
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async forbidOthersVideo(): Promise<void> {
     return this.callWithChatAdapter.forbidOthersAudio();
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async permitOthersVideo(): Promise<void> {
     return this.callWithChatAdapter.permitOthersAudio();
   }

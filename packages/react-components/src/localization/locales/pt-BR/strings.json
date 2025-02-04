@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Participante sem nome",
     "participantStateRinging": "Chamando...",
     "participantStateHold": "Em espera",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, Mais opções",
-    "attendeeRole": "Participante"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, Mais Opções",
+    "attendeeRole": "Participante",
+    "micDisabledIconLabel": "Microfone desabilitado",
+    "cameraDisabledIconLabel": "Câmera desabilitada"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} mais"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "Lista com marcadores aplicada",
     "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Ativar Modal RTT",
-    "rttModalTitle": "Ativar o RTT?",
-    "rttModalText": "O texto em tempo real (RTT) será ativado para todos na reunião.",
-    "rttConfirmButtonLabel": "Habilitar",
-    "rttCancelButtonLabel": "Cancelar",
-    "rttCloseModalButtonAriaLabel": "Fechar Modal RTT"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Ativar Modal RTT",
+    "realTimeTextModalTitle": "Ativar a RTT?",
+    "realTimeTextModalText": "O texto em tempo real (RTT) será ativado para todos na reunião.",
+    "realTimeTextConfirmButtonLabel": "Ativar",
+    "realTimeTextCancelButtonLabel": "Cancelar",
+    "realTimeTextCloseModalButtonAriaLabel": "Fechar Modal RTT"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Iniciando legendas..."
+    "captionsBannerSpinnerText": "Iniciando legendas...",
+    "realTimeTextInputBoxDefaultText": "Digitar mensagem em tempo real",
+    "realTimeTextInputErrorMessage": "A mensagem não pode ter mais de 2000 caracteres",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "O RTT (texto em tempo real) está habilitado para todos os participantes durante toda a reunião.",
+    "realTimeTextBannerLinkLabel": "Saiba mais",
+    "captionsOnlyContainerTitle": "Legendas",
+    "realTimeTextOnlyContainerTitle": "Texto em Tempo Real",
+    "captionsAndRealTimeTextContainerTitle": "Legendas e Texto em Tempo Real",
+    "expandButtonAriaLabel": "Expandir",
+    "minimizeButtonAriaLabel": "Recolher"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Sugestões"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Baixar",
     "dismissButtonAriaLabel": "Fechar",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Sobreposição de Detalhes da Imagem"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Mensagem enviada",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "Aplausos",
     "surprisedReactionTooltipContent": "Surpreso"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "Digitação RTT"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "Desativar legendas",
     "tooltipOffContent": "Ativar legendas"
   },
+  "startRealTimeTextButton": {
+    "label": "Habilitar a RTT para esta chamada",
+    "tooltipOffContent": "Habilitar a RTT para esta chamada"
+  },
   "messageThread": {
     "yesterday": "Ontem",
     "sunday": "Domingo",
@@ -308,7 +324,9 @@
     "resendMessage": "Tente enviar novamente",
     "failToSendTag": "Falha ao enviar",
     "editedTag": "Editado",
-    "liveAuthorIntro": "{author} disse",
+    "liveAuthorIntro": "Mensagem de {author}",
+    "editedMessageLiveAuthorIntro": "Mensagem editada de {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Mensagem editada",
     "messageContentAriaText": "{status} {author} disse {message}",
     "messageContentMineAriaText": "{status} Você disse {message}",
     "editBoxTextLimit": "Sua mensagem está acima do limite de {limitNumber} caracteres",
@@ -616,6 +634,14 @@
       "title": "O microfone foi desabilitado",
       "message": "Você não pode mais ativar o som.",
       "dismissButtonAriaLabel": "Fechar"
+    },
+    "togetherModeStarted": {
+      "title": "O modo Togethermode foi iniciado",
+      "dismissButtonAriaLabel": "Fechar"
+    },
+    "togetherModeEnded": {
+      "title": "O modo Togethermode foi encerrado",
+      "dismissButtonAriaLabel": "Fechar"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "Chamando...",
     "participantReconnecting": "Reconectando...",
     "participantStateHold": "Em espera",
-    "moreOptionsButtonAriaLabel": "Mais Opções {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Mais Opções {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "silenciado",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "mudo desativado",
     "moreOptionsParticipantHandRaisedAriaLabel": "Mão levantada",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Falando"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Falando",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Microfone desabilitado",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Câmera desabilitada"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Permitir {appName} usar a câmera e o microfone",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "Recusar",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Aceitar com Vídeo",
     "incomingCallNotificationDismissButtonAriaLabel": "Ignorar"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "RTT",
-    "bannerContent": "O RTT (texto em tempo real) está habilitado para todos os participantes durante toda a reunião.",
-    "bannerLinkLabel": "Saiba mais"
   }
 }

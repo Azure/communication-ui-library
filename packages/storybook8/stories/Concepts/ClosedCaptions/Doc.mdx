@@ -15,6 +15,16 @@ Azure Communication Services UI Library is adding support for Closed Captions. C
 
 Closed Captions is supported by default and are automatically included within the CallComposite and CallWithChatComposite experiences.
 
+Closed Captions is also supported for component users.
+
+List of components exported for Closed Captions:
+
+[StartCaptionsButton](./?path=/docs/components-start-captions-button--docs) is a component that can be used to turn on captions. Developers and use 'usePropsFor' to gather all the information required to power this component.
+
+[CaptionsSettingsModal](./?path=/docs/components-captions-settings-modal--docs) is a modal pop up that allows users to select spoken/caption language. Developers and use 'usePropsFor' to gather all the information required to power this component.
+
+[CaptionsBanner](./?path=/docs/components-captions-banner--docs) is a component that combines and displays captions and Real-Time Text in one banner. Developers and use 'usePropsFor' to gather all the information required to power this component, including the list of Real-Time Text and captions messages in the call. User can also use this component for captions only or Real-Time Text only.
+
 ## Azure Communication Service Based Captions
 
 Azure Communication Service Closed Captions are supported by default and are automatically included within the CallComposite and CallWithChatComposite experiences for calling scenarios involving Azure Communication Service users only. Captions can be enabled in both Mobile Web sessions and in Desktop Web sessions.
