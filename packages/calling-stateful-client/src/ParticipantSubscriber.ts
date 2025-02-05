@@ -116,7 +116,7 @@ export class ParticipantSubscriber {
     oldValue?: string;
     reason?: DisplayNameChangedReason;
   }): void => {
-    console.log(`display name changed from ${args.oldValue} to ${args.newValue} due to ${args.reason}`);
+    console.log(`hi there display name changed from ${args.oldValue} to ${args.newValue} due to ${args.reason}`);
     this._context.setParticipantDisplayName(
       this._callIdRef.callId,
       this._participantKey,
