@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Revert changes to add undefined type so we are not introducing a breaking change to the beta release ",
-  "comment": "Revert changes to add undefined type so we are not introducing a breaking change to the beta release",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

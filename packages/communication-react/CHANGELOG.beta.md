@@ -1,13 +1,46 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 02 Dec 2024 20:48:59 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 03 Feb 2025 22:02:22 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.24.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.24.0-beta.1)
+
+Mon, 03 Feb 2025 22:02:22 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.22.0-beta.1...1.24.0-beta.1)
+
+### Features
+
+#### Real Time Text
+We are excited to announce that the Azure Communication Services Web UI Library now supports RTT (Real Time Text). In an RTT enabled audio or video call, end-users augment the call with text. RTT text communications are transmitted immediately as they are typed, character-by-character, without the user hitting “send.” Users can enable RTT in a call, type to send real time text, or receive real time text from other users. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). This feature is a required by the EU as a core accessibility feature, with implementation needed by June 2025.
+
+* Receive and send Real Time Text messages
+* Seamless integration of real-time text with captions, allowing you to view both simultaneously
+* In our composites, Real Time Text turns on automatically for everyone when a message is first received/sent
+
+#### TogetherMode
+We are excited to announce that the Azure Communication Services Web UI Library now supports Together Mode in Teams interop scenarios. Together Mode is a feature that creates a virtual shared space for meeting participants. By using AI segmentation technology, it places participants in a common background, such as a conference room or auditorium, making it look like everyone is sitting together. This mode is designed to make meetings feel more engaging and reduce virtual meeting fatigue. It can help improve participants' sense of connection and collaboration by mimicking the experience of being in the same physical location. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). 
+
+* Receive together Mode in Teams Interop Meetings 
+* View reactions and raised hands in the Together mode view 
+
+### Improvements
+- Build captions inside caling stateful sample ([PR #5502](https://github.com/azure/communication-ui-library/pull/5502) by 96077406+carocao-msft@users.noreply.github.com)
+- Update to 1.33.1-beta.1 communication calling version ([PR #5588](https://github.com/azure/communication-ui-library/pull/5588) by edwardlee@microsoft.com)
+- Update stable/beta dependencies for communication-calling ([PR #5508](https://github.com/azure/communication-ui-library/pull/5508) by 79329532+alkwa-msft@users.noreply.github.com)
+
+### Bug Fixes
+- Update text container width to cap text for longer locale strings ([PR #5579](https://github.com/azure/communication-ui-library/pull/5579) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Hide read by in chat action flyout when participants is 20 or more, as read count is not supported ([PR #5585](https://github.com/azure/communication-ui-library/pull/5585) by palatter@microsoft.com)
+- Live announcement update when a message is received/edited from/by other users ([PR #5540](https://github.com/azure/communication-ui-library/pull/5540) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Check capability to determine if set caption language should be shown for teams meeting ([PR #5600](https://github.com/azure/communication-ui-library/pull/5600) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix keyboard navigation for message menu button ([PR #5576](https://github.com/azure/communication-ui-library/pull/5576) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
 
 ## [1.22.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.22.0-beta.1)
 
 Mon, 02 Dec 2024 20:48:59 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0...1.22.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0-beta.1...1.22.0-beta.1)
 
 ### Improvements
 - Add AAD sign out capability for sample app ([PR #5310](https://github.com/azure/communication-ui-library/pull/5310) by 77021369+jimchou-dev@users.noreply.github.com)
