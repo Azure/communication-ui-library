@@ -12,6 +12,7 @@ import {
   CallWithChatCompositeOptions,
   onResolveDeepNoiseSuppressionDependencyLazy,
   onResolveVideoEffectDependencyLazy,
+  Profile,
   toFlatCommunicationIdentifier,
   useAzureCommunicationCallWithChatAdapter
 } from '@azure/communication-react';
@@ -99,6 +100,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         laughReaction: { url: 'assets/reactions/laughEmoji.png', frameCount: 102 },
         applauseReaction: { url: 'assets/reactions/clapEmoji.png', frameCount: 102 },
         surprisedReaction: { url: 'assets/reactions/surprisedEmoji.png', frameCount: 102 }
+      },
+      onFetchProfile: async (userId: string, defaultProfile?: Profile): Promise<Profile | undefined> => {
+        console.log('hi there onFetchProfile', userId, defaultProfile);
+        if (userId !== null) {
+          return { displayName: '[Renamed Remote Participant] bob' };
+        }
+        return defaultProfile;
       }
     };
   }, []);
