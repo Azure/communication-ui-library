@@ -701,6 +701,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
     case 'call':
+    case 'returningFromBreakoutRoom':
       pageElement = (
         <CallPage
           callInvitationURL={callInvitationUrl}

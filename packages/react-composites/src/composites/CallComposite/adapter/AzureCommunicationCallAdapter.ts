@@ -143,6 +143,8 @@ class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallContextState;
   private callId: string | undefined;
+  /* @conditional-compile-remove(breakout-rooms) */
+  private isReturningFromBreakoutRoom: boolean = false;
   private displayNameModifier: AdapterStateModifier | undefined;
 
   constructor(
@@ -255,6 +257,11 @@ class CallContext {
     this.setState({ ...this.state, targetCallees });
   }
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setIsReturningFromBreakoutRoom(isReturningFromBreakoutRoom: boolean): void {
+    this.isReturningFromBreakoutRoom = isReturningFromBreakoutRoom;
+  }
+
   public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
     this.emitter.on('callEnded', handler);
   }
@@ -280,17 +287,19 @@ class CallContext {
     const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
     /* @conditional-compile-remove(breakout-rooms) */
-    const originCall = call?.breakoutRooms?.breakoutRoomOriginCallId
-      ? clientState.calls[call?.breakoutRooms?.breakoutRoomOriginCallId]
-      : latestEndedCall?.breakoutRooms?.breakoutRoomOriginCallId
-        ? clientState.calls[latestEndedCall?.breakoutRooms?.breakoutRoomOriginCallId]
-        : undefined;
+    if (call?.state === 'Connected' || call?.state === 'Connecting') {
+      this.setIsReturningFromBreakoutRoom(false);
+    }
+
+    let isReturningFromBreakoutRoom = false;
+    /* @conditional-compile-remove(breakout-rooms) */
+    isReturningFromBreakoutRoom = this.isReturningFromBreakoutRoom;
 
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
       transferCall,
-      /* @conditional-compile-remove(breakout-rooms) */ originCall,
+      isReturningFromBreakoutRoom,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
@@ -1214,21 +1223,20 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
-    if (!this.originCall) {
-      throw new Error('Could not return from breakout room because the origin call could not be retrieved.');
+    const callState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
+    const assignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
+
+    if (!assignedBreakoutRoom) {
+      throw new Error(
+        'Could not return from breakout room because assigned breakout room state could not be retrieved.'
+      );
     }
 
-    if (this.call?.id === this.originCall.id) {
-      console.error('Return from breakout room will not be done because current call is the origin call.');
-      return;
-    }
+    this.context.setIsReturningFromBreakoutRoom(true);
 
-    const breakoutRoomCall = this.call;
-    this.processNewCall(this.originCall);
-    await this.resumeCall();
-    if (breakoutRoomCall?.state && !['Disconnecting', 'Disconnected'].includes(breakoutRoomCall.state)) {
-      breakoutRoomCall.hangUp();
-    }
+    const mainMeeting = await assignedBreakoutRoom.returnToMainMeeting();
+    this.originCall = mainMeeting;
+    this.processNewCall(mainMeeting);
   }
 
   public getState(): CallAdapterState {
@@ -1514,15 +1522,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   private hangupOtherBreakoutRoomCalls(currentBreakoutRoomCallId: string): void {
-    // Get origin call id of breakout room call
-    const breakoutRoomCallState = this.callClient.getState().calls[currentBreakoutRoomCallId];
-    const originCallId = breakoutRoomCallState?.breakoutRooms?.breakoutRoomOriginCallId;
-
-    // Get other breakout room calls with the same origin call
+    // Get other breakout room calls by checking which other calls have breakout room settings defined
     const otherBreakoutRoomCallStates = Object.values(this.callClient.getState().calls).filter((callState) => {
-      return (
-        callState.breakoutRooms?.breakoutRoomOriginCallId === originCallId && callState.id !== currentBreakoutRoomCallId
-      );
+      return callState.breakoutRooms?.breakoutRoomSettings && callState.id !== currentBreakoutRoomCallId;
     });
 
     // Hang up other breakout room calls
