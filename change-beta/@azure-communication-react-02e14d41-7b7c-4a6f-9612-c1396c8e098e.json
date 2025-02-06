@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Hard mute",
-  "comment": "Hard mute accessibility",
-  "packageName": "@azure/communication-react",
-  "email": "fuyan@microsoft.com",
-  "dependentChangeType": "patch"
-}

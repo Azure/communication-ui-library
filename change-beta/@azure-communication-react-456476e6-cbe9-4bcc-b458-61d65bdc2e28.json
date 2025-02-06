@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "fix",
-  "workstream": "Allow for contoso to hard set the dialer page, on, off, or follow our auto behaviors",
-  "comment": "Allow for contoso to hard set the dialer page, on, off, or follow our behaviors",
-  "packageName": "@azure/communication-react",
-  "email": "dmceachern@microsoft.com",
-  "dependentChangeType": "patch"
-}

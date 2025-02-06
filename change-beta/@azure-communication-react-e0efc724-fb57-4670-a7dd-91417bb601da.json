@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Audio Context",
-  "comment": "Fix issue where AudioContext for composites is made too early",
-  "packageName": "@azure/communication-react",
-  "email": "dmceachern@microsoft.com",
-  "dependentChangeType": "patch"
-}
