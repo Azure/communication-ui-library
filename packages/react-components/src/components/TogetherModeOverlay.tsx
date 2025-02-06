@@ -84,14 +84,6 @@ export const TogetherModeOverlay = memo(
       [key: string]: TogetherModeParticipantStatus;
     }>({});
     const [hoveredParticipantID, setHoveredParticipantID] = useState('');
-    const [tabbedParticipantID, setTabbedParticipantID] = useState('');
-
-    // Reset the Tab key tracking on any other key press
-    const handleKeyUp = (e: React.KeyboardEvent<HTMLDivElement>, participantId: string) => {
-      if (e.key === 'Tab') {
-        setTabbedParticipantID(participantId);
-      }
-    };
 
     /*
      * The useMemo hook is used to calculate the participant status for the Together Mode overlay.
@@ -104,6 +96,7 @@ export const TogetherModeOverlay = memo(
       const participantsWithVideoAvailable = allParticipants.filter(
         (p) => p.videoStream?.isAvailable && togetherModeSeatPositions[p.userId]
       );
+
       const updatedSignals: { [key: string]: TogetherModeParticipantStatus } = {};
       for (const p of participantsWithVideoAvailable) {
         const { userId, reaction, raisedHand, spotlight, isMuted, displayName } = p;
@@ -116,12 +109,7 @@ export const TogetherModeOverlay = memo(
             isSpotlighted: !!spotlight,
             isMuted,
             displayName: displayName || locale.strings.videoGallery.displayNamePlaceholder,
-            showDisplayName: !!(
-              spotlight ||
-              raisedHand ||
-              hoveredParticipantID === userId ||
-              tabbedParticipantID === userId
-            ),
+            showDisplayName: !!(spotlight || raisedHand || hoveredParticipantID === userId),
             scaledSize: calculateScaledSize(seatingPosition.width, seatingPosition.height),
             seatPositionStyle: setTogetherModeSeatPositionStyle(seatingPosition)
           };
@@ -153,8 +141,7 @@ export const TogetherModeOverlay = memo(
       togetherModeSeatPositions,
       reactionResources,
       locale.strings.videoGallery.displayNamePlaceholder,
-      hoveredParticipantID,
-      tabbedParticipantID
+      hoveredParticipantID
     ]);
 
     useEffect(() => {
@@ -172,15 +159,12 @@ export const TogetherModeOverlay = memo(
             participantStatus.id && (
               <div
                 key={participantStatus.id}
-                data-ui-group="together-mode-participant"
+                data-ui-id={`together-mode-participant-${participantStatus.id}`}
                 style={{
                   ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle)
                 }}
                 onMouseEnter={() => setHoveredParticipantID(participantStatus.id)}
                 onMouseLeave={() => setHoveredParticipantID('')}
-                onKeyUp={(e) => handleKeyUp(e, participantStatus.id)}
-                onBlur={() => setTabbedParticipantID('')}
-                tabIndex={0}
               >
                 <div>
                   {participantStatus.showDisplayName && (
@@ -226,7 +210,6 @@ export const TogetherModeOverlay = memo(
                     // Second div - Responsible for ensuring the sprite emoji is always centered in the participant seat position
                     // Third div - Play Animation as the other animation applies on the base play animation for the sprite
                     <div
-                      data-ui-group="together-mode-participant-reaction"
                       style={moveAnimationStyles(
                         parseFloat(participantStatus.seatPositionStyle.seatPosition.height) *
                           REACTION_MAX_TRAVEL_HEIGHT,
@@ -234,6 +217,7 @@ export const TogetherModeOverlay = memo(
                       )}
                     >
                       <div
+                        data-ui-id={`together-mode-participant-reaction-${participantStatus.id}`}
                         style={{
                           ...togetherModeParticipantEmojiSpriteStyle(
                             emojiSize,
