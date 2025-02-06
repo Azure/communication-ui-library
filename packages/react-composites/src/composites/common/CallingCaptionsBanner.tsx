@@ -13,7 +13,7 @@ import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { FocusableElement } from './types/FocusableElement';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
-const mobileViewBannerWidth = '90%';
+const mobileViewBannerWidth = '95%';
 
 /** @private */
 export const CallingCaptionsBanner = (props: {
