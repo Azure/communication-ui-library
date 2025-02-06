@@ -280,6 +280,12 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
           onDismissMenu();
         }
       }}
+      onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          setMenuHidden(false);
+          console.log('Enter or Space pressed');
+        }
+      }}
       tabIndex={hasFlyout ? 0 : undefined}
     >
       <Stack
