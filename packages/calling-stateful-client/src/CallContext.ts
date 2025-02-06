@@ -1547,11 +1547,10 @@ export class CallContext {
     });
   }
 
-  public deleteLatestNotification(callId: string | undefined, notificationTarget: NotificationTarget): void {
+  public deleteLatestNotification(notificationTarget: NotificationTarget, callId?: string): void {
     const callIdOfNotification = this._latestCallIdOfNotification[notificationTarget];
 
-    // Only delete the notification if the call that pushed the notification is the same as the callId specified if it
-    // is provided
+    // Only delete the notification if the call that pushed the notification is the same as the callId if specified
     if (callId && callIdOfNotification !== callId) {
       return;
     }
