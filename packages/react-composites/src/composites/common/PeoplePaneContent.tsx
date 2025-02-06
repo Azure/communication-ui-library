@@ -192,6 +192,7 @@ const createDefaultContextualMenuItems = (
     menuItems.push({
       key: 'remove',
       text: strings.removeMenuLabel,
+      role: 'menuitem',
       onClick: () => {
         if (participant?.userId) {
           onRemoveParticipant?.(participant?.userId);
