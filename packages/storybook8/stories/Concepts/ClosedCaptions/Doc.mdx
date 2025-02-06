@@ -11,31 +11,39 @@ import {
 
 # Closed Captions
 
-Azure Communication Services UI Library is adding support for Closed Captions. Closed captions is a powerful tool that enables developers to enhance the accessibility of their videos. With closed captions, developers can provide a textual representation of the audio content in their videos, making it easier for users who are deaf or hard of hearing to follow along.
+Azure Communication Services UI Library is adding support for Closed Captions. Closed captions are a powerful tool that enables developers to enhance the accessibility of their videos. With closed captions, developers can provide a textual representation of the audio content in their videos, making it easier for users who are deaf or hard of hearing to follow along. Here are main scenarios where Closed Captions are useful:
 
-Closed Captions is supported by default and are automatically included within the CallComposite and CallWithChatComposite experiences.
+Accessibility: In the workplace or consumer apps, Closed Captioning for meetings, conference calls, and training videos can make a dramatic difference. Scenarios when audio cannot be heard, either because of a noisy environment, such as an airport, or because of an environment that must be kept quiet, such as a hospital.
 
-Closed Captions is also supported for component users.
+Inclusivity: Closed Captioning was developed to aid hearing-impaired people but can also be useful in language proficiency as well.
 
-List of components exported for Closed Captions:
+# Incorporating Closed Captions in your experience:
+
+The UI Library helps Contoso become more accessible and inclusive by providing closed captions within the composite and component experiences.
+
+## Interop Closed Captions:
+
+Interop Closed Captions are enabled by default and are automatically included within the CallComposite and CallWithChatComposite experiences.
+Captions can be enabled both in Mobile Web sessions and in Desktop Web sessions.
+For interop captions, users can enable captions in the menu and select the spoken language for the captions.
+Captions does not detect language automatically, so the spoken language selected needs to match the language that will be used in the call.
+Translation is also supported in this scenario.
+
+## Azure Communication Services Based Captions:
+
+Azure Communication Services Closed Captions are enabled by default and are automatically included within the CallComposite and CallWithChatComposite experiences.
+Captions can be enabled both in Mobile Web sessions and in Desktop Web sessions.
+Currently, Azure Communication Services captions does not support changing caption language or translation. Only changing the spoken language is supported at this time.
+
+## Closed Captions using Components
+
+For component users, we export the following components to help you integrate captions in your own calling experiences.
 
 [StartCaptionsButton](./?path=/docs/components-start-captions-button--docs) is a component that can be used to turn on captions. Developers and use 'usePropsFor' to gather all the information required to power this component.
 
 [CaptionsSettingsModal](./?path=/docs/components-captions-settings-modal--docs) is a modal pop up that allows users to select spoken/caption language. Developers and use 'usePropsFor' to gather all the information required to power this component.
 
 [CaptionsBanner](./?path=/docs/components-captions-banner--docs) is a component that combines and displays captions and Real-Time Text in one banner. Developers and use 'usePropsFor' to gather all the information required to power this component, including the list of Real-Time Text and captions messages in the call. User can also use this component for captions only or Real-Time Text only.
-
-## Azure Communication Service Based Captions
-
-Azure Communication Service Closed Captions are supported by default and are automatically included within the CallComposite and CallWithChatComposite experiences for calling scenarios involving Azure Communication Service users only. Captions can be enabled in both Mobile Web sessions and in Desktop Web sessions.
-
-For Azure Communication Service captions, users can enable captions in the menu and select the spoken language for the captions. Captions does not detect language automatically, so the spoken language selected needs to match the language that will be used in the call. Currently, Azure Communication Service captions does not support translation.
-
-## Teams Interop Closed Captions
-
-Teams Interop Closed Captions is supported by default and are automatically included within the CallComposite and CallWithChatComposite experiences during a call including one or more teams users.
-
-The main difference between Azure Communication Service Closed Captions and Teams Interop Closed Captions is that Teams Interop Closed Captions supports translation. End users can choose to have captions translated to a different language by using captions settings.
 
 ## How to use Captions
 
@@ -81,7 +89,7 @@ The caption language (Teams Interop Closed Captions) is set to English by defaul
   <PrimaryButton
     style={{ width: 'fit-content', color: 'white' }}
     text="Go to CallComposite to see captions in action"
-    href="../?path=/story/composites-callcomposite--basic-example"
+    href="../?path=/story/composites-callcomposite-basic-example--basic-example"
   />
 </Stack>
 
