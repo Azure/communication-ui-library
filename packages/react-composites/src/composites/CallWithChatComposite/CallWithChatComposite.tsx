@@ -614,6 +614,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   let chatPaneTitle = callWithChatStrings.chatPaneTitle;
   /* @conditional-compile-remove(breakout-rooms) */
+  // If breakout room settings are defined then we know we are in a breakout room so we should
+  // use the breakout room chat pane title.
   if (callAdapter.getState().call?.breakoutRooms?.breakoutRoomSettings) {
     chatPaneTitle = callWithChatStrings.breakoutRoomChatPaneTitle;
   }
