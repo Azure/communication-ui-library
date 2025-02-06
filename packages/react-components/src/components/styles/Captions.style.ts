@@ -4,7 +4,7 @@
 import { IStackStyles, ITheme, mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rtt) */
-import { IButtonStyles } from '@fluentui/react';
+import { IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 /**
  * @private
@@ -63,9 +63,24 @@ export const rttContainerClassName = (theme: ITheme, isTyping: boolean): string 
  */
 export const rttDisclosureBannerClassName = (): string => {
   return mergeStyles({
+    padding: '0.25rem',
     paddingTop: '0.5rem'
   });
 };
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @private
+ */
+export const realTimeTextInputBoxStyles = (theme: ITheme): Partial<ITextFieldStyles> => ({
+  root: {
+    marginBottom: _pxToRem(8)
+  },
+  fieldGroup: {
+    borderRadius: _pxToRem(4),
+    borderColor: theme.palette.neutralQuaternaryAlt
+  }
+});
 
 /* @conditional-compile-remove(rtt) */
 /**
