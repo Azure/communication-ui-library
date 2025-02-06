@@ -20,7 +20,8 @@ import {
 import {
   VideoGalleryTogetherModeParticipantPosition,
   VideoGalleryTogetherModeStreams,
-  TogetherModeStreamViewResult
+  TogetherModeStreamViewResult,
+  TogetherModeStreamOptions
 } from '../types/TogetherModeTypes';
 import { ViewScalingMode } from '../types';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
@@ -329,21 +330,46 @@ export interface VideoGalleryProps {
    */
   onMuteParticipant?: (userId: string) => Promise<void>;
   /* @conditional-compile-remove(together-mode) */
+  /**
+   * Indicates if the local participant can start together mode
+   */
   startTogetherModeEnabled?: boolean;
   /* @conditional-compile-remove(together-mode) */
+  /**
+   * Indicates if together mode is active
+   */
   isTogetherModeActive?: boolean;
   /* @conditional-compile-remove(together-mode) */
-  onCreateTogetherModeStreamView?: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
+  /**
+   * Callback to create a together mode stream view
+   */
+  onCreateTogetherModeStreamView?: (
+    options?: TogetherModeStreamOptions
+  ) => Promise<void | TogetherModeStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
-  /** Callback to create the local video stream view */
+  /**
+   * This callback is to start together mode
+   */
   onStartTogetherMode?: () => Promise<void>;
   /* @conditional-compile-remove(together-mode) */
+  /**
+   * This callback is to set the scene size for together mode
+   */
   onSetTogetherModeSceneSize?: (width: number, height: number) => void;
   /* @conditional-compile-remove(together-mode) */
+  /**
+   * Together mode video streams
+   */
   togetherModeStreams?: VideoGalleryTogetherModeStreams;
   /* @conditional-compile-remove(together-mode) */
+  /**
+   * Seating position of participants in together mode
+   */
   togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
   /* @conditional-compile-remove(together-mode) */
+  /**
+   * Callback to dispose a together mode stream view
+   */
   onDisposeTogetherModeStreamView?: () => Promise<void>;
   /**
    * This callback is to forbid audio for remote participant(s)

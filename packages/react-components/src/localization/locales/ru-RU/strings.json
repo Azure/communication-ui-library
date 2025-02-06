@@ -9,9 +9,11 @@
     "displayNamePlaceholder": "Участник без имени",
     "participantStateRinging": "Выполняется вызов...",
     "participantStateHold": "На удержании",
-    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}",
-    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {sharingState}, {connectionState}, дополнительные параметры",
-    "attendeeRole": "Участник"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, дополнительные параметры",
+    "attendeeRole": "Участник",
+    "micDisabledIconLabel": "Микрофон отключен",
+    "cameraDisabledIconLabel": "Камера отключена"
   },
   "ParticipantList": {
     "overflowParticipantCount": "и еще {overflowCount}"
@@ -69,16 +71,26 @@
     "richTextBulletedListAppliedAnnouncement": "Применен маркированный список",
     "richTextNumberedListAppliedAnnouncement": "Применен нумерованный список"
   },
-  "rttModal": {
-    "rttModalAriaLabel": "Модальное окно включения ввода в режиме реального времени",
-    "rttModalTitle": "Включить ввод в режиме реального времени?",
-    "rttModalText": "Текст в режиме реального времени (RTT) будет включен для всех участников собрания.",
-    "rttConfirmButtonLabel": "Включить",
-    "rttCancelButtonLabel": "Отмена",
-    "rttCloseModalButtonAriaLabel": "Закрыть модальное окно ввода в режиме реального времени"
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Модальное окно включения ввода в режиме реального времени",
+    "realTimeTextModalTitle": "Включить ввод в режиме реального времени?",
+    "realTimeTextModalText": "Текст в режиме реального времени (RTT) будет включен для всех участников собрания.",
+    "realTimeTextConfirmButtonLabel": "Включить",
+    "realTimeTextCancelButtonLabel": "Отмена",
+    "realTimeTextCloseModalButtonAriaLabel": "Закрыть модальное окно ввода в режиме реального времени"
   },
   "captionsBanner": {
-    "captionsBannerSpinnerText": "Запуск субтитров..."
+    "captionsBannerSpinnerText": "Запуск субтитров...",
+    "realTimeTextInputBoxDefaultText": "Введите сообщение в режиме реального времени",
+    "realTimeTextInputErrorMessage": "Длина сообщения не может превышать 2000 символов",
+    "realTimeTextBannerTitle": "Ввод в режиме реального времени",
+    "realTimeTextBannerContent": "Ввод в режиме реального времени включен для всех участников в течение всего собрания.",
+    "realTimeTextBannerLinkLabel": "Подробнее",
+    "captionsOnlyContainerTitle": "Субтитры",
+    "realTimeTextOnlyContainerTitle": "Текст в режиме реального времени",
+    "captionsAndRealTimeTextContainerTitle": "Субтитры и текст в реальном времени",
+    "expandButtonAriaLabel": "Развернуть",
+    "minimizeButtonAriaLabel": "Свернуть"
   },
   "mentionPopover": {
     "mentionPopoverHeader": "Рекомендации"
@@ -86,7 +98,7 @@
   "imageOverlay": {
     "downloadButtonLabel": "Скачать",
     "dismissButtonAriaLabel": "Закрыть",
-    "overlayVisibleMessage": "Image Details Overlay"
+    "overlayVisibleMessage": "Наложение сведений об изображении"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Сообщение отправлено",
@@ -195,7 +207,7 @@
     "applauseReactionTooltipContent": "Аплодисменты",
     "surprisedReactionTooltipContent": "Удивляюсь"
   },
-  "rtt": {
+  "realTimeText": {
     "isTypingText": "Ввод в режиме реального времени"
   },
   "captionsSettingsModal": {
@@ -292,6 +304,10 @@
     "tooltipOnContent": "Отключить автоматические субтитры",
     "tooltipOffContent": "Включить автоматические субтитры"
   },
+  "startRealTimeTextButton": {
+    "label": "Включить ввод в режиме реального времени для этого звонка",
+    "tooltipOffContent": "Включить ввод в режиме реального времени для этого звонка"
+  },
   "messageThread": {
     "yesterday": "Вчера",
     "sunday": "Воскресенье",
@@ -308,7 +324,9 @@
     "resendMessage": "Отправьте еще раз",
     "failToSendTag": "Не удалось отправить",
     "editedTag": "Изменено",
-    "liveAuthorIntro": "{author} говорит",
+    "liveAuthorIntro": "Сообщение от пользователя {author}",
+    "editedMessageLiveAuthorIntro": "Отредактированное сообщение от пользователя {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Отредактированное сообщение",
     "messageContentAriaText": "{status} {author} говорит: {message}",
     "messageContentMineAriaText": "{status} Вы сказали: {message}",
     "editBoxTextLimit": "Превышено предельное число символов в {limitNumber} сообщении",
@@ -616,6 +634,14 @@
       "title": "Ваш микрофон отключен",
       "message": "Вы больше не можете включать звук.",
       "dismissButtonAriaLabel": "Закрыть"
+    },
+    "togetherModeStarted": {
+      "title": "Режим \"Вместе\" запущен",
+      "dismissButtonAriaLabel": "Закрыть"
+    },
+    "togetherModeEnded": {
+      "title": "Режим \"Вместе\" завершен",
+      "dismissButtonAriaLabel": "Закрыть"
     }
   },
   "videoGallery": {
@@ -668,11 +694,13 @@
     "participantStateRinging": "Выполняется вызов...",
     "participantReconnecting": "Повторное подключение...",
     "participantStateHold": "На удержании",
-    "moreOptionsButtonAriaLabel": "Дополнительные параметры {displayName} {isMuted} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsButtonAriaLabel": "Дополнительные параметры {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
     "moreOptionsParticipantMutedStateMutedAriaLabel": "звук отключен",
     "moreOptionsParticipantMutedStateUnmutedAriaLabel": "звук включен",
     "moreOptionsParticipantHandRaisedAriaLabel": "Поднята рука",
-    "moreOptionsParticipantIsSpeakingAriaLabel": "Говорит"
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Говорит",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Микрофон отключен",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Камера отключена"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Разрешить {appName} использовать камеру и микрофон",
@@ -813,10 +841,5 @@
     "incomingCallNotificationRejectButtonLabel": "Отклонить",
     "incomingCallNotificationAccceptWithVideoButtonLabel": "Ответить с видео",
     "incomingCallNotificationDismissButtonAriaLabel": "Закрыть"
-  },
-  "rttDisclosureBanner": {
-    "bannerTitle": "Ввод в режиме реального времени",
-    "bannerContent": "Ввод в режиме реального времени включен для всех участников в течение всего собрания.",
-    "bannerLinkLabel": "Подробнее"
   }
 }

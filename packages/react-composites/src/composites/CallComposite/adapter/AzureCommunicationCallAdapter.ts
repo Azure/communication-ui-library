@@ -143,6 +143,8 @@ class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallContextState;
   private callId: string | undefined;
+  /* @conditional-compile-remove(breakout-rooms) */
+  private isReturningFromBreakoutRoom: boolean = false;
   private displayNameModifier: AdapterStateModifier | undefined;
 
   constructor(
@@ -255,6 +257,11 @@ class CallContext {
     this.setState({ ...this.state, targetCallees });
   }
 
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setIsReturningFromBreakoutRoom(isReturningFromBreakoutRoom: boolean): void {
+    this.isReturningFromBreakoutRoom = isReturningFromBreakoutRoom;
+  }
+
   public onCallEnded(handler: (callEndedData: CallAdapterCallEndedEvent) => void): void {
     this.emitter.on('callEnded', handler);
   }
@@ -280,17 +287,19 @@ class CallContext {
     const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
     /* @conditional-compile-remove(breakout-rooms) */
-    const originCall = call?.breakoutRooms?.breakoutRoomOriginCallId
-      ? clientState.calls[call?.breakoutRooms?.breakoutRoomOriginCallId]
-      : latestEndedCall?.breakoutRooms?.breakoutRoomOriginCallId
-        ? clientState.calls[latestEndedCall?.breakoutRooms?.breakoutRoomOriginCallId]
-        : undefined;
+    if (call?.state === 'Connected' || call?.state === 'Connecting') {
+      this.setIsReturningFromBreakoutRoom(false);
+    }
+
+    let isReturningFromBreakoutRoom = false;
+    /* @conditional-compile-remove(breakout-rooms) */
+    isReturningFromBreakoutRoom = this.isReturningFromBreakoutRoom;
 
     const newPage = getCallCompositePage(
       call,
       latestEndedCall,
       transferCall,
-      /* @conditional-compile-remove(breakout-rooms) */ originCall,
+      isReturningFromBreakoutRoom,
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
@@ -640,13 +649,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.stopAllSpotlight.bind(this);
     this.muteParticipant.bind(this);
     this.muteAllRemoteParticipants.bind(this);
-    /* @conditional-compile-remove(media-access) */
     this.forbidOthersAudio.bind(this);
-    /* @conditional-compile-remove(media-access) */
     this.permitOthersAudio.bind(this);
-    /* @conditional-compile-remove(media-access) */
     this.forbidOthersAudio.bind(this);
-    /* @conditional-compile-remove(media-access) */
     this.permitOthersAudio.bind(this);
   }
 
@@ -1184,57 +1189,54 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onStopAllSpotlight();
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async forbidAudio(userIds: string[]): Promise<void> {
     this.handlers.onForbidAudio?.(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitAudio(userIds: string[]): Promise<void> {
     this.handlers.onPermitAudio?.(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async forbidOthersAudio(): Promise<void> {
     this.handlers.onForbidOthersAudio?.();
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitOthersAudio(): Promise<void> {
     this.handlers.onPermitOthersAudio?.();
   }
 
-  /* @conditional-compile-remove(media-access) */
   public async forbidVideo(userIds: string[]): Promise<void> {
     this.handlers.onForbidVideo?.(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitVideo(userIds: string[]): Promise<void> {
     this.handlers.onPermitVideo?.(userIds);
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async forbidOthersVideo(): Promise<void> {
     this.handlers.onForbidOthersVideo?.();
   }
-  /* @conditional-compile-remove(media-access) */
+
   public async permitOthersVideo(): Promise<void> {
     this.handlers.onPermitOthersVideo?.();
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
-    if (!this.originCall) {
-      throw new Error('Could not return from breakout room because the origin call could not be retrieved.');
+    const callState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
+    const assignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
+
+    if (!assignedBreakoutRoom) {
+      throw new Error(
+        'Could not return from breakout room because assigned breakout room state could not be retrieved.'
+      );
     }
 
-    if (this.call?.id === this.originCall.id) {
-      console.error('Return from breakout room will not be done because current call is the origin call.');
-      return;
-    }
+    this.context.setIsReturningFromBreakoutRoom(true);
 
-    const breakoutRoomCall = this.call;
-    this.processNewCall(this.originCall);
-    await this.resumeCall();
-    if (breakoutRoomCall?.state && !['Disconnecting', 'Disconnected'].includes(breakoutRoomCall.state)) {
-      breakoutRoomCall.hangUp();
-    }
+    const mainMeeting = await assignedBreakoutRoom.returnToMainMeeting();
+    this.originCall = mainMeeting;
+    this.processNewCall(mainMeeting);
   }
 
   public getState(): CallAdapterState {
@@ -1466,21 +1468,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('transferAccepted', args);
   }
 
-  private capabilitiesChangedunmuteMicTrampoline(data: CapabilitiesChangeInfo): void {
-    /* @conditional-compile-remove(media-access) */
-    return;
-
-    if (data.newValue.unmuteMic?.isPresent === false) {
-      this.mute();
-    }
-  }
-
   private capabilitiesChanged(data: CapabilitiesChangeInfo): void {
     if (data.newValue.turnVideoOn?.isPresent === false) {
       // stopCamera is handled by web sdk when video hard muted.
       this.disposeLocalVideoStreamView();
     }
-    this.capabilitiesChangedunmuteMicTrampoline(data);
+
     if (data.newValue.shareScreen?.isPresent === false) {
       this.stopScreenShare();
     }
@@ -1529,15 +1522,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   /* @conditional-compile-remove(breakout-rooms) */
   private hangupOtherBreakoutRoomCalls(currentBreakoutRoomCallId: string): void {
-    // Get origin call id of breakout room call
-    const breakoutRoomCallState = this.callClient.getState().calls[currentBreakoutRoomCallId];
-    const originCallId = breakoutRoomCallState?.breakoutRooms?.breakoutRoomOriginCallId;
-
-    // Get other breakout room calls with the same origin call
+    // Get other breakout room calls by checking which other calls have breakout room settings defined
     const otherBreakoutRoomCallStates = Object.values(this.callClient.getState().calls).filter((callState) => {
-      return (
-        callState.breakoutRooms?.breakoutRoomOriginCallId === originCallId && callState.id !== currentBreakoutRoomCallId
-      );
+      return callState.breakoutRooms?.breakoutRoomSettings && callState.id !== currentBreakoutRoomCallId;
     });
 
     // Hang up other breakout room calls

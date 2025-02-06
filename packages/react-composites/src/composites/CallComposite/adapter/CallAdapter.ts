@@ -60,7 +60,8 @@ export type CallCompositePage =
   | 'removedFromCall'
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
   | 'transferring'
-  | 'badRequest';
+  | 'badRequest'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'returningFromBreakoutRoom';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -816,42 +817,34 @@ export interface CallAdapterCallOperations {
    * Return to origin call of breakout room
    */
   returnFromBreakoutRoom(): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Forbid Teams meeting attendees audio by their user ids.
    */
   forbidAudio(userIds: string[]): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Permit Teams meeting attendees audio by their user ids.
    */
   permitAudio(userIds: string[]): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Forbid Teams meeting audio.
    */
   forbidOthersAudio(): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Permit Teams meeting audio.
    */
   permitOthersAudio(): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Forbid Teams meeting attendees video by their user ids.
    */
   forbidVideo(userIds: string[]): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Permit Teams meeting attendees audio by their user ids.
    */
   permitVideo(userIds: string[]): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Forbid Teams meeting video.
    */
   forbidOthersVideo(): Promise<void>;
-  /* @conditional-compile-remove(media-access) */
   /**
    * Permit Teams meeting video.
    */

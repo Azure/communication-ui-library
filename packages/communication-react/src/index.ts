@@ -468,9 +468,7 @@ export type {
   StartRealTimeTextButtonProps,
   StartRealTimeTextButtonStrings
 } from '../../react-components/src/components/StartRealTimeTextButton';
-/* @conditional-compile-remove(media-access) */
-export type { MediaAccess } from '../../react-components/src';
-export type { CaptionsSettingsModalStrings, CaptionsSettingsModalProps } from '../../react-components/src';
+export type { CaptionsSettingsModalStrings, CaptionsSettingsModalProps, MediaAccess } from '../../react-components/src';
 export { CaptionsSettingsModal } from '../../react-components/src';
 export type { SupportedCaptionLanguage, SupportedSpokenLanguage, CaptionsOptions } from '../../react-components/src';
 export type {

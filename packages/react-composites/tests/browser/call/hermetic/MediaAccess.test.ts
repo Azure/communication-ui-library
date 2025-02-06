@@ -6,7 +6,6 @@ import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 
-/* @conditional-compile-remove(media-access) */
 test.describe('Media access mic/camera forbid/permit tests', async () => {
   test('When capabilities true, mic and carmera enabled on call control bar and self video tile', async ({
     page,
