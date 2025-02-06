@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "feature",
+  "workstream": "RTT",
+  "comment": "Update styling for RTT base on feedbacl",
+  "packageName": "@azure/communication-react",
+  "email": "96077406+carocao-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
