@@ -241,6 +241,10 @@ export const getCurrentCaptionLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): SupportedCaptionLanguage | undefined => {
+  // we default to 'en' if the currentCaptionLanguage is not set
+  if (state.calls[props.callId]?.captionsFeature.currentCaptionLanguage === '') {
+    return 'en';
+  }
   return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage as SupportedCaptionLanguage;
 };
 
@@ -249,6 +253,8 @@ export const getCurrentSpokenLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): SupportedSpokenLanguage | undefined => {
+  // when currentSpokenLanguage is '', it means the spoken language is not set.
+  // In this case we suggest showing the captions modal to set the spoken language when starting captions
   return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage as SupportedSpokenLanguage;
 };
 

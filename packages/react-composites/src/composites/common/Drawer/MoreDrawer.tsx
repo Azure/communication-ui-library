@@ -520,8 +520,12 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const [isCaptionLanguageDrawerOpen, setIsCaptionLanguageDrawerOpen] = useState<boolean>(false);
 
+  // we don't display the setting modal to set the spoken language on mobile
+  // so when spoken language is empty (not set), we default to 'en-us'
   const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<keyof SpokenLanguageStrings>(
-    captionSettingsProp.currentSpokenLanguage ?? 'en-us'
+    captionSettingsProp.currentSpokenLanguage && (captionSettingsProp.currentSpokenLanguage as string) !== ''
+      ? captionSettingsProp.currentSpokenLanguage
+      : 'en-us'
   );
 
   const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<keyof CaptionLanguageStrings>(
