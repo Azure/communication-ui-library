@@ -241,6 +241,9 @@ export const getCurrentCaptionLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): SupportedCaptionLanguage | undefined => {
+  if (state.calls[props.callId]?.captionsFeature.currentCaptionLanguage === '') {
+    return 'en';
+  }
   return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage as SupportedCaptionLanguage;
 };
 
@@ -249,6 +252,9 @@ export const getCurrentSpokenLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): SupportedSpokenLanguage | undefined => {
+  if (state.calls[props.callId]?.captionsFeature.currentSpokenLanguage === '') {
+    return 'en-us';
+  }
   return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage as SupportedSpokenLanguage;
 };
 
