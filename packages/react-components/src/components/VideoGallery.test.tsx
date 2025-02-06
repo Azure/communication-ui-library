@@ -791,6 +791,7 @@ test('should render screenshare component and local user video tile when local u
   expect(tileIsVideo(localVideoTile)).toBe(true);
 });
 
+/* @conditional-compile-remove(together-mode) */
 describe('VideoGallery together mode layout tests', () => {
   const createTestProps = (overrides: Partial<VideoGalleryProps> = {}, userId: string): VideoGalleryProps => ({
     layout: 'togetherMode',
@@ -886,6 +887,7 @@ const getHorizontalGallery = (root: Element | null): Element | null =>
 const getVerticalGallery = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="responsive-vertical-gallery"]') ?? null;
 
+/* @conditional-compile-remove(together-mode) */
 const getTogetherModeLayout = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="together-mode-layout"]') ?? null;
 
