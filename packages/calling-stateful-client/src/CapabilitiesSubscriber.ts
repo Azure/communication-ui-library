@@ -51,7 +51,7 @@ export class CapabilitiesSubscriber {
       ) {
         const capabilityTurnVideoOnAbsent = this._context.getState().latestNotifications.capabilityTurnVideoOnAbsent;
         if (capabilityTurnVideoOnAbsent) {
-          this._context.deleteLatestNotification(this._callIdRef.callId, 'capabilityTurnVideoOnAbsent');
+          this._context.deleteLatestNotification('capabilityTurnVideoOnAbsent', this._callIdRef.callId);
         }
         const capabilityTurnVideoOnPresent = this._context.getState().latestNotifications.capabilityTurnVideoOnPresent;
         if (!capabilityTurnVideoOnPresent) {
@@ -65,7 +65,7 @@ export class CapabilitiesSubscriber {
       if (data.newValue.turnVideoOn?.isPresent === false) {
         const capabilityTurnVideoOnPresent = this._context.getState().latestNotifications.capabilityTurnVideoOnPresent;
         if (capabilityTurnVideoOnPresent) {
-          this._context.deleteLatestNotification(this._callIdRef.callId, 'capabilityTurnVideoOnPresent');
+          this._context.deleteLatestNotification('capabilityTurnVideoOnPresent', this._callIdRef.callId);
         }
         const capabilityTurnVideoOnAbsent = this._context.getState().latestNotifications.capabilityTurnVideoOnAbsent;
         if (!capabilityTurnVideoOnAbsent) {
@@ -84,7 +84,7 @@ export class CapabilitiesSubscriber {
       ) {
         const capabilityUnmuteMicAbsent = this._context.getState().latestNotifications.capabilityUnmuteMicAbsent;
         if (capabilityUnmuteMicAbsent) {
-          this._context.deleteLatestNotification(this._callIdRef.callId, 'capabilityUnmuteMicAbsent');
+          this._context.deleteLatestNotification('capabilityUnmuteMicAbsent', this._callIdRef.callId);
         }
         const capabilityUnmuteMicPresent = this._context.getState().latestNotifications.capabilityUnmuteMicPresent;
         if (!capabilityUnmuteMicPresent) {
@@ -98,7 +98,7 @@ export class CapabilitiesSubscriber {
       if (data.newValue.unmuteMic?.isPresent === false) {
         const capabilityUnmuteMicPresent = this._context.getState().latestNotifications.capabilityUnmuteMicPresent;
         if (capabilityUnmuteMicPresent) {
-          this._context.deleteLatestNotification(this._callIdRef.callId, 'capabilityUnmuteMicPresent');
+          this._context.deleteLatestNotification('capabilityUnmuteMicPresent', this._callIdRef.callId);
         }
         const capabilityUnmuteMicAbsent = this._context.getState().latestNotifications.capabilityUnmuteMicAbsent;
         if (!capabilityUnmuteMicAbsent) {
