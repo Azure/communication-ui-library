@@ -26,7 +26,11 @@ import { _RTTDisclosureBanner } from './RTTDisclosureBanner';
 /* @conditional-compile-remove(rtt) */
 import { sortCaptionsAndRealTimeTexts } from './utils/sortCaptionsAndRealTimeTexts';
 /* @conditional-compile-remove(rtt) */
-import { expandIconClassName, bannerTitleContainerClassName } from './styles/Captions.style';
+import {
+  expandIconClassName,
+  bannerTitleContainerClassName,
+  realTimeTextInputBoxStyles
+} from './styles/Captions.style';
 /* @conditional-compile-remove(rtt) */
 import { titleClassName } from './styles/CaptionsSettingsModal.styles';
 /* @conditional-compile-remove(rtt) */
@@ -422,6 +426,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
           {
             /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && onSendRealTimeText && (
               <TextField
+                styles={realTimeTextInputBoxStyles(theme)}
                 placeholder={strings.realTimeTextInputBoxDefaultText}
                 value={textFieldValue}
                 onKeyDown={handleKeyDown}
