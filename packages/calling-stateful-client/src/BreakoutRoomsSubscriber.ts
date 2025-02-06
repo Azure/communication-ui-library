@@ -132,7 +132,6 @@ export class BreakoutRoomsSubscriber {
   };
 
   private onBreakoutRoomsJoined = (call: Call | TeamsCall): void => {
-    this._context.setBreakoutRoomOriginCallId(this._callIdRef.callId, call.id);
     this._context.deleteLatestNotification('assignedBreakoutRoomOpened', this._callIdRef.callId);
     this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin', this._callIdRef.callId);
     this._context.deleteLatestNotification('assignedBreakoutRoomChanged', this._callIdRef.callId);

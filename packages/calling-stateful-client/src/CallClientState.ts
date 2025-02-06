@@ -264,8 +264,6 @@ export interface BreakoutRoomsState {
   assignedBreakoutRoom?: BreakoutRoom;
   /** Breakout room settings of call. This is defined when call is a breakout room. */
   breakoutRoomSettings?: BreakoutRoomsSettings;
-  /** Origin call id of breakout room. This is defined when call is a breakout room. */
-  breakoutRoomOriginCallId?: string;
   /** Display name of breakout room. This is defined when call is a breakout room. */
   breakoutRoomDisplayName?: string;
 }
