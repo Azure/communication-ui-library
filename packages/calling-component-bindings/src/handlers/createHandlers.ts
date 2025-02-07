@@ -70,12 +70,6 @@ export type CreateDefaultCallingHandlers = (
  */
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoizeOne((...args) => {
   const [callClient, callAgent, deviceManager, call, options] = args;
-  /* @conditional-compile-remove(breakout-rooms) */
-  const callState = call?.id ? callClient.getState().calls[call?.id] : undefined;
-  /* @conditional-compile-remove(breakout-rooms) */
-  const breakoutRoomOriginCallId = callState?.breakoutRooms?.breakoutRoomOriginCallId;
-  /* @conditional-compile-remove(breakout-rooms) */
-  const breakoutRoomOriginCall = callAgent?.calls.find((call) => call.id === breakoutRoomOriginCallId);
   const commonCallingHandlers = createDefaultCommonCallingHandlers(callClient, deviceManager, call, options);
   return {
     ...commonCallingHandlers,
@@ -116,11 +110,7 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
       if (incomingCall) {
         await incomingCall.reject();
       }
-    },
-    /* @conditional-compile-remove(breakout-rooms) */
-    onHangUp: breakoutRoomOriginCall
-      ? async () => breakoutRoomOriginCall.hangUp().then(() => commonCallingHandlers.onHangUp())
-      : commonCallingHandlers.onHangUp
+    }
   };
 });
 

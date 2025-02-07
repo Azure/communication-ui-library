@@ -260,9 +260,11 @@ export interface SpotlightState {
  * @public
  */
 export interface BreakoutRoomsState {
+  /** Breakout room assigned to local user in call */
   assignedBreakoutRoom?: BreakoutRoom;
+  /** Breakout room settings of call. This is defined when call is a breakout room. */
   breakoutRoomSettings?: BreakoutRoomsSettings;
-  breakoutRoomOriginCallId?: string;
+  /** Display name of breakout room. This is defined when call is a breakout room. */
   breakoutRoomDisplayName?: string;
 }
 
@@ -1206,6 +1208,7 @@ export type NotificationTarget =
   | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpened'
   | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpenedPromptJoin'
   | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomChanged'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomClosed'
   | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomJoined'
   | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomClosingSoon'
   | 'capabilityTurnVideoOnPresent'

@@ -124,6 +124,10 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Spotlight)
     );
+
+    /* @conditional-compile-remove(breakout-rooms) */
+    // Clear assigned breakout room closed notification for this call.
+    this._context.deleteLatestNotification('assignedBreakoutRoomClosed');
     /* @conditional-compile-remove(breakout-rooms) */
     this._breakoutRoomsSubscriber = new BreakoutRoomsSubscriber(
       this._callIdRef,
