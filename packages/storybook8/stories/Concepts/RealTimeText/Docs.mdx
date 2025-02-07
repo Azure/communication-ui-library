@@ -7,10 +7,25 @@ import { overviewPageImagesStackStyle } from '../../constants';
 
 # Real-Time Text
 
+## Overview
+
 <SingleLineBetaBanner />
 
-Azure Communication Services UI Library supports Real-Time Text. Real-Time Text is a powerful tool that enables developers to enhance the accessibility of their videos.
-Real-Time Text (RTT) is a new accessibility feature that enables live transmission of text as it is typed, enhancing communication during voice and video calls. RTT displays text instantly, character by character, creating a natural and dynamic communication experience that mirrors spoken conversation.
+Real-Time Text (RTT) is a feature that allows text to be sent and received instantly during voice and video calls. As you type, the text appears immediately, letter by letter, making the conversation feel more natural and dynamic, just like talking.
+
+For example, if an RTT user types "Hello, how are you?" during a call, the recipient sees each character as it is typed: "H," then "He," then "Hel," and so on. This immediacy allows for fluid, continuous exchanges, benefiting users with hearing or speech impairments and improving clarity in noisy or quiet environments.
+
+## Key Scenarios Where RTT is Useful:
+
+Accessibility: RTT empowers individuals with speech or hearing impairments to participate in conversations actively, ensuring their input is received as naturally as spoken words.
+
+Enhancing Clarity: In noisy environments or situations with audio quality issues, RTT provides a reliable text-based alternative.
+
+## Why RTT Matters
+
+Microsoft is dedicated to accessibility, and the incorporation of Real-Time Text (RTT) supports this commitment by adhering to accessibility standards such as The European Accessibility Act (Directive (EU) 2019/882. This directive requires that voice and video services support RTT by June 2025, ensuring inclusive communication throughout Europe. Voice and video services will not be permitted to operate in Europe or have Europe based customers after June 2025 without RTT, making the inclusion of this feature in the UI Library critically important.
+
+## Incorporating RTT in Your Experience
 
 Real-Time Text is supported by default and are automatically included within the CallComposite and CallWithChatComposite experiences.
 
@@ -60,3 +75,17 @@ Note that Real-Time Text will be enabled for all participants in the call once t
     />
   </Stack.Item>
 </Stack>
+
+## RTT is available in these scenarios
+
+| Call Type             | Supported | Notes                                    |
+| --------------------- | --------- | ---------------------------------------- |
+| Rooms                 | Yes       |
+| 1:1/1:n               | Yes       |
+| Teams Meeting Interop | No        | Supported once RTT is available in Teams |
+| Teams Adhoc calling   | No        | Supported once RTT is available in Teams |
+| Group Calls           | Yes       |
+| PSTN                  | No        | Timeline for support TBD                 |
+
+To read more details about the underlying infrastructure, click here:  
+[Real Time Text (RTT) Overview - An Azure Communication Services concept document | Microsoft Learn](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/real-time-text)
