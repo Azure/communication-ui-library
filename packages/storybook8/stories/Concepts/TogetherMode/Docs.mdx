@@ -6,18 +6,24 @@ import TogetherModeSnippetText from '!!raw-loader!./snippets/TogetherMode.snippe
 
 # TogetherMode
 
-Together Mode in Teams uses AI to place everyone in a shared virtual background, creating the feeling of being in the same room.
-It’s built to make meetings more engaging and foster stronger connections.
+Azure Communication Services UI Library is adding support for Together Mode in Interop only scenarios.
 
-It’s especially effective for training sessions, workshops, or team-building activities.
-A classroom setting, like the one shown below, promotes learning and collaboration, helping participants stay engaged and comfortable in a familiar atmosphere.
+With the introduction of this new feature, ACS users can now participate in together mode during interop meetings and calls.
+This feature allows users to see all participants in a shared virtual background, fostering a sense of being in the same room.
+Together mode is prominently displayed in the video gallery enabling users to keep track of everyone engaged in the call.
+Enabling together mode enhances productivity and promotes a smoother flow of discussions and conversations within meetings.
+Here are some example scenarios where together mode is useful:
+
+- During a meeting with many participants, Together Mode can help the host to manage the conversation and ensure that everyone feels included. Participants can feel a greater sense of connection and collaboration as if they are physically present in the same room, even though they are remote.
+
+- In a call setting, Together Mode can be used to create a more engaging and interactive experience. For example, participants can see each other in a shared virtual environment, which can enhance communication. When a user begins to share a screen, while together mode is active, the view switches back to the default view until screensharing stops. It then switches back to together mode. This helps the host maintain engagement and move on with the meeting efficiently.
 
 <img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-scenario_example.png" />
 
 ## Supported Scenarios
 
-Together Mode is available only in Teams meetings and group calls. It can be started exclusively by Teams users with the roles of Organizer, Co-organizer, or Presenter.
-ACS (Azure Communication Services) users cannot initiate Together Mode themselves, but they can view the Together Mode stream if it’s started by a Teams user.
+Together mode is supported exclusively in Teams interop meetings or group calls that include a Microsoft 365 user.
+It can only be initiated by a Microsoft 365 user who holds the role of organizer, co-organizer, or presenter. Users who do not fulfill this requirement can switch to the Together mode stream view only when it has been initiated by an eligible user.
 
 <img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-not-active-for-acs-user.png" />
 The option to start or switch to Together Mode is disabled because ACS users do not have permission to initiate Together
@@ -26,6 +32,11 @@ Mode.
 <img style={{ width: 'auto', height: 'auto' }} src="images/together-mode/togethermode-active-for-acs-user.png" />
 When a Teams user starts Together Mode, the view option becomes enabled, allowing ACS users to switch to the Together
 Mode view.
+
+## Incorporating Together Mode into your experience:
+
+The UI library includes together mode as a feature by default within the CallComposite and CallWithChat Composite experiences, so no additional work is required.
+However, the Together mode view is only available for ACS users when on an interop call with a Teams or CTE user who has started together mode.
 
 ## Implementing with the VideoGallery
 
@@ -50,6 +61,18 @@ This code snippet illustrates the utilization of the `usePropsFor` hook from the
 For comprehensive setup instructions, refer to the [VideoGallery](./?path=/docs/components-video-gallery--docs). This component facilitates the seamless integration of video streams or shared content into your application.
 
 ## FAQs
+
+### When recording a call or meeting, will the Together Mode view be included in the recording?
+
+The recording bot does not subscribe to the Together Mode stream. Therefore, when recording is initiated during a meeting or call, the video stream from Together Mode will not be included in the recording.
+
+### Does Together Mode handle signaling features like spotlight or raise hand?
+
+Yes. When together mode is active spotlight and raise hand will be handled by the together mode feature
+
+### Is Panorama view supported?
+
+No. In this version, Panorama View will not be supported in the UI.
 
 ### Can I use UI library to change TogetherMode Scene?
 

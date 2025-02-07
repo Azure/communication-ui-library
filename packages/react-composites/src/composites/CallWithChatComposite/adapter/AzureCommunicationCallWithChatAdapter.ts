@@ -732,8 +732,10 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       this.updateChatAdapter(this.originCallChatAdapter);
     }
 
-    const originCallId = this.callAdapter.getState().call?.breakoutRooms?.breakoutRoomOriginCallId;
-    if (originCallId) {
+    // Check if breakout room settings are defined to verify the user is in a breakout room before
+    // returning to the origin call.
+    const breakoutRoomSettings = this.context.getState().call?.breakoutRooms?.breakoutRoomSettings;
+    if (breakoutRoomSettings) {
       await this.callAdapter.returnFromBreakoutRoom();
     }
   }

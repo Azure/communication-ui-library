@@ -1,8 +1,8 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "area": "feature",
-  "workstream": "RTT",
-  "comment": "Add expand button for mobile ",
+  "workstream": "Captions",
+  "comment": "Fix bug where spoken and caption language drawer missing default value",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

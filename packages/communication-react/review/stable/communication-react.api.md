@@ -263,7 +263,6 @@ export interface BaseCustomStyles {
 export interface BreakoutRoomsState {
     assignedBreakoutRoom?: BreakoutRoom;
     breakoutRoomDisplayName?: string;
-    breakoutRoomOriginCallId?: string;
     breakoutRoomSettings?: BreakoutRoomsSettings;
 }
 

@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Captions",
-  "comment": "Check capability to determine if set caption language should be shown for teams meeting",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

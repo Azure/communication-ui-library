@@ -701,7 +701,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       );
       break;
     case 'call':
-    case 'returningFromBreakoutRoom':
       pageElement = (
         <CallPage
           callInvitationURL={callInvitationUrl}
@@ -749,6 +748,36 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  if (page === 'returningFromBreakoutRoom') {
+    pageElement = (
+      <CallPage
+        callInvitationURL={callInvitationUrl}
+        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+        onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+        mobileView={props.mobileView}
+        modalLayerHostId={props.modalLayerHostId}
+        options={props.options}
+        updateSidePaneRenderer={setSidePaneRenderer}
+        mobileChatTabHeader={props.mobileChatTabHeader}
+        onCloseChatPane={props.onCloseChatPane}
+        latestErrors={latestInCallErrors}
+        latestNotifications={latestNotifications}
+        onDismissError={onDismissError}
+        onDismissNotification={onDismissNotification}
+        galleryLayout={userSetGalleryLayout}
+        onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+        onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
+        userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
+        capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+        pinnedParticipants={pinnedParticipants}
+        setPinnedParticipants={setPinnedParticipants}
+        compositeAudioContext={compositeAudioContext}
+        disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
+      />
+    );
   }
 
   useEndedCallConsoleErrors(endedCall);
