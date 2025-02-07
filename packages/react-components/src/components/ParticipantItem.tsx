@@ -166,7 +166,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const participantItemId = useId();
   const participantItemFlyoutId = useId();
   const hasFlyout = !!(menuItems && menuItems?.length > 0);
-  const flyoutShowing = hasFlyout && menuHidden;
 
   const strings = { ...localeStrings, ...props.strings };
   const participantStateString = formatParticipantStateString(props, strings);
@@ -230,6 +229,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         horizontalAlign="end"
         className={mergeStyles(menuButtonContainerStyle, { color: theme.palette.neutralPrimary })}
         title={strings.menuTitle}
+        aria-controls={participantItemFlyoutId}
         data-ui-id={ids.participantItemMenuButton}
       >
         <Icon
@@ -238,7 +238,13 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         />
       </Stack>
     ),
-    [theme.palette.neutralPrimary, strings.menuTitle, ids.participantItemMenuButton, showMenuIcon]
+    [
+      theme.palette.neutralPrimary,
+      strings.menuTitle,
+      participantItemFlyoutId,
+      ids.participantItemMenuButton,
+      showMenuIcon
+    ]
   );
 
   return (
@@ -251,7 +257,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         props.strings?.participantItemAriaLabel
       }
       aria-labelledby={`${props.ariaLabelledBy} ${participantItemId}`}
-      aria-expanded={flyoutShowing}
+      aria-expanded={menuHidden ? false : true}
       aria-disabled={hasFlyout || props.onClick ? false : true}
       aria-haspopup={hasFlyout ? true : undefined}
       aria-controls={participantItemFlyoutId}
@@ -268,6 +274,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         }
         if (!menuHidden) {
           onDismissMenu();
+        }
+      }}
+      onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          setMenuHidden(false);
         }
       }}
       tabIndex={hasFlyout ? 0 : undefined}
