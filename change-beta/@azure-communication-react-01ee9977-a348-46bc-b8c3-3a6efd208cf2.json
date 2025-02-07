@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "Hard mute",
-  "comment": "Remove conditional compile for media access - Part 4",
-  "packageName": "@azure/communication-react",
-  "email": "fuyan@microsoft.com",
-  "dependentChangeType": "patch"
-}
