@@ -807,7 +807,7 @@ describe('VideoGallery together mode layout tests', () => {
     ...overrides
   });
 
-  const runTogetherModeTests = (userId: string, canStartTogetherMode: boolean) => {
+  const runTogetherModeTests = (userId: string, canStartTogetherMode: boolean): void => {
     test('Confirm Together Mode Layout state when capability IS Present', () => {
       const { container } = render(<VideoGallery {...createTestProps({ startTogetherModeEnabled: true }, userId)} />);
       // Together Mode capability is present will always be false for ACS users, the test here is to confirm
