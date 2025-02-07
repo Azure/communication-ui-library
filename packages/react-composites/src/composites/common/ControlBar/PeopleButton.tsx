@@ -50,7 +50,6 @@ export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
     (event: React.MouseEvent<HTMLElement>) => {
       onClick?.(event);
       if (chatButtonPresent) {
-        console.log(peoplePaneDismissButtonRef);
         peoplePaneDismissButtonRef?.current?.focus();
         event.preventDefault();
       }
