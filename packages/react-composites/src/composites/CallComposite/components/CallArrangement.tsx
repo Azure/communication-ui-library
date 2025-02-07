@@ -541,89 +541,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           grow
           styles={callArrangementContainerStyles(verticalControlBar)}
         >
-          {props.callControlProps?.options !== false && !isMobileWithActivePane && (
-            <Stack
-              verticalAlign={'center'}
-              className={mergeStyles({
-                zIndex: CONTROL_BAR_Z_INDEX,
-                padding: verticalControlBar ? '0.25rem' : 'unset'
-              })}
-            >
-              {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
-                <CallControls
-                  {...props.callControlProps}
-                  containerWidth={containerWidth}
-                  containerHeight={containerHeight}
-                  isMobile={props.mobileView}
-                  peopleButtonChecked={isPeoplePaneOpen}
-                  onPeopleButtonClicked={togglePeoplePane}
-                  displayVertical={verticalControlBar}
-                />
-              ) : (
-                <CommonCallControlBar
-                  {...props.callControlProps}
-                  ref={controlBarRef}
-                  callControls={props.callControlProps.options}
-                  callAdapter={adapter as CallAdapter}
-                  mobileView={props.mobileView}
-                  disableButtonsForLobbyPage={isInLobby}
-                  disableButtonsForHoldScreen={isInLocalHold}
-                  peopleButtonChecked={isPeoplePaneOpen}
-                  onPeopleButtonClicked={togglePeoplePane}
-                  onMoreButtonClicked={onMoreButtonClicked}
-                  isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
-                  /* @conditional-compile-remove(rtt) */
-                  isRealTimeTextSupported={hasJoinedCall}
-                  /* @conditional-compile-remove(rtt) */
-                  onStartRealTimeText={onStartRealTimeText}
-                  /* @conditional-compile-remove(rtt) */
-                  startRealTimeTextButtonChecked={openRealTimeText}
-                  useTeamsCaptions={useTeamsCaptions}
-                  isCaptionsOn={isCaptionsOn}
-                  onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
-                  displayVertical={verticalControlBar}
-                  onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
-                  onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
-                  userSetGalleryLayout={props.userSetGalleryLayout}
-                  onSetDialpadPage={props.onSetDialpadPage}
-                  dtmfDialerPresent={props.dtmfDialerPresent}
-                  peopleButtonRef={peopleButtonRef}
-                  cameraButtonRef={cameraButtonRef}
-                  onStopLocalSpotlight={
-                    !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
-                  }
-                  onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
-                  teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
-                  sidePaneDismissButtonRef={sidePaneDismissButtonRef}
-                />
-              )}
-            </Stack>
-          )}
-          {props.callControlProps?.options !== false && showDrawer && (
-            <Stack styles={drawerContainerStylesValue}>
-              <PreparedMoreDrawer
-                callControls={props.callControlProps.options}
-                onLightDismiss={closeDrawer}
-                onPeopleButtonClicked={onMoreDrawerPeopleClicked}
-                disableButtonsForHoldScreen={isInLocalHold}
-                isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
-                /* @conditional-compile-remove(rtt) */
-                isRealTimeTextSupported={hasJoinedCall}
-                /* @conditional-compile-remove(rtt) */
-                onStartRealTimeText={onStartRealTimeText}
-                /* @conditional-compile-remove(rtt) */
-                startRealTimeTextButtonChecked={openRealTimeText}
-                useTeamsCaptions={useTeamsCaptions}
-                onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
-                userSetGalleryLayout={props.userSetGalleryLayout}
-                onSetDialpadPage={props.onSetDialpadPage}
-                dtmfDialerPresent={props.dtmfDialerPresent}
-                dtmfDialerOptions={props.dtmfDialerOptions}
-                reactionResources={reactionResources}
-                onClickMeetingPhoneInfo={onMeetingPhoneInfoClicked}
-              />
-            </Stack>
-          )}
           <Stack horizontal grow>
             <Stack.Item style={callCompositeContainerCSS}>
               <Stack.Item styles={callGalleryStyles} grow>
@@ -717,6 +634,89 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               </Stack>
             )}
           </Stack>
+          {props.callControlProps?.options !== false && !isMobileWithActivePane && (
+            <Stack
+              verticalAlign={'center'}
+              className={mergeStyles({
+                zIndex: CONTROL_BAR_Z_INDEX,
+                padding: verticalControlBar ? '0.25rem' : 'unset'
+              })}
+            >
+              {isLegacyCallControlEnabled(props.callControlProps?.options) ? (
+                <CallControls
+                  {...props.callControlProps}
+                  containerWidth={containerWidth}
+                  containerHeight={containerHeight}
+                  isMobile={props.mobileView}
+                  peopleButtonChecked={isPeoplePaneOpen}
+                  onPeopleButtonClicked={togglePeoplePane}
+                  displayVertical={verticalControlBar}
+                />
+              ) : (
+                <CommonCallControlBar
+                  {...props.callControlProps}
+                  ref={controlBarRef}
+                  callControls={props.callControlProps.options}
+                  callAdapter={adapter as CallAdapter}
+                  mobileView={props.mobileView}
+                  disableButtonsForLobbyPage={isInLobby}
+                  disableButtonsForHoldScreen={isInLocalHold}
+                  peopleButtonChecked={isPeoplePaneOpen}
+                  onPeopleButtonClicked={togglePeoplePane}
+                  onMoreButtonClicked={onMoreButtonClicked}
+                  isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
+                  /* @conditional-compile-remove(rtt) */
+                  isRealTimeTextSupported={hasJoinedCall}
+                  /* @conditional-compile-remove(rtt) */
+                  onStartRealTimeText={onStartRealTimeText}
+                  /* @conditional-compile-remove(rtt) */
+                  startRealTimeTextButtonChecked={openRealTimeText}
+                  useTeamsCaptions={useTeamsCaptions}
+                  isCaptionsOn={isCaptionsOn}
+                  onClickVideoEffects={onResolveVideoEffectDependency ? openVideoEffectsPane : undefined}
+                  displayVertical={verticalControlBar}
+                  onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
+                  onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
+                  userSetGalleryLayout={props.userSetGalleryLayout}
+                  onSetDialpadPage={props.onSetDialpadPage}
+                  dtmfDialerPresent={props.dtmfDialerPresent}
+                  peopleButtonRef={peopleButtonRef}
+                  cameraButtonRef={cameraButtonRef}
+                  onStopLocalSpotlight={
+                    !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
+                  }
+                  onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
+                  teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
+                  sidePaneDismissButtonRef={sidePaneDismissButtonRef}
+                />
+              )}
+            </Stack>
+          )}
+          {props.callControlProps?.options !== false && showDrawer && (
+            <Stack styles={drawerContainerStylesValue}>
+              <PreparedMoreDrawer
+                callControls={props.callControlProps.options}
+                onLightDismiss={closeDrawer}
+                onPeopleButtonClicked={onMoreDrawerPeopleClicked}
+                disableButtonsForHoldScreen={isInLocalHold}
+                isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
+                /* @conditional-compile-remove(rtt) */
+                isRealTimeTextSupported={hasJoinedCall}
+                /* @conditional-compile-remove(rtt) */
+                onStartRealTimeText={onStartRealTimeText}
+                /* @conditional-compile-remove(rtt) */
+                startRealTimeTextButtonChecked={openRealTimeText}
+                useTeamsCaptions={useTeamsCaptions}
+                onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}
+                userSetGalleryLayout={props.userSetGalleryLayout}
+                onSetDialpadPage={props.onSetDialpadPage}
+                dtmfDialerPresent={props.dtmfDialerPresent}
+                dtmfDialerOptions={props.dtmfDialerOptions}
+                reactionResources={reactionResources}
+                onClickMeetingPhoneInfo={onMeetingPhoneInfoClicked}
+              />
+            </Stack>
+          )}
         </Stack>
       </Stack>
     </div>
