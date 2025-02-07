@@ -48,33 +48,32 @@ export const deviceConfigurationStackTokens: IStackTokens = {
 };
 
 /** @private */
-export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl?: string): IStackStyles => ({
-  root: {
-    height: '100%',
-    width: '100%',
-    padding: desktop ? '2rem 1rem 2rem 1rem' : '1rem 1rem 2rem 1rem',
-    minWidth: desktop
-      ? '25rem' // sum of min-width from children + ChildrenGap * (nb of children - 1) + padding * 2 = (11 + 11) + (2 * 1) + 0.5 * 2
-      : '16rem', // from LocalPreview: ControlBar width + 0.5 * 2 for spacing + padding * 2 = 14 + 0.5 * 2 + 0.5 * 2
-    minHeight: desktop
-      ? '22rem' // max height of SelectionContainer + padding * 2 = 21 + 0.5 * 2
-      : '13rem',
-    '::before': !backgroundImageUrl
-      ? undefined
-      : {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          zIndex: 0,
-          width: '100%',
-          height: '100%',
-          backgroundImage: `url(${backgroundImageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          ...AnimationStyles.fadeIn500
-        }
-  }
+export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl?: string): IStyle => ({
+  height: '100%',
+  position: 'relative',
+  width: '100%',
+  padding: desktop ? '2rem 1rem 2rem 1rem' : '1rem 1rem 2rem 1rem',
+  minWidth: desktop
+    ? '20rem' // sum of min-width from children + ChildrenGap * (nb of children - 1) + padding * 2 = (11 + 11) + (2 * 1) + 0.5 * 2
+    : '16rem', // from LocalPreview: ControlBar width + 0.5 * 2 for spacing + padding * 2 = 14 + 0.5 * 2 + 0.5 * 2
+  minHeight: desktop
+    ? '22rem' // max height of SelectionContainer + padding * 2 = 21 + 0.5 * 2
+    : '13rem',
+  '::before': !backgroundImageUrl
+    ? undefined
+    : {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 0,
+        width: '100%',
+        height: '100%',
+        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        ...AnimationStyles.fadeIn500
+      }
 });
 
 /**
