@@ -326,6 +326,7 @@ export const usePeoplePane = (props: {
         _defaultMenuItems.push({
           key: 'mute',
           text: 'Mute',
+          role: 'menuitem',
           iconProps: {
             iconName: 'ContextualMenuMicMutedIcon',
             styles: { root: { lineHeight: 0 } }
@@ -350,6 +351,7 @@ export const usePeoplePane = (props: {
         _defaultMenuItems.push({
           key: 'permit-audio',
           text: localeStrings.permitAudioMenuLabel,
+          role: 'menuitem',
           iconProps: {
             iconName: 'ControlButtonMicOn',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -366,6 +368,7 @@ export const usePeoplePane = (props: {
         _defaultMenuItems.push({
           key: 'forbid-audio',
           text: localeStrings.forbidAudioMenuLabel,
+          role: 'menuitem',
           iconProps: {
             iconName: 'ControlButtonMicProhibited',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -387,6 +390,7 @@ export const usePeoplePane = (props: {
         _defaultMenuItems.push({
           key: 'permit-video',
           text: localeStrings.permitVideoMenuLabel,
+          role: 'menuitem',
           iconProps: {
             iconName: 'ControlButtonCameraOn',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -403,6 +407,7 @@ export const usePeoplePane = (props: {
         _defaultMenuItems.push({
           key: 'forbid-video',
           text: localeStrings.forbidVideoMenuLabel,
+          role: 'menuitem',
           iconProps: {
             iconName: 'ControlButtonCameraProhibitedSmall',
             styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -430,6 +435,7 @@ export const usePeoplePane = (props: {
           _defaultMenuItems.push({
             key: 'stop-spotlight',
             text: stopSpotlightMenuText,
+            role: 'menuitem',
             onClick: onStopSpotlight,
             iconProps: {
               iconName: 'StopSpotlightContextualMenuItem',
@@ -459,6 +465,7 @@ export const usePeoplePane = (props: {
           _defaultMenuItems.push({
             key: 'start-spotlight',
             text: startSpotlightMenuText,
+            role: 'menuitem',
             onClick: onStartSpotlight,
             iconProps: {
               iconName: 'StartSpotlightContextualMenuItem',
@@ -475,6 +482,7 @@ export const usePeoplePane = (props: {
           _defaultMenuItems.push({
             key: 'unpin',
             text: localeStrings?.unpinParticipantMenuLabel,
+            role: 'menuitem',
             iconProps: {
               iconName: 'UnpinParticipant',
               styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -492,6 +500,7 @@ export const usePeoplePane = (props: {
             text: disablePinMenuItem
               ? localeStrings.pinParticipantLimitReachedMenuLabel
               : localeStrings.pinParticipantMenuLabel,
+            role: 'menuitem',
             iconProps: {
               iconName: 'PinParticipant',
               styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
