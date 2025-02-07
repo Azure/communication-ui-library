@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
 import { useHandlers } from '../hooks/useHandlers';
@@ -15,6 +15,8 @@ import {
   DevicesButton,
   ErrorBar,
   VideoStreamOptions,
+  _useContainerHeight,
+  _useContainerWidth,
   useTheme
 } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
@@ -129,6 +131,17 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   getDevicePermissionState(setVideoState, setAudioState);
 
+  const configContainerRef = useRef<HTMLDivElement>(null);
+
+  const configWidth = _useContainerWidth(configContainerRef);
+  console.log('configWidth', configWidth);
+
+  /**
+   * We want to stack the two sections (preview and devices) when the container is less than 450 wide.
+   * We lose size calculation when the container is less than 450 wide, so we stack the two sections.
+   */
+  const stackConfig = !!configWidth && configWidth < 450;
+  console.log('stackConfig', stackConfig);
   const errorBarProps = usePropsFor(ErrorBar);
   const microphones = useSelector(getMicrophones);
   const environmentInfo = useSelector(getEnvironmentInfo);
@@ -301,143 +314,149 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   return (
     <Stack styles={containerStyles}>
-      <Stack styles={bannerNotificationStyles}>
-        <ConfigurationPageErrorBar
-          /* @conditional-compile-remove(call-readiness) */
-          // show trouble shooting error bar when encountering network error/ permission error
-          showTroubleShootingErrorBar={
-            !cameraPermissionGranted || !microphonePermissionGranted || networkErrors.length > 0
-          }
-          /* @conditional-compile-remove(call-readiness) */
-          permissionsState={permissionsState}
-          /* @conditional-compile-remove(call-readiness) */
-          onNetworkingTroubleShootingClick={onNetworkingTroubleShootingClick}
-          /* @conditional-compile-remove(call-readiness) */
-          onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
-          errorBarProps={filteredErrorBarProps}
-          onDismissError={props.onDismissError}
-        />
-      </Stack>
-      {
-        /* @conditional-compile-remove(call-readiness) */
-        // show the following screen if permission API is availible (not unsupported) and videoState, audioState is assigned values
-        videoState && videoState !== 'unsupported' && audioState && audioState !== 'unsupported' && (
-          <CallReadinessModal
-            modalLayerHostId={modalLayerHostId}
-            mobileView={mobileView}
-            /* @conditional-compile-remove(unsupported-browser) */
-            environmentInfo={environmentInfo}
-            permissionsState={permissionsState}
-            isPermissionsModalDismissed={isPermissionsModalDismissed}
-            setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
-            onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
-            doNotPromptCamera={deviceChecks?.camera === 'doNotPrompt'}
-          />
-        )
-      }
-
-      {
-        /* @conditional-compile-remove(call-readiness) */
-        // show the following screen if permission API is not availible (unsupported) and videoState, audioState is assigned values
-        videoState && audioState && (videoState === 'unsupported' || audioState === 'unsupported') && (
-          <CallReadinessModalFallBack
+      <div ref={configContainerRef} style={{ width: '100%', height: '100%' }}>
+        <Stack styles={bannerNotificationStyles}>
+          <ConfigurationPageErrorBar
             /* @conditional-compile-remove(call-readiness) */
-            modalLayerHostId={modalLayerHostId}
-            mobileView={mobileView}
-            checkPermissionModalShowing={forceShowingCheckPermissions}
+            // show trouble shooting error bar when encountering network error/ permission error
+            showTroubleShootingErrorBar={
+              !cameraPermissionGranted || !microphonePermissionGranted || networkErrors.length > 0
+            }
+            /* @conditional-compile-remove(call-readiness) */
             permissionsState={permissionsState}
-            isPermissionsModalDismissed={isPermissionsModalDismissed}
-            /* @conditional-compile-remove(unsupported-browser) */
-            environmentInfo={environmentInfo}
-            setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
+            /* @conditional-compile-remove(call-readiness) */
+            onNetworkingTroubleShootingClick={onNetworkingTroubleShootingClick}
+            /* @conditional-compile-remove(call-readiness) */
             onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
+            errorBarProps={filteredErrorBarProps}
+            onDismissError={props.onDismissError}
           />
-        )
-      }
+        </Stack>
+        {
+          /* @conditional-compile-remove(call-readiness) */
+          // show the following screen if permission API is availible (not unsupported) and videoState, audioState is assigned values
+          videoState && videoState !== 'unsupported' && audioState && audioState !== 'unsupported' && (
+            <CallReadinessModal
+              modalLayerHostId={modalLayerHostId}
+              mobileView={mobileView}
+              /* @conditional-compile-remove(unsupported-browser) */
+              environmentInfo={environmentInfo}
+              permissionsState={permissionsState}
+              isPermissionsModalDismissed={isPermissionsModalDismissed}
+              setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
+              onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
+              doNotPromptCamera={deviceChecks?.camera === 'doNotPrompt'}
+            />
+          )
+        }
 
-      <Stack verticalFill grow horizontal className={fillWidth}>
-        <Stack
-          className={configurationCenteredContent(mobileWithPreview, !!props.logo)}
-          verticalAlign="center"
-          verticalFill={mobileWithPreview}
-          tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
-        >
-          <Stack.Item styles={callDetailsContainerStyles}>
-            <Logo logo={props.logo} />
-            {title}
-            {callDescription}
-          </Stack.Item>
+        {
+          /* @conditional-compile-remove(call-readiness) */
+          // show the following screen if permission API is not availible (unsupported) and videoState, audioState is assigned values
+          videoState && audioState && (videoState === 'unsupported' || audioState === 'unsupported') && (
+            <CallReadinessModalFallBack
+              /* @conditional-compile-remove(call-readiness) */
+              modalLayerHostId={modalLayerHostId}
+              mobileView={mobileView}
+              checkPermissionModalShowing={forceShowingCheckPermissions}
+              permissionsState={permissionsState}
+              isPermissionsModalDismissed={isPermissionsModalDismissed}
+              /* @conditional-compile-remove(unsupported-browser) */
+              environmentInfo={environmentInfo}
+              setIsPermissionsModalDismissed={setIsPermissionsModalDismissed}
+              onPermissionsTroubleshootingClick={onPermissionsTroubleshootingClick}
+            />
+          )
+        }
+
+        <Stack verticalFill grow horizontal className={fillWidth}>
           <Stack
-            horizontal={!mobileWithPreview}
-            horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
+            className={configurationCenteredContent(mobileWithPreview, !!props.logo)}
+            verticalAlign={configHorizontal(mobileWithPreview, mobileView, stackConfig) ? undefined : 'center'}
             verticalFill={mobileWithPreview}
-            tokens={deviceConfigurationStackTokens}
+            tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
           >
-            {role !== 'Consumer' && (
-              <LocalPreview
-                mobileView={mobileWithPreview}
-                showDevicesButton={mobileView}
-                onToggleCamera={toggleCamera}
-                cameraLoading={cameraLoading && !isCameraOn}
-              />
-            )}
-            <Stack styles={mobileView ? undefined : configurationSectionStyle}>
-              {!mobileWithPreview && (
-                <Stack className={mobileView ? undefined : selectionContainerStyle(theme, _isSafari(environmentInfo))}>
-                  <LocalDeviceSettings
-                    {...options}
-                    {...localDeviceSettingsHandlers}
-                    onSelectCamera={switchCamera}
-                    cameraPermissionGranted={cameraPermissionGrantedTrampoline(
-                      cameraPermissionGranted,
-                      /* @conditional-compile-remove(call-readiness) */ videoState
-                    )}
-                    microphonePermissionGranted={micPermissionGrantedTrampoline(
-                      microphonePermissionGranted,
-                      /* @conditional-compile-remove(call-readiness) */ audioState
-                    )}
-                    /* @conditional-compile-remove(call-readiness) */
-                    onClickEnableDevicePermission={() => {
-                      setIsPermissionsModalDismissed(true);
-                    }}
-                    onClickVideoEffects={toggleVideoEffectsPane}
+            <Stack.Item styles={callDetailsContainerStyles}>
+              <Logo logo={props.logo} />
+              {title}
+              {callDescription}
+            </Stack.Item>
+            <Stack
+              horizontal={configHorizontal(mobileWithPreview, mobileView, stackConfig)}
+              horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
+              verticalFill={mobileWithPreview}
+              tokens={deviceConfigurationStackTokens}
+            >
+              {role !== 'Consumer' && (
+                <LocalPreview
+                  mobileView={mobileWithPreview}
+                  showDevicesButton={mobileView}
+                  onToggleCamera={toggleCamera}
+                  cameraLoading={cameraLoading && !isCameraOn}
+                />
+              )}
+              <Stack styles={mobileView ? undefined : configurationSectionStyle}>
+                {!mobileWithPreview && (
+                  <Stack
+                    className={mobileView ? undefined : selectionContainerStyle(theme, _isSafari(environmentInfo))}
+                  >
+                    <LocalDeviceSettings
+                      {...options}
+                      {...localDeviceSettingsHandlers}
+                      onSelectCamera={switchCamera}
+                      cameraPermissionGranted={cameraPermissionGrantedTrampoline(
+                        cameraPermissionGranted,
+                        /* @conditional-compile-remove(call-readiness) */ videoState
+                      )}
+                      microphonePermissionGranted={micPermissionGrantedTrampoline(
+                        microphonePermissionGranted,
+                        /* @conditional-compile-remove(call-readiness) */ audioState
+                      )}
+                      /* @conditional-compile-remove(call-readiness) */
+                      onClickEnableDevicePermission={() => {
+                        setIsPermissionsModalDismissed(true);
+                      }}
+                      onClickVideoEffects={toggleVideoEffectsPane}
+                    />
+                  </Stack>
+                )}
+                <Stack
+                  styles={
+                    mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop
+                  }
+                  horizontalAlign={mobileWithPreview ? 'stretch' : 'end'}
+                >
+                  <StartCallButton
+                    className={mobileWithPreview ? startCallButtonStyleMobile : startCallButtonStyleDesktop}
+                    onClick={startCall}
+                    disabled={disableStartCallButton}
+                    hideIcon={true}
                   />
                 </Stack>
-              )}
-              <Stack
-                styles={mobileWithPreview ? startCallButtonContainerStyleMobile : startCallButtonContainerStyleDesktop}
-                horizontalAlign={mobileWithPreview ? 'stretch' : 'end'}
-              >
-                <StartCallButton
-                  className={mobileWithPreview ? startCallButtonStyleMobile : startCallButtonStyleDesktop}
-                  onClick={startCall}
-                  disabled={disableStartCallButton}
-                  hideIcon={true}
-                />
               </Stack>
             </Stack>
           </Stack>
+          <Panel
+            isOpen={isVideoEffectsPaneOpen}
+            hasCloseButton={false}
+            isBlocking={false}
+            isHiddenOnDismiss={false}
+            styles={panelStyles}
+            focusTrapZoneProps={panelFocusProps}
+            layerProps={panelLayerProps}
+            type={PanelType.custom}
+            customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
+          >
+            <SidePane
+              ariaLabel={isVideoEffectsPaneOpen ? locale.strings.call.videoEffectsPaneAriaLabel : undefined}
+              mobileView={props.mobileView}
+              updateSidePaneRenderer={props.updateSidePaneRenderer}
+              maxWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
+              minWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
+            />
+          </Panel>
         </Stack>
-        <Panel
-          isOpen={isVideoEffectsPaneOpen}
-          hasCloseButton={false}
-          isBlocking={false}
-          isHiddenOnDismiss={false}
-          styles={panelStyles}
-          focusTrapZoneProps={panelFocusProps}
-          layerProps={panelLayerProps}
-          type={PanelType.custom}
-          customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
-        >
-          <SidePane
-            ariaLabel={isVideoEffectsPaneOpen ? locale.strings.call.videoEffectsPaneAriaLabel : undefined}
-            mobileView={props.mobileView}
-            updateSidePaneRenderer={props.updateSidePaneRenderer}
-            maxWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
-            minWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
-          />
-        </Panel>
-      </Stack>
+      </div>
     </Stack>
   );
 };
@@ -467,4 +486,11 @@ const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'unset' | 'ci
     return <></>;
   }
   return <Image styles={logoStyles(props.logo.shape)} src={props.logo.url} alt={props.logo.alt} />;
+};
+
+const configHorizontal = (mobileWithPreview: boolean, isMobile: boolean, configTooNarrow: boolean): boolean => {
+  if (configTooNarrow && !isMobile) {
+    return false;
+  }
+  return !mobileWithPreview;
 };
