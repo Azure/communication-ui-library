@@ -1,8 +1,8 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "area": "feature",
   "workstream": "Captions",
-  "comment": "Stablize Captions Banner Component",
+  "comment": "Fix bug where spoken and caption language drawer missing default value",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
