@@ -1,14 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, {
-  useMemo,
-  useRef,
-  useEffect,
-  useState,
-  useCallback,
-  RefObject
-} from 'react';
+import React, { useMemo, useRef, useEffect, useState, useCallback, RefObject } from 'react';
 import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
