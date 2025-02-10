@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 
 import {
+  CallFeatureStreamState,
   CallState,
   LocalVideoStreamState,
   RemoteParticipantState,
@@ -84,6 +85,14 @@ export interface MockRemoteVideoStreamState extends RemoteVideoStreamState {
   dummyView?: MockVideoStreamRendererViewState;
 }
 
+export interface MockFeatureVideoStreamState extends CallFeatureStreamState {
+  /**
+   * Dummy placeholder for `view`.
+   * The test application creates a `view` corresponding to the
+   * `dummyView` generating an HTMLElement for the target if needed.
+   */
+  dummyView?: MockVideoStreamRendererViewState;
+}
 /**
  * A slight modification of {@link VideoStreamRendererViewState} for initializing the
  * {@link MockCallAdapter} for hermetic e2e tests.
