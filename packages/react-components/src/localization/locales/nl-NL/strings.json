@@ -599,6 +599,11 @@
       "message": "U wordt over 5 seconden naar de toegewezen ruimte verplaatst.",
       "dismissButtonAriaLabel": "Sluiten"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Je aparte vergaderruimte is gesloten",
+      "message": "U wordt over 5 seconden terug naar de vergadering verplaatst.",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Deelnemen aan aparte vergaderruimte?",
       "message": "U bent toegewezen aan een aparte vergaderruimte.",

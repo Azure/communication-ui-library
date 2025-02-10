@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "ダイヤルパッドを表示",
     "dtmfDialpadPlaceholderText": "番号を入力してください",
     "breakoutRoomChatPaneTitle": "ブレークアウト ルーム チャット",
-    "chatContentSpinnerLabel": "読み込んでいます..."
+    "chatContentSpinnerLabel": "チャットを読み込んでいます"
   }
 }

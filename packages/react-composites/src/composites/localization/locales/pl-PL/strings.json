@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "Pokaż klawiaturę numeryczną",
     "dtmfDialpadPlaceholderText": "Wprowadź numer",
     "breakoutRoomChatPaneTitle": "Czat osobnego pokoju",
-    "chatContentSpinnerLabel": "Trwa ładowanie..."
+    "chatContentSpinnerLabel": "Ładowanie czatu"
   }
 }

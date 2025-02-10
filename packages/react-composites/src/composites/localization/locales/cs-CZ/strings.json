@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "Zobrazit číselník",
     "dtmfDialpadPlaceholderText": "Zadejte číslo",
     "breakoutRoomChatPaneTitle": "Chat ve skupinové místnosti",
-    "chatContentSpinnerLabel": "Načítání..."
+    "chatContentSpinnerLabel": "Načítá se chat"
   }
 }

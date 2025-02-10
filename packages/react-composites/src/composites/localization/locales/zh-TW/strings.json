@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "顯示撥號盤",
     "dtmfDialpadPlaceholderText": "輸入號碼",
     "breakoutRoomChatPaneTitle": "分組討論區聊天",
-    "chatContentSpinnerLabel": "正在載入..."
+    "chatContentSpinnerLabel": "正在載入聊天"
   }
 }

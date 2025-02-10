@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "Показать панель набора номера",
     "dtmfDialpadPlaceholderText": "Введите номер",
     "breakoutRoomChatPaneTitle": "Чат переговорной комнаты",
-    "chatContentSpinnerLabel": "Загрузка…"
+    "chatContentSpinnerLabel": "Загрузка чата"
   }
 }

@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "Vis numerisk tastatur",
     "dtmfDialpadPlaceholderText": "Skriv inn nummer",
     "breakoutRoomChatPaneTitle": "Grupperomchat",
-    "chatContentSpinnerLabel": "Laster inn ..."
+    "chatContentSpinnerLabel": "Laster inn chat"
   }
 }

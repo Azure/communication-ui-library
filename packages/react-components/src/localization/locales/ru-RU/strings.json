@@ -599,6 +599,11 @@
       "message": "Мы переместим вас в назначенную комнату через 5 секунд.",
       "dismissButtonAriaLabel": "Закрыть"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Ваша переговорная комната закрыта",
+      "message": "Мы перенастроим вас обратно на собрание через 5 секунд.",
+      "dismissButtonAriaLabel": "Закрыть"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Присоединиться к переговорной комнате?",
       "message": "Вам назначена переговорная комната.",
