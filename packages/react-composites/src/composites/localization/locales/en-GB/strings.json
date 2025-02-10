@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "Show dialpad",
     "dtmfDialpadPlaceholderText": "Enter number",
     "breakoutRoomChatPaneTitle": "Breakout Room Chat",
-    "chatContentSpinnerLabel": "Loading..."
+    "chatContentSpinnerLabel": "Loading chat"
   }
 }

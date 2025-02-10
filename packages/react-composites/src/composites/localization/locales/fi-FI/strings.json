@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "Näytä valintapaneeli",
     "dtmfDialpadPlaceholderText": "Syötä numero",
     "breakoutRoomChatPaneTitle": "Pienryhmätilan keskustelu",
-    "chatContentSpinnerLabel": "Ladataan..."
+    "chatContentSpinnerLabel": "Ladataan keskustelua"
   }
 }

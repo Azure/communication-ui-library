@@ -599,6 +599,11 @@
       "message": "Nous allons vous déplacer vers la salle affectée dans 5 secondes.",
       "dismissButtonAriaLabel": "Fermer"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Votre salle pour petit groupe s’est fermée",
+      "message": "Nous vous redéverrons à votre réunion dans 5 secondes.",
+      "dismissButtonAriaLabel": "Fermer"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Rejoindre la salle de réunion ?",
       "message": "Vous avez reçu une invitation à rejoindre une salle pour petit groupe.",
