@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "Mostrar teclado de discagem",
     "dtmfDialpadPlaceholderText": "Digite o número",
     "breakoutRoomChatPaneTitle": "Chat da Sala para Sessão de Grupo",
-    "chatContentSpinnerLabel": "Carregando..."
+    "chatContentSpinnerLabel": "Carregando chat"
   }
 }

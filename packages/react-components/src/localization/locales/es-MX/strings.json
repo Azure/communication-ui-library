@@ -599,6 +599,11 @@
       "message": "Te moveremos a la sala asignada en 5 segundos.",
       "dismissButtonAriaLabel": "Cerrar"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "La sala para sesión de subgrupo se cerró",
+      "message": "Volveremos a la reunión en 5 segundos.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "¿Quieres unirte a la sala para sesión de subgrupo?",
       "message": "Se te ha asignado a una sala para sesión de subgrupo.",
