@@ -27,8 +27,18 @@ jest.mock('@internal/acs-ui-common', () => {
   };
 });
 
+describe('Dummy Test', () => {
+  test('Dummy test to ensure test suite is not empty', () => {
+    expect(true).toBe(true);
+  });
+});
+
 /* @conditional-compile-remove(together-mode) */
 describe('together mode overlay tests', () => {
+  test('Dummy test to ensure test suite is not empty', () => {
+    expect(true).toBe(true);
+  });
+
   test('Confirm togetherMode participant Status is not rendered when no participant video stream is available', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
@@ -111,17 +121,16 @@ describe('together mode overlay tests', () => {
   });
 
   test('Confirm displayName is rendered when hand is raised', () => {
-    //   const raisedHand: RaisedHand = {
-    //     raisedHandOrderPosition: 1
-    //   };
     const localParticipant = createLocalParticipant({
-      videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+      videoStream: { isAvailable: true, renderElement: createVideoDivElement() },
+      raisedHand: { raisedHandOrderPosition: 1 }
     });
     const remoteParticipants = Array.from({ length: 1 }, (_, index) =>
       createRemoteParticipant({
         userId: `remoteParticipant-${index + 1}`,
         displayName: `Remote Participant ${index + 1}`,
-        videoStream: { isAvailable: true, renderElement: createVideoDivElement() }
+        videoStream: { isAvailable: true, renderElement: createVideoDivElement() },
+        raisedHand: { raisedHandOrderPosition: index + 1 }
       })
     );
 
@@ -179,14 +188,18 @@ describe('together mode overlay tests', () => {
     let renderedReactions = getTogetherModeReactions(container);
     expect(renderedReactions.length).toBe(0);
 
+    enum ReactionType {
+      like = '👍',
+      heart = '❤️'
+    }
     const updatedLocalParticipant = {
       ...localParticipant,
-      reaction: { reactionType: '👍', receivedOn: new Date() }
+      reaction: { reactionType: ReactionType.like, receivedOn: new Date() }
     };
 
     const updatedRemoteParticipants = remoteParticipants.map((participant) => ({
       ...participant,
-      reaction: { reactionType: '❤️', receivedOn: new Date() }
+      reaction: { reactionType: ReactionType.heart, receivedOn: new Date() }
     }));
 
     rerender(
@@ -317,12 +330,13 @@ describe('together mode overlay tests', () => {
 });
 
 /* @conditional-compile-remove(together-mode) */
-const getTogetherModeSignalContainer = (root: Element | null): Element[] =>
-  Array.from(root?.querySelectorAll('[data-ui-group="together-mode-participant"]') ?? []);
+const getTogetherModeSignalContainer = (root: Element | null): Element[] => {
+  return Array.from(root?.querySelectorAll('[data-ui-id^="together-mode-participant"]') ?? []);
+};
 
 /* @conditional-compile-remove(together-mode) */
 const getTogetherModeReactions = (root: Element | null): Element[] =>
-  Array.from(root?.querySelectorAll('[data-ui-group="together-mode-participant-reaction"]') ?? []);
+  Array.from(root?.querySelectorAll('[data-ui-id^="together-mode-participant-reaction"]') ?? []);
 
 /* @conditional-compile-remove(together-mode) */
 const getParticipantDisplayName = (root: Element | null): string[] => {

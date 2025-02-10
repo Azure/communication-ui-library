@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "",
-  "comment": "Hide read by in chat action flyout when participants is 20 or more, as read count is not supported.",
-  "packageName": "@azure/communication-react",
-  "email": "palatter@microsoft.com",
-  "dependentChangeType": "patch"
-}

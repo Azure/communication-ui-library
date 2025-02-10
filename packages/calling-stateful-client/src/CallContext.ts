@@ -252,13 +252,6 @@ export class CallContext {
         delete draft.calls[oldCallId];
         draft.calls[newCallId] = call;
       }
-      /* @conditional-compile-remove(breakout-rooms) */
-      // Update the old origin call id of breakout room calls to the new call id
-      Object.values(draft.calls).forEach((call) => {
-        if (call.breakoutRooms?.breakoutRoomOriginCallId === oldCallId) {
-          call.breakoutRooms?.breakoutRoomOriginCallId === newCallId;
-        }
-      });
 
       /* @conditional-compile-remove(breakout-rooms) */
       // Update call ids in latestCallIdsThatPushedNotifications
@@ -758,16 +751,6 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.breakoutRooms = { ...call.breakoutRooms, assignedBreakoutRoom: breakoutRoom };
-      }
-    });
-  }
-
-  /* @conditional-compile-remove(breakout-rooms) */
-  public setBreakoutRoomOriginCallId(callId: string, breakoutRoomCallId: string): void {
-    this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[this._callIdHistory.latestCallId(breakoutRoomCallId)];
-      if (call) {
-        call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomOriginCallId: callId };
       }
     });
   }
@@ -1547,11 +1530,10 @@ export class CallContext {
     });
   }
 
-  public deleteLatestNotification(callId: string | undefined, notificationTarget: NotificationTarget): void {
+  public deleteLatestNotification(notificationTarget: NotificationTarget, callId?: string): void {
     const callIdOfNotification = this._latestCallIdOfNotification[notificationTarget];
 
-    // Only delete the notification if the call that pushed the notification is the same as the callId specified if it
-    // is provided
+    // Only delete the notification if the call that pushed the notification is the same as the callId if specified
     if (callId && callIdOfNotification !== callId) {
       return;
     }

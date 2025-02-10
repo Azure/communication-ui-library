@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Resolve issue where toolbar was not focused when opening formatting options for rich text",
+  "packageName": "@azure/communication-react",
+  "email": "palatter@microsoft.com",
+  "dependentChangeType": "patch"
+}
