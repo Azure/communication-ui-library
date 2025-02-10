@@ -49,6 +49,8 @@ export const deviceConfigurationStackTokens: IStackTokens = {
 
 /** @private */
 export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl?: string): IStyle => ({
+  display: 'flex',
+  flexFlow: 'column',
   height: '100%',
   position: 'relative',
   width: '100%',
