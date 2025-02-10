@@ -27,8 +27,18 @@ jest.mock('@internal/acs-ui-common', () => {
   };
 });
 
+describe('Dummy Test', () => {
+  test('Dummy test to ensure test suite is not empty', () => {
+    expect(true).toBe(true);
+  });
+});
+
 /* @conditional-compile-remove(together-mode) */
 describe('together mode overlay tests', () => {
+  test('Dummy test to ensure test suite is not empty', () => {
+    expect(true).toBe(true);
+  });
+
   test('Confirm togetherMode participant Status is not rendered when no participant video stream is available', () => {
     const localParticipant = createLocalParticipant({
       videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
