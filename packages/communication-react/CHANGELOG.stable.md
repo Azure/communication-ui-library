@@ -14,7 +14,6 @@ Mon, 10 Feb 2025 18:17:45 GMT
 - We are excited to announce that the Azure Communication Services Web UI Library enables ACS and Teams identity users to be moved to breakout rooms when in Teams meetings. This feature will be available when using Call and CallWithChat composite with notification to handle transitions in and out of breakout rooms. In the CallWithChat composite, the chat thread will be updated when in the breakout room. ACS and Teams identity users will not yet be able to choose their own breakout room or manage breakout rooms.
 
 ### Improvements
-- Update styling for RTT base on feedback ([PR #5627](https://github.com/azure/communication-ui-library/pull/5627) by 96077406+carocao-msft@users.noreply.github.com)
 - Refactor deleteLatestNotification to support an optional `CallId` ([PR #5628](https://github.com/azure/communication-ui-library/pull/5628) by 79475487+mgamis-msft@users.noreply.github.com)
 - Live announcement update when a message is received/edited from/by other users ([PR #5540](https://github.com/azure/communication-ui-library/pull/5540) by 98852890+vhuseinova-msft@users.noreply.github.com)
 
