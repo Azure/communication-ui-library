@@ -7,7 +7,7 @@
 ## [1.24.0](https://github.com/azure/communication-ui-library/tree/1.24.0)
 
 Mon, 10 Feb 2025 18:17:45 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.24.0-beta.1...1.24.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.23.0...1.24.0)
 
 ### Features
 
@@ -22,10 +22,10 @@ Mon, 10 Feb 2025 18:17:45 GMT
 - Fix bug where spoken and caption language drawer missing default value in dropdowns ([PR #5626](https://github.com/azure/communication-ui-library/pull/5626) by 96077406+carocao-msft@users.noreply.github.com)
 - Fix acs room audio video enabled notifications. when acs user just joined room UI should not show the audio video enabled notifications ([PR #5563](https://github.com/azure/communication-ui-library/pull/5563) by fuyan@microsoft.com)
 - Update Aria items for Participant List and menu items to have better narrator communication of each participant item ([PR #5624](https://github.com/azure/communication-ui-library/pull/5624) by 94866715+dmceachernmsft@users.noreply.github.com)
-- fix media access hermetic test ([PR #5574](https://github.com/azure/communication-ui-library/pull/5574) by fuyan@microsoft.com)
-- update Background blur tile label width to cap text for longer locale strings ([PR #5579](https://github.com/azure/communication-ui-library/pull/5579) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix media access hermetic test ([PR #5574](https://github.com/azure/communication-ui-library/pull/5574) by fuyan@microsoft.com)
+- Update Background blur tile label width to cap text for longer locale strings ([PR #5579](https://github.com/azure/communication-ui-library/pull/5579) by 94866715+dmceachernmsft@users.noreply.github.com)
 - Resolve issue where Rich Text Editor toolbar was not focused when opening formatting options for rich text ([PR #5611](https://github.com/azure/communication-ui-library/pull/5611) by palatter@microsoft.com)
-- Hide read by in chat action flyout when participants is 20 or more, as read count is not supported. ([PR #5585](https://github.com/azure/communication-ui-library/pull/5585) by palatter@microsoft.com)
+- Hide read by in chat action flyout when participants is 20 or more, as read count is not supported ([PR #5585](https://github.com/azure/communication-ui-library/pull/5585) by palatter@microsoft.com)
 - Check capability to determine if set caption language should be shown for teams meeting ([PR #5600](https://github.com/azure/communication-ui-library/pull/5600) by 96077406+carocao-msft@users.noreply.github.com)
 - Fix keyboard navigation for message menu button ([PR #5576](https://github.com/azure/communication-ui-library/pull/5576) by 98852890+vhuseinova-msft@users.noreply.github.com)
 
