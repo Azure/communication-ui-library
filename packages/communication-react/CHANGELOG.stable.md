@@ -1,8 +1,37 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 13 Jan 2025 19:28:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 10 Feb 2025 18:17:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.24.0](https://github.com/azure/communication-ui-library/tree/1.24.0)
+
+Mon, 10 Feb 2025 18:17:45 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.24.0-beta.1...1.24.0)
+
+### Features
+- Change spinner text when loading chat in breakout room ([PR #5630](https://github.com/azure/communication-ui-library/pull/5630) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix bug where spoken and caption language drawer missing default value ([PR #5626](https://github.com/azure/communication-ui-library/pull/5626) by 96077406+carocao-msft@users.noreply.github.com)
+- Update styling for RTT base on feedback ([PR #5627](https://github.com/azure/communication-ui-library/pull/5627) by 96077406+carocao-msft@users.noreply.github.com)
+### Improvements
+- Refactor deleteLatestNotification ([PR #5628](https://github.com/azure/communication-ui-library/pull/5628) by 79475487+mgamis-msft@users.noreply.github.com)
+- Remove conditional compile for media access - Part 4 ([PR #5603](https://github.com/azure/communication-ui-library/pull/5603) by fuyan@microsoft.com)
+- Remove hard mute conditional compile part 2 ([PR #5591](https://github.com/azure/communication-ui-library/pull/5591) by fuyan@microsoft.com)
+- Remove hard mute conditional compile - part 3 ([PR #5594](https://github.com/azure/communication-ui-library/pull/5594) by fuyan@microsoft.com)
+- Add sdk references to story book ([PR #5544](https://github.com/azure/communication-ui-library/pull/5544) by fuyan@microsoft.com)
+- Remove conditional compile media access part 1 ([PR #5587](https://github.com/azure/communication-ui-library/pull/5587) by fuyan@microsoft.com)
+- Update @azure/communication-calling beta version to 1.33.2-beta.1 ([PR #5614](https://github.com/azure/communication-ui-library/pull/5614) by miguelgamis@microsoft.com)
+### Bug Fixes
+- Fix acs room audio video enabled notifications. when acs user just joined room, should not show the audio video enabled notifications ([PR #5563](https://github.com/azure/communication-ui-library/pull/5563) by fuyan@microsoft.com)
+- Update Aria items for Participant List and menu items ([PR #5624](https://github.com/azure/communication-ui-library/pull/5624) by 94866715+dmceachernmsft@users.noreply.github.com)
+- fix media access hermetic test ([PR #5574](https://github.com/azure/communication-ui-library/pull/5574) by fuyan@microsoft.com)
+- update text container width to cap text for longer locale strings ([PR #5579](https://github.com/azure/communication-ui-library/pull/5579) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Resolve issue where toolbar was not focused when opening formatting options for rich text ([PR #5611](https://github.com/azure/communication-ui-library/pull/5611) by palatter@microsoft.com)
+- Hide read by in chat action flyout when participants is 20 or more, as read count is not supported. ([PR #5585](https://github.com/azure/communication-ui-library/pull/5585) by palatter@microsoft.com)
+- Live announcement update when a message is received/edited from/by other users ([PR #5540](https://github.com/azure/communication-ui-library/pull/5540) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Check capability to determine if set caption language should be shown for teams meeting ([PR #5600](https://github.com/azure/communication-ui-library/pull/5600) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix keyboard navigation for message menu button ([PR #5576](https://github.com/azure/communication-ui-library/pull/5576) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
 
 ## [1.23.0](https://github.com/azure/communication-ui-library/tree/1.23.0)
 
