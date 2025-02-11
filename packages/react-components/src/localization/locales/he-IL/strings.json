@@ -599,6 +599,11 @@
       "message": "נעביר אותך לחדר שהוקצה לך תוך 5 שניות.",
       "dismissButtonAriaLabel": "סגור"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "פיצול החדרים שלך נסגר",
+      "message": "נעביר אותך בחזרה לפגישה שלך בעוד 5 שניות.",
+      "dismissButtonAriaLabel": "סגור"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "להצטרף לפיצול חדרים?",
       "message": "הוקצית לפיצול חדר.",

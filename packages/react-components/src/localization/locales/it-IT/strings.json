@@ -599,6 +599,11 @@
       "message": "Verrai spostato nella stanza assegnata tra 5 secondi.",
       "dismissButtonAriaLabel": "Chiudi"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Il gruppo di lavoro è chiuso",
+      "message": "Ti reinsegneremo alla riunione tra 5 secondi.",
+      "dismissButtonAriaLabel": "Chiudi"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Vuoi partecipare alla stanza di lavoro?",
       "message": "Ti è stata assegnata una stanza di lavoro.",
