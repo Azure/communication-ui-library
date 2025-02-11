@@ -166,7 +166,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const participantItemId = useId();
   const participantItemFlyoutId = useId();
   const hasFlyout = !!(menuItems && menuItems?.length > 0);
-  const flyoutShowing = hasFlyout && menuHidden;
+  const flyoutShowing = hasFlyout && !menuHidden;
 
   const strings = { ...localeStrings, ...props.strings };
   const participantStateString = formatParticipantStateString(props, strings);
