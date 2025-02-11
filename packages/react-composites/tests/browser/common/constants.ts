@@ -44,7 +44,8 @@ export const IDS = {
   reactionButtonSubMenu: 'reaction-sub-menu',
   reactionMobileDrawerMenuItem: 'reaction-mobile-drawer-menu-item',
   cameraButton: 'call-composite-camera-button',
-  microphoneButton: 'call-composite-microphone-button'
+  microphoneButton: 'call-composite-microphone-button',
+  togetherModeStream: 'together-mode-layout'
 };
 
 export const spokenLanguageStrings = [

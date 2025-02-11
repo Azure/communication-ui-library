@@ -888,11 +888,7 @@ const getVerticalGallery = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="responsive-vertical-gallery"]') ?? null;
 
 /* @conditional-compile-remove(together-mode) */
-const getTogetherModeLayout = (root: Element | null): Element | null =>
-  root?.querySelector('[data-ui-id="together-mode-layout"]') ?? null;
-
-const getTiles = (root: Element | null): Element[] =>
-  Array.from(root?.querySelectorAll('[data-ui-id="video-tile"]') ?? []);
+Array.from(root?.querySelectorAll('[data-ui-id="video-tile"]') ?? []);
 const getGridTiles = (root: Element | null): Element[] => Array.from(getTiles(getGridLayout(root)));
 const tileIsVideo = (tile: Element | undefined): boolean => !!tile?.querySelector('video');
 const tileIsAudio = (tile: Element | undefined): boolean => !!tile && !tile.querySelector('video');

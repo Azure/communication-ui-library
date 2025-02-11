@@ -14,7 +14,12 @@ import type {
 } from '../../../common';
 import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
 import type { ParticipantCapabilities } from '@azure/communication-calling';
-import { CallState, CapabilitiesFeatureState } from '@internal/calling-stateful-client';
+import {
+  CallFeatureStreamState,
+  CallState,
+  CapabilitiesFeatureState,
+  TogetherModeStreamsState
+} from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -74,7 +79,7 @@ export function defaultMockCallAdapterState(
     call: {
       id: 'call1',
 
-      kind: 'Call' as CallKind,
+      kind: 'TeamsCall' as CallKind,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
@@ -94,7 +99,7 @@ export function defaultMockCallAdapterState(
       /* @conditional-compile-remove(together-mode) */
       togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
       pptLive: { isActive: false },
-      role: role ?? 'Unknown',
+      role: 'Presenter',
       dominantSpeakers: dominantSpeakers,
       totalParticipantCount:
         Object.values(remoteParticipants).length > 0 ? Object.values(remoteParticipants).length + 1 : undefined,
@@ -133,7 +138,7 @@ export function defaultMockCallAdapterState(
           }
         }
       : undefined,
-    userId: { kind: 'communicationUser', communicationUserId: '1' },
+    userId: { kind: 'microsoftTeamsUser', rawId: '8:orgid:test', microsoftTeamsUserId: '8:orgid:test' },
     devices: {
       isSpeakerSelectionAvailable: true,
       selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
@@ -166,9 +171,14 @@ export function defaultMockCallAdapterState(
  *
  * Use this to add participants to state created via {@link defaultCallAdapterState}.
  */
-export function defaultMockRemoteParticipant(displayName?: string): MockRemoteParticipantState {
+export function defaultMockRemoteParticipant(
+  displayName?: string,
+  isTeamsUser: boolean = false
+): MockRemoteParticipantState {
   return {
-    identifier: { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
+    identifier: isTeamsUser
+      ? { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` }
+      : { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
     state: 'Connected',
     videoStreams: {
       1: {
@@ -260,6 +270,32 @@ export function addScreenshareStream(
     throw new Error(`Expected 1 screenshare stream for ${participant.displayName}, got ${streams.length}`);
   }
   addDummyView(streams[0], isReceiving, scalingMode);
+}
+
+/**
+ * Add a screenshare stream to {@link MockRemoteParticipantState}.
+ *
+ * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
+ */
+export function addTogetherModeStream(
+  togetherModeStreamState: TogetherModeStreamsState,
+  isReceiving: boolean,
+  scalingMode?: 'Stretch' | 'Crop' | 'Fit'
+): void {
+  const togetherModeStream =
+    togetherModeStreamState.mainVideoStream ||
+    ({
+      feature: 'togetherMode',
+      mediaStreamType: 'Video',
+      isAvailable: true,
+      isReceiving: true
+    } as CallFeatureStreamState);
+  // if (!togetherModeStream) {
+  //   throw new Error(`Expected togetherMode Stream to be active`);
+  // }
+  if (togetherModeStreamState.mainVideoStream) {
+    addDummyView(togetherModeStreamState.mainVideoStream, isReceiving, scalingMode);
+  }
 }
 
 /**
