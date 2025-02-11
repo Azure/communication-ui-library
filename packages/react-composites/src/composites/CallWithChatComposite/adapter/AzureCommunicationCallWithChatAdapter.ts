@@ -206,7 +206,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         if (!eventData.data || eventData.data.state === 'closed') {
           if (
             this.originCallChatAdapter &&
-            this.originCallChatAdapter?.getState().thread.threadId !== this.chatAdapter?.getState().thread.threadId
+            this.originCallChatAdapter?.getState().thread.threadId !== this.context.getState().chat?.threadId
           ) {
             this.updateChatAdapter(this.originCallChatAdapter);
           }
