@@ -599,6 +599,11 @@
       "message": "Przeniesiemy Cię do przypisanego pokoju w ciągu 5 sekund.",
       "dismissButtonAriaLabel": "Zamknij"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Osobny pokój został zamknięty",
+      "message": "Przeniesiemy Cię z powrotem do spotkania za 5 sekund.",
+      "dismissButtonAriaLabel": "Zamknij"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Dołączyć do osobnego pokoju?",
       "message": "Przypisano Cię do osobnego pokoju.",

@@ -599,6 +599,11 @@
       "message": "Byddwn yn eich symud i'ch ystafell wedi'i neilltuo mewn 5 eiliad.",
       "dismissButtonAriaLabel": "Cau"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Mae eich cyfarfod ymylol wedi cau",
+      "message": "Byddwn yn eich symud yn ôl i'ch cyfarfod mewn 5 eiliad.",
+      "dismissButtonAriaLabel": "Cau"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Ymuno â chyfarfod ymylol?",
       "message": "Rydych chi wedi cael eich neilltuo i gyfarfod ymylol.",

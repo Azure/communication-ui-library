@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
 import { useHandlers } from '../hooks/useHandlers';
@@ -15,10 +15,12 @@ import {
   DevicesButton,
   ErrorBar,
   VideoStreamOptions,
+  _useContainerHeight,
+  _useContainerWidth,
   useTheme
 } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Image, Panel, PanelType, Stack } from '@fluentui/react';
+import { Image, mergeStyles, Panel, PanelType, Stack } from '@fluentui/react';
 import {
   callDetailsContainerStyles,
   configurationCenteredContent,
@@ -129,6 +131,15 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   getDevicePermissionState(setVideoState, setAudioState);
 
+  const configContainerRef = useRef<HTMLDivElement>(null);
+
+  const configWidth = _useContainerWidth(configContainerRef);
+
+  /**
+   * We want to stack the two sections (preview and devices) when the container is less than 450 wide.
+   * We lose size calculation when the container is less than 450 wide, so we stack the two sections.
+   */
+  const stackConfig = !!configWidth && configWidth < 450;
   const errorBarProps = usePropsFor(ErrorBar);
   const microphones = useSelector(getMicrophones);
   const environmentInfo = useSelector(getEnvironmentInfo);
@@ -300,7 +311,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   );
 
   return (
-    <Stack styles={containerStyles}>
+    <div ref={configContainerRef} className={mergeStyles(containerStyles)}>
       <Stack styles={bannerNotificationStyles}>
         <ConfigurationPageErrorBar
           /* @conditional-compile-remove(call-readiness) */
@@ -358,7 +369,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       <Stack verticalFill grow horizontal className={fillWidth}>
         <Stack
           className={configurationCenteredContent(mobileWithPreview, !!props.logo)}
-          verticalAlign="center"
+          verticalAlign={stackConfig && !mobileView ? undefined : 'center'}
           verticalFill={mobileWithPreview}
           tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
         >
@@ -368,7 +379,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             {callDescription}
           </Stack.Item>
           <Stack
-            horizontal={!mobileWithPreview}
+            horizontal={configHorizontal(mobileWithPreview, mobileView, stackConfig)}
             horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
             verticalFill={mobileWithPreview}
             tokens={deviceConfigurationStackTokens}
@@ -438,7 +449,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           />
         </Panel>
       </Stack>
-    </Stack>
+    </div>
   );
 };
 
@@ -467,4 +478,11 @@ const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'unset' | 'ci
     return <></>;
   }
   return <Image styles={logoStyles(props.logo.shape)} src={props.logo.url} alt={props.logo.alt} />;
+};
+
+const configHorizontal = (mobileWithPreview: boolean, isMobile: boolean, configTooNarrow: boolean): boolean => {
+  if (configTooNarrow && !isMobile) {
+    return false;
+  }
+  return !mobileWithPreview;
 };

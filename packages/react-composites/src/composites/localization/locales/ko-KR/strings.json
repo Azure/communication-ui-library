@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "다이얼패드 표시",
     "dtmfDialpadPlaceholderText": "번호 입력",
     "breakoutRoomChatPaneTitle": "소규모 회의실 채팅",
-    "chatContentSpinnerLabel": "로드하는 중..."
+    "chatContentSpinnerLabel": "채팅 로드 중"
   }
 }

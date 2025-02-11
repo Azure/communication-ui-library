@@ -599,6 +599,11 @@
       "message": "5 秒後に、割り当てられた会議室に移動します。",
       "dismissButtonAriaLabel": "閉じる"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "ブレークアウト ルームが終了しました",
+      "message": "5 秒後に会議に戻ります。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "ブレークアウト ルームに参加しますか?",
       "message": "ブレークアウト ルームに割り当てられました。",
