@@ -599,6 +599,11 @@
       "message": "سننقلك إلى الغرفة المعينة خلال 5 ثوان.",
       "dismissButtonAriaLabel": "إغلاق"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "تم إغلاق الغرفة الفرعية الخاصة بك",
+      "message": "سنعيدك إلى اجتماعك خلال 5 ثوان.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "هل تريد الانضمام إلى الغرفة الفرعية؟",
       "message": "تم تعيينك إلى غرفة اجتماع فرعية.",

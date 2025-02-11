@@ -599,6 +599,11 @@
       "message": "5초 후에 할당된 채팅방으로 이동합니다.",
       "dismissButtonAriaLabel": "닫기"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "소규모 회의실 종료됨",
+      "message": "5초 후에 모임으로 돌아갑니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "소규모 회의실에 참가하시겠어요?",
       "message": "사용자가 소규모 회의실에 배정되었습니다.",

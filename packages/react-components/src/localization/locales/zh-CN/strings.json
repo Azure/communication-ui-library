@@ -599,6 +599,11 @@
       "message": "我们将在 5 秒后将你移动到你分配的聊天室。",
       "dismissButtonAriaLabel": "关闭"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "你的分组讨论室已关闭",
+      "message": "我们将在 5 秒后将你移回会议。",
+      "dismissButtonAriaLabel": "关闭"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "要加入分组讨论室吗?",
       "message": "已将你分配到一间分组讨论室。",

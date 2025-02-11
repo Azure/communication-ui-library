@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "Afficher le pavé ",
     "dtmfDialpadPlaceholderText": "Entrer un numéro",
     "breakoutRoomChatPaneTitle": "Conversation dans une salle pour petit groupe",
-    "chatContentSpinnerLabel": "Chargement en cours."
+    "chatContentSpinnerLabel": "Chargement de la session de messagerie instantanée"
   }
 }

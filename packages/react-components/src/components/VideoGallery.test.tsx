@@ -791,6 +791,90 @@ test('should render screenshare component and local user video tile when local u
   expect(tileIsVideo(localVideoTile)).toBe(true);
 });
 
+/* @conditional-compile-remove(together-mode) */
+describe('VideoGallery together mode layout tests', () => {
+  const createTestProps = (overrides: Partial<VideoGalleryProps> = {}, userId: string): VideoGalleryProps => ({
+    layout: 'togetherMode',
+    localParticipant: createLocalParticipant({
+      userId,
+      videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+    }),
+    remoteParticipants: [
+      createRemoteParticipant({
+        videoStream: { isAvailable: false, renderElement: createVideoDivElement() }
+      })
+    ],
+    ...overrides
+  });
+
+  const runTogetherModeTests = (userId: string, canStartTogetherMode: boolean): void => {
+    test('Confirm Together Mode Layout state when capability IS Present', () => {
+      const { container } = render(<VideoGallery {...createTestProps({ startTogetherModeEnabled: true }, userId)} />);
+      // Together Mode capability is present will always be false for ACS users, the test here is to confirm
+      // if for some reason the capability is present becomes true for ACS users, the canSwitchToTogetherModeLayout value
+      // remains false
+      canStartTogetherMode
+        ? expect(getTogetherModeLayout(container)).toBeTruthy()
+        : expect(getTogetherModeLayout(container)).toBeFalsy();
+    });
+
+    test('Confirm Together Mode CANNOT be started when capability NOT Present', () => {
+      const { container } = render(<VideoGallery {...createTestProps({ startTogetherModeEnabled: false }, userId)} />);
+      expect(getTogetherModeLayout(container)).toBeFalsy();
+    });
+
+    test('Confirm Together Mode Layout CAN be switched when together mode is already active', () => {
+      const { container } = render(<VideoGallery {...createTestProps({ isTogetherModeActive: true }, userId)} />);
+      expect(getTogetherModeLayout(container)).toBeTruthy();
+    });
+
+    test('Confirm Together Mode Layout CANNOT be switched when together mode is NOT active', () => {
+      const { container } = render(<VideoGallery {...createTestProps({ isTogetherModeActive: false }, userId)} />);
+      expect(getTogetherModeLayout(container)).toBeFalsy();
+    });
+
+    test('Confirm Together Mode View is NOT active when screenSharing is active', () => {
+      const props = createTestProps({ isTogetherModeActive: true }, userId);
+      const { rerender, container } = render(<VideoGallery {...props} />);
+      expect(getTogetherModeLayout(container)).toBeTruthy();
+
+      props.localParticipant.isScreenSharingOn = true;
+      props.localParticipant.screenShareStream = {
+        isAvailable: true,
+        renderElement: createRemoteScreenShareVideoDivElement()
+      };
+      rerender(<VideoGallery {...props} />);
+      expect(getTogetherModeLayout(container)).toBeFalsy();
+    });
+
+    test('Confirm Together Mode View is active when screenSharing is stopped', () => {
+      const props = createTestProps({ isTogetherModeActive: true }, userId);
+      const { rerender, container } = render(<VideoGallery {...props} />);
+      expect(getTogetherModeLayout(container)).toBeTruthy();
+
+      props.localParticipant.isScreenSharingOn = true;
+      props.localParticipant.screenShareStream = {
+        isAvailable: true,
+        renderElement: createRemoteScreenShareVideoDivElement()
+      };
+      rerender(<VideoGallery {...props} />);
+      expect(getTogetherModeLayout(container)).toBeFalsy();
+
+      props.localParticipant.isScreenSharingOn = false;
+      rerender(<VideoGallery {...props} />);
+      expect(getTogetherModeLayout(container)).toBeTruthy();
+    });
+  };
+
+  describe('Local Participant is a Teams User', () => {
+    runTogetherModeTests('8:orgid:localParticipant', true);
+  });
+
+  describe('Local Participant is an ACS User', () => {
+    runTogetherModeTests('8:acs:localParticipant', false);
+  });
+});
+
 const getFloatingLocalVideoModal = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="floating-local-video-host"]') ?? null;
 const getLocalVideoTile = (root: Element | null): Element | null =>
@@ -802,6 +886,10 @@ const getHorizontalGallery = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="responsive-horizontal-gallery"]') ?? null;
 const getVerticalGallery = (root: Element | null): Element | null =>
   root?.querySelector('[data-ui-id="responsive-vertical-gallery"]') ?? null;
+
+/* @conditional-compile-remove(together-mode) */
+const getTogetherModeLayout = (root: Element | null): Element | null =>
+  root?.querySelector('[data-ui-id="together-mode-layout"]') ?? null;
 
 const getTiles = (root: Element | null): Element[] =>
   Array.from(root?.querySelectorAll('[data-ui-id="video-tile"]') ?? []);

@@ -230,6 +230,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         horizontalAlign="end"
         className={mergeStyles(menuButtonContainerStyle, { color: theme.palette.neutralPrimary })}
         title={strings.menuTitle}
+        aria-controls={participantItemFlyoutId}
         data-ui-id={ids.participantItemMenuButton}
       >
         <Icon
@@ -238,7 +239,13 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         />
       </Stack>
     ),
-    [theme.palette.neutralPrimary, strings.menuTitle, ids.participantItemMenuButton, showMenuIcon]
+    [
+      theme.palette.neutralPrimary,
+      strings.menuTitle,
+      participantItemFlyoutId,
+      ids.participantItemMenuButton,
+      showMenuIcon
+    ]
   );
 
   return (
@@ -268,6 +275,11 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         }
         if (!menuHidden) {
           onDismissMenu();
+        }
+      }}
+      onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          setMenuHidden(false);
         }
       }}
       tabIndex={hasFlyout ? 0 : undefined}

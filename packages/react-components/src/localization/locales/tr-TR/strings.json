@@ -599,6 +599,11 @@
       "message": "Sizi 5 saniye içinde atanan odanıza taşıyacağız.",
       "dismissButtonAriaLabel": "Kapat"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Tartışma odanız kapatıldı",
+      "message": "5 saniye içinde toplantınıza geri taşınacak.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Tartışma odasına katılmak ister misiniz?",
       "message": "Bir tartışma odasına atandınız.",

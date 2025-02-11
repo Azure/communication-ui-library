@@ -599,6 +599,11 @@
       "message": "Za 5 sekund vás přesuneme do přiřazené místnosti.",
       "dismissButtonAriaLabel": "Zavřít"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Vaše skupinová místnost byla uzavřena",
+      "message": "Za 5 sekund vás přesuneme zpět na schůzku.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Připojit se ke skupinové místnosti?",
       "message": "Byli jste přiřazeni ke skupinové místnosti.",

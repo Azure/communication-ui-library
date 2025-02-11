@@ -159,6 +159,7 @@ export const TogetherModeOverlay = memo(
             participantStatus.id && (
               <div
                 key={participantStatus.id}
+                data-ui-id={`together-mode-participant-${participantStatus.id}`}
                 style={{
                   ...getTogetherModeParticipantOverlayStyle(participantStatus.seatPositionStyle)
                 }}
@@ -216,6 +217,7 @@ export const TogetherModeOverlay = memo(
                       )}
                     >
                       <div
+                        data-ui-id={`together-mode-participant-reaction-${participantStatus.id}`}
                         style={{
                           ...togetherModeParticipantEmojiSpriteStyle(
                             emojiSize,
