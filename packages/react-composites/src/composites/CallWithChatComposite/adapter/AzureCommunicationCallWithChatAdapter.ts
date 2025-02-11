@@ -222,8 +222,9 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.chatAdapter?.offStateChange(this.onChatStateChange);
         // Unassign chat adapter
         this.chatAdapter = undefined;
-        // Set chat state to undefined to prevent showing chat thread of origin call
+        // Set chat state to undefined to ensure that the chat thread of the breakout room is not shown
         this.context.unsetChatState();
+        // Update chat state to the origin call chat adapter
         if (this.originCallChatAdapter) {
           this.updateChatAdapter(this.originCallChatAdapter);
         }
