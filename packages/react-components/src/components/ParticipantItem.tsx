@@ -166,7 +166,6 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   const participantItemId = useId();
   const participantItemFlyoutId = useId();
   const hasFlyout = !!(menuItems && menuItems?.length > 0);
-  const flyoutShowing = hasFlyout && !menuHidden;
 
   const strings = { ...localeStrings, ...props.strings };
   const participantStateString = formatParticipantStateString(props, strings);
@@ -258,7 +257,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         props.strings?.participantItemAriaLabel
       }
       aria-labelledby={`${props.ariaLabelledBy} ${participantItemId}`}
-      aria-expanded={flyoutShowing}
+      aria-expanded={!menuHidden}
       aria-disabled={hasFlyout || props.onClick ? false : true}
       aria-haspopup={hasFlyout ? true : undefined}
       aria-controls={participantItemFlyoutId}
