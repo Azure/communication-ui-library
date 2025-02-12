@@ -78,7 +78,7 @@ export const _useContainerHeight = (containerRef: RefObject<HTMLElement>): numbe
   return height;
 };
 
-const NARROW_WIDTH_REM = 30;
+const NARROW_WIDTH_REM = 27.5;
 
 const SHORT_HEIGHT_REM = 23.75;
 
