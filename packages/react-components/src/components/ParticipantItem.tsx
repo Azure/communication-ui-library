@@ -257,7 +257,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
         props.strings?.participantItemAriaLabel
       }
       aria-labelledby={`${props.ariaLabelledBy} ${participantItemId}`}
-      aria-expanded={menuHidden ? false : true}
+      aria-expanded={!menuHidden}
       aria-disabled={hasFlyout || props.onClick ? false : true}
       aria-haspopup={hasFlyout ? true : undefined}
       aria-controls={participantItemFlyoutId}
