@@ -42,11 +42,11 @@ test.describe('PIN - Pinning tests', async () => {
 
     const isMobile = isTestProfileMobile(testInfo);
     if (isMobile) {
-      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=2`);
+      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
       await videoTile.dispatchEvent('touchstart');
       await pageClick(page, 'div[role="menu"] >> text=Pin for me');
     } else {
-      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=2`);
+      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
       await videoTile.hover();
       const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
       await moreButton.hover();
@@ -58,11 +58,11 @@ test.describe('PIN - Pinning tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('PIN-1-2-pin-video-tile-after.png');
 
     if (isMobile) {
-      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
+      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=0`);
       await videoTile.dispatchEvent('touchstart');
       await page.waitForSelector(dataUiId('drawer-menu'));
     } else {
-      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
+      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=0`);
       await videoTile.hover();
       const moreButton = await videoTile?.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
       await moreButton?.hover();
@@ -145,17 +145,17 @@ test.describe('PIN - Pinning tests', async () => {
     const isMobile = isTestProfileMobile(testInfo);
     if (isMobile) {
       for (let i = 0; i < 4; i++) {
-        const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=-1`);
+        const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=-2`);
         await videoTile.dispatchEvent('touchstart');
         await pageClick(page, 'div[role="menu"] >> text=Pin for me');
       }
 
-      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=-1`);
+      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=-2`);
       await videoTile.dispatchEvent('touchstart');
       await page.waitForSelector(dataUiId('drawer-menu'));
     } else {
       for (let i = 0; i < 4; i++) {
-        const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=-1`);
+        const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=-2`);
         await videoTile.hover();
         const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
         await moreButton.hover();
@@ -164,7 +164,7 @@ test.describe('PIN - Pinning tests', async () => {
         await pageClick(page, dataUiId('video-tile-pin-participant-button'));
       }
 
-      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=-1`);
+      const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=-2`);
       await videoTile.hover();
       const moreButton = await videoTile?.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
       await moreButton?.hover();

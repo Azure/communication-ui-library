@@ -103,7 +103,7 @@ test.describe('VideoGallery tests', async () => {
     const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
 
     // skip the first tile because it is the local video tile
-    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=0`);
     await videoTile.hover();
     const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     await moreButton.click();

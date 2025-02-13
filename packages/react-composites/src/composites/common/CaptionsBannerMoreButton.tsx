@@ -11,15 +11,11 @@ import { buttonFlyoutIncreasedSizeStyles } from '../CallComposite/styles/Buttons
 import { useLocale } from '../localization';
 import { MoreButton } from './MoreButton';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
-import { FocusableElement } from './types/FocusableElement';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
 /** @private */
 export interface CaptionsBannerMoreButtonProps extends ControlBarButtonProps {
   onCaptionsSettingsClick?: () => void;
-
-  /** Element to return focus to when the Captions Banner is closed */
-  returnFocusRef?: React.RefObject<FocusableElement>;
 }
 
 /**
@@ -47,8 +43,7 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
 
   const stopCaptions = useCallback(async () => {
     await startCaptionsButtonProps.onStopCaptions();
-    props.returnFocusRef?.current?.focus();
-  }, [startCaptionsButtonProps, props.returnFocusRef]);
+  }, [startCaptionsButtonProps]);
 
   moreButtonContextualMenuItems.push({
     key: 'ToggleCaptionsKey',
