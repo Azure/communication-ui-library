@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "feature",
-  "workstream": "Captions",
-  "comment": "Fix bug where spoken and caption language drawer missing default value",
+  "area": "fix",
+  "workstream": "A11y",
+  "comment": "Fix control bar button and more button A11y issues, announcing collapsed and expanded state",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"
