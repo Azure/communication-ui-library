@@ -2,6 +2,167 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 10 Feb 2025 18:17:45 GMT",
+      "version": "1.24.0",
+      "tag": "@azure/communication-react_v1.24.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0c652c481d44ad4a95c7b5fd50ab58f672758e16",
+            "area": "improvement",
+            "workstream": "Stateful layer",
+            "comment": "Refactor deleteLatestNotification"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6624fa7d8a62976029bf8025ac495808f2ac76c9",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Remove conditional compile for media access - Part 4"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "7cdaf40c616db5dc48845de00dfc8d608f0ba2fe",
+            "area": "fix",
+            "workstream": "Hard mute",
+            "comment": "Fix acs room audio video enabled notifications. when acs user just joined room, should not show the audio video enabled notifications"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9ab59fca7b23c01802766af357c95b9ccf0238a4",
+            "area": "feature",
+            "workstream": "Breakout rooms",
+            "comment": "Change spinner text when loading chat in breakout room"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "357b99182b006c8fd72ebbff4d63cde0ebd9c9ca",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Remove hard mute conditional compile part 2"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e34a743a37da0fdabd280a4c7d17824f8ae0ea2a",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update Aria items for Participant List and menu items"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "9ae565856b6e70f69f22cf50e07d37ac085d6bbd",
+            "area": "fix",
+            "workstream": "Hard mute",
+            "comment": "fix media access hermetic test"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "49a8a0dc02efea0b9be2092467f9e62917ae357c",
+            "area": "fix",
+            "workstream": "Video Effects",
+            "comment": "update text container width to cap text for longer locale strings"
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "bff4b7769feda9fcd2a30315946a55e5fb18a4fc",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve issue where toolbar was not focused when opening formatting options for rich text"
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "72b4f8b9585a03e5975c267093c300a6fd87c658",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Hide read by in chat action flyout when participants is 20 or more, as read count is not supported."
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e77a53b9eea5f6a30a36e551a58fd9c61252ccf2",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Live announcement update when a message is received/edited from/by other users"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c4773cb0426e31b45b5cc8670f2c891b36f35eeb",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "Check capability to determine if set caption language should be shown for teams meeting"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d9f22aaab01ef7cccd5ae88c1e301a1703665858",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Remove hard mute conditional compile - part 3"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c2198c933f0d0b9938df8bca86e673a0eccada48",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Add sdk references to story book"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c118cfd289774b52ca81d8c109c0d6ee0d4eb454",
+            "area": "feature",
+            "workstream": "Captions",
+            "comment": "Fix bug where spoken and caption language drawer missing default value"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "765d226a3a62f1642158a200d75a094818840da8",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix keyboard navigation for message menu button"
+          },
+          {
+            "author": "fuyan@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "167e634121b6b438a064bcec7ef64eaee7396acd",
+            "area": "improvement",
+            "workstream": "Hard mute",
+            "comment": "Remove conditional compile media access part 1"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a10d66cfa1adf64e1c14eb4886a81abc249cd5aa",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "Update styling for RTT base on feedback"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2058d9cb8a60969aa126df467699446b474c50ff",
+            "area": "improvement",
+            "workstream": "Calling dependency",
+            "comment": "Update @azure/communication-calling beta version to 1.33.2-beta.1"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 03 Feb 2025 22:02:22 GMT",
       "version": "1.24.0-beta.1",
       "tag": "@azure/communication-react_v1.24.0-beta.1",
