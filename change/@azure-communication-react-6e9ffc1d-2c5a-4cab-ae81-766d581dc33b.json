@@ -2,8 +2,8 @@
   "type": "patch",
   "area": "fix",
   "workstream": "A11y",
-  "comment": "Fix keyboard navigation for message menu button",
+  "comment": "Update aria-level for heading on the config screen",
   "packageName": "@azure/communication-react",
-  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "email": "dmceachern@microsoft.com",
   "dependentChangeType": "patch"
 }
