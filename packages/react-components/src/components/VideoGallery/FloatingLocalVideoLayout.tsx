@@ -214,8 +214,6 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
 
   return (
     <Stack styles={rootLayoutStyle}>
-      {wrappedLocalVideoComponent}
-      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       <Stack
         horizontal={overflowGalleryPosition === 'verticalRight'}
         styles={innerLayoutStyle}
@@ -231,6 +229,8 @@ export const FloatingLocalVideoLayout = (props: FloatingLocalVideoLayoutProps): 
         )}
         {overflowGalleryTrampoline(overflowGallery, props.overflowGalleryPosition)}
       </Stack>
+      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
+      {wrappedLocalVideoComponent}
     </Stack>
   );
 };
