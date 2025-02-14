@@ -123,7 +123,7 @@
     "captionsSettingsCancelButtonLabel": "Cancel",
     "captionsSettingsModalAriaLabel": "Captions Setting Modal",
     "captionsSettingsCloseModalButtonAriaLabel": "Close Captions Setting",
-    "captionsBannerMoreButtonCallingLabel": "More Options, to turn off captions or change captions language settings",
+    "captionsBannerMoreButtonCallingLabel": "Captions Settings More Options",
     "captionsBannerMoreButtonTooltip": "More options",
     "realTimeTextLabel": "Real-time text (RTT)",
     "startRealTimeTextLabel": "Turn on RTT for this call",
