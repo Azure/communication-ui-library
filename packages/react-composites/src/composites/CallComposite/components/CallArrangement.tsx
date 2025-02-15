@@ -93,7 +93,6 @@ import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
-import { FocusableElement } from '../../common/types/FocusableElement';
 import { DtmfDialPadOptions } from '../CallComposite';
 
 /**
@@ -156,7 +155,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     [theme.palette.neutralLighterAlt]
   );
 
-  const controlBarRef = useRef<FocusableElement>(null);
   const peopleButtonRef = useRef<IButton>(null);
   const cameraButtonRef = useRef<IButton>(null);
   const sidePaneDismissButtonRef = useRef<IButton>(null);
@@ -541,6 +539,98 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
           grow
           styles={callArrangementContainerStyles(verticalControlBar)}
         >
+          <Stack horizontal grow>
+            <Stack.Item style={callCompositeContainerCSS}>
+              <Stack.Item styles={callGalleryStyles} grow>
+                <Stack verticalFill styles={galleryContainerStyles}>
+                  <Stack.Item styles={notificationsContainerStyles}>
+                    {
+                      /* @conditional-compile-remove(breakout-rooms) */
+                      props.mobileView && <BreakoutRoomsBanner locale={locale} adapter={adapter} />
+                    }
+                    {props.showErrorNotifications && (
+                      <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+                        <NotificationStack
+                          onDismissNotification={props.onDismissError}
+                          activeNotifications={filteredLatestErrorNotifications}
+                        />
+                      </Stack>
+                    )}
+                    {latestNotifications && (
+                      <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+                        <NotificationStack
+                          activeNotifications={latestNotifications}
+                          onDismissNotification={props.onDismissNotification}
+                          /* @conditional-compile-remove(breakout-rooms) */
+                          strings={notificationStackStrings}
+                        />
+                      </Stack>
+                    )}
+                    {props.capabilitiesChangedNotificationBarProps &&
+                      props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
+                        <Stack styles={bannerNotificationStyles}>
+                          <CapabilitiesChangedNotificationBar
+                            {...props.capabilitiesChangedNotificationBarProps}
+                            capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
+                          />
+                        </Stack>
+                      )}
+                  </Stack.Item>
+                  {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
+                  {!isInLocalHold && (
+                    <CallingCaptionsBanner
+                      captionsOptions={props.captionsOptions}
+                      isMobile={props.mobileView}
+                      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                      useTeamsCaptions={useTeamsCaptions}
+                      /* @conditional-compile-remove(rtt) */
+                      isRealTimeTextOn={openRealTimeText}
+                    />
+                  )}
+                </Stack>
+              </Stack.Item>
+            </Stack.Item>
+            <SidePane
+              mobileView={props.mobileView}
+              maxWidth={isVideoPaneOpen ? `${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem` : undefined}
+              minWidth={isVideoPaneOpen ? `${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem` : undefined}
+              updateSidePaneRenderer={props.updateSidePaneRenderer}
+              onPeopleButtonClicked={
+                props.mobileView && !shouldShowPeopleTabHeaderButton(props.callControlProps.options)
+                  ? undefined
+                  : togglePeoplePane
+              }
+              disablePeopleButton={
+                typeof props.callControlProps.options !== 'boolean' &&
+                isDisabled(props.callControlProps.options?.participantsButton)
+              }
+              onChatButtonClicked={props.mobileChatTabHeader?.onClick}
+              disableChatButton={props.mobileChatTabHeader?.disabled}
+              showAddPeopleButton={!!props.callControlProps.callInvitationURL}
+              ariaLabel={isVideoEffectsPaneOpen ? locale.strings.call.videoEffectsPaneAriaLabel : undefined}
+            />
+            {props.mobileView && (
+              <ModalLocalAndRemotePIP
+                modalLayerHostId={props.modalLayerHostId}
+                hidden={!isSidePaneOpen}
+                styles={pipStyles}
+                strings={modalStrings}
+                minDragPosition={minMaxDragPosition.minDragPosition}
+                maxDragPosition={minMaxDragPosition.maxDragPosition}
+                onDismissSidePane={() => {
+                  closePeoplePane();
+                  if (props.onCloseChatPane) {
+                    props.onCloseChatPane();
+                  }
+                }}
+              />
+            )}
+            {drawerMenuItems.length > 0 && (
+              <Stack styles={drawerContainerStyles()}>
+                <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
+              </Stack>
+            )}
+          </Stack>
           {props.callControlProps?.options !== false && !isMobileWithActivePane && (
             <Stack
               verticalAlign={'center'}
@@ -562,7 +652,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               ) : (
                 <CommonCallControlBar
                   {...props.callControlProps}
-                  ref={controlBarRef}
                   callControls={props.callControlProps.options}
                   callAdapter={adapter as CallAdapter}
                   mobileView={props.mobileView}
@@ -624,99 +713,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               />
             </Stack>
           )}
-          <Stack horizontal grow>
-            <Stack.Item style={callCompositeContainerCSS}>
-              <Stack.Item styles={callGalleryStyles} grow>
-                <Stack verticalFill styles={galleryContainerStyles}>
-                  <Stack.Item styles={notificationsContainerStyles}>
-                    {
-                      /* @conditional-compile-remove(breakout-rooms) */
-                      props.mobileView && <BreakoutRoomsBanner locale={locale} adapter={adapter} />
-                    }
-                    {props.showErrorNotifications && (
-                      <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
-                        <NotificationStack
-                          onDismissNotification={props.onDismissError}
-                          activeNotifications={filteredLatestErrorNotifications}
-                        />
-                      </Stack>
-                    )}
-                    {latestNotifications && (
-                      <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
-                        <NotificationStack
-                          activeNotifications={latestNotifications}
-                          onDismissNotification={props.onDismissNotification}
-                          /* @conditional-compile-remove(breakout-rooms) */
-                          strings={notificationStackStrings}
-                        />
-                      </Stack>
-                    )}
-                    {props.capabilitiesChangedNotificationBarProps &&
-                      props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
-                        <Stack styles={bannerNotificationStyles}>
-                          <CapabilitiesChangedNotificationBar
-                            {...props.capabilitiesChangedNotificationBarProps}
-                            capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
-                          />
-                        </Stack>
-                      )}
-                  </Stack.Item>
-                  {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
-                  {!isInLocalHold && (
-                    <CallingCaptionsBanner
-                      captionsOptions={props.captionsOptions}
-                      isMobile={props.mobileView}
-                      onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
-                      useTeamsCaptions={useTeamsCaptions}
-                      returnFocusRef={controlBarRef}
-                      /* @conditional-compile-remove(rtt) */
-                      isRealTimeTextOn={openRealTimeText}
-                    />
-                  )}
-                </Stack>
-              </Stack.Item>
-            </Stack.Item>
-            <SidePane
-              mobileView={props.mobileView}
-              maxWidth={isVideoPaneOpen ? `${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem` : undefined}
-              minWidth={isVideoPaneOpen ? `${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem` : undefined}
-              updateSidePaneRenderer={props.updateSidePaneRenderer}
-              onPeopleButtonClicked={
-                props.mobileView && !shouldShowPeopleTabHeaderButton(props.callControlProps.options)
-                  ? undefined
-                  : togglePeoplePane
-              }
-              disablePeopleButton={
-                typeof props.callControlProps.options !== 'boolean' &&
-                isDisabled(props.callControlProps.options?.participantsButton)
-              }
-              onChatButtonClicked={props.mobileChatTabHeader?.onClick}
-              disableChatButton={props.mobileChatTabHeader?.disabled}
-              showAddPeopleButton={!!props.callControlProps.callInvitationURL}
-              ariaLabel={isVideoEffectsPaneOpen ? locale.strings.call.videoEffectsPaneAriaLabel : undefined}
-            />
-            {props.mobileView && (
-              <ModalLocalAndRemotePIP
-                modalLayerHostId={props.modalLayerHostId}
-                hidden={!isSidePaneOpen}
-                styles={pipStyles}
-                strings={modalStrings}
-                minDragPosition={minMaxDragPosition.minDragPosition}
-                maxDragPosition={minMaxDragPosition.maxDragPosition}
-                onDismissSidePane={() => {
-                  closePeoplePane();
-                  if (props.onCloseChatPane) {
-                    props.onCloseChatPane();
-                  }
-                }}
-              />
-            )}
-            {drawerMenuItems.length > 0 && (
-              <Stack styles={drawerContainerStyles()}>
-                <_DrawerMenu onLightDismiss={() => setDrawerMenuItems([])} items={drawerMenuItems} />
-              </Stack>
-            )}
-          </Stack>
         </Stack>
       </Stack>
     </div>
