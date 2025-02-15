@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "feature",
-  "workstream": "RTT",
-  "comment": "Update styling for RTT base on feedback",
+  "area": "fix",
+  "workstream": "A11y",
+  "comment": "Fix control bar button and more button A11y issues, announcing collapsed and expanded state",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

@@ -8,9 +8,9 @@ pr: none
 
 resources:
   repositories:
-    - repository: m365Pipelines
+    - repository: 1esPipelines
       type: git
-      name: 1ESPipelineTemplates/M365GPT
+      name: 1ESPipelineTemplates/1ESPipelineTemplates
       ref: refs/tags/release
 
 parameters:
@@ -21,7 +21,7 @@ parameters:
     default: false
 
 extends:
-  template: v1/M365.Unofficial.PipelineTemplate.yml@m365Pipelines
+  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
   parameters:
     pool:
       name: ess-1eshp-windows-latest
@@ -37,7 +37,7 @@ extends:
                 clean: true
                 persistCredentials: true
 
-              - task: TouchdownBuildTask@4
+              - task: TouchdownBuildTask@5
                 inputs:
                   environment: 'PRODEXT'
                   teamId: '35669'
@@ -49,7 +49,7 @@ extends:
                   cultureMappingType: 'None'
                 displayName: 'Call Touchdown build task for components and commit changes'
 
-              - task: TouchdownBuildTask@4
+              - task: TouchdownBuildTask@5
                 inputs:
                   environment: 'PRODEXT'
                   teamId: '35669'
@@ -99,7 +99,6 @@ extends:
                     git commit -m "TDBuild latest localization"
                     git push origin $newBranchName
 
-                    Write-Host "PR created successfully: $($response.url)"
     sdl:
       arrow:
         serviceConnection: Arrow_skype_PROD
