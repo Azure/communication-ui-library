@@ -350,7 +350,6 @@ export const getIsTogetherModeActive = (state: CallAdapterState): boolean | unde
  * @returns The local participant's user id or undefined.
  */
 export const getLocalUserId = (state: CallAdapterState): CommunicationIdentifierKind | undefined => state.userId;
-
 /** @private */
 export const getMediaAccessSetting = (state: CallAdapterState): MediaAccess | undefined =>
   state.call?.meetingMediaAccess;
