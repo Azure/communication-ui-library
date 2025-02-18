@@ -341,13 +341,23 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         await stream?.switchSource(device);
 
-        /// TODO: TEMPORARY SOLUTION
-        /// The Calling SDK needs to wait until the stream is ready before resolving the switchSource promise.
-        /// This is a temporary solution to wait for the stream to be ready before resolving the promise.
-        /// This allows the onSelectCamera to be throttled to prevent the streams from getting in to a frozen state
-        /// if the user switches cameras too rapidly.
-        /// This is to be removed once the Calling SDK has issued a fix.
-        await stream?.getMediaStream();
+        await Promise.all([
+          /// TODO: TEMPORARY SOLUTION
+          /// The Calling SDK needs to wait until the stream is ready before resolving the switchSource promise.
+          /// This is a temporary solution to wait for the stream to be ready before resolving the promise.
+          /// This allows the onSelectCamera to be throttled to prevent the streams from getting in to a frozen state
+          /// if the user switches cameras too rapidly.
+          /// This is to be removed once the Calling SDK has issued a fix.
+          stream?.getMediaStream(),
+
+          // An extra wait here is also necessary to prevent the remote stream freezing issue.
+          // If this is removed, please test switching cameras rapidly won't cause stream to freeze for remote users.
+          // When this mitigation was introduced, the repro interval time that caused the issue was:
+          // - iPhone 11, safari, v8.3.1: 750ms
+          // - Pixel 6, chrome, Android 15: 400ms
+          // - Windows 11, edge: 100ms
+          new Promise((resolve) => setTimeout(resolve, 1000))
+        ]);
       } else {
         const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
