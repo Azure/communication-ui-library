@@ -82,7 +82,7 @@ const screenshareButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
     background: theme.semanticColors.primaryButtonBackground,
     color: theme.semanticColors.primaryButtonText,
-    ':focus::after': { outlineColor: `${theme.palette.white} !important` }, // added !important to avoid override by FluentUI button styles
+    ':focus::after': { outlineColor: `${DefaultPalette.white} !important` }, // added !important to avoid override by FluentUI button styles
     '@media (forced-colors: active)': {
       border: '1px solid',
       borderColor: theme.palette.black
@@ -91,7 +91,7 @@ const screenshareButtonStyles = (theme: Theme): IButtonStyles => ({
   rootCheckedHovered: {
     background: theme.semanticColors.primaryButtonBackgroundHovered,
     color: theme.semanticColors.primaryButtonTextHovered,
-    ':focus::after': { outlineColor: `${theme.palette.white} !important` }, // added !important to avoid override by FluentUI button styles
+    ':focus::after': { outlineColor: `${DefaultPalette.white} !important` }, // added !important to avoid override by FluentUI button styles
     '@media (forced-colors: active)': {
       border: '1px solid',
       borderColor: theme.palette.black
