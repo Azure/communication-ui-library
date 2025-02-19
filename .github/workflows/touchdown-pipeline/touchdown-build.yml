@@ -8,10 +8,10 @@ pr: none
 
 resources:
   repositories:
-  - repository: 1esPipelines
-    type: git
-    name: 1ESPipelineTemplates/1ESPipelineTemplates
-    ref: refs/tags/release
+    - repository: 1esPipelines
+      type: git
+      name: 1ESPipelineTemplates/1ESPipelineTemplates
+      ref: refs/tags/release
 
 parameters:
   # Parameter to control whether to only pass strings to touchdown (false) or to also create a PR with changes (true)
