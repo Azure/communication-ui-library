@@ -105,7 +105,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           new Promise((resolve) => {
             return resolve({
               imageInitials: emoji,
-              initialsColor: emoji ? getBackgroundColor(emoji)?.backgroundColor : undefined
+              initialsColor: emoji ? getBackgroundColor(emoji)?.backgroundColor : undefined,
+              hideAvatar: true
             });
           })
       );
