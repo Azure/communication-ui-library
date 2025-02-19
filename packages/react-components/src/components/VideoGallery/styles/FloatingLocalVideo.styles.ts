@@ -113,6 +113,12 @@ export const floatingLocalVideoModalStyle = (
         }
       }
     },
+    {
+      // Needed to allow the videoGallery underneath to receive pointer events
+      root: {
+        pointerEvents: 'none'
+      }
+    },
     localVideoModalStyles
   );
 };

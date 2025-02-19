@@ -10,7 +10,6 @@ import { CallingCaptionsSettingsModal } from './CallingCaptionsSettingsModal';
 import { CaptionsBannerMoreButton } from './CaptionsBannerMoreButton';
 import { useLocale } from '../localization';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
-import { FocusableElement } from './types/FocusableElement';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
 
 const mobileViewBannerWidth = '95%';
@@ -23,8 +22,6 @@ export const CallingCaptionsBanner = (props: {
   captionsOptions?: {
     height: 'full' | 'default';
   };
-  /** Element to return focus to when the Captions Banner is closed */
-  returnFocusRef?: React.RefObject<FocusableElement>;
   /* @conditional-compile-remove(rtt) */
   isRealTimeTextOn?: boolean;
 }): JSX.Element => {
@@ -129,10 +126,7 @@ export const CallingCaptionsBanner = (props: {
           </Stack>
           {!props.isMobile && captionsBannerProps.isCaptionsOn && (
             <div className={floatingChildClassName}>
-              <CaptionsBannerMoreButton
-                onCaptionsSettingsClick={onClickCaptionsSettings}
-                returnFocusRef={props.returnFocusRef}
-              />
+              <CaptionsBannerMoreButton onCaptionsSettingsClick={onClickCaptionsSettings} />
             </div>
           )}
         </div>
