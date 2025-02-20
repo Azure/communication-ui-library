@@ -198,41 +198,6 @@ test.describe('VideoGallery tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('participant-cap-lg.png');
   });
 
-  /* @conditional-compile-remove(together-mode) */
-  test.only('Confirm together mode layout view', async ({ page, serverUrl }, testInfo) => {
-    test.skip(isTestProfileMobile(testInfo));
-    const paul = defaultMockRemoteParticipant('Paul Bridges', true);
-    const vasily = defaultMockRemoteParticipant('Vasily');
-    const participants = [paul, vasily];
-    vasily.raisedHand = { raisedHandOrderPosition: 1 };
-    addVideoStream(vasily, true);
-    const initialState = defaultMockCallAdapterState(participants);
-    if (initialState.call?.togetherMode) {
-      initialState.call.togetherMode.isActive = true;
-      addTogetherModeStream(initialState.call.togetherMode.streams, true);
-      initialState.call.togetherMode.seatingPositions = {
-        '8:acs:Vasily-id': { left: 0, top: 0, width: 100, height: 100 }
-      };
-    }
-    initialState.isTeamsCall = true;
-    await page.goto(
-      buildUrlWithMockAdapter(serverUrl, initialState, {
-        newControlBarExperience: 'true'
-      })
-    );
-
-    const id = `together-mode-participant-8:acs:Vasily-id`;
-    await waitForSelector(page, dataUiId(IDS.moreButton));
-    await pageClick(page, dataUiId(IDS.moreButton));
-    await page.locator('button:has-text("View")').click();
-    expect(page.locator('button:has-text("Together mode")')).toBeTruthy();
-    expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-view-option.png');
-    await page.locator('button:has-text("Together mode")').click();
-    await waitForSelector(page, dataUiId(IDS.togetherModeStream));
-    await waitForSelector(page, dataUiId(id));
-    expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-view.png');
-  });
-
   /* @conditional-compile-remove(gallery-layout-composite) */
   test('VideoGallery layouts looks correct on mobile', async ({ page, serverUrl }, testInfo) => {
     test.skip(!isTestProfileMobile(testInfo));

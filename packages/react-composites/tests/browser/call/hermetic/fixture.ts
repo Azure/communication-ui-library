@@ -61,7 +61,8 @@ export function defaultMockCallAdapterState(
   role?: ParticipantRole,
   isRoomsCall?: boolean,
   callEndReasonSubCode?: number,
-  isReactionCapability?: boolean
+  isReactionCapability?: boolean,
+  isTeamsUser?: boolean
 ): MockCallAdapterState {
   const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
   participants?.forEach((p) => {
@@ -79,7 +80,7 @@ export function defaultMockCallAdapterState(
     call: {
       id: 'call1',
 
-      kind: 'TeamsCall' as CallKind,
+      kind: 'Call' as CallKind,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
       transcription: { isTranscriptionActive: false },
@@ -138,7 +139,9 @@ export function defaultMockCallAdapterState(
           }
         }
       : undefined,
-    userId: { kind: 'microsoftTeamsUser', rawId: '8:orgid:test', microsoftTeamsUserId: '8:orgid:test' },
+    userId: isTeamsUser
+      ? { kind: 'microsoftTeamsUser', microsoftTeamsUserId: '8:orgid:localUser' }
+      : { kind: 'communicationUser', communicationUserId: '8:orgid:localUser' },
     devices: {
       isSpeakerSelectionAvailable: true,
       selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
@@ -177,7 +180,7 @@ export function defaultMockRemoteParticipant(
 ): MockRemoteParticipantState {
   return {
     identifier: isTeamsUser
-      ? { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` }
+      ? { kind: 'microsoftTeamsUser', microsoftTeamsUserId: `8:orgid:${displayName}-id` }
       : { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
     state: 'Connected',
     videoStreams: {
