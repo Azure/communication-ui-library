@@ -3,6 +3,7 @@
 
 import {
   addScreenshareStream,
+  addTogetherModeStream,
   addVideoStream,
   buildUrlWithMockAdapter,
   defaultMockCallAdapterState,
