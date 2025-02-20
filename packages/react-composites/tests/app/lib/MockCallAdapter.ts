@@ -125,7 +125,7 @@ export class MockCallAdapter implements CallAdapter {
   }
   /* @conditional-compile-remove(together-mode) */
   setTogetherModeSceneSize(width: number, height: number): void {
-    throw Error(`Setting Together Mode width ${width} and height: ${height} not implemented`);
+    return;
   }
   /* @conditional-compile-remove(together-mode) */
   disposeTogetherModeStreamView(): Promise<void> {
