@@ -17,6 +17,8 @@ import {
   TypingIndicatorStylesProps,
   useTheme
 } from '@internal/react-components';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { CustomAvatarOptions, OnRenderAvatarCallback } from '@internal/react-components';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextEditBoxOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -95,6 +97,8 @@ import { getCreatedBy, getTextOnlyChat } from './selectors/baseSelectors';
 export type ChatScreenProps = {
   options?: ChatCompositeOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   onRenderMessage?: (messageProps: MessageProps, defaultOnRender?: MessageRenderer) => JSX.Element;
   onRenderTypingIndicator?: (typingUsers: CommunicationParticipant[]) => JSX.Element;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
@@ -131,6 +135,8 @@ interface OverlayImageItem {
 export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   const {
     onFetchAvatarPersonaData,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+    onRenderAvatar,
     onRenderMessage,
     onRenderTypingIndicator,
     options,
@@ -229,7 +235,16 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
   };
 
   const onRenderAvatarCallback = useCallback(
-    (userId?: string, defaultOptions?: AvatarPersonaProps) => {
+    (
+      userId?: string,
+      defaultOptions?: AvatarPersonaProps,
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
+    ) => {
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      if (onRenderAvatar) {
+        return onRenderAvatar(userId, defaultOptions, defaultOnRender);
+      }
       return (
         <AvatarPersona
           userId={userId}
@@ -239,7 +254,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
         />
       );
     },
-    [onFetchAvatarPersonaData]
+    [onFetchAvatarPersonaData, /* @conditional-compile-remove(composite-onRenderAvatar-API) */ onRenderAvatar]
   );
 
   const messageThreadStyles = useMemo(() => {
@@ -380,7 +395,7 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
       const titleIcon = onRenderAvatarCallback && onRenderAvatarCallback(messageSenderId, titleIconRenderOptions);
       const overlayImage: OverlayImageItem = {
         title: message?.senderDisplayName || '',
-        titleIcon: titleIcon,
+        titleIcon: titleIcon || <></>,
         attachmentId: attachment.id,
         imageSrc: imageSrc,
         messageId: messageId,

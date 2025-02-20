@@ -107,6 +107,8 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
     adapter,
     options,
     onFetchAvatarPersonaData,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+    onRenderAvatar,
     onRenderTypingIndicator,
     onRenderMessage,
     onFetchParticipantMenuItems
@@ -127,6 +129,8 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+            /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+            onRenderAvatar={onRenderAvatar}
             /* @conditional-compile-remove(file-sharing-acs) */
             attachmentOptions={options?.attachmentOptions}
           />

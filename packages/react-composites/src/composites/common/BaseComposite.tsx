@@ -12,6 +12,8 @@ import {
   useTheme
 } from '@fluentui/react';
 import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 import React, { createContext, useContext } from 'react';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
@@ -55,9 +57,15 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
    * This will not affect the displayName shown in the composite.
    * The displayName throughout the composite will be what is provided to the adapter when the adapter is created.
    * will be what is provided to the adapter when the adapter is created.
+   *
+   * This callback will be ignored if onRenderAvatar is provided.
    */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
-
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  /**
+   * Optional callback to override render of the avatar.
+   */
+  onRenderAvatar?: OnRenderAvatarCallback;
   /**
    * A callback function that can be used to provide custom menu items for a participant in
    * participant list.
