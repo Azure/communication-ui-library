@@ -599,6 +599,11 @@
       "message": "Wir verschieben Sie in 5 Sekunden zu Ihrem zugewiesenen Raum.",
       "dismissButtonAriaLabel": "Schließen"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Ihr Gruppenraum wurde geschlossen.",
+      "message": "Wir bringen Sie in 5 Sekunden zurück zu Ihrer Besprechung.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Gruppenraum betreten?",
       "message": "Sie wurden einem Gruppenraum zugewiesen.",

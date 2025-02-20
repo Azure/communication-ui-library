@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "Mostrar teclado de marcado",
     "dtmfDialpadPlaceholderText": "Introducir número",
     "breakoutRoomChatPaneTitle": "Chat de sala para sesión de subgrupo",
-    "chatContentSpinnerLabel": "Cargando..."
+    "chatContentSpinnerLabel": "Cargando chat"
   }
 }

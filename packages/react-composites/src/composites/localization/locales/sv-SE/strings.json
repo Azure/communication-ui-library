@@ -453,6 +453,6 @@
     "openDtmfDialpadLabel": "Visa knappsats",
     "dtmfDialpadPlaceholderText": "Ange nummer",
     "breakoutRoomChatPaneTitle": "Grupprumschatt",
-    "chatContentSpinnerLabel": "Läser in ..."
+    "chatContentSpinnerLabel": "Läser in chatt"
   }
 }

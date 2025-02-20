@@ -599,6 +599,11 @@
       "message": "Vi flytter deg til det tilordnede rommet om fem sekunder.",
       "dismissButtonAriaLabel": "Lukk"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Grupperommet ditt er lukket",
+      "message": "Vi flytter deg tilbake til møtet om fem sekunder.",
+      "dismissButtonAriaLabel": "Lukk"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Bli med i grupperommet?",
       "message": "Du har blitt tilordnet et grupperom.",

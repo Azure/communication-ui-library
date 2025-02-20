@@ -599,6 +599,11 @@
       "message": "Du flyttas till det tilldelade rummet om 5 sekunder.",
       "dismissButtonAriaLabel": "Stäng"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Grupprummet har stängts",
+      "message": "Du flyttas tillbaka till mötet om 5 sekunder.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Vill du ansluta till grupprummet?",
       "message": "Du har tilldelats till ett separat rum.",

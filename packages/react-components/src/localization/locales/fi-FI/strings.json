@@ -599,6 +599,11 @@
       "message": "Siirrämme sinut määritettyihin huoneeseesi 5 sekunnin kuluttua.",
       "dismissButtonAriaLabel": "Sulje"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Pienryhmätilasi on suljettu",
+      "message": "Siirrämme sinut takaisin kokoukseen 5 sekunnin kuluttua.",
+      "dismissButtonAriaLabel": "Sulje"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Liitytäänkö pienryhmätilaan?",
       "message": "Sinut on määritetty pienryhmätilaan.",

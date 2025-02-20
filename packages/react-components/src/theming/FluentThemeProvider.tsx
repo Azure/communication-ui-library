@@ -27,7 +27,6 @@ export interface FluentThemeProviderProps {
 const wrapper = mergeStyles({
   height: '100%',
   width: '100%',
-  overflow: 'auto',
   // Add NorthStar styling used previously in the library
   '*': {
     boxSizing: 'border-box'
