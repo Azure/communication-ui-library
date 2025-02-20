@@ -1,8 +1,33 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 13 Jan 2025 19:28:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 10 Feb 2025 18:17:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.24.0](https://github.com/azure/communication-ui-library/tree/1.24.0)
+
+Mon, 10 Feb 2025 18:17:45 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.23.0...1.24.0)
+
+### Features
+
+- We are excited to announce that the Azure Communication Services Web UI Library enables ACS and Teams identity users to be moved to breakout rooms when in Teams meetings. This feature will be available when using Call and CallWithChat composite with notification to handle transitions in and out of breakout rooms. In the CallWithChat composite, the chat thread will be updated when in the breakout room. ACS and Teams identity users will not yet be able to choose their own breakout room or manage breakout rooms.
+
+### Improvements
+- Refactor deleteLatestNotification to support an optional `CallId` ([PR #5628](https://github.com/azure/communication-ui-library/pull/5628) by 79475487+mgamis-msft@users.noreply.github.com)
+- Live announcement update when a message is received/edited from/by other users ([PR #5540](https://github.com/azure/communication-ui-library/pull/5540) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
+### Bug Fixes
+- Fix bug where spoken and caption language drawer missing default value in dropdowns ([PR #5626](https://github.com/azure/communication-ui-library/pull/5626) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix acs room audio video enabled notifications. when acs user just joined room UI should not show the audio video enabled notifications ([PR #5563](https://github.com/azure/communication-ui-library/pull/5563) by fuyan@microsoft.com)
+- Update Aria items for Participant List and menu items to have better narrator communication of each participant item ([PR #5624](https://github.com/azure/communication-ui-library/pull/5624) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix media access hermetic test ([PR #5574](https://github.com/azure/communication-ui-library/pull/5574) by fuyan@microsoft.com)
+- Update Background blur tile label width to cap text for longer locale strings ([PR #5579](https://github.com/azure/communication-ui-library/pull/5579) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Resolve issue where Rich Text Editor toolbar was not focused when opening formatting options for rich text ([PR #5611](https://github.com/azure/communication-ui-library/pull/5611) by palatter@microsoft.com)
+- Hide read by in chat action flyout when participants is 20 or more, as read count is not supported ([PR #5585](https://github.com/azure/communication-ui-library/pull/5585) by palatter@microsoft.com)
+- Check capability to determine if set caption language should be shown for teams meeting ([PR #5600](https://github.com/azure/communication-ui-library/pull/5600) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix keyboard navigation for message menu button ([PR #5576](https://github.com/azure/communication-ui-library/pull/5576) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
 
 ## [1.23.0](https://github.com/azure/communication-ui-library/tree/1.23.0)
 

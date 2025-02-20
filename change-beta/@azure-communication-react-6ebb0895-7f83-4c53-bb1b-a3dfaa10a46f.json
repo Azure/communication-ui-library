@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "feature",
+  "area": "fix",
   "workstream": "Breakout rooms",
-  "comment": "Change spinner text when loading chat in breakout room",
+  "comment": "Fix bug where chat thread is stuck on spinner when immediately returning to main meeting from breakout room",
   "packageName": "@azure/communication-react",
   "email": "79475487+mgamis-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

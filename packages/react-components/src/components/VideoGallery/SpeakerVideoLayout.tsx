@@ -182,8 +182,6 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
 
   return (
     <Stack styles={rootLayoutStyle}>
-      {wrappedLocalVideoComponent}
-      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
       <Stack
         horizontal={overflowGalleryPosition === 'verticalRight'}
         styles={innerLayoutStyle}
@@ -199,6 +197,8 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         )}
         {overflowGalleryTrampoline(overflowGallery, props.overflowGalleryPosition)}
       </Stack>
+      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
+      {wrappedLocalVideoComponent}
     </Stack>
   );
 };

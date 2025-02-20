@@ -95,6 +95,7 @@ export const FloatingLocalVideo = (props: FloatingLocalVideoProps): JSX.Element 
         aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel}
         tabIndex={0}
         role={'dialog'}
+        style={{ pointerEvents: 'auto' }}
       >
         {localVideoComponent}
       </Stack>

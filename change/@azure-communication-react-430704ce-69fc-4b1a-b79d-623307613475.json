@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "",
+  "comment": "In Call Composites do not show You're Muted notification on lobby screen",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

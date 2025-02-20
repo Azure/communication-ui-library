@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Bug Fix: Fix move/close menu not showing on draggable video tile when ctrl+alt+space shortcut is used",
+  "packageName": "@azure/communication-react",
+  "email": "2684369+JamesBurnside@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

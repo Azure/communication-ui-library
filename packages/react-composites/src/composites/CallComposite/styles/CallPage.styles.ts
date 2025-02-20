@@ -108,7 +108,7 @@ export const callArrangementContainerStyles = (verticalControlBar?: boolean): IS
     root: {
       width: '100%',
       height: '100%',
-      flexDirection: verticalControlBar ? 'unset' : 'column-reverse' // to allow first initial keyboard focus on ControlBar
+      flexDirection: verticalControlBar ? 'unset' : 'column'
     }
   };
 };
