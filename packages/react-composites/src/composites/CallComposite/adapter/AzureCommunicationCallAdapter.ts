@@ -196,7 +196,7 @@ class CallContext {
       sounds: options?.callingSounds,
       reactions: options?.reactionResources
     };
-    this.emitter.setMaxListeners(options?.maxListeners ?? 50);
+    this.emitter.setMaxListeners(options?.maxListeners ?? 125);
     this.bindPublicMethods();
     this.displayNameModifier = options?.onFetchProfile
       ? createProfileStateModifier(options.onFetchProfile, () => {
