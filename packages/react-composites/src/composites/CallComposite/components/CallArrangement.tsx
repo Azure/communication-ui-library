@@ -94,6 +94,8 @@ import { useCompositeStringsForNotificationStackStrings } from '../hooks/useComp
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
 import { DtmfDialPadOptions } from '../CallComposite';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 
 /**
  * @private
@@ -110,6 +112,8 @@ export interface CallArrangementProps {
   mobileView: boolean;
   modalLayerHostId: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   latestErrors: ActiveErrorMessage[] | ActiveNotification[];
@@ -197,6 +201,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       setDrawerMenuItems,
       inviteLink: props.callControlProps.callInvitationURL,
       onFetchAvatarPersonaData: props.onFetchAvatarPersonaData,
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      onRenderAvatar: props.onRenderAvatar,
       onFetchParticipantMenuItems: props.callControlProps?.onFetchParticipantMenuItems,
       mobileView: props.mobileView,
       peopleButtonRef,
@@ -209,10 +215,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       props.callControlProps.callInvitationURL,
       props.callControlProps?.onFetchParticipantMenuItems,
       props.onFetchAvatarPersonaData,
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      props.onRenderAvatar,
       props.mobileView,
-      peopleButtonRef,
-      setParticipantActioned,
-      sidePaneDismissButtonRef,
       props.onCloseChatPane
     ]
   );
@@ -582,6 +587,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       captionsOptions={props.captionsOptions}
                       isMobile={props.mobileView}
                       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+                      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+                      onRenderAvatar={props.onRenderAvatar}
                       useTeamsCaptions={useTeamsCaptions}
                       /* @conditional-compile-remove(rtt) */
                       isRealTimeTextOn={openRealTimeText}

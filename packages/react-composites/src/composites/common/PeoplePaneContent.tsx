@@ -9,6 +9,8 @@ import {
   ParticipantMenuItemsCallback,
   _DrawerMenuItemProps
 } from '@internal/react-components';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 import React, { useCallback, useMemo } from 'react';
 import { CallWithChatCompositeStrings } from '../CallWithChatComposite';
 import { usePropsFor } from '../CallComposite/hooks/usePropsFor';
@@ -30,6 +32,8 @@ import { useLocale } from '../localization';
 export const PeoplePaneContent = (props: {
   inviteLink?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   setDrawerMenuItems: (drawerMenuItems: _DrawerMenuItemProps[]) => void;
   setParticipantActioned?: (userId: string) => void;
@@ -128,6 +132,8 @@ export const PeoplePaneContent = (props: {
       isMobile={props.mobileView}
       participantListProps={participantListProps}
       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      onRenderAvatar={props.onRenderAvatar}
       onFetchParticipantMenuItems={props.mobileView ? undefined : onFetchParticipantMenuItems}
       title={strings.peoplePaneSubTitle}
       headingMoreButtonAriaLabel={localeStrings.strings.call.peoplePaneMoreButtonAriaLabel}

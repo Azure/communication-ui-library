@@ -28,6 +28,8 @@ import { PromptProps } from './Prompt';
 import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 import { VideoTilesOptions } from '@internal/react-components';
 import { getCapabilites, getIsRoomsCall, getReactionResources, getRole } from '../selectors/baseSelectors';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 
 const VideoGalleryStyles = {
   root: {
@@ -54,6 +56,8 @@ export interface MediaGalleryProps {
   isMicrophoneChecked?: boolean;
   onStartLocalVideo: () => Promise<void>;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   isMobile?: boolean;
   drawerMenuHostId?: string;
   remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
@@ -82,7 +86,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setPromptProps,
     hideSpotlightButtons,
     videoTilesOptions,
-    captionsOptions
+    captionsOptions,
+    onFetchAvatarPersonaData,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+    onRenderAvatar
   } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -110,19 +117,32 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     };
   }, [cameraSwitcherCallback, cameraSwitcherCameras]);
 
-  const onRenderAvatar = useCallback(
+  const defaultOnRenderAvatar = useCallback(
     (userId?: string, options?: CustomAvatarOptions) => {
       return (
         <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
           <Stack styles={{ root: { margin: 'auto', maxHeight: '100%' } }}>
             {options?.coinSize && (
-              <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+              <AvatarPersona userId={userId} {...options} dataProvider={onFetchAvatarPersonaData} />
             )}
           </Stack>
         </Stack>
       );
     },
-    [props.onFetchAvatarPersonaData]
+    [onFetchAvatarPersonaData]
+  );
+
+  const onRenderAvatarCallback = useCallback(
+    (userId?: string, options?: CustomAvatarOptions) => {
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      if (onRenderAvatar) {
+        const defaultOnRenderAvatarWrapper = (props: CustomAvatarOptions): JSX.Element =>
+          defaultOnRenderAvatar(userId, props);
+        return onRenderAvatar(userId, options, defaultOnRenderAvatarWrapper);
+      }
+      return defaultOnRenderAvatar(userId, options);
+    },
+    [defaultOnRenderAvatar, /* @conditional-compile-remove(composite-onRenderAvatar-API) */ onRenderAvatar]
   );
 
   const remoteVideoTileMenuOptions: false | VideoTileContextualMenuProps | VideoTileDrawerMenuProps = useMemo(() => {
@@ -201,7 +221,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         layout={layoutBasedOnUserSelection()}
         showCameraSwitcherInLocalPreview={props.isMobile}
         localVideoCameraCycleButtonProps={cameraSwitcherProps}
-        onRenderAvatar={onRenderAvatar}
+        onRenderAvatar={onRenderAvatarCallback}
         remoteVideoTileMenu={remoteVideoTileMenuOptions}
         overflowGalleryPosition={overflowGalleryPosition}
         localVideoTileSize={
@@ -234,7 +254,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     props.localVideoTileOptions,
     props.userSetGalleryLayout,
     cameraSwitcherProps,
-    onRenderAvatar,
+    onRenderAvatarCallback,
     remoteVideoTileMenuOptions,
     overflowGalleryPosition,
     userRole,

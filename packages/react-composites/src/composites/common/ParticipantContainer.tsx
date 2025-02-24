@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import {
   participantListContainerStyle,
   participantListMobileStyle,
@@ -11,7 +11,14 @@ import {
   displayNameStyles,
   headingMoreButtonStyles
 } from './styles/ParticipantContainer.styles';
-import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from '@internal/react-components';
+import {
+  ParticipantList,
+  ParticipantListProps,
+  ParticipantMenuItemsCallback,
+  CustomAvatarOptions
+} from '@internal/react-components';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 import { Stack, Text, TooltipHost, TooltipOverflowMode, getId, useTheme } from '@fluentui/react';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
@@ -21,6 +28,8 @@ import { _formatString } from '@internal/acs-ui-common';
 type ParticipantContainerProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   participantListProps: ParticipantListProps;
   title?: string;
   isMobile?: boolean;
@@ -47,6 +56,8 @@ export const ParticipantListWithHeading = (props: {
   title?: string;
   isMobile?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   headingMoreButtonAriaLabel?: string;
   onClickHeadingMoreButton?: () => void;
@@ -55,6 +66,8 @@ export const ParticipantListWithHeading = (props: {
 }): JSX.Element => {
   const {
     onFetchAvatarPersonaData,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+    onRenderAvatar,
     onFetchParticipantMenuItems,
     title,
     participantListProps,
@@ -80,6 +93,46 @@ export const ParticipantListWithHeading = (props: {
       }
     }),
     [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize, props.isMobile]
+  );
+
+  const defaultOnRenderAvatar = useCallback(
+    (userId?: string, options?: CustomAvatarOptions): JSX.Element => {
+      return (
+        <>
+          <AvatarPersona
+            data-ui-id="chat-composite-participant-custom-avatar"
+            userId={userId}
+            {...options}
+            {...{ hidePersonaDetails: !!options?.text }}
+            dataProvider={onFetchAvatarPersonaData}
+            allowActiveBorder={true}
+          />
+          {options?.text && (
+            <div style={displayNameStyles}>
+              <TooltipHost content={options?.text} id={tooltipId} overflowMode={TooltipOverflowMode.Parent}>
+                <Text nowrap={false} aria-labelledby={tooltipId}>
+                  {options?.text}
+                </Text>
+              </TooltipHost>
+            </div>
+          )}
+        </>
+      );
+    },
+    [onFetchAvatarPersonaData, tooltipId]
+  );
+
+  const onRenderAvatarCallback = useCallback(
+    (userId?: string, options?: CustomAvatarOptions) => {
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      if (onRenderAvatar) {
+        const defaultOnRenderAvatarWrapper = (options: CustomAvatarOptions): JSX.Element =>
+          defaultOnRenderAvatar(userId, options);
+        return onRenderAvatar(userId, options, defaultOnRenderAvatarWrapper);
+      }
+      return defaultOnRenderAvatar(userId, options);
+    },
+    [defaultOnRenderAvatar, /* @conditional-compile-remove(composite-onRenderAvatar-API) */ onRenderAvatar]
   );
 
   return (
@@ -113,27 +166,7 @@ export const ParticipantListWithHeading = (props: {
           {...participantListProps}
           pinnedParticipants={pinnedParticipants}
           styles={props.isMobile ? participantListMobileStyle : participantListStyle}
-          onRenderAvatar={(userId, options) => (
-            <>
-              <AvatarPersona
-                data-ui-id="chat-composite-participant-custom-avatar"
-                userId={userId}
-                {...options}
-                {...{ hidePersonaDetails: !!options?.text }}
-                dataProvider={onFetchAvatarPersonaData}
-                allowActiveBorder={true}
-              />
-              {options?.text && (
-                <div style={displayNameStyles}>
-                  <TooltipHost content={options?.text} id={tooltipId} overflowMode={TooltipOverflowMode.Parent}>
-                    <Text nowrap={false} aria-labelledby={tooltipId}>
-                      {options?.text}
-                    </Text>
-                  </TooltipHost>
-                </div>
-              )}
-            </>
-          )}
+          onRenderAvatar={onRenderAvatarCallback}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           showParticipantOverflowTooltip={!props.isMobile}
           participantAriaLabelledBy={subheadingUniqueId}

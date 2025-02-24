@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { Stack } from '@fluentui/react';
-import { CommunicationParticipant, MessageProps } from '@internal/react-components';
+import { CommunicationParticipant, CustomAvatarOptions, MessageProps } from '@internal/react-components';
 import React from 'react';
 import { AvatarPersonaData } from '../../../src';
 
@@ -66,3 +66,20 @@ export const customOnFetchAvatarPersonaData = (): Promise<AvatarPersonaData> =>
       text: 'Custom Name'
     })
   );
+
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+/**
+ * Custom onRenderAvatar prop of {@link ChatComposite} used for UI test
+ */
+export const customOnRenderAvatar = (
+  userId?: string,
+  options?: CustomAvatarOptions,
+  defaultOnRender?: (options: CustomAvatarOptions) => JSX.Element
+): JSX.Element | undefined => {
+  const avatarOptions = {
+    ...options,
+    text: 'Custom Name',
+    initialsColor: 'red'
+  };
+  return defaultOnRender ? defaultOnRender(avatarOptions) : undefined;
+};

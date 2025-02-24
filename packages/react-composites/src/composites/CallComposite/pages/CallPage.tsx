@@ -7,7 +7,8 @@ import { _isInCall } from '@internal/calling-component-bindings';
 import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
 /* @conditional-compile-remove(breakout-rooms) */
 import { CustomAvatarOptions, VideoTile } from '@internal/react-components';
-
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 import { ActiveNotification } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import React, { useMemo } from 'react';
@@ -52,6 +53,8 @@ export interface CallPageProps {
   modalLayerHostId: string;
   callInvitationURL?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   updateSidePaneRenderer: (renderer: SidePaneRenderer | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
@@ -79,6 +82,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const {
     callInvitationURL,
     onFetchAvatarPersonaData,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+    onRenderAvatar,
     onFetchParticipantMenuItems,
     options,
     mobileView,
@@ -136,19 +141,31 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const displayName = useSelector((state) => state.displayName);
 
   /* @conditional-compile-remove(breakout-rooms) */
-  const onRenderAvatar = useCallback(
+  const defaultOnRenderAvatar = useCallback(
     (userId?: string, options?: CustomAvatarOptions) => {
       return (
         <Stack className={mergeStyles({ position: 'absolute', height: '100%', width: '100%' })}>
           <Stack styles={{ root: { margin: 'auto', maxHeight: '100%' } }}>
             {options?.coinSize && (
-              <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />
+              <AvatarPersona userId={userId} {...options} dataProvider={onFetchAvatarPersonaData} />
             )}
           </Stack>
         </Stack>
       );
     },
-    [props.onFetchAvatarPersonaData]
+    [onFetchAvatarPersonaData]
+  );
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  const onRenderAvatarCallback = useCallback(
+    (userId?: string, options?: CustomAvatarOptions, defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element) => {
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      if (onRenderAvatar) {
+        return onRenderAvatar(userId, options, defaultOnRender);
+      }
+      return defaultOnRenderAvatar(userId, options);
+    },
+    [defaultOnRenderAvatar, /* @conditional-compile-remove(composite-onRenderAvatar-API) */ onRenderAvatar]
   );
 
   let galleryContentWhenNotInCall = <></>;
@@ -159,7 +176,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         userId={toFlatCommunicationIdentifier(userId)}
         displayName={displayName}
         initialsName={displayName}
-        onRenderPlaceholder={onRenderAvatar}
+        onRenderPlaceholder={onRenderAvatarCallback}
       />
     );
   }
@@ -188,6 +205,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           {...mediaGalleryProps}
           {...mediaGalleryHandlers}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+          onRenderAvatar={onRenderAvatar}
           remoteVideoTileMenuOptions={options?.remoteVideoTileMenuOptions}
           drawerMenuHostId={drawerMenuHostId}
           localVideoTileOptions={options?.localVideoTile}
@@ -220,6 +239,8 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           increaseFlyoutItemSize: mobileView
         }}
         onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+        /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+        onRenderAvatar={onRenderAvatar}
         mobileView={mobileView}
         modalLayerHostId={props.modalLayerHostId}
         onRenderGalleryContent={() =>

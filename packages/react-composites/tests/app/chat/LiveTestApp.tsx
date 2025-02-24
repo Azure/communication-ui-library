@@ -5,6 +5,8 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
 import { Stack } from '@fluentui/react';
 import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _IdentifierProvider, defaultAttachmentMenuAction, MessageProps } from '@internal/react-components';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { CustomAvatarOptions } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../src';
 // eslint-disable-next-line no-restricted-imports
@@ -109,6 +111,25 @@ export const LiveTestApp = (): JSX.Element => {
                         text: 'Custom Name'
                       })
                     )
+                : undefined
+            }
+            /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+            onRenderAvatar={
+              customDataModel
+                ? (
+                    userId?: string,
+                    options?: CustomAvatarOptions,
+                    defaultOnRender?: (options: CustomAvatarOptions) => JSX.Element
+                  ) => {
+                    const avatarOptions = {
+                      ...options,
+                      hidePersonaDetails: true,
+                      text: 'Monica Smith',
+                      showOverflowTooltip: false,
+                      initialsColor: 'red'
+                    };
+                    return defaultOnRender ? defaultOnRender(avatarOptions) : undefined;
+                  }
                 : undefined
             }
             locale={useFrLocale ? COMPOSITE_LOCALE_FR_FR : undefined}

@@ -15,10 +15,11 @@ import {
   SendBoxStylesProps,
   TypingIndicator,
   TypingIndicatorStylesProps,
-  useTheme
+  useTheme,
+  CustomAvatarOptions
 } from '@internal/react-components';
 /* @conditional-compile-remove(composite-onRenderAvatar-API) */
-import { CustomAvatarOptions, OnRenderAvatarCallback } from '@internal/react-components';
+import { OnRenderAvatarCallback } from '@internal/react-components';
 /* @conditional-compile-remove(rich-text-editor) */
 import { RichTextEditBoxOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -238,7 +239,6 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
     (
       userId?: string,
       defaultOptions?: AvatarPersonaProps,
-      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
       defaultOnRender?: (props: CustomAvatarOptions) => JSX.Element
     ) => {
       /* @conditional-compile-remove(composite-onRenderAvatar-API) */
@@ -750,6 +750,8 @@ export const ChatScreen = (props: ChatScreenProps): JSX.Element => {
           options?.participantPane === true && (
             <ChatScreenPeoplePane
               onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+              /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+              onRenderAvatar={onRenderAvatar}
               onFetchParticipantMenuItems={props.onFetchParticipantMenuItems}
               isMobile={formFactor === 'mobile'}
             />

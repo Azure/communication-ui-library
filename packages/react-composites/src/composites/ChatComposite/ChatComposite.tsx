@@ -126,11 +126,11 @@ export const ChatComposite = (props: ChatCompositeProps): JSX.Element => {
             formFactor={formFactor}
             options={options}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+            onRenderAvatar={onRenderAvatar}
             onRenderTypingIndicator={onRenderTypingIndicator}
             onRenderMessage={onRenderMessage}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
-            /* @conditional-compile-remove(composite-onRenderAvatar-API) */
-            onRenderAvatar={onRenderAvatar}
             /* @conditional-compile-remove(file-sharing-acs) */
             attachmentOptions={options?.attachmentOptions}
           />
