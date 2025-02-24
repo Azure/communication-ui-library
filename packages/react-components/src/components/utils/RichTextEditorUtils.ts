@@ -17,7 +17,8 @@ export enum PluginEventType {
   BeforeCutCopy = 'beforeCutCopy',
   BeforePaste = 'beforePaste',
   ZoomChanged = 'zoomChanged',
-  MouseUp = 'mouseUp'
+  MouseUp = 'mouseUp',
+  CompositionEnd = 'compositionEnd'
 }
 
 /**
@@ -89,7 +90,7 @@ export const getRemovedInlineImages = (
 ): Record<string, string>[] => {
   const document = new DOMParser().parseFromString(content ?? '', 'text/html');
   const currentContentIds = Array.from(document.querySelectorAll('img')).map((img) => img.id);
-  previousInlineImages = previousInlineImages?.filter((img) => !currentContentIds?.includes(img.id));
+  previousInlineImages = previousInlineImages?.filter((img) => !!img.id && !currentContentIds?.includes(img.id));
 
   const removedInlineImages = [...previousInlineImages];
   return removedInlineImages;
@@ -180,6 +181,9 @@ export const removeLocalBlobs = (
   removedInlineImages: Record<string, string>[]
 ): void => {
   removedInlineImages.forEach((image) => {
+    if (!image.id) {
+      return;
+    }
     removeSingleLocalBlob(currentLocalBlobMap, image.id);
   });
 };

@@ -12,7 +12,7 @@ import {
   headingMoreButtonStyles
 } from './styles/ParticipantContainer.styles';
 import { ParticipantList, ParticipantListProps, ParticipantMenuItemsCallback } from '@internal/react-components';
-import { FocusZone, Stack, Text, TooltipHost, TooltipOverflowMode, getId, useTheme } from '@fluentui/react';
+import { Stack, Text, TooltipHost, TooltipOverflowMode, getId, useTheme } from '@fluentui/react';
 import { DefaultButton, IContextualMenuProps } from '@fluentui/react';
 import { AvatarPersona, AvatarPersonaDataCallback } from './AvatarPersona';
 import { useId } from '@fluentui/react-hooks';
@@ -108,7 +108,7 @@ export const ParticipantListWithHeading = (props: {
           </Stack.Item>
         )}
       </Stack>
-      <FocusZone className={participantListContainerStyle} shouldFocusOnMount={true}>
+      <Stack className={participantListContainerStyle}>
         <ParticipantList
           {...participantListProps}
           pinnedParticipants={pinnedParticipants}
@@ -138,7 +138,7 @@ export const ParticipantListWithHeading = (props: {
           showParticipantOverflowTooltip={!props.isMobile}
           participantAriaLabelledBy={subheadingUniqueId}
         />
-      </FocusZone>
+      </Stack>
     </Stack>
   );
 };

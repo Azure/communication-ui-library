@@ -63,7 +63,7 @@ interface SwitchableFluentThemeContext {
   themeStore: ThemeCollection;
 }
 
-const defaultTheme: NamedTheme = defaultThemes.Light;
+const defaultTheme: NamedTheme = defaultThemes.Light as NamedTheme;
 
 /**
  * React useContext for FluentTheme state of SwitchableFluentThemeProvider
@@ -102,7 +102,6 @@ export interface SwitchableFluentThemeProviderProps {
 export const SwitchableFluentThemeProvider = (props: SwitchableFluentThemeProviderProps): JSX.Element => {
   const { children, scopeId } = props;
   const [themeStore, setThemeCollection] = useState<ThemeCollection>(props.themes ?? defaultThemes);
-
   const themeFromStorage = getThemeFromLocalStorage(scopeId);
   const initialTheme = themeStore[themeFromStorage || defaultTheme.name] ?? defaultTheme;
   const [currentTheme, _setCurrentTheme] = useState<NamedTheme>(initialTheme);

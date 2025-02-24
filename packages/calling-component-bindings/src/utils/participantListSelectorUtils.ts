@@ -10,7 +10,7 @@ import { CallParticipantListParticipant } from '@internal/react-components';
 import { Spotlight } from '@internal/react-components';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
-import { Reaction } from '@internal/react-components';
+import { Reaction, MediaAccess } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 
 const convertRemoteParticipantToParticipantListParticipant = (
@@ -23,7 +23,8 @@ const convertRemoteParticipantToParticipantListParticipant = (
   raisedHand: RaisedHandState | undefined,
   localUserCanRemoveOthers: boolean,
   reaction: undefined | Reaction,
-  spotlight: undefined | Spotlight
+  spotlight: undefined | Spotlight,
+  mediaAccess: MediaAccess
 ): CallParticipantListParticipant => {
   const identifier = fromFlatCommunicationIdentifier(userId);
   return {
@@ -41,7 +42,8 @@ const convertRemoteParticipantToParticipantListParticipant = (
         getIdentifierKind(identifier).kind === 'phoneNumber') &&
       localUserCanRemoveOthers,
     reaction,
-    spotlight
+    spotlight,
+    mediaAccess
   };
 };
 
@@ -59,7 +61,8 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
     raisedHand: RaisedHandState | undefined,
     localUserCanRemoveOthers: boolean,
     reaction: undefined | Reaction,
-    spotlight: undefined | Spotlight
+    spotlight: undefined | Spotlight,
+    mediaAccess: MediaAccess
   ): CallParticipantListParticipant => {
     return convertRemoteParticipantToParticipantListParticipant(
       userId,
@@ -71,7 +74,8 @@ export const memoizedConvertAllremoteParticipants = memoizeFnAll(
       raisedHand,
       localUserCanRemoveOthers,
       reaction,
-      spotlight
+      spotlight,
+      mediaAccess
     );
   }
 );

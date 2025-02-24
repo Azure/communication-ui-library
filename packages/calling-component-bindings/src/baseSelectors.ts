@@ -1,11 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-import { CallState, DominantSpeakersInfo } from '@azure/communication-calling';
+import { CallState, DominantSpeakersInfo, EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import {
@@ -21,14 +19,14 @@ import {
 import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(acs-close-captions) */
-import { CaptionsKind } from '@azure/communication-calling';
+import { CaptionsKind, CapabilitiesChangeInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@internal/calling-stateful-client';
 import { RaisedHandState } from '@internal/calling-stateful-client';
-import { _SupportedCaptionLanguage, _SupportedSpokenLanguage } from '@internal/react-components';
-import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(breakout-rooms) */
-import { CallNotifications } from '@internal/calling-stateful-client';
-
+import { SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
+import { ConferencePhoneInfo, CallNotifications } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeCallFeatureState } from '@internal/calling-stateful-client';
 /**
  * Common props used to reference calling declarative client state.
  *
@@ -64,6 +62,16 @@ export const getCapabilities = (
   state: CallClientState,
   props: CallingBaseSelectorProps
 ): ParticipantCapabilities | undefined => state.calls[props.callId]?.capabilitiesFeature?.capabilities;
+
+/**
+ * @private
+ */
+export const getLatestCapabilitiesChangedInfo = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): CapabilitiesChangeInfo | undefined => {
+  return state.calls[props.callId]?.capabilitiesFeature?.latestCapabilitiesChangeInfo;
+};
 
 /**
  * @private
@@ -172,7 +180,6 @@ export const getIdentifier = (state: CallClientState): string => toFlatCommunica
  */
 export const getLatestErrors = (state: CallClientState): CallErrors => state.latestErrors;
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @private
  */
@@ -195,12 +202,8 @@ export const getCallState = (state: CallClientState, props: CallingBaseSelectorP
 /**
  * @private
  */
-export const getEnvironmentInfo = (
-  state: CallClientState
-): undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo => {
-  /* @conditional-compile-remove(unsupported-browser) */
+export const getEnvironmentInfo = (state: CallClientState): undefined | EnvironmentInfo => {
   return state.environmentInfo;
-  return undefined;
 };
 
 /** @private */
@@ -210,7 +213,6 @@ export const getParticipantCount = (state: CallClientState, props: CallingBaseSe
   return undefined;
 };
 
-/* @conditional-compile-remove(acs-close-captions) */
 /** @private */
 export const getCaptionsKind = (state: CallClientState, props: CallingBaseSelectorProps): CaptionsKind | undefined => {
   return state.calls[props.callId]?.captionsFeature.captionsKind;
@@ -238,32 +240,38 @@ export const getStartCaptionsInProgress = (
 export const getCurrentCaptionLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): _SupportedCaptionLanguage | undefined => {
-  return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage as _SupportedCaptionLanguage;
+): SupportedCaptionLanguage | undefined => {
+  // we default to 'en' if the currentCaptionLanguage is not set
+  if (state.calls[props.callId]?.captionsFeature.currentCaptionLanguage === '') {
+    return 'en';
+  }
+  return state.calls[props.callId]?.captionsFeature.currentCaptionLanguage as SupportedCaptionLanguage;
 };
 
 /** @private */
 export const getCurrentSpokenLanguage = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): _SupportedSpokenLanguage | undefined => {
-  return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage as _SupportedSpokenLanguage;
+): SupportedSpokenLanguage | undefined => {
+  // when currentSpokenLanguage is '', it means the spoken language is not set.
+  // In this case we suggest showing the captions modal to set the spoken language when starting captions
+  return state.calls[props.callId]?.captionsFeature.currentSpokenLanguage as SupportedSpokenLanguage;
 };
 
 /** @private */
 export const getSupportedCaptionLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): _SupportedCaptionLanguage[] | undefined => {
-  return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages as _SupportedCaptionLanguage[];
+): SupportedCaptionLanguage[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.supportedCaptionLanguages as SupportedCaptionLanguage[];
 };
 
 /** @private */
 export const getSupportedSpokenLanguages = (
   state: CallClientState,
   props: CallingBaseSelectorProps
-): _SupportedSpokenLanguage[] | undefined => {
-  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as _SupportedSpokenLanguage[];
+): SupportedSpokenLanguage[] | undefined => {
+  return state.calls[props.callId]?.captionsFeature.supportedSpokenLanguages as SupportedSpokenLanguage[];
 };
 
 /** @private */
@@ -300,3 +308,33 @@ export const getAssignedBreakoutRoom = (
 ): BreakoutRoom | undefined => {
   return state.calls[props.callId]?.breakoutRooms?.assignedBreakoutRoom;
 };
+
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeTextStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
+  return state.calls[props.callId]?.realTimeTextFeature.isRealTimeTextFeatureActive;
+};
+
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeText = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+):
+  | {
+      completedMessages?: RealTimeTextInfo[];
+      currentInProgress?: RealTimeTextInfo[];
+      myInProgress?: RealTimeTextInfo;
+    }
+  | undefined => {
+  return state.calls[props.callId]?.realTimeTextFeature.realTimeTexts;
+};
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ */
+export const getTogetherModeCallFeature = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+): TogetherModeCallFeatureState | undefined => state.calls[props.callId]?.togetherMode;

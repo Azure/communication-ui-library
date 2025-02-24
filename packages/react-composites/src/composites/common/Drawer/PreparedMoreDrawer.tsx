@@ -11,6 +11,7 @@ import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 /* @condtional-compile-remove(gallery-options) */
 import { VideoGalleryLayout } from '@internal/react-components';
 import { ReactionResources } from '@internal/react-components';
+import { DtmfDialPadOptions } from '../../CallComposite';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
@@ -19,14 +20,21 @@ export interface PreparedMoreDrawerProps {
   callControls?: boolean | CommonCallControlOptions;
   onClickShowDialpad?: () => void;
   isCaptionsSupported?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  isRealTimeTextSupported?: boolean;
   disableButtonsForHoldScreen?: boolean;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
+  dtmfDialerOptions?: boolean | DtmfDialPadOptions;
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
   onClickMeetingPhoneInfo?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  onStartRealTimeText?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  startRealTimeTextButtonChecked?: boolean;
 }
 
 /** @private */
@@ -41,7 +49,6 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
       captionsMenuTitle: strings.moreDrawerCaptionsMenuTitle,
       spokenLanguageMenuTitle: strings.moreDrawerSpokenLanguageMenuTitle,
       captionLanguageMenuTitle: strings.moreDrawerCaptionLanguageMenuTitle,
-
       galleryOptionsMenuTitle: strings.moreDrawerGalleryOptionsMenuTitle
     }),
     [strings]

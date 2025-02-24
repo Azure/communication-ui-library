@@ -6,12 +6,15 @@ import { CallAdapter, CallAdapterState } from '../../CallComposite';
 
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 import {
   AudioDeviceInfo,
   VideoDeviceInfo,
   Call,
   PermissionConstraints,
-  StartCallOptions
+  StartCallOptions,
+  DeviceAccess
 } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
@@ -108,7 +111,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     await this.callWithChatAdapter.setMicrophone(sourceId);
   public setSpeaker = async (sourceId: AudioDeviceInfo): Promise<void> =>
     await this.callWithChatAdapter.setSpeaker(sourceId);
-  public askDevicePermission = async (constraints: PermissionConstraints): Promise<void> =>
+  public askDevicePermission = async (constraints: PermissionConstraints): Promise<DeviceAccess> =>
     await this.callWithChatAdapter.askDevicePermission(constraints);
   public queryCameras = async (): Promise<VideoDeviceInfo[]> => await this.callWithChatAdapter.queryCameras();
   public queryMicrophones = async (): Promise<AudioDeviceInfo[]> => await this.callWithChatAdapter.queryMicrophones();
@@ -134,6 +137,16 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     options?: VideoStreamOptions
   ): Promise<void | CreateVideoStreamViewResult> =>
     await this.callWithChatAdapter.createStreamView(remoteUserId, options);
+  /* @conditional-compile-remove(together-mode) */
+  public createTogetherModeStreamView = async (
+    options?: TogetherModeStreamOptions
+  ): Promise<void | TogetherModeStreamViewResult> =>
+    await this.callWithChatAdapter.createTogetherModeStreamView(options);
+  /* @conditional-compile-remove(together-mode) */
+  public startTogetherMode = async (): Promise<void> => await this.callWithChatAdapter.startTogetherMode();
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSceneSize = (width: number, height: number): void =>
+    this.callWithChatAdapter.setTogetherModeSceneSize(width, height);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
     await this.callWithChatAdapter.disposeStreamView(remoteUserId, options);
   public disposeScreenShareStreamView(remoteUserId: string): Promise<void> {
@@ -145,6 +158,9 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public disposeLocalVideoStreamView(): Promise<void> {
     return this.callWithChatAdapter.disposeLocalVideoStreamView();
   }
+  /* @conditional-compile-remove(together-mode) */
+  public disposeTogetherModeStreamView = async (): Promise<void> =>
+    await this.callWithChatAdapter.disposeTogetherModeStreamView();
   public holdCall = async (): Promise<void> => {
     await this.callWithChatAdapter.holdCall();
   };
@@ -188,6 +204,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public async setSpokenLanguage(language: string): Promise<void> {
     await this.callWithChatAdapter.setSpokenLanguage(language);
   }
+  /* @conditional-compile-remove(rtt) */
+  public async sendRealTimeText(text: string, isFinalized: boolean): Promise<void> {
+    await this.callWithChatAdapter.sendRealTimeText(text, isFinalized);
+  }
 
   public async startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void> {
     await this.callWithChatAdapter.startVideoBackgroundEffect(videoBackgroundEffect);
@@ -205,12 +225,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.updateSelectedVideoBackgroundEffect(selectedVideoBackground);
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async startNoiseSuppressionEffect(): Promise<void> {
     return this.callWithChatAdapter.startNoiseSuppressionEffect();
   }
 
-  /* @conditional-compile-remove(DNS) */
   public async stopNoiseSuppressionEffect(): Promise<void> {
     return this.callWithChatAdapter.stopNoiseSuppressionEffect();
   }
@@ -231,12 +249,10 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.stopAllSpotlight();
   }
 
-  /* @conditional-compile-remove(soft-mute) */
   public async muteParticipant(userId: string): Promise<void> {
     return this.callWithChatAdapter.muteParticipant(userId);
   }
 
-  /* @conditional-compile-remove(soft-mute) */
   public async muteAllRemoteParticipants(): Promise<void> {
     return this.callWithChatAdapter.muteAllRemoteParticipants();
   }
@@ -244,6 +260,38 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
     return this.callWithChatAdapter.returnFromBreakoutRoom();
+  }
+
+  public async forbidAudio(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.forbidAudio(userIds);
+  }
+
+  public async permitAudio(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.permitAudio(userIds);
+  }
+
+  public async forbidOthersAudio(): Promise<void> {
+    return this.callWithChatAdapter.forbidOthersAudio();
+  }
+
+  public async permitOthersAudio(): Promise<void> {
+    return this.callWithChatAdapter.permitOthersAudio();
+  }
+
+  public async forbidVideo(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.forbidAudio(userIds);
+  }
+
+  public async permitVideo(userIds: string[]): Promise<void> {
+    return this.callWithChatAdapter.permitAudio(userIds);
+  }
+
+  public async forbidOthersVideo(): Promise<void> {
+    return this.callWithChatAdapter.forbidOthersAudio();
+  }
+
+  public async permitOthersVideo(): Promise<void> {
+    return this.callWithChatAdapter.permitOthersAudio();
   }
 }
 
@@ -264,17 +312,13 @@ function callAdapterStateFromCallWithChatAdapterState(
     /* @conditional-compile-remove(breakout-rooms) */
     latestNotifications: callWithChatAdapterState.latestCallNotifications,
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo: callWithChatAdapterState.environmentInfo,
 
     videoBackgroundImages: callWithChatAdapterState.videoBackgroundImages,
 
     onResolveVideoEffectDependency: callWithChatAdapterState.onResolveVideoEffectDependency,
-    /* @conditional-compile-remove(DNS) */
     onResolveDeepNoiseSuppressionDependency: callWithChatAdapterState.onResolveDeepNoiseSuppressionDependency,
-    /* @conditional-compile-remove(DNS) */
     deepNoiseSuppressionOnByDefault: callWithChatAdapterState.deepNoiseSuppressionOnByDefault,
-    /* @conditional-compile-remove(DNS) */
     hideDeepNoiseSuppressionButton: callWithChatAdapterState.hideDeepNoiseSuppressionButton,
     selectedVideoBackgroundEffect: callWithChatAdapterState.selectedVideoBackgroundEffect,
     reactions: callWithChatAdapterState.reactions

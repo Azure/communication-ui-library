@@ -12,6 +12,7 @@ import {
   isMicrosoftTeamsAppIdentifier,
   isPhoneNumberIdentifier
 } from '@azure/communication-common';
+import { DtmfDialPadOptions } from '../CallComposite';
 
 type ParticipantChangedAnnouncmentStrings = {
   participantJoinedNoticeString: string;
@@ -121,29 +122,28 @@ export const createAnnouncementString = (
       }
     );
   }
-  const participantNames = sortedParticipants.map((p) => p.displayName ?? strings.unnamedParticipantString);
 
   switch (sortedParticipants.length) {
     case 1:
       return _formatString(
         direction === 'joined' ? strings.participantJoinedNoticeString : strings.participantLeftNoticeString,
-        { displayName: participantNames[0] }
+        { displayName: sortedParticipants[0]?.displayName ?? strings.unnamedParticipantString }
       );
     case 2:
       return _formatString(
         direction === 'joined' ? strings.twoParticipantJoinedNoticeString : strings.twoParticipantLeftNoticeString,
         {
-          displayName1: participantNames[0],
-          displayName2: participantNames[1]
+          displayName1: sortedParticipants[0]?.displayName ?? strings.unnamedParticipantString,
+          displayName2: sortedParticipants[1]?.displayName ?? strings.unnamedParticipantString
         }
       );
     case 3:
       return _formatString(
         direction === 'joined' ? strings.threeParticipantJoinedNoticeString : strings.threeParticipantLeftNoticeString,
         {
-          displayName1: participantNames[0],
-          displayName2: participantNames[1],
-          displayName3: participantNames[2]
+          displayName1: sortedParticipants[0]?.displayName ?? strings.unnamedParticipantString,
+          displayName2: sortedParticipants[1]?.displayName ?? strings.unnamedParticipantString,
+          displayName3: sortedParticipants[2]?.displayName ?? strings.unnamedParticipantString
         }
       );
   }
@@ -159,9 +159,9 @@ export const createAnnouncementString = (
   const numberOfExtraParticipants = sortedParticipants.length - 3;
 
   return _formatString(direction === 'joined' ? strings.manyParticipantsJoined : strings.manyParticipantsLeft, {
-    displayName1: sortedParticipants[0].displayName ?? strings.unnamedParticipantString,
-    displayName2: sortedParticipants[1].displayName ?? strings.unnamedParticipantString,
-    displayName3: sortedParticipants[2].displayName ?? strings.unnamedParticipantString,
+    displayName1: sortedParticipants[0]?.displayName ?? strings.unnamedParticipantString,
+    displayName2: sortedParticipants[1]?.displayName ?? strings.unnamedParticipantString,
+    displayName3: sortedParticipants[2]?.displayName ?? strings.unnamedParticipantString,
     numOfParticipants: numberOfExtraParticipants.toString()
   });
 };
@@ -175,22 +175,41 @@ export const createAnnouncementString = (
  */
 export const showDtmfDialer = (
   callees?: CommunicationIdentifier[],
-  remoteParticipants?: RemoteParticipantState[]
+  remoteParticipants?: RemoteParticipantState[],
+  dialerOptions?: boolean | DtmfDialPadOptions
 ): boolean => {
-  let showDtmfDialer = false;
-  callees?.forEach((callee) => {
-    if (isMicrosoftTeamsAppIdentifier(callee) || isPhoneNumberIdentifier(callee)) {
-      showDtmfDialer = true;
+  let showDtmfDialerAuto = false;
+  if (typeof dialerOptions === 'object' && 'dialerBehavior' in dialerOptions) {
+    const hideDtmfDialerAlways = dialerOptions.dialerBehavior && dialerOptions.dialerBehavior === 'alwaysHide';
+    const showDtmfDialerAlways = dialerOptions.dialerBehavior === 'alwaysShow';
+    showDtmfDialerAuto = dialerOptions.dialerBehavior === 'autoShow' ? true : false;
+    if (showDtmfDialerAlways) {
+      return true;
     }
-  });
-  if (remoteParticipants) {
-    remoteParticipants.forEach((participant) => {
-      if (!('phoneNumber' in participant.identifier || 'teamsAppId' in participant.identifier)) {
-        showDtmfDialer = false;
+    if (hideDtmfDialerAlways) {
+      return false;
+    }
+  }
+  let showDtmfDialer = false;
+
+  /**
+   * We also want to check to see if the option is undefined. If this is the case we want this function
+   * to fallback on the original logic so that it will also render the callControls to show and hide the dialpad
+   * for the user.
+   */
+  if (showDtmfDialerAuto || dialerOptions === undefined || dialerOptions === false) {
+    callees?.forEach((callee) => {
+      if (isMicrosoftTeamsAppIdentifier(callee) || isPhoneNumberIdentifier(callee)) {
+        showDtmfDialer = true;
       }
     });
+    if (remoteParticipants) {
+      remoteParticipants.forEach((participant) => {
+        if (!('phoneNumber' in participant.identifier || 'teamsAppId' in participant.identifier)) {
+          showDtmfDialer = false;
+        }
+      });
+    }
   }
-  /* @conditional-compile-remove(dtmf-dialer-on-by-default) */
-  showDtmfDialer = true;
   return showDtmfDialer;
 };

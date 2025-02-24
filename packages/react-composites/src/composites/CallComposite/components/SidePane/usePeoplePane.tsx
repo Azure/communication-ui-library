@@ -1,19 +1,16 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { RefObject, useCallback, useEffect, useMemo } from 'react';
+import React, { RefObject, useCallback, useEffect, useMemo, useState } from 'react';
 import { SidePaneRenderer, useIsParticularSidePaneOpen } from './SidePaneProvider';
 import { SidePaneHeader } from '../../../common/SidePaneHeader';
 import { PeoplePaneContent } from '../../../common/PeoplePaneContent';
 import { useLocale } from '../../../localization';
-import { ParticipantMenuItemsCallback, _DrawerMenuItemProps } from '@internal/react-components';
+import { ParticipantMenuItemsCallback, _DrawerMenuItemProps, MediaAccess } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 import { IButton, IContextualMenuProps, IContextualMenuItem } from '@fluentui/react';
 import { useSelector } from '../../hooks/useSelector';
-import { getAlternateCallerId, getRole } from '../../selectors/baseSelectors';
-/* @conditional-compile-remove(soft-mute) */
-import { getRemoteParticipants } from '../../selectors/baseSelectors';
-/* @conditional-compile-remove(soft-mute) */
+import { getAlternateCallerId, getRemoteParticipants, getRole } from '../../selectors/baseSelectors';
 import { Prompt } from '../Prompt';
 
 const PEOPLE_SIDE_PANE_ID = 'people';
@@ -35,14 +32,23 @@ export const usePeoplePane = (props: {
   onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
   onStopAllSpotlight?: () => Promise<void>;
   maxParticipantsToSpotlight?: number;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteParticipant?: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants?: () => Promise<void>;
   pinnedParticipants?: string[];
   onPinParticipant?: (userId: string) => void;
   onUnpinParticipant?: (userId: string) => void;
   disablePinMenuItem?: boolean;
+  onForbidAudio?: (userIds: string[]) => Promise<void>;
+  onPermitAudio?: (userIds: string[]) => Promise<void>;
+  onForbidOthersAudio?: () => Promise<void>;
+  onPermitOthersAudio?: () => Promise<void>;
+  onForbidVideo?: (userIds: string[]) => Promise<void>;
+  onPermitVideo?: (userIds: string[]) => Promise<void>;
+  onForbidOthersVideo?: () => Promise<void>;
+  onPermitOthersVideo?: () => Promise<void>;
+  meetingMediaAccess?: MediaAccess;
+  sidePaneDismissButtonRef?: RefObject<IButton>;
+  chatButtonPresent?: boolean;
 }): {
   openPeoplePane: () => void;
   closePeoplePane: () => void;
@@ -64,14 +70,23 @@ export const usePeoplePane = (props: {
     onStopRemoteSpotlight,
     onStopAllSpotlight,
     maxParticipantsToSpotlight,
-    /* @conditional-compile-remove(soft-mute) */
     onMuteParticipant,
     pinnedParticipants,
     onPinParticipant,
     onUnpinParticipant,
     disablePinMenuItem,
-    /* @conditional-compile-remove(soft-mute) */
-    onMuteAllRemoteParticipants
+    onMuteAllRemoteParticipants,
+    onForbidAudio,
+    onPermitAudio,
+    onForbidOthersAudio,
+    onPermitOthersAudio,
+    onForbidVideo,
+    onPermitVideo,
+    onForbidOthersVideo,
+    onPermitOthersVideo,
+    meetingMediaAccess,
+    sidePaneDismissButtonRef,
+    chatButtonPresent
   } = props;
 
   const closePane = useCallback(() => {
@@ -80,11 +95,8 @@ export const usePeoplePane = (props: {
   }, [peopleButtonRef, updateSidePaneRenderer]);
 
   const localeStrings = useLocale().strings.call;
-  /* @conditional-compile-remove(soft-mute) */
   const remoteParticipants = useSelector(getRemoteParticipants);
-  /* @conditional-compile-remove(soft-mute) */
-  const [showMuteAllPrompt, setShowMuteAllPrompt] = React.useState(false);
-  /* @conditional-compile-remove(soft-mute) */
+  const [showMuteAllPrompt, setShowMuteAllPrompt] = useState(false);
   const muteAllPromptLabels = useMemo(
     () => ({
       confirmButtonLabel: localeStrings.muteAllConfirmButtonLabel,
@@ -100,15 +112,38 @@ export const usePeoplePane = (props: {
     ]
   );
 
-  /* @conditional-compile-remove(soft-mute) */
   const onMuteAllPromptConfirm = useCallback(() => {
     onMuteAllRemoteParticipants && onMuteAllRemoteParticipants();
     setShowMuteAllPrompt(false);
   }, [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
 
+  const [showForbidOthersAudioPrompt, setShowForbidOthersAudioPrompt] = useState(false);
+  const [showPermitOthersAudioPrompt, setShowPermitOthersAudioPrompt] = useState(false);
+  const [showForbidOthersVideoPrompt, setShowForbidOthersVideoPrompt] = useState(false);
+  const [showPermitOthersVideoPrompt, setShowPermitOthersVideoPrompt] = useState(false);
+
+  const onForbidAllAttendeesPromptConfirm = useCallback(() => {
+    onForbidOthersAudio && onForbidOthersAudio();
+    setShowForbidOthersAudioPrompt(false);
+  }, [onForbidOthersAudio, setShowForbidOthersAudioPrompt]);
+
+  const onPermitAllAttendeesPromptConfirm = useCallback(() => {
+    onPermitOthersAudio && onPermitOthersAudio();
+    setShowPermitOthersAudioPrompt(false);
+  }, [onPermitOthersAudio, setShowPermitOthersAudioPrompt]);
+
+  const onForbidOthersVideoPromptConfirm = useCallback(() => {
+    onForbidOthersVideo && onForbidOthersVideo();
+    setShowForbidOthersVideoPrompt(false);
+  }, [onForbidOthersVideo, setShowForbidOthersVideoPrompt]);
+
+  const onPermitOthersVideoPromptConfirm = useCallback(() => {
+    onPermitOthersVideo && onPermitOthersVideo();
+    setShowPermitOthersVideoPrompt(false);
+  }, [onPermitOthersVideo, setShowPermitOthersVideoPrompt]);
+
   const sidePaneHeaderMenuProps: IContextualMenuProps = useMemo(() => {
     const menuItems: IContextualMenuItem[] = [];
-    /* @conditional-compile-remove(soft-mute) */
     if (onMuteAllRemoteParticipants && remoteParticipants) {
       let isAllMuted = true;
       if (remoteParticipants) {
@@ -134,6 +169,95 @@ export const usePeoplePane = (props: {
         disabled: isAllMuted
       });
     }
+
+    let hasAttendee = false;
+    if (remoteParticipants) {
+      for (const participant of Object.values(remoteParticipants)) {
+        if (participant.role && participant.role === 'Attendee') {
+          hasAttendee = true;
+          break;
+        }
+      }
+    }
+
+    const isMeetingAudioPermitted = meetingMediaAccess ? meetingMediaAccess.isAudioPermitted : true;
+    const isMeetingVideoPermitted = meetingMediaAccess ? meetingMediaAccess.isVideoPermitted : true;
+    if (onForbidOthersAudio && remoteParticipants) {
+      hasAttendee &&
+        isMeetingAudioPermitted &&
+        menuItems.push({
+          ['data-ui-id']: 'people-pane-forbid-all-attendees-audio',
+          key: 'forbidOthersAudio',
+          text: localeStrings.forbidOthersAudioMenuLabel,
+          iconProps: {
+            iconName: 'ControlButtonMicProhibited',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onClick: () => {
+            setShowForbidOthersAudioPrompt(true);
+          },
+          ariaLabel: localeStrings.forbidOthersAudioMenuLabel,
+          disabled: !hasAttendee
+        });
+    }
+
+    if (onPermitOthersAudio && remoteParticipants) {
+      hasAttendee &&
+        !isMeetingAudioPermitted &&
+        menuItems.push({
+          ['data-ui-id']: 'people-pane-permit-all-attendees-audio',
+          key: 'permitOthersAudio',
+          text: localeStrings.permitOthersAudioMenuLabel,
+          iconProps: {
+            iconName: 'ControlButtonMicOn',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onClick: () => {
+            setShowPermitOthersAudioPrompt(true);
+          },
+          ariaLabel: localeStrings.permitOthersAudioMenuLabel,
+          disabled: !hasAttendee
+        });
+    }
+
+    if (onForbidOthersVideo && remoteParticipants) {
+      hasAttendee &&
+        isMeetingVideoPermitted &&
+        menuItems.push({
+          ['data-ui-id']: 'people-pane-forbid-all-attendees-video',
+          key: 'forbidOthersVideo',
+          text: localeStrings.forbidOthersVideoMenuLabel,
+          iconProps: {
+            iconName: 'ControlButtonCameraProhibitedSmall',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onClick: () => {
+            setShowForbidOthersVideoPrompt(true);
+          },
+          ariaLabel: localeStrings.forbidOthersVideoMenuLabel,
+          disabled: !hasAttendee
+        });
+    }
+
+    if (onPermitOthersVideo && remoteParticipants) {
+      hasAttendee &&
+        !isMeetingVideoPermitted &&
+        menuItems.push({
+          ['data-ui-id']: 'people-pane-permit-all-attendees-video',
+          key: 'permitOthersVideo',
+          text: localeStrings.permitOthersVideoMenuLabel,
+          iconProps: {
+            iconName: 'ControlButtonCameraOn',
+            styles: { root: { lineHeight: 0 } }
+          },
+          onClick: () => {
+            setShowPermitOthersVideoPrompt(true);
+          },
+          ariaLabel: localeStrings.permitOthersVideoMenuLabel,
+          disabled: !hasAttendee
+        });
+    }
+
     if (onStopAllSpotlight && spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0) {
       menuItems.push({
         key: 'stopAllSpotlightKey',
@@ -149,25 +273,44 @@ export const usePeoplePane = (props: {
       items: menuItems
     };
   }, [
+    onMuteAllRemoteParticipants,
+    remoteParticipants,
+    meetingMediaAccess,
+    onForbidOthersAudio,
+    onPermitOthersAudio,
+    onForbidOthersVideo,
+    onPermitOthersVideo,
     onStopAllSpotlight,
     spotlightedParticipantUserIds,
-    localeStrings.stopAllSpotlightMenuLabel,
-    /* @conditional-compile-remove(soft-mute) */ localeStrings.muteAllMenuLabel,
-    /* @conditional-compile-remove(soft-mute) */ onMuteAllRemoteParticipants,
-    /* @conditional-compile-remove(soft-mute) */ setShowMuteAllPrompt,
-    /* @conditional-compile-remove(soft-mute) */ remoteParticipants
+    localeStrings.muteAllMenuLabel,
+    localeStrings.forbidOthersAudioMenuLabel,
+    localeStrings.permitOthersAudioMenuLabel,
+    localeStrings.forbidOthersVideoMenuLabel,
+    localeStrings.permitOthersVideoMenuLabel,
+    localeStrings.stopAllSpotlightMenuLabel
   ]);
 
   const onRenderHeader = useCallback(
     () => (
       <SidePaneHeader
         onClose={closePane}
+        paneOpenerButton={peopleButtonRef}
         headingText={localeStrings.peoplePaneTitle}
         dismissSidePaneButtonAriaLabel={localeStrings.dismissSidePaneButtonLabel}
         mobileView={mobileView ?? false}
+        dismissButtonComponentRef={sidePaneDismissButtonRef}
+        chatButtonPresent={chatButtonPresent}
       />
     ),
-    [mobileView, closePane, localeStrings]
+    [
+      closePane,
+      peopleButtonRef,
+      localeStrings.peoplePaneTitle,
+      localeStrings.dismissSidePaneButtonLabel,
+      mobileView,
+      sidePaneDismissButtonRef,
+      chatButtonPresent
+    ]
   );
 
   const onFetchParticipantMenuItemsForCallComposite = useCallback(
@@ -177,13 +320,13 @@ export const usePeoplePane = (props: {
       const isSpotlighted = spotlightedParticipantUserIds?.includes(participantId);
       const isMe = myUserId === participantId;
       isPinned = isSpotlighted ? false : isPinned;
-      /* @conditional-compile-remove(soft-mute) */
       if (onMuteParticipant && !isMe && remoteParticipants && remoteParticipants[participantId]) {
         const participant = remoteParticipants[participantId];
-        const isMuted = participant.isMuted;
+        const isMuted = !!participant?.isMuted;
         _defaultMenuItems.push({
           key: 'mute',
           text: 'Mute',
+          role: 'menuitem',
           iconProps: {
             iconName: 'ContextualMenuMicMutedIcon',
             styles: { root: { lineHeight: 0 } }
@@ -196,6 +339,87 @@ export const usePeoplePane = (props: {
           disabled: isMuted
         });
       }
+
+      const remoteParticipant = remoteParticipants?.[participantId];
+
+      if (
+        remoteParticipant?.mediaAccess &&
+        !remoteParticipant.mediaAccess.isAudioPermitted &&
+        remoteParticipant?.role === 'Attendee' &&
+        onPermitAudio
+      ) {
+        _defaultMenuItems.push({
+          key: 'permit-audio',
+          text: localeStrings.permitAudioMenuLabel,
+          role: 'menuitem',
+          iconProps: {
+            iconName: 'ControlButtonMicOn',
+            styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+          },
+          onClick: () => {
+            onPermitAudio([participantId]);
+          },
+          'data-ui-id': 'participant-item-permit-microphone-button',
+          ariaLabel: localeStrings.permitAudioMenuLabel
+        });
+      }
+
+      if (remoteParticipant?.mediaAccess?.isAudioPermitted && remoteParticipant?.role === 'Attendee' && onForbidAudio) {
+        _defaultMenuItems.push({
+          key: 'forbid-audio',
+          text: localeStrings.forbidAudioMenuLabel,
+          role: 'menuitem',
+          iconProps: {
+            iconName: 'ControlButtonMicProhibited',
+            styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+          },
+          onClick: () => {
+            onForbidAudio([participantId]);
+          },
+          'data-ui-id': 'participant-item-forbid-microphone-button',
+          ariaLabel: localeStrings.forbidAudioMenuLabel
+        });
+      }
+
+      if (
+        remoteParticipant?.mediaAccess &&
+        !remoteParticipant.mediaAccess.isVideoPermitted &&
+        remoteParticipant?.role === 'Attendee' &&
+        onPermitVideo
+      ) {
+        _defaultMenuItems.push({
+          key: 'permit-video',
+          text: localeStrings.permitVideoMenuLabel,
+          role: 'menuitem',
+          iconProps: {
+            iconName: 'ControlButtonCameraOn',
+            styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+          },
+          onClick: () => {
+            onPermitVideo([participantId]);
+          },
+          'data-ui-id': 'participant-item-permit-camera-button',
+          ariaLabel: localeStrings.permitVideoMenuLabel
+        });
+      }
+
+      if (remoteParticipant?.mediaAccess?.isVideoPermitted && remoteParticipant?.role === 'Attendee' && onForbidVideo) {
+        _defaultMenuItems.push({
+          key: 'forbid-video',
+          text: localeStrings.forbidVideoMenuLabel,
+          role: 'menuitem',
+          iconProps: {
+            iconName: 'ControlButtonCameraProhibitedSmall',
+            styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
+          },
+          onClick: () => {
+            onForbidVideo([participantId]);
+          },
+          'data-ui-id': 'participant-item-forbid-camera-button',
+          ariaLabel: localeStrings.forbidVideoMenuLabel
+        });
+      }
+
       if (isSpotlighted) {
         const stopSpotlightMenuText = isMe
           ? localeStrings.stopSpotlightOnSelfMenuLabel
@@ -211,6 +435,7 @@ export const usePeoplePane = (props: {
           _defaultMenuItems.push({
             key: 'stop-spotlight',
             text: stopSpotlightMenuText,
+            role: 'menuitem',
             onClick: onStopSpotlight,
             iconProps: {
               iconName: 'StopSpotlightContextualMenuItem',
@@ -240,6 +465,7 @@ export const usePeoplePane = (props: {
           _defaultMenuItems.push({
             key: 'start-spotlight',
             text: startSpotlightMenuText,
+            role: 'menuitem',
             onClick: onStartSpotlight,
             iconProps: {
               iconName: 'StartSpotlightContextualMenuItem',
@@ -256,6 +482,7 @@ export const usePeoplePane = (props: {
           _defaultMenuItems.push({
             key: 'unpin',
             text: localeStrings?.unpinParticipantMenuLabel,
+            role: 'menuitem',
             iconProps: {
               iconName: 'UnpinParticipant',
               styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -273,6 +500,7 @@ export const usePeoplePane = (props: {
             text: disablePinMenuItem
               ? localeStrings.pinParticipantLimitReachedMenuLabel
               : localeStrings.pinParticipantMenuLabel,
+            role: 'menuitem',
             iconProps: {
               iconName: 'PinParticipant',
               styles: { root: { lineHeight: '1rem', textAlign: 'center' } }
@@ -294,31 +522,37 @@ export const usePeoplePane = (props: {
         : _defaultMenuItems;
     },
     [
+      pinnedParticipants,
       spotlightedParticipantUserIds,
-      onStartLocalSpotlight,
-      onStopLocalSpotlight,
-      onStartRemoteSpotlight,
-      onStopRemoteSpotlight,
-      onFetchParticipantMenuItems,
-      /* @conditional-compile-remove(soft-mute) */
       onMuteParticipant,
-      /* @conditional-compile-remove(soft-mute) */
       remoteParticipants,
-      localeStrings.stopSpotlightMenuLabel,
+      onPermitAudio,
+      onForbidAudio,
+      onPermitVideo,
+      onForbidVideo,
+      onFetchParticipantMenuItems,
+      localeStrings.permitAudioMenuLabel,
+      localeStrings.forbidAudioMenuLabel,
+      localeStrings.permitVideoMenuLabel,
+      localeStrings.forbidVideoMenuLabel,
       localeStrings.stopSpotlightOnSelfMenuLabel,
+      localeStrings.stopSpotlightMenuLabel,
       localeStrings.addSpotlightMenuLabel,
       localeStrings.startSpotlightMenuLabel,
       localeStrings.spotlightLimitReachedMenuTitle,
-      maxParticipantsToSpotlight,
-      pinnedParticipants,
-      onPinParticipant,
-      onUnpinParticipant,
-      disablePinMenuItem,
+      localeStrings?.unpinParticipantMenuLabel,
       localeStrings.pinParticipantMenuLabel,
-      localeStrings.pinParticipantLimitReachedMenuLabel,
-      localeStrings.unpinParticipantMenuLabel,
       localeStrings.unpinParticipantMenuItemAriaLabel,
-      localeStrings.pinParticipantMenuItemAriaLabel
+      localeStrings.pinParticipantLimitReachedMenuLabel,
+      localeStrings.pinParticipantMenuItemAriaLabel,
+      onStopLocalSpotlight,
+      onStopRemoteSpotlight,
+      maxParticipantsToSpotlight,
+      onStartLocalSpotlight,
+      onStartRemoteSpotlight,
+      onUnpinParticipant,
+      onPinParticipant,
+      disablePinMenuItem
     ]
   );
 
@@ -329,7 +563,6 @@ export const usePeoplePane = (props: {
     return (
       <>
         {
-          /* @conditional-compile-remove(soft-mute) */
           <Prompt
             {...muteAllPromptLabels}
             styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
@@ -338,6 +571,55 @@ export const usePeoplePane = (props: {
             onCancel={() => setShowMuteAllPrompt(false)}
           />
         }
+        {
+          <Prompt
+            heading={localeStrings.forbidOthersAudioDialogTitle}
+            text={localeStrings.forbidOthersAudioDialogContent}
+            confirmButtonLabel={localeStrings.forbidOthersAudioConfirmButtonLabel}
+            cancelButtonLabel={localeStrings.forbidOthersAudioCancelButtonLabel}
+            styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
+            onConfirm={() => onForbidAllAttendeesPromptConfirm()}
+            isOpen={showForbidOthersAudioPrompt}
+            onCancel={() => setShowForbidOthersAudioPrompt(false)}
+          />
+        }
+        {
+          <Prompt
+            heading={localeStrings.permitOthersAudioDialogTitle}
+            text={localeStrings.permitOthersAudioDialogContent}
+            confirmButtonLabel={localeStrings.permitOthersAudioConfirmButtonLabel}
+            cancelButtonLabel={localeStrings.permitOthersAudioCancelButtonLabel}
+            styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
+            onConfirm={() => onPermitAllAttendeesPromptConfirm()}
+            isOpen={showPermitOthersAudioPrompt}
+            onCancel={() => setShowForbidOthersAudioPrompt(false)}
+          />
+        }
+        {
+          <Prompt
+            heading={localeStrings.forbidOthersVideoDialogTitle}
+            text={localeStrings.forbidOthersVideoDialogContent}
+            confirmButtonLabel={localeStrings.forbidOthersVideoConfirmButtonLabel}
+            cancelButtonLabel={localeStrings.forbidOthersVideoCancelButtonLabel}
+            styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
+            onConfirm={() => onForbidOthersVideoPromptConfirm()}
+            isOpen={showForbidOthersVideoPrompt}
+            onCancel={() => setShowForbidOthersVideoPrompt(false)}
+          />
+        }
+        {
+          <Prompt
+            heading={localeStrings.permitOthersVideoDialogTitle}
+            text={localeStrings.permitOthersVideoDialogContent}
+            confirmButtonLabel={localeStrings.permitOthersVideoConfirmButtonLabel}
+            cancelButtonLabel={localeStrings.permitOthersVideoCancelButtonLabel}
+            styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
+            onConfirm={() => onPermitOthersVideoPromptConfirm()}
+            isOpen={showPermitOthersVideoPrompt}
+            onCancel={() => setShowForbidOthersVideoPrompt(false)}
+          />
+        }
+
         <PeoplePaneContent
           inviteLink={inviteLink}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
@@ -353,20 +635,43 @@ export const usePeoplePane = (props: {
       </>
     );
   }, [
+    muteAllPromptLabels,
+    showMuteAllPrompt,
+    localeStrings.forbidOthersAudioDialogTitle,
+    localeStrings.forbidOthersAudioDialogContent,
+    localeStrings.forbidOthersAudioConfirmButtonLabel,
+    localeStrings.forbidOthersAudioCancelButtonLabel,
+    localeStrings.permitOthersAudioDialogTitle,
+    localeStrings.permitOthersAudioDialogContent,
+    localeStrings.permitOthersAudioConfirmButtonLabel,
+    localeStrings.permitOthersAudioCancelButtonLabel,
+    localeStrings.forbidOthersVideoDialogTitle,
+    localeStrings.forbidOthersVideoDialogContent,
+    localeStrings.forbidOthersVideoConfirmButtonLabel,
+    localeStrings.forbidOthersVideoCancelButtonLabel,
+    localeStrings.permitOthersVideoDialogTitle,
+    localeStrings.permitOthersVideoDialogContent,
+    localeStrings.permitOthersVideoConfirmButtonLabel,
+    localeStrings.permitOthersVideoCancelButtonLabel,
+    showForbidOthersAudioPrompt,
+    showPermitOthersAudioPrompt,
+    showForbidOthersVideoPrompt,
+    showPermitOthersVideoPrompt,
     inviteLink,
-    mobileView,
     onFetchAvatarPersonaData,
     onFetchParticipantMenuItemsForCallComposite,
     setDrawerMenuItems,
+    mobileView,
     setParticipantActioned,
     sidePaneHeaderMenuProps,
     pinnedParticipants,
     role,
     alternateCallerId,
-    /* @conditional-compile-remove(soft-mute) */ showMuteAllPrompt,
-    /* @conditional-compile-remove(soft-mute) */ setShowMuteAllPrompt,
-    /* @conditional-compile-remove(soft-mute) */ muteAllPromptLabels,
-    /* @conditional-compile-remove(soft-mute) */ onMuteAllPromptConfirm
+    onMuteAllPromptConfirm,
+    onForbidAllAttendeesPromptConfirm,
+    onPermitAllAttendeesPromptConfirm,
+    onForbidOthersVideoPromptConfirm,
+    onPermitOthersVideoPromptConfirm
   ]);
 
   const sidePaneRenderer: SidePaneRenderer = useMemo(

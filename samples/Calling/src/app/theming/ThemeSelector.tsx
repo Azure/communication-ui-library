@@ -31,6 +31,10 @@ export const ThemeSelector = (props: ThemeSelectorProps): JSX.Element => {
     if (option) {
       const themeName = option.key.toString();
       const theme = themeStore[themeName];
+
+      if (!theme) {
+        throw new Error(`Theme ${themeName} not found in theme store`);
+      }
       setCurrentTheme(theme);
     }
   };

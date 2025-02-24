@@ -11,7 +11,7 @@ concurrency:
 jobs:
   stress_test_ui_tests:
     name: Stress test UI tests
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     steps:
       - uses: actions/checkout@v4
@@ -20,7 +20,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -51,7 +51,7 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ failure() }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results

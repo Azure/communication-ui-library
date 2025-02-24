@@ -100,7 +100,7 @@ describe('Stateful call client', () => {
       agent.testHelperPushCall(createMockCall());
       expect(await waitWithBreakCondition(() => Object.keys(client.getState().calls).length === 1)).toBe(true);
       expect(await waitWithBreakCondition(() => Object.keys(client.getState().callsEnded).length === 0)).toBe(true);
-      expect(listener.onChangeCalledCount).toBe(1);
+      expect(listener.onChangeCalledCount).toBe(2);
     }
     {
       const listener = new StateChangeListener(client);
@@ -576,7 +576,7 @@ describe('errors should be reported correctly from StatefulCallClient when', () 
     await expect(client.createCallAgent(stubCommunicationTokenCredential())).rejects.toThrow(
       new CallError('CallClient.createCallAgent', new Error('injected error'))
     );
-    expect(listener.onChangeCalledCount).toBe(1);
+    expect(listener.onChangeCalledCount).toBe(2);
     expect(client.getState().latestErrors['CallClient.createCallAgent']).toBeDefined();
   });
 
@@ -592,7 +592,7 @@ describe('errors should be reported correctly from StatefulCallClient when', () 
     await expect(client.getDeviceManager()).rejects.toThrow(
       new CallError('CallClient.getDeviceManager', new Error('injected error'))
     );
-    expect(listener.onChangeCalledCount).toBe(1);
+    expect(listener.onChangeCalledCount).toBe(2);
     expect(client.getState().latestErrors['CallClient.getDeviceManager']).toBeDefined();
   });
 });

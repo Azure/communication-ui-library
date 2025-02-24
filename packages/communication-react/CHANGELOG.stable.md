@@ -1,8 +1,169 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Thu, 12 Sep 2024 18:13:15 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 10 Feb 2025 18:17:45 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.24.0](https://github.com/azure/communication-ui-library/tree/1.24.0)
+
+Mon, 10 Feb 2025 18:17:45 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.23.0...1.24.0)
+
+### Features
+
+- We are excited to announce that the Azure Communication Services Web UI Library enables ACS and Teams identity users to be moved to breakout rooms when in Teams meetings. This feature will be available when using Call and CallWithChat composite with notification to handle transitions in and out of breakout rooms. In the CallWithChat composite, the chat thread will be updated when in the breakout room. ACS and Teams identity users will not yet be able to choose their own breakout room or manage breakout rooms.
+
+### Improvements
+- Refactor deleteLatestNotification to support an optional `CallId` ([PR #5628](https://github.com/azure/communication-ui-library/pull/5628) by 79475487+mgamis-msft@users.noreply.github.com)
+- Live announcement update when a message is received/edited from/by other users ([PR #5540](https://github.com/azure/communication-ui-library/pull/5540) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
+### Bug Fixes
+- Fix bug where spoken and caption language drawer missing default value in dropdowns ([PR #5626](https://github.com/azure/communication-ui-library/pull/5626) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix acs room audio video enabled notifications. when acs user just joined room UI should not show the audio video enabled notifications ([PR #5563](https://github.com/azure/communication-ui-library/pull/5563) by fuyan@microsoft.com)
+- Update Aria items for Participant List and menu items to have better narrator communication of each participant item ([PR #5624](https://github.com/azure/communication-ui-library/pull/5624) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix media access hermetic test ([PR #5574](https://github.com/azure/communication-ui-library/pull/5574) by fuyan@microsoft.com)
+- Update Background blur tile label width to cap text for longer locale strings ([PR #5579](https://github.com/azure/communication-ui-library/pull/5579) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Resolve issue where Rich Text Editor toolbar was not focused when opening formatting options for rich text ([PR #5611](https://github.com/azure/communication-ui-library/pull/5611) by palatter@microsoft.com)
+- Hide read by in chat action flyout when participants is 20 or more, as read count is not supported ([PR #5585](https://github.com/azure/communication-ui-library/pull/5585) by palatter@microsoft.com)
+- Check capability to determine if set caption language should be shown for teams meeting ([PR #5600](https://github.com/azure/communication-ui-library/pull/5600) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix keyboard navigation for message menu button ([PR #5576](https://github.com/azure/communication-ui-library/pull/5576) by 98852890+vhuseinova-msft@users.noreply.github.com)
+
+
+## [1.23.0](https://github.com/azure/communication-ui-library/tree/1.23.0)
+
+Mon, 13 Jan 2025 19:28:45 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.22.0...1.23.0)
+
+### Features
+- We are excited to announce that the Azure Communication Services Web UI Library now supports the Media Access feature. This feature allows organizers, co-organizers, and presenters to control the ability of other attendees to send audio and video while in a call. Attendees can determine if their audio or video is enabled or disabled and check the media access status of other participants. Developers can integrate this functionality through our composites (e.g., CallComposite, CallWithChatComposite) as well as through components. ([PR #5546](https://github.com/azure/communication-ui-library/pull/5546) by fuyan@microsoft.com)
+
+### Improvements
+- Add on several unit tests to the acs-ui-common packlet ([PR #5457](https://github.com/azure/communication-ui-library/pull/5457) by alkwa@microsoft.com)
+
+### Bug Fixes
+- Change the announcers in the Mic and Camera button to be conditionally rendered to stop them being read in scan mode if the button isn't focused ([PR #5526](https://github.com/azure/communication-ui-library/pull/5526) by dmceachern@microsoft.com)
+- Fix SendBox initialization that caused MaxListenersExceededWarning logs in the Console tool for ChatComposite with rich text editor enabled. ([PR #5537](https://github.com/azure/communication-ui-library/pull/5537) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update people button behavior to meet A11y requirements ([PR #5524](https://github.com/azure/communication-ui-library/pull/5524) by dmceachern@microsoft.com)
+- Update image overlay to announce when visible ([PR #5500](https://github.com/azure/communication-ui-library/pull/5500) by 3941071+emlynmac@users.noreply.github.com)
+- Fix an issue where tab key was ignored by rich text editor at the end of the text ([PR #5533](https://github.com/azure/communication-ui-library/pull/5533) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Define captions a region and focus on mount on captions region ([PR #5512](https://github.com/azure/communication-ui-library/pull/5512) by edwardlee@microsoft.com)
+- Fix an issue where keyboard focus was lost after message is edited ([PR #5530](https://github.com/azure/communication-ui-library/pull/5530) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Remove unreachable code ([PR #5520](https://github.com/azure/communication-ui-library/pull/5520) by 77021369+jimchou-dev@users.noreply.github.com)
+- Add more spacing for Video tile icons ([PR #5535](https://github.com/azure/communication-ui-library/pull/5535) by fuyan@microsoft.com)
+- Fix RTE .exe attachment disabling SendButton ([PR #5534](https://github.com/azure/communication-ui-library/pull/5534) by 77021369+jimchou-dev@users.noreply.github.com)
+
+
+## [1.22.0](https://github.com/azure/communication-ui-library/tree/1.22.0)
+
+Mon, 16 Dec 2024 19:44:14 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0...1.22.0)
+
+### Features
+- We are launching the ability to use components to build your own captions experience. These components are Start Captions Button, Captions Settings Modal, and Captions Banner. ([PR #5499](https://github.com/azure/communication-ui-library/pull/5499) by 96077406+carocao-msft@users.noreply.github.com, [PR #5469](https://github.com/azure/communication-ui-library/pull/5469) by 96077406+carocao-msft@users.noreply.github.com, [PR #5460](https://github.com/azure/communication-ui-library/pull/5460) by 96077406+carocao-msft@users.noreply.github.com)
+
+### Improvements
+- Update nanoid package ([PR #5490](https://github.com/azure/communication-ui-library/pull/5490) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update `@azure/communication-calling-effects` to 1.1.2 ([PR #5407](https://github.com/azure/communication-ui-library/pull/5407) by 2684369+JamesBurnside@users.noreply.github.com)
+
+### Bug Fixes
+- Fix an issue where edited message could be saved without the content and attachments when rich text editor is enabled ([PR #5434](https://github.com/azure/communication-ui-library/pull/5434) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix screenshare tab outline color when presenting ([PR #5431](https://github.com/azure/communication-ui-library/pull/5431) by 2684369+JamesBurnside@users.noreply.github.com)
+- In CallCompsite, return focus to control bar when captions is closed from the captions settings button ([PR #5438](https://github.com/azure/communication-ui-library/pull/5438) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update configuration page local preview to show 'Video is loading' while camera is switching on or switching source. Also disable camera button while swiching source. ([PR #5430](https://github.com/azure/communication-ui-library/pull/5430) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix error bar icon size for low network quality and local video freeze ([PR #5282](https://github.com/azure/communication-ui-library/pull/5282) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix regression that caused minor inconsistent padding between connecting and call pages in CallComposite ([PR #5423](https://github.com/azure/communication-ui-library/pull/5423) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix an issue where text editors didn't trigger typing events when using input method editor ([PR #5486](https://github.com/azure/communication-ui-library/pull/5486) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix console error that requested Teams conference details in unsupported calls ([PR #5444](https://github.com/azure/communication-ui-library/pull/5444) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix A11y Properties of Participant List More Options to have aria-expanded, aria-controls and aria-label. Correctly apply focus when the CallComposite people pane is opened when no one else has joined the call. ([PR #5427](https://github.com/azure/communication-ui-library/pull/5427) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update aria-live property of notifications in the notification stack. Update camera button aria-label to indicate loading status to match announcer. ([PR #5428](https://github.com/azure/communication-ui-library/pull/5428) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add aria descriptions to reaction and raise buttons ([PR #5414](https://github.com/azure/communication-ui-library/pull/5414) by dmceachern@microsoft.com)
+- Fix an issue where system chat messages weren't announced ([PR #5463](https://github.com/azure/communication-ui-library/pull/5463) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix issue where AudioContext for composites is made too early ([PR #5476](https://github.com/azure/communication-ui-library/pull/5476) by dmceachern@microsoft.com)
+- Removed custom styles for scroll bar for ChatComposite and Captions components ([PR #5470](https://github.com/azure/communication-ui-library/pull/5470) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update Control bar button aria-describedby ([PR #5493](https://github.com/azure/communication-ui-library/pull/5493) by dmceachern@microsoft.com)
+- Allow for Contoso to hard set the dialer page, on, off, or follow our behaviors ([PR #5454](https://github.com/azure/communication-ui-library/pull/5454) by dmceachern@microsoft.com)
+- Fix string typo for captions dropdown info. Fix usePropsFor return type for RaiseHandButton. ([PR #5448](https://github.com/azure/communication-ui-library/pull/5448) by 79475487+mgamis-msft@users.noreply.github.com)
+
+
+## [1.21.0](https://github.com/azure/communication-ui-library/tree/1.21.0)
+
+Tue, 12 Nov 2024 17:20:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.21.0-beta.1...1.21.0)
+
+General improvements and bug fixes.
+
+### Improvements
+
+- Add es-MX and fr-CA locales ([PR #5405](https://github.com/azure/communication-ui-library/pull/5405) by 79475487+mgamis-msft@users.noreply.github.com)
+- Updated Chat SDK and Signaling to latest stable release ([PR #5361](https://github.com/azure/communication-ui-library/pull/5361) by 109105353+jpeng-ms@users.noreply.github.com)
+- Introduce the Reactions button to allow for a better component meeting experience. ([PR #5401](https://github.com/azure/communication-ui-library/pull/5401) by dmceachern@microsoft.com)
+- Update comunication-calling stable version to 1.30.2 ([PR #5393](https://github.com/azure/communication-ui-library/pull/5393) by edwardlee@microsoft.com)
+- Update chat-component-bindings with noUncheckedIndexedAccess ([PR #5294](https://github.com/azure/communication-ui-library/pull/5294) by 2684369+JamesBurnside@users.noreply.github.com)
+- On safari, do not show speaker dropdown ([PR #5328](https://github.com/azure/communication-ui-library/pull/5328) by 2684369+JamesBurnside@users.noreply.github.com)
+
+### Bug Fixes
+
+- Introduce new aria strings to better announce the state of the participant in the video tile component ([PR #5345](https://github.com/azure/communication-ui-library/pull/5345) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Fix noUncheckedIndexedAccess for StatefulChatClient ([PR #5293](https://github.com/azure/communication-ui-library/pull/5293) by 2684369+JamesBurnside@users.noreply.github.com)
+- Remove unnecessary disabled prop from label ([PR #5365](https://github.com/azure/communication-ui-library/pull/5365) by edwardlee@microsoft.com)
+- Fix CallComposite captions to correctly be <li> items nested inside a <ul> ([PR #5375](https://github.com/azure/communication-ui-library/pull/5375) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix the A11y role of the local video tile in the VideoGallery depending on if it is draggable or not ([PR #5377](https://github.com/azure/communication-ui-library/pull/5377) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update caption modal styles for 400% zoom scenario ([PR #5403](https://github.com/azure/communication-ui-library/pull/5403) by dmceachern@microsoft.com)
+- Fix video dispose problem for multiple video stream ([PR #5188](https://github.com/azure/communication-ui-library/pull/5188) by jiangnanhello@live.com)
+- Add High Contrast borders around video tiles, side pane, and side pane close button in CallComposites ([PR #5388](https://github.com/azure/communication-ui-library/pull/5388) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix call not found error when gets removed ([PR #5338](https://github.com/azure/communication-ui-library/pull/5338) by jiangnanhello@live.com)
+- Fix device permission comboboxes on CallComposite configuration page to be appropriately labelled ([PR #5376](https://github.com/azure/communication-ui-library/pull/5376) by 2684369+JamesBurnside@users.noreply.github.com)
+- Focus will move into the video tile menu directly when menu is opened via keyboard ([PR #5313](https://github.com/azure/communication-ui-library/pull/5313) by jiangnanhello@live.com)
+- Add announcements to hold screen and attempting to reconnect screen ([PR #5402](https://github.com/azure/communication-ui-library/pull/5402) by edwardlee@microsoft.com)
+- Fix CallComposite issue where the available devices are not updated when the permissions are changed via the browser lock button ([PR #5283](https://github.com/azure/communication-ui-library/pull/5283) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update size to stop white border in local video tile when using safari ([PR #5318](https://github.com/azure/communication-ui-library/pull/5318) by dmceachern@microsoft.com)
+- Increase Start Call Button height on the Configuration Page to 52px on mobile form factor ([PR #5336](https://github.com/azure/communication-ui-library/pull/5336) by 2684369+JamesBurnside@users.noreply.github.com)
+- In configuration page of call composites, move focus to error bar when an error occurs ([PR #5374](https://github.com/azure/communication-ui-library/pull/5374) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix troubleshooting links color in high contrast modes ([PR #5386](https://github.com/azure/communication-ui-library/pull/5386) by 2684369+JamesBurnside@users.noreply.github.com)
+- Resolve issue where rich text editor tool bar would not focus when shown. Also fixed issue where editor component would remount when showing/hiding toolbar. ([PR #5337](https://github.com/azure/communication-ui-library/pull/5337) by 73612854+palatter@users.noreply.github.com)
+- Add announcement strings for CallComposite page status ([PR #5400](https://github.com/azure/communication-ui-library/pull/5400) by edwardlee@microsoft.com)
+- Resolve console errors for aria-hidden ([PR #5311](https://github.com/azure/communication-ui-library/pull/5311) by jiangnanhello@live.com)
+- Update video effects picker to a radio group for better A11y control ([PR #5373](https://github.com/azure/communication-ui-library/pull/5373) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update configuration screen drop downs to have a button inside enabling users with keyboards to reprompt for the troubleshooting links ([PR #5384](https://github.com/azure/communication-ui-library/pull/5384) by dmceachern@microsoft.com)
+- Add enter key support for rich text edit box ([PR #5395](https://github.com/azure/communication-ui-library/pull/5395) by 73612854+palatter@users.noreply.github.com)
+- Fix Start Call text color in Desert high contrast mode when a dark theme is applied ([PR #5387](https://github.com/azure/communication-ui-library/pull/5387) by 2684369+JamesBurnside@users.noreply.github.com)
+
+
+## [1.20.0](https://github.com/azure/communication-ui-library/tree/1.20.0)
+
+Tue, 15 Oct 2024 20:24:24 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.20.0-beta.1...1.20.0)
+
+### Features
+
+- Azure Communication Services Web UI Library now supports the Soft Mute feature. This feature enables users to mute other users in a call. If a user has been soft muted, they retain the ability to unmute themselves. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite). ([PR #5277](https://github.com/azure/communication-ui-library/pull/5277) by edwardlee@microsoft.com)
+
+- Azure Communication Services Web UI Library now supports Deep Noise Suppression. This feature enables noise suppression algorithms to filter out background noise, ensuring that only the speaker's voice is heard clearly. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite). ([PR #5265](https://github.com/Azure/communication-ui-library/pull/5265/))
+
+- Azure Communication Services Web UI Library now supports a new way to consume our Composite experiences. If you are wanting to use the Azure Communication Services UI library Composites and don't develop in react, we are introducing a series of loader functions to allow you to use the Composites in your application. These functions load a react node and attach it to your application allowing you to use the Composites as if you were building in react. ([PR #5198](https://github.com/azure/communication-ui-library/pull/5198) by dmceachern@microsoft.com)
+
+### Improvements
+
+- Add accessible name to video effects pane ([PR #5196](https://github.com/azure/communication-ui-library/pull/5196) by 79475487+mgamis-msft@users.noreply.github.com)
+- Soft mute now utilizes capabilities to discern if the current user is able to use the feature ([PR #5276](https://github.com/azure/communication-ui-library/pull/5276) by edwardlee@microsoft.com)
+- Add Welsh component and composite locales ([PR #5243](https://github.com/azure/communication-ui-library/pull/5243) by 79475487+mgamis-msft@users.noreply.github.com)
+
+### Bug Fixes
+
+- Adding logic to flag when the adapter is in the middle of creation ([PR #5182](https://github.com/azure/communication-ui-library/pull/5182) by 9044372+JoshuaLai@users.noreply.github.com)
+- White spaces handling update for text messages in message components ([PR #5225](https://github.com/azure/communication-ui-library/pull/5225) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update aria-labels and contrast colors ([PR #5309](https://github.com/azure/communication-ui-library/pull/5309) by edwardlee@microsoft.com)
+- Enable noUncheckedIndexedAccess in statefulcallclient and calling bindings ([PR #5242](https://github.com/azure/communication-ui-library/pull/5242) by 2684369+JamesBurnside@users.noreply.github.com)
+- Safely subscribe to on stateChanged events to prevent related events from failing if listeners throw an error ([PR #5165](https://github.com/azure/communication-ui-library/pull/5165) by edwardlee@microsoft.com)
+- Fix bug where waiting for others to join text shows up in black under dark mode, and showing up in screen share ([PR #5295](https://github.com/azure/communication-ui-library/pull/5295) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix runtime error when starting screenshare alone in a call ([PR #5240](https://github.com/azure/communication-ui-library/pull/5240) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix issue where reactions button was not accessible via keyboard ([PR #5281](https://github.com/azure/communication-ui-library/pull/5281) by 94866715+dmceachernmsft@users.noreply.github.com)
+- Increase Notification spacing betwen Title and Description text ([PR #5238](https://github.com/azure/communication-ui-library/pull/5238) by edwardlee@microsoft.com)
+- Ensure components re-render when adapter state changes by using useSelector instead of adapter.getState ([PR #5239](https://github.com/azure/communication-ui-library/pull/5239) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix bug where waiting for others to join text shows up in black under dark mode, and showing up in screen share ([PR #5295](https://github.com/azure/communication-ui-library/pull/5295) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix Call Controls to allow proper customization of buttons shown ([PR #5193](https://github.com/azure/communication-ui-library/pull/5193) by dmceachern@microsoft.com)
+- Fix noUncheckedIndexedAccess for react-composites ([PR #5297](https://github.com/azure/communication-ui-library/pull/5297) by 2684369+JamesBurnside@users.noreply.github.com)
+- Enable noUncheckedIndexedAccess for react-components ([PR #5266](https://github.com/azure/communication-ui-library/pull/5266) by 2684369+JamesBurnside@users.noreply.github.com)
 
 ## [1.19.0](https://github.com/azure/communication-ui-library/tree/1.19.0)
 

@@ -19,7 +19,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: true
       };
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
@@ -32,7 +32,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
@@ -45,7 +45,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureStateArabic;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
@@ -61,7 +61,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
@@ -78,7 +78,7 @@ test.describe('Teams Closed Captions Banner tests', async () => {
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false
       };
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
@@ -90,12 +90,14 @@ test.describe('Teams Closed Captions Banner tests', async () => {
     if (isTestProfileMobile(testInfo)) {
       test.skip();
     }
-    const initialState = defaultMockCallAdapterState();
+    const initialState = defaultMockCallAdapterState([], 'Presenter', false);
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-      /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
+      if (initialState.call.capabilitiesFeature) {
+        initialState.call.capabilitiesFeature.capabilities.setCaptionLanguage.isPresent = true;
+      }
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('captions-banner-more-button'));
@@ -109,7 +111,7 @@ test.describe('Captions buttons in call control', () => {
     const initialState = defaultMockCallAdapterState();
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
@@ -121,11 +123,13 @@ test.describe('Captions buttons in call control', () => {
   });
 
   test('Captions settings renders normally', async ({ page, serverUrl }, testInfo) => {
-    const initialState = defaultMockCallAdapterState();
+    const initialState = defaultMockCallAdapterState([], 'Presenter', false);
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
+      if (initialState.call.capabilitiesFeature) {
+        initialState.call.capabilitiesFeature.capabilities.setCaptionLanguage.isPresent = true;
+      }
       initialState.call.captionsFeature = captionsFeatureState;
-      /* @conditional-compile-remove(acs-close-captions) */
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
@@ -142,13 +146,13 @@ test.describe('Captions buttons in call control', () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature = captionsFeatureState;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, `[id="common-call-composite-captions-button"]`);
-    expect(await stableScreenshot(page)).toMatchSnapshot(`teams-caption-toggle-button.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`teams-caption-toggle-button-no-premium-license.png`);
   });
 
   test('Captions toggle button renders correctly when caption disabled', async ({ page, serverUrl }) => {
@@ -156,12 +160,12 @@ test.describe('Captions buttons in call control', () => {
     if (initialState?.call) {
       initialState.isTeamsMeeting = true;
       initialState.call.captionsFeature.isCaptionsFeatureActive = false;
-      /* @conditional-compile-remove(acs-close-captions) */
+
       initialState.call.captionsFeature.captionsKind = 'TeamsCaptions';
     }
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, `[id="common-call-composite-captions-button"]`);
-    expect(await stableScreenshot(page)).toMatchSnapshot(`teams-caption-toggle-button-disabled.png`);
+    expect(await stableScreenshot(page)).toMatchSnapshot(`teams-caption-toggle-button-disabled-no-premium-license.png`);
   });
 });

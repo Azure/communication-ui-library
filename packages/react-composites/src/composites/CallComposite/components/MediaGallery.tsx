@@ -27,7 +27,7 @@ import { LocalVideoTileOptions } from '../CallComposite';
 import { PromptProps } from './Prompt';
 import { useLocalSpotlightCallbacksWithPrompt, useRemoteSpotlightCallbacksWithPrompt } from '../utils/spotlightUtils';
 import { VideoTilesOptions } from '@internal/react-components';
-import { getIsRoomsCall, getReactionResources, getRole } from '../selectors/baseSelectors';
+import { getCapabilites, getIsRoomsCall, getReactionResources, getRole } from '../selectors/baseSelectors';
 
 const VideoGalleryStyles = {
   root: {
@@ -91,6 +91,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const announcerString = useParticipantChangedAnnouncement();
 
   const userRole = useSelector(getRole);
+  const capabilities = useSelector(getCapabilites);
   const isRoomsCall = useSelector(getIsRoomsCall);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -188,7 +189,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const VideoGalleryMemoized = useMemo(() => {
     const layoutBasedOnUserSelection = (): VideoGalleryLayout => {
       return props.localVideoTileOptions ? layoutBasedOnTilePosition : props.userSetGalleryLayout;
-      return layoutBasedOnTilePosition;
     };
 
     return (
@@ -219,9 +219,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         onStopLocalSpotlight={hideSpotlightButtons ? undefined : onStopLocalSpotlightWithPrompt}
         onStartRemoteSpotlight={hideSpotlightButtons ? undefined : onStartRemoteSpotlightWithPrompt}
         onStopRemoteSpotlight={hideSpotlightButtons ? undefined : onStopRemoteSpotlightWithPrompt}
-        /* @conditional-compile-remove(soft-mute) */
         onMuteParticipant={
-          ['Unknown', 'Organizer', 'Presenter', 'Co-organizer'].includes(userRole ?? '')
+          capabilities?.muteOthers?.isPresent || userRole === 'Unknown'
             ? videoGalleryProps.onMuteParticipant
             : undefined
         }
@@ -250,7 +249,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     onStopLocalSpotlightWithPrompt,
     onStartRemoteSpotlightWithPrompt,
     onStopRemoteSpotlightWithPrompt,
-    layoutBasedOnTilePosition
+    layoutBasedOnTilePosition,
+    capabilities?.muteOthers
   ]);
 
   return (

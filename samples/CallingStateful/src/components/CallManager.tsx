@@ -19,8 +19,17 @@ export const CallManager = (props: CallManagerProps): JSX.Element => {
 
   const [otherCalls, setOtherCalls] = useState<Call[] | TeamsCall[]>([]);
 
+  /**
+   * We want to make sure that we are still tracking either Calls or TeamsCalls since the two call types cannot be in
+   * the same array here. Filter is combining the types in the return so we need to make sure that we are only filtering
+   * against one type of call to stop TypeScript from complaining.
+   */
   useEffect(() => {
-    setOtherCalls(calls.filter((call) => call.id !== activeCall?.id));
+    if (calls[0] && calls[0].kind === 'TeamsCall') {
+      setOtherCalls((calls as TeamsCall[]).filter((call: TeamsCall) => call.id !== activeCall?.id));
+    } else {
+      setOtherCalls((calls as Call[]).filter((call: Call) => call.id !== activeCall?.id));
+    }
   }, [calls, activeCall]);
 
   return (

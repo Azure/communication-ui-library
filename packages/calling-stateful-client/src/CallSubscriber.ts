@@ -32,6 +32,10 @@ import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
+import { MediaAccessSubscriber } from './MediaAccessSubscriber';
+import { _isTeamsMeeting } from './TypeGuards';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextSubscriber } from './RealTimeTextSubscriber';
 
 /**
  * Keeps track of the listeners assigned to a particular call because when we get an event from SDK, it doesn't tell us
@@ -53,6 +57,8 @@ export class CallSubscriber {
   private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
+  /* @conditional-compile-remove(rtt) */
+  private _realTimeTextSubscriber?: RealTimeTextSubscriber;
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   private _reactionSubscriber?: ReactionSubscriber;
 
@@ -64,6 +70,7 @@ export class CallSubscriber {
   private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
   /* @conditional-compile-remove(together-mode) */
   private _togetherModeSubscriber: TogetherModeSubscriber;
+  private _mediaAccessSubscriber: MediaAccessSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -117,6 +124,10 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.Spotlight)
     );
+
+    /* @conditional-compile-remove(breakout-rooms) */
+    // Clear assigned breakout room closed notification for this call.
+    this._context.deleteLatestNotification('assignedBreakoutRoomClosed');
     /* @conditional-compile-remove(breakout-rooms) */
     this._breakoutRoomsSubscriber = new BreakoutRoomsSubscriber(
       this._callIdRef,
@@ -127,7 +138,20 @@ export class CallSubscriber {
     this._togetherModeSubscriber = new TogetherModeSubscriber(
       this._callIdRef,
       this._context,
+      this._internalContext,
       this._call.feature(Features.TogetherMode)
+    );
+
+    this._mediaAccessSubscriber = new MediaAccessSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.MediaAccess)
+    );
+    /* @conditional-compile-remove(rtt) */
+    this._realTimeTextSubscriber = new RealTimeTextSubscriber(
+      this._callIdRef,
+      this._context,
+      this._call.feature(Features.RealTimeText)
     );
 
     this.subscribe();
@@ -161,7 +185,6 @@ export class CallSubscriber {
     this._call.feature(Features.DominantSpeakers).on('dominantSpeakersChanged', this.dominantSpeakersChanged);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.on('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
-    /* @conditional-compile-remove(soft-mute) */
     this._call.on('mutedByOthers', this.mutedByOthersHandler);
 
     for (const localVideoStream of this._call.localVideoStreams) {
@@ -201,7 +224,6 @@ export class CallSubscriber {
     this._call.off('roleChanged', this.callRoleChangedHandler);
     /* @conditional-compile-remove(total-participant-count) */
     this._call.off('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
-    /* @conditional-compile-remove(soft-mute) */
     this._call.off('mutedByOthers', this.mutedByOthersHandler);
 
     this._participantSubscribers.forEach((participantSubscriber: ParticipantSubscriber) => {
@@ -231,6 +253,8 @@ export class CallSubscriber {
     this._optimalVideoCountSubscriber.unsubscribe();
     this._pptLiveSubscriber.unsubscribe();
     this._CaptionsFeatureSubscriber?.unsubscribe();
+    /* @conditional-compile-remove(rtt) */
+    this._realTimeTextSubscriber?.unsubscribe();
     this._raiseHandSubscriber?.unsubscribe();
 
     this._capabilitiesSubscriber.unsubscribe();
@@ -240,6 +264,7 @@ export class CallSubscriber {
     this._breakoutRoomsSubscriber.unsubscribe();
     /* @conditional-compile-remove(together-mode) */
     this._togetherModeSubscriber.unsubscribe();
+    this._mediaAccessSubscriber.unsubscribe();
   };
 
   // This is a helper function to safely call subscriber functions. This is needed in order to prevent events
@@ -289,7 +314,7 @@ export class CallSubscriber {
   };
 
   private initTeamsMeetingConference = (): void => {
-    if (this._call.state === 'Connected') {
+    if (this._call.state === 'Connected' && _isTeamsMeeting(this._call)) {
       this._call
         .feature(Features.TeamsMeetingAudioConferencing)
         .getTeamsMeetingAudioConferencingDetails()
@@ -338,7 +363,6 @@ export class CallSubscriber {
   };
 
   // TODO: Tee to notification state once available
-  /* @conditional-compile-remove(soft-mute) */
   private mutedByOthersHandler = (): void => {
     this._context.teeErrorToState(
       { name: 'mutedByOthers', message: 'Muted by another participant' },

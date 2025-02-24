@@ -76,7 +76,7 @@ const isMessageSame = (first: ChatMessage, second: ChatMessage): boolean => {
 const getLatestChatMessage = (messages: Message[]): ChatMessage | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
-    if (message.messageType === 'chat' && !!message.createdOn) {
+    if (message?.messageType === 'chat' && !!message.createdOn) {
       return message;
     }
   }
@@ -196,6 +196,10 @@ export interface MessageThreadStrings {
   failToSendTag?: string;
   /** String for LiveMessage introduction for the Chat Message */
   liveAuthorIntro: string;
+  /** String for LiveMessage introduction for the edited Chat Message by remote user */
+  editedMessageLiveAuthorIntro: string;
+  /** String for LiveMessage introduction for the edited Chat Message sent by local user */
+  editedMessageLocalUserLiveAuthorIntro: string;
   /** String for aria text of remote user's message content */
   messageContentAriaText: string;
   /** String for aria text of local user's message content */
@@ -221,7 +225,6 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(file-sharing-acs) */
   /** String for download attachment button in attachment card */
   downloadAttachment: string;
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /** String for open attachment button in attachment card */
   openAttachment: string;
   /* @conditional-compile-remove(data-loss-prevention) */
@@ -230,7 +233,6 @@ export interface MessageThreadStrings {
   /* @conditional-compile-remove(data-loss-prevention) */
   /** String for policy violation message removal details link */
   blockedWarningLinkText: string;
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /** String for aria text in attachment card group*/
   attachmentCardGroupMessage: string;
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -341,7 +343,7 @@ const memoizeAllMessages = memoizeFnAll(
 const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStatus): string | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
-    if (message.messageType === 'chat' && message.status === status && message.mine) {
+    if (message?.messageType === 'chat' && message.status === status && message.mine) {
       return message.messageId;
     }
   }
@@ -351,7 +353,7 @@ const getLastChatMessageIdWithStatus = (messages: Message[], status: MessageStat
 const getLastChatMessageForCurrentUser = (messages: Message[]): ChatMessage | undefined => {
   for (let i = messages.length - 1; i >= 0; i--) {
     const message = messages[i];
-    if (message.messageType === 'chat' && message.mine) {
+    if (message?.messageType === 'chat' && message.mine) {
       return message;
     }
   }

@@ -27,6 +27,8 @@ export type CallParticipantListParticipant = ParticipantListParticipant & {
   reaction?: Reaction;
   /** Whether calling participant is spotlighted **/
   spotlight?: Spotlight;
+  /** Whether calling participant has audio/video media access blocked **/
+  mediaAccess?: MediaAccess;
 };
 
 /**
@@ -92,3 +94,13 @@ export type ParticipantState =
   | 'EarlyMedia'
   | 'Disconnected'
   | 'Reconnecting';
+
+/**
+ * Audio/Video Media access state
+ *
+ * @public
+ */
+export type MediaAccess = {
+  isAudioPermitted: boolean;
+  isVideoPermitted: boolean;
+};

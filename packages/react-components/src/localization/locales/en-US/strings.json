@@ -5,10 +5,15 @@
     "removeButtonLabel": "Remove",
     "sharingIconLabel": "Sharing",
     "mutedIconLabel": "Muted",
+    "handRaisedIconLabel": "Hand raised - Position {position}",
     "displayNamePlaceholder": "Unnamed participant",
     "participantStateRinging": "Calling...",
     "participantStateHold": "On hold",
-    "attendeeRole": "Attendee"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, More Options",
+    "attendeeRole": "Attendee",
+    "micDisabledIconLabel": "Micophone disabled",
+    "cameraDisabledIconLabel": "Camera disabled"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} more"
@@ -58,6 +63,7 @@
     "richTextDeleteColumnMenu": "Delete column",
     "richTextDeleteRowMenu": "Delete row",
     "richTextDeleteTableMenu": "Delete table",
+    "richTextToolbarAriaLabel": "Message Formatting Toolbar",
     "richTextToolbarMoreButtonAriaLabel": "More options",
     "attachmentMoreMenu": "More Options",
     "richTextNewBulletedListItemAnnouncement": "Bullet, new line",
@@ -65,12 +71,34 @@
     "richTextBulletedListAppliedAnnouncement": "Bulleted list applied",
     "richTextNumberedListAppliedAnnouncement": "Numbered list applied"
   },
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Turn on RTT Modal",
+    "realTimeTextModalTitle": "Turn on RTT?",
+    "realTimeTextModalText": "Real-time text (RTT) will be turned on for everyone in the meeting.",
+    "realTimeTextConfirmButtonLabel": "Turn on",
+    "realTimeTextCancelButtonLabel": "Cancel",
+    "realTimeTextCloseModalButtonAriaLabel": "Close RTT Modal"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Starting captions...",
+    "realTimeTextInputBoxDefaultText": "Type message in real time",
+    "realTimeTextInputErrorMessage": "Message can not exceed 2000 characters",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (real-time text) is enabled for all participants for the entire duration of the meeting.",
+    "realTimeTextBannerLinkLabel": "Learn more",
+    "captionsOnlyContainerTitle": "Captions",
+    "realTimeTextOnlyContainerTitle": "Real-Time Text",
+    "captionsAndRealTimeTextContainerTitle": "Captions and Real-Time Text",
+    "expandButtonAriaLabel": "Expand",
+    "minimizeButtonAriaLabel": "Collapse"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Suggestions"
   },
   "imageOverlay": {
     "downloadButtonLabel": "Download",
-    "dismissButtonAriaLabel": "Close"
+    "dismissButtonAriaLabel": "Close",
+    "overlayVisibleMessage": "Image Details Overlay"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Message sent",
@@ -146,6 +174,7 @@
   },
   "participantsButton": {
     "label": "People",
+    "ariaLabel": "People",
     "tooltipContent": "Show participants",
     "menuHeader": "In this call",
     "participantsListButtonLabel": "{numParticipants} people",
@@ -169,7 +198,7 @@
   },
   "reactionButton": {
     "label": "React",
-    "ariaLabel": "React Button, Send a reaction",
+    "ariaLabel": "React",
     "tooltipDisabledContent": "Reaction action is disabled",
     "tooltipContent": "Send a reaction",
     "likeReactionTooltipContent": "Like",
@@ -177,6 +206,107 @@
     "laughReactionTooltipContent": "Laugh",
     "applauseReactionTooltipContent": "Applause",
     "surprisedReactionTooltipContent": "Surprised"
+  },
+  "realTimeText": {
+    "isTypingText": "RTT typing"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Captions Settings",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Spoken language",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Captions language",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Language that everyone on this call is speaking.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Captions will appear in this langugage.",
+    "captionsSettingsConfirmButtonLabel": "Confirm",
+    "captionsSettingsCancelButtonLabel": "Cancel",
+    "captionsSettingsModalAriaLabel": "Captions Setting Modal",
+    "captionsSettingsCloseModalButtonAriaLabel": "Close Captions Setting"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabic - U.A.E.",
+    "ar-sa": "Arabic - Saudi Arabia",
+    "da-dk": "Danish",
+    "de-de": "German - Germany",
+    "en-au": "English - Australia",
+    "en-ca": "English - Canada",
+    "en-gb": "English - United Kingdom",
+    "en-in": "English - India",
+    "en-nz": "English - New Zealand",
+    "en-us": "English - United States",
+    "es-es": "Spanish - Spain (Modern Sort)",
+    "es-mx": "Spanish - Mexico",
+    "fi-fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr-fr": "French - France",
+    "hi-in": "Hindi",
+    "it-it": "Italian - Italy",
+    "ja-jp": "Japanese",
+    "ko-kr": "Korean",
+    "nb-no": "Norwegian (Bokmål)",
+    "nl-be": "Dutch - Belgium",
+    "nl-nl": "Dutch - Netherlands",
+    "pl-pl": "Polish",
+    "pt-br": "Portuguese - Brazil",
+    "ru-ru": "Russian",
+    "sv-se": "Swedish",
+    "zh-cn": "Chinese - People's Republic of China",
+    "zh-hk": "Chinese - Hong Kong SAR",
+    "cs-cz": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr-tr": "Turkish",
+    "vi-vn": "Vietnamese",
+    "th-th": "Thai",
+    "he-il": "Hebrew",
+    "cy-gb": "Welsh",
+    "uk-ua": "Ukrainian",
+    "el-gr": "Greek",
+    "hu-hu": "Hungarian",
+    "ro-ro": "Romanian",
+    "sk-sk": "Slovak",
+    "zh-tw": "Chinese - Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabic",
+    "da": "Danish",
+    "de": "German",
+    "en": "English",
+    "es": "Spanish",
+    "fi": "Finnish",
+    "fr-ca": "French - Canada",
+    "fr": "French - France",
+    "hi": "Hindi",
+    "it": "Italian",
+    "ja": "Japanese",
+    "ko": "Korean",
+    "nb": "Norwegian (Bokmål)",
+    "nl": "Dutch",
+    "pl": "Polish",
+    "pt": "Portuguese - Brazil",
+    "ru": "Russian",
+    "sv": "Swedish",
+    "zh-Hans": "Chinese (Simplified)",
+    "zh-Hant": "Chinese (Traditional)",
+    "cs": "Czech",
+    "pt-pt": "Portuguese - Portugal",
+    "tr": "Turkish",
+    "vi": "Vietnamese",
+    "th": "Thai",
+    "he": "Hebrew",
+    "cy": "Welsh",
+    "uk": "Ukrainian",
+    "el": "Greek",
+    "hu": "Hungarian",
+    "ro": "Romanian",
+    "sk": "Slovak"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Turn on captions",
+    "offLabel": "Turn off captions",
+    "tooltipOnContent": "Turn off captions",
+    "tooltipOffContent": "Turn on captions"
+  },
+  "startRealTimeTextButton": {
+    "label": "Turn on RTT for this call",
+    "tooltipOffContent": "Turn on RTT for this call"
   },
   "messageThread": {
     "yesterday": "Yesterday",
@@ -194,7 +324,9 @@
     "resendMessage": "Try sending again",
     "failToSendTag": "Failed to send",
     "editedTag": "Edited",
-    "liveAuthorIntro": "{author} says",
+    "liveAuthorIntro": "Message from {author}",
+    "editedMessageLiveAuthorIntro": "Edited message from {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Edited message",
     "messageContentAriaText": "{status} {author} said {message}",
     "messageContentMineAriaText": "{status} You said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
@@ -467,6 +599,11 @@
       "message": "We'll move you to your assigned room in 5 seconds.",
       "dismissButtonAriaLabel": "Close"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Your breakout room has closed",
+      "message": "We'll move you back to your meeting in 5 seconds.",
+      "dismissButtonAriaLabel": "Close"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Join breakout room?",
       "message": "You've been assigned to a breakout room.",
@@ -481,6 +618,34 @@
     "breakoutRoomClosingSoon": {
       "title": "Room time limit about to expire.",
       "message": "This room will close in 30 seconds",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Your camera has been enabled",
+      "message": "Turn it on if you'd like to share video.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Your camera has been disabled",
+      "message": "You can no longer share video.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Your mic has been enabled",
+      "message": "Unmute if you'd like to speak.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Your mic has been disabled",
+      "message": "You can no longer unmute.",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode has started",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode has ended",
       "dismissButtonAriaLabel": "Close"
     }
   },
@@ -510,7 +675,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Exit spotlight",
     "attendeeRole": "Attendee",
     "muteParticipantMenuItemLabel": "Mute",
-    "waitingScreenText": "Waiting for others to join"
+    "waitingScreenText": "Waiting for others to join",
+    "forbidAudio": "Disable mic",
+    "permitAudio": "Allow mic",
+    "forbidAudioTileMenuLabel": "Disable mic",
+    "permitAudioTileMenuLabel": "Allow mic",
+    "forbidVideo": "Disable camera",
+    "permitVideo": "Allow camera",
+    "forbidVideoTileMenuLabel": "Disable camera",
+    "permitVideoTileMenuLabel": "Allow camera"
   },
   "dialpad": {
     "placeholderText": "Enter phone number",
@@ -524,8 +697,15 @@
   },
   "videoTile": {
     "participantStateRinging": "Calling...",
+    "participantReconnecting": "Reconnecting...",
     "participantStateHold": "On hold",
-    "moreOptionsButtonAriaLabel": "More Options"
+    "moreOptionsButtonAriaLabel": "More Options {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "muted",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "unmuted",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Hand raised",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Speaking",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Microphone disabled",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Camera disabled"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Allow {appName} to use your camera and microphone",
@@ -643,8 +823,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "previous page",
-    "rightNavButtonAriaLabel": "next page"
+    "leftNavButtonAriaLabel": "previous page {current} of {total}",
+    "rightNavButtonAriaLabel": "next page {current} of {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Join call from your phone",

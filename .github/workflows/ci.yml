@@ -23,7 +23,7 @@ jobs:
   # get matrix for ci-jobs
   get_matrix:
     name: Load CI Matrix Details
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     outputs:
       matrix: ${{ steps.get-matrix.outputs.matrix }}
     steps:
@@ -43,7 +43,7 @@ jobs:
   build_packages:
     needs: get_matrix
     name: 'Build Packages (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -80,7 +80,7 @@ jobs:
         run: rush lint
       # Builds
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       # Type check test folder
       # - must be run after building all packlets because it depends on compiled packlet dependencies
       # - must be run only on beta flavor build because the browser test code is not conditional compiled
@@ -95,7 +95,7 @@ jobs:
           then
             echo "Success, no new api changes found."
           else
-            echo "API CHANGES FOUND in ${{ matrix.flavor }} flavor - PLEASE RUN \"${{ matrix.flavor == 'stable' && 'rush switch-flavor:stable &&' || '' }} rush build -t @azure/communication-react\""
+            echo "API CHANGES FOUND in ${{ matrix.flavor }} flavor - PLEASE RUN \"${{ matrix.flavor == 'stable' && 'rush switch-flavor:stable &&' || '' }} rush build -v -t @azure/communication-react\""
             echo "Changes:"
             git status ${{ matrix.flavor != 'stable' && '**/review/beta/**' ||  '**/review/stable/**'  }}.md -s
             exit 1
@@ -106,12 +106,15 @@ jobs:
       # Typescript version check
       - name: Typescript version compatibility check
         run: rush build --only @internal/check-typescript-regression
+      # Scripts tests
+      - name: Test scripts/ folder
+        run: rush test --only @internal/scripts
       # Ensure all downstream packlet versions are consitent with the base packlet version
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
       # Upload azure-communication api.md files for easy access
       - name: Upload communication-react api files
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: communication-react.${{ matrix.flavor }}.api.json
           path: |
@@ -120,7 +123,7 @@ jobs:
   jest-test-coverage:
     needs: [get_matrix, build_packages]
     name: 'Jest Test Coverage (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       pull-requests: write
     strategy:
@@ -144,7 +147,7 @@ jobs:
         run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       # Build and test
       - name: Build Packages
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Test Packages
         run: rush test:ci-coverage -t @azure/communication-react
         env:
@@ -161,14 +164,14 @@ jobs:
         run: npx nyc report --temp-dir temp/jest/current/merge/detailed-full/ --report-dir temp/jest/current/merge/summary/ --reporter json-summary
       # Upload coverage report to review the merged report locally
       - name: Upload detailed and summary jest coverage reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: jest-coverage-report-${{ matrix.flavor }}
           path: temp/jest/current/merge/
       # Pull requests show details of coverage changes
       - name: Get jest tests coverage of main from gist
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/communication-ui-bot/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
+        run: curl -o temp/jest/base/coverage-report.json "https://gist.github.com/alkwa-msft/${{ matrix.coverage_gist_id }}/raw/communication-react-jest-report-${{ matrix.flavor }}.json" --create-dirs -L
       - name: Calculate coverage change
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         id: coverage
@@ -179,7 +182,7 @@ jobs:
           node ./common/config/workflows/coverage-utils.js ../../../temp/jest/base/coverage-report.json ../../../temp/jest/current/merge/summary/coverage-summary.json branches
       - name: Find Comment
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        uses: peter-evans/find-comment@v2
+        uses: peter-evans/find-comment@v3
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -187,7 +190,7 @@ jobs:
           body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
       - name: Create or update comment
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
-        uses: peter-evans/create-or-update-comment@v2
+        uses: peter-evans/create-or-update-comment@v4
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -217,7 +220,7 @@ jobs:
     name: Check if in progress feature can be removed separately (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE so job can access it
       - uses: actions/checkout@v4
@@ -243,7 +246,7 @@ jobs:
       # Builds
       - name: Build Packages
         if: ${{ matrix.flavor == 'beta-release'}}
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       # # Type check test folder
       # # - must be run after building all packlets because it depends on compiled packlet dependencies
       # # - must be run only on beta flavor build because the browser test code is not conditional compiled
@@ -257,7 +260,7 @@ jobs:
       # Upload azure-communication api.md files for easy access
       - name: Upload communication-react api files
         if: ${{ matrix.flavor == 'beta-release'}}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: communication-react.beta-release.api.json
           path: |
@@ -266,7 +269,7 @@ jobs:
   call_composite_automation_test:
     needs: get_matrix
     name: 'Call Composite automation test (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       pull-requests: write
     strategy:
@@ -295,7 +298,7 @@ jobs:
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
-          rush build -t .
+          rush build -v -t .
       - name: Call Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -305,7 +308,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-call.json
@@ -313,17 +316,17 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -333,7 +336,7 @@ jobs:
   chat_composite_automation_test:
     needs: get_matrix
     name: 'Chat Composite automation test (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       pull-requests: write
     strategy:
@@ -362,7 +365,7 @@ jobs:
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
-          rush build -t .
+          rush build -v -t .
       - name: Chat Composite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -372,7 +375,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-chat.json
@@ -380,17 +383,17 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -400,7 +403,7 @@ jobs:
   call_with_chat_composite_automation_test:
     needs: get_matrix
     name: 'Call With Chat Composite automation test (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       pull-requests: write
     strategy:
@@ -429,7 +432,7 @@ jobs:
       - name: Install packlets used by browser tests
         run: |
           cd packages/react-composites
-          rush build -t .
+          rush build -v -t .
       - name: CallWithChatComposite Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -439,7 +442,7 @@ jobs:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload playwright test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: ${{ always() }}
         with:
           name: e2e-results-${{ github.run_id }}-${{ github.run_attempt }}-${{ matrix.flavor }}-callwithchat.json
@@ -447,17 +450,17 @@ jobs:
           if-no-files-found: error
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: packages/react-composites/test-results
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -466,7 +469,7 @@ jobs:
   components_automation_test:
     needs: get_matrix
     name: 'Components automation test (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       pull-requests: write
     strategy:
@@ -492,7 +495,7 @@ jobs:
       # This is needed because react-components depends on acs-ui-common and
       # acs-ui-common specifies main/module variables in package.json
       - name: Build Common Package
-        run: rush build -t acs-ui-common
+        run: rush build -v -t acs-ui-common
       - name: Components Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -502,57 +505,29 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Components-snapshots
           path: packages/react-components/tests/temp
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
               body: 'Failed to pass the UI Test. If this PR is for UI change and the error is snapshot mismatch, please add "update_snapshots" label to the PR for updating the snapshot.'
             })
 
-  build_storybook:
-    needs: get_matrix
-    name: Build Storybook (${{ matrix.flavor }})
-    strategy:
-      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 'lts/*'
-      - name: Restore node_modules from cache
-        uses: actions/cache@v4
-        with:
-          path: common/temp/pnpm-store
-          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
-      - name: Install Dependencies
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
-        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
-      - name: Build
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rush build -o storybook
-      - name: Tests
-        if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
-        run: rushx test
-        working-directory: packages/storybook
-
   build_storybook8:
     needs: get_matrix
     name: Build Storybook v8 (${{ matrix.flavor }})
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     steps:
       - uses: actions/checkout@v4
       - name: Use Node.js
@@ -581,7 +556,7 @@ jobs:
   build_calling_sample:
     needs: get_matrix
     name: 'Build Calling Sample (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -598,13 +573,13 @@ jobs:
       - name: Install Dependencies
         run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Build
         run: rush build:minify -o calling
       - name: Tests
         run: rush test -o calling
       # upload bundle stats.json which will be consumed later
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ matrix.flavor == 'beta'}}
         with:
           name: Calling-report
@@ -613,7 +588,7 @@ jobs:
   build_chat_sample:
     needs: get_matrix
     name: 'Build Chat Sample (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -630,13 +605,13 @@ jobs:
       - name: Install Dependencies
         run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - name: Build dependencies
-        run: rush build -t @azure/communication-react
+        run: rush build -v -t @azure/communication-react
       - name: Build
         run: rush build:minify -o chat
       - name: Tests
         run: rush test -o chat
       # upload bundle stats.json which will be consumed later
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: ${{ matrix.flavor == 'beta'}}
         with:
           name: Chat-report
@@ -645,7 +620,39 @@ jobs:
   build_call_with_chat_sample:
     needs: get_matrix
     name: 'Build CallWithChat Sample (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
+    strategy:
+      matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+      - name: Restore node_modules from cache
+        uses: actions/cache@v4
+        with:
+          path: common/temp/pnpm-store
+          key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
+      - name: Install Dependencies
+        run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
+      - name: Build dependencies
+        run: rush build -v -t @azure/communication-react
+      - name: Build
+        run: rush build:minify -o callwithchat
+      - name: Tests
+        run: rush test -o callwithchat
+      # upload bundle stats.json which will be consumed later
+      - uses: actions/upload-artifact@v4
+        if: ${{ matrix.flavor == 'beta'}}
+        with:
+          name: CallWithChat-report
+          path: samples/CallWithChat/dist/build/report.json
+
+  build_calling_stateful_samples:
+    needs: get_matrix
+    name: 'Build Calling Stateful Samples (${{ matrix.flavor }})'
+    runs-on: ${{ vars.RUNS_ON }}
     strategy:
       matrix: ${{ fromJSON(needs.get_matrix.outputs.matrix) }}
     steps:
@@ -664,20 +671,14 @@ jobs:
       - name: Build dependencies
         run: rush build -t @azure/communication-react
       - name: Build
-        run: rush build:minify -o callwithchat
+        run: rush build -o calling-stateful-samples
       - name: Tests
-        run: rush test -o callwithchat
-      # upload bundle stats.json which will be consumed later
-      - uses: actions/upload-artifact@v3
-        if: ${{ matrix.flavor == 'beta'}}
-        with:
-          name: CallWithChat-report
-          path: samples/CallWithChat/dist/build/report.json
+        run: rush test -o calling-stateful-samples
 
   build_static_html_composites_sample:
     needs: get_matrix
     name: 'Build And Test Static HTML Composites Sample (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       pull-requests: write
     strategy:
@@ -695,7 +696,7 @@ jobs:
         with:
           chrome-version: 120.0.6099
       - name: Build
-        run: rush build -t sample-static-html-composites
+        run: rush build -v -t sample-static-html-composites
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -707,17 +708,17 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -727,7 +728,7 @@ jobs:
   build_component_examples:
     needs: get_matrix
     name: 'Build And Test Component+Binding Examples (${{ matrix.flavor }})'
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       pull-requests: write
     strategy:
@@ -745,7 +746,7 @@ jobs:
         with:
           chrome-version: 120.0.6099
       - name: Build
-        run: rush build -t component-examples
+        run: rush build -v -t component-examples
       - name: Visual Regression Tests
         id: visualregressiontests
         run: |
@@ -757,17 +758,17 @@ jobs:
           CHROME_PATH: ${{ steps.setup-chrome.outputs.chrome-path }}
       - name: Upload snapshot diff
         if: ${{ always() && steps.visualregressiontests.outcome == 'failure' }}
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: snapshots
           path: samples/tests/test-results/ # or path/to/artifact
       - name: Comment on PR
         if: ${{ github.event_name == 'pull_request' && always() && steps.visualregressiontests.outcome == 'failure' && !contains( github.event.pull_request.labels.*.name, 'update_snapshots') }}
-        uses: actions/github-script@v3
+        uses: actions/github-script@v7
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
-            github.issues.createComment({
+            github.rest.issues.createComment({
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -775,7 +776,7 @@ jobs:
             })
 
   compare_base_bundle_stats:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       pull-requests: write
     if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
@@ -786,16 +787,16 @@ jobs:
         include:
           # These are gist to track bundle sizes
           - app: Chat
-            gist: https://gist.github.com/communication-ui-bot/db13fa7067b083b7a91d7a95adf28be1
+            gist: https://gist.github.com/alkwa-msft/f19649d941b2739b13402ee4802aa851
           - app: Calling
-            gist: https://gist.github.com/communication-ui-bot/87d57b63bbbaee12273a9a901b67885c
+            gist: https://gist.github.com/alkwa-msft/8160c0362cb05b7b09f3dbf803007c73
           - app: CallWithChat
-            gist: https://gist.github.com/communication-ui-bot/72a7fca0af8a3c5b37f966bb6d4bcd11
+            gist: https://gist.github.com/alkwa-msft/c43393ae31b5b08215f3f49ed327d912
     steps:
       # checkout base bundle stats
       - name: Get bundle stats of main from gist
         run: curl -o base/report.json "${{ matrix.gist }}/raw/${{ matrix.app }}-report.json" --create-dirs -L
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           path: current
           name: ${{ matrix.app }}-report
@@ -810,26 +811,54 @@ jobs:
           echo "change=${change}" >> $GITHUB_OUTPUT
           echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
       - name: Find Comment
-        uses: peter-evans/find-comment@v2
+        uses: peter-evans/find-comment@v3
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
           body-includes: '## ${{ matrix.app }} bundle size is'
-      - name: Create or update comment
-        uses: peter-evans/create-or-update-comment@v2
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Delete existing comment
+        uses: actions/github-script@v7
         with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
-            - Current size: ${{ steps.bundles.outputs.current_size }}
-            - Base size: ${{ steps.bundles.outputs.base_size}}
-            - Diff size: ${{ steps.bundles.outputs.diff}}
-          edit-mode: replace
-
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const commentId = '${{ steps.fc.outputs.comment-id }}'
+            if (commentId) {
+              await github.rest.issues.deleteComment({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                comment_id: commentId
+              })
+            }
+      - name: Post new comment
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: `## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
+              - Current size: ${{ steps.bundles.outputs.current_size }}
+              - Base size: ${{ steps.bundles.outputs.base_size }}
+              - Diff size: ${{ steps.bundles.outputs.diff }}`
+            });
+      - name: Check whether the bundle size is increased significantly
+        if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
+        run: |
+          significantBundleSizeThreshold=800
+          app="${{ matrix.app }}"
+          bundleSizeDiff="${{ steps.bundles.outputs.diff }}"
+          if [ "$bundleSizeDiff" -ge "$significantBundleSizeThreshold" ]; then
+            echo "The bundle size diff for $app is greater than the threshold of $significantBundleSizeThreshold kb! If the bundle size increase is intended, please add \`significant bundle size change\` label to the PR." >&2
+            exit 1
+          fi
+          echo "Bundle size diff for $app is below the threshold of $significantBundleSizeThreshold. All is good!"
   update_base_bundle_report:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     name: Upload bundle size report to gist - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
     if: github.ref == 'refs/heads/main'
@@ -838,13 +867,13 @@ jobs:
         include:
           # These are gist to track bundle sizes
           - app: Chat
-            gist_id: db13fa7067b083b7a91d7a95adf28be1
+            gist_id: f19649d941b2739b13402ee4802aa851
           - app: Calling
-            gist_id: 87d57b63bbbaee12273a9a901b67885c
+            gist_id: 8160c0362cb05b7b09f3dbf803007c73
           - app: CallWithChat
-            gist_id: 72a7fca0af8a3c5b37f966bb6d4bcd11
+            gist_id: c43393ae31b5b08215f3f49ed327d912
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.app }}-report
       - name: Upload bundle report to gist
@@ -857,11 +886,11 @@ jobs:
           file_path: report.json
 
   check_failure:
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions:
       issues: write
     needs:
-      [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook]
+      [build_packages, build_calling_sample, build_chat_sample, build_static_html_composites_sample, build_storybook8]
     if: failure() && github.ref == 'refs/heads/main'
     name: File issue if main CI failed
     steps:

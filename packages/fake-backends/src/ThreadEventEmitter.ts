@@ -13,7 +13,7 @@ import {
   ParticipantsRemovedEvent,
   ReadReceiptReceivedEvent,
   TypingIndicatorReceivedEvent
-} from '@azure/communication-signaling';
+} from '@azure/communication-chat';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
 import { NetworkEventModel, Thread } from './types';
@@ -88,7 +88,7 @@ export class ThreadEventEmitter {
   }
 
   private dispatchOneEvent(): void {
-    if (this.eventQueue.length === 0) {
+    if (!this.eventQueue[0]) {
       throw new Error(`queue must not be empty`);
     }
     const event = this.eventQueue[0];
@@ -98,10 +98,9 @@ export class ThreadEventEmitter {
 
   private getOrCreateEmitter(userId: CommunicationIdentifier): EventEmitter {
     const flatUserId = toFlatCommunicationIdentifier(userId);
-    if (!this.emitters[flatUserId]) {
-      this.emitters[flatUserId] = new EventEmitter();
-    }
-    return this.emitters[flatUserId];
+    const eventEmitter = this.emitters[flatUserId] ?? new EventEmitter();
+    this.emitters[flatUserId] = eventEmitter;
+    return eventEmitter;
   }
 }
 

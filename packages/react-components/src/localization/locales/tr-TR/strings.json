@@ -5,10 +5,15 @@
     "removeButtonLabel": "Kaldır",
     "sharingIconLabel": "Paylaşım",
     "mutedIconLabel": "Ses kapatıldı",
+    "handRaisedIconLabel": "El kaldırdı - Konum {position}",
     "displayNamePlaceholder": "Adsız katılımcı",
     "participantStateRinging": "Arıyor...",
     "participantStateHold": "Beklemede",
-    "attendeeRole": "Katılımcı"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, Diğer Seçenekler",
+    "attendeeRole": "Katılımcı",
+    "micDisabledIconLabel": "Mikrofon devre dışı",
+    "cameraDisabledIconLabel": "Kamera devre dışı"
   },
   "ParticipantList": {
     "overflowParticipantCount": "{overflowCount} tane daha"
@@ -58,6 +63,7 @@
     "richTextDeleteColumnMenu": "Sütunu sil",
     "richTextDeleteRowMenu": "Satırı sil",
     "richTextDeleteTableMenu": "Tabloyu sil",
+    "richTextToolbarAriaLabel": "İleti Biçimlendirme Araç Çubuğu",
     "richTextToolbarMoreButtonAriaLabel": "Diğer seçenekler",
     "attachmentMoreMenu": "Diğer Seçenekler",
     "richTextNewBulletedListItemAnnouncement": "Madde işareti, yeni satır",
@@ -65,12 +71,34 @@
     "richTextBulletedListAppliedAnnouncement": "Madde işaretli liste uygulandı",
     "richTextNumberedListAppliedAnnouncement": "Numaralandırılmış liste uygulandı"
   },
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "RTT Kalıcı İletişim Kutusunu Aç",
+    "realTimeTextModalTitle": "RTT açılsın mı?",
+    "realTimeTextModalText": "Gerçek zamanlı metin (RTT) toplantıdaki herkes için açılır.",
+    "realTimeTextConfirmButtonLabel": "Aç",
+    "realTimeTextCancelButtonLabel": "İptal",
+    "realTimeTextCloseModalButtonAriaLabel": "RTT Kalıcı İletişim Kutusunu Kapat"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Alt yazılar başlatılıyor...",
+    "realTimeTextInputBoxDefaultText": "İletiyi gerçek zamanlı yazın",
+    "realTimeTextInputErrorMessage": "İleti 2000 karakteri geçemez",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (gerçek zamanlı metin) toplantı süresi boyunca tüm katılımcılar için etkindir.",
+    "realTimeTextBannerLinkLabel": "Daha fazla bilgi edinin",
+    "captionsOnlyContainerTitle": "Alt yazılar",
+    "realTimeTextOnlyContainerTitle": "Gerçek Zamanlı Metin",
+    "captionsAndRealTimeTextContainerTitle": "Altyazılar ve Gerçek Zamanlı Metin",
+    "expandButtonAriaLabel": "Genişlet",
+    "minimizeButtonAriaLabel": "Daralt"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Öneriler"
   },
   "imageOverlay": {
     "downloadButtonLabel": "İndir",
-    "dismissButtonAriaLabel": "Kapat"
+    "dismissButtonAriaLabel": "Kapat",
+    "overlayVisibleMessage": "Resim Ayrıntıları Katmanı"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "İleti gönderildi",
@@ -146,6 +174,7 @@
   },
   "participantsButton": {
     "label": "Kişiler",
+    "ariaLabel": "Kişiler",
     "tooltipContent": "Katılımcıları göster",
     "menuHeader": "Bu aramada",
     "participantsListButtonLabel": "{numParticipants} kişiler",
@@ -169,7 +198,7 @@
   },
   "reactionButton": {
     "label": "Tepki ver",
-    "ariaLabel": "Tepki Düğmesi, Bir tepki gönder",
+    "ariaLabel": "Tepki Ver",
     "tooltipDisabledContent": "Tepki eylemi devre dışı bırakıldı",
     "tooltipContent": "Tepki gönder",
     "likeReactionTooltipContent": "Beğen",
@@ -177,6 +206,107 @@
     "laughReactionTooltipContent": "Kahkaha",
     "applauseReactionTooltipContent": "Alkış",
     "surprisedReactionTooltipContent": "Şaşırmış"
+  },
+  "realTimeText": {
+    "isTypingText": "RTT yazma"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Açıklamalı Alt Yazı Ayarları",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Konuşma dili",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Açıklamalı alt yazı dili",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Bu çağrıdaki herkesin konuşma dili.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Açıklamalı alt yazılar bu dilde görünür.",
+    "captionsSettingsConfirmButtonLabel": "Onayla",
+    "captionsSettingsCancelButtonLabel": "İptal",
+    "captionsSettingsModalAriaLabel": "Alt Yazı Ayarı Kalıcı İletişim Kutusu",
+    "captionsSettingsCloseModalButtonAriaLabel": "Alt Yazı Ayarını Kapat"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arapça - BAE",
+    "ar-sa": "Arapça - Suudi Arabistan",
+    "da-dk": "Danca",
+    "de-de": "Almanca - Almanya",
+    "en-au": "İngilizce - Avustralya",
+    "en-ca": "İngilizce - Kanada",
+    "en-gb": "İngilizce - Birleşik Krallık",
+    "en-in": "İngilizce - Hindistan",
+    "en-nz": "İngilizce - Yeni Zelanda",
+    "en-us": "İngilizce - Birleşik Devletler",
+    "es-es": "İspanyolca - İspanya (Modern)",
+    "es-mx": "İspanyolca - Meksika",
+    "fi-fi": "Fince",
+    "fr-ca": "Fransızca - Kanada",
+    "fr-fr": "Fransızca - Fransa",
+    "hi-in": "Hintçe",
+    "it-it": "İtalyanca - İtalya",
+    "ja-jp": "Japonca",
+    "ko-kr": "Korece",
+    "nb-no": "Norveççe (Bokmål)",
+    "nl-be": "Hollanda dili - Belçika",
+    "nl-nl": "Felemenkçe - Hollanda",
+    "pl-pl": "Lehçe",
+    "pt-br": "Portekizce - Brezilya",
+    "ru-ru": "Rusça",
+    "sv-se": "İsveççe",
+    "zh-cn": "Çince - Çin Halk Cumhuriyeti",
+    "zh-hk": "Çince - Hong Kong ÖİB",
+    "cs-cz": "Çekçe",
+    "pt-pt": "Portekizce - Portekiz",
+    "tr-tr": "Türkçe",
+    "vi-vn": "Vietnamca",
+    "th-th": "Tayca",
+    "he-il": "İbranice",
+    "cy-gb": "Galce",
+    "uk-ua": "Ukraynaca",
+    "el-gr": "Yunanca",
+    "hu-hu": "Macarca",
+    "ro-ro": "Rumence",
+    "sk-sk": "Slovakça",
+    "zh-tw": "Çince - Tayvan"
+  },
+  "captionLanguages": {
+    "ar": "Arapça",
+    "da": "Danca",
+    "de": "Almanca",
+    "en": "İngilizce",
+    "es": "İspanyolca",
+    "fi": "Fince",
+    "fr-ca": "Fransızca - Kanada",
+    "fr": "Fransızca - Fransa",
+    "hi": "Hintçe",
+    "it": "İtalyanca",
+    "ja": "Japonca",
+    "ko": "Korece",
+    "nb": "Norveççe (Bokmål)",
+    "nl": "Felemenkçe",
+    "pl": "Lehçe",
+    "pt": "Portekizce - Brezilya",
+    "ru": "Rusça",
+    "sv": "İsveççe",
+    "zh-Hans": "Çince (Basitleştirilmiş)",
+    "zh-Hant": "Çince (Geleneksel)",
+    "cs": "Çekçe",
+    "pt-pt": "Portekizce - Portekiz",
+    "tr": "Türkçe",
+    "vi": "Vietnamca",
+    "th": "Tayca",
+    "he": "İbranice",
+    "cy": "Galce",
+    "uk": "Ukraynaca",
+    "el": "Yunanca",
+    "hu": "Macarca",
+    "ro": "Rumence",
+    "sk": "Slovakça"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Alt yazıları aç",
+    "offLabel": "Alt yazıları kapat",
+    "tooltipOnContent": "Alt yazıları kapat",
+    "tooltipOffContent": "Alt yazıları aç"
+  },
+  "startRealTimeTextButton": {
+    "label": "Bu arama için RTT'yi aç",
+    "tooltipOffContent": "Bu arama için RTT'yi aç"
   },
   "messageThread": {
     "yesterday": "Dün",
@@ -194,7 +324,9 @@
     "resendMessage": "Yeniden göndermeyi deneyin",
     "failToSendTag": "Gönderilemedi",
     "editedTag": "Düzenlendi",
-    "liveAuthorIntro": "{author} şöyle diyor:",
+    "liveAuthorIntro": "{author} tarafından gönderilen ileti",
+    "editedMessageLiveAuthorIntro": "{author} tarafından düzenlenen ileti",
+    "editedMessageLocalUserLiveAuthorIntro": "Düzenlenmiş ileti",
     "messageContentAriaText": "{status} {author} şunu dedi: {message}",
     "messageContentMineAriaText": "{status} {message} dediniz",
     "editBoxTextLimit": "İletiniz en fazla {limitNumber} aşıyor",
@@ -467,6 +599,11 @@
       "message": "Sizi 5 saniye içinde atanan odanıza taşıyacağız.",
       "dismissButtonAriaLabel": "Kapat"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Tartışma odanız kapatıldı",
+      "message": "5 saniye içinde toplantınıza geri taşınacak.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Tartışma odasına katılmak ister misiniz?",
       "message": "Bir tartışma odasına atandınız.",
@@ -481,6 +618,34 @@
     "breakoutRoomClosingSoon": {
       "title": "Oda süre sınırı sona ermek üzere.",
       "message": "Bu oda 30 sn. içinde kapanacak",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Kameranız etkinleştirildi",
+      "message": "Video paylaşmak istiyorsanız bu öğeyi açın.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Kameranız devre dışı bırakıldı",
+      "message": "Artık video paylaşamazsınız.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Mikrofonunuz etkinleştirildi",
+      "message": "Konuşmak isterseniz sesi açın.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Mikrofonunuz devre dışı bırakıldı",
+      "message": "Artık sesi açamazsınız.",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode başlatıldı",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode sona erdi",
       "dismissButtonAriaLabel": "Kapat"
     }
   },
@@ -510,7 +675,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Öne çıkarmadan çık",
     "attendeeRole": "Katılımcı",
     "muteParticipantMenuItemLabel": "Sesi kapat",
-    "waitingScreenText": "Diğerlerinin katılması bekleniyor"
+    "waitingScreenText": "Diğerlerinin katılması bekleniyor",
+    "forbidAudio": "Mikrofonu devre dışı bırak",
+    "permitAudio": "Mikrofona izin ver",
+    "forbidAudioTileMenuLabel": "Mikrofonu devre dışı bırak",
+    "permitAudioTileMenuLabel": "Mikrofona izin ver",
+    "forbidVideo": "Kamerayı devre dışı bırak",
+    "permitVideo": "Kameraya izin ver",
+    "forbidVideoTileMenuLabel": "Kamerayı devre dışı bırak",
+    "permitVideoTileMenuLabel": "Kameraya izin ver"
   },
   "dialpad": {
     "placeholderText": "Telefon numarası gir",
@@ -524,8 +697,15 @@
   },
   "videoTile": {
     "participantStateRinging": "Aranıyor...",
+    "participantReconnecting": "Yeniden bağlanıyor...",
     "participantStateHold": "Beklemede",
-    "moreOptionsButtonAriaLabel": "Diğer Seçenekler"
+    "moreOptionsButtonAriaLabel": "Diğer Seçenekler {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "sesi kapalı",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "sesi açık",
+    "moreOptionsParticipantHandRaisedAriaLabel": "El kaldırdı",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Konuşuyor",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Mikrofon devre dışı",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Kamera devre dışı"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName} uygulamasının kameranızı ve mikrofonunuzu kullanmasına izin verin",
@@ -643,8 +823,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "önceki sayfa",
-    "rightNavButtonAriaLabel": "sonraki sayfa"
+    "leftNavButtonAriaLabel": "önceki sayfa {current}/{total}",
+    "rightNavButtonAriaLabel": "sonraki sayfa {current}/{total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Telefonunuzdan aramaya katılın",

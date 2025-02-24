@@ -14,6 +14,8 @@ import {
   ParticipantsLeftListener,
   CallEndedListener
 } from '../../CallComposite';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 import {
   MessageDeletedListener,
   MessageEditedListener,
@@ -29,6 +31,7 @@ import type { AdapterError, AdapterState, Disposable } from '../../common/adapte
 import {
   AudioDeviceInfo,
   Call,
+  DeviceAccess,
   PermissionConstraints,
   PropertyChangedEvent,
   StartCallOptions,
@@ -40,6 +43,8 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { UploadChatImageResult } from '@internal/acs-ui-common';
@@ -64,11 +69,9 @@ import {
 
 import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
-
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-
 /**
  * Functionality for managing the current call with chat.
  * @public
@@ -226,6 +229,53 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Create the html view for a togethermode stream.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
+   *
+   * @beta
+   */
+  createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Start together mode.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   *
+   * @beta
+   */
+  startTogetherMode(): Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Recalculate the seating positions for together mode.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   * @param width - Width of the container
+   * @param height - Height of the container
+   *
+   * @beta
+   */
+  setTogetherModeSceneSize(width: number, height: number): void;
+
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Dispose the html view for a togethermode stream.
+   *
+   * @remarks
+   * This method is implemented for composite
+   *
+   * @beta
+   */
+  disposeTogetherModeStreamView(): Promise<void>;
   /**
    * Dispose the html view for a screen share stream
    *
@@ -261,7 +311,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @public
    */
-  askDevicePermission(constrain: PermissionConstraints): Promise<void>;
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
   /**
    * Query for available camera devices.
    *
@@ -443,21 +493,18 @@ export interface CallWithChatAdapterManagement {
    * Funtion to stop captions
    */
   stopCaptions(options?: StopCaptionsAdapterOptions): Promise<void>;
-
   /**
    * Start the video background effect.
    *
    * @public
    */
   startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
-
   /**
    * Stop the video background effect.
    *
    * @public
    */
   stopVideoBackgroundEffects(): Promise<void>;
-
   /**
    * Override the background picker images for background replacement effect.
    *
@@ -466,25 +513,18 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   updateBackgroundPickerImages(backgroundImages: VideoBackgroundImage[]): void;
-
   /**
    * Update the selected video background effect
    *
    * @public
    */
   updateSelectedVideoBackgroundEffect(selectedVideoBackground: VideoBackgroundEffect): void;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Start the noise suppression effect.
-   *
-   * @beta
    */
   startNoiseSuppressionEffect(): Promise<void>;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Start the noise suppression effect.
-   *
-   * @beta
    */
   stopNoiseSuppressionEffect(): Promise<void>;
   /**
@@ -505,12 +545,10 @@ export interface CallWithChatAdapterManagement {
    * Stop all spotlights
    */
   stopAllSpotlight(): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute a participant
    */
   muteParticipant(userId: string): Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Mute a participant
    */
@@ -520,6 +558,31 @@ export interface CallWithChatAdapterManagement {
    * Return to origin call of breakout room
    */
   returnFromBreakoutRoom(): Promise<void>;
+  /**
+   * forbids audio for the specified user ids.
+   */
+  forbidAudio: (userIds: string[]) => Promise<void>;
+  /** permits audio for the specified user ids. */
+  permitAudio: (userIds: string[]) => Promise<void>;
+  /** forbids audio for Teams meeting attendees except the local user. */
+  forbidOthersAudio: () => Promise<void>;
+  /**  permits audio for Teams meeting attendees except the local user. */
+  permitOthersAudio: () => Promise<void>;
+  /** forbids video for the specified user ids. */
+  forbidVideo: (userIds: string[]) => Promise<void>;
+  /** permits video for the specified user ids. */
+  permitVideo: (userIds: string[]) => Promise<void>;
+  /** forbids video for Teams meeting attendees except the local user. */
+  forbidOthersVideo: () => Promise<void>;
+  /** permits video for Teams meeting attendees except the local user. */
+  permitOthersVideo: () => Promise<void>;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Send real time text
+   * @param text - real time text content
+   * @param finalized - Boolean to indicate if the real time text is final
+   */
+  sendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
 }
 
 /**
@@ -543,6 +606,8 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* @conditional-compile-remove(rtt) */
+  on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(breakout-rooms) */
@@ -562,6 +627,8 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+  /* @conditional-compile-remove(rtt) */
+  off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   /* @conditional-compile-remove(breakout-rooms) */
@@ -631,6 +698,7 @@ export type CallWithChatEvent =
   | 'captionsReceived'
   | 'isCaptionLanguageChanged'
   | 'isSpokenLanguageChanged'
+  | /* @conditional-compile-remove(rtt) */ 'realTimeTextReceived'
   | 'capabilitiesChanged'
   | 'spotlightChanged'
   | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated'

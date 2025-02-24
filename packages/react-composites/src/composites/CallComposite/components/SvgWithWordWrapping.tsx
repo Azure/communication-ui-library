@@ -39,7 +39,14 @@ export const SvgWithWordWrapping = (props: {
   }, [width, lineHeightPx, text]);
 
   return (
-    <svg role={role} width={width} height={height + bufferHeightPx} ref={svgRef} xmlns="http://www.w3.org/2000/svg">
+    <svg
+      aria-level={1}
+      role={role}
+      width={width}
+      height={height + bufferHeightPx}
+      ref={svgRef}
+      xmlns="http://www.w3.org/2000/svg"
+    >
       <text height={0} ref={calculationTextElement} style={{ visibility: 'hidden' }}>
         {text}
       </text>

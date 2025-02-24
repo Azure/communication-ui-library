@@ -3,8 +3,10 @@
 
 import { IIconProps, MessageBarType } from '@fluentui/react';
 import { ActiveErrorMessage, ErrorType } from './ErrorBar';
-import { _SupportedSpokenLanguage } from '../types';
+import { SupportedSpokenLanguage } from '../types';
 import { ActiveNotification, NotificationType } from './NotificationStack';
+import { VideoTileStrings } from './VideoTile';
+import { _formatString } from '@internal/acs-ui-common';
 
 /**
  * @private
@@ -338,7 +340,6 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   callVideoStoppedBySystem: 'ErrorBarCallVideoStoppedBySystem',
   callVideoRecoveredBySystem: 'ErrorBarCallVideoRecoveredBySystem',
   callMacOsCameraAccessDenied: 'ErrorBarCallMacOsCameraAccessDenied',
-  /* @conditional-compile-remove(soft-mute) */
   mutedByRemoteParticipant: 'ErrorBarMutedByRemoteParticipant',
   speakingWhileMuted: 'ErrorBarCallMicrophoneMutedBySystem',
   recordingStarted: 'NotificationBarRecording',
@@ -356,9 +357,19 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomChanged: 'NotificationBarBreakoutRoomChanged',
   /* @conditional-compile-remove(breakout-rooms) */
+  assignedBreakoutRoomClosed: 'NotificationBarBreakoutRoomClosed',
+  /* @conditional-compile-remove(breakout-rooms) */
   breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
   /* @conditional-compile-remove(breakout-rooms) */
-  breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon'
+  breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon',
+  capabilityTurnVideoOnPresent: 'ControlButtonCameraOff',
+  capabilityTurnVideoOnAbsent: 'ControlButtonCameraProhibited',
+  capabilityUnmuteMicPresent: 'ControlButtonMicOff',
+  capabilityUnmuteMicAbsent: 'ControlButtonMicProhibited',
+  /* @conditional-compile-remove(together-mode) */
+  togetherModeStarted: 'NotificationBarTogetherModeIcon',
+  /* @conditional-compile-remove(together-mode) */
+  togetherModeEnded: 'NotificationBarTogetherModeIcon'
 };
 
 /**
@@ -391,7 +402,7 @@ export function chunk<T>(options: T[], itemsPerRow: number): T[][] {
 /**
  * @private
  */
-export const defaultSpokenLanguage: _SupportedSpokenLanguage = 'en-us';
+export const defaultSpokenLanguage: SupportedSpokenLanguage = 'en-us';
 
 /**
  * @private
@@ -402,11 +413,49 @@ const SAFARI_COMPOSITION_KEYCODE = 229;
  *
  * @private
  */
-export const isEnterKeyEventFromCompositionSession = (e: KeyboardEvent): boolean =>
-  // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (Safari only)
-  e.isComposing || e.keyCode === SAFARI_COMPOSITION_KEYCODE || e.which === SAFARI_COMPOSITION_KEYCODE;
+export const isEnterKeyEventFromCompositionSession = (e: KeyboardEvent): boolean => {
+  // Uses KeyCode 229 and which code 229 to determine if the press of the enter key is from a composition session or not (the code check is needed for Safari only, for everything else e.isComposing check is enough)
+  const isComposing =
+    e.isComposing || e.keyCode === SAFARI_COMPOSITION_KEYCODE || e.which === SAFARI_COMPOSITION_KEYCODE;
+  return isComposing && e.key === 'Enter';
+};
 
 /**
  * @private
  */
 export const nullToUndefined = <T>(value: T | null): T | undefined => (value === null ? undefined : value);
+
+/**
+ * @private
+ */
+export const formatMoreButtonAriaDescription = (
+  displayName?: string,
+  isMuted?: boolean,
+  isHandRaised?: boolean,
+  state?: string,
+  isSpeaking?: boolean,
+  strings?: VideoTileStrings,
+  isMicDisabled?: boolean,
+  isCameraDisabled?: boolean
+): string => {
+  const mutedState = isMuted
+    ? strings?.moreOptionsParticipantMutedStateMutedAriaLabel
+    : strings?.moreOptionsParticipantMutedStateUnmutedAriaLabel;
+  const handRaisedState = isHandRaised ? strings?.moreOptionsParticipantHandRaisedAriaLabel : undefined;
+  const isSpeakingState = isSpeaking ? strings?.moreOptionsParticipantIsSpeakingAriaLabel : undefined;
+  const micDisabledState = isMicDisabled ? strings?.moreOptionsParticipantMicDisabledAriaLabel : undefined;
+  const cameraDisabledState = isCameraDisabled ? strings?.moreOptionsParticipantCameraDisabledAriaLabel : undefined;
+  const description = strings?.moreOptionsButtonAriaLabel
+    ? _formatString(strings?.moreOptionsButtonAriaLabel, {
+        displayName: displayName ?? ' ',
+        isMuted: mutedState ?? ' ',
+        isHandRaised: handRaisedState ?? ' ',
+        state: state ?? ' ',
+        isSpeaking: isSpeakingState ?? ' ',
+        micDisabledState: micDisabledState ?? ' ',
+        cameraDisabledState: cameraDisabledState ?? ' '
+      })
+    : '';
+
+  return description;
+};

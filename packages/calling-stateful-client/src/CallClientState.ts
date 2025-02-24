@@ -29,17 +29,15 @@ import type {
   DiagnosticQuality,
   DiagnosticFlag
 } from '@azure/communication-calling';
+/* @conditional-compile-remove(rtt) */
+import { ParticipantInfo, RealTimeTextResultType } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
-
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { CaptionsResultType } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsKind } from '@azure/communication-calling';
 import { VideoEffectName } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { ReactionMessage } from '@azure/communication-calling';
@@ -87,6 +85,10 @@ export interface CaptionsInfo {
    */
   timestamp: Date;
   /**
+   * Timestamp of when the captions were last updated.
+   */
+  lastUpdatedTimestamp?: Date;
+  /**
    * The language that the captions are presented in. Corresponds to the captionLanguage specified in startCaptions / setCaptionLanguage.
    */
   captionLanguage?: string;
@@ -94,6 +96,42 @@ export interface CaptionsInfo {
    * The original spoken caption text prior to translating to subtitle language
    */
   spokenText?: string;
+}
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @beta
+ */
+export interface RealTimeTextInfo {
+  /**
+   * The sequence id of the real time text.
+   */
+  sequenceId: number;
+  /**
+   * The sender of the real time text.
+   */
+  sender: ParticipantInfo;
+  /**
+   * The real time text message.
+   */
+  message: string;
+  /**
+   * The result type of the real time text message.
+   */
+  resultType: RealTimeTextResultType;
+  /**
+   * The timestamp when the real time text message was created.
+   */
+  receivedTimestamp?: Date;
+  /**
+   * The timestamp when the real time text message was last updated.
+   */
+  updatedTimestamp?: Date;
+  /**
+   * If message originated from the local participant
+   * default is false
+   */
+  isMe?: boolean;
 }
 
 /**
@@ -128,11 +166,29 @@ export interface CaptionsCallFeatureState {
    * current caption language
    */
   currentCaptionLanguage: string;
-  /* @conditional-compile-remove(acs-close-captions) */
   /**
    * current caption kind: teams or acs captions
    */
   captionsKind: CaptionsKind;
+}
+
+/* @conditional-compile-remove(rtt) */
+/**
+ * @beta
+ */
+export interface RealTimeTextCallFeatureState {
+  /**
+   * array of received captions
+   */
+  realTimeTexts: {
+    completedMessages?: RealTimeTextInfo[];
+    currentInProgress?: RealTimeTextInfo[];
+    myInProgress?: RealTimeTextInfo;
+  };
+  /**
+   * whether real time text is on/off
+   */
+  isRealTimeTextFeatureActive?: boolean;
 }
 
 /**
@@ -204,9 +260,11 @@ export interface SpotlightState {
  * @public
  */
 export interface BreakoutRoomsState {
+  /** Breakout room assigned to local user in call */
   assignedBreakoutRoom?: BreakoutRoom;
+  /** Breakout room settings of call. This is defined when call is a breakout room. */
   breakoutRoomSettings?: BreakoutRoomsSettings;
-  breakoutRoomOriginCallId?: string;
+  /** Display name of breakout room. This is defined when call is a breakout room. */
   breakoutRoomDisplayName?: string;
 }
 
@@ -276,45 +334,73 @@ export interface RaiseHandCallFeatureState {
 
 /* @conditional-compile-remove(together-mode) */
 /**
- * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient} will
- * automatically listen for raised hands on the call and update the state exposed by {@link StatefulCallClient} accordingly.
- * @alpha
+ * Represents the name of the call feature stream
+ * @beta
  */
-export interface TogetherModeCallFeatureState {
-  /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
-   */
-  stream: TogetherModeStreamState[];
+export type CallFeatureStreamName = 'togetherMode';
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * State only version of {@link @azure/communication-calling#CallFeatureStream}.
+ * Represents call feature stream state.
+ * @beta
+ */
+export interface CallFeatureStreamState extends RemoteVideoStreamState {
+  feature?: CallFeatureStreamName;
 }
 
 /* @conditional-compile-remove(together-mode) */
 /**
- * State only version of {@link @azure/communication-calling#TogetherModeVideoStream}.
- * @alpha
+ * State only version of {@link @azure/communication-calling#TogetherModeSeatingMap}.
+ * @beta
+ *
+ * Represents the seating position of a participant in Together Mode.
  */
-export interface TogetherModeStreamState {
+export interface TogetherModeSeatingPositionState {
+  /* The top left offset from the top of the together mode view.*/
+  top: number;
+  /* The left offset position from the left of the together mode view. */
+  left: number;
+  /*  The width of the seating area */
+  width: number;
+  /* The height of the seating area. */
+  height: number;
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * Represents the seating positions of participants in Together Mode.
+ *
+ * @beta
+ */
+export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * Represents the streams in Together Mode.
+ *
+ * @beta
+ */
+export interface TogetherModeStreamsState {
+  mainVideoStream?: CallFeatureStreamState;
+}
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient}.
+ * Represents the state of the Together Mode feature.
+ * @beta
+ */
+export interface TogetherModeCallFeatureState {
+  isActive: boolean;
   /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.id}.
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
    */
-  id: number;
+  streams: TogetherModeStreamsState;
   /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.mediaStreamType}.
+   * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.TogetherModeSeatingMap}.
    */
-  mediaStreamType: MediaStreamType;
-  /**
-   * Proxy of {@link @azure/communication-calling#TogetherModeVideoStream.isReceiving}.
-   * @public
-   */
-  isReceiving: boolean;
-  /**
-   * {@link VideoStreamRendererView} that is managed by createView/disposeView in {@link StatefulCallClient}
-   * API. This can be undefined if the stream has not yet been rendered and defined after createView creates the view.
-   */
-  view?: VideoStreamRendererViewState;
-  /**
-   * Proxy of {@link @azure/communication-calling#RemoteVideoStream.size}.
-   */
-  streamSize?: { width: number; height: number };
+  seatingPositions: TogetherModeParticipantSeatingState;
 }
 
 /**
@@ -462,6 +548,21 @@ export interface VideoStreamRendererViewState {
 }
 
 /**
+ * Media access state
+ * @public
+ */
+export interface MediaAccessState {
+  /**
+   * Whether the audio is forcibly muted
+   */
+  isAudioPermitted: boolean;
+  /**
+   * Whether the video is forcibly muted
+   */
+  isVideoPermitted: boolean;
+}
+
+/**
  * State only version of {@link @azure/communication-calling#RemoteParticipant}. {@link StatefulCallClient} will
  * automatically retrieve RemoteParticipants and add their state to the state exposed by {@link StatefulCallClient}.
  *
@@ -522,11 +623,15 @@ export interface RemoteParticipantState {
    * Proxy of {@link @azure/communication-calling#SpotlightCallFeature.spotlightedParticipants}.
    */
   spotlight?: SpotlightState;
+  /**
+   * Proxy of {@link @azure/communication-calling#Call.MediaAccessCallFeature.MediaAccess}.
+   */
+  mediaAccess?: MediaAccessState;
   /* @conditional-compile-remove(remote-ufd) */
   /**
    * The diagnostic status of RemoteParticipant{@link @azure/communication-calling#RemoteDiagnostics}.
    */
-  diagnostics?: Record<string, RemoteDiagnosticState>;
+  diagnostics?: Partial<Record<RemoteDiagnosticType, RemoteDiagnosticState>>;
 }
 
 /**
@@ -540,7 +645,7 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#Call.id}.
    */
   id: string;
-  /* @conditional-compile-remove(teams-identity-support) */
+
   /**
    * Type of the call.
    */
@@ -596,9 +701,14 @@ export interface CallState {
    */
   transcription: TranscriptionCallFeatureState;
   /**
-   * Proxy of {@link @azure/communication-calling#TranscriptionCallFeature}.
+   * Proxy of {@link @azure/communication-calling#CaptionsCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Proxy of {@link @azure/communication-calling#RealTimeTextCallFeature}.
+   */
+  realTimeTextFeature: RealTimeTextCallFeatureState;
   /**
    * Proxy of {@link @azure/communication-calling#OptimalVideoCountCallFeature}.
    */
@@ -625,6 +735,7 @@ export interface CallState {
   /* @conditional-compile-remove(together-mode) */
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature}.
+   * @beta
    */
   togetherMode: TogetherModeCallFeatureState;
   /**
@@ -712,6 +823,11 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#BreakoutRoomsFeature}.
    */
   breakoutRooms?: BreakoutRoomsState;
+
+  /**
+   * Proxy of {@link @azure/communication-calling#MediaAccessFeature}.
+   */
+  meetingMediaAccess?: MediaAccessState;
 }
 
 /**
@@ -949,7 +1065,6 @@ export interface CallClientState {
    * See documentation of {@Link CallErrors} for details.
    */
   latestErrors: CallErrors;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Stores the latest notifications.
    *
@@ -962,7 +1077,6 @@ export interface CallClientState {
    * be used as the caller id in the PSTN call.
    */
   alternateCallerId?: string;
-  /* @conditional-compile-remove(unsupported-browser) */
   /**
    * state to track the environment that the stateful client was made in is supported
    */
@@ -1052,7 +1166,7 @@ export type CallErrorTarget =
   | 'CallClient.createTeamsCallAgent'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.getEnvironmentInfo'
+  | 'CallClient.getEnvironmentInfo'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'
@@ -1063,17 +1177,16 @@ export type CallErrorTarget =
   | 'DeviceManager.selectSpeaker'
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ /* @conditional-compile-remove(teams-identity-support) */ 'TeamsCall.addParticipant'
+  | 'TeamsCall.addParticipant'
   | 'VideoEffectsFeature.startEffects'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
-  | /* @conditional-compile-remove(soft-mute) */ 'Call.mutedByOthers'
+  | 'Call.mutedByOthers'
   | 'Call.muteAllRemoteParticipants'
   | 'Call.setConstraints';
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @public
  */
@@ -1081,7 +1194,6 @@ export type CallNotifications = {
   [target in NotificationTarget]: CallNotification;
 };
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @public
  */
@@ -1091,14 +1203,20 @@ export interface CallNotification {
   timestamp: Date;
 }
 
-/* @conditional-compile-remove(breakout-rooms) */
 /** @public */
 export type NotificationTarget =
-  | 'assignedBreakoutRoomOpened'
-  | 'assignedBreakoutRoomOpenedPromptJoin'
-  | 'assignedBreakoutRoomChanged'
-  | 'breakoutRoomJoined'
-  | 'breakoutRoomClosingSoon';
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpened'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpenedPromptJoin'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomChanged'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomClosed'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomJoined'
+  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomClosingSoon'
+  | 'capabilityTurnVideoOnPresent'
+  | 'capabilityTurnVideoOnAbsent'
+  | 'capabilityUnmuteMicPresent'
+  | 'capabilityUnmuteMicAbsent'
+  | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted'
+  | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
@@ -1119,12 +1237,20 @@ export interface DiagnosticsCallFeatureState {
 
 /* @conditional-compile-remove(remote-ufd) */
 /**
+ * All type names for {@link @azure/communication-calling#RemoteDiagnosticState}.
+ *
+ * @beta
+ */
+export type RemoteDiagnosticType = NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+
+/* @conditional-compile-remove(remote-ufd) */
+/**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.
  *
  * @beta
  */
 export declare type RemoteDiagnosticState = {
-  readonly diagnostic: NetworkDiagnosticType | MediaDiagnosticType | ServerDiagnosticType;
+  readonly diagnostic: RemoteDiagnosticType;
   readonly value: DiagnosticQuality | DiagnosticFlag;
   readonly valueType: DiagnosticValueType;
 };

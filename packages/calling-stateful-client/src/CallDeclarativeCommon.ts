@@ -4,9 +4,9 @@
 import { CallContext } from './CallContext';
 import { CallCommon } from './BetaToStableTypes';
 import { Features } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { PropertyChangedEvent, CaptionsCallFeature } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { Captions } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 import { TransferCallFeature, TransferAcceptedEvent, TransferEventArgs } from '@azure/communication-calling';
@@ -81,7 +81,7 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
           if (args[0] === Features.Captions) {
             const captionsFeature = target.feature(Features.Captions);
             let proxyFeature;
-            /* @conditional-compile-remove(acs-close-captions) */
+
             if (captionsFeature.captions.kind === 'Captions') {
               proxyFeature = new ProxyCaptions(this._context, target);
               return {
@@ -187,7 +187,6 @@ class ProxyTeamsCaptions implements ProxyHandler<TeamsCaptions> {
   }
 }
 
-/* @conditional-compile-remove(acs-close-captions) */
 /**
  * @private
  */

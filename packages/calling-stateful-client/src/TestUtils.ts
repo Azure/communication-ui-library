@@ -20,6 +20,13 @@ import {
   CallFeature
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
+import {
+  MediaAccessCallFeature,
+  MediaAccessChangedListener,
+  MediaAccess,
+  MeetingMediaAccessChangedListener,
+  MeetingMediaAccess
+} from '@azure/communication-calling';
 import { CollectionUpdatedEvent, RecordingInfo } from '@azure/communication-calling';
 
 import { VideoEffectsFeature } from '@azure/communication-calling';
@@ -94,10 +101,18 @@ export const stubCommunicationTokenCredential = (): CommunicationTokenCredential
  * @private
  */
 export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
+  consentToBeingRecordedAndTranscribed(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
+  public isConsentRequired = false;
   public name = 'Recording';
   public isRecordingActive = false;
   public recordings: RecordingInfo[] = [];
   public emitter = new EventEmitter();
+  public isTeamsConsentRequired = false;
+  public grantTeamsConsent(): Promise<void> {
+    return Promise.resolve();
+  }
   on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
   on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
   // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
@@ -167,14 +182,95 @@ export class MockRaiseHandCallFeatureImpl implements RaiseHandCallFeature {
     /* No state to clean up */
   }
 }
+/**
+ * @private
+ */
+export class MockMediaAccessCallFeatureImpl implements MediaAccessCallFeature {
+  private mediaAccesses: MediaAccess[] = [];
+  public name = 'MediaAccess';
+  public emitter = new EventEmitter();
+
+  constructor() {
+    this.mediaAccesses = [];
+  }
+
+  permitAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  permitVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  permitOthersAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidOthersAudio(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  permitOthersVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  forbidOthersVideo(): Promise<void> {
+    return Promise.resolve();
+  }
+
+  getAllOthersMediaAccess(): MediaAccess[] {
+    return this.mediaAccesses;
+  }
+
+  getMeetingMediaAccess(): MeetingMediaAccess {
+    return { isAudioPermitted: true, isVideoPermitted: true };
+  }
+
+  on(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  on(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  on(event: string, listener: (...args: any[]) => void): void {
+    this.emitter.on(event, listener);
+  }
+
+  off(event: 'mediaAccessChanged', listener: MediaAccessChangedListener): void;
+  off(event: 'meetingMediaAccessChanged', listener: MeetingMediaAccessChangedListener): void;
+  off(event: string, listener: (...args: any[]) => void): void {
+    this.emitter.off(event, listener);
+  }
+
+  dispose(): void {
+    /* No state to clean up */
+  }
+}
 
 /**
  * @private
  */
 export class MockTranscriptionCallFeatureImpl implements TranscriptionCallFeature {
+  consentForTranscription(): Promise<void> {
+    throw new Error('Method not implemented.');
+  }
   public name = 'Transcription';
   public isTranscriptionActive = false;
   public emitter = new EventEmitter();
+  public isConsentRequired = false;
+  public isTeamsConsentRequired = false;
+  public grantTeamsConsent(): Promise<void> {
+    return Promise.resolve();
+  }
+  public consentToBeingRecordedAndTranscribed(): Promise<void> {
+    this.isTranscriptionActive = true;
+    this.emitter.emit('isTranscriptionActiveChanged', this.isTranscriptionActive);
+    return Promise.resolve();
+  }
   on(event: 'isTranscriptionActiveChanged', listener: PropertyChangedEvent): void {
     this.emitter.on(event, listener);
   }
@@ -264,7 +360,7 @@ export interface MockCall extends Mutable<Call>, MockEmitter {
 export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
   return addMockEmitter({
     id: mockCallId,
-    /* @conditional-compile-remove(teams-identity-support) */
+
     kind: 'Call',
     info: {
       groupId: 'testGroupId'
@@ -397,7 +493,9 @@ export function createMockApiFeatures(
       ...new StubDiagnosticsCallFeatureImpl(),
       name: 'Default',
       isRecordingActive: false,
-      isTranscriptionActive: false
+      isTranscriptionActive: false,
+      getAllOthersMediaAccess: () => [],
+      getMeetingMediaAccess: () => ({ isAudioPermitted: true, isVideoPermitted: true })
     });
     return generic;
   };
@@ -446,7 +544,21 @@ export const createMockCallClient = (callAgent?: CallAgent, deviceManager?: Devi
         throw new Error('callAgent not set');
       }
       return Promise.resolve(callAgent);
-    }
+    },
+    feature: () => ({
+      getEnvironmentInfo: () =>
+        Promise.resolve({
+          environment: {
+            platform: 'mockPlatform',
+            browser: 'mockBrowser',
+            browserVersion: 'mockBrowserVersion'
+          },
+          isSupportedPlatform: true,
+          isSupportedBrowser: true,
+          isSupportedBrowserVersion: true,
+          isSupportedEnvironment: true
+        })
+    })
   } as unknown as CallClient;
 };
 
@@ -468,7 +580,7 @@ export const createMockCallAgent = (displayName = 'defaultDisplayName'): MockCal
   return addMockEmitter({
     calls: [] as Call[],
     displayName: displayName,
-    /* @conditional-compile-remove(teams-identity-support) */
+
     kind: 'CallAgent',
 
     testHelperPushCall(call: Call): void {

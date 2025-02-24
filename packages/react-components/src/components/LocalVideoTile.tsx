@@ -29,6 +29,7 @@ import {
   overlayStylesTransparent,
   loadSpinnerStyles
 } from './styles/VideoTile.styles';
+import { MediaAccess } from '../types';
 
 /**
  * A memoized version of VideoTile for rendering local participant.
@@ -68,6 +69,8 @@ export const _LocalVideoTile = React.memo(
     strings?: VideoGalleryStrings;
     reactionResources?: ReactionResources;
     participantsCount?: number;
+    isScreenSharingOn?: boolean;
+    mediaAccess?: MediaAccess;
   }) => {
     const {
       isAvailable,
@@ -97,7 +100,9 @@ export const _LocalVideoTile = React.memo(
       maxParticipantsToSpotlight,
       menuKind,
       strings,
-      reactionResources
+      reactionResources,
+      isScreenSharingOn,
+      mediaAccess
     } = props;
 
     const theme = useTheme();
@@ -109,7 +114,8 @@ export const _LocalVideoTile = React.memo(
         onCreateLocalStreamView,
         onDisposeLocalStreamView,
         renderElementExists: !!renderElement,
-        scalingMode: localVideoViewOptions?.scalingMode
+        scalingMode: localVideoViewOptions?.scalingMode,
+        isVideoPermitted: mediaAccess ? mediaAccess.isVideoPermitted : true
       }),
       [
         isAvailable,
@@ -117,7 +123,8 @@ export const _LocalVideoTile = React.memo(
         localVideoViewOptions?.scalingMode,
         onCreateLocalStreamView,
         onDisposeLocalStreamView,
-        renderElement
+        renderElement,
+        mediaAccess
       ]
     );
 
@@ -142,7 +149,6 @@ export const _LocalVideoTile = React.memo(
       return {
         contextualMenu: contextualMenuProps
       };
-      return {};
     }, [contextualMenuProps, menuKind]);
 
     const videoTileStyles = useMemo(() => {
@@ -190,11 +196,12 @@ export const _LocalVideoTile = React.memo(
             localVideoSelectedDescription={localVideoSelectedDescription}
           />
           <StreamMedia videoStreamElement={renderElement} isMirrored={true} />
-          {props.participantsCount === 1 && (
+          {props.participantsCount === 1 && !isScreenSharingOn && (
             <Stack className={mergeStyles(videoContainerStyles, overlayStyles())}>
               <Spinner
                 label={strings?.waitingScreenText}
                 ariaLive="assertive"
+                role="alert"
                 labelPosition="bottom"
                 styles={loadSpinnerStyles(theme, true)}
               />
@@ -210,7 +217,8 @@ export const _LocalVideoTile = React.memo(
       showCameraSwitcherInLocalPreview,
       props.participantsCount,
       strings?.waitingScreenText,
-      theme
+      theme,
+      isScreenSharingOn
     ]);
 
     const videoTileOverlay = useMemo(() => {
@@ -228,6 +236,7 @@ export const _LocalVideoTile = React.memo(
             label={strings?.waitingScreenText}
             ariaLive="assertive"
             labelPosition="bottom"
+            role="alert"
             styles={loadSpinnerStyles(theme, false)}
           />
         </Stack>
@@ -249,7 +258,9 @@ export const _LocalVideoTile = React.memo(
           displayName={displayName}
           initialsName={initialsName}
           styles={videoTileStyles}
-          onRenderPlaceholder={props.participantsCount === 1 ? onRenderAvatarOneParticipant : onRenderAvatar}
+          onRenderPlaceholder={
+            props.participantsCount === 1 && !isScreenSharingOn ? onRenderAvatarOneParticipant : onRenderAvatar
+          }
           isMuted={isMuted}
           showMuteIndicator={showMuteIndicator}
           personaMinSize={props.personaMinSize}
@@ -262,6 +273,7 @@ export const _LocalVideoTile = React.memo(
             )
           }
           overlay={videoTileOverlay}
+          mediaAccess={mediaAccess}
         >
           {drawerMenuItemProps.length > 0 && (
             <Layer hostId={props.drawerMenuHostId}>

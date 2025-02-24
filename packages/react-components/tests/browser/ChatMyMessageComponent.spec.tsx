@@ -4,91 +4,154 @@
 import React from 'react';
 import { expect } from '@playwright/experimental-ct-react';
 import { test as betaTest } from './FlavoredBaseTest';
-import {
-  ChatMyMessageComponent,
-  ChatMyMessageComponentProps
-} from '../../src/components/ChatMessage/MyMessageComponents/ChatMyMessageComponent';
-import { COMPONENT_LOCALE_EN_US } from '../../src';
 import { Locator, Page } from 'playwright-core';
+import { TestChatMyMessageComponent } from './TestingComponents/TestChatMyMessageComponent';
 
-betaTest.describe('ChatMyMessageComponent keyboard navigation tests', () => {
-  const localeStrings = COMPONENT_LOCALE_EN_US.strings;
+betaTest.describe('ChatMyMessageComponent rich text editor attachment tests', () => {
+  betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
 
-  const props: ChatMyMessageComponentProps = {
-    shouldOverlapAvatarAndMessage: false,
-    onActionButtonClick: () => {},
-    strings: localeStrings.messageThread,
-    message: {
-      content: 'Hello World!',
-      messageId: '1',
-      attached: true,
-      messageType: 'chat',
-      contentType: 'html',
-      createdOn: new Date(),
-      mine: true
-    },
-    userId: '1'
-  };
+  betaTest('Edit box should not allow to save empty text when attachments are deleted', async ({ mount, page }) => {
+    const component = await mount(
+      <TestChatMyMessageComponent content={''} contentType={'text'} isRichTextEditorEnabled={true} />
+    );
 
-  betaTest('User can navigate to message using keyboard', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props} />);
-    await showMoreMenuButton(component, page);
+    await startMessageEditing(component, page);
+    await removeAttachmentAndSubmit(component, true);
+
+    const editor = component.getByTestId('rooster-rich-text-editor');
+    await expect(editor).toBeVisible();
+    // make screenshot consistent
+    await editor.click();
+
+    await expect(component).toHaveScreenshot(
+      'chat-my-message-component-rich-text-edit-box-empty-content-without-attachment.png'
+    );
   });
 
-  betaTest('Users can start editing messages using keyboard', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props} />);
-    await showMoreMenuButton(component, page);
+  betaTest(
+    'Edit box should not allow to save empty html text when attachments are deleted',
+    async ({ mount, page }) => {
+      const component = await mount(
+        <TestChatMyMessageComponent content={'<div><br></div>'} contentType={'html'} isRichTextEditorEnabled={true} />
+      );
 
-    await openMoreMenu(component, page);
+      await startMessageEditing(component, page);
+      await removeAttachmentAndSubmit(component, true);
 
-    // start editing
-    await page.keyboard.press('Enter');
-    await expect(component.getByTestId('chat-message-edit-box-cancel-button')).toBeVisible();
-    await expect(component.getByTestId('chat-message-edit-box-submit-button')).toBeVisible();
-  });
+      const editor = component.getByTestId('rooster-rich-text-editor');
+      await expect(editor).toBeVisible();
+      // make screenshot consistent
+      await editor.click();
 
-  betaTest('Users can select delete option for a message using keyboard', async ({ mount, page }) => {
-    const component = await mount(<ChatMyMessageComponent {...props} />);
-    await showMoreMenuButton(component, page);
+      await expect(component).toHaveScreenshot(
+        'chat-my-message-component-rich-text-edit-box-empty-html-content-without-attachment.png'
+      );
+    }
+  );
 
-    await openMoreMenu(component, page);
+  betaTest(
+    'Edit box should allow to save the message when content exists but attachments are deleted',
+    async ({ mount, page }) => {
+      const component = await mount(
+        <TestChatMyMessageComponent content={'test'} contentType={'text'} isRichTextEditorEnabled={true} />
+      );
 
-    const removeButton = page.getByTestId('chat-composite-message-contextual-menu-remove-action');
+      await startMessageEditing(component, page);
+      await removeAttachmentAndSubmit(component, true);
 
-    //navigate to delete button
-    await page.keyboard.press('ArrowDown');
-    await expect(removeButton).toBeFocused();
+      await component.getByTestId('chat-composite-message').waitFor({ state: 'visible' });
+      await expect(component.getByTestId('attachment-card')).toBeHidden();
 
-    // select delete
-    await page.keyboard.press('Enter');
-    await expect(removeButton).not.toBeFocused();
-    // more menu isn't open
-    expect(removeButton).not.toBeVisible();
-  });
+      await expect(component).toHaveScreenshot(
+        'chat-my-message-component-rich-text-edit-box-not-empty-message-content-without-attachment.png'
+      );
+    }
+  );
 });
 
-const showMoreMenuButton = async (component: Locator, page: Page): Promise<void> => {
+betaTest.describe('ChatMyMessageComponent text editor attachment tests', () => {
+  betaTest.skip(({ isBetaBuild }) => !isBetaBuild, 'The tests should be run for beta flavor only');
+
+  betaTest('Edit box should not allow to save empty text when attachments are deleted', async ({ mount, page }) => {
+    const component = await mount(
+      <TestChatMyMessageComponent content={''} contentType={'text'} isRichTextEditorEnabled={false} />
+    );
+
+    await startMessageEditing(component, page);
+    await removeAttachmentAndSubmit(component, false);
+
+    const editor = component.getByRole('textbox');
+    await expect(editor).toBeVisible();
+    // make screenshot consistent
+    await editor.click();
+
+    await expect(component).toHaveScreenshot('chat-my-message-component-edit-box-empty-content-without-attachment.png');
+  });
+
+  betaTest('Edit box should allow to save empty html text when attachments are deleted', async ({ mount, page }) => {
+    await page.evaluate(() => document.fonts.ready);
+    const component = await mount(
+      <TestChatMyMessageComponent content={'<div><br></div>'} contentType={'html'} isRichTextEditorEnabled={false} />
+    );
+
+    await startMessageEditing(component, page);
+    await removeAttachmentAndSubmit(component, false);
+
+    // the plain edit box is not empty, so the message should be visible
+    await component.getByTestId('chat-composite-message').waitFor({ state: 'visible' });
+
+    await expect(component).toHaveScreenshot(
+      'chat-my-message-component-edit-box-empty-html-content-without-attachment.png'
+    );
+  });
+
+  betaTest(
+    'Edit box should allow to save the message when content exists but attachments are deleted',
+    async ({ mount, page }) => {
+      const component = await await mount(
+        <TestChatMyMessageComponent content={'test'} contentType={'text'} isRichTextEditorEnabled={false} />
+      );
+      await startMessageEditing(component, page);
+      await removeAttachmentAndSubmit(component, false);
+
+      await component.getByTestId('chat-composite-message').waitFor({ state: 'visible' });
+      await expect(component.getByTestId('attachment-card')).toBeHidden();
+
+      await expect(component).toHaveScreenshot(
+        'chat-my-message-component-edit-box-not-empty-message-content-without-attachment.png'
+      );
+    }
+  );
+});
+
+const startMessageEditing = async (component: Locator, page: Page): Promise<void> => {
   await component.evaluate(() => document.fonts.ready);
   const messageBody = component.getByTestId('chat-composite-message');
   await expect(messageBody).toBeVisible();
-  await page.keyboard.press('Tab');
-
-  await expect(messageBody).toBeFocused();
+  await expect(component.getByTestId('message-timestamp')).toBeVisible();
+  await component.getByTestId('message-timestamp').hover();
 
   await expect(component.getByTestId('chat-composite-message-action-icon')).toBeVisible();
+
+  await component.getByTestId('chat-composite-message-action-icon').click();
+  await page.getByTestId('chat-composite-message-contextual-menu-edit-action').click();
 };
 
-const openMoreMenu = async (component: Locator, page: Page): Promise<void> => {
-  // navigate to message menu
-  await page.keyboard.press('Tab');
-  await expect(component.getByTestId('chat-composite-message-action-icon')).toBeFocused();
+const removeAttachmentAndSubmit = async (component: Locator, isRichTexEditor: boolean): Promise<void> => {
+  const editor = isRichTexEditor ? component.getByTestId('rooster-rich-text-editor') : component.getByRole('textbox');
+  //check that the correct editor is shown (as tests can be faster than rich text editor initialization)
+  await editor.waitFor({ state: 'visible' });
+  const removeFileButton = component.getByRole('button', { name: 'Remove file' });
+  // Check that the button is visible and enabled
+  await removeFileButton.waitFor({ state: 'visible' });
+  await expect(removeFileButton).toBeEnabled();
+  await removeFileButton.click();
 
-  // open message menu
-  await page.keyboard.press('Enter');
+  const submitButtonTestId = isRichTexEditor
+    ? 'chat-message-rich-text-edit-box-submit-button'
+    : 'chat-message-edit-box-submit-button';
 
-  // page is used here as more menu is not part of the component
-  const editButton = page.getByTestId('chat-composite-message-contextual-menu-edit-action');
-  await expect(editButton).toBeVisible();
-  await expect(page.getByTestId('chat-composite-message-contextual-menu-remove-action')).toBeVisible();
-  await expect(editButton).toBeFocused();
+  await component.getByTestId('attachment-card').waitFor({ state: 'hidden' });
+
+  await component.getByTestId(submitButtonTestId).click();
 };

@@ -6,8 +6,8 @@ import { expect } from '@playwright/experimental-ct-react';
 import { TestRichTextInputBoxComponent } from './TestingComponents/TestRichTextInputBoxComponent';
 import { Locator } from 'playwright-core';
 import { test as betaTest } from './FlavoredBaseTest';
+import { formatButtonClick, formatButtonId } from './utils/RichTextEditorUtils';
 
-const formatButtonId = 'rich-text-input-box-format-button';
 const editorId = 'rooster-rich-text-editor';
 
 // created a separate file for table tests (`RichTextInputBoxComponentTablesTests.spec.tsx`) to speed up the test execution
@@ -16,22 +16,22 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
   betaTest('RichTextInputBoxComponent should be shown correctly', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
+    await component.getByTestId(formatButtonId).waitFor({ state: 'visible' });
     await expect(component).toHaveScreenshot('rich-text-input-box-component-without-format-toolbar.png');
-    const formatButton = component.getByTestId(formatButtonId);
 
-    await formatButton.hover();
+    await component.getByTestId('rooster-rich-text-editor').hover();
     await expect(component).toHaveScreenshot('rich-text-input-box-component-hover.png');
 
-    await formatButton.click();
-    //move mouse to the format button so the screenshots are consistent
-    await formatButton.hover();
+    await formatButtonClick(component);
+    //move mouse to the editor so the screenshots are consistent
+    await component.getByTestId('rooster-rich-text-editor').hover();
     await expect(component).toHaveScreenshot('rich-text-input-box-component-with-format-toolbar.png');
   });
 
   betaTest('Text should be formatted correctly when only 1 text style selected', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
-    await component.getByTestId(formatButtonId).click();
+    await formatButtonClick(component);
     const editor = component.getByTestId(editorId);
     const boldButton = component.getByLabel('Bold');
     const italicButton = component.getByLabel('Italic');
@@ -57,7 +57,7 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
   betaTest('Text should be formatted correctly when only all text styles selected', async ({ mount }) => {
     const component = await mount(<TestRichTextInputBoxComponent disabled={false} minHeight="1rem" maxHeight="2rem" />);
     await component.evaluate(() => document.fonts.ready);
-    await component.getByTestId(formatButtonId).click();
+    await formatButtonClick(component);
     const editor = component.getByTestId(editorId);
 
     await component.getByLabel('Bold').click();
@@ -93,7 +93,7 @@ betaTest.describe('RichTextInputBoxComponent tests', () => {
 });
 
 const addList = async (listButtonLabel: string, component: Locator): Promise<void> => {
-  await component.getByTestId(formatButtonId).click();
+  await formatButtonClick(component);
   const editor = component.getByTestId(editorId);
 
   await component.getByLabel(listButtonLabel).click();

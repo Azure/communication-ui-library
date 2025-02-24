@@ -10,21 +10,24 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-import { RaisedHand } from '@azure/communication-calling';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from './CallClientState';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo as AcsRealTimeTextInfo } from '@azure/communication-calling';
+import { RaisedHand, MediaAccess, MeetingMediaAccess } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 import { convertConferencePhoneInfo } from './Converter';
-
+/* @conditional-compile-remove(rtt) */
+import { convertFromSDKRealTimeTextToRealTimeTextInfoState } from './Converter';
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(acs-close-captions) */
 import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(together-mode) */
-import { TogetherModeVideoStream } from '@azure/communication-calling';
+import { TogetherModeVideoStream, TogetherModeSeatingMap } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { EventEmitter } from 'events';
 import { enableMapSet, enablePatches, Patch, produce } from 'immer';
@@ -47,8 +50,7 @@ import {
   CallErrorTarget,
   CallError
 } from './CallClientState';
-/* @conditional-compile-remove(breakout-rooms) */
-import { NotificationTarget, CallNotification, CallNotifications } from './CallClientState';
+import { NotificationTarget, CallNotifications, CallNotification } from './CallClientState';
 import { TeamsIncomingCallState } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { ReactionState } from './CallClientState';
@@ -57,7 +59,7 @@ import { callingStatefulLogger } from './Logger';
 import { CallIdHistory } from './CallIdHistory';
 import { LocalVideoStreamVideoEffectsState } from './CallClientState';
 import { convertFromTeamsSDKToCaptionInfoState } from './Converter';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { convertFromSDKToCaptionInfoState } from './Converter';
 import { convertFromSDKToRaisedHandState } from './Converter';
 import { ReactionMessage } from '@azure/communication-calling';
@@ -66,6 +68,8 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { LocalRecordingInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(local-recording-notification) */
 import { RecordingInfo } from '@azure/communication-calling';
+/* @conditional-compile-remove(together-mode) */
+import { CallFeatureStreamState, TogetherModeSeatingPositionState } from './CallClientState';
 
 enableMapSet();
 // Needed to generate state diff for verbose logging.
@@ -91,8 +95,9 @@ export class CallContext {
   private _atomicId: number;
   private _callIdHistory: CallIdHistory = new CallIdHistory();
   private _timeOutId: { [key: string]: ReturnType<typeof setTimeout> } = {};
+  private _latestCallIdOfNotification: Partial<Record<NotificationTarget, string>> = {};
   /* @conditional-compile-remove(breakout-rooms) */
-  private _latestCallIdsThatPushedNotifications: Partial<Record<NotificationTarget, string>> = {};
+  private _openBreakoutRoom: string | undefined;
 
   constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
     this._logger = createClientLogger('communication-react:calling-context');
@@ -110,9 +115,9 @@ export class CallContext {
       },
       callAgent: undefined,
       userId: userId,
-      /* @conditional-compile-remove(unsupported-browser) */ environmentInfo: undefined,
+      environmentInfo: undefined,
       latestErrors: {} as CallErrors,
-      /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: {} as CallNotifications
+      latestNotifications: {} as CallNotifications
     };
     this._emitter = new EventEmitter();
     this._emitter.setMaxListeners(maxListeners);
@@ -247,17 +252,23 @@ export class CallContext {
         delete draft.calls[oldCallId];
         draft.calls[newCallId] = call;
       }
+
       /* @conditional-compile-remove(breakout-rooms) */
-      // Update the old origin call id of breakout room calls to the new call id
-      Object.values(draft.calls).forEach((call) => {
-        if (call.breakoutRooms?.breakoutRoomOriginCallId === oldCallId) {
-          call.breakoutRooms?.breakoutRoomOriginCallId === newCallId;
+      // Update call ids in latestCallIdsThatPushedNotifications
+      Object.keys(this._latestCallIdOfNotification).forEach((key: string) => {
+        if (this._latestCallIdOfNotification[key as NotificationTarget] === oldCallId) {
+          this._latestCallIdOfNotification[key as NotificationTarget] = newCallId;
         }
       });
+
+      /* @conditional-compile-remove(breakout-rooms) */
+      // Update the open breakout room call id if it matches the old call id
+      if (this._openBreakoutRoom === oldCallId) {
+        this._openBreakoutRoom = newCallId;
+      }
     });
   }
 
-  /* @conditional-compile-remove(unsupported-browser) */
   public setEnvironmentInfo(envInfo: EnvironmentInfo): void {
     this.modifyState((draft: CallClientState) => {
       draft.environmentInfo = envInfo;
@@ -457,11 +468,78 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(together-mode) */
-  public setTogetherModeVideoStream(callId: string, addedStream: TogetherModeVideoStream[]): void {
+  public setTogetherModeVideoStreams(
+    callId: string,
+    addedStreams: CallFeatureStreamState[],
+    removedStreams: CallFeatureStreamState[]
+  ): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.togetherMode = { stream: addedStream };
+        for (const stream of removedStreams) {
+          if (stream.mediaStreamType === 'Video') {
+            call.togetherMode.streams.mainVideoStream = undefined;
+            call.togetherMode.isActive = false;
+            call.togetherMode.seatingPositions = {};
+          }
+        }
+
+        for (const newStream of addedStreams) {
+          // This should only be called by the subscriber and some properties are add by other components so if the
+          // stream already exists, only update the values that subscriber knows about.
+          const mainVideoStream = call.togetherMode.streams.mainVideoStream;
+          if (mainVideoStream && mainVideoStream.id === newStream.id) {
+            mainVideoStream.mediaStreamType = newStream.mediaStreamType;
+            mainVideoStream.isAvailable = newStream.isAvailable;
+            mainVideoStream.isReceiving = newStream.isReceiving;
+          } else {
+            call.togetherMode.streams.mainVideoStream = newStream;
+          }
+          call.togetherMode.isActive = true;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamIsAvailable(callId: string, streamId: number, isAvailable: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.isAvailable = isAvailable;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamIsReceiving(callId: string, streamId: number, isReceiving: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.isReceiving = isReceiving;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamSize(
+    callId: string,
+    streamId: number,
+    size: { width: number; height: number }
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const stream = call.togetherMode.streams.mainVideoStream;
+        if (stream && stream?.id === streamId) {
+          stream.streamSize = size;
+        }
       }
     });
   }
@@ -472,11 +550,25 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         for (const stream of removedStream) {
-          if (stream.mediaStreamType in call.togetherMode.stream) {
-            // Temporary lint fix: Remove the stream from the list
-            call.togetherMode.stream = [];
+          if (stream.mediaStreamType === 'Video') {
+            call.togetherMode.streams.mainVideoStream = undefined;
+            call.togetherMode.isActive = false;
           }
         }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeSeatingCoordinates(callId: string, seatingMap: TogetherModeSeatingMap): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        const seatingPositions: Record<string, TogetherModeSeatingPositionState> = {};
+        for (const [userId, seatingPosition] of seatingMap.entries()) {
+          seatingPositions[userId] = seatingPosition;
+        }
+        call.togetherMode.seatingPositions = seatingPositions;
       }
     });
   }
@@ -664,16 +756,6 @@ export class CallContext {
   }
 
   /* @conditional-compile-remove(breakout-rooms) */
-  public setBreakoutRoomOriginCallId(callId: string, breakoutRoomCallId: string): void {
-    this.modifyState((draft: CallClientState) => {
-      const call = draft.calls[this._callIdHistory.latestCallId(breakoutRoomCallId)];
-      if (call) {
-        call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomOriginCallId: callId };
-      }
-    });
-  }
-
-  /* @conditional-compile-remove(breakout-rooms) */
   public setBreakoutRoomSettings(callId: string, breakoutRoomSettings: BreakoutRoomsSettings): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -691,6 +773,21 @@ export class CallContext {
         call.breakoutRooms = { ...call.breakoutRooms, breakoutRoomDisplayName };
       }
     });
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public setOpenBreakoutRoom(callId: string): void {
+    this._openBreakoutRoom = callId;
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public deleteOpenBreakoutRoom(): void {
+    this._openBreakoutRoom = undefined;
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  public getOpenBreakoutRoom(): string | undefined {
+    return this._openBreakoutRoom;
   }
 
   public setCallScreenShareParticipant(callId: string, participantKey: string | undefined): void {
@@ -715,6 +812,25 @@ export class CallContext {
         );
         if (localVideoStream) {
           localVideoStream.view = view;
+        }
+      }
+    });
+  }
+
+  /* @conditional-compile-remove(together-mode) */
+  public setTogetherModeVideoStreamRendererView(
+    callId: string,
+    togetherModeStreamType: string,
+    view: VideoStreamRendererViewState | undefined
+  ): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        if (togetherModeStreamType === 'Video') {
+          const togetherModeStream = call.togetherMode.streams.mainVideoStream;
+          if (togetherModeStream) {
+            togetherModeStream.view = view;
+          }
         }
       }
     });
@@ -1078,10 +1194,105 @@ export class CallContext {
     this._atomicId++;
     return id;
   }
+  /* @conditional-compile-remove(rtt) */
+  private processNewRealTimeText(
+    realTimeTexts: {
+      completedMessages?: RealTimeTextInfo[];
+      currentInProgress?: RealTimeTextInfo[];
+      myInProgress?: RealTimeTextInfo;
+    },
+    newRealTimeText: RealTimeTextInfo
+  ): void {
+    // if the new message is final, push it to completed messages
+    if (newRealTimeText.resultType === 'Final') {
+      if (!realTimeTexts.completedMessages) {
+        realTimeTexts.completedMessages = [];
+      }
+      realTimeTexts.completedMessages?.push(newRealTimeText);
+      // clear the corresponding in progress message
+      if (newRealTimeText.isMe) {
+        realTimeTexts.myInProgress = undefined;
+      } else {
+        realTimeTexts.currentInProgress = realTimeTexts.currentInProgress?.filter(
+          (message) => message.sequenceId !== newRealTimeText.sequenceId
+        );
+      }
+    } else {
+      // if receive partial real time text
+      // if message is from me, assign it to myInProgress
+      if (newRealTimeText.isMe) {
+        realTimeTexts.myInProgress = newRealTimeText;
+      }
+      // if message is from others, assign it to currentInProgress
+      else {
+        if (!realTimeTexts.currentInProgress) {
+          realTimeTexts.currentInProgress = [];
+          realTimeTexts.currentInProgress.push(newRealTimeText);
+          return;
+        }
+        // find the index of the existing in progress message
+        // replace the existing in progress message with the new one
+        const existingIndex = realTimeTexts.currentInProgress?.findIndex(
+          (message) => message.sequenceId === newRealTimeText.sequenceId
+        );
+        if (existingIndex === -1) {
+          realTimeTexts.currentInProgress?.push(newRealTimeText);
+        } else {
+          realTimeTexts.currentInProgress[existingIndex] = newRealTimeText;
+        }
+      }
+    }
+    // edge case check for in progress messages time out
+    if (!realTimeTexts.completedMessages) {
+      realTimeTexts.completedMessages = [];
+    }
+    this.findTimeoutRealTimeText(realTimeTexts.currentInProgress, realTimeTexts.completedMessages);
+    this.findTimeoutRealTimeText(realTimeTexts.myInProgress, realTimeTexts.completedMessages);
+
+    // we only want to store up to 50 finalized messages
+    if (realTimeTexts.completedMessages && realTimeTexts.completedMessages?.length > 50) {
+      realTimeTexts.completedMessages.shift();
+    }
+  }
+
+  /* @conditional-compile-remove(rtt) */
+  private findTimeoutRealTimeText(
+    inProgressRealTimeTexts: RealTimeTextInfo[] | RealTimeTextInfo | undefined,
+    completedRealTimeTexts: RealTimeTextInfo[]
+  ): void {
+    // if inProgressRealTimeTexts is an array
+    if (inProgressRealTimeTexts && Array.isArray(inProgressRealTimeTexts)) {
+      // find the in progress real time text that has not been updated for 5 seconds
+      inProgressRealTimeTexts.forEach((realTimeText, index) => {
+        if (realTimeText.updatedTimestamp && Date.now() - realTimeText.updatedTimestamp.getTime() > 5000) {
+          // turn the in progress real time text to final
+          realTimeText.resultType = 'Final';
+          // move the in progress real time text to completed
+          completedRealTimeTexts.push(realTimeText);
+          // remove the in progress real time text from in progress
+          inProgressRealTimeTexts && (inProgressRealTimeTexts as RealTimeTextInfo[]).splice(index, 1);
+        }
+      });
+    } else {
+      // if inProgressRealTimeTexts is a single object
+      if (
+        inProgressRealTimeTexts &&
+        inProgressRealTimeTexts.updatedTimestamp &&
+        Date.now() - inProgressRealTimeTexts.updatedTimestamp.getTime() > 5000
+      ) {
+        // turn the in progress real time text to final
+        inProgressRealTimeTexts.resultType = 'Final';
+        // move the in progress real time text to completed
+        completedRealTimeTexts.push(inProgressRealTimeTexts);
+        // remove the in progress real time text from in progress
+        inProgressRealTimeTexts = undefined;
+      }
+    }
+  }
 
   private processNewCaption(captions: CaptionsInfo[], newCaption: CaptionsInfo): void {
     // time stamp when new caption comes in
-    newCaption.timestamp = new Date();
+    newCaption.lastUpdatedTimestamp = new Date();
     // if this is the first caption, push it in
     if (captions.length === 0) {
       captions.push(newCaption);
@@ -1093,7 +1304,6 @@ export class CallContext {
     // if the last caption is Partial, then check if the speaker is the same as the new caption, if so, update the last caption
     else {
       const lastCaption = captions[captions.length - 1];
-
       if (
         lastCaption &&
         lastCaption.speaker.identifier &&
@@ -1105,14 +1315,13 @@ export class CallContext {
       }
       // if different speaker, ignore the interjector until the current speaker finishes
       // edge case: if we dont receive the final caption from the current speaker for 5 secs, we turn the current speaker caption to final and push in the new interjector
-      else if (lastCaption) {
-        if (Date.now() - lastCaption.timestamp.getTime() > 5000) {
+      else if (lastCaption?.lastUpdatedTimestamp) {
+        if (Date.now() - lastCaption.lastUpdatedTimestamp.getTime() > 5000) {
           lastCaption.resultType = 'Final';
           captions.push(newCaption);
         }
       }
     }
-
     // If the array length exceeds 50, remove the oldest caption
     if (captions.length > 50) {
       captions.shift();
@@ -1129,23 +1338,33 @@ export class CallContext {
           currentCaptionLanguage === '' ||
           currentCaptionLanguage === undefined
         ) {
-          this.processNewCaption(call.captionsFeature.captions, convertFromTeamsSDKToCaptionInfoState(caption));
+          this.processNewCaption(call?.captionsFeature.captions ?? [], convertFromTeamsSDKToCaptionInfoState(caption));
         }
       }
     });
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   public addCaption(callId: string, caption: AcsCaptionsInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        this.processNewCaption(call.captionsFeature.captions, convertFromSDKToCaptionInfoState(caption));
+        this.processNewCaption(call?.captionsFeature.captions ?? [], convertFromSDKToCaptionInfoState(caption));
+      }
+    });
+  }
+  /* @conditional-compile-remove(rtt) */
+  public addRealTimeText(callId: string, realTimeText: AcsRealTimeTextInfo): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        this.processNewRealTimeText(
+          call.realTimeTextFeature.realTimeTexts,
+          convertFromSDKRealTimeTextToRealTimeTextInfoState(realTimeText)
+        );
       }
     });
   }
 
-  /* @conditional-compile-remove(acs-close-captions) */
   public setCaptionsKind(callId: string, kind: CaptionsKind): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1159,7 +1378,7 @@ export class CallContext {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
-        call.captionsFeature.captions = [];
+        call.captionsFeature.captions = call.captionsFeature.captions.filter((c) => 'message' in c);
       }
     });
   }
@@ -1169,6 +1388,15 @@ export class CallContext {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
       if (call) {
         call.captionsFeature.isCaptionsFeatureActive = isCaptionsActive;
+      }
+    });
+  }
+  /* @conditional-compile-remove(rtt) */
+  setIsRealTimeTextActive(callId: string, isRealTimeTextActive: boolean): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (call) {
+        call.realTimeTextFeature.isRealTimeTextFeatureActive = isRealTimeTextActive;
       }
     });
   }
@@ -1295,28 +1523,58 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public setLatestNotification(callId: string, notification: CallNotification): void {
-    this._latestCallIdsThatPushedNotifications[notification.target] = callId;
+    this._latestCallIdOfNotification[notification.target] = callId;
     this.modifyState((draft: CallClientState) => {
       draft.latestNotifications[notification.target] = notification;
     });
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
-  public deleteLatestNotification(callId: string, notificationTarget: NotificationTarget): void {
-    let callIdToPushLatestNotification = this._latestCallIdsThatPushedNotifications[notificationTarget];
-    callIdToPushLatestNotification = callIdToPushLatestNotification
-      ? this._callIdHistory.latestCallId(callIdToPushLatestNotification)
-      : undefined;
-    // Only delete the notification if the call that pushed the notification is the same as the call that is trying
-    // to delete it.
-    if (callIdToPushLatestNotification !== callId) {
+  public deleteLatestNotification(notificationTarget: NotificationTarget, callId?: string): void {
+    const callIdOfNotification = this._latestCallIdOfNotification[notificationTarget];
+
+    // Only delete the notification if the call that pushed the notification is the same as the callId if specified
+    if (callId && callIdOfNotification !== callId) {
       return;
     }
 
     this.modifyState((draft: CallClientState) => {
       delete draft.latestNotifications[notificationTarget];
+    });
+  }
+
+  public setMediaAccesses(callId: string, mediaAccesses: MediaAccess[]): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (!call) {
+        return;
+      }
+
+      mediaAccesses.forEach((participantMediaAccess) => {
+        const participant = call.remoteParticipants[toFlatCommunicationIdentifier(participantMediaAccess.participant)];
+        if (participant) {
+          participant.mediaAccess = {
+            isAudioPermitted: participantMediaAccess.isAudioPermitted,
+            isVideoPermitted: participantMediaAccess.isVideoPermitted
+          };
+        }
+      });
+    });
+  }
+
+  public setMeetingMediaAccess(callId: string, meetingMediaAccess: MeetingMediaAccess): void {
+    this.modifyState((draft: CallClientState) => {
+      const call = draft.calls[this._callIdHistory.latestCallId(callId)];
+      if (!call) {
+        return;
+      }
+
+      if (meetingMediaAccess) {
+        call.meetingMediaAccess = {
+          isAudioPermitted: meetingMediaAccess.isAudioPermitted,
+          isVideoPermitted: meetingMediaAccess.isVideoPermitted
+        };
+      }
     });
   }
 }

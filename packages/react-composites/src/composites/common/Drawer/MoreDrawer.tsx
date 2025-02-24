@@ -10,12 +10,15 @@ import {
   _DrawerMenuItemProps as DrawerMenuItemProps,
   _DrawerMenuStyles,
   SpokenLanguageStrings,
-  CaptionLanguageStrings
+  CaptionLanguageStrings,
+  CaptionsSettingsModal
 } from '@internal/react-components';
+/* @conditional-compile-remove(rtt) */
+import { CaptionsBanner } from '@internal/react-components';
 import { _ReactionDrawerMenuItem } from '@internal/react-components';
 import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-import { _StartCaptionsButton, _CaptionsSettingsModal } from '@internal/react-components';
+import { StartCaptionsButton } from '@internal/react-components';
 
 import { HoldButton } from '@internal/react-components';
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
@@ -31,9 +34,6 @@ import { isDisabled } from '../../CallComposite/utils';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 import { Stack, Toggle, useTheme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
-import { _captionSettingsSelector, _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
-import { useHandlers } from '../../CallComposite/hooks/useHandlers';
 import { CaptionLanguageSettingsDrawer } from './CaptionLanguageSettingsDrawer';
 import { themedToggleButtonStyle } from './MoreDrawer.styles';
 import { _spokenLanguageToCaptionLanguage } from '@internal/react-components';
@@ -43,6 +43,15 @@ import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
+import { DtmfDialPadOptions } from '../../CallComposite';
+import { getRemoteParticipantsConnectedSelector } from '../../CallComposite/selectors/mediaGallerySelector';
+/* @conditional-compile-remove(together-mode) */
+import {
+  getCapabilites,
+  getIsTogetherModeActive,
+  getLocalUserId,
+  getIsTeamsCall
+} from '../../CallComposite/selectors/baseSelectors';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -136,6 +145,10 @@ export interface MoreDrawerDevicesMenuProps {
    * Whether the dialpad is present in the call
    */
   dtmfDialerPresent?: boolean;
+  /**
+   * options for the controls of the DTMF dialer
+   */
+  dtmfDialerOptions?: boolean | DtmfDialPadOptions;
 }
 
 /** @private */
@@ -145,15 +158,23 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   callControls?: boolean | CommonCallControlOptions;
   onClickShowDialpad?: () => void;
   isCaptionsSupported?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  isRealTimeTextSupported?: boolean;
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
   onReactionClick?: (reaction: string) => Promise<void>;
-
   onClickMeetingPhoneInfo?: () => void;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants?: () => void;
+  onForbidOthersAudio?: () => void;
+  onPermitOthersAudio?: () => void;
+  onForbidOthersVideo?: () => void;
+  onPermitOthersVideo?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  onStartRealTimeText?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  startRealTimeTextButtonChecked?: boolean;
 }
 
 const inferCallWithChatControlOptions = (
@@ -176,13 +197,25 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const localeStrings = useLocale();
   const holdButtonProps = usePropsFor(HoldButton);
+  /* @conditional-compile-remove(rtt) */
+  const realTimeTextProps = usePropsFor(CaptionsBanner);
 
   const callees = useSelector(getTargetCallees);
-  const allowDtmfDialer = showDtmfDialer(callees);
+  const participants = useSelector(getRemoteParticipantsConnectedSelector);
+  const allowDtmfDialer = showDtmfDialer(callees, participants, props.dtmfDialerOptions);
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
+  /* @conditional-compile-remove(together-mode) */
+  const participantCapability = useSelector(getCapabilites);
+  /* @conditional-compile-remove(together-mode) */
+  const participantId = useSelector(getLocalUserId);
+  /* @conditional-compile-remove(together-mode) */
+  const isTogetherModeActive = useSelector(getIsTogetherModeActive);
+  /* @conditional-compile-remove(together-mode) */
+  const isTeamsCall = useSelector(getIsTeamsCall);
 
+  const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
   const onSpeakerItemClick = useCallback(
     (
       _ev: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement> | undefined,
@@ -202,9 +235,9 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const drawerSelectionOptions = inferCallWithChatControlOptions(props.callControls);
 
   const showCaptionsButton =
-    props.isCaptionsSupported &&
-    /* @conditional-compile-remove(acs-close-captions) */ drawerSelectionOptions !== false &&
-    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(drawerSelectionOptions.captionsButton);
+    props.isCaptionsSupported && drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions.captionsButton);
+  /* @conditional-compile-remove(rtt) */
+  const showRealTimeTextButton = props.isRealTimeTextSupported;
 
   if (props.reactionResources !== undefined) {
     drawerMenuItems.push({
@@ -368,8 +401,31 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
   };
 
+  /* @conditional-compile-remove(together-mode) */
+  const togetherModeOption = {
+    itemKey: 'togetherModeSelectionKey',
+    text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,
+    onItemClick: () => {
+      props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
+      onLightDismiss();
+    },
+    iconProps: {
+      iconName: 'TogetherModeLayout',
+      styles: { root: { lineHeight: 0 } }
+    },
+    disabled: !(
+      (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
+      isTogetherModeActive
+    ),
+    secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
+  };
+
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
+  /* @conditional-compile-remove(together-mode) */
+  if (isTeamsCall || isTeamsMeeting) {
+    galleryLayoutOptions.subMenuProps?.push(togetherModeOption);
+  }
 
   if (drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions?.galleryControlsButton)) {
     drawerMenuItems.push(galleryLayoutOptions);
@@ -427,8 +483,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     });
   }
 
-  const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
-
   const teamsMeetingCoordinates = getTeamsMeetingCoordinates(callAdapter.getState());
 
   if (
@@ -458,18 +512,20 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   //Captions drawer menu
   const supportedCaptionLanguageStrings = useLocale().strings.call.captionLanguageStrings;
 
-  const captionSettingsProp = useAdaptedSelector(_captionSettingsSelector);
+  const captionSettingsProp = usePropsFor(CaptionsSettingsModal);
 
-  const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
-
-  const captionSettingsHandlers = useHandlers(_CaptionsSettingsModal);
+  const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
 
   const [isSpokenLanguageDrawerOpen, setIsSpokenLanguageDrawerOpen] = useState<boolean>(false);
 
   const [isCaptionLanguageDrawerOpen, setIsCaptionLanguageDrawerOpen] = useState<boolean>(false);
 
+  // we don't display the setting modal to set the spoken language on mobile
+  // so when spoken language is empty (not set), we default to 'en-us'
   const [currentSpokenLanguage, setCurrentSpokenLanguage] = useState<keyof SpokenLanguageStrings>(
-    captionSettingsProp.currentSpokenLanguage ?? 'en-us'
+    captionSettingsProp.currentSpokenLanguage && (captionSettingsProp.currentSpokenLanguage as string) !== ''
+      ? captionSettingsProp.currentSpokenLanguage
+      : 'en-us'
   );
 
   const [currentCaptionLanguage, setCurrentCaptionLanguage] = useState<keyof CaptionLanguageStrings>(
@@ -478,13 +534,13 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const onToggleChange = useCallback(async () => {
     if (!captionSettingsProp.isCaptionsFeatureActive) {
-      await startCaptionsButtonHandlers.onStartCaptions({
+      await startCaptionsButtonProps.onStartCaptions({
         spokenLanguage: currentSpokenLanguage
       });
     } else {
-      startCaptionsButtonHandlers.onStopCaptions();
+      startCaptionsButtonProps.onStopCaptions();
     }
-  }, [captionSettingsProp.isCaptionsFeatureActive, startCaptionsButtonHandlers, currentSpokenLanguage]);
+  }, [captionSettingsProp.isCaptionsFeatureActive, startCaptionsButtonProps, currentSpokenLanguage]);
 
   if (showCaptionsButton) {
     const captionsDrawerItems: DrawerMenuItemProps[] = [];
@@ -570,6 +626,51 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     }
   }
 
+  /* @conditional-compile-remove(rtt) */
+  const rttDisabled =
+    props.disableButtonsForHoldScreen || realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked;
+  // rtt
+  /* @conditional-compile-remove(rtt) */
+  if (showRealTimeTextButton) {
+    const realTimeTextDrawerItems: DrawerMenuItemProps[] = [];
+
+    drawerMenuItems.push({
+      itemKey: 'realTimeText',
+      id: 'common-call-composite-rtt-button',
+      disabled: props.disableButtonsForHoldScreen,
+      text: localeStrings.strings.call.realTimeTextLabel,
+      iconProps: { iconName: 'RealTimeTextIcon' },
+      subMenuProps: realTimeTextDrawerItems
+    });
+
+    realTimeTextDrawerItems.push({
+      itemKey: 'ToggleRTTKey',
+      text: localeStrings.strings.call.startRealTimeTextLabel,
+      ariaLabel: rttDisabled
+        ? localeStrings.strings.call.disabledStartRealTimeTextLabel
+        : localeStrings.strings.call.startRealTimeTextLabel,
+      iconProps: {
+        iconName: 'RealTimeTextIcon',
+        styles: { root: { lineHeight: 0 } }
+      },
+      onItemClick: props.onStartRealTimeText,
+      disabled: rttDisabled,
+      secondaryComponent: (
+        <Stack verticalFill verticalAlign="center">
+          <Toggle
+            id="common-call-composite-rtt-toggle-button"
+            checked={realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked}
+            styles={themedToggleButtonStyle(
+              theme,
+              realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked
+            )}
+            onChange={props.onStartRealTimeText}
+          />
+        </Stack>
+      )
+    });
+  }
+
   const customDrawerButtons = useMemo(
     () =>
       generateCustomCallDrawerButtons(
@@ -595,7 +696,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         <SpokenLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}
           selectLanguage={setCurrentSpokenLanguage}
-          setCurrentLanguage={captionSettingsHandlers.onSetSpokenLanguage}
+          setCurrentLanguage={captionSettingsProp.onSetSpokenLanguage}
           currentLanguage={currentSpokenLanguage}
           strings={{ menuTitle: props.strings.spokenLanguageMenuTitle }}
           supportedLanguageStrings={supportedSpokenLanguageStrings}
@@ -605,7 +706,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         <CaptionLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}
           selectLanguage={setCurrentCaptionLanguage}
-          setCurrentLanguage={captionSettingsHandlers.onSetCaptionLanguage}
+          setCurrentLanguage={captionSettingsProp.onSetCaptionLanguage}
           currentLanguage={currentCaptionLanguage}
           strings={{ menuTitle: props.strings.captionLanguageMenuTitle }}
           supportedLanguageStrings={supportedCaptionLanguageStrings}

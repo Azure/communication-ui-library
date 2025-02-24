@@ -25,7 +25,7 @@ test.describe('VideoGalleryLayout tests', async () => {
 
     const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    for (let i = 1; i < 2; i++) {
+    for (let i = 0; i < 1; i++) {
       const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
       await videoTile.hover();
       const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
@@ -49,7 +49,7 @@ test.describe('VideoGalleryLayout tests', async () => {
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
     const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
 
-    for (let i = 1; i < 2; i++) {
+    for (let i = 0; i < 1; i++) {
       const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=${i}`);
       await videoTile.hover();
       const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
@@ -73,7 +73,7 @@ test.describe('VideoGalleryLayout tests', async () => {
     const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
     let moreButton;
 
-    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=1`);
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=0`);
     await videoTile.hover();
     moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
     await moreButton.hover();
@@ -89,5 +89,59 @@ test.describe('VideoGalleryLayout tests', async () => {
     await moreButton?.click();
 
     expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-unpin.png');
+  });
+
+  test('VideoTile attendee audio/video hard muted for Desktop', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    paul.role = 'Attendee';
+    paul.mediaAccess = {
+      isAudioPermitted: false,
+      isVideoPermitted: false
+    };
+    addVideoStream(paul, true);
+
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants, 'Presenter', undefined, undefined, true);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=0`);
+    await videoTile.hover();
+    const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+    await moreButton.hover();
+    await moreButton.click();
+    await waitForSelector(page, dataUiId('video-tile-permit-audio'));
+    await waitForSelector(page, dataUiId('video-tile-permit-video'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-attendee-audio-video-hard-muted.png');
+  });
+
+  test('VideoTile attendee audio/video permitted for Desktop', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    paul.role = 'Attendee';
+    paul.mediaAccess = {
+      isAudioPermitted: true,
+      isVideoPermitted: true
+    };
+    addVideoStream(paul, true);
+
+    const participants = [paul];
+    const initialState = defaultMockCallAdapterState(participants, 'Presenter', undefined, undefined, true);
+
+    await page.goto(buildUrlWithMockAdapter(serverUrl, initialState));
+
+    const videoGallery = await waitForSelector(page, dataUiId(IDS.videoGallery));
+
+    const videoTile = await videoGallery.waitForSelector(dataUiId(IDS.videoTile) + ` >> nth=0`);
+    await videoTile.hover();
+    const moreButton = await videoTile.waitForSelector(dataUiId(IDS.videoTileMoreOptionsButton));
+    await moreButton.hover();
+    await moreButton.click();
+    await waitForSelector(page, dataUiId('video-tile-forbid-audio'));
+    await waitForSelector(page, dataUiId('video-tile-forbid-video'));
+    expect(await stableScreenshot(page)).toMatchSnapshot('video-tile-attendee-audio-video-permitted.png');
   });
 });

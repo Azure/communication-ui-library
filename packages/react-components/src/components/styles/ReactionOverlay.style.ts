@@ -120,37 +120,11 @@ function scaleStartPos(index: number): number {
  * It is for the ease of testing and implementation.
  * @private
  */
-const ReactionStyleBuckets: Array<IReactionStyleBucket> = [
-  {
-    sizeScale: 0.9,
-    heightMaxScale: 0.7 * 0.95,
-    opacityMax: 0.9
-  }
-];
-
-/**
- * @private
- */
-const ReactionBurstStyleBuckets: Array<IReactionStyleBucket> = [
-  {
-    sizeScale: 0.6,
-    opacityMax: 0.75,
-    heightMaxScale: 0.93,
-    heightMinScale: 0.27
-  },
-  {
-    sizeScale: 0.6,
-    opacityMax: 0.75,
-    heightMaxScale: 0.8,
-    heightMinScale: 0.13
-  },
-  {
-    sizeScale: 0.6,
-    opacityMax: 0.75,
-    heightMaxScale: 0.67,
-    heightMinScale: 0
-  }
-];
+const ReactionStyleBucket: IReactionStyleBucket = {
+  sizeScale: 0.9,
+  heightMaxScale: 0.7 * 0.95,
+  opacityMax: 0.9
+};
 
 /**
  * @private
@@ -171,18 +145,7 @@ export interface IReactionStyleBucket {
 export function getReactionStyleBucket(): IReactionStyleBucket {
   // Having dynamic emoji size on rendering animation impacts performance of the animation itself.
   // So we are choosing to use a fixed size for all cases.
-  const index = 0;
-  return ReactionStyleBuckets[index];
-}
-
-/**
- * Return a style bucket for burst scenario
- * We can utilize this style when we allow more than 50 reactions at a time. Can be configured through ECS.
- * @private
- */
-export function getReactionBurstStyleBucket(): IReactionStyleBucket {
-  const index = getRandomInt(0, ReactionBurstStyleBuckets.length - 1);
-  return ReactionBurstStyleBuckets[index];
+  return ReactionStyleBucket;
 }
 
 /**

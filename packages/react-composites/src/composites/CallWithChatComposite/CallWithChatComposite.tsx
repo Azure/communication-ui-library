@@ -614,7 +614,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   let chatPaneTitle = callWithChatStrings.chatPaneTitle;
   /* @conditional-compile-remove(breakout-rooms) */
-  if (callAdapter.getState().call?.breakoutRooms?.breakoutRoomOriginCallId) {
+  // If breakout room settings are defined then we know we are in a breakout room so we should
+  // use the breakout room chat pane title.
+  if (callAdapter.getState().call?.breakoutRooms?.breakoutRoomSettings) {
     chatPaneTitle = callWithChatStrings.breakoutRoomChatPaneTitle;
   }
 
@@ -625,9 +627,10 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         onClose={closeChat}
         dismissSidePaneButtonAriaLabel={callWithChatStrings.dismissSidePaneButtonLabel ?? ''}
         mobileView={mobileView}
+        chatButtonPresent={showChatButton}
       />
     ),
-    [chatPaneTitle, callWithChatStrings.dismissSidePaneButtonLabel, closeChat, mobileView]
+    [chatPaneTitle, closeChat, callWithChatStrings.dismissSidePaneButtonLabel, mobileView, showChatButton]
   );
 
   const sidePaneContentRenderer = useMemo(

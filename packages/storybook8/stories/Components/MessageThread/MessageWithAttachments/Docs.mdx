@@ -1,0 +1,57 @@
+import { Canvas, Meta } from '@storybook/blocks';
+import { DetailedBetaBanner } from '../../../BetaBanners/DetailedBetaBanner';
+
+import * as MessageWithAttachmentsStories from './index.stories';
+
+import MessageWithAttachmentText from '!!raw-loader!./snippets/MessageWithAttachment.snippet.tsx';
+import MessageWithAttachmentFromTeamsText from '!!raw-loader!./snippets/MessageWithAttachmentFromTeams.snippet.tsx';
+import MessageWithCustomAttachmentText from '!!raw-loader!./snippets/MessageWithCustomAttachment.snippet.tsx';
+
+<Meta of={MessageWithAttachmentsStories} />
+
+# Display Messages with Attachments
+
+## Basic Usage: Default Attachment Rendering
+
+The MessageThread component renders message attachments without any additional configuration. Simply provide a
+list of `ChatMessages` with attachments of type `AttachmentMetadata` and the component will render the message
+content along with associated attachments.
+
+By default, the button associated with the attachment card will open the attachment in a new tab.
+Specifically, `window.open` method will be called for target `URL` defined in `AttachmentMetadata`.
+
+## Basic Usage Example
+
+<Canvas
+  of={MessageWithAttachmentsStories.AttachmentsDocsOnly}
+  source={{ code: MessageWithAttachmentText }}
+  layout="padded"
+/>
+
+If the identity of message sender is a Microsoft Teams user, the attachment will be rendered with an `open`
+icon shown below.
+
+<Canvas
+  of={MessageWithAttachmentsStories.AttachmentFromTeamsDocsOnly}
+  source={{ code: MessageWithAttachmentFromTeamsText }}
+  layout="padded"
+/>
+
+## Advanced Usage: Customizing Attachment Rendering
+
+<DetailedBetaBanner />
+
+The MessageThread component also supports multiple ways to customize the rendering. You can leverage the
+`attachmentOptions.downloadOptions` props to provide a dynamic list of menu action buttons that will be based
+on properties of the attachment or the chat message associated with it. Moreover, you can also opt to provide
+a static list for all scenarios.
+
+For example, the following code snippet demonstrates how to customize the download options for attachments.
+
+## Advanced Usage Example
+
+<Canvas
+  of={MessageWithAttachmentsStories.CustomAttachmentsDocsOnly}
+  source={{ code: MessageWithCustomAttachmentText }}
+  layout="padded"
+/>

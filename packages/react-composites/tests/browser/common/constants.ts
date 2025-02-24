@@ -42,7 +42,9 @@ export const IDS = {
   mentionSuggestionItem: 'mention-suggestion-item',
   reactionButton: 'call-composite-reaction-button',
   reactionButtonSubMenu: 'reaction-sub-menu',
-  reactionMobileDrawerMenuItem: 'reaction-mobile-drawer-menu-item'
+  reactionMobileDrawerMenuItem: 'reaction-mobile-drawer-menu-item',
+  cameraButton: 'call-composite-camera-button',
+  microphoneButton: 'call-composite-microphone-button'
 };
 
 export const spokenLanguageStrings = [
@@ -161,7 +163,7 @@ export const captionsFeatureState = {
   currentSpokenLanguage: 'en-us',
   isCaptionsFeatureActive: true,
   startCaptionsInProgress: true,
-  /* @conditional-compile-remove(acs-close-captions) */
+
   captionsKind: 'Captions' as const
 };
 
@@ -204,6 +206,6 @@ export const captionsFeatureStateArabic = {
   currentSpokenLanguage: 'ar-ae',
   isCaptionsFeatureActive: true,
   startCaptionsInProgress: true,
-  /* @conditional-compile-remove(acs-close-captions) */
+
   captionsKind: 'Captions' as const
 };

@@ -369,6 +369,11 @@ export interface CallCompositeStrings {
   /**
    * Label for the button to open effects
    */
+  configurationPageCameraIsLoadingLabel?: string;
+
+  /**
+   * Label for the button to open effects
+   */
   configurationPageVideoEffectsButtonLabel?: string;
 
   /**
@@ -476,6 +481,21 @@ export interface CallCompositeStrings {
    * string to be used to start captions
    */
   startCaptionsButtonOnLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * string to be used to open real time text contextual menu
+   */
+  realTimeTextLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * string to be used to start real time text
+   */
+  startRealTimeTextLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * string to be used to when start real time text button is disabled
+   */
+  disabledStartRealTimeTextLabel?: string;
   /**
    * string to be used to stop captions
    */
@@ -544,6 +564,56 @@ export interface CallCompositeStrings {
    * captions banner loading spinner label
    */
   captionsBannerSpinnerText?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Default text for RTT input text box
+   */
+  realTimeTextInputBoxDefaultText?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Error message for RTT input text box when the size exceeds the limit 2000
+   */
+  realTimeTextInputErrorMessage?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Text to show in the real time text disclosure banner
+   */
+  realTimeTextBannerContent?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title text of the real time text disclosure banner
+   */
+  realTimeTextBannerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Label for the link in the real time text disclosure banner
+   */
+  realTimeTextBannerLinkLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when only captions is enabled
+   */
+  captionsOnlyContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when only real time text is enabled
+   */
+  realTimeTextOnlyContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Title for the container when both captions and real time text is enabled
+   */
+  captionsAndRealTimeTextContainerTitle?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Expand button aria label
+   */
+  expandButtonAriaLabel?: string;
+  /* @conditional-compile-remove(rtt) */
+  /**
+   * Minimize button aria label
+   */
+  minimizeButtonAriaLabel?: string;
   /**
    * transfer page text when showing the transferor who initiated the transfer
    */
@@ -624,6 +694,11 @@ export interface CallCompositeStrings {
    * Label for the selection of the default (Gallery) layout
    */
   moreButtonLargeGalleryDefaultLayoutLabel?: string;
+  /* conditional-compile-remove(together-mode) */
+  /**
+   * Label for the selection of the Together Mode (Gallery) layout
+   */
+  moreButtonTogetherModeLayoutLabel?: string;
   /**
    * Label for the selection of the floatingLocalVideo (Dynamic) layout
    */
@@ -761,37 +836,30 @@ export interface CallCompositeStrings {
    * Tooltip for button to exit spotlight
    */
   exitSpotlightButtonTooltip: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Label for confirm button of hang up for everyone dialog
    */
   leaveConfirmButtonLabel?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Label for confirm button of leave confim dialog
    */
   endCallConfirmButtonLabel?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Label for cancel button in hang up confirm dialog
    */
   hangUpCancelButtonLabel?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Title of confirm dialog when leaving
    */
   leaveConfirmDialogTitle?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Content of confirm dialog when leaving
    */
   leaveConfirmDialogContent?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Title of confirm dialog when leaving
    */
   endCallConfirmDialogTitle?: string;
-  /* @conditional-compile-remove(end-call-options) */
   /**
    * Content of confirm dialog when leaving
    */
@@ -827,27 +895,22 @@ export interface CallCompositeStrings {
    * Error message when the meeting identifier or passcode is invalid
    */
   phoneCallMoreButtonLabel: string;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Label for mute all remote participants menu item in People Pane
    */
   muteAllMenuLabel: string;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Label for mute all prompt title
    */
   muteAllDialogTitle: string;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Label for mute all prompt content
    */
   muteAllDialogContent: string;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Label for mute all confirm button
    */
   muteAllConfirmButtonLabel: string;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Label for mute all cancel button
    */
@@ -894,4 +957,92 @@ export interface CallCompositeStrings {
    * notification.
    */
   returnFromBreakoutRoomBannerButtonLabel: string;
+  /**
+   * Label for menu item to forbid audio media access
+   */
+  forbidAudioMenuLabel: string;
+  /**
+   * Label for menu item to permit audio media access
+   */
+  permitAudioMenuLabel: string;
+  /**
+   * Dialog title to confirm forbid Teams meeting audio media access
+   */
+  forbidOthersAudioDialogTitle: string;
+  /**
+   * Dialog content to confirm forbid Teams meeting audio media access
+   */
+  forbidOthersAudioDialogContent: string;
+  /**
+   * Dialog button to confirm forbid Teams meeting audio media access
+   */
+  forbidOthersAudioConfirmButtonLabel: string;
+  /**
+   * Dialog cancel button for forbid Teams meeting audio media access
+   */
+  forbidOthersAudioCancelButtonLabel: string;
+  /**
+   * Dialog title to confirm permit Teams meeting audio media access
+   */
+  permitOthersAudioDialogTitle: string;
+  /**
+   * Dialog content to confirm permit Teams meeting audio media access
+   */
+  permitOthersAudioDialogContent: string;
+  /**
+   * Dialog button to confirm permit Teams meeting audio media access
+   */
+  permitOthersAudioConfirmButtonLabel: string;
+  /**
+   * Dialog cancel button for permit Teams meeting audio media access
+   */
+  permitOthersAudioCancelButtonLabel: string;
+  /**
+   * Label for menu item to forbid video media access
+   */
+  forbidOthersAudioMenuLabel: string;
+  /** Label for menu item to permit video media access */
+  permitOthersAudioMenuLabel: string;
+  /** Label for menu item to forbid video media access */
+  forbidVideoMenuLabel: string;
+  /** Label for menu item to permit video media access */
+  permitVideoMenuLabel: string;
+  /** Dialog title to confirm forbid Teams meeting video media access */
+  forbidOthersVideoDialogTitle: string;
+  /** Dialog content to confirm forbid Teams meeting video media access */
+  forbidOthersVideoDialogContent: string;
+  /** Dialog button to confirm forbid Teams meeting video media access */
+  forbidOthersVideoConfirmButtonLabel: string;
+  /** Dialog cancel button for forbid Teams meeting video media access */
+  forbidOthersVideoCancelButtonLabel: string;
+  /** Dialog title to confirm permit Teams meeting video media access */
+  permitOthersVideoDialogTitle: string;
+  /** Dialog content to confirm permit Teams meeting video media access */
+  permitOthersVideoDialogContent: string;
+  /** Dialog button to confirm permit Teams meeting video media access */
+  permitOthersVideoConfirmButtonLabel: string;
+  /** Dialog cancel button for permit Teams meeting video media access */
+  permitOthersVideoCancelButtonLabel: string;
+  /** Label for menu item to forbid audio media access */
+  forbidOthersVideoMenuLabel: string;
+  /** Label for menu item to permit audio media access */
+  permitOthersVideoMenuLabel: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The title of the RealTimeText modal */
+  realTimeTextModalTitle: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The text of the RealTimeText modal */
+  realTimeTextModalText: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The label for the confirm button */
+  realTimeTextConfirmButtonLabel: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The label for the cancel button */
+  realTimeTextCancelButtonLabel: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The aria label for the modal */
+  realTimeTextModalAriaLabel: string;
+  /* @conditional-compile-remove(rtt) */
+  /** The aria label for the close button */
+  realTimeTextCloseModalButtonAriaLabel: string;
 }

@@ -13,7 +13,10 @@ import { IPersona, PersonaSize, mergeStyles, Persona } from '@fluentui/react';
 import { mergeClasses } from '@fluentui/react-components';
 import { createStyleFromV8Style } from '../../styles/v8StyleShim';
 import { ChatMessage as FluentChatMessage } from '@fluentui-contrib/react-chat';
-import { getFluentUIAttachedValue } from '../../utils/ChatMessageComponentUtils';
+import {
+  getFluentUIAttachedValue,
+  removeFluentUIKeyboardNavigationStyles
+} from '../../utils/ChatMessageComponentUtils';
 import { ChatMessageComponentWrapperProps } from '../ChatMessageComponentWrapper';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types/ChatMessage';
@@ -47,21 +50,13 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     /* @conditional-compile-remove(date-time-customization) */
     onDisplayDateTimeString,
     inlineImageOptions,
-    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     actionsForAttachment,
     userId,
-    /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
     onRenderAttachmentDownloads,
     /* @conditional-compile-remove(mention) */
     mentionOptions
   } = props;
   const chatMessageRenderStyles = useChatMessageRenderStyles();
-
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-  const onRenderAttachmentDownloadsMemo = useMemo(() => {
-    return onRenderAttachmentDownloads;
-    return undefined;
-  }, [onRenderAttachmentDownloads]);
 
   // To rerender the defaultChatMessageRenderer if app running across days(every new day chat time stamp
   // needs to be regenerated), the dependency on "new Date().toDateString()"" is added.
@@ -74,8 +69,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
         return (
           <ChatMessageComponentAsMessageBubble
             {...messageProps}
-            /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-            onRenderAttachmentDownloads={onRenderAttachmentDownloadsMemo}
+            onRenderAttachmentDownloads={onRenderAttachmentDownloads}
             strings={messageProps.strings}
             message={messageProps.message}
             userId={userId}
@@ -83,7 +77,6 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
             /* @conditional-compile-remove(date-time-customization) */
             onDisplayDateTimeString={onDisplayDateTimeString}
             inlineImageOptions={inlineImageOptions}
-            /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
             actionsForAttachment={actionsForAttachment}
             /* @conditional-compile-remove(mention) */
             mentionDisplayOptions={mentionOptions?.displayOptions}
@@ -93,14 +86,12 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
       return <></>;
     },
     [
-      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
-      onRenderAttachmentDownloadsMemo,
+      onRenderAttachmentDownloads,
       userId,
       shouldOverlapAvatarAndMessage,
       /* @conditional-compile-remove(date-time-customization) */
       onDisplayDateTimeString,
       inlineImageOptions,
-      /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
       actionsForAttachment,
       /* @conditional-compile-remove(mention) */
       mentionOptions?.displayOptions
@@ -152,8 +143,13 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     );
   }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar]);
 
+  const setMessageContainerRef = useCallback((node: HTMLDivElement | null) => {
+    removeFluentUIKeyboardNavigationStyles(node);
+  }, []);
+
   const messageBodyProps = useMemo(() => {
     return {
+      ref: setMessageContainerRef,
       // chatItemMessageContainer used in className and style prop as style prop can't handle CSS selectors
       className: mergeClasses(
         chatMessageRenderStyles.bodyCommon,
@@ -169,6 +165,7 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
         styles?.chatItemMessageContainer !== undefined ? createStyleFromV8Style(styles?.chatItemMessageContainer) : {}
     };
   }, [
+    setMessageContainerRef,
     chatMessageRenderStyles.bodyCommon,
     chatMessageRenderStyles.bodyWithoutAvatar,
     chatMessageRenderStyles.bodyHiddenAvatar,

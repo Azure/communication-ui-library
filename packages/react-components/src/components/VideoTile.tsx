@@ -18,7 +18,7 @@ import { ComponentLocale, useLocale } from '../localization';
 import { useTheme } from '../theming';
 import { BaseCustomStyles, CustomAvatarOptions, OnRenderAvatarCallback } from '../types';
 import { CallingTheme } from '../theming';
-import { RaisedHand } from '../types';
+import { RaisedHand, MediaAccess } from '../types';
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
 
 import { ParticipantState } from '../types';
@@ -30,13 +30,16 @@ import {
   rootStyles,
   videoContainerStyles,
   tileInfoContainerStyle,
-  participantStateStringStyles
+  participantStateStringStyles,
+  videoTileHighContrastStyles,
+  iconsGroupContainerStyle
 } from './styles/VideoTile.styles';
 import { pinIconStyle } from './styles/VideoTile.styles';
 import useLongPress from './utils/useLongPress';
 import { moreButtonStyles } from './styles/VideoTile.styles';
 import { raiseHandContainerStyles } from './styles/VideoTile.styles';
 import { ReactionResources } from '../types/ReactionTypes';
+import { formatMoreButtonAriaDescription } from './utils';
 
 /**
  * Strings of {@link VideoTile} that can be overridden.
@@ -49,6 +52,21 @@ export interface VideoTileStrings {
   participantStateRinging: string;
   /** String for displaying the Hold state of the remote participant */
   participantStateHold: string;
+  /* @conditional-compile-remove(remote-ufd) */
+  /** String for displaying the reconnecting state of the remote participant */
+  participantReconnecting?: string;
+  /** String for the announcement of the muted state of the participant when muted */
+  moreOptionsParticipantMutedStateMutedAriaLabel: string;
+  /** String for the announcement of the unmuted state of the participant when unmuted */
+  moreOptionsParticipantMutedStateUnmutedAriaLabel: string;
+  /** String for the announcement of the participant has their hand raised */
+  moreOptionsParticipantHandRaisedAriaLabel: string;
+  /** String for the announcement of whether the participant is speaking or not */
+  moreOptionsParticipantIsSpeakingAriaLabel: string;
+  /** String for the announcement of whether the participant microphone disabled */
+  moreOptionsParticipantMicDisabledAriaLabel: string;
+  /** String for the announcement of whether the participant camera disabled */
+  moreOptionsParticipantCameraDisabledAriaLabel: string;
 }
 
 /**
@@ -175,6 +193,10 @@ export interface VideoTileProps {
    * Reactions resources' url and metadata.
    */
   reactionResources?: ReactionResources;
+  /**
+   * Media access state of the participant.
+   */
+  mediaAccess?: MediaAccess;
 }
 
 // Coin max size is set to PersonaSize.size100
@@ -213,23 +235,64 @@ const videoTileMoreMenuProps = {
 };
 const VideoTileMoreOptionsButton = (props: {
   contextualMenu?: IContextualMenuProps;
+  participantDisplayName: string | undefined;
+  participantState: string | undefined;
+  participantHandRaised: boolean;
+  participantIsSpeaking: boolean | undefined;
+  participantIsMuted: boolean | undefined;
   canShowContextMenuButton: boolean;
+  isMicDisabled?: boolean;
+  isCameraDisabled?: boolean;
 }): JSX.Element => {
-  const locale = useLocale();
+  const locale = useLocale().strings.videoTile;
   const theme = useTheme();
-  const strings = { ...locale.strings.videoTile };
 
-  const { contextualMenu, canShowContextMenuButton } = props;
+  const {
+    contextualMenu,
+    canShowContextMenuButton,
+    participantDisplayName,
+    participantHandRaised,
+    participantIsSpeaking,
+    participantState,
+    participantIsMuted,
+    isMicDisabled,
+    isCameraDisabled
+  } = props;
+  const [moreButtonAiraDescription, setMoreButtonAriaDescription] = useState<string>('');
+
+  useEffect(() => {
+    setMoreButtonAriaDescription(
+      formatMoreButtonAriaDescription(
+        participantDisplayName,
+        participantIsMuted,
+        participantHandRaised,
+        participantState,
+        participantIsSpeaking,
+        locale,
+        isMicDisabled,
+        isCameraDisabled
+      )
+    );
+  }, [
+    participantDisplayName,
+    participantHandRaised,
+    participantIsMuted,
+    participantIsSpeaking,
+    participantState,
+    locale,
+    isMicDisabled,
+    isCameraDisabled
+  ]);
+
   if (!contextualMenu) {
     return <></>;
   }
 
   const optionsIcon = canShowContextMenuButton ? 'VideoTileMoreOptions' : undefined;
-
   return (
     <IconButton
       data-ui-id="video-tile-more-options-button"
-      ariaLabel={strings?.moreOptionsButtonAriaLabel}
+      ariaLabel={moreButtonAiraDescription}
       styles={moreButtonStyles(theme)}
       menuIconProps={videoTileMoreMenuIconProps}
       menuProps={{ ...videoTileMoreMenuProps, ...contextualMenu }}
@@ -266,7 +329,8 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
     raisedHand,
     personaMinSize = DEFAULT_PERSONA_MIN_SIZE_PX,
     personaMaxSize = DEFAULT_PERSONA_MAX_SIZE_PX,
-    contextualMenu
+    contextualMenu,
+    mediaAccess
   } = props;
 
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -284,6 +348,9 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
 
   const observer = useRef(
     new ResizeObserver((entries): void => {
+      if (!entries[0]) {
+        return;
+      }
       const { width, height } = entries[0].contentRect;
       const personaCalcSize = Math.min(width, height) / 3;
       // we only want to set the persona size if it has changed
@@ -380,6 +447,12 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   const canShowContextMenuButton = isHovered || isFocused;
   let raisedHandBackgroundColor = '';
   raisedHandBackgroundColor = callingPalette.raiseHandGold;
+  const participantMediaAccessIcons = useMemo(
+    () =>
+      canShowLabel || participantStateString ? getMediaAccessIcons(showMuteIndicator, isMuted, mediaAccess) : undefined,
+    [canShowLabel, isMuted, mediaAccess, participantStateString, showMuteIndicator]
+  );
+  const canShowParticipantIcons = participantMediaAccessIcons || isSpotlighted || isPinned;
 
   return (
     <Stack
@@ -390,17 +463,20 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
           background: theme.palette.neutralLighter,
           borderRadius: theme.effects.roundedCorner4
         },
-        (isSpeaking || raisedHand) && {
-          '&::after': {
-            content: `''`,
-            position: 'absolute',
-            border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : raisedHandBackgroundColor}`,
-            borderRadius: theme.effects.roundedCorner4,
-            width: '100%',
-            height: '100%',
-            pointerEvents: 'none'
-          }
-        },
+        isSpeaking || raisedHand
+          ? {
+              '&::after': {
+                content: `''`,
+                position: 'absolute',
+                border: `0.25rem solid ${isSpeaking ? theme.palette.themePrimary : raisedHandBackgroundColor}`,
+                borderRadius: theme.effects.roundedCorner4,
+                width: '100%',
+                height: '100%',
+                pointerEvents: 'none'
+              }
+            }
+          : {},
+        videoTileHighContrastStyles(theme),
         styles?.root
       )}
       {...longPressHandlers}
@@ -448,24 +524,31 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
                   {bracketedParticipantString(participantStateString, !!canShowLabel)}
                 </Text>
               )}
-              {showMuteIndicator && isMuted && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTileMicOff" />
-                </Stack>
-              )}
-              {isSpotlighted && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTileSpotlighted" />
-                </Stack>
-              )}
-              {isPinned && (
-                <Stack className={mergeStyles(iconContainerStyle)}>
-                  <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
+              {canShowParticipantIcons && (
+                <Stack horizontal className={mergeStyles(iconsGroupContainerStyle)}>
+                  {participantMediaAccessIcons}
+                  {isSpotlighted && (
+                    <Stack className={mergeStyles(iconContainerStyle)}>
+                      <Icon iconName="VideoTileSpotlighted" />
+                    </Stack>
+                  )}
+                  {isPinned && (
+                    <Stack className={mergeStyles(iconContainerStyle)}>
+                      <Icon iconName="VideoTilePinned" className={mergeStyles(pinIconStyle)} />
+                    </Stack>
+                  )}
                 </Stack>
               )}
               <VideoTileMoreOptionsButton
                 contextualMenu={contextualMenu}
+                participantDisplayName={displayName}
+                participantHandRaised={!!raisedHand}
+                participantIsMuted={isMuted}
+                participantState={participantStateString}
+                participantIsSpeaking={isSpeaking}
                 canShowContextMenuButton={canShowContextMenuButton}
+                isMicDisabled={mediaAccess?.isAudioPermitted === false}
+                isCameraDisabled={mediaAccess?.isVideoPermitted === false}
               />
             </Stack>
           </Stack>
@@ -490,6 +573,45 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
         )}
       </div>
     </Stack>
+  );
+};
+
+const getMediaAccessIcons = (
+  showMuteIndicator: boolean,
+  isMuted?: boolean,
+  mediaAccess?: MediaAccess
+): JSX.Element | undefined => {
+  const cameraForbidIcon =
+    mediaAccess && !mediaAccess?.isVideoPermitted ? (
+      <Stack className={mergeStyles(iconContainerStyle)}>
+        <Icon iconName="ControlButtonCameraProhibitedSmall" />
+      </Stack>
+    ) : undefined;
+
+  const micOffIcon =
+    (mediaAccess ? mediaAccess.isAudioPermitted : true) && showMuteIndicator && isMuted ? (
+      <Stack className={mergeStyles(iconContainerStyle)}>
+        <Icon iconName="VideoTileMicOff" />
+      </Stack>
+    ) : undefined;
+
+  const micForbidIcon =
+    mediaAccess && !mediaAccess?.isAudioPermitted && showMuteIndicator ? (
+      <Stack className={mergeStyles(iconContainerStyle)}>
+        <Icon iconName="ControlButtonMicProhibitedSmall" />
+      </Stack>
+    ) : undefined;
+
+  if (!(cameraForbidIcon || micOffIcon || micForbidIcon)) {
+    return undefined;
+  }
+
+  return (
+    <>
+      {cameraForbidIcon}
+      {micOffIcon}
+      {micForbidIcon}
+    </>
   );
 };
 

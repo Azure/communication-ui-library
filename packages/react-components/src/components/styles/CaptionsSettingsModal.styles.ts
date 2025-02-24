@@ -3,7 +3,6 @@
 
 import { IButtonStyles, IDropdownStyles, IModalStyles, mergeStyles, Theme } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-import { scrollbarStyles } from './Common.style';
 
 /**
  * @private
@@ -14,7 +13,7 @@ export const themedCaptionsSettingsModalStyle = (theme: Theme): Partial<IModalSt
     padding: _pxToRem(24),
     width: _pxToRem(440),
     height: 'fit-content',
-    overflow: 'hidden'
+    overflowY: 'auto'
   }
 });
 
@@ -93,7 +92,10 @@ export const buttonStyles = (theme: Theme): IButtonStyles => {
 export const dropdownStyles: Partial<IDropdownStyles> = {
   callout: {
     height: _pxToRem(300),
-    overflow: 'auto',
-    ...scrollbarStyles
+    overflow: 'auto'
+  },
+  dropdownOptionText: {
+    textWrap: 'auto',
+    overflow: 'unset'
   }
 };

@@ -28,6 +28,8 @@ import { PersonAdd20Regular, Call20Regular } from '@fluentui/react-icons';
 import { Dialpad20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
+/* @conditional-compile-remove(together-mode) */
+import { PeopleAudience20Regular } from '@fluentui/react-icons';
 // eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -108,7 +110,9 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   JoinByPhoneConferenceIdIcon: <Dialpad20Regular />,
   JoinByPhoneWaitToBeAdmittedIcon: <Clock20Filled />,
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
-  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />
+  StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />,
+  /* @conditional-compile-remove(together-mode) */
+  TogetherModeLayout: <PeopleAudience20Regular />
 };
 
 /**
@@ -173,10 +177,10 @@ export type CallCompositeIcons = {
   ControlButtonParticipants?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
-
   ControlButtonCameraProhibited?: JSX.Element;
-
+  ControlButtonCameraProhibitedSmall?: JSX.Element;
   ControlButtonMicProhibited?: JSX.Element;
+  ControlButtonMicProhibitedSmall?: JSX.Element;
   ControlButtonRaiseHand?: JSX.Element;
   ControlButtonLowerHand?: JSX.Element;
   ControlButtonExitSpotlight?: JSX.Element;
@@ -247,6 +251,8 @@ export type CallCompositeIcons = {
   JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
   PeoplePaneMoreButton?: JSX.Element;
   StopAllSpotlightMenuButton?: JSX.Element;
+  /* @conditional-compile-remove(together-mode) */
+  TogetherModeLayout?: JSX.Element;
 };
 
 /**
@@ -287,10 +293,10 @@ export type CallWithChatCompositeIcons = {
   ControlButtonOptions?: JSX.Element;
   ControlButtonScreenShareStart?: JSX.Element;
   ControlButtonScreenShareStop?: JSX.Element;
-
   ControlButtonCameraProhibited?: JSX.Element;
-
+  ControlButtonCameraProhibitedSmall?: JSX.Element;
   ControlButtonMicProhibited?: JSX.Element;
+  ControlButtonMicProhibitedSmall?: JSX.Element;
   ErrorBarCallCameraAccessDenied?: JSX.Element;
   ErrorBarCallCameraAlreadyInUse?: JSX.Element;
   ErrorBarCallLocalVideoFreeze?: JSX.Element;

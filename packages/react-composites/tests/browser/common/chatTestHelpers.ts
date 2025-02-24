@@ -4,6 +4,7 @@
 import { IDS } from './constants';
 import {
   dataUiId,
+  dataTestId,
   stubMessageTimestamps,
   waitForChatCompositeToLoad,
   buildUrl,
@@ -49,11 +50,15 @@ export const chatTestSetupWithPerUserArgs = async ({
   const pageLoadPromises: Promise<unknown>[] = [];
   for (const idx in pages) {
     const page = pages[idx];
-    const user: ChatUserType = usersWithArgs[idx].user;
-    const qArgs = usersWithArgs[idx].qArgs ? usersWithArgs[idx].qArgs : {};
+    const user = usersWithArgs[idx]?.user;
+    if (!page || !user) {
+      throw new Error('Page and user must be defined');
+    }
+
+    const qArgs = usersWithArgs[idx]?.qArgs ?? {};
     await page.goto(buildUrl(serverUrl, user, qArgs));
     pageLoadPromises.push(waitForChatCompositeToLoad(page));
-    await stubMessageTimestamps(pages[idx]);
+    await stubMessageTimestamps(page);
   }
   await Promise.all(pageLoadPromises);
 };
@@ -121,7 +126,7 @@ export const waitForAndHideTypingIndicator = async (page: Page, rootSelector = '
  * Only select messages under the targeted root node. By default, this means anywhere in the <body>.
  */
 export const waitForNMessages = async (page: Page, n: number, rootSelector = 'body'): Promise<void> => {
-  return waitForNOf(page, n, rootSelector, dataUiId(IDS.messageTimestamp));
+  return waitForNOf(page, n, rootSelector, dataTestId(IDS.messageTimestamp));
 };
 
 const waitForNOf = async (page: Page, n: number, rootSelector: string, selector: string): Promise<void> => {

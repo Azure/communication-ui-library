@@ -5,10 +5,15 @@
     "removeButtonLabel": "제거",
     "sharingIconLabel": "공유 중",
     "mutedIconLabel": "음소거됨",
+    "handRaisedIconLabel": "손들기 - 위치 {position}",
     "displayNamePlaceholder": "명명되지 않은 참가자",
     "participantStateRinging": "전화 거는 중...",
     "participantStateHold": "대기 중",
-    "attendeeRole": "참석자"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, 기타 옵션",
+    "attendeeRole": "참석자",
+    "micDisabledIconLabel": "마이크를 사용할 수 없음",
+    "cameraDisabledIconLabel": "카메라 사용 안 함"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount}개 더 보기"
@@ -58,6 +63,7 @@
     "richTextDeleteColumnMenu": "열 삭제",
     "richTextDeleteRowMenu": "행 삭제",
     "richTextDeleteTableMenu": "표 삭제",
+    "richTextToolbarAriaLabel": "메시지 서식 도구 모음",
     "richTextToolbarMoreButtonAriaLabel": "옵션 더 보기",
     "attachmentMoreMenu": "옵션 더 보기",
     "richTextNewBulletedListItemAnnouncement": "글머리 기호, 새 줄",
@@ -65,12 +71,34 @@
     "richTextBulletedListAppliedAnnouncement": "글머리 기호 목록 적용됨",
     "richTextNumberedListAppliedAnnouncement": "번호 매기기 목록 적용됨"
   },
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "실시간 입력 모달 활성화",
+    "realTimeTextModalTitle": "실시간 입력을 활성화하시겠습니까?",
+    "realTimeTextModalText": "모임의 모든 사용자에 대해 RTT(실시간 텍스트)가 켜집니다.",
+    "realTimeTextConfirmButtonLabel": "활성화",
+    "realTimeTextCancelButtonLabel": "취소",
+    "realTimeTextCloseModalButtonAriaLabel": "실시간 입력 모달 닫기"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "캡션 시작 중...",
+    "realTimeTextInputBoxDefaultText": "실시간으로 메시지 입력",
+    "realTimeTextInputErrorMessage": "메시지는 2000자를 초과할 수 없음",
+    "realTimeTextBannerTitle": "실시간 입력",
+    "realTimeTextBannerContent": "전체 모임 기간 동안 모든 참가자에 대해 RTT(실시간 텍스트)를 사용할 수 있습니다.",
+    "realTimeTextBannerLinkLabel": "자세히 알아보기",
+    "captionsOnlyContainerTitle": "캡션",
+    "realTimeTextOnlyContainerTitle": "실시간 텍스트",
+    "captionsAndRealTimeTextContainerTitle": "캡션 및 실시간 텍스트",
+    "expandButtonAriaLabel": "펼치기",
+    "minimizeButtonAriaLabel": "접기"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "제안"
   },
   "imageOverlay": {
     "downloadButtonLabel": "다운로드",
-    "dismissButtonAriaLabel": "닫기"
+    "dismissButtonAriaLabel": "닫기",
+    "overlayVisibleMessage": "이미지 세부 정보 오버레이"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "메시지를 보냄",
@@ -146,6 +174,7 @@
   },
   "participantsButton": {
     "label": "사용자",
+    "ariaLabel": "사용자",
     "tooltipContent": "참가자 표시",
     "menuHeader": "이 통화에서",
     "participantsListButtonLabel": "{numParticipants}명",
@@ -169,7 +198,7 @@
   },
   "reactionButton": {
     "label": "반응",
-    "ariaLabel": "반응 단추, 반응 보내기",
+    "ariaLabel": "반응",
     "tooltipDisabledContent": "반응 동작을 사용할 수 없습니다.",
     "tooltipContent": "반응 보내기",
     "likeReactionTooltipContent": "좋아요",
@@ -177,6 +206,107 @@
     "laughReactionTooltipContent": "크게 웃는 표정",
     "applauseReactionTooltipContent": "박수",
     "surprisedReactionTooltipContent": "놀란 표정"
+  },
+  "realTimeText": {
+    "isTypingText": "실시간 입력 입력 중"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "캡션 설정",
+    "captionsSettingsSpokenLanguageDropdownLabel": "음성 언어",
+    "captionsSettingsCaptionLanguageDropdownLabel": "캡션 언어",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "이 통화의 모든 사람이 말하는 언어입니다.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "캡션이 이 언어로 표시됩니다.",
+    "captionsSettingsConfirmButtonLabel": "확인",
+    "captionsSettingsCancelButtonLabel": "취소",
+    "captionsSettingsModalAriaLabel": "캡션 설정 모달",
+    "captionsSettingsCloseModalButtonAriaLabel": "캡션 설정 닫기"
+  },
+  "spokenLanguages": {
+    "ar-ae": "아랍어 - 아랍에미리트",
+    "ar-sa": "아라비아어 - 사우디 아라비아",
+    "da-dk": "덴마크어",
+    "de-de": "독일어 - 독일",
+    "en-au": "영어 - 오스트레일리아",
+    "en-ca": "영어 - 캐나다",
+    "en-gb": "영어 - 영국",
+    "en-in": "영어 - 인도",
+    "en-nz": "영어 - 뉴질랜드",
+    "en-us": "영어 - 미국",
+    "es-es": "스페인어 - 스페인(현대 정렬)",
+    "es-mx": "스페인어 - 멕시코",
+    "fi-fi": "핀란드어",
+    "fr-ca": "프랑스어 - 캐나다",
+    "fr-fr": "프랑스어 - 프랑스",
+    "hi-in": "힌디어",
+    "it-it": "이탈리아어 - 이탈리아",
+    "ja-jp": "일본어",
+    "ko-kr": "한국어",
+    "nb-no": "노르웨이어(보크몰)",
+    "nl-be": "네덜란드어 - 벨기에",
+    "nl-nl": "네덜란드어 - 네덜란드",
+    "pl-pl": "폴란드어",
+    "pt-br": "포르투갈어 - 브라질",
+    "ru-ru": "러시아어",
+    "sv-se": "스웨덴어",
+    "zh-cn": "중국어 - 중국",
+    "zh-hk": "중국어 - 홍콩 특별 행정구",
+    "cs-cz": "체코어",
+    "pt-pt": "포르투갈어 - 포르투갈",
+    "tr-tr": "터키어",
+    "vi-vn": "베트남어",
+    "th-th": "태국어",
+    "he-il": "히브리어",
+    "cy-gb": "웨일스어",
+    "uk-ua": "우크라이나어",
+    "el-gr": "그리스어",
+    "hu-hu": "헝가리어",
+    "ro-ro": "루마니아어",
+    "sk-sk": "슬로바키아어",
+    "zh-tw": "중국어 - 대만"
+  },
+  "captionLanguages": {
+    "ar": "아랍어",
+    "da": "덴마크어",
+    "de": "독일어",
+    "en": "영어",
+    "es": "스페인어",
+    "fi": "핀란드어",
+    "fr-ca": "프랑스어 - 캐나다",
+    "fr": "프랑스어 - 프랑스",
+    "hi": "힌디어",
+    "it": "이탈리아어",
+    "ja": "일본어",
+    "ko": "한국어",
+    "nb": "노르웨이어(보크몰)",
+    "nl": "네덜란드어",
+    "pl": "폴란드어",
+    "pt": "포르투갈어 - 브라질",
+    "ru": "러시아어",
+    "sv": "스웨덴어",
+    "zh-Hans": "중국어(간체)",
+    "zh-Hant": "중국어(번체)",
+    "cs": "체코어",
+    "pt-pt": "포르투갈어 - 포르투갈",
+    "tr": "터키어",
+    "vi": "베트남어",
+    "th": "태국어",
+    "he": "히브리어",
+    "cy": "웨일스어",
+    "uk": "우크라이나어",
+    "el": "그리스어",
+    "hu": "헝가리어",
+    "ro": "루마니아어",
+    "sk": "슬로바키아어"
+  },
+  "startCaptionsButton": {
+    "onLabel": "캡션 켜기",
+    "offLabel": "캡션 끄기",
+    "tooltipOnContent": "캡션 끄기",
+    "tooltipOffContent": "캡션 켜기"
+  },
+  "startRealTimeTextButton": {
+    "label": "이 통화에 대한 RTT 켜기",
+    "tooltipOffContent": "이 통화에 대한 RTT 켜기"
   },
   "messageThread": {
     "yesterday": "어제",
@@ -194,7 +324,9 @@
     "resendMessage": "전송 다시 시도",
     "failToSendTag": "보내기 실패",
     "editedTag": "편집됨",
-    "liveAuthorIntro": "{author} 님이 말합니다.",
+    "liveAuthorIntro": "{author}의 메시지",
+    "editedMessageLiveAuthorIntro": "{author}의 편집한 메시지",
+    "editedMessageLocalUserLiveAuthorIntro": "편집한 메시지",
     "messageContentAriaText": "{status} {author} 님의 메시지: {message}",
     "messageContentMineAriaText": "{status} 내 메시지: {message}",
     "editBoxTextLimit": "메시지가 {limitNumber} 문자 제한을 초과했습니다.",
@@ -467,6 +599,11 @@
       "message": "5초 후에 할당된 채팅방으로 이동합니다.",
       "dismissButtonAriaLabel": "닫기"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "소규모 회의실 종료됨",
+      "message": "5초 후에 모임으로 돌아갑니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "소규모 회의실에 참가하시겠어요?",
       "message": "사용자가 소규모 회의실에 배정되었습니다.",
@@ -481,6 +618,34 @@
     "breakoutRoomClosingSoon": {
       "title": "소회의실 시간 제한이 곧 만료됩니다.",
       "message": "이 소회의실은 30초 후에 닫힙니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "카메라가 사용하도록 설정되었습니다",
+      "message": "비디오를 공유하고자 하는 경우 이 기능을 켜세요.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "카메라를 사용하지 않습니다",
+      "message": "더 이상 비디오를 공유할 수 없습니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "마이크를 사용하도록 설정했습니다",
+      "message": "말하기를 원하는 경우 음소거를 해제하세요.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "마이크를 사용할 수 없습니다.",
+      "message": "더 이상 음소거 해제할 수 없음",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode가 시작되었습니다.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode가 종료되었습니다.",
       "dismissButtonAriaLabel": "닫기"
     }
   },
@@ -510,7 +675,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "스포트라이트 종료",
     "attendeeRole": "참석자",
     "muteParticipantMenuItemLabel": "음소거",
-    "waitingScreenText": "다른 사용자의 참여를 기다리는 중"
+    "waitingScreenText": "다른 사용자의 참여를 기다리는 중",
+    "forbidAudio": "마이크 비활성화",
+    "permitAudio": "마이크 허용",
+    "forbidAudioTileMenuLabel": "마이크 비활성화",
+    "permitAudioTileMenuLabel": "마이크 허용",
+    "forbidVideo": "카메라 비활성화",
+    "permitVideo": "카메라 허용",
+    "forbidVideoTileMenuLabel": "카메라 비활성화",
+    "permitVideoTileMenuLabel": "카메라 허용"
   },
   "dialpad": {
     "placeholderText": "전화 번호를 입력하세요.",
@@ -524,8 +697,15 @@
   },
   "videoTile": {
     "participantStateRinging": "전화 거는 중...",
+    "participantReconnecting": "다시 연결하는 중...",
     "participantStateHold": "대기 중",
-    "moreOptionsButtonAriaLabel": "옵션 더 보기"
+    "moreOptionsButtonAriaLabel": "기타 옵션 {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "음소거됨",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "음소거 해제됨",
+    "moreOptionsParticipantHandRaisedAriaLabel": "손 들기",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "말하기",
+    "moreOptionsParticipantMicDisabledAriaLabel": "마이크를 사용할 수 없음",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "카메라 사용 안 함"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName} 님이 카메라와 마이크를 사용하도록 허용",
@@ -643,8 +823,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "이전 페이지",
-    "rightNavButtonAriaLabel": "다음 페이지"
+    "leftNavButtonAriaLabel": "이전 페이지 {current}/{total}",
+    "rightNavButtonAriaLabel": "다음 페이지 {current}/{total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "내 전화에서 통화 참가",

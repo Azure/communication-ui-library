@@ -5,10 +5,15 @@
     "removeButtonLabel": "削除",
     "sharingIconLabel": "共有",
     "mutedIconLabel": "ミュート状態",
+    "handRaisedIconLabel": "挙手 - 位置 {position}",
     "displayNamePlaceholder": "名前のない参加者",
     "participantStateRinging": "呼び出し中...",
     "participantStateHold": "保留中",
-    "attendeeRole": "出席者"
+    "participantItemAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{micDisabledState}、{cameraDisabledState}、{sharingState}、{connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}、{handRaisedState}、{mutedState}、{micDisabledState}、{cameraDisabledState}、{sharingState}、{connectionState}、その他のオプション",
+    "attendeeRole": "出席者",
+    "micDisabledIconLabel": "マイクが無効になっています",
+    "cameraDisabledIconLabel": "カメラが無効になっています"
   },
   "ParticipantList": {
     "overflowParticipantCount": "その他 {overflowCount} 個"
@@ -58,6 +63,7 @@
     "richTextDeleteColumnMenu": "列の削除",
     "richTextDeleteRowMenu": "行の削除",
     "richTextDeleteTableMenu": "表の削除",
+    "richTextToolbarAriaLabel": "メッセージの書式設定ツール バー",
     "richTextToolbarMoreButtonAriaLabel": "その他のオプション",
     "attachmentMoreMenu": "その他のオプション",
     "richTextNewBulletedListItemAnnouncement": "行頭文字、改行",
@@ -65,12 +71,34 @@
     "richTextBulletedListAppliedAnnouncement": "箇条書きが適用されました",
     "richTextNumberedListAppliedAnnouncement": "番号付きリストが適用されました"
   },
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "RTT モーダルを有効にする",
+    "realTimeTextModalTitle": "RTT を有効にしますか?",
+    "realTimeTextModalText": "会議の全員に対してリアルタイム テキスト (RTT) が有効になります。",
+    "realTimeTextConfirmButtonLabel": "有効にする",
+    "realTimeTextCancelButtonLabel": "キャンセル",
+    "realTimeTextCloseModalButtonAriaLabel": "RTT モーダルを閉じる"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "キャプションを開始しています...",
+    "realTimeTextInputBoxDefaultText": "リアルタイムにメッセージを入力",
+    "realTimeTextInputErrorMessage": "メッセージは 2,000 文字以下にする必要があります",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (リアルタイム テキスト) は、会議の全期間のすべての参加者に対して有効になっています。",
+    "realTimeTextBannerLinkLabel": "詳細情報",
+    "captionsOnlyContainerTitle": "キャプション",
+    "realTimeTextOnlyContainerTitle": "リアルタイム テキスト",
+    "captionsAndRealTimeTextContainerTitle": "キャプションとリアルタイム テキスト",
+    "expandButtonAriaLabel": "展開",
+    "minimizeButtonAriaLabel": "折りたたむ"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "候補"
   },
   "imageOverlay": {
     "downloadButtonLabel": "ダウンロード",
-    "dismissButtonAriaLabel": "閉じる"
+    "dismissButtonAriaLabel": "閉じる",
+    "overlayVisibleMessage": "画像の詳細のオーバーレイ"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "メッセージを送信しました",
@@ -146,6 +174,7 @@
   },
   "participantsButton": {
     "label": "ユーザー",
+    "ariaLabel": "連絡先",
     "tooltipContent": "参加者を表示",
     "menuHeader": "この通話で",
     "participantsListButtonLabel": "{numParticipants} 人",
@@ -169,7 +198,7 @@
   },
   "reactionButton": {
     "label": "リアクションする",
-    "ariaLabel": "リアクション ボタン、リアクションの送信",
+    "ariaLabel": "リアクションする",
     "tooltipDisabledContent": "リアクション操作が無効になっています",
     "tooltipContent": "リアクションを送信します",
     "likeReactionTooltipContent": "いいね!",
@@ -177,6 +206,107 @@
     "laughReactionTooltipContent": "笑い",
     "applauseReactionTooltipContent": "喝采",
     "surprisedReactionTooltipContent": "驚いた"
+  },
+  "realTimeText": {
+    "isTypingText": "RTT 入力"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "ライブ キャプションの設定",
+    "captionsSettingsSpokenLanguageDropdownLabel": "音声言語",
+    "captionsSettingsCaptionLanguageDropdownLabel": "ライブ キャプションの言語",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "この通話の全員が話す言語。",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "ライブ キャプションはこの言語で表示されます。",
+    "captionsSettingsConfirmButtonLabel": "確認する",
+    "captionsSettingsCancelButtonLabel": "キャンセル",
+    "captionsSettingsModalAriaLabel": "ライブ キャプション設定モーダル",
+    "captionsSettingsCloseModalButtonAriaLabel": "ライブ キャプション設定を閉じる"
+  },
+  "spokenLanguages": {
+    "ar-ae": "アラビア語 - U.A.E.",
+    "ar-sa": "アラビア語 - サウジアラビア",
+    "da-dk": "デンマーク語",
+    "de-de": "ドイツ語 - ドイツ",
+    "en-au": "英語 - オーストラリア",
+    "en-ca": "英語 - カナダ",
+    "en-gb": "英語 - イギリス",
+    "en-in": "英語 - インド",
+    "en-nz": "英語 - ニュージーランド",
+    "en-us": "英語 - 米国",
+    "es-es": "スペイン語 - スペイン (モダン)",
+    "es-mx": "スペイン語 - メキシコ",
+    "fi-fi": "フィンランド語",
+    "fr-ca": "フランス語 - カナダ",
+    "fr-fr": "フランス語 - フランス",
+    "hi-in": "ヒンディー語",
+    "it-it": "イタリア語 - イタリア",
+    "ja-jp": "日本語",
+    "ko-kr": "韓国語",
+    "nb-no": "ノルウェー語 (ブークモール)",
+    "nl-be": "オランダ語 - ベルギー",
+    "nl-nl": "オランダ語 - オランダ",
+    "pl-pl": "ポーランド語",
+    "pt-br": "ポルトガル語 - ブラジル",
+    "ru-ru": "ロシア語",
+    "sv-se": "スウェーデン語",
+    "zh-cn": "中国語 - 中国",
+    "zh-hk": "中国語 - 香港特別行政区",
+    "cs-cz": "チェコ語",
+    "pt-pt": "ポルトガル語 - ポルトガル",
+    "tr-tr": "トルコ語",
+    "vi-vn": "ベトナム語",
+    "th-th": "タイ語",
+    "he-il": "ヘブライ語",
+    "cy-gb": "ウェールズ語",
+    "uk-ua": "ウクライナ語",
+    "el-gr": "ギリシャ語",
+    "hu-hu": "ハンガリー語",
+    "ro-ro": "ルーマニア語",
+    "sk-sk": "スロバキア語",
+    "zh-tw": "中国語 - 台湾"
+  },
+  "captionLanguages": {
+    "ar": "アラビア語",
+    "da": "デンマーク語",
+    "de": "ドイツ語",
+    "en": "英語",
+    "es": "スペイン語",
+    "fi": "フィンランド語",
+    "fr-ca": "フランス語 - カナダ",
+    "fr": "フランス語 - フランス",
+    "hi": "ヒンディー語",
+    "it": "イタリア語",
+    "ja": "日本語",
+    "ko": "韓国語",
+    "nb": "ノルウェー語 (ブークモール)",
+    "nl": "オランダ語",
+    "pl": "ポーランド語",
+    "pt": "ポルトガル語 - ブラジル",
+    "ru": "ロシア語",
+    "sv": "スウェーデン語",
+    "zh-Hans": "中国語 (簡体字)",
+    "zh-Hant": "中国語 (繁体字)",
+    "cs": "チェコ語",
+    "pt-pt": "ポルトガル語 - ポルトガル",
+    "tr": "トルコ語",
+    "vi": "ベトナム語",
+    "th": "タイ語",
+    "he": "ヘブライ語",
+    "cy": "ウェールズ語",
+    "uk": "ウクライナ語",
+    "el": "ギリシャ語",
+    "hu": "ハンガリー語",
+    "ro": "ルーマニア語",
+    "sk": "スロバキア語"
+  },
+  "startCaptionsButton": {
+    "onLabel": "ライブ キャプションをオンにする",
+    "offLabel": "キャプションをオフにする",
+    "tooltipOnContent": "キャプションをオフにする",
+    "tooltipOffContent": "ライブ キャプションをオンにする"
+  },
+  "startRealTimeTextButton": {
+    "label": "この呼び出しの RTT を有効にする",
+    "tooltipOffContent": "この呼び出しの RTT を有効にする"
   },
   "messageThread": {
     "yesterday": "昨日",
@@ -194,7 +324,9 @@
     "resendMessage": "もう一度送信",
     "failToSendTag": "送信できませんでした",
     "editedTag": "編集済み",
-    "liveAuthorIntro": "{author} さんの発言",
+    "liveAuthorIntro": "{author} からのメッセージ",
+    "editedMessageLiveAuthorIntro": "{author} さんからのメッセージを編集しました",
+    "editedMessageLocalUserLiveAuthorIntro": "メッセージを編集しました",
     "messageContentAriaText": "{status} {author} さんが {message} と言いました",
     "messageContentMineAriaText": "{status} あなたが {message} と言いました",
     "editBoxTextLimit": "メッセージが{limitNumber}文字の制限を超えています",
@@ -467,6 +599,11 @@
       "message": "5 秒後に、割り当てられた会議室に移動します。",
       "dismissButtonAriaLabel": "閉じる"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "ブレークアウト ルームが終了しました",
+      "message": "5 秒後に会議に戻ります。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "ブレークアウト ルームに参加しますか?",
       "message": "ブレークアウト ルームに割り当てられました。",
@@ -481,6 +618,34 @@
     "breakoutRoomClosingSoon": {
       "title": "ルームの時間制限がもうすぐ切れます。",
       "message": "このルームは 30 秒後に終了します",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "カメラが有効になっています",
+      "message": "ビデオを共有したい場合はオンにしてください。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "カメラが無効になっています",
+      "message": "ビデオを共有できなくなりました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "マイクが有効になりました",
+      "message": "音声機能を使用する場合は、ミュートを解除します。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "マイクが無効になっています",
+      "message": "ミュートを解除できなくなりました。",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode が開始しました",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode が終了しました",
       "dismissButtonAriaLabel": "閉じる"
     }
   },
@@ -510,7 +675,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "スポットライトを終了",
     "attendeeRole": "出席者",
     "muteParticipantMenuItemLabel": "ミュート",
-    "waitingScreenText": "他のユーザーの参加を待っています"
+    "waitingScreenText": "他のユーザーの参加を待っています",
+    "forbidAudio": "マイクを無効にする",
+    "permitAudio": "マイクを許可する",
+    "forbidAudioTileMenuLabel": "マイクを無効にする",
+    "permitAudioTileMenuLabel": "マイクを許可する",
+    "forbidVideo": "カメラを無効にする",
+    "permitVideo": "カメラを許可する",
+    "forbidVideoTileMenuLabel": "カメラを無効にする",
+    "permitVideoTileMenuLabel": "カメラを許可する"
   },
   "dialpad": {
     "placeholderText": "電話番号を入力してください",
@@ -524,8 +697,15 @@
   },
   "videoTile": {
     "participantStateRinging": "呼び出し中...",
+    "participantReconnecting": "再接続中...",
     "participantStateHold": "保留中",
-    "moreOptionsButtonAriaLabel": "その他のオプション"
+    "moreOptionsButtonAriaLabel": "その他のオプションの {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "ミュート中",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "ミュート解除",
+    "moreOptionsParticipantHandRaisedAriaLabel": "挙手しました",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "話し中",
+    "moreOptionsParticipantMicDisabledAriaLabel": "マイクが無効になっています",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "カメラが無効になっています"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "{appName}にカメラとマイクの使用を許可する",
@@ -643,8 +823,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "前のページ",
-    "rightNavButtonAriaLabel": "次のページ"
+    "leftNavButtonAriaLabel": "前のページ {current}/{total}",
+    "rightNavButtonAriaLabel": "次のページ {current}/{total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "電話から通話に参加",

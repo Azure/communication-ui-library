@@ -1,0 +1,21 @@
+import { Canvas, Meta } from '@storybook/blocks';
+import { SingleLineBetaBanner } from '../../../BetaBanners/SingleLineBetaBanner';
+import * as BlockedMessageStories from './index.stories';
+
+import MessageThreadWithBlockedMessagesExampleText from '!!raw-loader!./snippets/BlockedMessages.snippet.tsx';
+
+<Meta of={BlockedMessageStories} />
+
+## MessageThread With Blocked Message
+
+<SingleLineBetaBanner />
+
+The example below shows a message thread with a blocked message. If `link` is not provided, it will omit the hyperlink.
+
+## Example
+
+<Canvas
+  of={BlockedMessageStories.BlockedMessagesDocsOnly}
+  source={{ code: MessageThreadWithBlockedMessagesExampleText }}
+  layout="padded"
+/>

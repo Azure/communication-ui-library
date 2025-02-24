@@ -14,8 +14,6 @@ import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 import { COMPONENT_LOCALE_EN_US } from '../localization/locales';
 /* @conditional-compile-remove(mention) */
 import { waitFor } from '@testing-library/react';
-/* @conditional-compile-remove(data-loss-prevention) */
-import { registerIcons } from '@fluentui/react';
 /* @conditional-compile-remove(mention) */
 import { MessageStatus } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(mention) */
@@ -174,14 +172,6 @@ describe('Message should display status of edited if message is edited', () => {
 
 /* @conditional-compile-remove(data-loss-prevention) */
 describe('Message blocked should display default blocked text correctly', () => {
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        datalosspreventionprohibited: <></>
-      }
-    });
-  });
-
   test('Should locale string for default message blocked by policy"', async () => {
     const testLocale = createTestLocale({ messageThread: { yesterday: Math.random().toString() } });
     const sampleMessage: BlockedMessage = {
@@ -205,19 +195,6 @@ describe('Message blocked should display default blocked text correctly', () => 
 /* @conditional-compile-remove(mention) */
 describe('Message should display Mention correctly', () => {
   const MSFT_MENTION = 'msft-mention';
-
-  beforeAll(() => {
-    registerIcons({
-      icons: {
-        chatmessageoptions: <></>,
-        messageedit: <></>,
-        messageremove: <></>,
-        messageresend: <></>,
-        editboxcancel: <></>,
-        editboxsubmit: <></>
-      }
-    });
-  });
 
   test('Message should include Mention', async () => {
     const user1Id = 'user1';
@@ -297,6 +274,9 @@ describe('Message should display Mention correctly', () => {
 
     // edit message
     const message1ContentAfterEdit = `Hey <msft-mention id="${user2Id}">${user2Name}</msft-mention> and <msft-mention id="${user3Id}">${user3Name}</msft-mention>, can you help me with my internet connection?`;
+    if (!messages[0]) {
+      throw new Error('Failed to find message to edit');
+    }
     messages[0].content = message1ContentAfterEdit;
     messages[0].editedOn = new Date('2019-04-13T00:01:00.000+08:10');
     const expectedOnRenderMentionCount = 2;
@@ -353,6 +333,9 @@ describe('Message should display Mention correctly', () => {
     const onUpdateMessageCallback = (messageId: string, content: string): Promise<void> => {
       const msgIdx = messages.findIndex((m) => m.messageId === messageId);
       const message = messages[msgIdx];
+      if (!message) {
+        throw new Error('Failed to find message to update');
+      }
       message.content = content;
       message.editedOn = new Date(Date.now());
       messages[msgIdx] = message;
@@ -433,7 +416,7 @@ describe('Message should display Mention correctly', () => {
     // Verify message has new edited content includes mention HTML tag
     await waitFor(async () => {
       expect(onUpdateMessageCount).toEqual(expectedOnUpdateMessageCount);
-      const editedMessageContentWithMention = messages[0].content;
+      const editedMessageContentWithMention = messages[0]?.content;
       expect(editedMessageContentWithMention).toContain(user1Name);
       expect(editedMessageContentWithMention).toContain(MSFT_MENTION);
     });

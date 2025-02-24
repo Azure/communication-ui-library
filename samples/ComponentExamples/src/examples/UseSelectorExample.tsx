@@ -30,7 +30,7 @@ const CustomChatThread = ({ messages }: { messages: Message[] }): JSX.Element =>
 // We strongly recommend to use reselect library for getting better perf
 // For how to write an efficient selector, check /docs/architecture/WritingSelectors.md
 const topicSelector = (state: ChatClientState, props: { threadId: string }): string | undefined =>
-  state.threads[props.threadId].properties?.topic;
+  state.threads[props.threadId]?.properties?.topic;
 
 export const UseSelectorExample = (): JSX.Element => {
   const chatThreadClient = useChatThreadClient();

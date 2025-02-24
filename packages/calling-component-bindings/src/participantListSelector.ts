@@ -8,7 +8,8 @@ import {
   getDisplayName,
   getIsScreenSharingOn,
   getIsMuted,
-  CallingBaseSelectorProps
+  CallingBaseSelectorProps,
+  getCapabilities
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
@@ -41,7 +42,6 @@ const convertRemoteParticipantsToParticipantListParticipants = (
         // Filter out MicrosoftBot participants
         .filter((participant: RemoteParticipantState) => {
           return !isMicrosoftTeamsAppIdentifier(participant.identifier);
-          return true;
         })
         /**
          * hiding participants who are inLobby, idle, or connecting in ACS clients till we can admit users through ACS clients.
@@ -73,6 +73,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             spotlightedParticipants,
             toFlatCommunicationIdentifier(participant.identifier)
           );
+
           return memoizeFn(
             toFlatCommunicationIdentifier(participant.identifier),
             displayName,
@@ -83,7 +84,8 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             participant.raisedHand,
             localUserCanRemoveOthers,
             remoteParticipantReaction,
-            spotlight
+            spotlight,
+            participant.mediaAccess
           );
         })
         .sort((a, b) => {
@@ -134,7 +136,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     getParticipantCount,
     isHideAttendeeNamesEnabled,
     getLocalParticipantReactionState,
-    getSpotlightCallFeature
+    getSpotlightCallFeature,
+    getCapabilities
   ],
   (
     userId,
@@ -147,7 +150,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     partitipantCount,
     isHideAttendeeNamesEnabled,
     localParticipantReactionState,
-    spotlightCallFeature
+    spotlightCallFeature,
+    capabilities
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -173,7 +177,11 @@ export const participantListSelector: ParticipantListSelector = createSelector(
       // Local participant can never remove themselves.
       isRemovable: false,
       reaction: memoizedConvertToVideoTileReaction(localParticipantReactionState),
-      spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId)
+      spotlight: memoizedSpotlight(spotlightCallFeature?.spotlightedParticipants, userId),
+      mediaAccess: {
+        isAudioPermitted: capabilities?.unmuteMic ? capabilities.unmuteMic.isPresent : true,
+        isVideoPermitted: capabilities?.turnVideoOn ? capabilities.turnVideoOn.isPresent : true
+      }
     });
     /* @conditional-compile-remove(total-participant-count) */
     const totalParticipantCount = partitipantCount;

@@ -33,7 +33,6 @@ import { DisplayNameField } from './DisplayNameField';
 import { RoomLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { getRoomIdFromUrl } from '../utils/AppUtils';
-/* @conditional-compile-remove(teams-identity-support) */
 import { getIsCTE } from '../utils/AppUtils';
 import { Dialpad } from '@azure/communication-react';
 import { Backspace20Regular } from '@fluentui/react-icons';
@@ -45,7 +44,7 @@ export type CallOption =
   | 'TeamsMeeting'
   | 'Rooms'
   | 'StartRooms'
-  | /* @conditional-compile-remove(teams-identity-support) */ 'TeamsIdentity'
+  | 'TeamsIdentity'
   | '1:N'
   | 'PSTN'
   | 'TeamsAdhoc';
@@ -58,9 +57,7 @@ export interface HomeScreenProps {
     role?: string;
     outboundParticipants?: string[];
     alternateCallerId?: string;
-    /* @conditional-compile-remove(teams-identity-support) */
     teamsToken?: string;
-    /* @conditional-compile-remove(teams-identity-support) */
     teamsId?: string;
     outboundTeamsUsers?: string[];
   }): void;
@@ -79,17 +76,13 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
     { key: 'StartRooms', text: 'Start a Rooms call' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting using ACS identity' },
     { key: 'Rooms', text: 'Join a Rooms Call' },
-    /* @conditional-compile-remove(teams-identity-support) */
     { key: 'TeamsIdentity', text: 'Join a Teams call using Teams identity' },
-
     { key: '1:N', text: 'Start a 1:N ACS Call' },
     { key: 'PSTN', text: 'Start a PSTN Call' },
     { key: 'TeamsAdhoc', text: 'Call a Teams User or voice application' }
   ];
   const roomIdLabel = 'Room ID';
-  /* @conditional-compile-remove(teams-identity-support) */
   const teamsTokenLabel = 'Enter a Teams token';
-  /* @conditional-compile-remove(teams-identity-support) */
   const teamsIdLabel = 'Enter a Teams Id';
   const roomsRoleGroupLabel = 'Rooms Role';
   const roomRoleOptions: IChoiceGroupOption[] = [
@@ -101,33 +94,26 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   // Get display name from local storage if available
   const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
   const [displayName, setDisplayName] = useState<string | undefined>(defaultDisplayName ?? undefined);
-
-  const [chosenCallOption, setChosenCallOption] = useState<ICallChoiceGroupOption>(callOptions[0]);
+  const [chosenCallOption, setChosenCallOption] = useState(callOptions[0] as ICallChoiceGroupOption);
   const [callLocator, setCallLocator] = useState<TeamsMeetingLinkLocator | RoomLocator | TeamsMeetingIdLocator>();
   const [meetingId, setMeetingId] = useState<string>();
   const [passcode, setPasscode] = useState<string>();
-  const [chosenRoomsRoleOption, setRoomsRoleOption] = useState<IChoiceGroupOption>(roomRoleOptions[1]);
+  const [chosenRoomsRoleOption, setRoomsRoleOption] = useState<IChoiceGroupOption | undefined>(roomRoleOptions[1]);
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
   const [outboundParticipants, setOutboundParticipants] = useState<string | undefined>();
   const [dialPadParticipant, setDialpadParticipant] = useState<string>();
-  /* @conditional-compile-remove(teams-identity-support) */
   const [teamsToken, setTeamsToken] = useState<string>();
-  /* @conditional-compile-remove(teams-identity-support) */
   const [teamsId, setTeamsId] = useState<string>();
   const [outboundTeamsUsers, setOutboundTeamsUsers] = useState<string | undefined>();
-
   const [alternateCallerIdCalloutVisible, setAlternateCallerIdCalloutVisible] = useState<boolean>(false);
-
   const startGroupCall: boolean = chosenCallOption.key === 'ACSCall';
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
-  /* @conditional-compile-remove(teams-identity-support) */
   const teamsIdentityChosen = chosenCallOption.key === 'TeamsIdentity';
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
   const teamsAdhocChosen: boolean = chosenCallOption.key === 'TeamsAdhoc';
-
   const buttonEnabled =
-    (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsToken) &&
+    (displayName || teamsToken) &&
     (startGroupCall ||
       (teamsCallChosen && callLocator) ||
       (((chosenCallOption.key === 'Rooms' && callLocator) || chosenCallOption.key === 'StartRooms') &&
@@ -135,19 +121,11 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
       (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
       (teamsAdhocChosen && outboundTeamsUsers) ||
       (outboundParticipants && acsCallChosen) ||
-      /* @conditional-compile-remove(teams-identity-support) */ (teamsIdentityChosen &&
-        callLocator &&
-        teamsToken &&
-        teamsId));
+      (teamsIdentityChosen && callLocator && teamsToken && teamsId));
 
   registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
-
   const isMobileSession = useIsMobile();
-
-  let showDisplayNameField = true;
-  /* @conditional-compile-remove(teams-identity-support) */
-  showDisplayNameField = !teamsIdentityChosen;
-
+  const showDisplayNameField = !teamsIdentityChosen;
   const [teamsIdFormatError, setTeamsIdFormatError] = useState<boolean>(false);
 
   return (
@@ -175,12 +153,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 required={true}
                 onChange={(_, option) => {
                   option && setChosenCallOption(option as ICallChoiceGroupOption);
-                  /* @conditional-compile-remove(teams-identity-support) */
+
                   setTeamsIdFormatError(false);
                 }}
               />
             )}
-            {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
+            {(teamsCallChosen || teamsIdentityChosen) && (
               <TextField
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'Link' }}
@@ -192,12 +170,12 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 }}
               />
             )}
-            {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
+            {(teamsCallChosen || teamsIdentityChosen) && (
               <Text className={teamsItemStyle} block variant="medium">
                 <b>Or</b>
               </Text>
             )}
-            {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
+            {(teamsCallChosen || teamsIdentityChosen) && (
               <TextField
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'MeetingId' }}
@@ -210,7 +188,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 }}
               />
             )}
-            {(teamsCallChosen || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) && (
+            {(teamsCallChosen || teamsIdentityChosen) && (
               <TextField
                 className={teamsItemStyle}
                 iconProps={{ iconName: 'passcode' }}
@@ -228,48 +206,42 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 <b>And</b>
               </Text>
             )}
-            {
-              /* @conditional-compile-remove(teams-identity-support) */ (chosenCallOption.key === 'TeamsIdentity' ||
-                getIsCTE()) && (
-                <Stack>
-                  <TextField
-                    className={teamsItemStyle}
-                    label={teamsTokenLabel}
-                    required
-                    placeholder={'Enter a Teams Token'}
-                    onChange={(_, newValue) => setTeamsToken(newValue)}
-                  />
-                </Stack>
-              )
-            }
-            {
-              /* @conditional-compile-remove(teams-identity-support) */ (chosenCallOption.key === 'TeamsIdentity' ||
-                getIsCTE()) && (
-                <Stack>
-                  <TextField
-                    className={teamsItemStyle}
-                    label={teamsIdLabel}
-                    required
-                    placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
-                    errorMessage={
-                      teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
+            {(chosenCallOption.key === 'TeamsIdentity' || getIsCTE()) && (
+              <Stack>
+                <TextField
+                  className={teamsItemStyle}
+                  label={teamsTokenLabel}
+                  required
+                  placeholder={'Enter a Teams Token'}
+                  onChange={(_, newValue) => setTeamsToken(newValue)}
+                />
+              </Stack>
+            )}
+            {(chosenCallOption.key === 'TeamsIdentity' || getIsCTE()) && (
+              <Stack>
+                <TextField
+                  className={teamsItemStyle}
+                  label={teamsIdLabel}
+                  required
+                  placeholder={'Enter a Teams user ID (8:orgid:<UUID>)'}
+                  errorMessage={
+                    teamsIdFormatError ? `Teams user ID should be in the format '8:orgid:<UUID>'` : undefined
+                  }
+                  onChange={(_, newValue) => {
+                    if (!newValue) {
+                      setTeamsIdFormatError(false);
+                      setTeamsId(undefined);
+                    } else if (newValue.match(/8:orgid:[a-zA-Z0-9-]+/)) {
+                      setTeamsIdFormatError(false);
+                      setTeamsId(newValue);
+                    } else {
+                      setTeamsIdFormatError(true);
+                      setTeamsId(undefined);
                     }
-                    onChange={(_, newValue) => {
-                      if (!newValue) {
-                        setTeamsIdFormatError(false);
-                        setTeamsId(undefined);
-                      } else if (newValue.match(/8:orgid:[a-zA-Z0-9-]+/)) {
-                        setTeamsIdFormatError(false);
-                        setTeamsId(newValue);
-                      } else {
-                        setTeamsIdFormatError(true);
-                        setTeamsId(undefined);
-                      }
-                    }}
-                  />
-                </Stack>
-              )
-            }
+                  }}
+                />
+              </Stack>
+            )}
             {chosenCallOption.key === 'Rooms' && (
               <Stack>
                 <TextField
@@ -387,9 +359,8 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             className={buttonStyle}
             text={buttonText}
             onClick={() => {
-              if (displayName || /* @conditional-compile-remove(teams-identity-support) */ teamsIdentityChosen) {
+              if (displayName || teamsIdentityChosen) {
                 displayName && saveDisplayNameToLocalStorage(displayName);
-
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 const teamsParticipantsToCall = parseParticipants(outboundTeamsUsers);
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);
@@ -398,12 +369,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                   displayName: !displayName ? 'Teams UserName PlaceHolder' : displayName,
                   callLocator: callLocator,
                   option: chosenCallOption.key,
-                  role: chosenRoomsRoleOption.key,
+                  role: chosenRoomsRoleOption?.key,
                   outboundParticipants: acsParticipantsToCall ? acsParticipantsToCall : dialpadParticipantToCall,
                   alternateCallerId,
-                  /* @conditional-compile-remove(teams-identity-support) */
                   teamsToken,
-                  /* @conditional-compile-remove(teams-identity-support) */
                   teamsId,
                   outboundTeamsUsers: teamsParticipantsToCall
                 });

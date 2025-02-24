@@ -41,12 +41,11 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
       /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
       callControls: {
         screenShareButton: shouldHideScreenShare ? false : undefined,
-        /* @conditional-compile-remove(end-call-options) */
         endCallButton: {
           hangUpForEveryone: 'endCallOptions'
         }
       },
-      autoShowDtmfDialer: true
+      disableAutoShowDtmfDialer: { dialerBehavior: 'autoShow' }
     }),
     [shouldHideScreenShare]
   );

@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useMemo } from 'react';
-/* @conditional-compile-remove(call-readiness) */
+import React, { useCallback, useMemo, useRef } from 'react';
 import { useState } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
 import { useHandlers } from '../hooks/useHandlers';
@@ -10,9 +9,18 @@ import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
 import { StartCallButton } from '../components/StartCallButton';
 import { devicePermissionSelector } from '../selectors/devicePermissionSelector';
 import { useSelector } from '../hooks/useSelector';
-import { ActiveErrorMessage, DevicesButton, ErrorBar, useTheme } from '@internal/react-components';
+import {
+  ActiveErrorMessage,
+  CameraButton,
+  DevicesButton,
+  ErrorBar,
+  VideoStreamOptions,
+  _useContainerHeight,
+  _useContainerWidth,
+  useTheme
+} from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Image, Panel, PanelType, Stack } from '@fluentui/react';
+import { Image, mergeStyles, Panel, PanelType, Stack } from '@fluentui/react';
 import {
   callDetailsContainerStyles,
   configurationCenteredContent,
@@ -44,6 +52,7 @@ import { usePropsFor } from '../hooks/usePropsFor';
 /* @conditional-compile-remove(call-readiness) */
 import { DeviceCheckOptions } from '../CallComposite';
 import { ConfigurationPageErrorBar } from '../components/ConfigurationPageErrorBar';
+import { _isSafari } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
 import { getDevicePermissionState } from '../utils';
 /* @conditional-compile-remove(call-readiness) */
@@ -59,12 +68,11 @@ import { localVideoSelector } from '../../CallComposite/selectors/localVideoStre
 
 import { CapabilitiesChangeNotificationBarProps } from '../components/CapabilitiesChangedNotificationBar';
 import { SvgWithWordWrapping } from '../components/SvgWithWordWrapping';
-import { EnvironmentInfo } from '@azure/communication-calling';
 import { getMicrophones, getRole } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(unsupported-browser) */
 import { getEnvironmentInfo } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(call-readiness) */
 import { getCameras } from '../selectors/baseSelectors';
+import { VideoDeviceInfo } from '@azure/communication-calling';
 
 /**
  * @private
@@ -123,15 +131,49 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   getDevicePermissionState(setVideoState, setAudioState);
 
+  const configContainerRef = useRef<HTMLDivElement>(null);
+
+  const configWidth = _useContainerWidth(configContainerRef);
+
+  /**
+   * We want to stack the two sections (preview and devices) when the container is less than 450 wide.
+   * We lose size calculation when the container is less than 450 wide, so we stack the two sections.
+   */
+  const stackConfig = !!configWidth && configWidth < 450;
   const errorBarProps = usePropsFor(ErrorBar);
   const microphones = useSelector(getMicrophones);
-  /* @conditional-compile-remove(unsupported-browser) */
   const environmentInfo = useSelector(getEnvironmentInfo);
 
   let disableStartCallButton = !microphonePermissionGranted || microphones?.length === 0;
   const role = useSelector(getRole);
 
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
+  const [cameraLoading, setCameraLoading] = useState(false);
+  const switchCamera = useCallback(
+    async (device: VideoDeviceInfo, options?: VideoStreamOptions) => {
+      // Only set camera to be loading if we are switching source while the camera is on
+      setCameraLoading(isCameraOn);
+      try {
+        await localDeviceSettingsHandlers.onSelectCamera(device, options);
+      } finally {
+        setCameraLoading(false);
+      }
+    },
+    [localDeviceSettingsHandlers, isCameraOn]
+  );
+  const { onToggleCamera } = usePropsFor(CameraButton);
+  const toggleCamera = useCallback(
+    async (options?: VideoStreamOptions | undefined) => {
+      // Only set camera to loading if we are turning on the camera (i.e. the camera was off)
+      setCameraLoading(!isCameraOn);
+      try {
+        await onToggleCamera(options);
+      } finally {
+        setCameraLoading(false);
+      }
+    },
+    [isCameraOn, onToggleCamera]
+  );
 
   let filteredLatestErrors: ActiveErrorMessage[] = props.latestErrors;
 
@@ -269,7 +311,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   );
 
   return (
-    <Stack styles={containerStyles}>
+    <div ref={configContainerRef} className={mergeStyles(containerStyles)}>
       <Stack styles={bannerNotificationStyles}>
         <ConfigurationPageErrorBar
           /* @conditional-compile-remove(call-readiness) */
@@ -327,7 +369,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
       <Stack verticalFill grow horizontal className={fillWidth}>
         <Stack
           className={configurationCenteredContent(mobileWithPreview, !!props.logo)}
-          verticalAlign="center"
+          verticalAlign={stackConfig && !mobileView ? undefined : 'center'}
           verticalFill={mobileWithPreview}
           tokens={mobileWithPreview ? configurationStackTokensMobile : configurationStackTokensDesktop}
         >
@@ -337,29 +379,26 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
             {callDescription}
           </Stack.Item>
           <Stack
-            horizontal={!mobileWithPreview}
+            horizontal={configHorizontal(mobileWithPreview, mobileView, stackConfig)}
             horizontalAlign={mobileWithPreview ? 'stretch' : 'center'}
             verticalFill={mobileWithPreview}
             tokens={deviceConfigurationStackTokens}
           >
-            {localPreviewTrampoline(mobileWithPreview, !!(role === 'Consumer'))}
+            {role !== 'Consumer' && (
+              <LocalPreview
+                mobileView={mobileWithPreview}
+                showDevicesButton={mobileView}
+                onToggleCamera={toggleCamera}
+                cameraLoading={cameraLoading && !isCameraOn}
+              />
+            )}
             <Stack styles={mobileView ? undefined : configurationSectionStyle}>
               {!mobileWithPreview && (
-                <Stack
-                  className={
-                    mobileView
-                      ? undefined
-                      : selectionContainerStyle(
-                          theme,
-                          isSafariBrowserEnvironmentTrampoline(
-                            /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
-                          )
-                        )
-                  }
-                >
+                <Stack className={mobileView ? undefined : selectionContainerStyle(theme, _isSafari(environmentInfo))}>
                   <LocalDeviceSettings
                     {...options}
                     {...localDeviceSettingsHandlers}
+                    onSelectCamera={switchCamera}
                     cameraPermissionGranted={cameraPermissionGrantedTrampoline(
                       cameraPermissionGranted,
                       /* @conditional-compile-remove(call-readiness) */ videoState
@@ -410,15 +449,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           />
         </Panel>
       </Stack>
-    </Stack>
+    </div>
   );
-};
-
-const localPreviewTrampoline = (mobileView: boolean, doNotShow?: boolean): JSX.Element | undefined => {
-  if (doNotShow) {
-    return undefined;
-  }
-  return <LocalPreview mobileView={mobileView} showDevicesButton={mobileView} />;
 };
 
 const cameraPermissionGrantedTrampoline = (
@@ -448,9 +480,9 @@ const Logo = (props: { logo?: { url: string; alt?: string; shape?: 'unset' | 'ci
   return <Image styles={logoStyles(props.logo.shape)} src={props.logo.url} alt={props.logo.alt} />;
 };
 
-const isSafariBrowserEnvironmentTrampoline = (environmentInfo?: EnvironmentInfo): boolean | undefined => {
-  /* @conditional-compile-remove(unsupported-browser) */
-  return environmentInfo && environmentInfo?.environment.browser.toLowerCase() === 'safari';
-
-  return false;
+const configHorizontal = (mobileWithPreview: boolean, isMobile: boolean, configTooNarrow: boolean): boolean => {
+  if (configTooNarrow && !isMobile) {
+    return false;
+  }
+  return !mobileWithPreview;
 };

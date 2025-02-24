@@ -1,0 +1,16 @@
+import { CaptionsSettingsModal } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as CaptionsSettingsModalStories from './index.stories';
+import CaptionsSettingsModalExampleText from '!!raw-loader!./snippets/CaptionsSettingsModal.snippet.tsx';
+
+<Meta of={CaptionsSettingsModalStories} />
+
+# CaptionsSettingsModal
+
+A component for setting caption/spoken languages and starting captions.
+
+<Canvas of={CaptionsSettingsModalStories.CaptionsSettingsModal} source={{ code: CaptionsSettingsModalExampleText }} />
+
+## Props
+
+<ArgTypes of={CaptionsSettingsModal} />

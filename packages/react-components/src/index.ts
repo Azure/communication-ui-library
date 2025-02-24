@@ -12,8 +12,10 @@ export { COMPONENT_LOCALE_CS_CZ } from './localization/locales/cs-CZ/ComponentLo
 export { COMPONENT_LOCALE_CY_GB } from './localization/locales/cy-GB/ComponentLocale';
 export { COMPONENT_LOCALE_DE_DE } from './localization/locales/de-DE/ComponentLocale';
 export { COMPONENT_LOCALE_ES_ES } from './localization/locales/es-ES/ComponentLocale';
+export { COMPONENT_LOCALE_ES_MX } from './localization/locales/es-MX/ComponentLocale';
 export { COMPONENT_LOCALE_FI_FI } from './localization/locales/fi-FI/ComponentLocale';
 export { COMPONENT_LOCALE_FR_FR } from './localization/locales/fr-FR/ComponentLocale';
+export { COMPONENT_LOCALE_FR_CA } from './localization/locales/fr-CA/ComponentLocale';
 export { COMPONENT_LOCALE_HE_IL } from './localization/locales/he-IL/ComponentLocale';
 export { COMPONENT_LOCALE_IT_IT } from './localization/locales/it-IT/ComponentLocale';
 export { COMPONENT_LOCALE_JA_JP } from './localization/locales/ja-JP/ComponentLocale';
@@ -62,6 +64,15 @@ export type {
   ViewScalingMode
 } from './types';
 
+/* @conditional-compile-remove(together-mode) */
+export type {
+  TogetherModeStreamViewResult,
+  VideoGalleryTogetherModeParticipantPosition,
+  VideoGalleryTogetherModeSeatingInfo,
+  VideoGalleryTogetherModeStreams,
+  TogetherModeStreamOptions
+} from './types';
+
 export type { RaisedHand } from './types';
 
 export type { Spotlight } from './types';
@@ -71,8 +82,8 @@ export type { Reaction, ReactionResources, ReactionSprite } from './types';
 export type {
   SpokenLanguageStrings,
   CaptionLanguageStrings,
-  _SupportedSpokenLanguage,
-  _SupportedCaptionLanguage
+  SupportedSpokenLanguage,
+  SupportedCaptionLanguage
 } from './types';
 export { _spokenLanguageToCaptionLanguage } from './types';
 
@@ -84,3 +95,5 @@ export type { SurveyIssues } from './types';
 export type { SurveyIssuesHeadingStrings } from './types';
 
 export type { CallSurveyImprovementSuggestions } from './types';
+
+export type { MediaAccess } from './types';

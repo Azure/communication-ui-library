@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useMemo, useRef, useEffect, useState, useCallback } from 'react';
+import React, { useMemo, useRef, useEffect, useState, useCallback, RefObject } from 'react';
 import { CallAdapterProvider } from '../../CallComposite/adapter/CallAdapterProvider';
 import { CallAdapter } from '../../CallComposite';
 import { PeopleButton } from './PeopleButton';
@@ -35,11 +35,10 @@ import {
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
 import { DesktopMoreButton } from './DesktopMoreButton';
-import { isDisabled } from '../../CallComposite/utils';
-import { HiddenFocusStartPoint } from '../HiddenFocusStartPoint';
+import { isDisabled, _isSafari } from '../../CallComposite/utils';
 import { CallWithChatControlOptions } from '../../CallWithChatComposite';
 import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
-import { CaptionsSettingsModal } from '../CaptionsSettingsModal';
+import { CallingCaptionsSettingsModal } from '../CallingCaptionsSettingsModal';
 import { RaiseHand } from '../../CallComposite/components/buttons/RaiseHand';
 import { Reaction } from '../../CallComposite/components/buttons/Reaction';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
@@ -47,9 +46,8 @@ import { capabilitySelector } from '../../CallComposite/selectors/capabilitySele
 import { DtmfDialpadButton } from './DtmfDialerButton';
 import { ExitSpotlightButton } from '../ExitSpotlightButton';
 import { useLocale } from '../../localization';
-/* @conditional-compile-remove(end-call-options) */
 import { isBoolean } from '../utils';
-/* @conditional-compile-remove(end-call-options) */
+import { getEnvironmentInfo } from '../../CallComposite/selectors/baseSelectors';
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
 import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../../CallComposite/selectors/baseSelectors';
@@ -57,8 +55,8 @@ import { callStatusSelector } from '../../CallComposite/selectors/callStatusSele
 import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
 /* @conditional-compile-remove(breakout-rooms) */
 import { Timer } from './Timer';
-/* @conditional-compile-remove(DNS) */
-import { _isSafari } from '../../CallComposite/utils';
+/* @conditional-compile-remove(rtt) */
+import { CallingRealTimeTextModal } from '../CallingRealTimeTextModal';
 
 /**
  * @private
@@ -75,22 +73,26 @@ export interface CommonCallControlBarProps {
   onClickShowDialpad?: () => void;
   onClickVideoEffects?: (showVideoEffects: boolean) => void;
   isCaptionsSupported?: boolean;
+  isRealTimeTextSupported?: boolean;
   isCaptionsOn?: boolean;
   displayVertical?: boolean;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
-  peopleButtonRef?: React.RefObject<IButton>;
-  cameraButtonRef?: React.RefObject<IButton>;
-  videoBackgroundPickerRef?: React.RefObject<IButton>;
+  peopleButtonRef?: RefObject<IButton>;
+  cameraButtonRef?: RefObject<IButton>;
+  videoBackgroundPickerRef?: RefObject<IButton>;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
   onStopLocalSpotlight?: () => void;
   useTeamsCaptions?: boolean;
-
   onToggleTeamsMeetingConferenceModal?: () => void;
-
   teamsMeetingConferenceModalPresent?: boolean;
+  sidePaneDismissButtonRef?: RefObject<IButton>;
+  /* @conditional-compile-remove(rtt) */
+  onStartRealTimeText?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  startRealTimeTextButtonChecked?: boolean;
 }
 
 const inferCommonCallControlOptions = (
@@ -112,10 +114,12 @@ const inferCommonCallControlOptions = (
   return options;
 };
 
+type CommonCallControlBarMergedProps = CommonCallControlBarProps & ContainerRectProps;
+
 /**
  * @private
  */
-export const CommonCallControlBar = (props: CommonCallControlBarProps & ContainerRectProps): JSX.Element => {
+export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JSX.Element => {
   const theme = useTheme();
   const rtl = theme.rtl;
 
@@ -134,12 +138,12 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
+  /* @conditional-compile-remove(rtt) */
+  const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
 
-  /* @conditional-compile-remove(end-call-options) */
   // If the hangup capability is not present, we default to true
   const isHangUpForEveryoneAllowed =
     useSelector((state) => state.call?.capabilitiesFeature?.capabilities.hangUpForEveryOne.isPresent) ?? true;
-  /* @conditional-compile-remove(end-call-options) */
   const isTeams = useSelector(getIsTeamsCall);
 
   /* @conditional-compile-remove(breakout-rooms) */
@@ -183,6 +187,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
   const openCaptionsSettingsModal = useCallback((): void => {
     setShowCaptionsSettingsModal(true);
   }, []);
+  /* @conditional-compile-remove(rtt) */
+  const openRealTimeTextModal = useCallback((): void => {
+    setShowRealTimeTextModal(true);
+  }, []);
+  /* @conditional-compile-remove(rtt) */
+  const onDismissRealTimeTextModal = useCallback((): void => {
+    setShowRealTimeTextModal(false);
+  }, []);
 
   const onDismissCaptionsSettings = useCallback((): void => {
     setShowCaptionsSettingsModal(false);
@@ -215,21 +227,15 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     [callStrings]
   );
 
-  /* @conditional-compile-remove(DNS) */
   const [isDeepNoiseSuppressionOn, setDeepNoiseSuppressionOn] = useState<boolean>(false);
 
-  /* @conditional-compile-remove(DNS) */
   const startDeepNoiseSuppression = useCallback(async () => {
     await props.callAdapter.startNoiseSuppressionEffect();
   }, [props.callAdapter]);
 
-  /* @conditional-compile-remove(DNS) */
-  const environmentInfo = props.callAdapter.getState().environmentInfo;
-
-  /* @conditional-compile-remove(DNS) */
+  const environmentInfo = useSelector(getEnvironmentInfo);
   const isSafari = _isSafari(environmentInfo);
 
-  /* @conditional-compile-remove(DNS) */
   useEffect(() => {
     if (
       props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
@@ -239,14 +245,14 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
       setDeepNoiseSuppressionOn(true);
     }
   }, [props.callAdapter, startDeepNoiseSuppression]);
-  /* @conditional-compile-remove(DNS) */
+
   const showNoiseSuppressionButton =
     props.callAdapter.getState().onResolveDeepNoiseSuppressionDependency &&
     !props.callAdapter.getState().hideDeepNoiseSuppressionButton &&
     !isSafari
       ? true
       : false;
-  /* @conditional-compile-remove(DNS) */
+
   const onClickNoiseSuppression = useCallback(async () => {
     if (isDeepNoiseSuppressionOn) {
       await props.callAdapter.stopNoiseSuppressionEffect();
@@ -338,15 +344,19 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
 
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
-  const showCaptionsButton =
-    props.isCaptionsSupported &&
-    /* @conditional-compile-remove(acs-close-captions) */ isEnabled(options.captionsButton);
+  const showCaptionsButton = props.isCaptionsSupported && isEnabled(options.captionsButton);
+  /* @conditional-compile-remove(rtt) */
+  const showRealTimeTextButton = props.isRealTimeTextSupported;
 
   const showTeamsMeetingPhoneCallButton = isEnabled(options?.teamsMeetingPhoneCallButton);
 
   const showDesktopMoreButton =
     isEnabled(options?.moreButton) &&
-    (false || isEnabled(options?.holdButton) || showCaptionsButton || props.onUserSetGalleryLayout);
+    (false ||
+      isEnabled(options?.holdButton) ||
+      showCaptionsButton ||
+      props.onUserSetGalleryLayout ||
+      /* @conditional-compile-remove(rtt) */ showRealTimeTextButton);
 
   const role = props.callAdapter.getState().call?.role;
   const hideRaiseHandButtonInRoomsCall =
@@ -357,12 +367,21 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
     <div ref={controlBarSizeRef}>
       <CallAdapterProvider adapter={props.callAdapter}>
         {showCaptionsSettingsModal && (
-          <CaptionsSettingsModal
+          <CallingCaptionsSettingsModal
             showCaptionsSettingsModal={showCaptionsSettingsModal}
             onDismissCaptionsSettings={onDismissCaptionsSettings}
             changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
           />
         )}
+        {
+          /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
+            <CallingRealTimeTextModal
+              showModal={showRealTimeTextModal}
+              onDismissModal={onDismissRealTimeTextModal}
+              onStartRealTimeText={props.onStartRealTimeText}
+            />
+          )
+        }
         {props.teamsMeetingConferenceModalPresent && (
           <MeetingConferencePhoneInfoModal
             conferencePhoneInfoList={props.callAdapter.getState().call?.meetingConference?.conferencePhones ?? []}
@@ -384,12 +403,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
         <Stack.Item grow className={mergeStyles(controlBarWrapperDesktopStyles)}>
           <CallAdapterProvider adapter={props.callAdapter}>
             <Stack horizontalAlign="center">
-              {/*
-              HiddenFocusStartPoint is a util component used when we can't ensure the initial element for first
-              tab focus is at the top of dom tree. It moves the first-tab focus to the next interact-able element
-              immediately after it in the dom tree.
-              */}
-              <HiddenFocusStartPoint />
               <Stack.Item>
                 {/*
                   Note: We use the layout="horizontal" instead of dockedBottom because of how we position the
@@ -405,7 +418,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       !props.mobileView &&
                         assignedBreakoutRoom &&
                         assignedBreakoutRoom.state === 'open' &&
-                        assignedBreakoutRoom.call && (
+                        // Breakout room settings are only defined in a breakout room so we use this to ensure
+                        // the button is not shown when already in a breakout room
+                        !breakoutRoomSettings && (
                           <PrimaryButton
                             text={callStrings.joinBreakoutRoomButtonLabel}
                             onClick={async (): Promise<void> => {
@@ -422,11 +437,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         splitButtonsForDeviceSelection={!props.mobileView}
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.microphoneButton)}
                         disableTooltip={props.mobileView}
-                        /* @conditional-compile-remove(DNS) */
                         onClickNoiseSuppression={onClickNoiseSuppression}
-                        /* @conditional-compile-remove(DNS) */
                         isDeepNoiseSuppressionOn={isDeepNoiseSuppressionOn}
-                        /* @conditional-compile-remove(DNS) */
                         showNoiseSuppressionButton={showNoiseSuppressionButton}
                       />
                     )}
@@ -519,7 +531,13 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                         onClickShowDialpad={props.onClickShowDialpad}
                         callControls={props.callControls}
                         isCaptionsSupported={showCaptionsButton}
+                        /* @conditional-compile-remove(rtt) */
+                        isRealTimeTextSupported={showRealTimeTextButton}
                         onCaptionsSettingsClick={openCaptionsSettingsModal}
+                        /* @conditional-compile-remove(rtt) */
+                        onStartRealTimeTextClick={openRealTimeTextModal}
+                        /* @conditional-compile-remove(rtt) */
+                        startRealTimeTextButtonChecked={props.startRealTimeTextButtonChecked}
                         onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                         onUserSetGalleryLayout={props.onUserSetGalleryLayout}
                         userSetGalleryLayout={props.userSetGalleryLayout}
@@ -533,7 +551,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                       displayType="compact"
                       mobileView={props.mobileView}
                       styles={endCallButtonStyles}
-                      /* @conditional-compile-remove(end-call-options) */
                       enableEndCallMenu={
                         !isBoolean(props.callControls) &&
                         !isBoolean(props.callControls?.endCallButton) &&
@@ -568,11 +585,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                 {isEnabled(options?.peopleButton) && (
                   <PeopleButton
                     checked={props.peopleButtonChecked}
-                    ariaLabel={
-                      props.peopleButtonChecked
-                        ? peopleButtonStrings?.tooltipCloseAriaLabel
-                        : peopleButtonStrings?.tooltipOpenAriaLabel
-                    }
+                    ariaLabel={peopleButtonStrings.label}
                     showLabel={options.displayType !== 'compact'}
                     onClick={props.onPeopleButtonClicked}
                     data-ui-id="common-call-composite-people-button"
@@ -584,6 +597,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarProps & Containe
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}
                     componentRef={props.peopleButtonRef}
+                    chatButtonPresent={isEnabled(options.chatButton)}
+                    peoplePaneDismissButtonRef={props.sidePaneDismissButtonRef}
                   />
                 )}
                 {customButtons['secondary']

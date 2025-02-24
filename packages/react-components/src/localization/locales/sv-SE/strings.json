@@ -5,10 +5,15 @@
     "removeButtonLabel": "Ta bort",
     "sharingIconLabel": "Delar",
     "mutedIconLabel": "Ljudet är avstängt",
+    "handRaisedIconLabel": "Upphöjt hand – position {position}",
     "displayNamePlaceholder": "Namnlös deltagare",
     "participantStateRinging": "Ringer...",
     "participantStateHold": "Parkerat",
-    "attendeeRole": "Deltagare"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, fler alternativ",
+    "attendeeRole": "Deltagare",
+    "micDisabledIconLabel": "Mikrofonen är inaktiverad",
+    "cameraDisabledIconLabel": "Kameran är inaktiverad"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} till"
@@ -58,6 +63,7 @@
     "richTextDeleteColumnMenu": "Ta bort kolumn",
     "richTextDeleteRowMenu": "Ta bort rad",
     "richTextDeleteTableMenu": "Ta bort tabell",
+    "richTextToolbarAriaLabel": "Verktygsfältet Meddelandeformatering",
     "richTextToolbarMoreButtonAriaLabel": "Fler alternativ",
     "attachmentMoreMenu": "Fler alternativ",
     "richTextNewBulletedListItemAnnouncement": "Punkt, ny rad",
@@ -65,12 +71,34 @@
     "richTextBulletedListAppliedAnnouncement": "Punktlista tillämpad",
     "richTextNumberedListAppliedAnnouncement": "Numrerad tillämpad"
   },
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Aktivera RTT-modal",
+    "realTimeTextModalTitle": "Aktivera RTT?",
+    "realTimeTextModalText": "Realtidstext (RTT) aktiveras för alla i mötet.",
+    "realTimeTextConfirmButtonLabel": "Aktivera",
+    "realTimeTextCancelButtonLabel": "Avbryt",
+    "realTimeTextCloseModalButtonAriaLabel": "Stäng RTT-modal"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Startar undertexter ...",
+    "realTimeTextInputBoxDefaultText": "Skriv meddelande i realtid",
+    "realTimeTextInputErrorMessage": "Meddelandet får inte överstiga 2 000 tecken",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (realtidstext) är aktiverat för alla deltagare under hela mötets varaktighet.",
+    "realTimeTextBannerLinkLabel": "Mer information",
+    "captionsOnlyContainerTitle": "Undertext",
+    "realTimeTextOnlyContainerTitle": "Text i realtid",
+    "captionsAndRealTimeTextContainerTitle": "Undertexter och text i realtid",
+    "expandButtonAriaLabel": "Visa",
+    "minimizeButtonAriaLabel": "Dölj"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Förslag"
   },
   "imageOverlay": {
     "downloadButtonLabel": "Ladda ner",
-    "dismissButtonAriaLabel": "Stäng"
+    "dismissButtonAriaLabel": "Stäng",
+    "overlayVisibleMessage": "Bilddetaljöverlägg"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Meddelandet har skickats",
@@ -146,6 +174,7 @@
   },
   "participantsButton": {
     "label": "Personer",
+    "ariaLabel": "Kontakter",
     "tooltipContent": "Visa deltagare",
     "menuHeader": "I det här samtalet",
     "participantsListButtonLabel": "{numParticipants} personer",
@@ -169,7 +198,7 @@
   },
   "reactionButton": {
     "label": "Reagera",
-    "ariaLabel": "React-knapp, skicka en reaktion",
+    "ariaLabel": "Reagera",
     "tooltipDisabledContent": "Reaktionsåtgärden är inaktiverad",
     "tooltipContent": "Skicka en reaktion",
     "likeReactionTooltipContent": "Gilla",
@@ -177,6 +206,107 @@
     "laughReactionTooltipContent": "Skrattar",
     "applauseReactionTooltipContent": "Applåd",
     "surprisedReactionTooltipContent": "Förvånad"
+  },
+  "realTimeText": {
+    "isTypingText": "RTT-inmatning"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Inställningar för undertexter",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Talat språk",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Språk för undertexter",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Språk som alla i det här samtalet talar.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Undertexter visas på det här språket.",
+    "captionsSettingsConfirmButtonLabel": "Bekräfta",
+    "captionsSettingsCancelButtonLabel": "Avbryt",
+    "captionsSettingsModalAriaLabel": "Modalt fönster för inställning av undertexter",
+    "captionsSettingsCloseModalButtonAriaLabel": "Stäng inställningar för undertexter"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabiska – Förenade Arabemiraten",
+    "ar-sa": "Arabiska – Saudiarabien",
+    "da-dk": "Danska",
+    "de-de": "Tyska – Tyskland",
+    "en-au": "Engelska – Australien",
+    "en-ca": "Engelska – Kanada",
+    "en-gb": "Engelska – Storbritannien",
+    "en-in": "Engelska – Indien",
+    "en-nz": "Engelska – Nya Zeeland",
+    "en-us": "Engelska – USA",
+    "es-es": "Spanska – Spanien (modern sortering)",
+    "es-mx": "Spanska – Mexiko",
+    "fi-fi": "Finska",
+    "fr-ca": "Franska – Kanada",
+    "fr-fr": "Franska – Frankrike",
+    "hi-in": "Hindi",
+    "it-it": "Italienska – Italien",
+    "ja-jp": "Japanska",
+    "ko-kr": "Koreanska",
+    "nb-no": "Norska (Bokmål)",
+    "nl-be": "Nederländska – Belgien",
+    "nl-nl": "Nederländska -–Nederländerna",
+    "pl-pl": "Polska",
+    "pt-br": "Portugisiska – Brasilien",
+    "ru-ru": "Ryska",
+    "sv-se": "Svenska",
+    "zh-cn": "Kinesiska (Kina),",
+    "zh-hk": "Kinesiska – Hongkong SAR",
+    "cs-cz": "Tjeckiska",
+    "pt-pt": "Portugisiska – Portugal",
+    "tr-tr": "Turkiska",
+    "vi-vn": "Vietnamesiska",
+    "th-th": "Thailändska",
+    "he-il": "Hebreiska",
+    "cy-gb": "Walesiska",
+    "uk-ua": "Ukrainska",
+    "el-gr": "Grekiska",
+    "hu-hu": "Ungerska",
+    "ro-ro": "Rumänska",
+    "sk-sk": "Slovakiska",
+    "zh-tw": "Kinesiska – Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabiska",
+    "da": "Danska",
+    "de": "Tyska",
+    "en": "Engelska",
+    "es": "Spanska",
+    "fi": "Finska",
+    "fr-ca": "Franska – Kanada",
+    "fr": "Franska – Frankrike",
+    "hi": "Hindi",
+    "it": "Italienska",
+    "ja": "Japanska",
+    "ko": "Koreanska",
+    "nb": "Norska (Bokmål)",
+    "nl": "Nederländska",
+    "pl": "Polska",
+    "pt": "Portugisiska – Brasilien",
+    "ru": "Ryska",
+    "sv": "Svenska",
+    "zh-Hans": "Kinesiska (förenklad)",
+    "zh-Hant": "Kinesiska (traditionell)",
+    "cs": "Tjeckiska",
+    "pt-pt": "Portugisiska – Portugal",
+    "tr": "Turkiska",
+    "vi": "Vietnamesiska",
+    "th": "Thailändska",
+    "he": "Hebreiska",
+    "cy": "Walesiska",
+    "uk": "Ukrainska",
+    "el": "Grekiska",
+    "hu": "Ungerska",
+    "ro": "Rumänska",
+    "sk": "Slovakiska"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Aktivera undertexter",
+    "offLabel": "Stäng av undertexter",
+    "tooltipOnContent": "Stäng av undertexter",
+    "tooltipOffContent": "Aktivera undertexter"
+  },
+  "startRealTimeTextButton": {
+    "label": "Aktivera RTT för det här samtalet",
+    "tooltipOffContent": "Aktivera RTT för det här samtalet"
   },
   "messageThread": {
     "yesterday": "I går",
@@ -194,7 +324,9 @@
     "resendMessage": "Försök skicka igen",
     "failToSendTag": "Inte skickat",
     "editedTag": "Redigerad",
-    "liveAuthorIntro": "{author} säger",
+    "liveAuthorIntro": "Meddelande från {author}",
+    "editedMessageLiveAuthorIntro": "Redigerat meddelande från {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Redigerat meddelande",
     "messageContentAriaText": "{status} {author} sa {message}",
     "messageContentMineAriaText": "{status} Du sa {message}",
     "editBoxTextLimit": "Meddelandet överskrider gränsen på {limitNumber} tecken",
@@ -467,6 +599,11 @@
       "message": "Du flyttas till det tilldelade rummet om 5 sekunder.",
       "dismissButtonAriaLabel": "Stäng"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Grupprummet har stängts",
+      "message": "Du flyttas tillbaka till mötet om 5 sekunder.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Vill du ansluta till grupprummet?",
       "message": "Du har tilldelats till ett separat rum.",
@@ -481,6 +618,34 @@
     "breakoutRoomClosingSoon": {
       "title": "Tidsgränsen för rummet upphör snart att gälla.",
       "message": "Det här rummet stängs om 30 sekunder",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Kameran har aktiverats",
+      "message": "Aktivera om du vill dela video.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Kameran har inaktiverats",
+      "message": "Du kan inte längre dela video.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Mikrofonen har aktiverats",
+      "message": "Slå på ljudet om du vill prata.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Mikrofonen har inaktiverats",
+      "message": "Du kan inte längre slå på ljudet.",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "togetherModeStarted": {
+      "title": "Tillsammans-läge har startats",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "togetherModeEnded": {
+      "title": "Tillsammans-läge har avslutats",
       "dismissButtonAriaLabel": "Stäng"
     }
   },
@@ -510,7 +675,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Spotlight",
     "attendeeRole": "Deltagare",
     "muteParticipantMenuItemLabel": "Stäng av ljudet",
-    "waitingScreenText": "Väntar på att andra ska ansluta"
+    "waitingScreenText": "Väntar på att andra ska ansluta",
+    "forbidAudio": "Inaktivera mikrofon",
+    "permitAudio": "Tillåt mikrofon",
+    "forbidAudioTileMenuLabel": "Inaktivera mikrofon",
+    "permitAudioTileMenuLabel": "Tillåt mikrofon",
+    "forbidVideo": "Inaktivera kameran",
+    "permitVideo": "Tillåt kamera",
+    "forbidVideoTileMenuLabel": "Inaktivera kameran",
+    "permitVideoTileMenuLabel": "Tillåt kamera"
   },
   "dialpad": {
     "placeholderText": "Ange telefonnummer",
@@ -524,8 +697,15 @@
   },
   "videoTile": {
     "participantStateRinging": "Ringer...",
+    "participantReconnecting": "Ansluter igen...",
     "participantStateHold": "Parkerat",
-    "moreOptionsButtonAriaLabel": "Fler alternativ"
+    "moreOptionsButtonAriaLabel": "Fler alternativ {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "ljud av",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "ljud på",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Uppräckt hand",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Talar",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Mikrofonen är inaktiverad",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Kameran är inaktiverad"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Tillåt {appName} använda kameran och mikrofonen",
@@ -643,8 +823,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "föregående sida",
-    "rightNavButtonAriaLabel": "nästa sida"
+    "leftNavButtonAriaLabel": "föregående sida {current} av {total}",
+    "rightNavButtonAriaLabel": "nästa sida {current} av {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Anslut till samtal från din telefon",

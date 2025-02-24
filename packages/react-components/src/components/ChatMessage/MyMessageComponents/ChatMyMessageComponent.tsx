@@ -7,9 +7,7 @@ import { MessageThreadStrings, UpdateMessageCallback } from '../../MessageThread
 import { ChatMessage, ComponentSlotStyle, OnRenderAvatarCallback } from '../../../types';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../../types';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMenuAction } from '../../../types/Attachment';
-/* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
@@ -90,13 +88,11 @@ export type ChatMyMessageComponentProps = {
    * @beta
    */
   inlineImageOptions?: InlineImageOptions;
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to render message attachments in the message component.
    * @beta
    */
   onRenderAttachmentDownloads?: (message: ChatMessage) => JSX.Element;
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   /**
    * Optional callback to define custom actions for attachments.
    * @beta
@@ -118,10 +114,14 @@ export type ChatMyMessageComponentProps = {
  * @private
  */
 export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.Element => {
-  const { onDeleteMessage, onSendMessage, message } = props;
+  const { onDeleteMessage, onSendMessage, message, onCancelEditMessage, onUpdateMessage } = props;
   const [isEditing, setIsEditing] = useState(false);
+  const [focusMessageAfterEditing, setFocusMessageAfterEditing] = useState(false);
 
-  const onEditClick = useCallback(() => setIsEditing(true), [setIsEditing]);
+  const onEditClick = useCallback(() => {
+    setIsEditing(true);
+    setFocusMessageAfterEditing(false);
+  }, []);
 
   const clientMessageId = 'clientMessageId' in message ? message.clientMessageId : undefined;
   const content = 'content' in message ? message.content : undefined;
@@ -173,28 +173,36 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
       if (`attachments` in message && attachments) {
         message.attachments = attachments;
       }
-      props.onUpdateMessage &&
-        message.messageId &&
-        (await props.onUpdateMessage(
-          message.messageId,
-          text,
-          /* @conditional-compile-remove(file-sharing-acs) */
-          { attachments: attachments }
-        ));
+      await onUpdateMessage?.(
+        message.messageId,
+        text,
+        /* @conditional-compile-remove(file-sharing-acs) */
+        { attachments: attachments }
+      );
       setIsEditing(false);
+
+      setFocusMessageAfterEditing(true);
     },
-    [message, props]
+    [message, onUpdateMessage]
   );
+
+  const onCancelHandler = useCallback(
+    (messageId: string) => {
+      onCancelEditMessage?.(messageId);
+      setIsEditing(false);
+
+      setFocusMessageAfterEditing(true);
+    },
+    [onCancelEditMessage]
+  );
+
   if (isEditing && message.messageType === 'chat') {
     return (
       <ChatMessageComponentAsEditBoxPicker
         message={message}
         strings={props.strings}
         onSubmit={onSubmitHandler}
-        onCancel={(messageId) => {
-          props.onCancelEditMessage && props.onCancelEditMessage(messageId);
-          setIsEditing(false);
-        }}
+        onCancel={onCancelHandler}
         /* @conditional-compile-remove(mention) */
         mentionLookupOptions={props.mentionOptions?.lookupOptions}
         /* @conditional-compile-remove(rich-text-editor) */
@@ -223,6 +231,7 @@ export const ChatMyMessageComponent = (props: ChatMyMessageComponentProps): JSX.
         inlineImageOptions={props.inlineImageOptions}
         /* @conditional-compile-remove(mention) */
         mentionDisplayOptions={props.mentionOptions?.displayOptions}
+        shouldFocusFluentMessageBody={focusMessageAfterEditing}
       />
     );
   }

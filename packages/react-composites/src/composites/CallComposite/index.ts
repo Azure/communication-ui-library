@@ -7,6 +7,7 @@ export type { CallCompositeOptions, CallCompositeProps, RemoteVideoTileMenuOptio
 export type { DeviceCheckOptions } from './CallComposite';
 export type { LocalVideoTileOptions } from './CallComposite';
 export type { CallControlOptions } from './types/CallControlOptions';
+export type { DtmfDialPadOptions } from './CallComposite';
 
 export * from './Strings';
 
@@ -16,12 +17,10 @@ export {
   useAzureCommunicationCallAdapter
 } from './adapter';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export { createTeamsCallAdapter, createTeamsCallAdapterFromClient, useTeamsCallAdapter } from './adapter';
 
 export type { TeamsAdapterOptions } from './adapter';
 
-/* @conditional-compile-remove(teams-identity-support) */
 export type { TeamsCallAdapterArgsCommon, TeamsCallAdapter, TeamsCallAdapterArgs } from './adapter';
 /* @conditional-compile-remove(teams-identity-support-beta) */
 export type { TeamsOutboundCallAdapterArgs, StartTeamsCallIdentifier } from './adapter';
@@ -84,6 +83,9 @@ export type {
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from './adapter';
+
+/* @conditional-compile-remove(rtt) */
+export type { RealTimeTextReceivedListener } from './adapter';
 
 export type { TransferAcceptedListener } from './adapter';
 

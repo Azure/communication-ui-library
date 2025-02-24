@@ -4,12 +4,12 @@
 import {
   AudioDeviceInfo,
   Call,
+  DeviceAccess,
   DtmfTone,
   ParticipantRole,
   PermissionConstraints,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
 import { CallKind } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
@@ -23,7 +23,7 @@ import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 // TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported
 export class _MockCallAdapter implements CallAdapter {
   constructor(testState: {
-    askDevicePermission?: (constrain: PermissionConstraints) => Promise<void>;
+    askDevicePermission?: (constrain: PermissionConstraints) => Promise<DeviceAccess>;
     localParticipantRole?: ParticipantRole;
   }) {
     this.state = {
@@ -110,8 +110,17 @@ export class _MockCallAdapter implements CallAdapter {
   createStreamView(): Promise<void> {
     throw Error('createStreamView not implemented');
   }
+  /* @conditional-compile-remove(together-mode) */
+  createTogetherModeStreamView(): Promise<void> {
+    throw Error('createTogetherModeStreamView not implemented');
+  }
+  /* @conditional-compile-remove(together-mode) */
   startTogetherMode(): Promise<void> {
     throw Error('startTogetherMode not implemented');
+  }
+  /* @conditional-compile-remove(together-mode) */
+  setTogetherModeSceneSize(width: number, height: number): void {
+    throw Error(`Setting Together Mode scene to width ${width} and height ${height} is not implemented`);
   }
   disposeStreamView(): Promise<void> {
     return Promise.resolve();
@@ -125,8 +134,12 @@ export class _MockCallAdapter implements CallAdapter {
   disposeRemoteVideoStreamView(): Promise<void> {
     return Promise.resolve();
   }
+  /* @conditional-compile-remove(together-mode) */
+  disposeTogetherModeStreamView(): Promise<void> {
+    return Promise.resolve();
+  }
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  askDevicePermission(constrain: PermissionConstraints): Promise<void> {
+  askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess> {
     throw Error('askDevicePermission not implemented');
   }
   async queryCameras(): Promise<VideoDeviceInfo[]> {
@@ -176,6 +189,11 @@ export class _MockCallAdapter implements CallAdapter {
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
+  /* @conditional-compile-remove(rtt) */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  sendRealTimeText(text: string, isFinalized: boolean): Promise<void> {
+    throw Error('sendRealTimeText not implemented');
+  }
 
   startVideoBackgroundEffect(): Promise<void> {
     throw new Error('startVideoBackgroundEffect not implemented.');
@@ -220,13 +238,36 @@ export class _MockCallAdapter implements CallAdapter {
   muteParticipant(userId: string): Promise<void> {
     throw Error('muteParticipant not implemented');
   }
-  /* @conditional-compile-remove(soft-mute) */
   muteAllRemoteParticipants(): Promise<void> {
     throw Error('muteAllRemoteParticipants not implemented');
   }
   /* @conditional-compile-remove(breakout-rooms) */
   returnFromBreakoutRoom(): Promise<void> {
     throw Error('returnFromBreakoutRoom not implemented');
+  }
+  forbidAudio(userIds: string[]): Promise<void> {
+    throw Error(`forbidAudio not implemented userIds=${userIds}`);
+  }
+  permitAudio(userIds: string[]): Promise<void> {
+    throw Error(`permitAudio not implemented userIds=${userIds}`);
+  }
+  forbidOthersAudio(): Promise<void> {
+    throw Error('forbidOthersAudio not implemented');
+  }
+  permitOthersAudio(): Promise<void> {
+    throw Error('permitOthersAudio not implemented');
+  }
+  forbidVideo(userIds: string[]): Promise<void> {
+    throw Error(`forbidAudio not implemented - userIds=${userIds}`);
+  }
+  permitVideo(userIds: string[]): Promise<void> {
+    throw Error(`permitAudio not implemented userIds=${userIds}`);
+  }
+  forbidOthersVideo(): Promise<void> {
+    throw Error('forbidOthersAudio not implemented');
+  }
+  permitOthersVideo(): Promise<void> {
+    throw Error('permitOthersAudio not implemented');
   }
 }
 
@@ -240,7 +281,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
     page: 'call',
     call: {
       id: 'call1',
-      /* @conditional-compile-remove(teams-identity-support) */
       kind: CallKind.Call,
       callerInfo: { displayName: 'caller', identifier: { kind: 'communicationUser', communicationUserId: '1' } },
       direction: 'Incoming',
@@ -259,7 +299,7 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
       /* @conditional-compile-remove(together-mode) */
-      togetherMode: { stream: [] },
+      togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
       pptLive: { isActive: false },
       localParticipantReaction: undefined,
       role,
@@ -271,8 +311,12 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
         currentSpokenLanguage: '',
         isCaptionsFeatureActive: false,
         startCaptionsInProgress: false,
-        /* @conditional-compile-remove(acs-close-captions) */
         captionsKind: 'Captions'
+      },
+      /* @conditional-compile-remove(rtt) */
+      realTimeTextFeature: {
+        realTimeTexts: {},
+        isRealTimeTextFeatureActive: false
       },
       transfer: {
         acceptedTransfers: {}

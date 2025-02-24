@@ -145,6 +145,10 @@ export interface RichTextStrings {
    */
   richTextDeleteTableMenu: string;
   /**
+   * Text for the rich text toolbar.
+   */
+  richTextToolbarAriaLabel: string;
+  /**
    * Text for the rich text toolbar more button.
    */
   richTextToolbarMoreButtonAriaLabel: string;
@@ -427,20 +431,17 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     onSendMessage
   ]);
 
-  const hasErrorMessage = useMemo(() => {
+  // ignore attachments error (errored attachment will not be added, shouldn't disable SendButton)
+  const hasBlockingErrorMessages = useMemo(() => {
     return (
       !!systemMessage ||
       !!contentTooLongMessage ||
       /* @conditional-compile-remove(file-sharing-acs) */
       !!attachmentUploadsPendingError ||
-      /* @conditional-compile-remove(file-sharing-acs) */
-      !!attachments?.filter((attachmentUpload) => attachmentUpload.error).pop()?.error ||
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       !!inlineImagesWithProgress?.filter((image) => image.error).pop()?.error
     );
   }, [
-    /* @conditional-compile-remove(file-sharing-acs) */
-    attachments,
     contentTooLongMessage,
     /* @conditional-compile-remove(file-sharing-acs) */
     attachmentUploadsPendingError,
@@ -454,10 +455,10 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
       hasContent,
       /* @conditional-compile-remove(file-sharing-acs) */ hasCompletedAttachmentUploads:
         isAttachmentUploadCompleted(attachments),
-      hasError: hasErrorMessage,
+      hasError: hasBlockingErrorMessages,
       disabled
     });
-  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachments, disabled, hasContent, hasErrorMessage]);
+  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachments, disabled, hasContent, hasBlockingErrorMessages]);
 
   const onRenderSendIcon = useCallback(
     (isHover: boolean) => {
@@ -483,6 +484,14 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     /* @conditional-compile-remove(file-sharing-acs) */
     const errorMessage =
       uploadErrorMessage || /* @conditional-compile-remove(rich-text-editor-image-upload) */ imageUploadErrorMessage;
+
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    let errorBarType = SendBoxErrorBarType.error;
+    /* @conditional-compile-remove(file-sharing-acs) */
+    if (uploadErrorMessage) {
+      errorBarType = SendBoxErrorBarType.warning;
+    }
+
     return {
       /* @conditional-compile-remove(file-sharing-acs) */
       attachmentUploadsPendingError: attachmentUploadsPendingError,
@@ -493,7 +502,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
             message: errorMessage,
             timestamp: Date.now(),
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
-            errorBarType: SendBoxErrorBarType.error
+            errorBarType: errorBarType
           }
         : undefined,
       systemMessage: systemMessage,

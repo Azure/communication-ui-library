@@ -11,8 +11,8 @@ import {
   mediaGalleryHeightOptions
 } from './constants';
 
-const botAvatars = ['Default', 'Cat', 'Fox', 'Koala'];
-export const getControlledBotAvatarSymbol = (AvatarName: string): string => {
+const remoteParticipantAvatars = ['Default', 'Cat', 'Fox', 'Koala'];
+export const getControlledRemoteParticipantAvatarSymbol = (AvatarName: string): string => {
   switch (AvatarName) {
     case 'Default':
       return '🤖';
@@ -206,7 +206,13 @@ const notificationOptions: NotificationType[] = [
   'recordingAndTranscriptionStarted',
   'recordingAndTranscriptionStopped',
   'recordingStoppedStillTranscribing',
-  'transcriptionStoppedStillRecording'
+  'transcriptionStoppedStillRecording',
+  'capabilityTurnVideoOnAbsent',
+  'capabilityTurnVideoOnPresent',
+  'capabilityUnmuteMicAbsent',
+  'capabilityUnmuteMicPresent',
+  'togetherModeStarted',
+  'togetherModeEnded'
 ];
 
 export const defaultActiveNotifications = ['callNoSpeakerFound'];
@@ -224,22 +230,27 @@ export const controlsToAdd = {
     name: 'App Name'
   },
   avatarInitials: { control: 'text', defaultValue: 'A B', name: 'Avatar initials' },
-  botAvatar: { control: 'radio', options: botAvatars, defaultValue: 'Default', name: 'Bot Avatar' },
-  botChatTopic: {
+  remoteParticipantAvatar: {
+    control: 'radio',
+    options: remoteParticipantAvatars,
+    defaultValue: 'Default',
+    name: 'Remote Participant Avatar'
+  },
+  remoteParticipantChatTopic: {
     control: 'text',
     name: 'Chat Topic',
     type: { name: 'string', required: true }
   },
-  botToken: {
+  remoteParticipantToken: {
     control: 'text',
     defaultValue: '',
-    name: 'Valid token for bot',
+    name: 'Valid token for a remote participant',
     type: { name: 'string', required: true }
   },
-  botUserId: {
+  remoteParticipantUserId: {
     control: 'text',
     defaultValue: '',
-    name: 'User identifier for bot',
+    name: 'User identifier for a remote participant',
     type: { name: 'string', required: true }
   },
   calleeUserId: {
@@ -559,7 +570,19 @@ export const controlsToAdd = {
     defaultValue: '2',
     name: 'Select max number of notifications to show'
   },
-  richTextEditor: { control: 'boolean', name: 'Enable rich text editor' }
+  richTextEditor: { control: 'boolean', name: 'Enable rich text editor' },
+  isRTTTyping: { control: 'boolean', name: 'Is RTT typing' },
+  rttDisplayName: { control: 'text', name: 'RTT display name' },
+  rttCaptionText: { control: 'text', name: 'RTT caption text' },
+  isCaptionsOn: { control: 'boolean', name: 'Is captions on' },
+  isRealTimeTextOn: { control: 'boolean', name: 'Is real time text on' },
+  startCaptionsInProgress: { control: 'boolean', name: 'Start captions in progress' },
+  captionsFormFactor: {
+    control: 'radio',
+    options: ['default', 'compact'],
+    defaultValue: 'default',
+    name: 'Form factor'
+  }
 };
 
 export const hiddenControl = { control: false, table: { disable: true } };

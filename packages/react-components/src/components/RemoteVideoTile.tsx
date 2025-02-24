@@ -66,11 +66,15 @@ export const _RemoteVideoTile = React.memo(
     onStartSpotlight?: (userIds: string[]) => void;
     onStopSpotlight?: (userIds: string[]) => void;
     maxParticipantsToSpotlight?: number;
-    /* @conditional-compile-remove(soft-mute) */ onMuteParticipant?: (userId: string) => void;
+    onMuteParticipant?: (userId: string) => void;
     disablePinMenuItem?: boolean;
     toggleAnnouncerString?: (announcerString: string) => void;
     reactionResources?: ReactionResources;
     onLongTouch?: (() => void) | undefined;
+    onForbidAudio?: (userIds: string[]) => Promise<void>;
+    onPermitAudio?: (userIds: string[]) => Promise<void>;
+    onForbidVideo?: (userIds: string[]) => Promise<void>;
+    onPermitVideo?: (userIds: string[]) => Promise<void>;
   }) => {
     const {
       isAvailable,
@@ -94,13 +98,17 @@ export const _RemoteVideoTile = React.memo(
       onStartSpotlight,
       onStopSpotlight,
       maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
+      onMuteParticipant,
       onUpdateScalingMode,
       disablePinMenuItem,
       toggleAnnouncerString,
       strings,
       reactionResources,
-      streamId
+      streamId,
+      onForbidAudio,
+      onPermitAudio,
+      onForbidVideo,
+      onPermitVideo
     } = props;
 
     const remoteVideoStreamProps: RemoteVideoStreamLifecycleMaintainerProps = useMemo(
@@ -114,7 +122,8 @@ export const _RemoteVideoTile = React.memo(
         remoteParticipantId: userId,
         renderElementExists: !!renderElement,
         scalingMode: remoteVideoViewOptions?.scalingMode,
-        streamId
+        streamId,
+        isVideoPermitted: remoteParticipant.mediaAccess ? remoteParticipant.mediaAccess.isVideoPermitted : true
       }),
       [
         isAvailable,
@@ -126,7 +135,8 @@ export const _RemoteVideoTile = React.memo(
         remoteVideoViewOptions?.scalingMode,
         renderElement,
         userId,
-        streamId
+        streamId,
+        remoteParticipant.mediaAccess
       ]
     );
 
@@ -147,7 +157,11 @@ export const _RemoteVideoTile = React.memo(
       onStartSpotlight,
       onStopSpotlight,
       maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant
+      onMuteParticipant,
+      onForbidAudio,
+      onPermitAudio,
+      onForbidVideo,
+      onPermitVideo
     });
 
     const videoTileContextualMenuProps = useMemo(() => {
@@ -253,6 +267,7 @@ export const _RemoteVideoTile = React.memo(
           }
           isSpotlighted={isSpotlighted}
           overlay={reactionOverlay}
+          mediaAccess={remoteParticipant.mediaAccess}
         />
         {drawerMenuItemProps.length > 0 && (
           <Layer hostId={props.drawerMenuHostId}>

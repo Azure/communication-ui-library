@@ -1,0 +1,850 @@
+{
+  "participantItem": {
+    "isMeText": "(tú)",
+    "menuTitle": "Más opciones",
+    "removeButtonLabel": "Quitar",
+    "sharingIconLabel": "Compartiendo",
+    "mutedIconLabel": "Silenciado",
+    "handRaisedIconLabel": "Mano levantada: posición {position}",
+    "displayNamePlaceholder": "Participante sin nombre",
+    "participantStateRinging": "Llamando...",
+    "participantStateHold": "En espera",
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, Más opciones",
+    "attendeeRole": "Asistente",
+    "micDisabledIconLabel": "Micrófono deshabilitado",
+    "cameraDisabledIconLabel": "Cámara deshabilitada"
+  },
+  "ParticipantList": {
+    "overflowParticipantCount": "+{overflowCount} más"
+  },
+  "typingIndicator": {
+    "singleUser": "{user} está escribiendo...",
+    "multipleUsers": "{users} están escribiendo...",
+    "multipleUsersAbbreviateOne": "{users} y 1 usuario más están escribiendo...",
+    "multipleUsersAbbreviateMany": "{users} y {numOthers} usuarios más están escribiendo...",
+    "delimiter": ", "
+  },
+  "sendBox": {
+    "placeholderText": "Escribir un mensaje",
+    "textTooLong": "La longitud del mensaje supera el límite máximo.",
+    "sendButtonAriaLabel": "Enviar mensaje",
+    "attachmentUploadsPendingError": "El archivo se está cargando. Espera.",
+    "removeAttachment": "Quitar archivo",
+    "uploading": "Cargando",
+    "uploadCompleted": "Carga completada",
+    "attachmentMoreMenu": "Más opciones"
+  },
+  "richTextSendBox": {
+    "placeholderText": "Escribir un mensaje",
+    "textTooLong": "La longitud del mensaje supera el límite máximo.",
+    "sendButtonAriaLabel": "Enviar mensaje",
+    "attachmentUploadsPendingError": "El archivo se está cargando. Espera.",
+    "imageUploadsPendingError": "La imagen se está cargando. Espera.",
+    "removeAttachment": "Quitar archivo",
+    "uploading": "Cargando",
+    "uploadCompleted": "Carga completada",
+    "richTextBoldTooltip": "Negrita",
+    "richTextItalicTooltip": "Cursiva",
+    "richTextUnderlineTooltip": "Subrayado",
+    "richTextBulletListTooltip": "Lista con viñetas",
+    "richTextNumberListTooltip": "Lista numerada",
+    "richTextIncreaseIndentTooltip": "Aumentar sangría",
+    "richTextDecreaseIndentTooltip": "Reducir sangría",
+    "richTextInsertTableTooltip": "Insertar tabla",
+    "richTextFormatButtonTooltip": "Formato",
+    "richTextInsertRowOrColumnMenu": "Insertar",
+    "richTextInsertTableMenuTitle": "Insertar tabla de {column} x {row}",
+    "richTextInsertRowAboveMenu": "Insertar arriba",
+    "richTextInsertRowBelowMenu": "Insertar debajo",
+    "richTextInsertColumnLeftMenu": "Insertar a la izquierda",
+    "richTextInsertColumnRightMenu": "Insertar a la derecha",
+    "richTextDeleteRowOrColumnMenu": "Eliminar",
+    "richTextDeleteColumnMenu": "Eliminar columna",
+    "richTextDeleteRowMenu": "Eliminar fila",
+    "richTextDeleteTableMenu": "Eliminar tabla",
+    "richTextToolbarAriaLabel": "Barra de herramientas de formato de mensaje",
+    "richTextToolbarMoreButtonAriaLabel": "Más opciones",
+    "attachmentMoreMenu": "Más opciones",
+    "richTextNewBulletedListItemAnnouncement": "Viñeta, nueva línea",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nueva línea",
+    "richTextBulletedListAppliedAnnouncement": "Lista con viñetas aplicada",
+    "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
+  },
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Activar modal RTT",
+    "realTimeTextModalTitle": "¿Activar RTT?",
+    "realTimeTextModalText": "Se activará el texto en tiempo real (RTT) para todos los participantes de la reunión.",
+    "realTimeTextConfirmButtonLabel": "Activar",
+    "realTimeTextCancelButtonLabel": "Cancelar",
+    "realTimeTextCloseModalButtonAriaLabel": "Cerrar modal RTT"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Iniciando subtítulos...",
+    "realTimeTextInputBoxDefaultText": "Escribir un mensaje en tiempo real",
+    "realTimeTextInputErrorMessage": "El mensaje no puede exceder los 2000 caracteres",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RtT (texto en tiempo real) está habilitado para todos los participantes durante toda la reunión.",
+    "realTimeTextBannerLinkLabel": "Más información",
+    "captionsOnlyContainerTitle": "Subtítulos",
+    "realTimeTextOnlyContainerTitle": "Texto en tiempo real",
+    "captionsAndRealTimeTextContainerTitle": "Subtítulos y texto en tiempo real",
+    "expandButtonAriaLabel": "Expandir",
+    "minimizeButtonAriaLabel": "Contraer"
+  },
+  "mentionPopover": {
+    "mentionPopoverHeader": "Sugerencias"
+  },
+  "imageOverlay": {
+    "downloadButtonLabel": "Descargar",
+    "dismissButtonAriaLabel": "Cerrar",
+    "overlayVisibleMessage": "Superposición de detalles de imagen"
+  },
+  "messageStatusIndicator": {
+    "deliveredAriaLabel": "Mensaje enviado",
+    "deliveredTooltipText": "Enviado",
+    "seenAriaLabel": "Mensaje visto por otros usuarios",
+    "seenTooltipText": "Visto",
+    "readByTooltipText": "Leído por {messageThreadReadCount} de {remoteParticipantsCount}",
+    "sendingAriaLabel": "Envío de mensajes",
+    "sendingTooltipText": "Enviando",
+    "failedToSendAriaLabel": "Error al enviar el mensaje",
+    "failedToSendTooltipText": "Error al enviar"
+  },
+  "endCallButton": {
+    "label": "Salir",
+    "tooltipContent": "Abandonar llamada",
+    "leaveOption": "Salir",
+    "endCallOption": "Finalizar la llamada para todos"
+  },
+  "cameraButton": {
+    "onLabel": "Cámara",
+    "offLabel": "Cámara",
+    "tooltipDisabledContent": "La cámara está deshabilitada",
+    "tooltipOnContent": "Desactivar la cámara",
+    "tooltipOffContent": "Activar la cámara",
+    "tooltipVideoLoadingContent": "El vídeo se está cargando",
+    "cameraMenuTitle": "Cámara",
+    "cameraMenuTooltip": "Elegir cámara",
+    "cameraButtonSplitRoleDescription": "Botón de expansión",
+    "onSplitButtonAriaLabel": "Desactivar la cámara",
+    "offSplitButtonAriaLabel": "Activar la cámara",
+    "cameraActionTurnedOnAnnouncement": "La cámara se ha activado",
+    "cameraActionTurnedOffAnnouncement": "La cámara se ha desactivado",
+    "onSplitButtonPrimaryActionCamera": "Desactivar la cámara",
+    "offSplitButtonPrimaryActionCamera": "Activar la cámara",
+    "cameraPrimaryActionSplitButtonTitle": "Usar cámara",
+    "videoEffectsMenuItemTitle": "Efectos",
+    "cameraButtonAriaDescription": "opciones de cámara"
+  },
+  "microphoneButton": {
+    "onLabel": "Micro",
+    "offLabel": "Micro",
+    "tooltipDisabledContent": "Micrófono deshabilitado",
+    "tooltipOnContent": "Silenciar micrófono",
+    "tooltipOffContent": "Reactivar micrófono",
+    "microphoneMenuTitle": "Micrófono",
+    "microphoneMenuTooltip": "Elegir micrófono",
+    "speakerMenuTitle": "Altavoz",
+    "speakerMenuTooltip": "Elegir altavoz",
+    "microphoneButtonSplitRoleDescription": "Botón de expansión",
+    "onSplitButtonAriaLabel": "Desactivar audio del micrófono",
+    "offSplitButtonAriaLabel": "Reactivar audio del micrófono",
+    "microphoneActionTurnedOnAnnouncement": "El micrófono se ha activado",
+    "microphoneActionTurnedOffAnnouncement": "El micrófono se ha desactivado",
+    "offSplitButtonMicrophonePrimaryAction": "Reactivar audio del micrófono",
+    "onSplitButtonMicrophonePrimaryAction": "Desactivar audio del micrófono",
+    "microphonePrimaryActionSplitButtonTitle": "Usar micrófono",
+    "microphoneAriaDescription": "Opciones de audio",
+    "deepNoiseSuppressionTitle": "Supresión de ruido",
+    "deepNoiseSuppressionOnAnnouncement": "Se ha activado la supresión profunda de ruido",
+    "deepNoiseSuppressionOffAnnouncement": "Se ha desactivado la supresión profunda de ruido"
+  },
+  "devicesButton": {
+    "label": "Dispositivos",
+    "tooltipContent": "Administrar dispositivos",
+    "cameraMenuTitle": "Cámara",
+    "cameraMenuTooltip": "Elegir cámara",
+    "audioDeviceMenuTitle": "Dispositivo de audio",
+    "audioDeviceMenuTooltip": "Elige un dispositivo de audio",
+    "microphoneMenuTitle": "Micrófono",
+    "microphoneMenuTooltip": "Elegir micrófono",
+    "speakerMenuTitle": "Altavoz",
+    "speakerMenuTooltip": "Elegir altavoz"
+  },
+  "participantsButton": {
+    "label": "Contactos",
+    "ariaLabel": "Personas",
+    "tooltipContent": "Mostrar participantes",
+    "menuHeader": "En esta llamada",
+    "participantsListButtonLabel": "{numParticipants} personas",
+    "muteAllButtonLabel": "Silenciar a todos",
+    "copyInviteLinkButtonLabel": "Copiar vínculo de invitación",
+    "copyInviteLinkActionedAriaLabel": "Vínculo de invitación copiado"
+  },
+  "screenShareButton": {
+    "onLabel": "Dejar de presentar",
+    "offLabel": "Presentar",
+    "tooltipDisabledContent": "La presentación está deshabilitada",
+    "tooltipOnContent": "Presentando tu pantalla",
+    "tooltipOffContent": "Presentar tu pantalla"
+  },
+  "raiseHandButton": {
+    "offLabel": "Levantar",
+    "onLabel": "Bajar",
+    "tooltipDisabledContent": "La acción Levantar la mano está deshabilitada",
+    "tooltipOnContent": "Bajar la mano",
+    "tooltipOffContent": "Levantar la mano"
+  },
+  "reactionButton": {
+    "label": "Reaccionar",
+    "ariaLabel": "Reaccionar",
+    "tooltipDisabledContent": "La acción de reacción está deshabilitada",
+    "tooltipContent": "Enviar una reacción",
+    "likeReactionTooltipContent": "Me gusta",
+    "heartReactionTooltipContent": "Amor",
+    "laughReactionTooltipContent": "Risa",
+    "applauseReactionTooltipContent": "Aplauso",
+    "surprisedReactionTooltipContent": "Sorprendido"
+  },
+  "realTimeText": {
+    "isTypingText": "Escritura en tiempo real"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Configuración de subtítulos",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Idioma hablado",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Idioma de subtítulos",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Idioma en el que están hablando todos los usuarios de esta llamada.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Los subtítulos aparecerán en este idioma.",
+    "captionsSettingsConfirmButtonLabel": "Confirmar",
+    "captionsSettingsCancelButtonLabel": "Cancelar",
+    "captionsSettingsModalAriaLabel": "Configuración modal de subtítulos",
+    "captionsSettingsCloseModalButtonAriaLabel": "Cerrar configuración de subtítulos"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Árabe - Emiratos Árabes Unidos",
+    "ar-sa": "Árabe (Arabia Saudí)",
+    "da-dk": "Danés",
+    "de-de": "Alemán (Alemania)",
+    "en-au": "Inglés (Australia)",
+    "en-ca": "Inglés (Canadá)",
+    "en-gb": "Inglés (Reino Unido)",
+    "en-in": "Inglés (India)",
+    "en-nz": "Inglés (Nueva Zelanda)",
+    "en-us": "Inglés (Estados Unidos)",
+    "es-es": "Español - España (alfabetización internacional)",
+    "es-mx": "Español (México)",
+    "fi-fi": "Finés",
+    "fr-ca": "Francés (Canadá)",
+    "fr-fr": "Francés (Francia)",
+    "hi-in": "Hindi",
+    "it-it": "Italiano (Italia)",
+    "ja-jp": "Japonés",
+    "ko-kr": "Coreano",
+    "nb-no": "Noruego (Bokmål)",
+    "nl-be": "Neerlandés (Bélgica)",
+    "nl-nl": "Neerlandés (Países Bajos)",
+    "pl-pl": "Polaco",
+    "pt-br": "Portugués (Brasil)",
+    "ru-ru": "Ruso",
+    "sv-se": "Sueco",
+    "zh-cn": "Chino - República Popular China",
+    "zh-hk": "Chino (RAE de Hong Kong)",
+    "cs-cz": "Checo",
+    "pt-pt": "Portugués (Portugal)",
+    "tr-tr": "Turco",
+    "vi-vn": "Vietnamita",
+    "th-th": "Tailandés",
+    "he-il": "Hebreo",
+    "cy-gb": "Galés",
+    "uk-ua": "Ucraniano",
+    "el-gr": "Griego",
+    "hu-hu": "Húngaro",
+    "ro-ro": "Rumano",
+    "sk-sk": "Eslovaco",
+    "zh-tw": "Chino (Taiwán)"
+  },
+  "captionLanguages": {
+    "ar": "Árabe",
+    "da": "Danés",
+    "de": "Alemán",
+    "en": "Inglés",
+    "es": "Español",
+    "fi": "Finés",
+    "fr-ca": "Francés (Canadá)",
+    "fr": "Francés (Francia)",
+    "hi": "Hindi",
+    "it": "Italiano",
+    "ja": "Japonés",
+    "ko": "Coreano",
+    "nb": "Noruego (Bokmål)",
+    "nl": "Neerlandés",
+    "pl": "Polaco",
+    "pt": "Portugués (Brasil)",
+    "ru": "Ruso",
+    "sv": "Sueco",
+    "zh-Hans": "Chino (simplificado)",
+    "zh-Hant": "Chino (tradicional)",
+    "cs": "Checo",
+    "pt-pt": "Portugués (Portugal)",
+    "tr": "Turco",
+    "vi": "Vietnamita",
+    "th": "Tailandés",
+    "he": "Hebreo",
+    "cy": "Galés",
+    "uk": "Ucraniano",
+    "el": "Griego",
+    "hu": "Húngaro",
+    "ro": "Rumano",
+    "sk": "Eslovaco"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Activar subtítulos",
+    "offLabel": "Desactivar subtítulos",
+    "tooltipOnContent": "Desactivar subtítulos",
+    "tooltipOffContent": "Activar subtítulos"
+  },
+  "startRealTimeTextButton": {
+    "label": "Activar RTT para esta llamada",
+    "tooltipOffContent": "Activar RTT para esta llamada"
+  },
+  "messageThread": {
+    "yesterday": "Ayer",
+    "sunday": "Domingo",
+    "monday": "Lunes",
+    "tuesday": "Martes",
+    "wednesday": "Miércoles",
+    "thursday": "Jueves",
+    "friday": "Viernes",
+    "saturday": "Sábado",
+    "participantJoined": "se unió al chat.",
+    "participantLeft": "abandonó el chat.",
+    "editMessage": "Editar",
+    "removeMessage": "Eliminar",
+    "resendMessage": "Intenta enviar de nuevo",
+    "failToSendTag": "Error al enviar",
+    "editedTag": "Editado",
+    "liveAuthorIntro": "Mensaje de {author}",
+    "editedMessageLiveAuthorIntro": "Mensaje editado de {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Mensaje editado",
+    "messageContentAriaText": "{status} {author} dijo {message}",
+    "messageContentMineAriaText": "{status} Tú dijiste {message}",
+    "editBoxTextLimit": "Tu mensaje supera el límite de {limitNumber} caracteres",
+    "editBoxPlaceholderText": "Editar el mensaje",
+    "newMessagesIndicator": "Mensajes nuevos",
+    "noDisplayNameSub": "Sin nombre",
+    "editBoxCancelButton": "Cancelar",
+    "editBoxSubmitButton": "Listo",
+    "messageReadCount": "Leído por {messageReadByCount} de {remoteParticipantsCount}",
+    "actionMenuMoreOptions": "Más opciones",
+    "downloadAttachment": "Descargar archivo",
+    "openAttachment": "Abrir archivo",
+    "blockedWarningText": "Este mensaje se eliminó debido a la directiva de la organización.",
+    "blockedWarningLinkText": "Detalles",
+    "attachmentCardGroupMessage": "El mensaje tiene {attachmentCount} archivo adjunto",
+    "messageDeletedAnnouncementAriaLabel": "El mensaje se eliminó",
+    "richTextBoldTooltip": "Negrita",
+    "richTextItalicTooltip": "Cursiva",
+    "richTextUnderlineTooltip": "Subrayado",
+    "richTextBulletListTooltip": "Lista con viñetas",
+    "richTextNumberListTooltip": "Lista numerada",
+    "richTextIncreaseIndentTooltip": "Aumentar sangría",
+    "richTextDecreaseIndentTooltip": "Reducir sangría",
+    "richTextInsertTableTooltip": "Insertar tabla",
+    "richTextFormatButtonTooltip": "Formato",
+    "richTextInsertRowOrColumnMenu": "Insertar",
+    "richTextInsertTableMenuTitle": "Insertar tabla de {column} x {row}",
+    "richTextInsertRowAboveMenu": "Insertar arriba",
+    "richTextInsertRowBelowMenu": "Insertar debajo",
+    "richTextInsertColumnLeftMenu": "Insertar a la izquierda",
+    "richTextInsertColumnRightMenu": "Insertar a la derecha",
+    "richTextDeleteRowOrColumnMenu": "Eliminar",
+    "richTextDeleteColumnMenu": "Eliminar columna",
+    "richTextDeleteRowMenu": "Eliminar fila",
+    "richTextDeleteTableMenu": "Eliminar tabla",
+    "richTextToolbarMoreButtonAriaLabel": "Más opciones",
+    "attachmentUploadsPendingError": "El archivo se está cargando. Espera.",
+    "imageUploadsPendingError": "La imagen se está cargando. Espera.",
+    "richTextNewBulletedListItemAnnouncement": "Viñeta, nueva línea",
+    "richTextNewNumberedListItemAnnouncement": "{0}, nueva línea",
+    "richTextBulletedListAppliedAnnouncement": "Lista con viñetas aplicada",
+    "richTextNumberedListAppliedAnnouncement": "Lista numerada aplicada"
+  },
+  "errorBar": {
+    "unableToReachChatService": "Estás sin conexión",
+    "accessDenied": "No se puede acceder a los servicios de chat. Comprueba las credenciales de usuario proporcionadas.",
+    "userNotInChatThread": "Ya no estás en este hilo de chat",
+    "sendMessageNotInChatThread": "No se pudo enviar el mensaje porque ya no estás en este hilo de chat",
+    "sendMessageGeneric": "Error al enviar el mensaje",
+    "callingNetworkFailure": "Problema al conectar la llamada: parece que no hay conexión",
+    "startVideoGeneric": "No se pudo iniciar el video",
+    "stopVideoGeneric": "No se pudo detener el video",
+    "muteGeneric": "No se pudo silenciar el micrófono",
+    "unmuteGeneric": "No se pudo reactivar el micrófono",
+    "speakingWhileMuted": "El micrófono está desactivado",
+    "startScreenShareGeneric": "Hubo un problema al iniciar la pantalla compartida.",
+    "stopScreenShareGeneric": "No se pudo detener la pantalla compartida",
+    "callNetworkQualityLow": "La calidad de la red es baja.",
+    "teamsMeetingCallNetworkQualityLow": "La calidad de la red es baja.",
+    "callNoSpeakerFound": "No se encontraron altavoces ni auriculares. Conecta un dispositivo de audio para escuchar la llamada.",
+    "callNoMicrophoneFound": "No se encontraron micrófonos. Conecta un dispositivo de entrada de audio.",
+    "callMicrophoneAccessDenied": "No se puede acceder al micrófono. Haz clic en el candado de la barra de direcciones para conceder permiso a esta página web.",
+    "callMicrophoneAccessDeniedSafari": "No se puede acceder al micrófono. Actualiza la página para habilitar permisos o comprueba la configuración de este navegador y que los permisos estén habilitados para este sitio web.",
+    "callMicrophoneMutedBySystem": "Tu sistema ha silenciado el audio.",
+    "callMicrophoneUnmutedBySystem": "Tu micrófono se ha recuperado y el sistema ha activado el audio.",
+    "callMacOsMicrophoneAccessDenied": "No se puede acceder al micrófono. Concede permiso al micrófono en la configuración de privacidad de macOS.",
+    "callLocalVideoFreeze": "El ancho de banda de red es deficiente. Es posible que el video aparezca pausado para otros usuarios en la llamada.",
+    "callCameraAccessDenied": "No se puede acceder a la cámara. Haz clic en el candado de la barra de direcciones para conceder permiso a esta página web.",
+    "callCameraAccessDeniedSafari": "No se puede acceder a la cámara. Actualiza la página para habilitar permisos o comprueba la configuración de este navegador y que los permisos estén habilitados para este sitio web.",
+    "callCameraAlreadyInUse": "No se puede acceder a la cámara. Puede que ya la esté usando otra aplicación.",
+    "callVideoStoppedBySystem": "El sistema ha detenido el video.",
+    "callVideoRecoveredBySystem": "El video se ha reanudado.",
+    "callMacOsCameraAccessDenied": "MacOS está bloqueando el acceso a la cámara. Actualiza la configuración de privacidad para permitir que este navegador acceda a la cámara.",
+    "callMacOsScreenShareAccessDenied": "MacOS está bloqueando el uso compartido de la pantalla. Actualiza la configuración de privacidad para permitir que este navegador grabe la pantalla.",
+    "dismissButtonAriaLabel": "Cerrar",
+    "failedToJoinCallGeneric": "No es posible unirse a la llamada.",
+    "failedToJoinCallInvalidMeetingLink": "No es posible unirse a la reunión. Vínculo no válido.",
+    "cameraFrozenForRemoteParticipants": "Los usuarios de la llamada tienen problemas para ver el video. Comprueba los dispositivos y la red.",
+    "unableToStartVideoEffect": "No se puede aplicar el efecto de video.",
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": "No se puede iniciar el primer plano en los participantes porque el número máximo de participantes ya está puesto en primer plano.",
+    "mutedByRemoteParticipant": "Otro participante te ha silenciado."
+  },
+  "notificationStack": {
+    "callingNetworkFailure": {
+      "title": "Problema al conectar la llamada",
+      "message": "Parece que estás desconectado. Comprueba la conexión de red e inténtalo de nuevo.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "startVideoGeneric": {
+      "title": "No se pudo iniciar el video.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "stopVideoGeneric": {
+      "title": "No se pudo detener el video.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "muteGeneric": {
+      "title": "No se pudo silenciar el micrófono.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "unmuteGeneric": {
+      "title": "No se pudo reactivar el micrófono.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "speakingWhileMuted": {
+      "title": "El audio está desactivado.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "startScreenShareGeneric": {
+      "title": "Hubo un problema al iniciar la pantalla compartida.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "stopScreenShareGeneric": {
+      "title": "No se pudo detener la pantalla compartida.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callNetworkQualityLow": {
+      "title": "La calidad de la red es baja.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "teamsMeetingCallNetworkQualityLow": {
+      "title": "La calidad de la red es baja.",
+      "dismissButtonAriaLabel": "Cerrar",
+      "message": "Únete a esta llamada desde el teléfono para obtener un mejor sonido. Puedes seguir viendo la reunión en este dispositivo.",
+      "primaryButtonLabel": "Unirse por Teléfono"
+    },
+    "callNoSpeakerFound": {
+      "title": "No se encontraron altavoces ni auriculares",
+      "message": "Conecta un dispositivo de audio para escuchar la llamada.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callNoMicrophoneFound": {
+      "title": "No se han encontrado micrófonos",
+      "message": "Conecta un dispositivo de entrada de audio.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callMicrophoneAccessDenied": {
+      "title": "No se puede acceder al micrófono.",
+      "message": "Haz clic en el candado de la barra de direcciones para conceder permiso a esta página web.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callMicrophoneAccessDeniedSafari": {
+      "title": "No se puede acceder al micrófono.",
+      "message": "Actualiza la página para habilitar permisos o comprueba la configuración de este navegador y que los permisos estén habilitados para este sitio web.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callMicrophoneMutedBySystem": {
+      "title": "Tu sistema ha silenciado el audio.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callMicrophoneUnmutedBySystem": {
+      "title": "Tu micrófono se ha recuperado y el sistema ha activado el audio.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callMacOsMicrophoneAccessDenied": {
+      "title": "No se puede acceder al micrófono.",
+      "message": "Concede permiso al micrófono en la configuración de privacidad de macOS.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callLocalVideoFreeze": {
+      "title": "El ancho de banda de red es deficiente",
+      "message": "Es posible que el video aparezca pausado para otros usuarios en la llamada.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callCameraAccessDenied": {
+      "title": "No se puede acceder a la cámara",
+      "message": "Haz clic en el candado de la barra de direcciones para conceder permiso a esta página web.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callCameraAccessDeniedSafari": {
+      "title": "No se puede acceder a la cámara",
+      "message": "Actualiza la página para habilitar permisos o comprueba la configuración de este navegador y que los permisos estén habilitados para este sitio web.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callCameraAlreadyInUse": {
+      "title": "No se puede acceder a la cámara",
+      "message": "Puede que ya la esté usando otra aplicación.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callVideoStoppedBySystem": {
+      "title": "El sistema ha detenido el video.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callVideoRecoveredBySystem": {
+      "title": "El video se ha reanudado.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callMacOsCameraAccessDenied": {
+      "title": "MacOS está bloqueando el acceso a la cámara",
+      "message": "Actualiza la configuración de privacidad para permitir que este navegador acceda a la cámara.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "callMacOsScreenShareAccessDenied": {
+      "title": "MacOS está bloqueando la pantalla compartida",
+      "message": "Actualiza la configuración de privacidad para permitir que este navegador grabe la pantalla.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "failedToJoinCallGeneric": {
+      "title": "No es posible unirse a la llamada.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "failedToJoinCallInvalidMeetingLink": {
+      "title": "No es posible unirse a la reunión. Vínculo no válido.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "cameraFrozenForRemoteParticipants": {
+      "title": "Los usuarios de la llamada tienen problemas para ver el video",
+      "message": "Comprueba los dispositivos y la red.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "unableToStartVideoEffect": {
+      "title": "No se puede aplicar el efecto de video.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "startSpotlightWhileMaxParticipantsAreSpotlighted": {
+      "title": "No se puede poner primer plano a los participantes",
+      "message": "Ya está puesto en primer plano el número máximo de participantes.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "mutedByRemoteParticipant": {
+      "title": "Otro participante te ha silenciado.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "recordingStarted": {
+      "title": "La grabación se ha iniciado.",
+      "message": "Al unirte, das tu consentimiento para que se transcriba esta reunión.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "transcriptionStarted": {
+      "title": "La transcripción se ha iniciado.",
+      "message": "Al unirte, das tu consentimiento para que se transcriba esta reunión.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "recordingStopped": {
+      "title": "Se está guardando la grabación.",
+      "message": "La grabación se ha detenido.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "transcriptionStopped": {
+      "title": "Se está guardando la transcripción.",
+      "message": "La transcripción se ha detenido.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "recordingAndTranscriptionStarted": {
+      "title": "Se han iniciado la grabación y la transcripción.",
+      "message": "Al unirte, das tu consentimiento para que se transcriba esta reunión.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "recordingAndTranscriptionStopped": {
+      "title": "Se están guardando la grabación y la transcripción.",
+      "message": "Se han detenido la grabación y la transcripción.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "recordingStoppedStillTranscribing": {
+      "title": "La grabación se ha detenido.",
+      "message": "Solo estás transcribiendo esta reunión.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "transcriptionStoppedStillRecording": {
+      "title": "La transcripción se ha detenido.",
+      "message": "Solo estás grabando esta reunión.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "assignedBreakoutRoomOpened": {
+      "title": "Te moveremos a la sala asignada en 5 segundos.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "assignedBreakoutRoomChanged": {
+      "title": "La sala para sesión de subgrupo cambió",
+      "message": "Te moveremos a la sala asignada en 5 segundos.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "assignedBreakoutRoomClosed": {
+      "title": "La sala para sesión de subgrupo se cerró",
+      "message": "Volveremos a la reunión en 5 segundos.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "assignedBreakoutRoomOpenedPromptJoin": {
+      "title": "¿Quieres unirte a la sala para sesión de subgrupo?",
+      "message": "Se te ha asignado a una sala para sesión de subgrupo.",
+      "dismissButtonAriaLabel": "Cerrar",
+      "primaryButtonLabel": "Unirse a la sala",
+      "secondaryButtonLabel": "Más tarde"
+    },
+    "breakoutRoomJoined": {
+      "title": "Te has unido a una sala para sesión de subgrupo.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "breakoutRoomClosingSoon": {
+      "title": "El límite de tiempo de sala está por expirar.",
+      "message": "Esta sala se cerrará en 30 segundos",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "La cámara se habilitó",
+      "message": "Activa esta opción si quieres compartir video.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Se deshabilitó la cámara",
+      "message": "Ya no puedes compartir video.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "El micrófono se habilitó",
+      "message": "Reactiva el audio si quieres hablar.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "El micro se deshabilitó",
+      "message": "Ya no puedes activar el audio.",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "togetherModeStarted": {
+      "title": "El modo de colaboración inició",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "togetherModeEnded": {
+      "title": "El modo de colaboración finalizó",
+      "dismissButtonAriaLabel": "Cerrar"
+    }
+  },
+  "videoGallery": {
+    "screenIsBeingSharedMessage": "Estás compartiendo tu pantalla",
+    "screenShareLoadingMessage": "Cargando la pantalla de {participant}",
+    "localScreenShareLoadingMessage": "Cargando la pantalla",
+    "localVideoLabel": "Tú",
+    "localVideoCameraSwitcherLabel": "Cambiar de cámara",
+    "localVideoMovementLabel": "Mosaico de video local móvil",
+    "localVideoMovementAriaLabel": "Mosaico de video local móvil",
+    "localVideoSelectedDescription": "{cameraName} seleccionada",
+    "displayNamePlaceholder": "Participante sin nombre",
+    "fitRemoteParticipantToFrame": "Ajustar al marco",
+    "fillRemoteParticipantFrame": "Marco de relleno",
+    "pinParticipantForMe": "Anclar para mí",
+    "pinParticipantForMeLimitReached": "Pin (límite alcanzado)",
+    "unpinParticipantForMe": "Desanclar",
+    "pinParticipantMenuItemAriaLabel": "Anclar {participantName}",
+    "unpinParticipantMenuItemAriaLabel": "Desanclar {participantName}",
+    "pinnedParticipantAnnouncementAriaLabel": "{participantName} anclado",
+    "unpinnedParticipantAnnouncementAriaLabel": "{participantName} desanclado",
+    "startSpotlightVideoTileMenuLabel": "Poner en primer plano para todos",
+    "addSpotlightVideoTileMenuLabel": "Agregar primer plano",
+    "spotlightLimitReachedMenuTitle": "Se alcanzó el límite de primer plano",
+    "stopSpotlightVideoTileMenuLabel": "Dejar de poner en primer plano",
+    "stopSpotlightOnSelfVideoTileMenuLabel": "Salir de primer plano",
+    "attendeeRole": "Asistente",
+    "muteParticipantMenuItemLabel": "Silenciar",
+    "waitingScreenText": "Esperando a que se unan otros usuarios",
+    "forbidAudio": "Deshabilitar micrófono",
+    "permitAudio": "Permitir micrófono",
+    "forbidAudioTileMenuLabel": "Deshabilitar micrófono",
+    "permitAudioTileMenuLabel": "Permitir micrófono",
+    "forbidVideo": "Deshabilitar cámara",
+    "permitVideo": "Permitir cámara",
+    "forbidVideoTileMenuLabel": "Deshabilitar cámara",
+    "permitVideoTileMenuLabel": "Permitir cámara"
+  },
+  "dialpad": {
+    "placeholderText": "Escribir un número de teléfono",
+    "deleteButtonAriaLabel": "Eliminar"
+  },
+  "holdButton": {
+    "onLabel": "Reanudar",
+    "offLabel": "En espera",
+    "tooltipOnContent": "Reanudar llamada",
+    "tooltipOffContent": "Poner llamada en espera"
+  },
+  "videoTile": {
+    "participantStateRinging": "Llamando...",
+    "participantReconnecting": "Reconectando...",
+    "participantStateHold": "En espera",
+    "moreOptionsButtonAriaLabel": "Más opciones {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "audio desactivado",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "se reactivaron las notificaciones",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Mano levantada",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Hablando",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Micrófono deshabilitado",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Cámara deshabilitada"
+  },
+  "CameraAndMicrophoneSitePermissionsRequest": {
+    "primaryText": "Permitir que {appName} usen la cámara y el micrófono",
+    "secondaryText": "Esto es para que los participantes puedan verte y oírte.",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas",
+    "primaryButtonText": "Continuar sin cámara ni micrófono",
+    "ariaLabel": "Permitir el acceso a la cámara y al micrófono"
+  },
+  "CameraSitePermissionsRequest": {
+    "primaryText": "Permitir que {appName} use la cámara",
+    "secondaryText": "Esto es para que los participantes puedan verte.",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas",
+    "primaryButtonText": "Continuar sin cámara",
+    "ariaLabel": "Permitir el acceso a la cámara"
+  },
+  "MicrophoneSitePermissionsRequest": {
+    "primaryText": "Permitir que {appName} use el micrófono",
+    "secondaryText": "Esto es para que los participantes puedan oírte.",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas",
+    "primaryButtonText": "Continuar sin micrófono",
+    "ariaLabel": "Permitir el acceso al micrófono"
+  },
+  "CameraAndMicrophoneSitePermissionsCheck": {
+    "primaryText": "Comprobando el acceso a la cámara y al micrófono",
+    "secondaryText": "Permite el acceso si se solicita. Esto es para que los participantes puedan verte y oírte.",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas",
+    "primaryButtonText": "Continuar sin cámara ni micrófono",
+    "ariaLabel": "Comprobando el acceso a la cámara y al micrófono. Permite el acceso si se solicita."
+  },
+  "CameraSitePermissionsCheck": {
+    "primaryText": "Comprobando el acceso a la cámara",
+    "secondaryText": "Permite el acceso si se solicita. Esto es para que los participantes puedan verte.",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas",
+    "primaryButtonText": "Continuar sin cámara",
+    "ariaLabel": "Comprobando el acceso a la cámara. Permite el acceso si se solicita."
+  },
+  "MicrophoneSitePermissionsCheck": {
+    "primaryText": "Comprobando el acceso al micrófono",
+    "secondaryText": "Permite el acceso si se solicita. Esto es para que los participantes puedan oírte.",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas",
+    "primaryButtonText": "Continuar sin micrófono",
+    "ariaLabel": "Comprobando el acceso al micrófono. Permite el acceso si se solicita."
+  },
+  "CameraAndMicrophoneSitePermissionsDenied": {
+    "primaryText": "No se puede permitir el acceso a la cámara ni al micrófono.",
+    "secondaryText": "Haz clic en el ícono de bloqueo de la barra de direcciones para conceder permisos de micrófono a esta página web. Es posible que sea necesario actualizar la página.",
+    "primaryButtonText": "Continuar sin cámara ni micrófono",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas"
+  },
+  "CameraAndMicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "No se puede permitir el acceso a la cámara ni al micrófono.",
+    "secondaryText": "Actualiza la página para habilitar permisos o comprueba la configuración de este navegador y que los permisos estén habilitados para este sitio web.",
+    "primaryButtonText": "Continuar sin cámara ni micrófono",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas"
+  },
+  "CameraSitePermissionsDenied": {
+    "primaryText": "No se puede acceder a la cámara",
+    "secondaryText": "Haz clic en el ícono de bloqueo de la barra de direcciones para conceder permisos de cámara a esta página web. Es posible que sea necesario actualizar la página.",
+    "primaryButtonText": "Continuar sin cámara",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas"
+  },
+  "MicrophoneSitePermissionsDenied": {
+    "primaryText": "No se puede acceder al micrófono.",
+    "secondaryText": "Haz clic en el ícono de bloqueo de la barra de direcciones para conceder permisos de micrófono a esta página web. Es posible que sea necesario actualizar la página.",
+    "primaryButtonText": "Continuar sin micrófono",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas"
+  },
+  "CameraSitePermissionsDeniedSafari": {
+    "primaryText": "No se puede acceder a la cámara",
+    "secondaryText": "Actualiza la página para habilitar permisos o comprueba la configuración de este navegador y que los permisos estén habilitados para este sitio web.",
+    "primaryButtonText": "Continuar sin cámara",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas"
+  },
+  "MicrophoneSitePermissionsDeniedSafari": {
+    "primaryText": "No se puede acceder al micrófono.",
+    "secondaryText": "Actualiza la página para habilitar permisos o comprueba la configuración de este navegador y que los permisos estén habilitados para este sitio web.",
+    "primaryButtonText": "Continuar sin micrófono",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas"
+  },
+  "UnsupportedBrowser": {
+    "primaryText": "Navegador no compatible",
+    "secondaryText": "Únete a esta llamada con un navegador compatible.",
+    "moreHelpLinkText": "Ver los requisitos de compatibilidad"
+  },
+  "UnsupportedBrowserVersion": {
+    "primaryText": "Es necesario actualizar el navegador",
+    "secondaryText": "Para garantizar la mejor llamada posible, actualiza el navegador e intenta unirte de nuevo a la llamada.",
+    "moreHelpLinkText": "Ver los requisitos de compatibilidad",
+    "continueAnywayButtonText": "Iniciar llamada sin actualizar"
+  },
+  "UnsupportedOperatingSystem": {
+    "primaryText": "Sistema operativo no compatible",
+    "secondaryText": "Únete a esta llamada desde un dispositivo con un sistema operativo compatible.",
+    "moreHelpLinkText": "Ver los requisitos de compatibilidad"
+  },
+  "BrowserPermissionDenied": {
+    "primaryText": "No se puede usar la cámara o el micrófono",
+    "secondaryText": "Es posible que el navegador no tenga acceso a la cámara o al micrófono. Para solucionar este problema, abre Preferencias del sistema.",
+    "primaryButtonText": "Intentar de nuevo",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas"
+  },
+  "BrowserPermissionDeniedIOS": {
+    "primaryText": "Permite el acceso al micrófono para continuar",
+    "secondaryText": "Para que otros participantes puedan oírte.",
+    "primaryButtonText": "Intentar de nuevo",
+    "imageAltText": "Ubicación de permisos del dispositivo de micrófono y cámara para iOS",
+    "linkText": "¿Necesitas ayuda? Obtén ayuda para la solución de problemas",
+    "step1Text": "Ve a la aplicación de Configuración",
+    "step2Text": "Desplázate hacia abajo hasta la configuración de este navegador",
+    "step3Text": "Activar micrófono (cámara opcional)",
+    "step4Text": "Intenta unirte de nuevo a la llamada",
+    "step1DigitText": "1",
+    "step2DigitText": "2",
+    "step3DigitText": "3",
+    "step4DigitText": "4"
+  },
+  "verticalGallery": {
+    "leftNavButtonAriaLabel": "página anterior {current} de {total}",
+    "rightNavButtonAriaLabel": "página siguiente {current} de {total}"
+  },
+  "meetingConferencePhoneInfo": {
+    "meetingConferencePhoneInfoModalTitle": "Unirse a la llamada desde el teléfono",
+    "meetingConferencePhoneInfoModalDialIn": "Marcar número",
+    "meetingConferencePhoneInfoModalMeetingId": "Escribir el id. de reunión",
+    "meetingConferencePhoneInfoModalWait": "Espera a ser admitido por el organizador",
+    "meetingConferencePhoneInfoModalNoPhoneAvailable": "No hay teléfono disponible",
+    "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
+    "meetingConferencePhoneInfoModalTollFree": "(Número gratuito)",
+    "meetingConferencePhoneInfoModalToll": "(Número de pago)"
+  },
+  "IncomingCallNotification": {
+    "incomingCallNotificationPlaceholderId": "Usuario desconocido",
+    "incomingCallNotificationPlaceholderAlert": "{callerName} está llamando",
+    "incomingCallNoticicationAcceptWithAudioAriaLabel": "Aceptar con audio",
+    "incomingCallNoticicationAcceptWithVideoAriaLabel": "Aceptar con video",
+    "incomingCallNoticicationRejectAriaLabel": "Rechazar",
+    "incomingCallNotificationAcceptButtonLabel": "Aceptar",
+    "incomingCallNotificationRejectButtonLabel": "Rechazar",
+    "incomingCallNotificationAccceptWithVideoButtonLabel": "Aceptar con vídeo",
+    "incomingCallNotificationDismissButtonAriaLabel": "Descartar"
+  }
+}

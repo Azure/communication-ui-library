@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { CaptionsBanner, CaptionsSettingsModal, ControlBarButton, useCall } from '@azure/communication-react';
 import {
   usePropsFor,
   VideoGallery,
@@ -9,9 +10,13 @@ import {
   MicrophoneButton,
   ScreenShareButton,
   EndCallButton,
-  VideoStreamOptions
+  VideoStreamOptions,
+  StartCaptionsButton
 } from '@azure/communication-react';
+/* @conditional-compile-remove(rtt) */
+import { StartRealTimeTextButton, RealTimeTextModal } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
+import { LocalLanguage20Regular } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
 
 export const CallingComponents = (): JSX.Element => {
@@ -20,9 +25,16 @@ export const CallingComponents = (): JSX.Element => {
   const microphoneProps = usePropsFor(MicrophoneButton);
   const screenShareProps = usePropsFor(ScreenShareButton);
   const endCallProps = usePropsFor(EndCallButton);
-
+  const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
+  const captionsSettingsModalProps = usePropsFor(CaptionsSettingsModal);
+  const captionsBannerProps = usePropsFor(CaptionsBanner);
   const [callEnded, setCallEnded] = useState(false);
-
+  /* @conditional-compile-remove(rtt) */
+  const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
+  /* @conditional-compile-remove(rtt) */
+  const [isRealTimeTextStarted, setIsRealTimeTextStarted] = useState(false);
+  const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
+  const call = useCall();
   const localVideoViewOptions = {
     scalingMode: 'Crop',
     isMirrored: true
@@ -52,11 +64,71 @@ export const CallingComponents = (): JSX.Element => {
             localVideoViewOptions={localVideoViewOptions}
             remoteVideoViewOptions={remoteVideoViewOptions}
           />
+          {captionsSettingsModalProps?.isCaptionsFeatureActive && (
+            <CaptionsSettingsModal
+              {...captionsSettingsModalProps}
+              showModal={showCaptionsSettingsModal}
+              onDismissCaptionsSettings={() => {
+                setShowCaptionsSettingsModal(false);
+              }}
+            />
+          )}
+          {
+            /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
+              <RealTimeTextModal
+                showModal={showRealTimeTextModal}
+                onDismissModal={() => {
+                  setShowRealTimeTextModal(false);
+                }}
+                onStartRealTimeText={() => {
+                  setIsRealTimeTextStarted(true);
+                }}
+              />
+            )
+          }
+          {(captionsBannerProps?.isCaptionsOn ||
+            /* @conditional-compile-remove(rtt) */ captionsBannerProps.isRealTimeTextOn ||
+            /* @conditional-compile-remove(rtt) */ isRealTimeTextStarted) && (
+            <CaptionsBanner
+              {...captionsBannerProps}
+              /* @conditional-compile-remove(rtt) */
+              isRealTimeTextOn={captionsBannerProps.isRealTimeTextOn || isRealTimeTextStarted}
+            />
+          )}
           <Stack>
             <ControlBar layout={'floatingBottom'}>
               {cameraProps && <CameraButton {...cameraProps} />}
               {microphoneProps && <MicrophoneButton {...microphoneProps} />}
               {screenShareProps && <ScreenShareButton {...screenShareProps} />}
+              {startCaptionsButtonProps && (
+                <StartCaptionsButton
+                  {...startCaptionsButtonProps}
+                  disabled={!(call?.state === 'Connected')}
+                  onStartCaptions={async () => {
+                    setShowCaptionsSettingsModal(true);
+                    startCaptionsButtonProps.onStartCaptions();
+                  }}
+                />
+              )}
+              {startCaptionsButtonProps && (
+                <ControlBarButton
+                  onRenderOnIcon={() => <LocalLanguage20Regular />}
+                  onRenderOffIcon={() => <LocalLanguage20Regular />}
+                  disabled={!captionsSettingsModalProps.isCaptionsFeatureActive}
+                  onClick={() => {
+                    setShowCaptionsSettingsModal(true);
+                  }}
+                />
+              )}
+              {
+                /* @conditional-compile-remove(rtt) */ <StartRealTimeTextButton
+                  disabled={!(call?.state === 'Connected')}
+                  isRealTimeTextOn={captionsBannerProps.isRealTimeTextOn || isRealTimeTextStarted}
+                  onStartRealTimeText={() => {
+                    setShowRealTimeTextModal(true);
+                  }}
+                />
+              }
               {endCallProps && <EndCallButton {...endCallProps} onHangUp={onHangup} />}
             </ControlBar>
           </Stack>

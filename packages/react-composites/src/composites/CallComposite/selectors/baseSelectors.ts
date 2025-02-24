@@ -1,15 +1,17 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallState as SDKCallStatus, DominantSpeakersInfo } from '@azure/communication-calling';
-import { ParticipantCapabilities } from '@azure/communication-calling';
-import { VideoDeviceInfo, AudioDeviceInfo } from '@azure/communication-calling';
+import {
+  CallState as SDKCallStatus,
+  DominantSpeakersInfo,
+  ParticipantCapabilities,
+  ParticipantRole,
+  VideoDeviceInfo,
+  AudioDeviceInfo,
+  CapabilitiesChangeInfo,
+  EnvironmentInfo
+} from '@azure/communication-calling';
 
-import { CapabilitiesChangeInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(unsupported-browser) */
-import { EnvironmentInfo } from '@azure/communication-calling';
-
-import { ParticipantRole } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 import {
@@ -19,6 +21,8 @@ import {
   LocalVideoStreamState,
   RemoteParticipantState
 } from '@internal/calling-stateful-client';
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextInfo } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
 import { SpotlightedParticipant } from '@azure/communication-calling';
@@ -29,18 +33,19 @@ import {
   _isInCall,
   _isPreviewOn,
   _dominantSpeakersWithFlatId,
+  DeepNoiseSuppressionEffectDependency,
   VideoBackgroundEffectsDependency
 } from '@internal/calling-component-bindings';
-/* @conditional-compile-remove(DNS) */
-import { DeepNoiseSuppressionEffectDependency } from '@internal/calling-component-bindings';
 import { AdapterErrors } from '../../common/adapters';
 /* @conditional-compile-remove(breakout-rooms) */
 import { AdapterNotifications } from '../../common/adapters';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
-/* @conditional-compile-remove(acs-close-captions) */
+
 import { CaptionsKind } from '@azure/communication-calling';
-import { ReactionResources } from '@internal/react-components';
+import { ReactionResources, MediaAccess } from '@internal/react-components';
+/* @conditional-compile-remove(together-mode) */
+import { CommunicationIdentifierKind } from '@azure/communication-common';
 
 /**
  * @private
@@ -159,7 +164,6 @@ export const getRemoteParticipants = (
       [keys: string]: RemoteParticipantState;
     } => state.call?.remoteParticipants;
 
-/* @conditional-compile-remove(unsupported-browser) */
 /**
  * @private
  */
@@ -171,7 +175,6 @@ export const getEnvironmentInfo = (state: CallAdapterState): EnvironmentInfo | u
 export const getSelectedVideoEffect = (state: CallAdapterState): VideoBackgroundEffect | undefined =>
   state.selectedVideoBackgroundEffect;
 
-/* @conditional-compile-remove(acs-close-captions) */
 /** @private */
 export const getCaptionsKind = (state: CallAdapterState): CaptionsKind | undefined => {
   return state.call?.captionsFeature.captionsKind;
@@ -182,9 +185,29 @@ export const getCaptions = (state: CallAdapterState): CaptionsInfo[] | undefined
   return state.call?.captionsFeature.captions;
 };
 
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeText = (
+  state: CallAdapterState
+):
+  | {
+      completedMessages?: RealTimeTextInfo[];
+      currentInProgress?: RealTimeTextInfo[];
+      myInProgress?: RealTimeTextInfo;
+    }
+  | undefined => {
+  return state.call?.realTimeTextFeature.realTimeTexts;
+};
+
 /** @private */
 export const getCaptionsStatus = (state: CallAdapterState): boolean | undefined => {
   return state.call?.captionsFeature.isCaptionsFeatureActive;
+};
+
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeTextStatus = (state: CallAdapterState): boolean | undefined => {
+  return state.call?.realTimeTextFeature.isRealTimeTextFeatureActive;
 };
 
 /** @private */
@@ -283,18 +306,15 @@ export const getVideoEffectsDependency = (
   state: CallAdapterState
 ): (() => Promise<VideoBackgroundEffectsDependency>) | undefined => state.onResolveVideoEffectDependency;
 
-/* @conditional-compile-remove(DNS) */
 /** @private */
 export const getDeepNoiseSuppresionEffectsDependency = (
   state: CallAdapterState
 ): (() => Promise<DeepNoiseSuppressionEffectDependency>) | undefined => state.onResolveDeepNoiseSuppressionDependency;
 
-/* @conditional-compile-remove(DNS) */
 /** @private */
 export const getDeepNoiseSuppresionIsOnByDefault = (state: CallAdapterState): boolean | undefined =>
   state.deepNoiseSuppressionOnByDefault;
 
-/* @conditional-compile-remove(DNS) */
 /** @private */
 export const getHideDeepNoiseSupressionButton = (state: CallAdapterState): boolean | undefined =>
   state.hideDeepNoiseSuppressionButton;
@@ -311,3 +331,26 @@ export const getIsRoomsCall = (state: CallAdapterState): boolean => state.isRoom
 /** @private */
 export const getVideoBackgroundImages = (state: CallAdapterState): VideoBackgroundImage[] | undefined =>
   state.videoBackgroundImages;
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ * Gets the together mode streams state.
+ * @param state - The current state of the call adapter.
+ * @returns The together mode streams state or undefined.
+ */
+export const getIsTogetherModeActive = (state: CallAdapterState): boolean | undefined =>
+  state.call?.togetherMode.isActive;
+
+/* @conditional-compile-remove(together-mode) */
+/**
+ * @private
+ * Gets local participant's user id.
+ * @param state - The current state of the call adapter.
+ * @returns The local participant's user id or undefined.
+ */
+export const getLocalUserId = (state: CallAdapterState): CommunicationIdentifierKind | undefined => state.userId;
+
+/** @private */
+export const getMediaAccessSetting = (state: CallAdapterState): MediaAccess | undefined =>
+  state.call?.meetingMediaAccess;

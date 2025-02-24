@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ParticipantState } from './ParticipantListParticipant';
+import { ParticipantState, MediaAccess } from './ParticipantListParticipant';
 
 import { RaisedHand } from './ParticipantListParticipant';
 import { Reaction } from './ParticipantListParticipant';
@@ -43,6 +43,15 @@ export type VideoGalleryParticipant = {
   isScreenSharingOn?: boolean;
   /** Whether participant is spotlighted **/
   spotlight?: Spotlight;
+  /* @conditional-compile-remove(remote-ufd) */
+  /** Signal strength of the participant, range from 1 to 3, lower means better connection **/
+  signalStrength?: number;
+  /** Media audio video access states **/
+  mediaAccess?: MediaAccess;
+  /** Attendee can have audio be forbidden **/
+  canAudioBeForbidden?: boolean;
+  /** Attendee can have video be forbidden **/
+  canVideoBeForbidden?: boolean;
 };
 
 /**
@@ -126,4 +135,6 @@ export interface VideoGalleryRemoteParticipant extends VideoGalleryParticipant {
    * @public
    * */
   reaction?: Reaction;
+  /** Media audio video access states **/
+  mediaAccess?: MediaAccess;
 }

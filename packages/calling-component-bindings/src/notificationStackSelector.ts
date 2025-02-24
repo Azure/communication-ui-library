@@ -6,10 +6,13 @@ import {
   getDeviceManager,
   getDiagnostics,
   getLatestErrors,
-  getEnvironmentInfo
+  getEnvironmentInfo,
+  getCallState
 } from './baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
-import { getLatestNotifications, getAssignedBreakoutRoom } from './baseSelectors';
+import { getAssignedBreakoutRoom } from './baseSelectors';
+
+import { getLatestNotifications } from './baseSelectors';
 
 import { getMeetingConferencePhones } from './baseSelectors';
 
@@ -46,18 +49,20 @@ export type NotificationStackSelector = (
 export const notificationStackSelector: NotificationStackSelector = createSelector(
   [
     getLatestErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ getLatestNotifications,
+    getLatestNotifications,
     getDiagnostics,
     getDeviceManager,
+    getCallState,
     getEnvironmentInfo,
     getMeetingConferencePhones,
     /* @conditional-compile-remove(breakout-rooms) */ getAssignedBreakoutRoom
   ],
   (
     latestErrors: CallErrors,
-    /* @conditional-compile-remove(breakout-rooms) */ latestNotifications,
+    latestNotifications,
     diagnostics,
     deviceManager,
+    callStatus,
     environmentInfo,
     meetingConference,
     /* @conditional-compile-remove(breakout-rooms) */ assignedBreakoutRoom
@@ -72,15 +77,11 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     const activeErrorMessages: ActiveNotification[] = [];
 
     const isSafari = (): boolean => {
-      /* @conditional-compile-remove(calling-environment-info) */
       return environmentInfo?.environment.browser === 'safari';
-      return /^((?!chrome|android|crios|fxios).)*safari/i.test(navigator.userAgent);
     };
 
     const isMacOS = (): boolean => {
-      /* @conditional-compile-remove(calling-environment-info) */
       return environmentInfo?.environment.platform === 'mac';
-      return false;
     };
 
     // Errors reported via diagnostics are more reliable than from API method failures, so process those first.
@@ -184,9 +185,13 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     }
 
     appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.unmute', 'unmuteGeneric');
-
-    /* @conditional-compile-remove(soft-mute) */
-    appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
+    if (
+      latestNotifications &&
+      !latestNotifications['capabilityUnmuteMicAbsent'] &&
+      !latestNotifications['capabilityUnmuteMicPresent']
+    ) {
+      appendActiveErrorIfDefined(activeErrorMessages, latestErrors, 'Call.mutedByOthers', 'mutedByRemoteParticipant');
+    }
 
     appendActiveErrorIfDefined(
       activeErrorMessages,
@@ -221,8 +226,17 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
 
     //below is for active notifications
     const activeNotifications: ActiveNotification[] = [];
-    if (diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value) {
-      activeNotifications.push({ type: 'speakingWhileMuted', timestamp: new Date(Date.now()), autoDismiss: true });
+    if (
+      diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value &&
+      // only show this notification when the participant is in an active call and not on screens such as Lobby
+      callStatus === 'Connected'
+    ) {
+      activeNotifications.push({
+        type: 'speakingWhileMuted',
+        timestamp: new Date(Date.now()),
+        autoDismiss: true,
+        ariaLive: 'off' // "You're muted" is too noisy, so we don't want to announce it.
+      });
     }
     /* @conditional-compile-remove(breakout-rooms) */
     if (latestNotifications['assignedBreakoutRoomOpened']) {
@@ -247,6 +261,13 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       });
     }
     /* @conditional-compile-remove(breakout-rooms) */
+    if (latestNotifications['assignedBreakoutRoomClosed']) {
+      activeNotifications.push({
+        type: 'assignedBreakoutRoomClosed',
+        timestamp: latestNotifications['assignedBreakoutRoomClosed'].timestamp
+      });
+    }
+    /* @conditional-compile-remove(breakout-rooms) */
     if (latestNotifications['breakoutRoomJoined']) {
       activeNotifications.push({
         type: 'breakoutRoomJoined',
@@ -260,6 +281,52 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         timestamp: latestNotifications['breakoutRoomClosingSoon'].timestamp
       });
     }
+
+    if (latestNotifications['capabilityTurnVideoOnPresent']) {
+      activeNotifications.push({
+        type: 'capabilityTurnVideoOnPresent',
+        timestamp: latestNotifications['capabilityTurnVideoOnPresent'].timestamp
+      });
+    }
+
+    if (latestNotifications['capabilityTurnVideoOnAbsent']) {
+      activeNotifications.push({
+        type: 'capabilityTurnVideoOnAbsent',
+        timestamp: latestNotifications['capabilityTurnVideoOnAbsent'].timestamp
+      });
+    }
+
+    if (latestNotifications['capabilityUnmuteMicPresent']) {
+      activeNotifications.push({
+        type: 'capabilityUnmuteMicPresent',
+        timestamp: latestNotifications['capabilityUnmuteMicPresent'].timestamp
+      });
+    }
+
+    if (latestNotifications['capabilityUnmuteMicAbsent']) {
+      activeNotifications.push({
+        type: 'capabilityUnmuteMicAbsent',
+        timestamp: latestNotifications['capabilityUnmuteMicAbsent'].timestamp
+      });
+    }
+
+    /* @conditional-compile-remove(together-mode) */
+    if (latestNotifications['togetherModeStarted']) {
+      activeNotifications.push({
+        type: 'togetherModeStarted',
+        timestamp: latestNotifications['togetherModeStarted'].timestamp,
+        autoDismiss: true
+      });
+    }
+    /* @conditional-compile-remove(together-mode) */
+    if (latestNotifications['togetherModeEnded']) {
+      activeNotifications.push({
+        type: 'togetherModeEnded',
+        timestamp: latestNotifications['togetherModeEnded'].timestamp,
+        autoDismiss: true
+      });
+    }
+
     return { activeErrorMessages: activeErrorMessages, activeNotifications: activeNotifications };
   }
 );

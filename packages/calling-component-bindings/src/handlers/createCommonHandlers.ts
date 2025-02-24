@@ -2,40 +2,51 @@
 // Licensed under the MIT License.
 
 import {
+  AddPhoneNumberOptions,
   AudioDeviceInfo,
-  Call,
-  LocalVideoStream,
-  StartCallOptions,
-  VideoDeviceInfo,
-  BackgroundBlurEffect,
-  BackgroundReplacementEffect,
+  AudioEffectsStartConfig,
+  AudioEffectsStopConfig,
   BackgroundBlurConfig,
-  BackgroundReplacementConfig
+  BackgroundBlurEffect,
+  BackgroundReplacementConfig,
+  BackgroundReplacementEffect,
+  Call,
+  CallSurvey,
+  CallSurveyResponse,
+  DtmfTone,
+  LocalVideoStream,
+  RemoteParticipant,
+  StartCallOptions,
+  TeamsCall,
+  VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(DNS) */
-import { AudioEffectsStartConfig, AudioEffectsStopConfig } from '@azure/communication-calling';
-/* @conditional-compile-remove(soft-mute) */
-import { RemoteParticipant } from '@azure/communication-calling';
-import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-import { DtmfTone } from '@azure/communication-calling';
-import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(teams-identity-support) */
-import { TeamsCall } from '@azure/communication-calling';
 /* @conditional-compile-remove(call-readiness) */
 import { PermissionConstraints } from '@azure/communication-calling';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CreateViewResult, StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
-import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-import { disposeAllLocalPreviewViews, _isInCall, _isInLobbyOrConnecting, _isPreviewOn } from '../utils/callUtils';
+import {
+  CreateVideoStreamViewResult,
+  VideoStreamOptions,
+  ReactionButtonReaction,
+  CaptionsOptions
+} from '@internal/react-components';
+import {
+  disposeAllLocalPreviewViews,
+  _isInCall,
+  _isInLobbyOrConnecting,
+  _isPreviewOn,
+  getCallStateIfExist
+} from '../utils/callUtils';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import { Features } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { _ComponentCallingHandlers } from './createHandlers';
-
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 /**
  * Object containing all the handlers required for calling components.
  *
@@ -77,7 +88,6 @@ export interface CommonCallingHandlers {
   onDisposeLocalScreenShareStreamView: () => Promise<void>;
   onSendDtmfTone: (dtmfTone: DtmfTone) => Promise<void>;
   onRemoveParticipant(userId: string): Promise<void>;
-
   onRemoveParticipant(participant: CommunicationIdentifier): Promise<void>;
   /* @conditional-compile-remove(call-readiness) */
   askDevicePermission: (constrain: PermissionConstraints) => Promise<void>;
@@ -85,37 +95,92 @@ export interface CommonCallingHandlers {
   onAcceptCall: (incomingCallId: string, useVideo?: boolean) => Promise<void>;
   onRejectCall: (incomingCallId: string) => Promise<void>;
   onRemoveVideoBackgroundEffects: () => Promise<void>;
-
   onBlurVideoBackground: (backgroundBlurConfig?: BackgroundBlurConfig) => Promise<void>;
-
   onReplaceVideoBackground: (backgroundReplacementConfig: BackgroundReplacementConfig) => Promise<void>;
-  /* @conditional-compile-remove(DNS) */
   onStartNoiseSuppressionEffect: () => Promise<void>;
-  /* @conditional-compile-remove(DNS) */
   onStopNoiseSuppressionEffect: () => Promise<void>;
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   onStopCaptions: () => Promise<void>;
+  /* @conditional-compile-remove(rtt) */
+  onSendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
-
   onSubmitSurvey(survey: CallSurvey): Promise<CallSurveyResponse | undefined>;
   onStartSpotlight: (userIds?: string[]) => Promise<void>;
   onStopSpotlight: (userIds?: string[]) => Promise<void>;
   onStopAllSpotlight: () => Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteParticipant: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(soft-mute) */
   onMuteAllRemoteParticipants: () => Promise<void>;
-}
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call back to create a view for together mode
+   *
+   * @beta
+   */
+  onCreateTogetherModeStreamView: (options?: TogetherModeStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
 
-/**
- * options bag to start captions
- *
- * @public
- */
-export type CaptionsOptions = {
-  spokenLanguage: string;
-};
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call back to create a view for together mode
+   *
+   * @beta
+   */
+  onStartTogetherMode: () => Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call set together mode scene size
+   *
+   * @beta
+   */
+  onSetTogetherModeSceneSize: (width: number, height: number) => void;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Call back to dispose together mode views
+   *
+   * @beta
+   */
+  onDisposeTogetherModeStreamView: () => Promise<void>;
+  /**
+   * Forbid remote participants from sending audio
+   *
+   */
+  onForbidAudio?: (userIds: string[]) => Promise<void>;
+  /**
+   * Permit remote participants to send audio
+   *
+   */
+  onPermitAudio?: (userIds: string[]) => Promise<void>;
+  /**
+   * Change meeting option forbid remote participants from sending audio
+   *
+   */
+  onForbidOthersAudio?: () => Promise<void>;
+  /**
+   * Change meeting option permit remote participants to send audio
+   *
+   */
+  onPermitOthersAudio?: () => Promise<void>;
+  /**
+   * Forbid remote participants from sending video
+   *
+   */
+  onForbidVideo?: (userIds: string[]) => Promise<void>;
+  /**
+   * Permit remote participants to send video
+   *
+   */
+  onPermitVideo?: (userIds: string[]) => Promise<void>;
+  /**
+   * Change meeting option forbid remote participants from sending video
+   *
+   */
+  onForbidOthersVideo?: () => Promise<void>;
+  /**
+   * Change meeting option permit remote participants to send video
+   *
+   */
+  onPermitOthersVideo?: () => Promise<void>;
+}
 
 /**
  * @private
@@ -134,11 +199,10 @@ export type VideoBackgroundEffectsDependency = {
   createBackgroundReplacementEffect: (config: BackgroundReplacementConfig) => BackgroundReplacementEffect;
 };
 
-/* @conditional-compile-remove(DNS) */
 /**
  * Dependency type to be injected for deep noise suppression
  *
- * @beta
+ * @public
  */
 export type DeepNoiseSuppressionEffectDependency = {
   deepNoiseSuppressionEffect: AudioEffectsStartConfig;
@@ -152,10 +216,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
   (
     callClient: StatefulCallClient,
     deviceManager: StatefulDeviceManager | undefined,
-    call: Call | /* @conditional-compile-remove(teams-identity-support) */ TeamsCall | undefined,
+    call: Call | TeamsCall | undefined,
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-      /* @conditional-compile-remove(DNS) */
       onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
     }
   ): CommonCallingHandlers & Partial<_ComponentCallingHandlers> => {
@@ -278,13 +341,23 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         await stream?.switchSource(device);
 
-        /// TODO: TEMPORARY SOLUTION
-        /// The Calling SDK needs to wait until the stream is ready before resolving the switchSource promise.
-        /// This is a temporary solution to wait for the stream to be ready before resolving the promise.
-        /// This allows the onSelectCamera to be throttled to prevent the streams from getting in to a frozen state
-        /// if the user switches cameras too rapidly.
-        /// This is to be removed once the Calling SDK has issued a fix.
-        await stream?.getMediaStream();
+        await Promise.all([
+          /// TODO: TEMPORARY SOLUTION
+          /// The Calling SDK needs to wait until the stream is ready before resolving the switchSource promise.
+          /// This is a temporary solution to wait for the stream to be ready before resolving the promise.
+          /// This allows the onSelectCamera to be throttled to prevent the streams from getting in to a frozen state
+          /// if the user switches cameras too rapidly.
+          /// This is to be removed once the Calling SDK has issued a fix.
+          stream?.getMediaStream(),
+
+          // An extra wait here is also necessary to prevent the remote stream freezing issue.
+          // If this is removed, please test switching cameras rapidly won't cause stream to freeze for remote users.
+          // When this mitigation was introduced, the repro interval time that caused the issue was:
+          // - iPhone 11, safari, v8.3.1: 750ms
+          // - Pixel 6, chrome, Android 15: 400ms
+          // - Windows 11, edge: 100ms
+          new Promise((resolve) => setTimeout(resolve, 1000))
+        ]);
       } else {
         const previewOn = _isPreviewOn(callClient.getState().deviceManager);
 
@@ -328,7 +401,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    const onReactionClick = async (reaction: Reaction): Promise<void> => {
+    const onReactionClick = async (reaction: ReactionButtonReaction): Promise<void> => {
       if (
         reaction === 'like' ||
         reaction === 'applause' ||
@@ -404,9 +477,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
 
       const participant = Object.values(callState.remoteParticipants).find(
@@ -455,9 +528,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
 
       const participant = Object.values(callState.remoteParticipants).find(
@@ -486,9 +559,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
 
       const participant = Object.values(callState.remoteParticipants).find(
@@ -499,10 +572,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         return;
       }
 
-      const remoteVideoStream = Object.values(participant.videoStreams).find((i) => i.mediaStreamType === 'Video');
+      const remoteVideoStream = Object.values(participant.videoStreams).filter((i) => i.mediaStreamType === 'Video');
 
-      if (remoteVideoStream && remoteVideoStream.view) {
-        callClient.disposeView(call.id, participant.identifier, remoteVideoStream);
+      for (const stream of remoteVideoStream) {
+        if (stream.view) {
+          callClient.disposeView(call.id, participant.identifier, stream);
+        }
       }
     };
 
@@ -510,10 +585,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
+
       const participant = Object.values(callState.remoteParticipants).find(
         (participant) => toFlatCommunicationIdentifier(participant.identifier) === userId
       );
@@ -521,12 +597,14 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!participant || !participant.videoStreams) {
         return;
       }
-      const screenShareStream = Object.values(participant.videoStreams).find(
+      const screenShareStreams = Object.values(participant.videoStreams).filter(
         (i) => i.mediaStreamType === 'ScreenSharing'
       );
 
-      if (screenShareStream && screenShareStream.view) {
-        callClient.disposeView(call.id, participant.identifier, screenShareStream);
+      for (const stream of screenShareStreams) {
+        if (stream.view) {
+          callClient.disposeView(call.id, participant.identifier, stream);
+        }
       }
     };
 
@@ -534,10 +612,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!call) {
         return;
       }
-      const callState = callClient.getState().calls[call.id];
+      const callState = getCallStateIfExist(callClient.getState(), call.id);
       if (!callState) {
-        throw new Error(`Call Not Found: ${call.id}`);
+        return;
       }
+
       const screenShareStream = callState?.localVideoStreams.find((item) => item.mediaStreamType === 'ScreenSharing');
       if (screenShareStream && screenShareStream.view) {
         callClient.disposeView(call.id, undefined, screenShareStream);
@@ -618,7 +697,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
     };
 
-    /* @conditional-compile-remove(DNS) */
     const onStartNoiseSuppressionEffect = async (): Promise<void> => {
       const audioEffects =
         options?.onResolveDeepNoiseSuppressionDependency &&
@@ -630,12 +708,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         if (isNoiseSuppressionSupported) {
           return await audioEffectsFeature.startEffects(audioEffects);
         } else {
-          throw new Error('Deep Noise Suppression is not supported on this platform.');
+          console.warn('Deep Noise Suppression is not supported on this platform.');
         }
       }
     };
 
-    /* @conditional-compile-remove(DNS) */
     const onStopNoiseSuppressionEffect = async (): Promise<void> => {
       const stream = call?.localAudioStreams.find((stream) => stream.mediaStreamType === 'Audio');
       if (stream && options?.onResolveDeepNoiseSuppressionDependency) {
@@ -662,7 +739,11 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
     };
-
+    /* @conditional-compile-remove(rtt) */
+    const onSendRealTimeText = async (text: string, isFinalized: boolean): Promise<void> => {
+      const realTimeTextFeature = call?.feature(Features.RealTimeText);
+      await realTimeTextFeature?.sendRealTimeText(text, isFinalized);
+    };
     const onSubmitSurvey = async (survey: CallSurvey): Promise<CallSurveyResponse | undefined> =>
       await call?.feature(Features.CallSurvey).submitSurvey(survey);
     const onStartSpotlight = async (userIds?: string[]): Promise<void> => {
@@ -676,7 +757,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     const onStopAllSpotlight = async (): Promise<void> => {
       await call?.feature(Features.Spotlight).stopAllSpotlight();
     };
-    /* @conditional-compile-remove(soft-mute) */
     const onMuteParticipant = async (userId: string): Promise<void> => {
       if (call?.remoteParticipants) {
         call?.remoteParticipants.forEach(async (participant: RemoteParticipant) => {
@@ -688,7 +768,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         });
       }
     };
-    /* @conditional-compile-remove(soft-mute) */
     const onMuteAllRemoteParticipants = async (): Promise<void> => {
       call?.muteAllRemoteParticipants();
     };
@@ -714,7 +793,93 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
           await call?.feature(Features.Spotlight).stopSpotlight(participants);
         }
       : undefined;
+    /* @conditional-compile-remove(together-mode) */
+    const onCreateTogetherModeStreamView = async (
+      options = { scalingMode: 'Fit', isMirrored: false, viewKind: 'main' } as TogetherModeStreamOptions
+    ): Promise<void | TogetherModeStreamViewResult> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        return;
+      }
+      const togetherModeStreams = callState.togetherMode.streams;
+      const togetherModeCreateViewResult: TogetherModeStreamViewResult = {};
 
+      const mainVideoStream = togetherModeStreams.mainVideoStream;
+      if (mainVideoStream && mainVideoStream.isAvailable && !mainVideoStream.view) {
+        const createViewResult = await callClient.createView(call.id, undefined, mainVideoStream, options);
+        // SDK currently only supports 1 Video media stream type
+        togetherModeCreateViewResult.mainVideoView = createViewResult?.view
+          ? { view: createViewResult?.view }
+          : undefined;
+      }
+      return togetherModeCreateViewResult;
+    };
+
+    /* @conditional-compile-remove(together-mode) */
+    const onDisposeTogetherModeStreamView = async (): Promise<void> => {
+      if (!call) {
+        return;
+      }
+      const callState = callClient.getState().calls[call.id];
+      if (!callState) {
+        throw new Error(`Call Not Found: ${call.id}`);
+      }
+
+      const togetherModeStreams = callState.togetherMode.streams;
+      if (!togetherModeStreams.mainVideoStream) {
+        return;
+      }
+
+      if (togetherModeStreams.mainVideoStream.view) {
+        callClient.disposeView(call.id, undefined, togetherModeStreams.mainVideoStream);
+      }
+    };
+    /* @conditional-compile-remove(together-mode) */
+    const onSetTogetherModeSceneSize = (width: number, height: number): void => {
+      const togetherModeFeature = call?.feature(Features.TogetherMode);
+      if (togetherModeFeature) {
+        togetherModeFeature.sceneSize = { width, height };
+      }
+    };
+
+    const onForbidAudio = async (userIds: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.MediaAccess).forbidAudio(participants);
+    };
+
+    const onPermitAudio = async (userIds: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.MediaAccess).permitAudio(participants);
+    };
+
+    const onForbidOthersAudio = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).forbidOthersAudio();
+    };
+
+    const onPermitOthersAudio = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).permitOthersAudio();
+    };
+
+    const onForbidVideo = async (userIds: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.MediaAccess).forbidVideo(participants);
+    };
+
+    const onPermitVideo = async (userIds: string[]): Promise<void> => {
+      const participants = userIds?.map((userId) => _toCommunicationIdentifier(userId));
+      await call?.feature(Features.MediaAccess).permitVideo(participants);
+    };
+
+    const onForbidOthersVideo = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).forbidOthersVideo();
+    };
+
+    const onPermitOthersVideo = async (): Promise<void> => {
+      await call?.feature(Features.MediaAccess).permitOthersVideo();
+    };
     return {
       onHangUp,
       onToggleHold,
@@ -737,7 +902,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onRaiseHand,
       onLowerHand,
       onToggleRaiseHand,
-      onReactionClick: onReactionClick,
+      onReactionClick,
       onAddParticipant: notImplemented,
       onRemoveParticipant: notImplemented,
       onStartCall: notImplemented,
@@ -747,9 +912,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onRemoveVideoBackgroundEffects,
       onBlurVideoBackground,
       onReplaceVideoBackground,
-      /* @conditional-compile-remove(DNS) */
       onStartNoiseSuppressionEffect,
-      /* @conditional-compile-remove(DNS) */
       onStopNoiseSuppressionEffect,
       onStartCaptions,
       onStopCaptions,
@@ -763,12 +926,28 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onStopLocalSpotlight,
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
-      /* @conditional-compile-remove(soft-mute) */
       onMuteParticipant,
-      /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants,
       onAcceptCall: notImplemented,
-      onRejectCall: notImplemented
+      onRejectCall: notImplemented,
+      /* @conditional-compile-remove(together-mode) */
+      onCreateTogetherModeStreamView,
+      /* @conditional-compile-remove(together-mode) */
+      onStartTogetherMode: notImplemented,
+      /* @conditional-compile-remove(together-mode) */
+      onSetTogetherModeSceneSize,
+      /* @conditional-compile-remove(together-mode) */
+      onDisposeTogetherModeStreamView,
+      onForbidAudio,
+      onPermitAudio,
+      onForbidOthersAudio,
+      onPermitOthersAudio,
+      onForbidVideo,
+      onPermitVideo,
+      onForbidOthersVideo,
+      onPermitOthersVideo,
+      /* @conditional-compile-remove(rtt) */
+      onSendRealTimeText
     };
   }
 );

@@ -24,7 +24,12 @@ import {
   ParticipantListParticipant
 } from '../types';
 import { CustomAvatarOptions } from '../types';
-import { ParticipantItem, ParticipantItemStrings, ParticipantItemStyles } from './ParticipantItem';
+import {
+  formatParticipantStateString,
+  ParticipantItem,
+  ParticipantItemStrings,
+  ParticipantItemStyles
+} from './ParticipantItem';
 import { iconStyles, participantListItemStyle, participantListStyle } from './styles/ParticipantList.styles';
 import { _formatString } from '@internal/acs-ui-common';
 
@@ -98,7 +103,6 @@ export type ParticipantListProps = {
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /** Optional callback when rendered ParticipantItem is clicked */
   onParticipantClick?: (participant?: ParticipantListParticipant) => void;
-  /* @conditional-compile-remove(soft-mute) */
   /** Optional callback to render a context menu to mute a participant */
   onMuteParticipant?: (userId: string) => Promise<void>;
   styles?: ParticipantListStyles;
@@ -147,50 +151,62 @@ const onRenderParticipantDefault = (
   const displayName = formatDisplayName(participant.displayName);
 
   const callingPalette = (theme as unknown as CallingTheme).callingPalette;
-
   const isPinned = pinnedParticipants && pinnedParticipants?.includes(participant.userId);
+  const isScreenSharing = callingParticipant?.isScreenSharing;
+  const isMuted = callingParticipant?.isMuted;
+  const hasRaisedHand = callingParticipant?.raisedHand;
+  const isAudioPermitted = callingParticipant?.mediaAccess ? callingParticipant.mediaAccess.isAudioPermitted : true;
+  const isVideoPermitted = callingParticipant?.mediaAccess ? callingParticipant.mediaAccess.isVideoPermitted : true;
 
-  const onRenderIcon =
-    callingParticipant?.isScreenSharing || callingParticipant?.isMuted || callingParticipant?.raisedHand || isPinned
-      ? () => (
-          <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
-            {callingParticipant.raisedHand && (
-              <Stack
-                horizontal={true}
-                tokens={{ childrenGap: '0.2rem' }}
-                style={{
-                  alignItems: 'center',
-                  padding: '0.1rem 0.2rem',
-                  backgroundColor: theme?.palette.neutralLighter,
-                  borderRadius: '0.3rem'
-                }}
-              >
-                {callingParticipant.raisedHand.raisedHandOrderPosition && (
-                  <Stack.Item>
-                    <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
-                  </Stack.Item>
-                )}
+  const shouldRenderParticipantIcon =
+    isScreenSharing || isMuted || hasRaisedHand || isPinned || !isAudioPermitted || !isVideoPermitted;
+
+  const onRenderIcon = shouldRenderParticipantIcon
+    ? () => (
+        <Stack horizontal={true} tokens={{ childrenGap: '0.5rem' }}>
+          {callingParticipant.raisedHand && (
+            <Stack
+              horizontal={true}
+              tokens={{ childrenGap: '0.2rem' }}
+              style={{
+                alignItems: 'center',
+                padding: '0.1rem 0.2rem',
+                backgroundColor: theme?.palette.neutralLighter,
+                borderRadius: '0.3rem'
+              }}
+            >
+              {callingParticipant.raisedHand.raisedHandOrderPosition && (
                 <Stack.Item>
-                  <RaisedHandIcon />
+                  <Text>{callingParticipant.raisedHand?.raisedHandOrderPosition}</Text>
                 </Stack.Item>
-              </Stack>
-            )}
-            {callingParticipant.isScreenSharing && (
-              <Icon
-                iconName="ParticipantItemScreenShareStart"
-                className={iconStyles}
-                ariaLabel={strings.sharingIconLabel}
-              />
-            )}
-            {callingParticipant.isMuted && (
-              <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
-            )}
-            {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
-
-            {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
-          </Stack>
-        )
-      : () => null;
+              )}
+              <Stack.Item>
+                <RaisedHandIcon />
+              </Stack.Item>
+            </Stack>
+          )}
+          {callingParticipant.isScreenSharing && (
+            <Icon
+              iconName="ParticipantItemScreenShareStart"
+              className={iconStyles}
+              ariaLabel={strings.sharingIconLabel}
+            />
+          )}
+          {callingParticipant.spotlight && <Icon iconName="ParticipantItemSpotlighted" className={iconStyles} />}
+          {isPinned && <Icon iconName="ParticipantItemPinned" className={iconStyles} />}
+          {callingParticipant.mediaAccess && !callingParticipant.mediaAccess.isVideoPermitted ? (
+            <Icon iconName="ControlButtonCameraProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+          ) : undefined}
+          {callingParticipant.mediaAccess && !callingParticipant.mediaAccess?.isAudioPermitted ? (
+            <Icon iconName="ControlButtonMicProhibited" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+          ) : undefined}
+          {(callingParticipant.mediaAccess ? callingParticipant.mediaAccess.isAudioPermitted : true) &&
+          callingParticipant.isMuted ? (
+            <Icon iconName="ParticipantItemMicOff" className={iconStyles} ariaLabel={strings.mutedIconLabel} />
+          ) : undefined}
+        </Stack>
+      )
+    : () => null;
 
   const onRenderAvatarWithRaiseHand =
     callingParticipant?.raisedHand && onRenderAvatar
@@ -205,6 +221,26 @@ const onRenderParticipantDefault = (
             defaultOnRender
           )
       : onRenderAvatar;
+
+  const ariaLabelTemplate =
+    (menuItems && menuItems.length > 0 ? strings?.participantItemWithMoreOptionsAriaLabel : undefined) ??
+    strings?.participantItemAriaLabel;
+  const ariaLabel = _formatString(ariaLabelTemplate ?? '', {
+    displayName: displayName ?? '',
+    connectionState: formatParticipantStateString(callingParticipant, strings) ?? '',
+    mutedState: (callingParticipant.isMuted ? strings?.mutedIconLabel : undefined) ?? '',
+    micDisabledState:
+      (callingParticipant.mediaAccess?.isAudioPermitted === false ? strings?.micDisabledIconLabel : undefined) ?? '',
+    cameraDisabledState:
+      (callingParticipant.mediaAccess?.isVideoPermitted === false ? strings?.cameraDisabledIconLabel : undefined) ?? '',
+    sharingState: (callingParticipant.isScreenSharing ? strings?.sharingIconLabel : undefined) ?? '',
+    handRaisedState:
+      (callingParticipant.raisedHand?.raisedHandOrderPosition
+        ? _formatString(strings?.handRaisedIconLabel ?? '', {
+            position: callingParticipant.raisedHand?.raisedHandOrderPosition?.toString() ?? ''
+          })
+        : undefined) ?? ''
+  });
 
   return (
     <ParticipantItem
@@ -221,6 +257,9 @@ const onRenderParticipantDefault = (
       showParticipantOverflowTooltip={showParticipantOverflowTooltip}
       participantState={callingParticipant.state}
       ariaLabelledBy={participantAriaLabelledBy}
+      strings={{
+        participantItemAriaLabel: ariaLabel
+      }}
     />
   );
 };

@@ -5,10 +5,15 @@
     "removeButtonLabel": "إزالة",
     "sharingIconLabel": "جارٍ المشاركة",
     "mutedIconLabel": "تم كتم الصوت",
+    "handRaisedIconLabel": "يد مرفوعة - الموضع {position}",
     "displayNamePlaceholder": "مشارك غير مسمى",
     "participantStateRinging": "يتم الآن الاتصال...",
     "participantStateHold": "قيد الانتظار",
-    "attendeeRole": "الحضور"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}، {handRaisedState}، {mutedState}، {micDisabledState}، {cameraDisabledState}، {sharingState}، {connectionState}، خيارات إضافية",
+    "attendeeRole": "الحضور",
+    "micDisabledIconLabel": "تم تعطيل الميكروفون",
+    "cameraDisabledIconLabel": "تم تعطيل الكاميرا"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} من الأشخاص الإضافيين"
@@ -58,6 +63,7 @@
     "richTextDeleteColumnMenu": "حذف العمود",
     "richTextDeleteRowMenu": "حذف الصف",
     "richTextDeleteTableMenu": "حذف الجدول",
+    "richTextToolbarAriaLabel": "شريط أدوات تنسيق الرسائل",
     "richTextToolbarMoreButtonAriaLabel": "خيارات إضافية",
     "attachmentMoreMenu": "خيارات إضافية",
     "richTextNewBulletedListItemAnnouncement": "رمز نقطي، سطر جديد",
@@ -65,12 +71,34 @@
     "richTextBulletedListAppliedAnnouncement": "تم تطبيق قائمة نقطية",
     "richTextNumberedListAppliedAnnouncement": "تطبيق قائمة ذات تعداد رقمي"
   },
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "تشغيل مربع حوار عرض الكتابة في الوقت الحقيقي (RTT) المشروط",
+    "realTimeTextModalTitle": "هل تريد تشغيل عرض الكتابة في الوقت الحقيقي؟",
+    "realTimeTextModalText": "سيتم تشغيل النص في الوقت الحقيقي (RTT) لكل شخص في الاجتماع.",
+    "realTimeTextConfirmButtonLabel": "تشغيل",
+    "realTimeTextCancelButtonLabel": "إلغاء الأمر",
+    "realTimeTextCloseModalButtonAriaLabel": "إغلاق مربع حوار عرض الكتابة في الوقت الحقيقي (RTT) المشروط"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "يتم الآن بدء التسميات التوضيحية...",
+    "realTimeTextInputBoxDefaultText": "اكتب رسالة في الوقت الحقيقي",
+    "realTimeTextInputErrorMessage": "لا يمكن أن تتجاوز الرسالة 2000 حرف",
+    "realTimeTextBannerTitle": "عرض الكتابة في الوقت الحقيقي (RTT)",
+    "realTimeTextBannerContent": "تم تمكين RTT (نص الوقت الحقيقي) لجميع المشاركين طوال مدة الاجتماع.",
+    "realTimeTextBannerLinkLabel": "تعرّف على المزيد",
+    "captionsOnlyContainerTitle": "نص الكلام",
+    "realTimeTextOnlyContainerTitle": "نص حقيقي",
+    "captionsAndRealTimeTextContainerTitle": "التسميات التوضيحية والنص في الوقت الحقيقي",
+    "expandButtonAriaLabel": "توسيع",
+    "minimizeButtonAriaLabel": "طي"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "الاقتراحات"
   },
   "imageOverlay": {
     "downloadButtonLabel": "تنزيل",
-    "dismissButtonAriaLabel": "إغلاق"
+    "dismissButtonAriaLabel": "إغلاق",
+    "overlayVisibleMessage": "تراكب تفاصيل الصور"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "تم إرسال الرسالة",
@@ -146,6 +174,7 @@
   },
   "participantsButton": {
     "label": "الأشخاص",
+    "ariaLabel": "الأشخاص",
     "tooltipContent": "إظهار المشاركين",
     "menuHeader": "في هذه المكالمة",
     "participantsListButtonLabel": "{numParticipants} من الأشخاص",
@@ -169,7 +198,7 @@
   },
   "reactionButton": {
     "label": "تفاعل",
-    "ariaLabel": "زر \"تفاعل\"، إرسال تفاعل",
+    "ariaLabel": "تفاعل",
     "tooltipDisabledContent": "تم تعطيل إجراء التفاعل",
     "tooltipContent": "إرسال تفاعل",
     "likeReactionTooltipContent": "إعجاب",
@@ -177,6 +206,107 @@
     "laughReactionTooltipContent": "ضحك",
     "applauseReactionTooltipContent": "تصفيق",
     "surprisedReactionTooltipContent": "مندهش"
+  },
+  "realTimeText": {
+    "isTypingText": "عرض الكتابة في الوقت الحقيقي (RTT) قيد الكتابة"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "إعدادات التسميات التوضيحية",
+    "captionsSettingsSpokenLanguageDropdownLabel": "اللغة المنطوقة",
+    "captionsSettingsCaptionLanguageDropdownLabel": "لغة التسميات التوضيحية",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "اللغة التي يتحدث بها كل شخص في هذه المكالمة.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "ستظهر التسميات التوضيحية بهذه اللغة.",
+    "captionsSettingsConfirmButtonLabel": "تأكيد",
+    "captionsSettingsCancelButtonLabel": "إلغاء الأمر",
+    "captionsSettingsModalAriaLabel": "مربع حوار مشروط لإعدادات نص الكلام",
+    "captionsSettingsCloseModalButtonAriaLabel": "إغلاق إعداد نص الكلام"
+  },
+  "spokenLanguages": {
+    "ar-ae": "العربية - الإمارات العربية المتحدة",
+    "ar-sa": "العربية - السعودية",
+    "da-dk": "الدانمركية",
+    "de-de": "الألمانية - ألمانيا",
+    "en-au": "الإنجليزية - أستراليا",
+    "en-ca": "الإنجليزية - كندا",
+    "en-gb": "الإنجليزية - المملكة المتحدة",
+    "en-in": "الإنجليزية - الهند",
+    "en-nz": "الإنجليزية - نيوزيلندا",
+    "en-us": "الإنجليزية - الولايات المتحدة",
+    "es-es": "الإسبانية - إسبانيا (فرز حديث)",
+    "es-mx": "الإسبانية - المكسيك",
+    "fi-fi": "الفنلندية",
+    "fr-ca": "الفرنسية - كندا",
+    "fr-fr": "الفرنسية - فرنسا",
+    "hi-in": "الهندية",
+    "it-it": "الإيطالية - إيطاليا",
+    "ja-jp": "اليابانية",
+    "ko-kr": "الكورية",
+    "nb-no": "النرويجية (بوكمال)",
+    "nl-be": "الهولندية - بلجيكا",
+    "nl-nl": "الهولندية - هولندا",
+    "pl-pl": "البولندية",
+    "pt-br": "البرتغالية - البرازيل",
+    "ru-ru": "الروسية",
+    "sv-se": "السويدية",
+    "zh-cn": "الصينية - جمهورية الصين الشعبية",
+    "zh-hk": "الصينية - منطقة هونغ كونغ الإدارية الخاصة",
+    "cs-cz": "التشيكية",
+    "pt-pt": "البرتغالية - البرتغال",
+    "tr-tr": "التركية",
+    "vi-vn": "الفيتنامية",
+    "th-th": "التايلاندية",
+    "he-il": "العبرية",
+    "cy-gb": "الويلزية",
+    "uk-ua": "الأوكرانية",
+    "el-gr": "اليونانية",
+    "hu-hu": "الهنغارية",
+    "ro-ro": "الرومانية",
+    "sk-sk": "السلوفاكية",
+    "zh-tw": "الصينية - تايوان"
+  },
+  "captionLanguages": {
+    "ar": "العربية",
+    "da": "الدانمركية",
+    "de": "الألمانية",
+    "en": "الإنجليزية",
+    "es": "الإسبانية",
+    "fi": "الفنلندية",
+    "fr-ca": "الفرنسية - كندا",
+    "fr": "الفرنسية - فرنسا",
+    "hi": "الهندية",
+    "it": "الإيطالية",
+    "ja": "اليابانية",
+    "ko": "الكورية",
+    "nb": "النرويجية (بوكمال)",
+    "nl": "الهولندية",
+    "pl": "البولندية",
+    "pt": "البرتغالية - البرازيل",
+    "ru": "الروسية",
+    "sv": "السويدية",
+    "zh-Hans": "الصينية (المبسطة)",
+    "zh-Hant": "الصينية (التقليدية)",
+    "cs": "التشيكية",
+    "pt-pt": "البرتغالية - البرتغال",
+    "tr": "التركية",
+    "vi": "الفيتنامية",
+    "th": "التايلاندية",
+    "he": "العبرية",
+    "cy": "الويلزية",
+    "uk": "الأوكرانية",
+    "el": "اليونانية",
+    "hu": "الهنغارية",
+    "ro": "الرومانية",
+    "sk": "السلوفاكية"
+  },
+  "startCaptionsButton": {
+    "onLabel": "تمكين نص الكلام",
+    "offLabel": "تعطيل نص الكلام",
+    "tooltipOnContent": "تعطيل نص الكلام",
+    "tooltipOffContent": "تمكين نص الكلام"
+  },
+  "startRealTimeTextButton": {
+    "label": "تشغيل RTT لهذه المكالمة",
+    "tooltipOffContent": "تشغيل RTT لهذه المكالمة"
   },
   "messageThread": {
     "yesterday": "أمس",
@@ -194,7 +324,9 @@
     "resendMessage": "محاولة الإرسال مرة أخرى",
     "failToSendTag": "فشل الإرسال",
     "editedTag": "تم التحرير",
-    "liveAuthorIntro": "قال {author}",
+    "liveAuthorIntro": "رسالة من {author}",
+    "editedMessageLiveAuthorIntro": "تم تحرير الرسالة من {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "رسالة محررة",
     "messageContentAriaText": "{status} {author} قال {message}",
     "messageContentMineAriaText": "{status} أنت قولت {message}",
     "editBoxTextLimit": "تجاوزت رسالتك الحد الأقصى لعدد الأحرف {limitNumber}",
@@ -467,6 +599,11 @@
       "message": "سننقلك إلى الغرفة المعينة خلال 5 ثوان.",
       "dismissButtonAriaLabel": "إغلاق"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "تم إغلاق الغرفة الفرعية الخاصة بك",
+      "message": "سنعيدك إلى اجتماعك خلال 5 ثوان.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "هل تريد الانضمام إلى الغرفة الفرعية؟",
       "message": "تم تعيينك إلى غرفة اجتماع فرعية.",
@@ -482,6 +619,34 @@
       "title": "أوشكت صلاحية الحد الزمني للغرفة على الانتهاء.",
       "message": "سيتم إغلاق هذه الغرفة في غضون 30 ثانية.",
       "dismissButtonAriaLabel": "‏إغلاق"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "تم تمكين الكاميرا لديك",
+      "message": "قم بتشغيلها إذا كنت ترغب في مشاركة الفيديو.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "تم تعطيل الكاميرا",
+      "message": "لم يعد بإمكانك مشاركة الفيديو.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "تم تمكين الميكروفون لديك",
+      "message": "قم بإلغاء كتم الصوت إذا أردت التحدث.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "تم تعطيل الميكروفون",
+      "message": "لم يعد بإمكانك إلغاء كتم الصوت.",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "togetherModeStarted": {
+      "title": "تم بدء وضع التجميع",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "togetherModeEnded": {
+      "title": "تم إنهاء وضع التجميع",
+      "dismissButtonAriaLabel": "إغلاق"
     }
   },
   "videoGallery": {
@@ -510,7 +675,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "الخروج من وضع تسليط الضوء",
     "attendeeRole": "الحضور",
     "muteParticipantMenuItemLabel": "كتم الصوت",
-    "waitingScreenText": "في انتظار انضمام الآخرين"
+    "waitingScreenText": "في انتظار انضمام الآخرين",
+    "forbidAudio": "تعطيل الميكروفون",
+    "permitAudio": "السماح بالميكروفون",
+    "forbidAudioTileMenuLabel": "تعطيل الميكروفون",
+    "permitAudioTileMenuLabel": "السماح بالميكروفون",
+    "forbidVideo": "تعطيل الكاميرا",
+    "permitVideo": "السماح بالكاميرا",
+    "forbidVideoTileMenuLabel": "تعطيل الكاميرا",
+    "permitVideoTileMenuLabel": "السماح بالكاميرا"
   },
   "dialpad": {
     "placeholderText": "أدخل رقم الهاتف",
@@ -524,8 +697,15 @@
   },
   "videoTile": {
     "participantStateRinging": "يتم الآن الاتصال...",
+    "participantReconnecting": "يتم الآن إعادة الاتصال...",
     "participantStateHold": "قيد الانتظار",
-    "moreOptionsButtonAriaLabel": "خيارات إضافية"
+    "moreOptionsButtonAriaLabel": "خيارات إضافية {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "مكتوم الصوت",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "غير مكتوم الصوت",
+    "moreOptionsParticipantHandRaisedAriaLabel": "يد مرفوعة",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "يتحدث",
+    "moreOptionsParticipantMicDisabledAriaLabel": "تم تعطيل الميكروفون",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "تم تعطيل الكاميرا"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "السماح {appName} باستخدام الكاميرا والميكروفون لديك",
@@ -643,8 +823,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "الصفحة السابقة",
-    "rightNavButtonAriaLabel": "الصفحة التالية"
+    "leftNavButtonAriaLabel": "الصفحة السابقة {current} من {total}",
+    "rightNavButtonAriaLabel": "الصفحة التالية {current} من {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "الانضمام إلى مكالمة من هاتفك",

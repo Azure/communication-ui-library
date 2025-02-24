@@ -16,6 +16,13 @@ import {
   VideoStreamOptions,
   CreateVideoStreamViewResult
 } from '../types';
+/* @conditional-compile-remove(together-mode) */
+import {
+  VideoGalleryTogetherModeParticipantPosition,
+  VideoGalleryTogetherModeStreams,
+  TogetherModeStreamViewResult,
+  TogetherModeStreamOptions
+} from '../types/TogetherModeTypes';
 import { ViewScalingMode } from '../types';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _RemoteVideoTile } from './RemoteVideoTile';
@@ -24,7 +31,10 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
-import { _formatString } from '@internal/acs-ui-common';
+import {
+  _formatString,
+  /* @conditional-compile-remove(together-mode) */ _isIdentityMicrosoftTeamsUser
+} from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
@@ -37,8 +47,13 @@ import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
+
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeLayout } from './VideoGallery/TogetherModeLayout';
 import { LayoutProps } from './VideoGallery/Layout';
 import { ReactionResources } from '../types/ReactionTypes';
+/* @conditional-compile-remove(together-mode) */
+import { TogetherModeStream } from './VideoGallery/TogetherModeStream';
 
 /**
  * @private
@@ -128,7 +143,6 @@ export interface VideoGalleryStrings {
   stopSpotlightOnSelfVideoTileMenuLabel: string;
   /** String for the attendee role */
   attendeeRole: string;
-  /* @conditional-compile-remove(soft-mute) */
   /** Menu text shown in Video Tile contextual menu to mute a remote participant */
   muteParticipantMenuItemLabel: string;
   /** Text shown when waiting for others to join the call */
@@ -143,6 +157,7 @@ export type VideoGalleryLayout =
   | 'floatingLocalVideo'
   | 'speaker'
   | /* @conditional-compile-remove(large-gallery) */ 'largeGallery'
+  | /* @conditional-compile-remove(together-mode) */ 'togetherMode'
   | 'focusedContent';
 
 /**
@@ -310,11 +325,68 @@ export interface VideoGalleryProps {
    * Additional Options for Video Tiles
    */
   videoTilesOptions?: VideoTilesOptions;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * This callback is to mute a remote participant
    */
   onMuteParticipant?: (userId: string) => Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Indicates if the local participant can start together mode
+   */
+  startTogetherModeEnabled?: boolean;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Indicates if together mode is active
+   */
+  isTogetherModeActive?: boolean;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Callback to create a together mode stream view
+   */
+  onCreateTogetherModeStreamView?: (
+    options?: TogetherModeStreamOptions
+  ) => Promise<void | TogetherModeStreamViewResult>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * This callback is to start together mode
+   */
+  onStartTogetherMode?: () => Promise<void>;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * This callback is to set the scene size for together mode
+   */
+  onSetTogetherModeSceneSize?: (width: number, height: number) => void;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Together mode video streams
+   */
+  togetherModeStreams?: VideoGalleryTogetherModeStreams;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Seating position of participants in together mode
+   */
+  togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
+  /* @conditional-compile-remove(together-mode) */
+  /**
+   * Callback to dispose a together mode stream view
+   */
+  onDisposeTogetherModeStreamView?: () => Promise<void>;
+  /**
+   * This callback is to forbid audio for remote participant(s)
+   */
+  onForbidAudio?: (userIds: string[]) => Promise<void>;
+  /**
+   * This callback is to permit audio for remote participant(s)
+   */
+  onPermitAudio?: (userIds: string[]) => Promise<void>;
+  /**
+   * This callback is to forbid video for remote participant(s)
+   */
+  onForbidVideo?: (userIds: string[]) => Promise<void>;
+  /**
+   * This callback is to permit video for remote participant(s)
+   */
+  onPermitVideo?: (userIds: string[]) => Promise<void>;
 }
 
 /**
@@ -399,8 +471,27 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     maxParticipantsToSpotlight,
     reactionResources,
     videoTilesOptions,
-    /* @conditional-compile-remove(soft-mute) */
-    onMuteParticipant
+    onMuteParticipant,
+    /* @conditional-compile-remove(together-mode) */
+    startTogetherModeEnabled,
+    /* @conditional-compile-remove(together-mode) */
+    isTogetherModeActive,
+    /* @conditional-compile-remove(together-mode) */
+    onCreateTogetherModeStreamView,
+    /* @conditional-compile-remove(together-mode) */
+    onStartTogetherMode,
+    /* @conditional-compile-remove(together-mode) */
+    onSetTogetherModeSceneSize,
+    /* @conditional-compile-remove(together-mode) */
+    togetherModeStreams,
+    /* @conditional-compile-remove(together-mode) */
+    togetherModeSeatingCoordinates,
+    /* @conditional-compile-remove(together-mode) */
+    onDisposeTogetherModeStreamView,
+    onForbidAudio,
+    onPermitAudio,
+    onForbidVideo,
+    onPermitVideo
   } = props;
 
   const ids = useIdentifiers();
@@ -483,17 +574,10 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
     const showDisplayNameTrampoline = (): string => {
       return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
-      return isNarrow ? '' : strings.localVideoLabel;
     };
 
     return (
-      <Stack
-        styles={localVideoTileContainerStyles}
-        key="local-video-tile-key"
-        tabIndex={0}
-        aria-label={strings.localVideoMovementAriaLabel ?? strings.localVideoMovementLabel}
-        role={'dialog'}
-      >
+      <Stack styles={localVideoTileContainerStyles} key="local-video-tile-key">
         <_LocalVideoTile
           alwaysShowLabelBackground={videoTilesOptions?.alwaysShowLabelBackground}
           userId={localParticipant.userId}
@@ -525,6 +609,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           strings={strings}
           reactionResources={reactionResources}
           participantsCount={remoteParticipants.length + 1}
+          isScreenSharingOn={localParticipant.isScreenSharingOn}
+          mediaAccess={localParticipant.mediaAccess}
         />
       </Stack>
     );
@@ -654,39 +740,45 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
           onStopSpotlight={onStopRemoteSpotlight}
           maxParticipantsToSpotlight={maxParticipantsToSpotlight}
           reactionResources={reactionResources}
-          /* @conditional-compile-remove(soft-mute) */
           onMuteParticipant={onMuteParticipant}
+          onForbidAudio={onForbidAudio}
+          onPermitAudio={onPermitAudio}
+          onForbidVideo={onForbidVideo}
+          onPermitVideo={onPermitVideo}
         />
       );
     },
     [
+      selectedScalingModeState,
+      pinnedParticipants,
+      videoTilesOptions?.alwaysShowLabelBackground,
       onCreateRemoteStreamView,
       onDisposeRemoteVideoStreamView,
-      remoteVideoViewOptions,
-      localParticipant,
       onRenderAvatar,
       showMuteIndicator,
       strings,
-      drawerMenuHostId,
+      localParticipant.userId,
       remoteVideoTileMenu,
-      selectedScalingModeState,
-      pinnedParticipants,
+      drawerMenuHostId,
       onPinParticipant,
       onUnpinParticipant,
-      toggleAnnouncerString,
       onUpdateScalingMode,
+      toggleAnnouncerString,
       spotlightedParticipants,
       onStartRemoteSpotlight,
       onStopRemoteSpotlight,
       maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(soft-mute) */ onMuteParticipant,
       reactionResources,
-      videoTilesOptions
+      onMuteParticipant,
+      onForbidAudio,
+      onPermitAudio,
+      onForbidVideo,
+      onPermitVideo,
+      remoteVideoViewOptions
     ]
   );
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
-
   const localScreenShareStreamComponent = (
     <LocalScreenShare
       localParticipant={localParticipant}
@@ -716,6 +808,47 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     : localParticipant.isScreenSharingOn
       ? localScreenShareStreamComponent
       : undefined;
+
+  /* @conditional-compile-remove(together-mode) */
+  const togetherModeStreamComponent = useMemo(
+    () => (
+      <TogetherModeStream
+        startTogetherModeEnabled={startTogetherModeEnabled}
+        isTogetherModeActive={isTogetherModeActive}
+        onCreateTogetherModeStreamView={onCreateTogetherModeStreamView}
+        onStartTogetherMode={onStartTogetherMode}
+        onDisposeTogetherModeStreamView={onDisposeTogetherModeStreamView}
+        onSetTogetherModeSceneSize={onSetTogetherModeSceneSize}
+        togetherModeStreams={togetherModeStreams}
+        seatingCoordinates={togetherModeSeatingCoordinates}
+        localParticipant={localParticipant}
+        remoteParticipants={remoteParticipants}
+        reactionResources={reactionResources}
+        containerWidth={containerWidth}
+        containerHeight={containerHeight}
+      />
+    ),
+    [
+      startTogetherModeEnabled,
+      isTogetherModeActive,
+      onCreateTogetherModeStreamView,
+      onStartTogetherMode,
+      onDisposeTogetherModeStreamView,
+      onSetTogetherModeSceneSize,
+      togetherModeStreams,
+      togetherModeSeatingCoordinates,
+      localParticipant,
+      remoteParticipants,
+      reactionResources,
+      containerWidth,
+      containerHeight
+    ]
+  );
+  /* @conditional-compile-remove(together-mode) */
+  // Current implementation of capabilities is only based on user role.
+  // This logic checks for the user role and if the user is a Teams user.
+  const canSwitchToTogetherModeLayout =
+    isTogetherModeActive || (_isIdentityMicrosoftTeamsUser(localParticipant.userId) && startTogetherModeEnabled);
 
   const layoutProps = useMemo<LayoutProps>(
     () => ({
@@ -770,8 +903,21 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (layout === 'largeGallery') {
       return <LargeGalleryLayout {...layoutProps} />;
     }
+    /* @conditional-compile-remove(together-mode) */
+    // Teams users can switch to Together mode layout only if they have the capability,
+    // while ACS users can do so only if Together mode is enabled.
+    if (!screenShareComponent && layout === 'togetherMode' && canSwitchToTogetherModeLayout) {
+      return <TogetherModeLayout togetherModeStreamComponent={togetherModeStreamComponent} />;
+    }
     return <DefaultLayout {...layoutProps} />;
-  }, [layout, layoutProps, screenShareParticipant]);
+  }, [
+    /* @conditional-compile-remove(together-mode) */ canSwitchToTogetherModeLayout,
+    layout,
+    layoutProps,
+    screenShareComponent,
+    screenShareParticipant,
+    /* @conditional-compile-remove(together-mode) */ togetherModeStreamComponent
+  ]);
 
   return (
     <div

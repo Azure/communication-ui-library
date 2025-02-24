@@ -3,6 +3,7 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { VideoStreamOptions, CreateVideoStreamViewResult, ViewScalingMode } from '../../types';
+import { callingComponentLogger } from '../utils/Logger';
 
 /** @private */
 export interface VideoStreamLifecycleMaintainerExtendableProps {
@@ -12,6 +13,7 @@ export interface VideoStreamLifecycleMaintainerExtendableProps {
   scalingMode?: ViewScalingMode;
   isScreenSharingOn?: boolean;
   streamId?: number;
+  isVideoPermitted?: boolean;
 }
 
 interface VideoStreamLifecycleMaintainerProps extends VideoStreamLifecycleMaintainerExtendableProps {
@@ -48,13 +50,14 @@ const useVideoStreamLifecycleMaintainer = (
     onDisposeStreamView,
     renderElementExists,
     scalingMode,
-    streamId
+    streamId,
+    isVideoPermitted
   } = props;
 
   const [videoStreamViewResult, setVideoStreamViewResult] = useState<CreateVideoStreamViewResult | undefined>();
 
   useEffect(() => {
-    if (isStreamAvailable && !renderElementExists) {
+    if (isVideoPermitted !== false && isStreamAvailable && !renderElementExists) {
       onCreateStreamView?.({ isMirrored, scalingMode })?.then((result) => {
         result && setVideoStreamViewResult(result);
       });
@@ -67,6 +70,8 @@ const useVideoStreamLifecycleMaintainer = (
         if (!isScreenSharingOn) {
           onDisposeStreamView?.();
         }
+      } else {
+        callingComponentLogger.warning('Stream view element does not exist when disposing stream view');
       }
     };
   }, [
@@ -77,12 +82,8 @@ const useVideoStreamLifecycleMaintainer = (
     onDisposeStreamView,
     renderElementExists,
     scalingMode,
-    /**
-     * this is here in order to force a re-render when streamId changes
-     *  - this should not happen but to recover for the user we will make sure that we subscribe to the
-     * new stream by forcing a re-render.
-     */
-    streamId
+    streamId,
+    isVideoPermitted
   ]);
 
   // The execution order for above useEffect is onCreateRemoteStreamView =>(async time gap) RenderElement generated => element disposed => onDisposeRemoteStreamView

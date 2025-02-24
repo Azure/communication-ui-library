@@ -5,10 +5,15 @@
     "removeButtonLabel": "Tynnu",
     "sharingIconLabel": "Rhannu",
     "mutedIconLabel": "Wedi tewi",
+    "handRaisedIconLabel": "Llaw wedi'i chodi - Lleoliad {position}",
     "displayNamePlaceholder": "Cyfranogwr dienw",
     "participantStateRinging": "Wrthi'n galw...",
     "participantStateHold": "Galwad yn aros",
-    "attendeeRole": "Mynychwr"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, Mwy o Ddewisiadau",
+    "attendeeRole": "Mynychwr",
+    "micDisabledIconLabel": "Meicroffon wedi'i analluogi",
+    "cameraDisabledIconLabel": "Camera wedi'i analluogi"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} arall"
@@ -58,6 +63,7 @@
     "richTextDeleteColumnMenu": "Dileu'r golofn",
     "richTextDeleteRowMenu": "Dileu'r rhes",
     "richTextDeleteTableMenu": "Dileu'r tabl",
+    "richTextToolbarAriaLabel": "Bar Offer Fformatio Negeseuon",
     "richTextToolbarMoreButtonAriaLabel": "Mwy o ddewisiadau",
     "attachmentMoreMenu": "Mwy o Ddewisiadau",
     "richTextNewBulletedListItemAnnouncement": "Bwled, llinell newydd",
@@ -65,12 +71,34 @@
     "richTextBulletedListAppliedAnnouncement": "Wedi defnyddio'r rhestr bwledi",
     "richTextNumberedListAppliedAnnouncement": "Wedi defnyddio rhestr wedi'i rhifo"
   },
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Rhoi Moddol RTT ar waith",
+    "realTimeTextModalTitle": "Rhoi RTT ar waith?",
+    "realTimeTextModalText": "Bydd teipio mewn amser real (RTT) yn cael ei alluogi ar gyfer pawb yn y cyfarfod.",
+    "realTimeTextConfirmButtonLabel": "Rhoi ar waith",
+    "realTimeTextCancelButtonLabel": "Canslo",
+    "realTimeTextCloseModalButtonAriaLabel": "Cau'r Moddol RTT"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Wrthi'n dechrau'r capsiynau...",
+    "realTimeTextInputBoxDefaultText": "Teipiwch neges mewn amser go iawn",
+    "realTimeTextInputErrorMessage": "All y neges ddim bod yn fwy na 2000 o nodau",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "Mae RTT (testun amser real) wedi'i alluogi ar gyfer yr holl gyfranogwyr ar gyfer cyfnod cyfan y cyfarfod.",
+    "realTimeTextBannerLinkLabel": "Dysgu mwy",
+    "captionsOnlyContainerTitle": "Capsiynau",
+    "realTimeTextOnlyContainerTitle": "Testun Amser Real",
+    "captionsAndRealTimeTextContainerTitle": "Capsiynau a Thestun Amser Real",
+    "expandButtonAriaLabel": "Ehangu",
+    "minimizeButtonAriaLabel": "Crebachu"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Awgrymiadau"
   },
   "imageOverlay": {
     "downloadButtonLabel": "Lawrlwytho",
-    "dismissButtonAriaLabel": "Cau"
+    "dismissButtonAriaLabel": "Cau",
+    "overlayVisibleMessage": "Troshaen Manylion Delwedd"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Wedi anfon y neges",
@@ -146,6 +174,7 @@
   },
   "participantsButton": {
     "label": "Pobl",
+    "ariaLabel": "Pobl",
     "tooltipContent": "Dangos cyfranogwyr",
     "menuHeader": "Yn yr alwad hon",
     "participantsListButtonLabel": "{numParticipants} o bobl",
@@ -169,7 +198,7 @@
   },
   "reactionButton": {
     "label": "Ymateb",
-    "ariaLabel": "Botwm Ymateb, Anfon ymateb",
+    "ariaLabel": "Ymateb",
     "tooltipDisabledContent": "Mae'r weithred ymateb wedi'i hanalluogi",
     "tooltipContent": "Anfon ymateb",
     "likeReactionTooltipContent": "Hoffi",
@@ -177,6 +206,107 @@
     "laughReactionTooltipContent": "Chwerthin",
     "applauseReactionTooltipContent": "Curo Dwylo",
     "surprisedReactionTooltipContent": "Wedi synnu"
+  },
+  "realTimeText": {
+    "isTypingText": "Teipio RTT"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Gosodiadau Capsiynau",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Iaith lafar",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Iaith capsiynau",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Yr iaith y mae pawb yn yr alwad hon yn ei siarad.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Bydd capsiynau'n ymddangos yn yr iaith hon.",
+    "captionsSettingsConfirmButtonLabel": "Cadarnhau",
+    "captionsSettingsCancelButtonLabel": "Canslo",
+    "captionsSettingsModalAriaLabel": "Moddol Gosodiad Capsiynau",
+    "captionsSettingsCloseModalButtonAriaLabel": "Cau Gosodiad Capsiynau"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabeg - E.A.U.",
+    "ar-sa": "Arabeg - Saudi Arabia",
+    "da-dk": "Daneg",
+    "de-de": "Almaeneg - Yr Almaen",
+    "en-au": "Saesneg - Awstralia",
+    "en-ca": "Saesneg - Canada",
+    "en-gb": "Saesneg - Y Deyrnas Unedig",
+    "en-in": "Saesneg - India",
+    "en-nz": "Saesneg - Seland Newydd",
+    "en-us": "Saesneg - Unol Daleithiau America",
+    "es-es": "Sbaeneg - Sbaen (Modern)",
+    "es-mx": "Sbaeneg - Mecsico",
+    "fi-fi": "Ffinneg",
+    "fr-ca": "Ffrangeg - Canada",
+    "fr-fr": "Ffrangeg - Ffrainc",
+    "hi-in": "Hindi",
+    "it-it": "Eidaleg - Yr Eidal",
+    "ja-jp": "Japaneeg",
+    "ko-kr": "Coreeg",
+    "nb-no": "Norwyeg (Bokmål)",
+    "nl-be": "Iseldireg - Gwlad Belg",
+    "nl-nl": "Iseldireg - Yr Iseldiroedd",
+    "pl-pl": "Pwyleg",
+    "pt-br": "Portiwgaleg - Brasil",
+    "ru-ru": "Rwseg",
+    "sv-se": "Swedeg",
+    "zh-cn": "Tsieinëeg - Gweriniaeth y Bobl Tsieina",
+    "zh-hk": "Tsieinëeg - Hong Kong SAR",
+    "cs-cz": "Tsieceg",
+    "pt-pt": "Portiwgaleg - Portiwgal",
+    "tr-tr": "Tyrceg",
+    "vi-vn": "Fietnameg",
+    "th-th": "Thai",
+    "he-il": "Hebraeg",
+    "cy-gb": "Cymraeg",
+    "uk-ua": "Wcreineg",
+    "el-gr": "Groeg",
+    "hu-hu": "Hwngareg",
+    "ro-ro": "Rwmaneg",
+    "sk-sk": "Slofaceg",
+    "zh-tw": "Tsieinëeg - Taiwan"
+  },
+  "captionLanguages": {
+    "ar": "Arabeg",
+    "da": "Daneg",
+    "de": "Almaeneg",
+    "en": "Saesneg",
+    "es": "Sbaeneg",
+    "fi": "Ffinneg",
+    "fr-ca": "Ffrangeg - Canada",
+    "fr": "Ffrangeg - Ffrainc",
+    "hi": "Hindi",
+    "it": "Eidaleg",
+    "ja": "Japaneeg",
+    "ko": "Coreeg",
+    "nb": "Norwyeg (Bokmål)",
+    "nl": "Iseldireg",
+    "pl": "Pwyleg",
+    "pt": "Portiwgaleg - Brasil",
+    "ru": "Rwseg",
+    "sv": "Swedeg",
+    "zh-Hans": "Tsieinëeg (Syml)",
+    "zh-Hant": "Tsieinëeg (Traddodiadol)",
+    "cs": "Tsieceg",
+    "pt-pt": "Portiwgaleg - Portiwgal",
+    "tr": "Tyrceg",
+    "vi": "Fietnameg",
+    "th": "Thai",
+    "he": "Hebraeg",
+    "cy": "Cymraeg",
+    "uk": "Wcreineg",
+    "el": "Groeg",
+    "hu": "Hwngareg",
+    "ro": "Rwmaneg",
+    "sk": "Slofaceg"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Galluogi capsiynau",
+    "offLabel": "Analluogi capsiynau",
+    "tooltipOnContent": "Analluogi capsiynau",
+    "tooltipOffContent": "Galluogi capsiynau"
+  },
+  "startRealTimeTextButton": {
+    "label": "Rhoi RTT ar waith ar gyfer yr alwad hon",
+    "tooltipOffContent": "Rhoi RTT ar waith ar gyfer yr alwad hon"
   },
   "messageThread": {
     "yesterday": "Ddoe",
@@ -194,7 +324,9 @@
     "resendMessage": "Rhowch gynnig arall ar anfon",
     "failToSendTag": "Wedi methu â'i hanfon",
     "editedTag": "Golygwyd",
-    "liveAuthorIntro": "Mae {author} yn dweud",
+    "liveAuthorIntro": "Neges gan {author}",
+    "editedMessageLiveAuthorIntro": "Neges wedi'i golygu gan {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Neges wedi’i golygu",
     "messageContentAriaText": "{status} Dywedodd {author} {message}",
     "messageContentMineAriaText": "{status} Dywedoch chi {message}",
     "editBoxTextLimit": "Mae eich neges dros y terfyn o {limitNumber} nodau",
@@ -467,6 +599,11 @@
       "message": "Byddwn yn eich symud i'ch ystafell wedi'i neilltuo mewn 5 eiliad.",
       "dismissButtonAriaLabel": "Cau"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Mae eich cyfarfod ymylol wedi cau",
+      "message": "Byddwn yn eich symud yn ôl i'ch cyfarfod mewn 5 eiliad.",
+      "dismissButtonAriaLabel": "Cau"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Ymuno â chyfarfod ymylol?",
       "message": "Rydych chi wedi cael eich neilltuo i gyfarfod ymylol.",
@@ -481,6 +618,34 @@
     "breakoutRoomClosingSoon": {
       "title": "Mae terfyn amser yr ystafell ar fin dod i ben.",
       "message": "Bydd yr ystafell hon yn cau mewn 30 eiliad",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Mae eich camera wedi cael ei alluogi",
+      "message": "Rhowch eich camera ar waith os hoffech chi rannu fideo",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Mae eich camera wedi cael ei analluogi",
+      "message": "Does dim modd i chi rannu fideo bellach",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Mae eich meic wedi cael ei alluogi",
+      "message": "Dad-dewch y meicroffon os hoffech chi siarad.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Mae eich meic wedi cael ei analluogi",
+      "message": "Does dim modd i chi ddad-dewi bellach.",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "togetherModeStarted": {
+      "title": "Mae Togethermode wedi dechrau",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "togetherModeEnded": {
+      "title": "Mae Togethermode wedi dod i ben",
       "dismissButtonAriaLabel": "Cau"
     }
   },
@@ -510,7 +675,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Gadael y sbotolau",
     "attendeeRole": "Mynychwr",
     "muteParticipantMenuItemLabel": "Tewi",
-    "waitingScreenText": "Yn aros i bobl eraill ymuno"
+    "waitingScreenText": "Yn aros i bobl eraill ymuno",
+    "forbidAudio": "Analluogi meic",
+    "permitAudio": "Caniatáu meic",
+    "forbidAudioTileMenuLabel": "Analluogi meic",
+    "permitAudioTileMenuLabel": "Caniatáu meic",
+    "forbidVideo": "Analluogi camera",
+    "permitVideo": "Caniatáu camera",
+    "forbidVideoTileMenuLabel": "Analluogi camera",
+    "permitVideoTileMenuLabel": "Caniatáu camera"
   },
   "dialpad": {
     "placeholderText": "Rhowch rif ffôn",
@@ -524,8 +697,15 @@
   },
   "videoTile": {
     "participantStateRinging": "Wrthi'n galw...",
+    "participantReconnecting": "Wrthi'n ailgysylltu...",
     "participantStateHold": "Galwad yn aros",
-    "moreOptionsButtonAriaLabel": "Mwy o Ddewisiadau"
+    "moreOptionsButtonAriaLabel": "Mwy o Ddewisiadau {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "wedi tewi",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "wedi dad-dewi",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Llaw wedi’i chodi",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Siarad",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Meicroffon wedi'i analluogi",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Camera wedi'i analluogi"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Caniatáu i {appName} ddefnyddio eich camera a'ch meicroffon",
@@ -643,8 +823,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "y dudalen flaenorol",
-    "rightNavButtonAriaLabel": "y dudalen nesaf"
+    "leftNavButtonAriaLabel": "tudalen flaenorol {current} o {total}",
+    "rightNavButtonAriaLabel": "tudalen nesaf {current} o {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Ymuno â galwad o'ch ffôn",

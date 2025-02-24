@@ -14,7 +14,7 @@ import { CompositeLocale } from '../../localization';
 /* @conditional-compile-remove(breakout-rooms) */
 import { useSelector } from '../hooks/useSelector';
 /* @conditional-compile-remove(breakout-rooms) */
-import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../selectors/baseSelectors';
+import { getAssignedBreakoutRoom, getBreakoutRoomSettings, getLatestNotifications } from '../selectors/baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
 import { Banner } from './Banner';
 
@@ -25,13 +25,21 @@ import { Banner } from './Banner';
 export const BreakoutRoomsBanner = (props: {
   locale: CompositeLocale;
   adapter: CommonCallAdapter;
-}): JSX.Element | undefined => {
+}): JSX.Element | null => {
   const { locale, adapter } = props;
 
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
   const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
+  const latestNotifications = useSelector(getLatestNotifications);
 
-  if (assignedBreakoutRoom && assignedBreakoutRoom.state === 'open' && assignedBreakoutRoom.call) {
+  if (
+    assignedBreakoutRoom &&
+    assignedBreakoutRoom.state === 'open' &&
+    // Breakout room settings are only defined in a breakout room so we use this to ensure
+    // the button is not shown when already in a breakout room
+    !breakoutRoomSettings &&
+    !latestNotifications['assignedBreakoutRoomOpened']
+  ) {
     return (
       <Stack styles={bannerNotificationStyles}>
         <Banner
@@ -61,5 +69,5 @@ export const BreakoutRoomsBanner = (props: {
       </Stack>
     );
   }
-  return undefined;
+  return null;
 };

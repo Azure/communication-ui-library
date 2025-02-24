@@ -5,10 +5,15 @@
     "removeButtonLabel": "הסר",
     "sharingIconLabel": "משתף",
     "mutedIconLabel": "מושתק",
+    "handRaisedIconLabel": "יד מורמת - מיקום {position}",
     "displayNamePlaceholder": "משתתף ללא שם",
     "participantStateRinging": "מתקשר...",
     "participantStateHold": "בהמתנה",
-    "attendeeRole": "משתתף"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, אפשרויות נוספות",
+    "attendeeRole": "משתתף",
+    "micDisabledIconLabel": "המיקרופון לא זמין",
+    "cameraDisabledIconLabel": "המצלמה לא זמינה"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} נוספים"
@@ -58,6 +63,7 @@
     "richTextDeleteColumnMenu": "מחק עמודה",
     "richTextDeleteRowMenu": "מחק שורה",
     "richTextDeleteTableMenu": "מחק טבלה",
+    "richTextToolbarAriaLabel": "סרגל כלים של עיצוב הודעה",
     "richTextToolbarMoreButtonAriaLabel": "אפשרויות נוספות",
     "attachmentMoreMenu": "אפשרויות נוספות",
     "richTextNewBulletedListItemAnnouncement": "תבליט, שורה חדשה",
@@ -65,12 +71,34 @@
     "richTextBulletedListAppliedAnnouncement": "הוחלה רשימה עם תבליטים",
     "richTextNumberedListAppliedAnnouncement": "רשימה ממוספרת הוחלה"
   },
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "הפעל תיבת דו-שיח מודאלית של RTT",
+    "realTimeTextModalTitle": "להפעיל RTT?",
+    "realTimeTextModalText": "טקסט בזמן אמת (RTT) יופעל עבור כל האנשים בפגישה.",
+    "realTimeTextConfirmButtonLabel": "הפעל",
+    "realTimeTextCancelButtonLabel": "ביטול",
+    "realTimeTextCloseModalButtonAriaLabel": "סגור תיבת דו-שיח מודאלית של RTT"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "מאתחל כתוביות...",
+    "realTimeTextInputBoxDefaultText": "הקלד הודעה בזמן אמת",
+    "realTimeTextInputErrorMessage": "ההודעה אינה יכולה לחרוג מ- 2,000 תווים",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (טקסט בזמן אמת) זמין עבור כל המשתתפים למשך הזמן כולו של הפגישה.",
+    "realTimeTextBannerLinkLabel": "מידע נוסף",
+    "captionsOnlyContainerTitle": "כתוביות",
+    "realTimeTextOnlyContainerTitle": "טקסט בזמן אמת",
+    "captionsAndRealTimeTextContainerTitle": "כתוביות וטקסט בזמן אמת",
+    "expandButtonAriaLabel": "הרחב",
+    "minimizeButtonAriaLabel": "כווץ"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "הצעות"
   },
   "imageOverlay": {
     "downloadButtonLabel": "הורד",
-    "dismissButtonAriaLabel": "סגור"
+    "dismissButtonAriaLabel": "סגור",
+    "overlayVisibleMessage": "שכבת-על של פרטי תמונה"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "ההודעה נשלחה",
@@ -146,6 +174,7 @@
   },
   "participantsButton": {
     "label": "אנשים",
+    "ariaLabel": "אנשים",
     "tooltipContent": "הצג משתתפים",
     "menuHeader": "בשיחה זו",
     "participantsListButtonLabel": "{numParticipants} אנשים",
@@ -169,7 +198,7 @@
   },
   "reactionButton": {
     "label": "תגובה",
-    "ariaLabel": "לחצן 'הגב', שלח תגובה",
+    "ariaLabel": "תגובה",
     "tooltipDisabledContent": "פעולת התגובה אינה זמינה",
     "tooltipContent": "שלח תגובה",
     "likeReactionTooltipContent": "אהבתי",
@@ -177,6 +206,107 @@
     "laughReactionTooltipContent": "צחוק",
     "applauseReactionTooltipContent": "תשואות",
     "surprisedReactionTooltipContent": "מופתע"
+  },
+  "realTimeText": {
+    "isTypingText": "הקלדת RTT"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "הגדרות כתוביות",
+    "captionsSettingsSpokenLanguageDropdownLabel": "שפה מדוברת",
+    "captionsSettingsCaptionLanguageDropdownLabel": "שפת כתוביות",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "השפה שבה כולם בשיחה הזו מדברים.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "הכתוביות יופיעו בשפה זו.",
+    "captionsSettingsConfirmButtonLabel": "אישור",
+    "captionsSettingsCancelButtonLabel": "ביטול",
+    "captionsSettingsModalAriaLabel": "מודאל הגדרת כתוביות",
+    "captionsSettingsCloseModalButtonAriaLabel": "סגור הגדרת כתוביות"
+  },
+  "spokenLanguages": {
+    "ar-ae": "ערבית - איחוד האמירויות",
+    "ar-sa": "ערבית - ערב הסעודית",
+    "da-dk": "דנית",
+    "de-de": "גרמנית - גרמניה",
+    "en-au": "אנגלית - אוסטרליה",
+    "en-ca": "אנגלית - קנדה",
+    "en-gb": "אנגלית - בריטניה",
+    "en-in": "אנגלית - הודו",
+    "en-nz": "אנגלית - ניו זילנד",
+    "en-us": "אנגלית - ארצות הברית",
+    "es-es": "ספרדית - ספרד (ספרדית מודרנית)",
+    "es-mx": "ספרדית - מקסיקו",
+    "fi-fi": "פינית",
+    "fr-ca": "צרפתית - קנדה",
+    "fr-fr": "צרפתית - צרפת",
+    "hi-in": "הינדי",
+    "it-it": "איטלקית - איטליה",
+    "ja-jp": "יפנית",
+    "ko-kr": "קוריאנית",
+    "nb-no": "נורווגית (Bokmål)",
+    "nl-be": "הולנדית - בלגיה",
+    "nl-nl": "הולנדית - הולנד",
+    "pl-pl": "פולנית",
+    "pt-br": "פורטוגזית - ברזיל",
+    "ru-ru": "רוסית",
+    "sv-se": "שוודית",
+    "zh-cn": "סינית - הרפובליקה העממית של סין",
+    "zh-hk": "סינית - הונג קונג",
+    "cs-cz": "צ'כית",
+    "pt-pt": "פורטוגזית - פורטוגל",
+    "tr-tr": "טורקית",
+    "vi-vn": "וייטנאמית",
+    "th-th": "תאית",
+    "he-il": "עברית",
+    "cy-gb": "וולשית",
+    "uk-ua": "אוקראינית",
+    "el-gr": "יוונית",
+    "hu-hu": "הונגרית",
+    "ro-ro": "רומנית",
+    "sk-sk": "סלובקית",
+    "zh-tw": "סינית - טייוואן"
+  },
+  "captionLanguages": {
+    "ar": "ערבית",
+    "da": "דנית",
+    "de": "גרמנית",
+    "en": "אנגלית",
+    "es": "ספרדית",
+    "fi": "פינית",
+    "fr-ca": "צרפתית - קנדה",
+    "fr": "צרפתית - צרפת",
+    "hi": "הינדי",
+    "it": "איטלקית",
+    "ja": "יפנית",
+    "ko": "קוריאנית",
+    "nb": "נורווגית (Bokmål)",
+    "nl": "הולנדית",
+    "pl": "פולנית",
+    "pt": "פורטוגזית - ברזיל",
+    "ru": "רוסית",
+    "sv": "שוודית",
+    "zh-Hans": "סינית (פשוטה)",
+    "zh-Hant": "סינית (מסורתית)",
+    "cs": "צ'כית",
+    "pt-pt": "פורטוגזית - פורטוגל",
+    "tr": "טורקית",
+    "vi": "וייטנאמית",
+    "th": "תאית",
+    "he": "עברית",
+    "cy": "וולשית",
+    "uk": "אוקראינית",
+    "el": "יוונית",
+    "hu": "הונגרית",
+    "ro": "רומנית",
+    "sk": "סלובקית"
+  },
+  "startCaptionsButton": {
+    "onLabel": "הפעל כתוביות",
+    "offLabel": "כבה כתוביות",
+    "tooltipOnContent": "כבה כתוביות",
+    "tooltipOffContent": "הפעל כתוביות"
+  },
+  "startRealTimeTextButton": {
+    "label": "הפעל RTT עבור שיחה זו",
+    "tooltipOffContent": "הפעל RTT עבור שיחה זו"
   },
   "messageThread": {
     "yesterday": "אתמול",
@@ -194,7 +324,9 @@
     "resendMessage": "נסה לשלוח שוב",
     "failToSendTag": "השליחה נכשלה",
     "editedTag": "נערך",
-    "liveAuthorIntro": "{author} אומר",
+    "liveAuthorIntro": "הודעה מאת {author}",
+    "editedMessageLiveAuthorIntro": "הודעה ערוכה מ- {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "הודעה ערוכה",
     "messageContentAriaText": "{status} {author} אמר {message}",
     "messageContentMineAriaText": "{status} אמרת {message}",
     "editBoxTextLimit": "ההודעה שלך נמצאת מעבר למגבלה של {limitNumber} תווים",
@@ -467,6 +599,11 @@
       "message": "נעביר אותך לחדר שהוקצה לך תוך 5 שניות.",
       "dismissButtonAriaLabel": "סגור"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "פיצול החדרים שלך נסגר",
+      "message": "נעביר אותך בחזרה לפגישה שלך בעוד 5 שניות.",
+      "dismissButtonAriaLabel": "סגור"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "להצטרף לפיצול חדרים?",
       "message": "הוקצית לפיצול חדר.",
@@ -481,6 +618,34 @@
     "breakoutRoomClosingSoon": {
       "title": "תוקף מגבלת זמן החדר עומד לפוג.",
       "message": "חדר זה ייסגר בעוד 30 שניות",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "המצלמה שלך הפכה לזמינה",
+      "message": "הפעל אותה אם ברצונך לשתף וידאו.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "המצלמה שלך הושבתה",
+      "message": "לא תוכל עוד לשתף וידאו.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "המיקרופון שלך הפך לזמין",
+      "message": "בטל את ההשתקה אם אתה מעוניין לדבר.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "המיקרופון שלך הפך ללא זמין",
+      "message": "לא תוכל עוד לבטל השתקה.",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "togetherModeStarted": {
+      "title": "Togethermode התחיל",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "togetherModeEnded": {
+      "title": "Togethermode הסתיים",
       "dismissButtonAriaLabel": "סגור"
     }
   },
@@ -510,7 +675,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "צא מזרקור",
     "attendeeRole": "משתתף",
     "muteParticipantMenuItemLabel": "השתק",
-    "waitingScreenText": "מחכה שאחרים יצטרפו"
+    "waitingScreenText": "מחכה שאחרים יצטרפו",
+    "forbidAudio": "הפוך את המיקרופון ללא זמין",
+    "permitAudio": "אפשר שימוש במיקרופון",
+    "forbidAudioTileMenuLabel": "הפוך את המיקרופון ללא זמין",
+    "permitAudioTileMenuLabel": "אפשר שימוש במיקרופון",
+    "forbidVideo": "הפוך את המצלמה ללא זמינה",
+    "permitVideo": "אפשר שימוש במצלמה",
+    "forbidVideoTileMenuLabel": "הפוך את המצלמה ללא זמינה",
+    "permitVideoTileMenuLabel": "אפשר שימוש במצלמה"
   },
   "dialpad": {
     "placeholderText": "הזן מספר טלפון",
@@ -524,8 +697,15 @@
   },
   "videoTile": {
     "participantStateRinging": "מתקשר...",
+    "participantReconnecting": "מתחבר מחדש...",
     "participantStateHold": "בהמתנה",
-    "moreOptionsButtonAriaLabel": "אפשרויות נוספות"
+    "moreOptionsButtonAriaLabel": "אפשרויות נוספות {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "מושתק",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "לא מושתק",
+    "moreOptionsParticipantHandRaisedAriaLabel": "‫כף יד מורמת",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "מדבר",
+    "moreOptionsParticipantMicDisabledAriaLabel": "המיקרופון לא זמין",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "המצלמה לא זמינה"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "אפשר {appName} להשתמש במצלמה ובמיקרופון שלך",
@@ -643,8 +823,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "הדף הקודם",
-    "rightNavButtonAriaLabel": "הדף הבא"
+    "leftNavButtonAriaLabel": "העמוד הקודם {current} מתוך {total}",
+    "rightNavButtonAriaLabel": "העמוד הבא {current} מתוך {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "הצטרף לשיחה מהטלפון שלך",

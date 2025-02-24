@@ -15,12 +15,10 @@ import { _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { DeclarativeCallAgent } from '@internal/calling-stateful-client';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import memoizeOne from 'memoize-one';
-import { isACSCallParticipants } from '../utils/callUtils';
 import { createLocalVideoStream } from '../utils/callUtils';
 import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './createCommonHandlers';
 
 import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
-/* @conditional-compile-remove(DNS) */
 import { DeepNoiseSuppressionEffectDependency } from './createCommonHandlers';
 
 /**
@@ -41,7 +39,6 @@ export interface CallingHandlers extends CommonCallingHandlers {
  */
 export type CallingHandlersOptions = {
   onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
-  /* @conditional-compile-remove(DNS) */
   /**
    * Dependency resolver for deep noise suppression effect.
    * @beta
@@ -73,21 +70,11 @@ export type CreateDefaultCallingHandlers = (
  */
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoizeOne((...args) => {
   const [callClient, callAgent, deviceManager, call, options] = args;
-  /* @conditional-compile-remove(breakout-rooms) */
-  const callState = call?.id ? callClient.getState().calls[call?.id] : undefined;
-  /* @conditional-compile-remove(breakout-rooms) */
-  const breakoutRoomOriginCallId = callState?.breakoutRooms?.breakoutRoomOriginCallId;
-  /* @conditional-compile-remove(breakout-rooms) */
-  const breakoutRoomOriginCall = callAgent?.calls.find((call) => call.id === breakoutRoomOriginCallId);
   const commonCallingHandlers = createDefaultCommonCallingHandlers(callClient, deviceManager, call, options);
   return {
     ...commonCallingHandlers,
     // FIXME: onStartCall API should use string, not the underlying SDK types.
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions): Call | undefined => {
-      return callAgent?.startCall(participants, options);
-      if (!isACSCallParticipants(participants)) {
-        throw new Error('TeamsUserIdentifier in Teams call is not supported!');
-      }
       return callAgent?.startCall(participants, options);
     },
     onAddParticipant: async (
@@ -123,11 +110,7 @@ export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoiz
       if (incomingCall) {
         await incomingCall.reject();
       }
-    },
-    /* @conditional-compile-remove(breakout-rooms) */
-    onHangUp: breakoutRoomOriginCall
-      ? async () => breakoutRoomOriginCall.hangUp().then(() => commonCallingHandlers.onHangUp())
-      : commonCallingHandlers.onHangUp
+    }
   };
 });
 

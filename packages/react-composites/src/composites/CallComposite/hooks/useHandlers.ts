@@ -150,7 +150,7 @@ const createCompositeHandlers = memoizeOne(
       },
       /* @conditional-compile-remove(call-readiness) */
       askDevicePermission: async (constrain) => {
-        return adapter.askDevicePermission(constrain);
+        await adapter.askDevicePermission(constrain);
       },
 
       onRemoveVideoBackgroundEffects: async () => {
@@ -173,11 +173,10 @@ const createCompositeHandlers = memoizeOne(
         return await adapter.startVideoBackgroundEffect(replacementConfig);
       },
 
-      /* @conditional-compile-remove(DNS) */
       onStartNoiseSuppressionEffect: async () => {
         return await adapter.startNoiseSuppressionEffect();
       },
-      /* @conditional-compile-remove(DNS) */
+
       onStopNoiseSuppressionEffect: async () => {
         return await adapter.stopNoiseSuppressionEffect();
       },
@@ -224,13 +223,71 @@ const createCompositeHandlers = memoizeOne(
             await adapter.stopSpotlight(userIds);
           }
         : undefined,
-      /* @conditional-compile-remove(soft-mute) */
       onMuteParticipant: async (userId: string): Promise<void> => {
         await adapter.muteParticipant(userId);
       },
-      /* @conditional-compile-remove(soft-mute) */
       onMuteAllRemoteParticipants: async (): Promise<void> => {
         await adapter.muteAllRemoteParticipants();
+      },
+      onForbidAudio: capabilities?.forbidOthersAudio?.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.forbidAudio(userIds);
+          }
+        : undefined,
+      onPermitAudio: capabilities?.forbidOthersAudio?.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.permitAudio(userIds);
+          }
+        : undefined,
+      onForbidOthersAudio: capabilities?.forbidOthersAudio?.isPresent
+        ? async (): Promise<void> => {
+            await adapter.forbidOthersAudio();
+          }
+        : undefined,
+      onPermitOthersAudio: capabilities?.forbidOthersAudio?.isPresent
+        ? async (): Promise<void> => {
+            await adapter.permitOthersAudio();
+          }
+        : undefined,
+      onForbidVideo: capabilities?.forbidOthersVideo?.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.forbidVideo(userIds);
+          }
+        : undefined,
+      onPermitVideo: capabilities?.forbidOthersVideo?.isPresent
+        ? async (userIds: string[]): Promise<void> => {
+            await adapter.permitVideo(userIds);
+          }
+        : undefined,
+      onForbidOthersVideo: capabilities?.forbidOthersVideo?.isPresent
+        ? async (): Promise<void> => {
+            await adapter.forbidOthersVideo();
+          }
+        : undefined,
+      onPermitOthersVideo: capabilities?.forbidOthersVideo?.isPresent
+        ? async (): Promise<void> => {
+            await adapter.permitOthersVideo();
+          }
+        : undefined,
+      /* @conditional-compile-remove(together-mode) */
+      onCreateTogetherModeStreamView: async (options) => {
+        return await adapter.createTogetherModeStreamView(options);
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onStartTogetherMode: async () => {
+        return await adapter.startTogetherMode();
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onSetTogetherModeSceneSize: (width: number, height: number) => {
+        return adapter.setTogetherModeSceneSize(width, height);
+      },
+      /* @conditional-compile-remove(together-mode) */
+      onDisposeTogetherModeStreamView: async () => {
+        return await adapter.disposeTogetherModeStreamView();
+      },
+      /* @conditional-compile-remove(rtt) */
+      onSendRealTimeText: async (text: string, isFinalized: boolean) => {
+        return await adapter.sendRealTimeText(text, isFinalized);
       }
     };
   }

@@ -18,7 +18,7 @@ import {
 import { ChatParticipant as SignalingChatParticipant } from '@azure/communication-signaling';
 import { _createStatefulChatClientWithDeps } from './StatefulChatClient';
 import { ChatClientState, ChatError } from './ChatClientState';
-import { Constants } from './Constants';
+import { Constants } from './constants';
 import {
   StateChangeListener,
   StatefulChatClientWithEventTrigger,
@@ -76,6 +76,11 @@ describe('declarative chatThread list iterators', () => {
 describe('declarative chatClient basic api functions', () => {
   test('set internal store correctly when proxy getChatThreadClient and deleteThread', async () => {
     const client = createStatefulChatClientMock();
+
+    if (!mockChatThreads[0]) {
+      throw new Error('mockChatThreads is empty');
+    }
+
     await client.getChatThreadClient(mockChatThreads[0].id);
 
     expect(Object.keys(client.getState().threads).length).toBe(1);
@@ -246,6 +251,10 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     expect(Object.keys(client.getState().threads[threadId]?.participants ?? {}).length).toBe(2);
 
+    if (!mockParticipants[0]) {
+      throw new Error('mockParticipants is empty');
+    }
+
     // remove event
     const removedEvent: ParticipantsRemovedEvent = {
       threadId,
@@ -318,7 +327,7 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     client.triggerEvent('readReceiptReceived', addedEvent);
 
     expect(client.getState().threads[threadId]?.readReceipts.length).toBe(1);
-    expect(client.getState().threads[threadId]?.readReceipts[0].chatMessageId).toBe(messageId);
+    expect(client.getState().threads[threadId]?.readReceipts[0]?.chatMessageId).toBe(messageId);
 
     expect(client.getState().threads[threadId]?.latestReadTime).toEqual(readOn);
   });

@@ -39,7 +39,6 @@ import {
   useResponsiveMode,
   ZIndexes
 } from '@fluentui/react';
-import { useWindow } from '@fluentui/react-window-provider';
 
 // @TODO - need to change this to a panel whenever the breakpoint is under medium (verify the spec)
 
@@ -47,6 +46,14 @@ import { useWindow } from '@fluentui/react-window-provider';
 export interface _ExtendedIModalProps extends IModalProps {
   minDragPosition?: _ICoordinates;
   maxDragPosition?: _ICoordinates;
+  dataUiId?: string;
+
+  /**
+   * Originally the FluentUI modal used window to capture key events that trigger the move/close menu.
+   * As we want to avoid global listeners, we are allowing the user to pass in a specific element
+   * to capture the key events.
+   */
+  keyEventElement?: HTMLElement | Window;
 }
 
 const animationDuration = AnimationVariables.durationValue2;
@@ -83,7 +90,7 @@ const DEFAULT_PROPS: Partial<_ExtendedIModalProps> = {
 
 const getModalClassNames = classNamesFunction<IModalStyleProps, IModalStyles>();
 
-const getMoveDelta = (ev: React.KeyboardEvent<HTMLElement>): number => {
+const getMoveDelta = (ev: KeyboardEvent): number => {
   let delta = 10;
   if (ev.shiftKey) {
     if (!ev.ctrlKey) {
@@ -142,7 +149,9 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
       dragOptions,
       onDismissed,
       minDragPosition,
-      maxDragPosition
+      maxDragPosition,
+      dataUiId,
+      keyEventElement = window
     } = props;
 
     const rootRef = React.useRef<HTMLDivElement>(null);
@@ -154,8 +163,6 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
 
     const focusTrapZoneId = useId('ModalFocusTrapZone');
 
-    const win = useWindow();
-
     const { setTimeout, clearTimeout } = useSetTimeout();
 
     const [isModalOpen, setIsModalOpen] = React.useState(isOpen);
@@ -163,7 +170,10 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
     const [coordinates, setCoordinates] = React.useState<_ICoordinates>(ZERO);
     const [modalRectangleTop, setModalRectangleTop] = React.useState<number | undefined>();
 
-    const [isModalMenuOpen, { toggle: toggleModalMenuOpen, setFalse: setModalMenuClose }] = useBoolean(false);
+    const [isModalMenuOpen, { setTrue: setModalMenuOpen, setFalse: setModalMenuClose }] = useBoolean(false);
+
+    const [_, forceUpdate] = React.useState(0);
+    const forceUpdateCallback = React.useCallback(() => forceUpdate((prev) => prev + 1), []);
 
     const internalState = useConst<IModalInternalState>(() => ({
       onModalCloseTimer: 0,
@@ -190,7 +200,7 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
       topOffsetFixed,
       isModeless,
       layerClassName,
-      windowInnerHeight: win?.innerHeight,
+      windowInnerHeight: window?.innerHeight,
       isDefaultDragHandle: dragOptions && !dragOptions.dragHandleSelector
     });
 
@@ -298,7 +308,8 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
     const handleEnterKeyboardMoveMode = () => {
       // We need a global handleKeyDown event when we are in the move mode so that we can
       // handle the key presses and the components inside the modal do not get the events
-      const handleKeyDown = (ev: React.KeyboardEvent<HTMLElement>): void => {
+      const handleKeyDown = (event: Event): void => {
+        const ev = event as KeyboardEvent;
         if (ev.altKey && ev.ctrlKey && ev.keyCode === KeyCodes.space) {
           // CTRL + ALT + SPACE is handled during keyUp
           ev.preventDefault();
@@ -313,6 +324,7 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
 
         if (internalState.isInKeyboardMoveMode && (ev.keyCode === KeyCodes.escape || ev.keyCode === KeyCodes.enter)) {
           internalState.isInKeyboardMoveMode = false;
+          forceUpdateCallback();
           ev.preventDefault();
           ev.stopPropagation();
         }
@@ -362,10 +374,9 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
       internalState.lastSetCoordinates = coordinates;
       setModalMenuClose();
       internalState.isInKeyboardMoveMode = true;
-
-      internalState.events.on(win, 'keydown', handleKeyDown, true /* useCapture */);
+      keyEventElement.addEventListener('keydown', handleKeyDown, true /* useCapture */);
       internalState.disposeOnKeyDown = () => {
-        internalState.events.off(win, 'keydown', handleKeyDown, true /* useCapture */);
+        keyEventElement.removeEventListener('keydown', handleKeyDown, true /* useCapture */);
         internalState.disposeOnKeyDown = undefined;
       };
     };
@@ -377,12 +388,13 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
     };
 
     const registerForKeyUp = (): void => {
-      const handleKeyUp = (ev: React.KeyboardEvent<HTMLElement>): void => {
+      const handleKeyUp = (event: Event): void => {
+        const ev = event as KeyboardEvent;
         // Needs to handle the CTRL + ALT + SPACE key during keyup due to FireFox bug:
         // https://bugzilla.mozilla.org/show_bug.cgi?id=1220143
         if (ev.altKey && ev.ctrlKey && ev.keyCode === KeyCodes.space) {
           if (elementContains(internalState.scrollableContent, ev.target as HTMLElement)) {
-            toggleModalMenuOpen();
+            setModalMenuOpen();
             ev.preventDefault();
             ev.stopPropagation();
           }
@@ -390,9 +402,9 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
       };
 
       if (!internalState.disposeOnKeyUp) {
-        internalState.events.on(win, 'keyup', handleKeyUp, true /* useCapture */);
+        keyEventElement.addEventListener('keyup', handleKeyUp, true /* useCapture */);
         internalState.disposeOnKeyUp = () => {
-          internalState.events.off(win, 'keyup', handleKeyUp, true /* useCapture */);
+          keyEventElement.removeEventListener('keyup', handleKeyUp, true /* useCapture */);
           internalState.disposeOnKeyUp = undefined;
         };
       }
@@ -444,8 +456,9 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
         firstFocusableSelector={firstFocusableSelector}
         focusPreviouslyFocusedInnerElement
         onBlur={internalState.isInKeyboardMoveMode ? handleExitKeyboardMoveMode : undefined}
-        data-ui-id={props['data-ui-id' as keyof _ExtendedIModalProps]}
+        data-ui-id={dataUiId}
         // enableAriaHiddenSiblings is handled by the Popup
+        {...(props.focusTrapZoneProps ?? {})}
       >
         {dragOptions && internalState.isInKeyboardMoveMode && (
           <div className={classNames.keyboardMoveIconContainer}>
@@ -872,7 +885,7 @@ class DraggableZone extends React.Component<IDraggableZoneProps, IDraggableZoneS
     }
 
     for (let i = 0; i < touchList.length; i++) {
-      if (touchList[i].identifier === this._touchId) {
+      if (touchList[i]?.identifier === this._touchId) {
         return touchList[i];
       }
     }

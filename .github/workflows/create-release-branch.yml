@@ -18,7 +18,7 @@ jobs:
   create_release:
     if: ${{ startsWith(github.event.inputs.branch, 'prerelease') }}
     name: Create release branch
-    runs-on: ubuntu-latest
+    runs-on: ${{ vars.RUNS_ON }}
     permissions: read-all
     steps:
       # Check-out repo
@@ -48,7 +48,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: 'lts/*'
 
       # Make sure that Rush is installed in run
       - name: Add rush to run

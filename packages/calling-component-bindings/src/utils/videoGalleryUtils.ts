@@ -6,7 +6,7 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { memoizeFnAll, toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { RemoteParticipantState, RemoteVideoStreamState } from '@internal/calling-stateful-client';
-import { VideoGalleryRemoteParticipant, VideoGalleryStream } from '@internal/react-components';
+import { VideoGalleryRemoteParticipant, VideoGalleryStream, MediaAccess } from '@internal/react-components';
 import memoizeOne from 'memoize-one';
 import { _convertParticipantState, ParticipantConnectionState } from './callUtils';
 import { maskDisplayNameWithRole } from './callUtils';
@@ -72,7 +72,14 @@ export const _videoGalleryRemoteParticipantsMemo: _VideoGalleryRemoteParticipant
             participant.raisedHand,
             participant.contentSharingStream,
             remoteParticipantReaction,
-            spotlight
+            spotlight,
+            participant.mediaAccess,
+            participant.role,
+            /* @conditional-compile-remove(remote-ufd) */
+            Math.max(
+              (participant.diagnostics?.networkReceiveQuality?.value ?? 0) as number,
+              (participant.diagnostics?.networkSendQuality?.value ?? 0) as number
+            )
           );
         })
     );
@@ -90,7 +97,10 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
     raisedHand?: RaisedHandState,
     contentSharingStream?: HTMLElement,
     reaction?: Reaction,
-    spotlight?: Spotlight
+    spotlight?: Spotlight,
+    mediaAccess?: MediaAccess,
+    role?: ParticipantRole,
+    signalStrength?: undefined | /* @conditional-compile-remove(remote-ufd) */ number
   ): VideoGalleryRemoteParticipant => {
     return convertRemoteParticipantToVideoGalleryRemoteParticipant(
       userId,
@@ -102,7 +112,10 @@ const memoizedAllConvertRemoteParticipant = memoizeFnAll(
       raisedHand,
       contentSharingStream,
       reaction,
-      spotlight
+      spotlight,
+      signalStrength,
+      mediaAccess,
+      role
     );
   }
 );
@@ -118,7 +131,10 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
   raisedHand?: RaisedHandState,
   contentSharingStream?: HTMLElement,
   reaction?: Reaction,
-  spotlight?: Spotlight
+  spotlight?: Spotlight,
+  signalStrength?: undefined | /* @conditional-compile-remove(remote-ufd) */ number,
+  mediaAccess?: MediaAccess,
+  role?: ParticipantRole
 ): VideoGalleryRemoteParticipant => {
   const rawVideoStreamsArray = Object.values(videoStreams);
   let videoStream: VideoGalleryStream | undefined = undefined;
@@ -161,7 +177,12 @@ export const convertRemoteParticipantToVideoGalleryRemoteParticipant = (
     state,
     raisedHand,
     reaction,
-    spotlight
+    spotlight,
+    mediaAccess,
+    canAudioBeForbidden: role === 'Attendee',
+    canVideoBeForbidden: role === 'Attendee',
+    /* @conditional-compile-remove(remote-ufd) */
+    signalStrength
   };
 };
 
@@ -218,7 +239,11 @@ export const memoizeLocalParticipant = memoizeOne(
     raisedHand: raisedHand,
     reaction,
     spotlight: localSpotlight,
-    capabilities
+    capabilities,
+    mediaAccess: {
+      isAudioPermitted: capabilities?.unmuteMic ? capabilities.unmuteMic.isPresent : true,
+      isVideoPermitted: capabilities?.turnVideoOn ? capabilities.turnVideoOn.isPresent : true
+    }
   })
 );
 
@@ -226,3 +251,14 @@ export const memoizeLocalParticipant = memoizeOne(
 export const memoizeSpotlightedParticipantIds = memoizeOne((spotlightedParticipants) =>
   spotlightedParticipants?.map((p: SpotlightedParticipant) => toFlatCommunicationIdentifier(p.identifier))
 );
+
+/** @private */
+export const memoizeTogetherModeStreams = memoizeOne((togetherModeStreams) => ({
+  mainVideoStream: {
+    id: togetherModeStreams?.mainVideoStream?.id,
+    isReceiving: togetherModeStreams?.mainVideoStream?.isReceiving,
+    isAvailable: togetherModeStreams?.mainVideoStream?.isAvailable,
+    renderElement: togetherModeStreams?.mainVideoStream?.view?.target,
+    streamSize: togetherModeStreams?.mainVideoStream?.streamSize
+  }
+}));

@@ -6,50 +6,76 @@ import { mergeStyles } from '@fluentui/react';
 import { Stack } from '@fluentui/react';
 import {
   ArrowClockwise16Regular,
+  Backspace20Regular,
+  Call20Filled,
   CallEnd20Filled,
+  CallPause20Filled,
+  CallPause20Regular,
   Checkmark20Regular,
   CheckmarkCircle16Regular,
+  ChevronLeft20Regular,
+  ChevronRight20Regular,
   Circle16Regular,
+  ClosedCaption20Regular,
+  ClosedCaptionOff20Regular,
   Delete20Regular,
-  Dismiss20Regular,
   Dismiss16Regular,
+  Dismiss20Regular,
   Edit20Regular,
+  Emoji20Regular,
   ErrorCircle16Regular,
   Eye16Regular,
-  MicOff16Filled,
-  MicOff20Regular,
-  MicOff20Filled,
+  HandRight20Regular,
+  HandRightOff20Regular,
   Mic16Filled,
   Mic20Filled,
   Mic20Regular,
+  MicOff16Filled,
+  MicOff16Regular,
+  MicOff20Filled,
+  MicOff20Regular,
+  MicProhibited16Filled,
   MoreHorizontal20Filled,
   MoreHorizontal20Regular,
+  Open20Regular,
   People20Filled,
-  Settings20Filled,
-  Send20Filled,
-  Send20Regular,
-  ShareScreenStart20Filled,
-  ShareScreenStop20Filled,
-  Speaker220Regular,
-  Video16Filled,
-  Video20Filled,
-  Video20Regular,
-  VideoOff20Filled,
-  ChevronLeft20Regular,
-  ChevronRight20Regular,
-  WifiWarning20Filled,
-  SpeakerMute16Filled,
-  MicProhibited16Filled,
-  VideoProhibited16Filled,
+  People20Regular,
+  PersonDelete20Regular,
+  PersonVoice20Regular,
   Pin16Filled,
   Pin20Filled,
   Pin20Regular,
   PinOff20Regular,
-  ScaleFit20Regular,
+  Play20Regular,
+  Record16Regular,
   ScaleFill20Regular,
-  PersonDelete20Regular
+  ScaleFit20Regular,
+  Send20Filled,
+  Send20Regular,
+  Settings20Filled,
+  Settings20Regular,
+  ShareScreenStart20Filled,
+  ShareScreenStop20Filled,
+  Speaker220Regular,
+  SpeakerMute16Filled,
+  Star28Filled,
+  Star28Regular,
+  Translate20Regular,
+  Video16Filled,
+  Video20Filled,
+  Video20Regular,
+  VideoBackgroundEffect20Filled,
+  VideoBackgroundEffect20Regular,
+  VideoOff20Filled,
+  VideoPersonStar20Filled,
+  VideoPersonStarOff20Filled,
+  VideoProhibited16Filled,
+  WifiWarning20Filled
 } from '@fluentui/react-icons';
-import { MicOff16Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(together-mode) */
+import { PeopleAudience20Regular } from '@fluentui/react-icons';
+/* @conditional-compile-remove(rtt) */
+import { SlideTextCall20Regular, ArrowMaximize20Regular, ArrowMinimize20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
   TextBold20Regular,
@@ -67,52 +93,22 @@ import {
   TableAdd20Regular,
   TableDismiss20Regular
 } from '@fluentui/react-icons';
-import { Emoji20Regular } from '@fluentui/react-icons';
-import { Star28Regular, Star28Filled } from '@fluentui/react-icons';
-import { HandRight20Regular, HandRightOff20Regular } from '@fluentui/react-icons';
-import {
-  ClosedCaption20Regular,
-  ClosedCaptionOff20Regular,
-  Settings20Regular,
-  PersonVoice20Regular,
-  Translate20Regular
-} from '@fluentui/react-icons';
 /* @conditional-compile-remove(call-readiness) */
-import { Important20Filled } from '@fluentui/react-icons';
-
-import { Record16Regular } from '@fluentui/react-icons';
+import { Important20Filled, Sparkle20Filled } from '@fluentui/react-icons';
+import { VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
 /* @conditional-compile-remove(breakout-rooms) */
 import { ConferenceRoom16Regular, DoorArrowLeft16Regular, DoorArrowRight16Regular } from '@fluentui/react-icons';
-
-import { VideoBackgroundEffect20Filled, VideoBackgroundEffect20Regular } from '@fluentui/react-icons';
-
-import { Backspace20Regular } from '@fluentui/react-icons';
-
-/* @conditional-compile-remove(call-readiness) */
-import { Sparkle20Filled, VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
-
-/* @conditional-compile-remove(file-sharing-teams-interop) */
-import { Open20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ArrowDownload20Regular } from '@fluentui/react-icons';
-import { CallPause20Regular, CallPause20Filled, Play20Regular } from '@fluentui/react-icons';
-import { People20Regular } from '@fluentui/react-icons';
-
 /* @conditional-compile-remove(data-loss-prevention) */
 import { Prohibited16Regular } from '@fluentui/react-icons';
-
 /* @conditional-compile-remove(unsupported-browser) */
 import { Warning20Filled } from '@fluentui/react-icons';
-
-import { VideoPersonStar20Filled, VideoPersonStarOff20Filled } from '@fluentui/react-icons';
-
 import { _pxToRem } from '@internal/acs-ui-common';
-
 import React from 'react';
 import { useTheme } from './FluentThemeProvider';
 /* @conditional-compile-remove(call-readiness) */
 import { sitePermissionIconBackgroundStyle, scaledIconStyles } from './icons.styles';
-import { Call20Filled } from '@fluentui/react-icons';
 
 /**
  * Icons used by the React components exported from this library.
@@ -125,11 +121,8 @@ export type ComponentIcons = Record<keyof typeof DEFAULT_COMPONENT_ICONS, JSX.El
 
 const WifiWarning16Filled = (): JSX.Element => (
   // All ErrorBar icons are 16px x 16px (when 1rem = 16 px).
-  // There is no 16px version of this icon in the fluent icon package, so scale the larger
-  // one down to required size.
-  <div className={mergeStyles({ transform: 'scale(0.8)' })}>
-    <WifiWarning20Filled />
-  </div>
+  // There is no 16px version of this icon in the fluent icon package, so set height and width to 1rem.
+  <WifiWarning20Filled style={{ height: '1rem', width: '1rem' }} />
 );
 
 const MoreHorizontal18Regular = (): JSX.Element => (
@@ -273,6 +266,10 @@ export const DEFAULT_COMPONENT_ICONS = {
   ControlButtonScreenShareStop: <ShareScreenStop20Filled />,
   ControlButtonRaiseHand: <ControlButtonRaiseHandIcon />,
   ControlButtonLowerHand: <ControlButtonLowerHandIcon />,
+  ControlButtonMicProhibited: <MicProhibited20Filled />,
+  ControlButtonMicProhibitedSmall: <MicProhibited16Filled />,
+  ControlButtonCameraProhibited: <VideoProhibited20Filled />,
+  ControlButtonCameraProhibitedSmall: <VideoProhibited16Filled />,
   RaiseHandContextualMenuItem: <HandRight20Regular />,
   LowerHandContextualMenuItem: <HandRightOff20Regular />,
   ReactionButtonIcon: <Emoji20Regular />,
@@ -280,7 +277,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   CancelAttachmentUpload: <Dismiss16Regular />,
   /* @conditional-compile-remove(file-sharing-acs) */
   DownloadAttachment: <ArrowDownload20Regular />,
-  /* @conditional-compile-remove(file-sharing-teams-interop) @conditional-compile-remove(file-sharing-acs) */
   OpenAttachment: <Open20Regular />,
   /* @conditional-compile-remove(file-sharing-acs) */
   AttachmentMoreMenu: <MoreHorizontal20Filled />,
@@ -302,9 +298,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarClear: <Dismiss16Regular />,
   ErrorBarCallVideoRecoveredBySystem: <Video16Filled />,
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
-  /* @conditional-compile-remove(soft-mute) */
   ErrorBarMutedByRemoteParticipant: <MicOff16Regular />,
-
   NotificationBarRecording: <Record16Regular />,
   /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomOpened: <DoorArrowRight16Regular />,
@@ -316,6 +310,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   NotificationBarBreakoutRoomJoined: <ConferenceRoom16Regular />,
   /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomClosingSoon: <DoorArrowLeft16Regular />,
+  /* @conditional-compile-remove(breakout-rooms) */
+  NotificationBarBreakoutRoomClosed: <DoorArrowLeft16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,
@@ -339,6 +335,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   SendBoxSend: <Send20Regular />,
   SendBoxSendHovered: <Send20Filled />,
   VideoTileMicOff: <MicOff16Filled />,
+  VideoTileCameraOff: <VideoProhibited16Filled />,
   DialpadBackspace: <Backspace20Regular />,
   /* @conditional-compile-remove(call-readiness) */
   SitePermissionsSparkle: <SitePermissionSparkle20Filled />,
@@ -411,9 +408,16 @@ export const DEFAULT_COMPONENT_ICONS = {
   RichTextTableInsertMenuIcon: <TableAdd20Regular />,
   /* @conditional-compile-remove(rich-text-editor) */
   RichTextTableDeleteMenuIcon: <TableDismiss20Regular />,
-  /* @conditional-compile-remove(soft-mute) */
   ContextualMenuMicMutedIcon: <MicOff20Regular />,
   IncomingCallNotificationRejectIcon: <CallEnd20Filled />,
   IncomingCallNotificationAcceptIcon: <Call20Filled />,
-  IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />
+  IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />,
+  /* @conditional-compile-remove(together-mode) */
+  NotificationBarTogetherModeIcon: <PeopleAudience20Regular />,
+  /* @conditional-compile-remove(rtt) */
+  RealTimeTextIcon: <SlideTextCall20Regular />,
+  /* @conditional-compile-remove(rtt) */
+  ExpandIcon: <ArrowMaximize20Regular />,
+  /* @conditional-compile-remove(rtt) */
+  MinimizeIcon: <ArrowMinimize20Regular />
 };

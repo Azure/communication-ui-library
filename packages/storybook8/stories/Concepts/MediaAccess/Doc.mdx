@@ -1,0 +1,109 @@
+import { Meta, Source } from '@storybook/addon-docs';
+
+import CustomMediaAccessCompositeText from '!!raw-loader!./snippets/MediaAccessComposite.snippet.tsx';
+import MediaAccessMicCameraCapabilitiesText from '!!raw-loader!./snippets/MediaAccessMicCameraCapabilities.snippet.tsx';
+import MediaAccessRemoteParticipantsText from '!!raw-loader!./snippets/MediaAccessRemoteParticipants.snippet.tsx';
+
+<Meta title="Concepts/MediaAccess" />
+
+# Media access
+
+## Overview
+
+Azure Communication Services UI Library is adding support for media access.
+This feature allows organizers, co-organizers, and presenters to control the ability of other attendees to send audio and video.
+Additionally, users can determine if their audio or video is enabled or disabled and check the media access status of other participants.
+This feature allows greater control over meeting environments, minimizing disruptions from unexpected background noise or a disruptive participant.
+Here are some example scenarios where Disable mic and Disable camera are useful:
+
+During a large virtual visit with multiple doctors, the host can use Disable mic to ensure that only the speaker is heard, reducing interruptions.
+
+In a virtual banking session, the host can disable participants' cameras to maintain focus on the presentation, ensuring no distractions from video feeds.
+
+The supported scenarios for the media access feature are:
+
+- Teams Interop Meetings
+- Teams Interop Meetings as a Teams user
+- Teams ad-hoc call
+
+## How to use Media Access Feature
+
+The media access feature in Teams meetings allows the Organizer, Co-organizer, and Presenter to control whether attendees can enable their mic or camera.
+This can be managed through the Teams meeting options “Allow mic/camera for attendees” or on a per-participant basis with the options “Disable mic/camera” and “Enable mic/camera.”
+
+Teams meeting attendees can check their own media access state using the capabilities `unMuteMic` and `turnVideoOn`, or view the media states for remote participants.
+
+ACS users must have the Organizer, Co-organizer, or Presenter role to use the media access feature.
+
+Participants can disable/enable audio/video using the contextual menu button on their video gallery tile like shown below:
+
+<img
+  style={{ width: 'auto', height: 'auto' }}
+  src="images/media-access/media-access-disable-mic-camera-video-tile.png"
+/>
+
+Participants can also disable/enable audio/video using the contextual menu button on their participant item in the people pane like
+shown below:
+
+<img
+  style={{ width: 'auto', height: 'auto' }}
+  src="images/media-access/media-access-disable-mic-camera-people-pane.png"
+/>
+
+A local participant with audio or video disabled will see a mic or camera disabled icon on the control bar, notifications that mic and camera have been disabled and will not be able to unmute or turn the video on, as shown below:
+
+<img
+  style={{ width: 'auto', height: 'auto' }}
+  src="images/media-access/media-access-local-participant-mic-camera-disabled.png"
+/>
+
+The concept of the media access feature is the same in Microsoft Teams which you can read
+more about here -
+[Manage attendee audio and video permissions in Microsoft Teams meetings](https://support.microsoft.com/en-us/office/manage-attendee-audio-and-video-permissions-in-microsoft-teams-meetings-f9db15e1-f46f-46da-95c6-34f9f39e671a).
+
+## Incorporating Disable mic and Disable camera into your experience:
+
+The UI library includes the media access by default within the CallComposite and CallWithChat Composite experiences, so no additional work is required.
+
+## Listening to local participant `unmuteMic` and `turnVideoOn` capabilities changes
+
+You can listen to `capabilitiesChanged` events on the CallAdapter or CallWithChatAdapter by defining your own
+`capabilitiesChangedListener` callback. The following code snippet shows an example of listening to `capabilitiesChanged`
+events on the CallAdapter to log the added and removed participants to the browser console. But you can choose to
+do more if you wish.
+
+<Source code={MediaAccessMicCameraCapabilitiesText} />
+
+Note: Assigning a `capabilitiesChangedListener` callback to listen for 'capabilitiesChanged' events will not override the
+behavior of CallComposite and CallWithChatComposite which places participants in the main view of
+VideoGallery.
+
+## UI component to use remote participant(s) media access state
+
+If you want to build your own UI components using the media access states we suggest using the `VideoGallerySelector` or creating your own custom selector to pipe in the media access states for remote participants to your UI component.
+Here is an example of how we put to together the VideoGallery component with these media access states.
+
+<Source code={MediaAccessRemoteParticipantsText} />
+
+## Programatic media access for participants
+
+The CallAdapter and CallWithChatAdapter can also be used to programatically change media access one or more participants using
+the functions `forbidAudio`, `permitAudio`, `forbidVideo`, `permitVideo`, `forbidOthersAudio`, `permitOthersAudio`, `forbidOthersVideo` and `permitOthersVideo`.
+The example below shows a code snippet where a button is added to invoke the `forbidAudio` and `permitAudio` function to change media access state
+for remote participants from an added dropdown that is populated by remote participants in the call.
+
+<Source code={CustomMediaAccessCompositeText} />
+
+## FAQ:
+
+### When recording a call or meeting, will the Disable mic or Disable camera status be included in the recording?
+
+The recording bot subscribes to the overall audio and video streams, so the muted status will not impact the recording as it is based on the live state during the meeting.
+
+### What happens when a user's mic or video is disabled?
+
+When a user's mic is disabled, they receive a notification informing them of their muted status. Similarly, when a user's camera is disabled, they receive a notification. Icons indicating the mute status appear next to their name in the participant list and video gallery tile.
+
+### Can users see who has been muted?
+
+Yes, users can see muted icons next to the names of participants whose mic or camera has been disabled in the participant list and video gallery tile.

@@ -195,7 +195,6 @@ export interface NotificationStackStrings {
    * Error string letting you know remote participants see a frozen stream for you.
    */
   cameraFrozenForRemoteParticipants?: NotificationStrings;
-
   /**
    * Unable to start effect
    */
@@ -204,7 +203,6 @@ export interface NotificationStackStrings {
    * An error message when starting spotlight while max participants are spotlighted
    */
   startSpotlightWhileMaxParticipantsAreSpotlighted?: NotificationStrings;
-  /* @conditional-compile-remove(soft-mute) */
   /**
    * Muted by a remote participant message
    */
@@ -257,9 +255,14 @@ export interface NotificationStackStrings {
   assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
-   * Message shown in notification when the user is assigned breakout room is changed
+   * Message shown in notification when the user's assigned breakout room is changed
    */
   assignedBreakoutRoomChanged?: NotificationStrings;
+  /* @conditional-compile-remove(breakout-rooms) */
+  /**
+   * Message shown in notification when the user's assigned breakout room is closed
+   */
+  assignedBreakoutRoomClosed?: NotificationStrings;
   /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Message shown in notification when breakout room is joined
@@ -270,6 +273,28 @@ export interface NotificationStackStrings {
    * Message shown in notification when breakout room is closing soon
    */
   breakoutRoomClosingSoon?: NotificationStrings;
+  /**
+   * Message shown in notification when capability turnVideoOn is present
+   */
+  capabilityTurnVideoOnPresent?: NotificationStrings;
+  /**
+   * Message shown in notification when capability turnVideoOn is absent
+   */
+  capabilityTurnVideoOnAbsent?: NotificationStrings;
+  /**
+   * Message shown in notification when capability unMuteMic is present
+   */
+  capabilityUnmuteMicPresent?: NotificationStrings;
+  /**
+   * Message shown in notification when capability unMuteMic is absent
+   */
+  capabilityUnmuteMicAbsent?: NotificationStrings;
+
+  /* @conditional-compile-remove(together-mode) */
+  togetherModeStarted?: NotificationStrings;
+
+  /* @conditional-compile-remove(together-mode) */
+  togetherModeEnded?: NotificationStrings;
 }
 
 /**
@@ -316,6 +341,12 @@ export interface ActiveNotification {
    * by the user.
    */
   timestamp?: Date;
+
+  /**
+   * Aria-live property for the notification.
+   * @defaultValue polite
+   */
+  ariaLive?: 'assertive' | 'off' | 'polite';
 }
 
 /**
@@ -394,6 +425,7 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
                   index === maxNotificationsToShow - 1 && activeNotifications.length > maxNotificationsToShow
                 }
                 autoDismiss={notification.autoDismiss}
+                ariaLive={notification.ariaLive}
               />
             </div>
           );

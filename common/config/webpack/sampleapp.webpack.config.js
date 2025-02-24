@@ -6,12 +6,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer')
 const CopyPlugin = require("copy-webpack-plugin");
-const ReactRefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
-const ReactRefreshTypeScript = require('react-refresh-typescript');
-
-// Detect if running in GitHub Codespaces environment through environment variable set by codespace.
-// More details: https://docs.github.com/en/codespaces/developing-in-a-codespace/default-environment-variables-for-your-codespace#list-of-default-environment-variables
-const RUNNING_IN_GH_CODESPACES = !!process.env.CODESPACES;
 
 const webpackConfig = (sampleAppDir, env, babelConfig) => {
   const config = {
@@ -52,12 +46,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           test: /\.tsx?$/,
           loader: 'ts-loader',
           options: {
-            transpileOnly: true,
-
-            // Enable HRML for GH codespaces devlopment (this was found to not work on MacOS so enabling for GH Codespaces only)
-            getCustomTransformers: () => ({
-              before: [!env.production && RUNNING_IN_GH_CODESPACES && ReactRefreshTypeScript()].filter(Boolean),
-            })
+            transpileOnly: true
           },
           exclude: /dist/,
           sideEffects: false
@@ -77,9 +66,6 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       ]
     },
     plugins: [
-      // Enable HRML for GH codespaces devlopment (this was found to not work on MacOS so enabling for GH Codespaces only)
-      !env.production && RUNNING_IN_GH_CODESPACES && new ReactRefreshWebpackPlugin(),
-
       new HtmlWebpackPlugin({ template: './public/index.html' }),
       new webpack.DefinePlugin({
         'process.env.PRODUCTION': env.production || !env.development,
@@ -100,19 +86,12 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           { from: path.resolve(sampleAppDir, "public/assets"), to: "assets",  noErrorOnMissing: true },
         ]
       })
-    ].filter(Boolean),
+    ],
     devServer: {
       port: 3000,
       hot: true,
       open: true,
       static: { directory: path.resolve(sampleAppDir, 'public') },
-      // To support hot reloading in GitHub Codespaces, we need to use the secure websocket URL
-      // For more details: https://github.com/orgs/community/discussions/11524#discussioncomment-2176952
-      client: RUNNING_IN_GH_CODESPACES ? {
-        webSocketURL: {
-          port: '443'
-        }
-      } : undefined,
       proxy: [
         {
           path: '/token',

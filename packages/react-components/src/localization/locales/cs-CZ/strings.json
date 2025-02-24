@@ -5,10 +5,15 @@
     "removeButtonLabel": "Odebrat",
     "sharingIconLabel": "Sdílení",
     "mutedIconLabel": "Ztlumeno",
+    "handRaisedIconLabel": "Zvednutá ruka – pozice {position}",
     "displayNamePlaceholder": "Nepojmenovaný účastník",
     "participantStateRinging": "Volání…",
     "participantStateHold": "Pozastavený hovor",
-    "attendeeRole": "Účastník"
+    "participantItemAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}",
+    "participantItemWithMoreOptionsAriaLabel": "{displayName}, {handRaisedState}, {mutedState}, {micDisabledState}, {cameraDisabledState}, {sharingState}, {connectionState}, Další možnosti",
+    "attendeeRole": "Účastník",
+    "micDisabledIconLabel": "Mikrofon zakázán",
+    "cameraDisabledIconLabel": "Kamera zakázána"
   },
   "ParticipantList": {
     "overflowParticipantCount": "+{overflowCount} další(ch)"
@@ -58,6 +63,7 @@
     "richTextDeleteColumnMenu": "Odstranit sloupec",
     "richTextDeleteRowMenu": "Odstranit řádek",
     "richTextDeleteTableMenu": "Odstranit tabulku",
+    "richTextToolbarAriaLabel": "Panel nástrojů Formátování zpráv",
     "richTextToolbarMoreButtonAriaLabel": "Další možnosti",
     "attachmentMoreMenu": "Další možnosti",
     "richTextNewBulletedListItemAnnouncement": "Odrážka, nový řádek",
@@ -65,12 +71,34 @@
     "richTextBulletedListAppliedAnnouncement": "Byl použit seznam s odrážkami",
     "richTextNumberedListAppliedAnnouncement": "Použil se číslovaný seznam."
   },
+  "realTimeTextModal": {
+    "realTimeTextModalAriaLabel": "Zapnout modální okno psaní v reálném čase",
+    "realTimeTextModalTitle": "Zapnout psaní v reálném čase?",
+    "realTimeTextModalText": "Text v reálném čase (RTT) se zapne pro všechny účastníky schůzky.",
+    "realTimeTextConfirmButtonLabel": "Zapnout",
+    "realTimeTextCancelButtonLabel": "Zrušit",
+    "realTimeTextCloseModalButtonAriaLabel": "Zavřít modální okno psaní v reálném čase"
+  },
+  "captionsBanner": {
+    "captionsBannerSpinnerText": "Spouští se titulky...",
+    "realTimeTextInputBoxDefaultText": "Napište zprávu v reálném čase",
+    "realTimeTextInputErrorMessage": "Zpráva nesmí být delší než 2000 znaků",
+    "realTimeTextBannerTitle": "RTT",
+    "realTimeTextBannerContent": "RTT (psaní v reálném čase) je povolené pro všechny účastníky po celou dobu trvání schůzky.",
+    "realTimeTextBannerLinkLabel": "Další informace",
+    "captionsOnlyContainerTitle": "Titulky",
+    "realTimeTextOnlyContainerTitle": "Text v reálném čase",
+    "captionsAndRealTimeTextContainerTitle": "Titulky a text v reálném čase",
+    "expandButtonAriaLabel": "Rozbalit",
+    "minimizeButtonAriaLabel": "Sbalit"
+  },
   "mentionPopover": {
     "mentionPopoverHeader": "Návrhy"
   },
   "imageOverlay": {
     "downloadButtonLabel": "Stáhnout",
-    "dismissButtonAriaLabel": "Zavřít"
+    "dismissButtonAriaLabel": "Zavřít",
+    "overlayVisibleMessage": "Překrytí podrobností obrázku"
   },
   "messageStatusIndicator": {
     "deliveredAriaLabel": "Zpráva byla odeslána",
@@ -146,6 +174,7 @@
   },
   "participantsButton": {
     "label": "Lidé",
+    "ariaLabel": "Lidé",
     "tooltipContent": "Zobrazit účastníky",
     "menuHeader": "V tomto hovoru",
     "participantsListButtonLabel": "Počet lidí: {numParticipants}",
@@ -169,7 +198,7 @@
   },
   "reactionButton": {
     "label": "Reagovat",
-    "ariaLabel": "Tlačítko Reagovat, odeslat reakci",
+    "ariaLabel": "Reagovat",
     "tooltipDisabledContent": "Akce reakce je zakázaná",
     "tooltipContent": "Odeslání reakce",
     "likeReactionTooltipContent": "To se mi líbí",
@@ -177,6 +206,107 @@
     "laughReactionTooltipContent": "Smích",
     "applauseReactionTooltipContent": "Aplaus",
     "surprisedReactionTooltipContent": "Překvapení"
+  },
+  "realTimeText": {
+    "isTypingText": "Probíhá psaní v reálném čase"
+  },
+  "captionsSettingsModal": {
+    "captionsSettingsModalTitle": "Nastavení titulků",
+    "captionsSettingsSpokenLanguageDropdownLabel": "Mluvený jazyk",
+    "captionsSettingsCaptionLanguageDropdownLabel": "Jazyk titulků",
+    "captionsSettingsSpokenLanguageDropdownInfoText": "Jazyk, kterým mluví všichni účastníci tohoto hovoru.",
+    "captionsSettingsCaptionLanguageDropdownInfoText": "Titulky se zobrazí v tomto jazyce. ",
+    "captionsSettingsConfirmButtonLabel": "Potvrdit",
+    "captionsSettingsCancelButtonLabel": "Zrušit",
+    "captionsSettingsModalAriaLabel": "Modální nastavení titulků",
+    "captionsSettingsCloseModalButtonAriaLabel": "Nastavení titulků"
+  },
+  "spokenLanguages": {
+    "ar-ae": "Arabština - Spojené arabské emiráty",
+    "ar-sa": "Arabština - Saúdská Arábie",
+    "da-dk": "Dánština",
+    "de-de": "Němčina - Německo",
+    "en-au": "Angličtina - Austrálie",
+    "en-ca": "Angličtina - Kanada",
+    "en-gb": "Angličtina - Spojené království",
+    "en-in": "Angličtina - Indie",
+    "en-nz": "Angličtina - Nový Zéland",
+    "en-us": "Angličtina - Spojené státy americké",
+    "es-es": "Španělština - Španělsko (Modern Sort)",
+    "es-mx": "Španělština - Mexiko",
+    "fi-fi": "Finština",
+    "fr-ca": "Francouzština - Kanada",
+    "fr-fr": "Francouzština - Francie",
+    "hi-in": "Hindština",
+    "it-it": "Italština - Itálie",
+    "ja-jp": "Japonština",
+    "ko-kr": "Korejština",
+    "nb-no": "Norština (Bokmål)",
+    "nl-be": "Holandština – Belgie",
+    "nl-nl": "Holandština - Nizozemsko",
+    "pl-pl": "Polština",
+    "pt-br": "Portugalština – Brazílie",
+    "ru-ru": "Ruština",
+    "sv-se": "Švédština",
+    "zh-cn": "Čínština – Čínská lidová republika",
+    "zh-hk": "Čínština – Hong Kong SAR",
+    "cs-cz": "Čeština",
+    "pt-pt": "Portugalština – Portugalsko",
+    "tr-tr": "Turečtina",
+    "vi-vn": "Vietnamština",
+    "th-th": "Thajština",
+    "he-il": "Hebrejština",
+    "cy-gb": "Velština",
+    "uk-ua": "Ukrajinština",
+    "el-gr": "Řečtina",
+    "hu-hu": "Maďarština",
+    "ro-ro": "Rumunština",
+    "sk-sk": "Slovenština",
+    "zh-tw": "Čínština – Tchaj-wan"
+  },
+  "captionLanguages": {
+    "ar": "Arabština",
+    "da": "Dánština",
+    "de": "Němčina",
+    "en": "Angličtina",
+    "es": "Španělština",
+    "fi": "Finština",
+    "fr-ca": "Francouzština - Kanada",
+    "fr": "Francouzština - Francie",
+    "hi": "Hindština",
+    "it": "Italština",
+    "ja": "Japonština",
+    "ko": "Korejština",
+    "nb": "Norština (Bokmål)",
+    "nl": "Nizozemština",
+    "pl": "Polština",
+    "pt": "Portugalština – Brazílie",
+    "ru": "Ruština",
+    "sv": "Švédština",
+    "zh-Hans": "Čínština (zjednodušená)",
+    "zh-Hant": "Čínština (tradiční)",
+    "cs": "Čeština",
+    "pt-pt": "Portugalština – Portugalsko",
+    "tr": "Turečtina",
+    "vi": "Vietnamština",
+    "th": "Thajština",
+    "he": "Hebrejština",
+    "cy": "Velština",
+    "uk": "Ukrajinština",
+    "el": "Řečtina",
+    "hu": "Maďarština",
+    "ro": "Rumunština",
+    "sk": "Slovenština"
+  },
+  "startCaptionsButton": {
+    "onLabel": "Zapnout titulky",
+    "offLabel": "Vypnout titulky",
+    "tooltipOnContent": "Vypnout titulky",
+    "tooltipOffContent": "Zapnout titulky"
+  },
+  "startRealTimeTextButton": {
+    "label": "Zapnout RTT pro tento hovor",
+    "tooltipOffContent": "Zapnout RTT pro tento hovor"
   },
   "messageThread": {
     "yesterday": "Včera",
@@ -194,7 +324,9 @@
     "resendMessage": "Zkusit odeslat znovu",
     "failToSendTag": "Odeslání se nezdařilo",
     "editedTag": "Upraveno",
-    "liveAuthorIntro": "{author} říká",
+    "liveAuthorIntro": "Zpráva od {author}",
+    "editedMessageLiveAuthorIntro": "Upravená zpráva od {author}",
+    "editedMessageLocalUserLiveAuthorIntro": "Upravená zpráva",
     "messageContentAriaText": "{status} {author} řekl(a) {message}",
     "messageContentMineAriaText": "{status} Řekli jste {message}.",
     "editBoxTextLimit": "Vaše zpráva překročila limit {limitNumber} znaků.",
@@ -467,6 +599,11 @@
       "message": "Za 5 sekund vás přesuneme do přiřazené místnosti.",
       "dismissButtonAriaLabel": "Zavřít"
     },
+    "assignedBreakoutRoomClosed": {
+      "title": "Vaše skupinová místnost byla uzavřena",
+      "message": "Za 5 sekund vás přesuneme zpět na schůzku.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
     "assignedBreakoutRoomOpenedPromptJoin": {
       "title": "Připojit se ke skupinové místnosti?",
       "message": "Byli jste přiřazeni ke skupinové místnosti.",
@@ -481,6 +618,34 @@
     "breakoutRoomClosingSoon": {
       "title": "Časový limit místnosti brzy vyprší.",
       "message": "Tato místnost se zavře během 30 sekund.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "capabilityTurnVideoOnPresent": {
+      "title": "Vaše kamera je zapnutá",
+      "message": "Pokud byste chtěli sdílet video, zapněte tuto funkci.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "capabilityTurnVideoOnAbsent": {
+      "title": "Vaše kamera byla vypnuta",
+      "message": "Už nemůžete sdílet video.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "capabilityUnmuteMicPresent": {
+      "title": "Váš mikrofon je zapnutý.",
+      "message": "Zrušte ztlumení, pokud chcete mluvit.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "capabilityUnmuteMicAbsent": {
+      "title": "Váš mikrofon je vypnutý.",
+      "message": "Už nemůžete zrušit ztlumení.",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "togetherModeStarted": {
+      "title": "Režim Togethermode byl spuštěn",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "togetherModeEnded": {
+      "title": "Režim Togethermode skončil",
       "dismissButtonAriaLabel": "Zavřít"
     }
   },
@@ -510,7 +675,15 @@
     "stopSpotlightOnSelfVideoTileMenuLabel": "Ukončit hlavní výběr",
     "attendeeRole": "Účastník",
     "muteParticipantMenuItemLabel": "Ztlumit",
-    "waitingScreenText": "Čeká se na připojení ostatních"
+    "waitingScreenText": "Čeká se na připojení ostatních",
+    "forbidAudio": "Vypnout mikrofon",
+    "permitAudio": "Povolit mikrofon",
+    "forbidAudioTileMenuLabel": "Vypnout mikrofon",
+    "permitAudioTileMenuLabel": "Povolit mikrofon",
+    "forbidVideo": "Zakázat kameru",
+    "permitVideo": "Povolit kameru",
+    "forbidVideoTileMenuLabel": "Zakázat kameru",
+    "permitVideoTileMenuLabel": "Povolit kameru"
   },
   "dialpad": {
     "placeholderText": "Zadejte telefonní číslo",
@@ -524,8 +697,15 @@
   },
   "videoTile": {
     "participantStateRinging": "Volání…",
+    "participantReconnecting": "Obnovuje se připojení...",
     "participantStateHold": "Pozastavený hovor",
-    "moreOptionsButtonAriaLabel": "Další možnosti"
+    "moreOptionsButtonAriaLabel": "Další možnosti {displayName} {isMuted} {micDisabledState} {cameraDisabledState} {isHandRaised} {state} {isSpeaking}",
+    "moreOptionsParticipantMutedStateMutedAriaLabel": "ztlumeno",
+    "moreOptionsParticipantMutedStateUnmutedAriaLabel": "ztlumení zrušeno",
+    "moreOptionsParticipantHandRaisedAriaLabel": "Zvednutá ruka",
+    "moreOptionsParticipantIsSpeakingAriaLabel": "Mluví",
+    "moreOptionsParticipantMicDisabledAriaLabel": "Mikrofon zakázán",
+    "moreOptionsParticipantCameraDisabledAriaLabel": "Kamera zakázána"
   },
   "CameraAndMicrophoneSitePermissionsRequest": {
     "primaryText": "Povolit aplikaci {appName} používat kameru a mikrofon",
@@ -643,8 +823,8 @@
     "step4DigitText": "4"
   },
   "verticalGallery": {
-    "leftNavButtonAriaLabel": "předchozí stránka",
-    "rightNavButtonAriaLabel": "další stránka"
+    "leftNavButtonAriaLabel": "předchozí stránka {current} z(e) {total}",
+    "rightNavButtonAriaLabel": "další stránka {current} z(e) {total}"
   },
   "meetingConferencePhoneInfo": {
     "meetingConferencePhoneInfoModalTitle": "Připojit se k hovoru z vašeho telefonu",

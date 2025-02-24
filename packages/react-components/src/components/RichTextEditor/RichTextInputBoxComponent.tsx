@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { ReactNode, useCallback, useEffect, useMemo, useState } from 'react';
+import React, { ReactNode, useCallback, useMemo, useState } from 'react';
 import { BaseCustomStyles } from '../../types';
 import { RichTextEditor, RichTextEditorComponentRef, RichTextEditorStyleProps } from './RichTextEditor';
 import { RichTextSendBoxStrings } from './RichTextSendBox';
@@ -105,15 +105,6 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     [disabled, showRichTextEditorFormatting, theme]
   );
 
-  useEffect(() => {
-    if (showRichTextEditorFormatting !== undefined) {
-      // Focus the editor when toolbar shown/hidden
-      editorComponentRef.current?.focus();
-    }
-    // we don't need execute this useEffect if editorComponentRef is changed
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [showRichTextEditorFormatting]);
-
   const actionButtons = useMemo(() => {
     return (
       <Stack.Item align="end" className={richTextActionButtonsStackStyle}>
@@ -164,6 +155,10 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
     [onEnterKeyDown, showRichTextEditorFormatting, onTyping]
   );
 
+  const onCompositionUpdate = useCallback(() => {
+    onTyping?.();
+  }, [onTyping]);
+
   const useHorizontalLayout = useMemo(() => {
     const isRichTextEditorToolbarShown = showRichTextEditorFormatting === true;
     return (
@@ -189,12 +184,16 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
       })}
     >
       {/* This layout is used for the compact view when formatting options are not shown */}
-      <Stack
-        grow
-        horizontal={useHorizontalLayout}
-        horizontalAlign={useHorizontalLayout ? 'end' : 'space-between'}
+      {/* We don't use a stack here as there is a bug in Fluent Stack that causes remount of children when using wrap */}
+      <div
         className={inputBoxContentStackStyle}
-        wrap={useHorizontalLayout}
+        style={{
+          display: 'flex',
+          flexGrow: 1,
+          flexDirection: useHorizontalLayout ? 'row' : 'column',
+          justifyContent: useHorizontalLayout ? 'flex-end' : 'space-between',
+          flexWrap: useHorizontalLayout ? 'wrap' : 'nowrap'
+        }}
       >
         {/* Fixes the issue when flex box can grow to be bigger than parent */}
         <Stack grow className={inputBoxRichTextStackStyle}>
@@ -205,6 +204,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
               placeholderText={placeholderText}
               onChange={onChange}
               onKeyDown={onKeyDown}
+              onCompositionUpdate={onCompositionUpdate}
               ref={editorComponentRef}
               strings={strings}
               showRichTextEditorFormatting={showRichTextEditorFormatting === true}
@@ -220,7 +220,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
           {/* @conditional-compile-remove(file-sharing-acs) */ onRenderAttachmentUploads && onRenderAttachmentUploads()}
         </Stack>
         {actionButtons}
-      </Stack>
+      </div>
     </div>
   );
 };

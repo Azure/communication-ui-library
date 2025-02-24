@@ -64,6 +64,7 @@ import { SurveyPage } from './pages/SurveyPage';
 import { useAudio } from '../common/AudioProvider';
 
 import { complianceBannerSelector } from './selectors/complianceBannerSelector';
+import { devicePermissionSelector } from './selectors/devicePermissionSelector';
 
 /**
  * Props for {@link CallComposite}.
@@ -148,6 +149,15 @@ export interface LocalVideoTileOptions {
    */
   position?: 'grid' | 'floating';
 }
+
+/**
+ * Options to determine the rendering behavior of the dtmfDialer in the CallComposite
+ * @public
+ */
+export interface DtmfDialPadOptions {
+  dialerBehavior?: 'autoShow' | 'alwaysShow' | 'alwaysHide';
+}
+
 /**
  * Optional features of the {@link CallComposite}.
  *
@@ -243,7 +253,7 @@ export type CallCompositeOptions = {
    * - PSTN Calls
    * @defaultValue false
    */
-  disableAutoShowDtmfDialer?: boolean;
+  disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
   /**
    * Options for controlling the starting layout of the composite's video gallery
    */
@@ -365,6 +375,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   const hasMicrophones = microphonesCount > 0;
 
   const role = useSelector(getRole);
+  const { video: cameraHasPermission, audio: micHasPermission } = useSelector(devicePermissionSelector);
 
   useEffect(() => {
     (async () => {
@@ -374,9 +385,13 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         constrain.audio = props.options?.deviceChecks?.microphone === 'doNotPrompt' ? false : constrain.audio;
         constrain.video = props.options?.deviceChecks?.camera === 'doNotPrompt' ? false : constrain.video;
       }
-      await adapter.askDevicePermission(constrain);
-      adapter.queryCameras();
-      adapter.queryMicrophones();
+      const permissionsResult = await adapter.askDevicePermission(constrain);
+      if (permissionsResult?.audio) {
+        adapter.queryMicrophones();
+      }
+      if (permissionsResult?.video) {
+        adapter.queryCameras();
+      }
       adapter.querySpeakers();
     })();
   }, [
@@ -387,7 +402,10 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     // Ensure we re-ask for permissions if the number of devices goes from 0 -> n during a call
     // as we cannot request permissions when there are no devices.
     hasCameras,
-    hasMicrophones
+    hasMicrophones,
+    // Ensure we re-query for devices when permission for the device is granted.
+    cameraHasPermission,
+    micHasPermission
   ]);
 
   const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
@@ -477,7 +495,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             'recordingAndTranscriptionStopped',
             'recordingStoppedStillTranscribing',
             'transcriptionStoppedStillRecording'
-          ].includes(activeNotifications[index].type)
+          ].includes(notification.type)
         ) {
           activeNotifications.splice(index, 1);
         }
@@ -730,6 +748,36 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         </>
       );
       break;
+  }
+
+  /* @conditional-compile-remove(breakout-rooms) */
+  if (page === 'returningFromBreakoutRoom') {
+    pageElement = (
+      <CallPage
+        callInvitationURL={callInvitationUrl}
+        onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+        onFetchParticipantMenuItems={onFetchParticipantMenuItems}
+        mobileView={props.mobileView}
+        modalLayerHostId={props.modalLayerHostId}
+        options={props.options}
+        updateSidePaneRenderer={setSidePaneRenderer}
+        mobileChatTabHeader={props.mobileChatTabHeader}
+        onCloseChatPane={props.onCloseChatPane}
+        latestErrors={latestInCallErrors}
+        latestNotifications={latestNotifications}
+        onDismissError={onDismissError}
+        onDismissNotification={onDismissNotification}
+        galleryLayout={userSetGalleryLayout}
+        onUserSetGalleryLayoutChange={setUserSetGalleryLayout}
+        onSetUserSetOverflowGalleryPosition={setUserSetOverflowGalleryPosition}
+        userSetOverflowGalleryPosition={userSetOverflowGalleryPosition}
+        capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+        pinnedParticipants={pinnedParticipants}
+        setPinnedParticipants={setPinnedParticipants}
+        compositeAudioContext={compositeAudioContext}
+        disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
+      />
+    );
   }
 
   useEndedCallConsoleErrors(endedCall);

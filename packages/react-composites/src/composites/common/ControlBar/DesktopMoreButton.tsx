@@ -3,9 +3,11 @@
 
 import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
+/* @conditional-compile-remove(rtt) */
+import { CaptionsBanner } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-import { _StartCaptionsButton } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
+import { StartCaptionsButton } from '@internal/react-components';
 import React from 'react';
 import { useState } from 'react';
 import { useMemo, useCallback } from 'react';
@@ -19,13 +21,17 @@ import {
   generateCustomCallDesktopOverflowButtons,
   onFetchCustomButtonPropsTrampoline
 } from './CustomButton';
-import { useHandlers } from '../../CallComposite/hooks/useHandlers';
-import { _startCaptionsButtonSelector } from '@internal/calling-component-bindings';
-import { useAdaptedSelector } from '../../CallComposite/hooks/useAdaptedSelector';
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(together-mode) */
+import {
+  getIsTogetherModeActive,
+  getCapabilites,
+  getLocalUserId,
+  getIsTeamsCall
+} from '../../CallComposite/selectors/baseSelectors';
 import { getTeamsMeetingCoordinates, getIsTeamsMeeting } from '../../CallComposite/selectors/baseSelectors';
 import { CallControlOptions } from '../../CallComposite';
 
@@ -34,8 +40,14 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   disableButtonsForHoldScreen?: boolean;
   onClickShowDialpad?: () => void;
   isCaptionsSupported?: boolean;
+  /* @conditional-compile-remove(rtt) */
+  isRealTimeTextSupported?: boolean;
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  onStartRealTimeTextClick?: () => void;
+  /* @conditional-compile-remove(rtt) */
+  startRealTimeTextButtonChecked?: boolean;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
@@ -52,13 +64,14 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
 export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element => {
   const localeStrings = useLocale();
   const holdButtonProps = usePropsFor(HoldButton);
-  const startCaptionsButtonProps = useAdaptedSelector(_startCaptionsButtonSelector);
-  const startCaptionsButtonHandlers = useHandlers(_StartCaptionsButton);
+  const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
+  /* @conditional-compile-remove(rtt) */
+  const realTimeTextProps = usePropsFor(CaptionsBanner);
   const startCaptions = useCallback(async () => {
-    await startCaptionsButtonHandlers.onStartCaptions({
+    await startCaptionsButtonProps.onStartCaptions({
       spokenLanguage: startCaptionsButtonProps.currentSpokenLanguage
     });
-  }, [startCaptionsButtonHandlers, startCaptionsButtonProps.currentSpokenLanguage]);
+  }, [startCaptionsButtonProps]);
 
   /* @conditional-compile-remove(overflow-top-composite) */
   const [galleryPositionTop, setGalleryPositionTop] = useState<boolean>(false);
@@ -72,6 +85,14 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   const isTeamsMeeting = useSelector(getIsTeamsMeeting);
   const teamsMeetingCoordinates = useSelector(getTeamsMeetingCoordinates);
+  /* @conditional-compile-remove(together-mode) */
+  const isTogetherModeActive = useSelector(getIsTogetherModeActive);
+  /* @conditional-compile-remove(together-mode) */
+  const participantCapability = useSelector(getCapabilites);
+  /* @conditional-compile-remove(together-mode) */
+  const participantId = useSelector(getLocalUserId);
+  /* @conditional-compile-remove(together-mode) */
+  const isTeamsCall = useSelector(getIsTeamsCall);
 
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
 
@@ -142,7 +163,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
       onClick: () => {
         startCaptionsButtonProps.checked
-          ? startCaptionsButtonHandlers.onStopCaptions()
+          ? startCaptionsButtonProps.onStopCaptions()
           : startCaptionsButtonProps.currentSpokenLanguage !== ''
             ? startCaptions()
             : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
@@ -173,6 +194,54 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         disabled: props.disableButtonsForHoldScreen || !startCaptionsButtonProps.checked
       });
     }
+  }
+
+  //RTT
+  /* @conditional-compile-remove(rtt) */
+  if (props.isRealTimeTextSupported) {
+    const realTimeTextContextualMenuItems: IContextualMenuItem[] = [];
+    const rttDisabled =
+      props.disableButtonsForHoldScreen || realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked;
+
+    moreButtonContextualMenuItems.push({
+      key: 'realTimeTextKey',
+      id: 'common-call-composite-captions-button',
+      text: localeStrings.strings.call.realTimeTextLabel,
+      iconProps: { iconName: 'RealTimeTextIcon', styles: { root: { lineHeight: 0 } } },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      disabled: props.disableButtonsForHoldScreen,
+      subMenuProps: {
+        id: 'rtt-contextual-menu',
+        items: realTimeTextContextualMenuItems,
+        calloutProps: {
+          preventDismissOnEvent: _preventDismissOnEvent
+        }
+      },
+      submenuIconProps: {
+        iconName: 'HorizontalGalleryRightButton',
+        styles: menuSubIconStyleSet
+      }
+    });
+
+    realTimeTextContextualMenuItems.push({
+      key: 'StartRealTimeTextKey',
+      id: 'common-call-composite-rtt-start-button',
+      text: localeStrings.strings.call.startRealTimeTextLabel,
+      ariaLabel: rttDisabled
+        ? localeStrings.strings.call.disabledStartRealTimeTextLabel
+        : localeStrings.strings.call.startRealTimeTextLabel,
+      onClick: props.onStartRealTimeTextClick,
+      iconProps: {
+        iconName: 'RealTimeTextIcon',
+        styles: { root: { lineHeight: 0 } }
+      },
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      disabled: rttDisabled
+    });
   }
 
   const dtmfDialerScreenOption = {
@@ -340,6 +409,29 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       }
     };
 
+    /* @conditional-compile-remove(together-mode) */
+    const togetherModeOption = {
+      key: 'togetherModeSelectionKey',
+      text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,
+      canCheck: true,
+      itemProps: {
+        styles: buttonFlyoutIncreasedSizeStyles
+      },
+      isChecked: props.userSetGalleryLayout === 'togetherMode',
+      onClick: () => {
+        props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
+        setFocusedContentOn(false);
+      },
+      disabled: !(
+        (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
+        isTogetherModeActive
+      ),
+      iconProps: {
+        iconName: 'TogetherModeLayout',
+        styles: { root: { lineHeight: 0 } }
+      }
+    };
+
     /* @conditional-compile-remove(overflow-top-composite) */
     const overflowGalleryOption = {
       key: 'topKey',
@@ -370,6 +462,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     galleryOptions.subMenuProps?.items?.push(galleryOption);
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
+    /* @conditional-compile-remove(together-mode) */
+    if (isTeamsCall || isTeamsMeeting) {
+      galleryOptions.subMenuProps?.items?.push(togetherModeOption);
+    }
     if (props.callControls === true || (props.callControls as CallControlOptions)?.galleryControlsButton !== false) {
       moreButtonContextualMenuItems.push(galleryOptions);
     }
@@ -420,6 +516,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       strings={moreButtonStrings}
       menuIconProps={{ hidden: true }}
       menuProps={{
+        shouldFocusOnContainer: false,
         items: moreButtonContextualMenuItems,
         calloutProps: {
           preventDismissOnEvent: _preventDismissOnEvent

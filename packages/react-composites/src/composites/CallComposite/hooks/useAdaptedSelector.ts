@@ -8,12 +8,15 @@ import { useState, useEffect, useRef, useMemo } from 'react';
 import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
 import { CallAdapterState } from '../adapter/CallAdapter';
-import { CallErrors, CallState, CallClientState, DeviceManagerState } from '@internal/calling-stateful-client';
+import {
+  CallErrors,
+  CallState,
+  CallClientState,
+  DeviceManagerState,
+  CallNotifications
+} from '@internal/calling-stateful-client';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
-/* @conditional-compile-remove(unsupported-browser) */
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */
-import { CallNotifications } from '@internal/calling-stateful-client';
 /**
  * @private
  */
@@ -84,10 +87,10 @@ const memoizeState = memoizeOne(
     deviceManager: DeviceManagerState,
     calls: { [key: string]: CallState },
     latestErrors: CallErrors,
-    latestNotifications?: undefined | /* @conditional-compile-remove(breakout-rooms) */ CallNotifications,
+    latestNotifications?: CallNotifications,
     displayName?: string,
     alternateCallerId?: string,
-    environmentInfo?: undefined | /* @conditional-compile-remove(unsupported-browser) */ EnvironmentInfo
+    environmentInfo?: EnvironmentInfo
   ): CallClientState => ({
     userId,
     incomingCalls: {},
@@ -97,10 +100,8 @@ const memoizeState = memoizeOne(
     callAgent: { displayName },
     calls,
     latestErrors,
-    /* @conditional-compile-remove(breakout-rooms) */
     latestNotifications: latestNotifications ?? ({} as CallNotifications),
     alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */
     environmentInfo
   })
 );
@@ -130,7 +131,6 @@ const adaptCompositeState = (compositeState: CallAdapterState): CallClientState 
       /* @conditional-compile-remove(breakout-rooms) */ (compositeState.latestNotifications as CallNotifications),
     compositeState.displayName,
     compositeState.alternateCallerId,
-    /* @conditional-compile-remove(unsupported-browser) */
     compositeState.environmentInfo
   );
 };

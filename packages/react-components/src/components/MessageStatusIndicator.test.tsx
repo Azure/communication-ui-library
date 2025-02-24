@@ -5,20 +5,8 @@ import React from 'react';
 import { MessageStatusIndicator } from './MessageStatusIndicator';
 import { createTestLocale, renderWithLocalization } from './utils/testUtils';
 import { screen } from '@testing-library/react';
-import { registerIcons } from '@fluentui/react';
 
 describe('MessageStatusIndicator strings should be localizable and overridable', () => {
-  beforeEach(() => {
-    registerIcons({
-      icons: {
-        messagesending: <></>,
-        messagedelivered: <></>,
-        messageseen: <></>,
-        messagefailed: <></>
-      }
-    });
-  });
-
   test('Should localize tooltip text', async () => {
     const testLocale = createTestLocale({
       messageStatusIndicator: {

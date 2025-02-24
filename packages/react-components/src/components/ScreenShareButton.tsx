@@ -4,7 +4,7 @@
 import React from 'react';
 import { useLocale } from '../localization';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
-import { DefaultPalette, IButtonStyles, mergeStyles, Theme, useTheme } from '@fluentui/react';
+import { DefaultPalette, IButtonStyles, mergeStyleSets, Theme, useTheme } from '@fluentui/react';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 /**
@@ -67,7 +67,7 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
   return (
     <ControlBarButton
       {...props}
-      className={mergeStyles(styles, props.styles)}
+      styles={mergeStyleSets(styles, props.styles)}
       onClick={props.onToggleScreenShare ?? props.onClick}
       onRenderOnIcon={props.onRenderOnIcon ?? onRenderScreenShareOnIcon}
       onRenderOffIcon={props.onRenderOffIcon ?? onRenderScreenShareOffIcon}
@@ -80,8 +80,8 @@ export const ScreenShareButton = (props: ScreenShareButtonProps): JSX.Element =>
 
 const screenshareButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
-    background: theme.palette.themePrimary,
-    color: DefaultPalette.white,
+    background: theme.semanticColors.primaryButtonBackground,
+    color: theme.semanticColors.primaryButtonText,
     ':focus::after': { outlineColor: `${DefaultPalette.white} !important` }, // added !important to avoid override by FluentUI button styles
     '@media (forced-colors: active)': {
       border: '1px solid',
@@ -89,13 +89,17 @@ const screenshareButtonStyles = (theme: Theme): IButtonStyles => ({
     }
   },
   rootCheckedHovered: {
-    background: theme.palette.themePrimary,
-    color: DefaultPalette.white,
+    background: theme.semanticColors.primaryButtonBackgroundHovered,
+    color: theme.semanticColors.primaryButtonTextHovered,
     ':focus::after': { outlineColor: `${DefaultPalette.white} !important` }, // added !important to avoid override by FluentUI button styles
     '@media (forced-colors: active)': {
       border: '1px solid',
       borderColor: theme.palette.black
     }
   },
-  labelChecked: { color: DefaultPalette.white }
+  rootCheckedPressed: {
+    background: theme.semanticColors.primaryButtonBackgroundPressed,
+    color: theme.semanticColors.primaryButtonTextPressed
+  },
+  labelChecked: { color: theme.semanticColors.primaryButtonText }
 });

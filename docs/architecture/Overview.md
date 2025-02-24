@@ -6,9 +6,9 @@ This repository houses the source code for [`@azure/communication-react` package
 
 There is some overlap between this document and the conceptual sections in the user-facing documentation for `@azure/communication-react`. Read the user-documentation before continuing to get a better understanding of the internals. Suggested reading:
 
-- An [overview](https://azure.github.io/communication-ui-library/?path=/docs/overview--page) of the main offering.
-- An understanding of the [UI composites](https://azure.github.io/communication-ui-library/?path=/docs/quickstarts-composites--page) and the [adapters](https://azure.github.io/communication-ui-library/?path=/docs/composite-adapters--page) that power them.
-- An understanding of the [UI components](https://azure.github.io/communication-ui-library/?path=/docs/overview-uicomponents--page) and the [stateful data layer](https://azure.github.io/communication-ui-library/?path=/docs/statefulclient-overview--page) that powers them.
+- An [overview](https://azure.github.io/communication-ui-library/?path=/docs/overview--docs) of the main offering.
+- An understanding of the [UI composites](https://azure.github.io/communication-ui-library/?path=/docs/composites-get-started--docs) and the [adapters](https://azure.github.io/communication-ui-library/?path=/docs/composites-adapters--docs) that power them.
+- An understanding of the [UI components](https://azure.github.io/communication-ui-library/?path=/docs/components-overview--docs) and the [stateful data layer](https://azure.github.io/communication-ui-library/?path=/docs/stateful-client-overview--docs) that powers them.
 
 These documents are geared towards customers. As such, they focus primarily on getting off the ground using the different APIs available in the library and some intricacies of _how_ to use the API.
 

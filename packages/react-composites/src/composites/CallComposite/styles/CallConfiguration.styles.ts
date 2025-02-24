@@ -48,33 +48,34 @@ export const deviceConfigurationStackTokens: IStackTokens = {
 };
 
 /** @private */
-export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl?: string): IStackStyles => ({
-  root: {
-    height: '100%',
-    width: '100%',
-    padding: desktop ? '2rem 1rem 2rem 1rem' : '1rem 1rem 2rem 1rem',
-    minWidth: desktop
-      ? '25rem' // sum of min-width from children + ChildrenGap * (nb of children - 1) + padding * 2 = (11 + 11) + (2 * 1) + 0.5 * 2
-      : '16rem', // from LocalPreview: ControlBar width + 0.5 * 2 for spacing + padding * 2 = 14 + 0.5 * 2 + 0.5 * 2
-    minHeight: desktop
-      ? '22rem' // max height of SelectionContainer + padding * 2 = 21 + 0.5 * 2
-      : '13rem',
-    '::before': !backgroundImageUrl
-      ? undefined
-      : {
-          content: '""',
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          zIndex: 0,
-          width: '100%',
-          height: '100%',
-          backgroundImage: `url(${backgroundImageUrl})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          ...AnimationStyles.fadeIn500
-        }
-  }
+export const configurationContainerStyle = (desktop: boolean, backgroundImageUrl?: string): IStyle => ({
+  display: 'flex',
+  flexFlow: 'column',
+  height: '100%',
+  position: 'relative',
+  width: '100%',
+  padding: desktop ? '2rem 1rem 2rem 1rem' : '1rem 1rem 2rem 1rem',
+  minWidth: desktop
+    ? '20rem' // sum of min-width from children + ChildrenGap * (nb of children - 1) + padding * 2 = (11 + 11) + (2 * 1) + 0.5 * 2
+    : '16rem', // from LocalPreview: ControlBar width + 0.5 * 2 for spacing + padding * 2 = 14 + 0.5 * 2 + 0.5 * 2
+  minHeight: desktop
+    ? '22rem' // max height of SelectionContainer + padding * 2 = 21 + 0.5 * 2
+    : '13rem',
+  '::before': !backgroundImageUrl
+    ? undefined
+    : {
+        content: '""',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 0,
+        width: '100%',
+        height: '100%',
+        backgroundImage: `url(${backgroundImageUrl})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        ...AnimationStyles.fadeIn500
+      }
 });
 
 /**
@@ -153,6 +154,10 @@ const configurationPageTextDecoration = (theme: ITheme): IStyle => {
   return {
     textShadow: `0px 0px 8px ${theme.palette.whiteTranslucent40}`,
     fill: theme.semanticColors.bodyText,
+    svg: {
+      // Fix SVGs not displaying the correct color in Desert high contrast mode
+      fill: 'currentColor'
+    },
     stroke: theme.palette.whiteTranslucent40,
     paintOrder: 'stroke fill',
     strokeWidth: _pxToRem(1.5),
@@ -160,8 +165,6 @@ const configurationPageTextDecoration = (theme: ITheme): IStyle => {
       letterSpacing: '-0.02rem' // cope with extra width due to stroke width
     },
     '@media (forced-colors: active)': {
-      forcedColorAdjust: 'auto',
-      fill: theme.palette.neutralQuaternaryAlt,
       textShadow: 'none',
       stroke: 'none'
     }
@@ -224,7 +227,8 @@ export const startCallButtonContainerStyleMobile: IStackStyles = {
 export const startCallButtonStyleMobile = mergeStyles({
   width: '100%',
   maxWidth: 'unset',
-  borderRadius: '0.25rem'
+  borderRadius: '0.25rem',
+  height: '3.25rem'
 });
 
 /**
