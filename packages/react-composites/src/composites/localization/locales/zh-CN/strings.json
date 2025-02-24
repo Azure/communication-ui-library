@@ -123,7 +123,7 @@
     "captionsSettingsCancelButtonLabel": "取消",
     "captionsSettingsModalAriaLabel": "字幕设置模式",
     "captionsSettingsCloseModalButtonAriaLabel": "关闭字幕设置",
-    "captionsBannerMoreButtonCallingLabel": "更多",
+    "captionsBannerMoreButtonCallingLabel": "字幕设置更多选项",
     "captionsBannerMoreButtonTooltip": "更多选项",
     "realTimeTextLabel": "实时文本(RTT)",
     "startRealTimeTextLabel": "为此通话启用 RTT",
