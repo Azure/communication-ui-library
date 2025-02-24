@@ -1,8 +1,34 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 03 Feb 2025 22:02:22 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 24 Feb 2025 23:41:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.25.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.25.0-beta.1)
+
+Mon, 24 Feb 2025 23:41:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.24.0...1.25.0-beta.1)
+
+### Features
+- Change spinner text when loading chat in breakout room ([PR #5630](https://github.com/azure/communication-ui-library/pull/5630) by 79475487+mgamis-msft@users.noreply.github.com)
+- Update styling for RTT base on feedback ([PR #5627](https://github.com/azure/communication-ui-library/pull/5627) by 96077406+carocao-msft@users.noreply.github.com)
+- Promote breakout rooms feature to GA ([PR #5584](https://github.com/azure/communication-ui-library/pull/5584) by 79475487+mgamis-msft@users.noreply.github.com)
+- Remove breakoutRoomOriginCallId from BreakoutRoomsState api ([PR #5629](https://github.com/azure/communication-ui-library/pull/5629) by 79475487+mgamis-msft@users.noreply.github.com)
+### Improvements
+- As per component governance bump esbuild version ([PR #5648](https://github.com/azure/communication-ui-library/pull/5648) by 9044372+JoshuaLai@users.noreply.github.com)
+- Update @azure/communication-calling beta version to 1.33.2-beta.1 ([PR #5614](https://github.com/azure/communication-ui-library/pull/5614) by miguelgamis@microsoft.com)
+### Bug Fixes
+- Fix control bar button and more button A11y issues, announcing collapsed and expanded state ([PR #5639](https://github.com/azure/communication-ui-library/pull/5639) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix screenshare button text to be black in dark mode to match fluent dark mode primary button ([PR #5654](https://github.com/azure/communication-ui-library/pull/5654) by 2684369+JamesBurnside@users.noreply.github.com)
+- In Call Composites do not show You're Muted notification on lobby screen ([PR #5651](https://github.com/azure/communication-ui-library/pull/5651) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix bug where switching camera on iphone may cause stream to freeze for remote participants ([PR #5650](https://github.com/azure/communication-ui-library/pull/5650) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update aria-level for heading on the config screen ([PR #5638](https://github.com/azure/communication-ui-library/pull/5638) by dmceachern@microsoft.com)
+- Fix bug where chat thread is stuck on spinner when immediately returning to main meeting from breakout room ([PR #5640](https://github.com/azure/communication-ui-library/pull/5640) by 79475487+mgamis-msft@users.noreply.github.com)
+- Resolve initial focus order when call screen first appears ([PR #5631](https://github.com/azure/communication-ui-library/pull/5631) by edwardlee@microsoft.com)
+- Update configuration screen to support use at 400% zoom ([PR #5633](https://github.com/azure/communication-ui-library/pull/5633) by dmceachern@microsoft.com)
+- Bug Fix: Fix move/close menu not showing on draggable video tile when ctrl+alt+space shortcut is used ([PR #5652](https://github.com/azure/communication-ui-library/pull/5652) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update the Max number of event listeners on a event in the CallAdapter ([PR #5660](https://github.com/azure/communication-ui-library/pull/5660) by dmceachern@microsoft.com)
+
 
 ## [1.24.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.24.0-beta.1)
 
