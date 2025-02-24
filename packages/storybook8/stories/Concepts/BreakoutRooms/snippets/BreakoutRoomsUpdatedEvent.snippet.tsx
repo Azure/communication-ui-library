@@ -41,7 +41,13 @@ export const ContosoCallContainer = (props: ContainerProps): JSX.Element => {
 
   const afterCallAdapterCreate = useCallback(async (adapter: CallAdapter): Promise<CallAdapter> => {
     adapter.on('breakoutRoomsUpdated', (event) => {
-      console.log('Breakout rooms updated event: ', event);
+      if (event.type === 'assignedBreakoutRooms') {
+        console.log('Assigned breakout rooms event: ', event);
+      } else if (event.type === 'join') {
+        console.log('Breakout rooms join event: ', event);
+      } else if (event.type === 'breakoutRoomsSettings') {
+        console.log('Breakout rooms settings event: ', event);
+      }
     });
     return adapter;
   }, []);
