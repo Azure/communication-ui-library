@@ -21,7 +21,9 @@ export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
       setCallAdapter(wrapAdapterForTests(await createCallAdapterWithCredentials(queryArgs)));
     })();
 
-    return () => callAdapter && callAdapter.dispose();
+    return () => {
+      callAdapter && callAdapter.dispose();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryArgs]);
 
