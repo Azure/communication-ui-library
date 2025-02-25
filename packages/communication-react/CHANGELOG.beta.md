@@ -13,7 +13,6 @@ Mon, 24 Feb 2025 23:41:46 GMT
 
 - Change spinner text when loading chat in breakout room ([PR #5630](https://github.com/azure/communication-ui-library/pull/5630) by 79475487+mgamis-msft@users.noreply.github.com)
 - Update styling for RTT base on feedback ([PR #5627](https://github.com/azure/communication-ui-library/pull/5627) by 96077406+carocao-msft@users.noreply.github.com)
-- Remove breakoutRoomOriginCallId from BreakoutRoomsState api ([PR #5629](https://github.com/azure/communication-ui-library/pull/5629) by 79475487+mgamis-msft@users.noreply.github.com)
 
 ### Bug Fixes
 
@@ -22,10 +21,10 @@ Mon, 24 Feb 2025 23:41:46 GMT
 - In Call Composites do not show 'You're Muted' notification on lobby screen ([PR #5651](https://github.com/azure/communication-ui-library/pull/5651) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix bug where switching camera on iphone may cause stream to freeze for remote participants ([PR #5650](https://github.com/azure/communication-ui-library/pull/5650) by 2684369+JamesBurnside@users.noreply.github.com)
 - Update aria-level for heading on the config screen ([PR #5638](https://github.com/azure/communication-ui-library/pull/5638) by dmceachern@microsoft.com)
-- Fix bug where chat thread is stuck on spinner when immediately returning to main meeting from breakout room ([PR #5640](https://github.com/azure/communication-ui-library/pull/5640) by 79475487+mgamis-msft@users.noreply.github.com)
 - Resolve initial focus order when call screen first appears ([PR #5631](https://github.com/azure/communication-ui-library/pull/5631) by edwardlee@microsoft.com)
 - Update configuration screen to support use at 400% zoom ([PR #5633](https://github.com/azure/communication-ui-library/pull/5633) by dmceachern@microsoft.com)
 - Fix move/close menu not showing on draggable video tile when ctrl+alt+space shortcut is used ([PR #5652](https://github.com/azure/communication-ui-library/pull/5652) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update the Max number of event listeners on a event in the CallAdapter ([PR #5660](https://github.com/azure/communication-ui-library/pull/5660) by dmceachern@microsoft.com)
 
 
 ## [1.24.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.24.0-beta.1)
