@@ -123,10 +123,8 @@ export const LiveTestApp = (): JSX.Element => {
                   ) => {
                     const avatarOptions = {
                       ...options,
-                      hidePersonaDetails: true,
-                      text: 'Monica Smith',
-                      showOverflowTooltip: false,
-                      initialsColor: 'red'
+                      imageInitials: 'CI',
+                      text: 'Custom Name'
                     };
                     return defaultOnRender ? defaultOnRender(avatarOptions) : undefined;
                   }

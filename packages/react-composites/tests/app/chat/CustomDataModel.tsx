@@ -78,8 +78,8 @@ export const customOnRenderAvatar = (
 ): JSX.Element | undefined => {
   const avatarOptions = {
     ...options,
-    text: 'Custom Name',
-    initialsColor: 'red'
+    imageInitials: 'CI',
+    text: 'Custom Name'
   };
   return defaultOnRender ? defaultOnRender(avatarOptions) : undefined;
 };
