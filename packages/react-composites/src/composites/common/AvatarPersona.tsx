@@ -39,6 +39,10 @@ export type AvatarPersonaData = {
    * It has '?' in place of initials, with static font and background colors
    */
   showUnknownPersonaCoin?: boolean;
+  /**
+   * If true, hide the entire avatar avatar element.
+   */
+  hideAvatar?: boolean;
 };
 
 /**
@@ -107,7 +111,7 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
     mergeStyles(activePersona, props.styles);
   }
 
-  return (
+  return !data?.hideAvatar ? (
     <Persona
       {...props}
       className={activePersona}
@@ -120,6 +124,8 @@ export const AvatarPersona = (props: AvatarPersonaProps): JSX.Element => {
       showOverflowTooltip={showOverflowTooltip ?? false}
       showUnknownPersonaCoin={data?.showUnknownPersonaCoin ?? props.showUnknownPersonaCoin ?? false}
     />
+  ) : (
+    <></>
   );
 };
 
