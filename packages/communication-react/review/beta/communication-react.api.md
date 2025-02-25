@@ -330,6 +330,7 @@ export interface BaseCompositeProps<TIcons extends Record<string, JSX.Element>> 
     locale?: CompositeLocale;
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
     onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
+    onRenderAvatar?: OnRenderAvatarCallback;
     rtl?: boolean;
 }
 
@@ -2863,7 +2864,10 @@ export type CreateViewResult = {
 export type CustomAvatarOptions = {
     coinSize?: number;
     hidePersonaDetails?: boolean;
+    initialsColor?: PersonaInitialsColor | string;
     initialsTextColor?: string;
+    imageUrl?: string;
+    imageInitials?: string;
     noVideoAvailableAriaLabel?: string;
     presence?: PersonaPresence;
     size?: PersonaSize;
