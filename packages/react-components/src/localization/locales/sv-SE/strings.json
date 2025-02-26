@@ -571,13 +571,13 @@
       "dismissButtonAriaLabel": "Stäng"
     },
     "recordingAndTranscriptionStarted": {
-      "title": "Inspelning och avskrift har startats.",
+      "title": "Inspelning och transkription har startats.",
       "message": "Genom att ansluta ger du ditt medgivande för att det här mötet ska transkriberas.",
       "dismissButtonAriaLabel": "Stäng"
     },
     "recordingAndTranscriptionStopped": {
       "title": "Inspelning och transkription sparas.",
-      "message": "Inspelning och avskrift har avslutats.",
+      "message": "Inspelning och transkription har avslutats.",
       "dismissButtonAriaLabel": "Stäng"
     },
     "recordingStoppedStillTranscribing": {

@@ -136,6 +136,15 @@ interface CallAdapterPrivateState {
   };
 }
 
+/**
+ * For each time that we use the hook {@link useSelector} in the {@link CallComposite} we add another listener
+ * to the `stateChanged` event on the this adapter. This number is set in relation to the number of
+ * times that we are using the hook useSelector in the CallComposite.
+ *
+ * We will need to update this as the threshold is reached with more usages of useSelector.
+ */
+const EVENT_LISTENER_WARNING_WARNING_LIMIT = 125;
+
 type CallContextState = CallAdapterState & CallAdapterPrivateState;
 
 /** Context of call, which is a centralized context for all state updates */
@@ -196,7 +205,7 @@ class CallContext {
       sounds: options?.callingSounds,
       reactions: options?.reactionResources
     };
-    this.emitter.setMaxListeners(options?.maxListeners ?? 50);
+    this.emitter.setMaxListeners(options?.maxListeners ?? EVENT_LISTENER_WARNING_WARNING_LIMIT);
     this.bindPublicMethods();
     this.displayNameModifier = options?.onFetchProfile
       ? createProfileStateModifier(options.onFetchProfile, () => {
