@@ -281,6 +281,11 @@ export type CallWithChatCompositeOptions = {
    * @beta
    */
   richTextEditor?: boolean;
+  /**
+   * Options to enable joining call without a microphone.
+   * @defaultValue false
+   */
+  skipMicCheck?: boolean;
 };
 
 type CallWithChatScreenProps = {
@@ -360,6 +365,7 @@ type CallWithChatScreenProps = {
   };
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   richTextEditor?: boolean;
+  skipMicCheck?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -539,7 +545,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         logo: props.logo,
         backgroundImage: props.backgroundImage
       },
-      spotlight: props.spotlight
+      spotlight: props.spotlight,
+      skipMicCheck: props.skipMicCheck
     }),
     [
       props.callControls,
@@ -561,7 +568,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       surveyOptions,
       props.logo,
       props.backgroundImage,
-      props.spotlight
+      props.spotlight,
+      props.skipMicCheck
     ]
   );
 
@@ -733,6 +741,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         spotlight={options?.spotlight}
         /* @conditional-compile-remove(rich-text-editor-composite-support) */
         richTextEditor={options?.richTextEditor}
+        skipMicCheck={options?.skipMicCheck}
       />
     </BaseProvider>
   );

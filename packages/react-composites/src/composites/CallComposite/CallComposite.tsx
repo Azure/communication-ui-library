@@ -349,6 +349,11 @@ export type CallCompositeOptions = {
      */
     hideSpotlightButtons?: boolean;
   };
+  /**
+   * Options to enable joining call without a microphone.
+   * @defaultValue false
+   */
+  skipMicCheck?: boolean;
 };
 
 type MainScreenProps = {
@@ -556,6 +561,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'configuration':
       pageElement = (
         <ConfigurationPage
+          skipMicCheck={props.options?.skipMicCheck}
           mobileView={props.mobileView}
           startCallHandler={(): void => {
             if (callees) {

@@ -797,6 +797,7 @@ export type CallCompositeOptions = {
     spotlight?: {
         hideSpotlightButtons?: boolean;
     };
+    skipMicCheck?: boolean;
 };
 
 // @public
@@ -1637,6 +1638,7 @@ export type CallWithChatCompositeOptions = {
         hideSpotlightButtons?: boolean;
     };
     richTextEditor?: boolean;
+    skipMicCheck?: boolean;
 };
 
 // @public

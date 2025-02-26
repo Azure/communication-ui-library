@@ -103,6 +103,7 @@ export interface ConfigurationPageProps {
   backgroundImage?: {
     url: string;
   };
+  skipMicCheck?: boolean;
 }
 
 /**
@@ -115,7 +116,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     modalLayerHostId,
     /* @conditional-compile-remove(call-readiness) */ deviceChecks,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
-    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
+    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
+    skipMicCheck
   } = props;
 
   const theme = useTheme();
@@ -144,7 +146,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const microphones = useSelector(getMicrophones);
   const environmentInfo = useSelector(getEnvironmentInfo);
 
-  let disableStartCallButton = !microphonePermissionGranted || microphones?.length === 0;
+  let disableStartCallButton = (!microphonePermissionGranted || microphones?.length === 0) && !skipMicCheck;
   const role = useSelector(getRole);
 
   const isCameraOn = useSelector(localVideoSelector).isAvailable;
