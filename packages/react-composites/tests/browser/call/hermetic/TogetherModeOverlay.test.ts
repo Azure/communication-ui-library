@@ -349,7 +349,7 @@ test.describe('Confirm Together Mode Stream signaling events', async () => {
   });
 });
 
-test.only('Confirm multiple participants status in together mode when window size is smaller', async ({
+test('Confirm multiple participants status in together mode when window size is smaller', async ({
   page,
   serverUrl
 }, testInfo) => {

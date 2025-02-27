@@ -278,6 +278,7 @@ export function addScreenshareStream(
   addDummyView(streams[0], isReceiving, scalingMode);
 }
 
+/* conditional-compile-remove(together-mode) */
 /**
  * Add a screenshare stream to {@link MockRemoteParticipantState}.
  *
@@ -296,9 +297,9 @@ export function addTogetherModeStream(
       isAvailable: true,
       isReceiving: true
     } as CallFeatureStreamState);
-  // if (!togetherModeStream) {
-  //   throw new Error(`Expected togetherMode Stream to be active`);
-  // }
+  if (!togetherModeStream) {
+    throw new Error(`Expected togetherMode Stream to be active`);
+  }
   if (togetherModeStreamState.mainVideoStream) {
     addDummyView(togetherModeStreamState.mainVideoStream, isReceiving, scalingMode);
   }
