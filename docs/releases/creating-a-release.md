@@ -169,7 +169,7 @@ After finishing creating a release branch, follow these steps to create a UI sna
 
 Once the release branch has been created, we must make sure that the package we eventually off of the release branch is high quality. Towards this:
 
-- Set up a bug bash with the team to shake out any issues. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/31350/WebUI-Setting-up-a-bug-bash) for setting up a bug bash.
+- Set up a bug bash with the team to shake out any issues. See [internal documentation](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/59158/How-to-setup-a-release-bug-bash) for setting up a bug bash.
   - Triage bugs found via bug bash and manage merging of fixes into the release branch, as described in the section below.
 
 #### Cherry-picking Changes

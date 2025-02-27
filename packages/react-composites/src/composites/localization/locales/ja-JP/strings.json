@@ -123,7 +123,7 @@
     "captionsSettingsCancelButtonLabel": "キャンセル",
     "captionsSettingsModalAriaLabel": "字幕設定モーダル",
     "captionsSettingsCloseModalButtonAriaLabel": "字幕設定を閉じる",
-    "captionsBannerMoreButtonCallingLabel": "その他",
+    "captionsBannerMoreButtonCallingLabel": "キャプション設定のその他のオプション",
     "captionsBannerMoreButtonTooltip": "その他のオプション",
     "realTimeTextLabel": "リアルタイム テキスト (RTT)",
     "startRealTimeTextLabel": "この呼び出しの RTT を有効にする",

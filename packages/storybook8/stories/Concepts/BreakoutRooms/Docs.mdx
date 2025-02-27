@@ -1,0 +1,68 @@
+import { Meta, Source } from '@storybook/addon-docs';
+import BreakoutRoomsEventSnippetText from '!!raw-loader!./snippets/BreakoutRoomsUpdatedEvent.snippet.tsx';
+
+<Meta
+  id="breakout rooms"
+  title="Concepts/Breakout rooms"
+  parameters={{ previewTabs: { canvas: { disable: true, hidden: true } } }}
+/>
+
+# Breakout Rooms
+
+## Overview
+
+ACS and Team identity users are now ready to be moved into breakout rooms in Teams meetings when the meeting organizer
+assigns the ACS or Teams identity user a breakout room and opens that breakout room. ACS and Teams identity users,
+however, will not yet have the ability to choose their breakout room when they are granted by meeting organizer. ACS
+and Teams identity users can be move into breakout rooms but they will not yet have the ability to create and manage
+breakout rooms when they have organizer or co-organizer role.
+
+Click [here](https://support.microsoft.com/en-us/office/use-breakout-rooms-in-microsoft-teams-meetings-7de1f48a-da07-466c-a5ab-4ebace28e461)
+to learn more about breakout rooms in Teams meetings and how to create and manage breakout rooms as a Teams user.
+
+## Composites
+
+ACS and Team identity users using the CallComposite and CallWithChatComposite will now be able move to breakout rooms
+in Teams meetings. When the meeting organizer assigns a breakout room to an ACS or Teams identity user and that
+breakout room is opened, the composite will automatically change the current call to the breakout room. When the
+breakout room is closed, the ACS or Teams identity user will automatically be moved back the the main meeting.
+
+There are notifications that will be shown to guide the ACS or Teams identity user through the composite transitions
+between the main meeting and breakout room. The notifications are shown when:
+
+- the user's assigned breakout room opens and the user will be automatically moved to the breakout room
+- the user's assigned breakout room opens and the user is prompted to join
+- the user joins a breakout room
+- the user's assigned breakout room is changed while already in a breakout room
+- the user is in a breakout room with a time limit and that breakout room is closing soon
+- the user is in a breakout room and that breakout room is closed
+
+## Handling breakoutRoomsUpdated events
+
+The [CallAdapter](?path=/docs/composites-adapters--docs#calladapter) and CallWithChatAdapter are able to receive
+`breakoutRoomsUpdated` events and allows you to handle these events by defining your own `BreakoutRoomsUpdateListener`
+callback. The following code snippet shows an example of a `BreakoutRoomsUpdateListener` that outputs the event to the
+browser console.
+
+<Source code={BreakoutRoomsEventSnippetText} />
+
+Note: The `breakoutRoomsUpdated` room event encompasses 4 types: `assignedBreakoutRooms`, `join`,
+`breakoutRoomsSettings`, and `breakoutRooms`
+
+## FAQs
+
+### Are breakout rooms supported in calls other than Teams meetings?
+
+No. Breakout rooms is a feature that is currently only available in Teams meetings
+
+### Can ACS or Teams identity users choose their own breakout room to join?
+
+Can ACS or Teams identity users will not yet be able to choose their own breakout room like in Teams. The meeting
+organizer must assign the breakout room for the ACS or Teams identity user.
+
+### Where can I learn about managing breakout rooms and their settings?
+
+This [documentation](https://support.microsoft.com/en-us/office/use-breakout-rooms-in-microsoft-teams-meetings-7de1f48a-da07-466c-a5ab-4ebace28e461)
+will guide you on everything you need to know about creating and managing breakout rooms as a Teams user.
+
+Note: ACS Web UI Library cannot yet be used to manage breakout rooms and their settings

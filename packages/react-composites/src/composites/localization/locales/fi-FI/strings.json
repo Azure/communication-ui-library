@@ -123,7 +123,7 @@
     "captionsSettingsCancelButtonLabel": "Peruuta",
     "captionsSettingsModalAriaLabel": "Tekstitysasetus, modaalinen valintaikkuna",
     "captionsSettingsCloseModalButtonAriaLabel": "Sulje tekstitysasetus",
-    "captionsBannerMoreButtonCallingLabel": "Lisää",
+    "captionsBannerMoreButtonCallingLabel": "Tekstitysasetusten lisäasetukset",
     "captionsBannerMoreButtonTooltip": "Lisää vaihtoehtoja",
     "realTimeTextLabel": "Reaaliaikainen teksti (RTT)",
     "startRealTimeTextLabel": "Ota reaaliaikainen kirjoitus käyttöön tässä puhelussa",
