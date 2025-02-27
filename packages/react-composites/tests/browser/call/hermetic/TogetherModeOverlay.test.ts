@@ -22,7 +22,8 @@ import {
 } from '../../common/utils';
 import { IDS } from '../../common/constants';
 import { CallKind } from '@azure/communication-calling';
-// import type { MockCallState } from '../../../common';
+import type { MockRemoteParticipantState } from '../../../common';
+import { TogetherModeSeatingPositionState } from '@internal/calling-stateful-client';
 
 /* @conditional-compile-remove(together-mode) */
 test.describe('Confirm Start Together layout view option ', async () => {
@@ -109,10 +110,7 @@ test.describe('Confirm Start Together layout view option ', async () => {
 });
 
 test.describe('Confirm Together Mode Stream signaling events', async () => {
-  test.only('Confirm raiseHand icon and display Name in together mode layout', async ({
-    page,
-    serverUrl
-  }, testInfo) => {
+  test('Confirm raiseHand icon and display Name in together mode layout', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges', true);
     const vasily = defaultMockRemoteParticipant('Vasily');
@@ -149,10 +147,7 @@ test.describe('Confirm Together Mode Stream signaling events', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-view-raisehand-icon.png');
   });
 
-  test.only('Confirm spotlight icon and display Name in together mode layout', async ({
-    page,
-    serverUrl
-  }, testInfo) => {
+  test('Confirm spotlight icon and display Name in together mode layout', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges', true);
     const vasily = defaultMockRemoteParticipant('Vasily');
@@ -189,7 +184,7 @@ test.describe('Confirm Together Mode Stream signaling events', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-view-spotlight-icon.png');
   });
 
-  test.only('Confirm mute icon and display Name in together mode layout', async ({ page, serverUrl }, testInfo) => {
+  test('Confirm mute icon and display Name in together mode layout', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const paul = defaultMockRemoteParticipant('Paul Bridges', true);
     const vasily = defaultMockRemoteParticipant('Vasily');
@@ -227,7 +222,7 @@ test.describe('Confirm Together Mode Stream signaling events', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-view-mute-icon.png');
   });
 
-  test.only('Confirm only icons show when seating width is 100px in together mode layout', async ({
+  test('Confirm only icons show when seating width is 100px in together mode layout', async ({
     page,
     serverUrl
   }, testInfo) => {
@@ -269,4 +264,118 @@ test.describe('Confirm Together Mode Stream signaling events', async () => {
     await waitForSelector(page, dataUiId(id));
     expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-view-icons-only.png');
   });
+
+  test.only('Confirm multiple participants status in together mode', async ({ page, serverUrl }, testInfo) => {
+    test.skip(isTestProfileMobile(testInfo));
+    const participants = createRandomRemoteParticipantList(10);
+    const initialState = defaultMockCallAdapterState(participants);
+    if (initialState.call?.togetherMode) {
+      initialState.isTeamsCall = true;
+      initialState.call.kind = 'TeamsCall' as CallKind;
+      initialState.call.togetherMode.isActive = true;
+      addTogetherModeStream(initialState.call.togetherMode.streams, true);
+      initialState.call.togetherMode.seatingPositions = {
+        '8:orgid:Participant-1-id': {
+          top: 121.50823529411764,
+          left: 858.175834509804,
+          width: 198.83478588235292,
+          height: 149.10745098039214
+        },
+        '8:orgid:Participant-2-id': {
+          top: 298.93176470588236,
+          left: 635.1239913725491,
+          width: 208.3941505882353,
+          height: 156.27607843137255
+        },
+        '8:orgid:Participant-3-id': {
+          top: 298.93176470588236,
+          left: 851.8029247058824,
+          width: 208.3941505882353,
+          height: 156.27607843137255
+        },
+        '8:orgid:Participant-4-id': {
+          top: 206.45647058823528,
+          left: 747.9244949019608,
+          width: 202.6585317647059,
+          height: 151.9749019607843
+        },
+        '8:orgid:Participant-5-id': {
+          top: 298.93176470588236,
+          left: 1071.6683129411765,
+          width: 208.3941505882353,
+          height: 156.27607843137255
+        },
+        '8:orgid:Participant-6-id': {
+          top: 36.20156862745097,
+          left: 961.4169733333333,
+          width: 193.09916705882353,
+          height: 144.80627450980393
+        },
+        '8:orgid:Participant-7-id': {
+          top: 206.45647058823528,
+          left: 961.4169733333333,
+          width: 202.6585317647059,
+          height: 151.9749019607843
+        },
+        '8:orgid:Participant-8-id': {
+          top: 121.50823529411764,
+          left: 647.8698109803921,
+          width: 198.83478588235292,
+          height: 149.10745098039214
+        },
+        '8:orgid:Participant-9-id': {
+          top: 36.20156862745097,
+          left: 757.4838596078431,
+          width: 193.09916705882353,
+          height: 144.80627450980393
+        },
+        '8:orgid:Participant-10-id': {
+          top: 121.50823529411764,
+          left: 1065.2954031372549,
+          width: 198.83478588235292,
+          height: 149.10745098039214
+        }
+      };
+    }
+
+    await page.setViewportSize({ width: 1912, height: 600 });
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        newControlBarExperience: 'true'
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.moreButton));
+    await pageClick(page, dataUiId(IDS.moreButton));
+    await page.locator('button:has-text("View")').click();
+    expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-view-option-all-participants.png');
+    await page.locator('button:has-text("Together mode")').click();
+    await waitForSelector(page, dataUiId(IDS.togetherModeStream));
+    // await waitForSelector(page, dataUiId(id));
+    for (let i = 1; i <= 10; i++) {
+      const id = `together-mode-participant-8:orgid:Participant-${i}-id`;
+      await waitForSelector(page, dataUiId(id));
+    }
+    expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-all-participants.png');
+  });
 });
+
+const createRandomRemoteParticipantList = (participantCount: number): MockRemoteParticipantState[] => {
+  const participants = [];
+  for (let i = 1; i <= participantCount; i++) {
+    const participant = defaultMockRemoteParticipant(`Participant-${i}`, true);
+    addVideoStream(participant, true);
+    assignRandomSignalingEvents(participant, i);
+    participants.push(participant);
+  }
+  return participants;
+};
+
+const assignRandomSignalingEvents = (participant: MockRemoteParticipantState, orderNumber: number): void => {
+  if (orderNumber % 2 === 0) {
+    participant.raisedHand = { raisedHandOrderPosition: orderNumber };
+    participant.isMuted = true;
+  } else {
+    participant.spotlight = { spotlightedOrderPosition: orderNumber };
+  }
+};

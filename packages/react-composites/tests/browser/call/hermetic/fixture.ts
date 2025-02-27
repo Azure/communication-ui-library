@@ -180,7 +180,10 @@ export function defaultMockRemoteParticipant(
 ): MockRemoteParticipantState {
   return {
     identifier: isTeamsUser
-      ? { kind: 'microsoftTeamsUser', microsoftTeamsUserId: `8:orgid:${displayName}-id` }
+      ? {
+          kind: 'microsoftTeamsUser',
+          microsoftTeamsUserId: `${displayName}-id`
+        }
       : { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
     state: 'Connected',
     videoStreams: {
