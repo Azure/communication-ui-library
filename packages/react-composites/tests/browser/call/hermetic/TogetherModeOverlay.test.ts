@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import {
-  //   addScreenshareStream,
   addTogetherModeStream,
   addVideoStream,
   buildUrlWithMockAdapter,
@@ -11,19 +10,10 @@ import {
   test
 } from './fixture';
 import { expect } from '@playwright/test';
-import {
-  dataUiId,
-  //   dragToRight,
-  //   existsOnPage,
-  isTestProfileMobile,
-  pageClick,
-  stableScreenshot,
-  waitForSelector
-} from '../../common/utils';
+import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 import { CallKind } from '@azure/communication-calling';
 import type { MockRemoteParticipantState } from '../../../common';
-import { TogetherModeSeatingPositionState } from '@internal/calling-stateful-client';
 
 /* @conditional-compile-remove(together-mode) */
 test.describe('Confirm Start Together layout view option ', async () => {
@@ -265,7 +255,7 @@ test.describe('Confirm Together Mode Stream signaling events', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-view-icons-only.png');
   });
 
-  test.only('Confirm multiple participants status in together mode', async ({ page, serverUrl }, testInfo) => {
+  test('Confirm multiple participants status in together mode', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
     const participants = createRandomRemoteParticipantList(10);
     const initialState = defaultMockCallAdapterState(participants);
@@ -351,13 +341,112 @@ test.describe('Confirm Together Mode Stream signaling events', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-view-option-all-participants.png');
     await page.locator('button:has-text("Together mode")').click();
     await waitForSelector(page, dataUiId(IDS.togetherModeStream));
-    // await waitForSelector(page, dataUiId(id));
     for (let i = 1; i <= 10; i++) {
       const id = `together-mode-participant-8:orgid:Participant-${i}-id`;
       await waitForSelector(page, dataUiId(id));
     }
     expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-all-participants.png');
   });
+});
+
+test.only('Confirm multiple participants status in together mode when window size is smaller', async ({
+  page,
+  serverUrl
+}, testInfo) => {
+  test.skip(isTestProfileMobile(testInfo));
+  const participants = createRandomRemoteParticipantList(10);
+  const initialState = defaultMockCallAdapterState(participants);
+  if (initialState.call?.togetherMode) {
+    initialState.isTeamsCall = true;
+    initialState.call.kind = 'TeamsCall' as CallKind;
+    initialState.call.togetherMode.isActive = true;
+    addTogetherModeStream(initialState.call.togetherMode.streams, true);
+    initialState.call.togetherMode.seatingPositions = {
+      '8:orgid:Participant-1-id': {
+        top: 48.92235294117647,
+        left: 214.6134650980392,
+        width: 80.0560188235294,
+        height: 60.03450980392157
+      },
+      '8:orgid:Participant-2-id': {
+        top: 120.35764705882352,
+        left: 124.8070337254902,
+        width: 83.90486588235292,
+        height: 62.920784313725484
+      },
+      '8:orgid:Participant-3-id': {
+        top: 120.35764705882352,
+        left: 212.04756705882352,
+        width: 83.90486588235292,
+        height: 62.920784313725484
+      },
+      '8:orgid:Participant-4-id': {
+        top: 83.12470588235294,
+        left: 170.22342901960783,
+        width: 81.59555764705883,
+        height: 61.189019607843136
+      },
+      '8:orgid:Participant-5-id': {
+        top: 120.35764705882352,
+        left: 300.57104941176476,
+        width: 83.90486588235292,
+        height: 62.920784313725484
+      },
+      '8:orgid:Participant-6-id': {
+        top: 14.5756862745098,
+        left: 256.18101333333334,
+        width: 77.74671058823529,
+        height: 58.30274509803922
+      },
+      '8:orgid:Participant-7-id': {
+        top: 83.12470588235294,
+        left: 256.18101333333334,
+        width: 81.59555764705883,
+        height: 61.189019607843136
+      },
+      '8:orgid:Participant-8-id': {
+        top: 48.92235294117647,
+        left: 129.93882980392158,
+        width: 80.0560188235294,
+        height: 60.03450980392157
+      },
+      '8:orgid:Participant-9-id': {
+        top: 14.5756862745098,
+        left: 174.0722760784314,
+        width: 77.74671058823529,
+        height: 58.30274509803922
+      },
+      '8:orgid:Participant-10-id': {
+        top: 48.92235294117647,
+        left: 298.005151372549,
+        width: 80.0560188235294,
+        height: 60.03450980392157
+      }
+    };
+  }
+
+  await page.setViewportSize({ width: 700, height: 500 });
+  await page.goto(
+    buildUrlWithMockAdapter(serverUrl, initialState, {
+      newControlBarExperience: 'true'
+    })
+  );
+
+  await waitForSelector(page, dataUiId(IDS.moreButton));
+  await pageClick(page, dataUiId(IDS.moreButton));
+  await page.locator('button:has-text("View")').click();
+  expect(await stableScreenshot(page)).toMatchSnapshot(
+    'together-mode-view-option-all-participants-in-smaller-size.png'
+  );
+  await page.locator('button:has-text("Together mode")').click();
+  await waitForSelector(page, dataUiId(IDS.togetherModeStream));
+  for (let i = 1; i <= 10; i++) {
+    const id = `together-mode-participant-8:orgid:Participant-${i}-id`;
+    await waitForSelector(page, dataUiId(id));
+  }
+  expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-all-participants-in-smaller-size.png');
+  page.click(dataUiId('together-mode-participant-8:orgid:Participant-5-id'));
+  expect(await stableScreenshot(page)).toMatchSnapshot('together-mode-participant-1-click.png');
 });
 
 const createRandomRemoteParticipantList = (participantCount: number): MockRemoteParticipantState[] => {
