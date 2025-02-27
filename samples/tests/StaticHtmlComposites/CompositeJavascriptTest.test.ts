@@ -40,7 +40,9 @@ test.describe('JS Bundle Test', () => {
 
     // Flakey test fix: wait for participant list to have finished loading
     if (isBetaBuild) {
-      await page.waitForSelector('[data-ui-id=participant-item]');
+      const selector = '[data-ui-id="participant-item"]';
+      const component = page.locator(selector);
+      await component.waitFor({ state: 'visible' });
     }
 
     await page.addScriptTag({
