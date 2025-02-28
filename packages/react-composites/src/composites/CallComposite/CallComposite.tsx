@@ -359,7 +359,7 @@ export type CallCompositeOptions = {
      * skip will allow the user to join the call without granting the microphone permission.
      * @defaultValue 'blockOnAccess'
      */
-    microphoneCheck: 'blockOnAccess' | 'skip';
+    microphoneCheck?: 'blockOnAccess' | 'skip';
   };
 };
 

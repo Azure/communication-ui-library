@@ -798,7 +798,7 @@ export type CallCompositeOptions = {
         hideSpotlightButtons?: boolean;
     };
     joinCallOptions?: {
-        microphoneCheck: 'blockOnAccess' | 'skip';
+        microphoneCheck?: 'blockOnAccess' | 'skip';
     };
 };
 
@@ -1641,7 +1641,7 @@ export type CallWithChatCompositeOptions = {
     };
     richTextEditor?: boolean;
     joinCallOptions?: {
-        microphoneCheck: 'blockOnAccess' | 'skip';
+        microphoneCheck?: 'blockOnAccess' | 'skip';
     };
 };
 
