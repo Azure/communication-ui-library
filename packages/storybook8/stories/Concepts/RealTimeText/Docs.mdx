@@ -1,7 +1,5 @@
-import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/addon-docs';
 import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
-import { overviewPageImagesStackStyle } from '../../constants';
 
 <Meta title="Concepts/Real-Time Text" />
 
@@ -25,11 +23,26 @@ Enhancing Clarity: In noisy environments or situations with audio quality issues
 
 Microsoft is dedicated to accessibility, and the incorporation of Real-Time Text (RTT) supports this commitment by adhering to accessibility standards such as The European Accessibility Act (Directive (EU) 2019/882. This directive requires that voice and video services support RTT by June 2025, ensuring inclusive communication throughout Europe. Voice and video services will not be permitted to operate in Europe or have Europe based customers after June 2025 without RTT, making the inclusion of this feature in the UI Library critically important.
 
+## How RTT Works in a Call Experience
+
+Real-Time Text (RTT) is tightly integrated into both the communication flow and the UI, ensuring that users can engage in dynamic, real-time conversations.
+
+When a call starts, RTT is not enabled by default. Participants can choose to activate it at any time during the call. To enable RTT, users open the call control bar—usually located at the bottom of the screen—and click on the "More" button, represented by an ellipsis (...). From the menu that appears, selecting the "Start Real-Time Text" option activates RTT for everyone in the call. A notification is displayed to inform all participants that RTT has been turned on and cannot be disabled for the rest of the call.
+
+<img style={{ width: '100%' }} src="images/StartRTT.png" alt="example of component that can be used for starting RTT" />
+
+Once RTT is enabled, participants can type messages in a dedicated text window that appears in the captions area. As each character is typed, it is immediately visible to everyone in real time, creating a natural, continuous flow of communication. This allows both the person typing and other participants to engage with the conversation without waiting for complete messages. RTT can also merge seamlessly with live captions to deliver a unified text experience. This allows users to view both real-time messages and captions in one place, ensuring accessibility and minimal UI clutter.
+
+Although RTT exists in the caption window, it can still be enabled without captions being enabled. Similarly, captions can still be enabled without RTT being enabled. When both captions and RTT are enabled, both captions and RTT messages are displayed in the same interface. RTT messages show a "RTT Typing" tag while they are being composed and then integrate into the captions feed once committed. The design prioritizes usability, making it easy for participants to activate and follow conversations without interruptions.
+
+<img
+  style={{ width: '100%' }}
+  src="images/CaptionsBannerRTT.png"
+  alt="example of Captions Banner with Real-Time Text Enabled"
+/>
 ## Incorporating RTT in Your Experience
 
-Real-Time Text is supported by default and are automatically included within the CallComposite and CallWithChatComposite experiences.
-
-Real-Time Text is also supported for component only users.
+RTT is automatically available in the UI Library. RTT is integrated by default within the CallComposite, CallWithChatComposite, and is available to be built using the associated Components. These components automatically manage message display states, typing indicators, and user interaction prompts to deliver a fluid, accessible experience. Developers can use these four components to build their own customer RTT experience.
 
 List of components exported for Real-Time Text:
 
@@ -40,41 +53,6 @@ List of components exported for Real-Time Text:
 [StartRealTimeTextButton](./?path=/docs/components-start-real-time-text-button--docs) is a component that can be used to turn on Real-Time Text. Note that Real-Time Text will not be started for everyone in the call until a message is sent.
 
 [CaptionsBanner](./?path=/docs/components-captions-banner--docs) is a component that combines and displays captions and Real-Time Text in one banner. Developers and use 'usePropsFor' to gather all the information required to power this component, including the list of Real-Time Text and captions messages in the call. User can also use this component for captions only or Real-Time Text only.
-
-## How to use Real-Time Text
-
-Real-Time Text is automatically included within the CallComposite and CallWithChatComposite experiences.
-
-To turn on Real-Time Text, users need to navigate to the control bar after call is connected, and click on more button. Inside the menu pop up, click on Real-Time Text, then click on Turn on RTT for this call.
-
-Note that Real-Time Text will be enabled for all participants in the call once the first message is sent. It cannot be turned off.
-
-<Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
-  <Stack.Item align="center">
-    <>Using the more menu to turn on Real-Time Text</>
-    <img
-      style={{ width: '100%' }}
-      src="images/StartRTT.png"
-      alt="example of component that can be used for starting RTT"
-    />
-  </Stack.Item>
-  <Stack.Item align="center">
-    <>Real-Time Text Modal showing the disclaimer warning</>
-    <img
-      style={{ width: '100%' }}
-      src="images/RTTModal.png"
-      alt="example of component that can be used for showing a disclaimer warning that Real-Time Text is enabled for everyone in the call once turned on"
-    />
-  </Stack.Item>
-  <Stack.Item align="center">
-    <>Captions Banner with Real-Time Text Enabled</>
-    <img
-      style={{ width: '100%' }}
-      src="images/CaptionsBannerRTT.png"
-      alt="example of Captions Banner with Real-Time Text Enabled"
-    />
-  </Stack.Item>
-</Stack>
 
 ## RTT is available in these scenarios
 
@@ -89,3 +67,23 @@ Note that Real-Time Text will be enabled for all participants in the call once t
 
 To read more details about the underlying infrastructure, click here:  
 [Real Time Text (RTT) Overview - An Azure Communication Services concept document | Microsoft Learn](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/real-time-text)
+
+## FAQ
+
+### How can I enable RTT?
+
+RTT can be enabled during calls via the control bar “more” button.
+
+Enabling RTT opens the RTT window for everyone in the call. When one user enables RTT, other users do not need to enable it for themselves. This window cannot be closed for the duration of the call nor can RTT be disabled.
+
+### When I type a sentence in the RTT window, when does it get sent?
+
+A message is sent when the user explicitly takes an action, such as pressing "Enter," or if no additional text is typed for 3 seconds, at which point the text will automatically commit.
+
+Otherwise, text remains ephemeral as it is being typed, allowing users to see characters appear in real time without immediately committing to a message.
+
+### How does this differ from chat?
+
+Chat is an asynchronous form of messaging that requires a user to type out their whole sentence and commit it before anyone else sees the message. Chat can also be closed or hidden in many calls, giving it a secondary level of prominence.
+
+RTT is a synchronous form of messaging that shows text as it is typed in the main video gallery. The window cannot be hidden or closed, giving it the same level of prominence as speaking would in a call. RTT is also a focused accessibility feature.

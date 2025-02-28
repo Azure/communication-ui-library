@@ -278,6 +278,8 @@ export interface CallAdapter extends CommonCallAdapter {
 // @public
 export type CallAdapterCallEndedEvent = {
     callId: string;
+    code?: number;
+    subCode?: number;
 };
 
 // @public @deprecated
@@ -902,7 +904,9 @@ export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 // @public
 export class CallError extends Error {
     constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
+    code?: number;
     innerError: Error;
+    subCode?: number;
     target: CallErrorTarget;
     timestamp: Date;
 }
