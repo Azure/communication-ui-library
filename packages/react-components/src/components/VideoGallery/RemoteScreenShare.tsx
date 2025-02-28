@@ -111,7 +111,7 @@ export const LoadingSpinner = (props: { loadingMessage: string }): JSX.Element =
   return (
     <Stack verticalAlign="center" className={loadingStyle}>
       <Spinner
-        styles={{ label: { maxWidth: '15rem', overflow: 'hidden', textOverflow: 'ellipses' } }}
+        styles={{ label: { maxWidth: '10rem', overflow: 'hidden', textOverflow: 'ellipsis' } }}
         label={props.loadingMessage}
         size={SpinnerSize.xSmall}
         aria-live={'assertive'}
