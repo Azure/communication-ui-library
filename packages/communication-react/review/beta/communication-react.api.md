@@ -800,7 +800,7 @@ export type CallCompositeOptions = {
         hideSpotlightButtons?: boolean;
     };
     joinCallOptions?: {
-        microphoneCheck?: 'blockOnAccess' | 'skip';
+        microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
     };
 };
 
@@ -1645,7 +1645,7 @@ export type CallWithChatCompositeOptions = {
     };
     richTextEditor?: boolean;
     joinCallOptions?: {
-        microphoneCheck?: 'blockOnAccess' | 'skip';
+        microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
     };
 };
 

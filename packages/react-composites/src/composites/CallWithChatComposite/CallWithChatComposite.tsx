@@ -289,9 +289,9 @@ export type CallWithChatCompositeOptions = {
      * options for checking microphone permissions when joining a call.
      * block on access will block the user from joining the call if the microphone permission is not granted.
      * skip will allow the user to join the call without granting the microphone permission.
-     * @defaultValue 'blockOnAccess'
+     * @defaultValue 'requireMicrophoneAvailable'
      */
-    microphoneCheck?: 'blockOnAccess' | 'skip';
+    microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
   };
 };
 
@@ -380,9 +380,9 @@ type CallWithChatScreenProps = {
      * options for checking microphone permissions when joining a call.
      * block on access will block the user from joining the call if the microphone permission is not granted.
      * skip will allow the user to join the call without granting the microphone permission.
-     * @defaultValue 'blockOnAccess'
+     * @defaultValue 'requireMicrophoneAvailable'
      */
-    microphoneCheck?: 'blockOnAccess' | 'skip';
+    microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
   };
 };
 
