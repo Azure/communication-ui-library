@@ -109,15 +109,14 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     if (deviceManager.deviceAccess?.audio === false && isSafari()) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDeniedSafari' });
     }
-    if (
+
+    if (diagnostics?.media.latest.microphonePermissionDenied?.value === true && isMacOS()) {
+      activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
+    } else if (
       (deviceManager.deviceAccess?.audio === false && !isSafari()) ||
       (diagnostics?.media.latest.microphonePermissionDenied?.value === true && !isMacOS())
     ) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
-    }
-
-    if (diagnostics?.media.latest.microphonePermissionDenied?.value === true && isMacOS()) {
-      activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
     }
 
     const microphoneMuteUnexpectedlyDiagnostic =
