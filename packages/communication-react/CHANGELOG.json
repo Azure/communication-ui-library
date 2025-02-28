@@ -2,6 +2,177 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 24 Feb 2025 23:41:46 GMT",
+      "version": "1.25.0-beta.1",
+      "tag": "@azure/communication-react_v1.25.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "203fe3cf17781ae0053f1321eee1ad8e6348850e",
+            "area": "improvement",
+            "workstream": "Governance",
+            "comment": "As per component governance bump esbuild version"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9ab59fca7b23c01802766af357c95b9ccf0238a4",
+            "area": "feature",
+            "workstream": "Breakout rooms",
+            "comment": "Change spinner text when loading chat in breakout room"
+          },
+          {
+            "author": "94866715+dmceachernmsft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e34a743a37da0fdabd280a4c7d17824f8ae0ea2a",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update Aria items for Participant List and menu items"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ea87c09afaf1e174e8b70ba14b74f56fc366ad1a",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix control bar button and more button A11y issues, announcing collapsed and expanded state"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0c21167a29431a5741611aac2be49a748b6c7d80",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix screenshare button text to be black in dark mode to match fluent dark mode primary button"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a29bb6357ff13bb49c6135fd337c937a7c40ce3d",
+            "area": "fix",
+            "workstream": "",
+            "comment": "In Call Composites do not show You're Muted notification on lobby screen"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5127860ee1fa6a91183a30e45c7baf15b5810da6",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix bug where switching camera on iphone may cause stream to freeze for remote participants"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "01ec29b62e61941601b3aa56984529f5b8f7b625",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update aria-level for heading on the config screen"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "78eef1fc1520b94fe1e4c5214057ded1d97645bf",
+            "area": "fix",
+            "workstream": "Breakout rooms",
+            "comment": "Fix bug where chat thread is stuck on spinner when immediately returning to main meeting from breakout room"
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "bff4b7769feda9fcd2a30315946a55e5fb18a4fc",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve issue where toolbar was not focused when opening formatting options for rich text"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8f04b062fb904a0a55dade8ff3c8c27b433b1fa2",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Resolve initial focus order when call screen first appears"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c521e8a19d30dc8c36a44b08980b99de854c4c4a",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update configuration screen to support use at 400% zoom"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c118cfd289774b52ca81d8c109c0d6ee0d4eb454",
+            "area": "feature",
+            "workstream": "Captions",
+            "comment": "Fix bug where spoken and caption language drawer missing default value"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a10d66cfa1adf64e1c14eb4886a81abc249cd5aa",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "Update styling for RTT base on feedback"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6f3fd7a1d61d9718a956738960e054782c3045b3",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Bug Fix: Fix move/close menu not showing on draggable video tile when ctrl+alt+space shortcut is used"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "2058d9cb8a60969aa126df467699446b474c50ff",
+            "area": "improvement",
+            "workstream": "Calling dependency",
+            "comment": "Update @azure/communication-calling beta version to 1.33.2-beta.1"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0c652c481d44ad4a95c7b5fd50ab58f672758e16",
+            "area": "improvement",
+            "workstream": "Stateful layer",
+            "comment": "Refactor deleteLatestNotification"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "998514cd4669c230bf82049c5889cd812fbf52b5",
+            "area": "fix",
+            "workstream": "CallAdapter",
+            "comment": "Update the Max number of event listeners on a event in the CallAdapter"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b255ba277c2347b229a4b5be849f3fee674d6183",
+            "area": "feature",
+            "workstream": "Breakout rooms",
+            "comment": "Promote breakout rooms feature to GA"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "47034b42e209d617718d948150dcd5bae0a8f3ea",
+            "area": "feature",
+            "workstream": "Breakout rooms",
+            "comment": "Remove breakoutRoomOriginCallId from BreakoutRoomsState api"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 10 Feb 2025 18:17:45 GMT",
       "version": "1.24.0",
       "tag": "@azure/communication-react_v1.24.0",
