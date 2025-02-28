@@ -123,7 +123,7 @@
     "captionsSettingsCancelButtonLabel": "취소하기",
     "captionsSettingsModalAriaLabel": "캡션 설정 모달",
     "captionsSettingsCloseModalButtonAriaLabel": "캡션 설정 닫기",
-    "captionsBannerMoreButtonCallingLabel": "기타",
+    "captionsBannerMoreButtonCallingLabel": "캡션 설정 추가 옵션",
     "captionsBannerMoreButtonTooltip": "기타 옵션",
     "realTimeTextLabel": "실시간 텍스트(RTT)",
     "startRealTimeTextLabel": "이 통화에 대한 RTT 켜기",
