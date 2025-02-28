@@ -424,6 +424,8 @@ export interface CallAdapter extends CommonCallAdapter {
 // @public
 export type CallAdapterCallEndedEvent = {
     callId: string;
+    code?: number;
+    subCode?: number;
 };
 
 // @public @deprecated
