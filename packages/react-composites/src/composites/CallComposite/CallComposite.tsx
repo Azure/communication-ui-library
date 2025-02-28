@@ -350,10 +350,17 @@ export type CallCompositeOptions = {
     hideSpotlightButtons?: boolean;
   };
   /**
-   * Options to enable joining call without a microphone.
-   * @defaultValue false
+   * Options for settings related to joining a call.
    */
-  skipMicCheck?: boolean;
+  joinCallOptions?: {
+    /**
+     * options for checking microphone permissions when joining a call.
+     * block on access will block the user from joining the call if the microphone permission is not granted.
+     * skip will allow the user to join the call without granting the microphone permission.
+     * @defaultValue 'blockOnAccess'
+     */
+    microphoneCheck: 'blockOnAccess' | 'skip';
+  };
 };
 
 type MainScreenProps = {
@@ -561,7 +568,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'configuration':
       pageElement = (
         <ConfigurationPage
-          skipMicCheck={props.options?.skipMicCheck}
+          joinCallOptions={props.options?.joinCallOptions}
           mobileView={props.mobileView}
           startCallHandler={(): void => {
             if (callees) {

@@ -103,7 +103,18 @@ export interface ConfigurationPageProps {
   backgroundImage?: {
     url: string;
   };
-  skipMicCheck?: boolean;
+  /**
+   * Options for settings related to joining a call.
+   */
+  joinCallOptions?: {
+    /**
+     * options for checking microphone permissions when joining a call.
+     * block on access will block the user from joining the call if the microphone permission is not granted.
+     * skip will allow the user to join the call without granting the microphone permission.
+     * @defaultValue 'blockOnAccess'
+     */
+    microphoneCheck: 'blockOnAccess' | 'skip';
+  };
 }
 
 /**
@@ -117,7 +128,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     /* @conditional-compile-remove(call-readiness) */ deviceChecks,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
     /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
-    skipMicCheck
+    joinCallOptions = { microphoneCheck: 'blockOnAccess' }
   } = props;
 
   const theme = useTheme();
@@ -146,7 +157,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const microphones = useSelector(getMicrophones);
   const environmentInfo = useSelector(getEnvironmentInfo);
 
-  let disableStartCallButton = (!microphonePermissionGranted || microphones?.length === 0) && !skipMicCheck;
+  let disableStartCallButton =
+    (!microphonePermissionGranted || microphones?.length === 0) && joinCallOptions.microphoneCheck === 'blockOnAccess';
   const role = useSelector(getRole);
 
   const isCameraOn = useSelector(localVideoSelector).isAvailable;

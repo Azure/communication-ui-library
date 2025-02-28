@@ -282,10 +282,17 @@ export type CallWithChatCompositeOptions = {
    */
   richTextEditor?: boolean;
   /**
-   * Options to enable joining call without a microphone.
-   * @defaultValue false
+   * Options for settings related to joining a call.
    */
-  skipMicCheck?: boolean;
+  joinCallOptions?: {
+    /**
+     * options for checking microphone permissions when joining a call.
+     * block on access will block the user from joining the call if the microphone permission is not granted.
+     * skip will allow the user to join the call without granting the microphone permission.
+     * @defaultValue 'blockOnAccess'
+     */
+    microphoneCheck: 'blockOnAccess' | 'skip';
+  };
 };
 
 type CallWithChatScreenProps = {
@@ -365,7 +372,18 @@ type CallWithChatScreenProps = {
   };
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   richTextEditor?: boolean;
-  skipMicCheck?: boolean;
+  /**
+   * Options for settings related to joining a call.
+   */
+  joinCallOptions?: {
+    /**
+     * options for checking microphone permissions when joining a call.
+     * block on access will block the user from joining the call if the microphone permission is not granted.
+     * skip will allow the user to join the call without granting the microphone permission.
+     * @defaultValue 'blockOnAccess'
+     */
+    microphoneCheck: 'blockOnAccess' | 'skip';
+  };
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -546,7 +564,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         backgroundImage: props.backgroundImage
       },
       spotlight: props.spotlight,
-      skipMicCheck: props.skipMicCheck
+      joinCallOptions: props.joinCallOptions
     }),
     [
       props.callControls,
@@ -569,7 +587,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.logo,
       props.backgroundImage,
       props.spotlight,
-      props.skipMicCheck
+      props.joinCallOptions
     ]
   );
 
@@ -741,7 +759,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         spotlight={options?.spotlight}
         /* @conditional-compile-remove(rich-text-editor-composite-support) */
         richTextEditor={options?.richTextEditor}
-        skipMicCheck={options?.skipMicCheck}
+        joinCallOptions={options?.joinCallOptions}
       />
     </BaseProvider>
   );
