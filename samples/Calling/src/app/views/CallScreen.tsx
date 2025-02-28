@@ -54,11 +54,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         console.log(`Call Id: ${callIdRef.current}`);
       }
     });
-    adapter.on('error', (e) => {
-      console.log('Adapter error event:', e);
+    adapter.on('transferAccepted', (event) => {
+      console.log('Call being transferred to: ' + event);
     });
-    adapter.on('transferAccepted', (e) => {
-      console.log('Call being transferred to: ' + e);
+    adapter.on('callEnded', (event) => {
+      console.log('Call ended id: ' + event.callId + ' code: ' + event.code, 'subcode: ' + event.subCode);
     });
   }, []);
 
