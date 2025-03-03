@@ -15,11 +15,13 @@ import {
   Stack,
   IStyleFunctionOrObject,
   IToggleStyleProps,
-  IToggleStyles
+  IToggleStyles,
+  IButton
 } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
+import { useAccessibility } from '../Accessibility';
 
 /**
  * Strings of {@link MicrophoneButton} that can be overridden.
@@ -221,6 +223,10 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const onRenderMicOffIcon = (): JSX.Element => {
     return <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOff" />;
   };
+  // activate the context
+  const accessibility = useAccessibility();
+  // create a ref for the local component
+  const micButtonRef = React.useRef<IButton | null>(null);
 
   const isMicOn = props.checked;
 
@@ -342,7 +348,12 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
         disabled={disabled}
         primaryDisabled={primaryDisabled}
         onFocus={() => setAnnouncerPresent(true)}
-        onBlur={() => setAnnouncerPresent(false)}
+        onBlur={(event) => {
+          console.log('onBlur event', event);
+          props.onBlur?.(event);
+          accessibility.setComponentRef(micButtonRef.current);
+          setAnnouncerPresent(false);
+        }}
       />
     </>
   );

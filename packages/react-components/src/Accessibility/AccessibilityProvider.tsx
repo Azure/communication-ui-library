@@ -5,6 +5,7 @@ import React, { createContext, useContext, useState, useCallback, ReactNode } fr
 
 /**
  * Type for reference to the last component used
+ * @public
  */
 export type AccessibilityComponentRef = IButton | null;
 
@@ -21,6 +22,7 @@ const AccessibilityContext = createContext<AccessibilityContextType | null>(null
 /**
  * Hook to access the A11yContext content
  * @returns The A11yContext
+ * @public
  */
 export const useAccessibility = (): AccessibilityContextType => {
   const context = useContext(AccessibilityContext);
@@ -32,6 +34,7 @@ export const useAccessibility = (): AccessibilityContextType => {
 
 /**
  * Props for the AccessibilityProvider
+ * @public
  */
 export type AccessibilityProviderProps = {
   children: ReactNode;
@@ -39,8 +42,10 @@ export type AccessibilityProviderProps = {
 
 /**
  * Provider to access the A11yContext
+ * @public
  */
 export const AccessibilityProvider = (props: AccessibilityProviderProps): JSX.Element => {
+  console.log('AccessibilityProvider');
   const [componentRef, setComponentRef] = useState<AccessibilityComponentRef>(null);
 
   const handleSetComponentRef = useCallback((ref: AccessibilityComponentRef) => {

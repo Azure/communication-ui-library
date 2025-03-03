@@ -11,7 +11,7 @@ import {
   Theme,
   useTheme
 } from '@fluentui/react';
-import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { FluentThemeProvider, ParticipantMenuItemsCallback, AccessibilityProvider } from '@internal/react-components';
 import React, { createContext, useContext } from 'react';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
@@ -19,7 +19,6 @@ import { CallCompositeIcons, CallWithChatCompositeIcons, ChatCompositeIcons, DEF
 import { globalLayerHostStyle } from './styles/GlobalHostLayer.styles';
 import { useId } from '@fluentui/react-hooks';
 import { ACSAudioProvider } from './AudioProvider';
-import { AccessibilityProvider } from '../Accessibility';
 /**
  * Properties common to all composites exported from this library.
  *

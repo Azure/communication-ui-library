@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CommandBarButton, DefaultButton, IButton, Stack, concatStyleSets } from '@fluentui/react';
-import { useTheme } from '@internal/react-components';
+import { useTheme, useAccessibility } from '@internal/react-components';
 import React, { useMemo, RefObject, useCallback } from 'react';
 import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
 import {
@@ -12,7 +12,6 @@ import {
   mobilePaneHiddenIconStyles
 } from './styles/Pane.styles';
 import { CallWithChatCompositeIcon } from './icons';
-import { useAccessibility } from '../Accessibility';
 
 /**
  * @private
