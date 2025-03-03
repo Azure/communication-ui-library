@@ -12,6 +12,7 @@ import {
   mobilePaneHiddenIconStyles
 } from './styles/Pane.styles';
 import { CallWithChatCompositeIcon } from './icons';
+import { useAccessibility } from '../Accessibility';
 
 /**
  * @private
@@ -27,6 +28,7 @@ export const SidePaneHeader = (props: {
   chatButtonPresent?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
+  const accessibility = useAccessibility();
   const sidePaneCloseButtonStyles = useMemo(
     () => ({
       root: {
@@ -72,7 +74,7 @@ export const SidePaneHeader = (props: {
           iconProps={{ iconName: 'cancel' }}
           onClick={() => {
             props.onClose();
-            props.paneOpenerButton?.current?.focus();
+            accessibility.componentRef?.focus();
           }}
           onKeyDown={handleShiftTab}
           componentRef={props.dismissButtonComponentRef}
