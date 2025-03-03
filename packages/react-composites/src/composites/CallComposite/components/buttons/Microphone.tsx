@@ -66,7 +66,7 @@ export const Microphone = (props: {
       showLabel={props.displayType !== 'compact'}
       disableTooltip={props.disableTooltip}
       styles={styles}
-      // set the ref to the local component in the context
+      // set the ref to the local component in the context when it leaves focus
       onBlur={() => accessibility.setComponentRef(micButtonRef.current)}
       // set the ref for the local component to track
       componentRef={micButtonRef}

@@ -19,6 +19,7 @@ import { CallCompositeIcons, CallWithChatCompositeIcons, ChatCompositeIcons, DEF
 import { globalLayerHostStyle } from './styles/GlobalHostLayer.styles';
 import { useId } from '@fluentui/react-hooks';
 import { ACSAudioProvider } from './AudioProvider';
+import { AccessibilityProvider } from '../Accessibility';
 /**
  * Properties common to all composites exported from this library.
  *
@@ -122,7 +123,9 @@ export const BaseProvider = (
       }
       <Customizer scopedSettings={{ Layer: { hostId: globalLayerHostId } }}>
         <ACSAudioProvider audioContext={compositeAudioContext}>
-          <WithBackgroundColor>{props.children}</WithBackgroundColor>
+          <AccessibilityProvider>
+            <WithBackgroundColor>{props.children}</WithBackgroundColor>
+          </AccessibilityProvider>
         </ACSAudioProvider>
       </Customizer>
       <LayerHost id={globalLayerHostId} className={mergeStyles(globalLayerHostStyle)} />
