@@ -17,6 +17,8 @@ import {
   getRole
 } from '../../selectors/baseSelectors';
 import { concatButtonBaseStyles } from '../../styles/Buttons.styles';
+import { useAccessibility } from '../../../Accessibility';
+import { IButton } from '@fluentui/react';
 
 /**
  * @private
@@ -37,6 +39,11 @@ export const Microphone = (props: {
   const isRoomsCall = useSelector(getIsRoomsCall);
   const role = useSelector(getRole);
   const unmuteMicCapability = useSelector(getCapabilites)?.unmuteMic;
+
+  // activate the context
+  const accessibility = useAccessibility();
+  // create a ref for the local component
+  const micButtonRef = React.useRef<IButton | null>(null);
 
   /**
    * When call is in connecting state, microphone button should be disabled.
@@ -59,6 +66,10 @@ export const Microphone = (props: {
       showLabel={props.displayType !== 'compact'}
       disableTooltip={props.disableTooltip}
       styles={styles}
+      // set the ref to the local component in the context
+      onBlur={() => accessibility.setComponentRef(micButtonRef.current)}
+      // set the ref for the local component to track
+      componentRef={micButtonRef}
       enableDeviceSelectionMenu={props.splitButtonsForDeviceSelection}
       disabled={microphoneButtonProps.disabled || props.disabled || !!(isRoomsCall && role === 'Unknown')}
       onRenderOffIcon={

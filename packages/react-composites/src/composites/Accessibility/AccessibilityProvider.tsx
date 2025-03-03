@@ -1,0 +1,56 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+import { IButton } from '@fluentui/react';
+import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+
+/**
+ * Type for reference to the last component used
+ */
+export type AccessibilityComponentRef = IButton | null;
+
+interface AccessibilityContextType {
+  /** function to set the reference to the last used control */
+  setComponentRef: (ref: AccessibilityComponentRef) => void;
+  /** reference to the last used control */
+  componentRef: AccessibilityComponentRef;
+}
+
+// Create the context with a default value
+const AccessibilityContext = createContext<AccessibilityContextType | null>(null);
+
+/**
+ * Hook to access the A11yContext content
+ * @returns The A11yContext
+ */
+export const useAccessibility = (): AccessibilityContextType => {
+  const context = useContext(AccessibilityContext);
+  if (!context) {
+    throw new Error('useAccessibility must be used within an AccessibilityProvider');
+  }
+  return context;
+};
+
+/**
+ * Props for the AccessibilityProvider
+ */
+export type AccessibilityProviderProps = {
+  children: ReactNode;
+};
+
+/**
+ * Provider to access the A11yContext
+ */
+export const AccessibilityProvider = (props: AccessibilityProviderProps): JSX.Element => {
+  const [componentRef, setComponentRef] = useState<AccessibilityComponentRef>(null);
+
+  const handleSetComponentRef = useCallback((ref: AccessibilityComponentRef) => {
+    console.log(ref);
+    setComponentRef(ref);
+  }, []);
+
+  return (
+    <AccessibilityContext.Provider value={{ setComponentRef: handleSetComponentRef, componentRef }}>
+      {props.children}
+    </AccessibilityContext.Provider>
+  );
+};
