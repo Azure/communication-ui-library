@@ -1471,7 +1471,13 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
     callAdapterOptions
   );
   const chatAdapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
-  return new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
+  /* @conditional-compile-remove(breakout-rooms) */
+  const callWithChatAdapter = new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
+  /* @conditional-compile-remove(breakout-rooms) */
+  callWithChatAdapter.setCreateChatAdapterCallback((threadId: string) =>
+    createAzureCommunicationChatAdapterFromClient(chatClient, chatClient.getChatThreadClient(threadId))
+  );
+  return callWithChatAdapter;
 };
 
 /**
