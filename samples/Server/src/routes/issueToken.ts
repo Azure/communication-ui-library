@@ -31,22 +31,14 @@ const handleUserTokenRequest = async (requestedScope?: string): Promise<Communic
  * e.g. ?scope=chat,voip
  *
  */
-router.get('/', async (req, res, next) => {
-  try {
-    const scope = (req.query?.scope as string) ?? '';
-    res.send(await handleUserTokenRequest(scope));
-  } catch (error) {
-    next(error);
-  }
+router.get('/', async (req, res) => {
+  const scope = (req.query?.scope as string) ?? '';
+  res.send(await handleUserTokenRequest(scope));
 });
 
-router.post('/', async (req, res, next) => {
-  try {
-    const scope = (req.body?.scope as string) ?? '';
-    res.send(await handleUserTokenRequest(scope));
-  } catch (error) {
-    next(error);
-  }
+router.post('/', async (req, res) => {
+  const scope = (req.body?.scope as string) ?? '';
+  res.send(await handleUserTokenRequest(scope));
 });
 
 export default router;
