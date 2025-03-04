@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useState, useMemo } from 'react';
+import React, { useCallback, useState, useMemo, useRef } from 'react';
 import { useLocale } from '../localization';
 import { VideoStreamOptions } from '../types';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
@@ -9,6 +9,7 @@ import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 
 import {
   ContextualMenuItemType,
+  IButton,
   IButtonProps,
   IContextualMenuItem,
   IContextualMenuItemStyles,
@@ -17,6 +18,7 @@ import {
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
+import { useAccessibility } from '../Accessibility';
 
 const defaultLocalVideoViewOptions = {
   scalingMode: 'Crop',
@@ -177,6 +179,8 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
   const strings = { ...localeStrings, ...props.strings };
   const [announcerString, setAnnouncerString] = useState<string | undefined>(undefined);
   const [announcerPresent, setAnnouncerPresent] = useState<boolean>(false);
+  const accessibility = useAccessibility();
+  const cameraButtonRef = useRef<IButton | null>(null);
 
   const disabled = props.disabled || waitForCamera;
 
@@ -322,6 +326,8 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         aria-description={strings.cameraButtonAriaDescription}
         aria-roledescription={props.enableDeviceSelectionMenu ? strings.cameraButtonSplitRoleDescription : undefined}
         ariaLabel={ariaLabel}
+        onMenuClick={() => accessibility.setComponentRef(cameraButtonRef.current)}
+        componentRef={cameraButtonRef}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         splitButtonMenuProps={splitButtonMenuProps}
         onFocus={() => setAnnouncerPresent(true)}

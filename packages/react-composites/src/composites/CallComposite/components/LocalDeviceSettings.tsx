@@ -2,11 +2,11 @@
 // Licensed under the MIT License.
 
 import { AudioDeviceInfo, VideoDeviceInfo } from '@azure/communication-calling';
-import { Dropdown, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
+import { Dropdown, IButton, IDropdownOption, Label, mergeStyles, Stack } from '@fluentui/react';
 
 import { DefaultButton } from '@fluentui/react';
-import { useEffect } from 'react';
-import { useTheme, VideoStreamOptions, _DevicePermissionDropdown } from '@internal/react-components';
+import { useEffect, useRef } from 'react';
+import { useTheme, VideoStreamOptions, _DevicePermissionDropdown, useAccessibility } from '@internal/react-components';
 import React from 'react';
 import { CallCompositeIcon } from '../../common/icons';
 import { useLocale } from '../../localization';
@@ -105,6 +105,8 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
   const theme = useTheme();
   const locale = useLocale();
   const adapter = useAdapter();
+  const accessibility = useAccessibility();
+  const videoEffectsButtonRef = useRef<IButton | null>(null);
 
   const onResolveVideoEffectDependency = useSelector(getVideoEffectsDependency);
   const defaultPlaceHolder = locale.strings.call.defaultPlaceHolder;
@@ -255,8 +257,14 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
               <DefaultButton
                 iconProps={{ iconName: 'ConfigurationScreenVideoEffectsButton' }}
                 styles={effectsButtonStyles(theme, !cameraPermissionGranted)}
-                onClick={props.onClickVideoEffects}
+                onClick={() => {
+                  if (props.onClickVideoEffects) {
+                    accessibility.setComponentRef(videoEffectsButtonRef.current);
+                    props.onClickVideoEffects();
+                  }
+                }}
                 disabled={!cameraPermissionGranted}
+                componentRef={videoEffectsButtonRef}
                 data-ui-id={'call-config-video-effects-button'}
               >
                 {locale.strings.call.configurationPageVideoEffectsButtonLabel}

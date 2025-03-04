@@ -156,7 +156,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   );
 
   const peopleButtonRef = useRef<IButton>(null);
-  const cameraButtonRef = useRef<IButton>(null);
   const sidePaneDismissButtonRef = useRef<IButton>(null);
 
   const containerRef = useRef<HTMLDivElement>(null);
@@ -430,8 +429,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     props.updateSidePaneRenderer,
     props.mobileView,
     props.latestErrors as ActiveErrorMessage[],
-    props.onDismissError,
-    cameraButtonRef
+    props.onDismissError
   );
   const [showDrawer, setShowDrawer] = useState(false);
   const onMoreButtonClicked = useCallback(() => {
@@ -676,8 +674,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   userSetGalleryLayout={props.userSetGalleryLayout}
                   onSetDialpadPage={props.onSetDialpadPage}
                   dtmfDialerPresent={props.dtmfDialerPresent}
-                  peopleButtonRef={peopleButtonRef}
-                  cameraButtonRef={cameraButtonRef}
                   onStopLocalSpotlight={
                     !hideSpotlightButtons && localParticipant.spotlight ? onStopLocalSpotlightWithPrompt : undefined
                   }

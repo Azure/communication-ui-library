@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IStackStyles, Stack } from '@fluentui/react';
+import { IButton, IStackStyles, Stack } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
-import { ControlBarButtonProps } from '@internal/react-components';
-import React, { useCallback, useMemo } from 'react';
+import { ControlBarButtonProps, useAccessibility } from '@internal/react-components';
+import React, { useCallback, useMemo, useRef } from 'react';
 import { CallWithChatCompositeIcon } from '../../common/icons';
 import { ChatButton } from './ChatButton';
 import { useCallWithChatCompositeStrings } from '../hooks/useCallWithChatCompositeStrings';
@@ -30,6 +30,8 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
 
   const baseIcon = props.showLabel ? regularIcon : filledIcon;
   const callWithChatStrings = useCallWithChatCompositeStrings();
+  const accessibility = useAccessibility();
+  const chatButtonRef = useRef<IButton | null>(null);
 
   const numberOfMsgToolTip =
     props.strings?.tooltipOffContent && unreadChatMessagesCount > 0
@@ -65,6 +67,11 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
       onRenderOffIcon={notificationOnIcon}
       onRenderOnIcon={onRenderOnIcon}
       strings={chatStrings}
+      onClick={(event) => {
+        accessibility.setComponentRef(chatButtonRef.current);
+        props.onClick?.(event);
+      }}
+      componentRef={chatButtonRef}
     />
   );
 };

@@ -141,7 +141,6 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
         : props?.strings?.tooltipOffContent);
 
   const tooltipId = props.tooltipId ?? props.labelKey ? props.labelKey + '-tooltip' : undefined;
-
   return (
     <ControlButtonTooltip hidden={props.disableTooltip} content={tooltipContent} id={tooltipId}>
       <DefaultButton
@@ -154,6 +153,8 @@ export const ControlBarButton = (props: ControlBarButtonProps): JSX.Element => {
         aria-describedby={tooltipId}
         menuTriggerKeyCode={KeyCodes.down} // explicitly sets the keypress to activiate the split button drop down.
         text={undefined} // this is handled as a child of the button, without this the `showLabel` prop may be ignored.
+        onFocus={props.onFocus}
+        onBlur={props.onBlur}
       >
         {props.showLabel ? labelText : <></>}
       </DefaultButton>

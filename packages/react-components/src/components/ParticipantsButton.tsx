@@ -7,11 +7,12 @@ import {
   IContextualMenuProps,
   IContextualMenuStyles,
   IContextualMenuItemStyles,
-  merge
+  merge,
+  IButton
 } from '@fluentui/react';
 import { _formatString } from '@internal/acs-ui-common';
 import copy from 'copy-to-clipboard';
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState, useRef } from 'react';
 import {
   ParticipantList,
   ParticipantListProps,
@@ -28,6 +29,7 @@ import { ParticipantListParticipant } from '../types';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { _preventDismissOnEvent as preventDismissOnEvent } from '@internal/acs-ui-common';
 import { Announcer } from './Announcer';
+import { useAccessibility } from '../Accessibility';
 
 /**
  * Styles for the {@link ParticipantsButton} menu.
@@ -182,6 +184,9 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
     onFetchParticipantMenuItems,
     showParticipantOverflowTooltip
   } = props;
+
+  const accessibility = useAccessibility();
+  const participantsButtonRef = useRef<IButton | null>(null);
 
   const disabled = props.disabled;
 
@@ -372,6 +377,10 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         strings={strings}
         aria-label={strings.ariaLabel}
         labelKey={props.labelKey ?? 'participantsButtonLabel'}
+        componentRef={participantsButtonRef}
+        onBlur={() => {
+          accessibility.setComponentRef(participantsButtonRef.current);
+        }}
       />
     </>
   );

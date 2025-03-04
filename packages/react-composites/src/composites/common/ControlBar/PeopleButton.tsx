@@ -1,8 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useMemo, RefObject } from 'react';
-import { ControlBarButton, ControlBarButtonProps, ControlBarButtonStyles, useTheme } from '@internal/react-components';
+import React, { useCallback, useMemo, RefObject, useRef } from 'react';
+import {
+  ControlBarButton,
+  ControlBarButtonProps,
+  ControlBarButtonStyles,
+  useAccessibility,
+  useTheme
+} from '@internal/react-components';
 import { concatStyleSets, IButton } from '@fluentui/react';
 import { CallCompositeIcon } from '../icons';
 
@@ -23,6 +29,8 @@ export interface PeopleButtonProps extends ControlBarButtonProps {
 export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
   const { strings, onRenderOnIcon, onRenderOffIcon, onClick, peoplePaneDismissButtonRef, chatButtonPresent } = props;
   const theme = useTheme();
+  const accessibility = useAccessibility();
+  const peopleButtonRef = useRef<IButton | null>(null);
   const styles: ControlBarButtonStyles = useMemo(
     () =>
       concatStyleSets(
@@ -64,9 +72,13 @@ export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
       labelKey={'peopleButtonLabelKey'}
       onRenderOnIcon={onRenderOnIcon ?? icon}
       onRenderOffIcon={onRenderOffIcon ?? icon}
-      onClick={handleClick}
+      onClick={(event: React.MouseEvent<HTMLElement>) => {
+        accessibility.setComponentRef(peopleButtonRef.current);
+        handleClick(event);
+      }}
       onKeyDown={handleTab}
       styles={styles}
+      componentRef={peopleButtonRef}
     />
   );
 };

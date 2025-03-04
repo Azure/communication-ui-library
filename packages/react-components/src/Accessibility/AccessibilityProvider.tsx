@@ -2,6 +2,7 @@
 // Licensed under the MIT License.
 import { IButton } from '@fluentui/react';
 import React, { createContext, useContext, useState, useCallback, ReactNode } from 'react';
+import { useEffect } from 'react';
 
 /**
  * Type for reference to the last component used
@@ -48,10 +49,17 @@ export const AccessibilityProvider = (props: AccessibilityProviderProps): JSX.El
   console.log('AccessibilityProvider');
   const [componentRef, setComponentRef] = useState<AccessibilityComponentRef>(null);
 
-  const handleSetComponentRef = useCallback((ref: AccessibilityComponentRef) => {
-    console.log(ref);
-    setComponentRef(ref);
-  }, []);
+  const handleSetComponentRef = useCallback(
+    (ref: AccessibilityComponentRef) => {
+      console.log(ref);
+      setComponentRef(ref);
+    },
+    [setComponentRef]
+  );
+
+  useEffect(() => {
+    console.log('componentRef', componentRef);
+  }, [componentRef]);
 
   return (
     <AccessibilityContext.Provider value={{ setComponentRef: handleSetComponentRef, componentRef }}>
