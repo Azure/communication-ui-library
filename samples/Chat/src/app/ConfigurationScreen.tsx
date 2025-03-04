@@ -179,6 +179,43 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
     [selectedAvatar, theme]
   );
 
+  const getRandomName = (): string | undefined => {
+    const names = [
+      'Olivia',
+      'Ethan',
+      'Sophia',
+      'Liam',
+      'Ava',
+      'Noah',
+      'Isabella',
+      'Mason',
+      'Charlotte',
+      'Lucas',
+      'Amelia',
+      'Benjamin',
+      'Harper',
+      'Henry',
+      'Evelyn',
+      'Jack',
+      'Scarlett',
+      'Elijah',
+      'Lily',
+      'Samuel',
+      'Grace',
+      'Daniel',
+      'Aurora',
+      'Matthew',
+      'Violet',
+      'Wyatt',
+      'Stella',
+      'Caleb',
+      'Penelope',
+      'Julian'
+    ];
+    const randomName = names[Math.floor(Math.random() * names.length)];
+    return randomName;
+  };
+
   const validateName = (): void => {
     if (!name) {
       setEmptyWarning(true);
@@ -253,6 +290,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           </FocusZone>
           <DisplayNameField
             setName={setName}
+            defaultName={getRandomName()}
             setEmptyWarning={setEmptyWarning}
             validateName={validateName}
             isEmpty={emptyWarning}
