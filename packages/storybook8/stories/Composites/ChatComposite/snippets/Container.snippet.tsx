@@ -1,11 +1,14 @@
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
+  ChatAdapter,
   ChatComposite,
   CompositeLocale,
   fromFlatCommunicationIdentifier,
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
+import { AzureOpenAI } from 'openai';
+import { ChatCompletionMessageParam } from 'openai/resources';
 import React, { useMemo, useEffect, useState } from 'react';
 
 export type ContainerProps = {
@@ -49,13 +52,29 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     return () => clearTimeout(handle);
   }, [props.displayName]);
 
-  const adapter = useAzureCommunicationChatAdapter({
-    endpoint: props.endpointUrl,
-    userId,
-    displayName,
-    credential,
-    threadId: props.threadId
-  });
+  const adapter = useAzureCommunicationChatAdapter(
+    { endpoint: props.endpointUrl, userId, displayName, credential, threadId: props.threadId },
+    parseMessageBeforeSend
+  );
+
+  async function parseMessageBeforeSend(adapter: ChatAdapter): Promise<ChatAdapter> {
+    const sendMessage = adapter.sendMessage.bind(adapter);
+    adapter.sendMessage = async (content: string): Promise<void> => {
+      // Look for the token `/bot` in the message content.
+      console.log('Content is ', content);
+      if (content.startsWith('/bot')) {
+        // If the token is found, remove it from the message content.
+        const msgToBot = content.slice(4).trim();
+        // Send the message to the OpenAI API.
+        const response = await sendMessageToOpenAI(msgToBot);
+        console.log('Response from OpenAI:', response);
+        return;
+      }
+
+      await sendMessage(content);
+    };
+    return adapter;
+  }
 
   if (adapter) {
     return (
@@ -79,4 +98,34 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     return <>Failed to construct credential. Provided token is malformed.</>;
   }
   return <>Initializing...</>;
+};
+
+const apiVersion = '';
+const openAiEndpoint = '';
+const openAiKey = '';
+const openAiDeployment = '';
+export const azureOpenAIClient = new AzureOpenAI({
+  endpoint: openAiEndpoint,
+  apiKey: openAiKey,
+  apiVersion: apiVersion,
+  deployment: openAiDeployment,
+  dangerouslyAllowBrowser: true
+});
+
+export const sendMessageToOpenAI = async (message: string): Promise<string> => {
+  try {
+    const messages: ChatCompletionMessageParam[] = [];
+    messages.push({ role: 'system', content: 'You are a personal assistant to me in this chat' });
+    messages.push({ role: 'user', content: message });
+    const stream = await azureOpenAIClient.chat.completions.create({
+      model: openAiDeployment,
+      messages: messages,
+      stream: false
+    });
+
+    return stream.choices[0]?.message?.content ?? 'undefined';
+  } catch (error) {
+    console.error('Error sending message to OpenAI:', error);
+    throw error;
+  }
 };

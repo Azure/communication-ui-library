@@ -37,6 +37,7 @@
     "@microsoft/applicationinsights-react-js": "^3.0.5",
     "@microsoft/applicationinsights-web": "^2.6.2",
     "copy-to-clipboard": "^3.3.1",
+    "openai": "4.86.1",
     "remark-gfm": "4",
     "resize-observer-polyfill": "^1.5.1",
     "tslib": "^2.5.0",
