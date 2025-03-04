@@ -44,6 +44,11 @@ import { getEndpointUrl } from './utils/getEndpointUrl';
 import { refreshToken } from './utils/refreshToken';
 /* @conditional-compile-remove(rich-text-editor-composite-support) */
 import { RichTextEditorToggle } from './RichTextEditorToggle';
+import {
+  getDisplayNameFromLocalStorage,
+  localStorageAvailable,
+  saveDisplayNameToLocalStorage
+} from './utils/localStorage';
 
 // These props are set by the caller of ConfigurationScreen in the JSX and not found in context
 export interface ConfigurationScreenProps {
@@ -93,6 +98,14 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
   const [disableJoinChatButton, setDisableJoinChatButton] = useState<boolean>(false);
   const theme = useTheme();
   const { joinChatHandler, setToken, setUserId, setDisplayName, setThreadId, setEndpointUrl } = props;
+
+  useEffect(() => {
+    // Get display name from local storage if available
+    const defaultDisplayName = localStorageAvailable ? getDisplayNameFromLocalStorage() : null;
+    if (defaultDisplayName) {
+      setName(defaultDisplayName);
+    }
+  }, []);
 
   // Used when new user is being registered.
   const setupAndJoinChatThreadWithNewUser = useCallback(() => {
@@ -179,47 +192,11 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
     [selectedAvatar, theme]
   );
 
-  const getRandomName = (): string | undefined => {
-    const names = [
-      'Olivia',
-      'Ethan',
-      'Sophia',
-      'Liam',
-      'Ava',
-      'Noah',
-      'Isabella',
-      'Mason',
-      'Charlotte',
-      'Lucas',
-      'Amelia',
-      'Benjamin',
-      'Harper',
-      'Henry',
-      'Evelyn',
-      'Jack',
-      'Scarlett',
-      'Elijah',
-      'Lily',
-      'Samuel',
-      'Grace',
-      'Daniel',
-      'Aurora',
-      'Matthew',
-      'Violet',
-      'Wyatt',
-      'Stella',
-      'Caleb',
-      'Penelope',
-      'Julian'
-    ];
-    const randomName = names[Math.floor(Math.random() * names.length)];
-    return randomName;
-  };
-
   const validateName = (): void => {
     if (!name) {
       setEmptyWarning(true);
     } else {
+      saveDisplayNameToLocalStorage(name);
       setEmptyWarning(false);
       setDisableJoinChatButton(true);
       setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_SPINNER_INITIALIZE_CHAT);
@@ -289,8 +266,8 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
             </Stack>
           </FocusZone>
           <DisplayNameField
+            defaultName={name}
             setName={setName}
-            defaultName={getRandomName()}
             setEmptyWarning={setEmptyWarning}
             validateName={validateName}
             isEmpty={emptyWarning}

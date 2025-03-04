@@ -4,7 +4,7 @@
 import { TextFieldStyleProps, inputBoxStyle, inputBoxTextStyle } from './styles/DisplayNameField.styles';
 import { ENTER_KEY } from './utils/constants';
 
-import React, { useEffect } from 'react';
+import React from 'react';
 import { TextField } from '@fluentui/react';
 
 interface DisplayNameFieldProps {
@@ -22,12 +22,6 @@ const TEXTFIELD_EMPTY_ERROR_MSG = 'Name cannot be empty';
 
 const DisplayNameFieldComponent = (props: DisplayNameFieldProps): JSX.Element => {
   const { setName, setEmptyWarning, isEmpty, defaultName, validateName } = props;
-
-  useEffect(() => {
-    if (defaultName) {
-      setName(defaultName);
-    }
-  }, []);
 
   const onNameTextChange = (
     event: React.FormEvent<HTMLInputElement | HTMLTextAreaElement>,
