@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallAgent } from '@azure/communication-calling';
+import { CallAgent, LocalVideoStream } from '@azure/communication-calling';
 import {
   CommunicationIdentifier,
   CommunicationUserIdentifier,
@@ -28,6 +28,30 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const { callAgent, headerImageProps } = props;
   const [targetParticipants, setTargetParticipants] = useState<CommunicationIdentifier[]>();
   const [alternateCallerId, setAlternateCallerId] = useState<string>();
+
+  const createVideoMediaStreamToSend = () => {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    canvas.width = 1500;
+    canvas.height = 845;
+    if (ctx) {
+      ctx.fillStyle = 'blue';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      const colors = ['red', 'yellow'];
+      window.setInterval(() => {
+        ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)] || 'black';
+        const x = Math.floor(Math.random() * canvas.width);
+        const y = Math.floor(Math.random() * canvas.height);
+        const size = 100;
+        ctx.fillRect(x, y, size, size);
+      }, 1000 / 30);
+    }
+
+    return canvas.captureStream(30);
+  };
+
+  const mediaStream = createVideoMediaStreamToSend();
+  const localStream = new LocalVideoStream(mediaStream);
 
   const incomingCallStackProps = usePropsFor(IncomingCallStack);
   return (
@@ -69,7 +93,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 if (isMicrosoftTeamsUserIdentifier(targetParticipants[0])) {
                   (callAgent as CallAgent).startCall(targetParticipants as MicrosoftTeamsUserIdentifier[]);
                 } else {
-                  (callAgent as CallAgent).startCall(targetParticipants as CommunicationUserIdentifier[]);
+                  (callAgent as CallAgent).startCall(targetParticipants as CommunicationUserIdentifier[], {
+                    videoOptions: { localVideoStreams: [localStream] }
+                  });
                 }
               }
             }
