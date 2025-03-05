@@ -28,7 +28,7 @@ const formContextItems = (context: ContextItem[]): ChatCompletionMessageParam[] 
   return messages;
 };
 
-export const askAI = async (context: ContextItem[], prompt: string, userDisplayName?: string): Promise<string> => {
+export const askAI = async (prompt: string, userDisplayName: string, context: ContextItem[] = []): Promise<string> => {
   try {
     const messages: ChatCompletionMessageParam[] = [];
     const contextItems: ChatCompletionMessageParam[] = formContextItems(context);

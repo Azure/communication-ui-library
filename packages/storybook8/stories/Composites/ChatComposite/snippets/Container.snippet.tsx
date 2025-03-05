@@ -1,3 +1,4 @@
+import { ChatMessageType } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   ChatAdapter,
@@ -12,7 +13,6 @@ import {
 import { PartialTheme, Theme } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage } from '@fluentui-contrib/react-chat';
 import React, { useMemo, useEffect, useState } from 'react';
-import { ChatMessageType } from '@azure/communication-chat';
 import { askAI, ContextItem } from './AIClient';
 
 export type ContainerProps = {
@@ -87,26 +87,26 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
           });
         }
 
-        const response = await askAI(history, msgToBot, displayName);
-        // await sendMessage(response, {
-        //   senderDisplayName: 'Bot',
-        //   type: 'text'
-        // });
-        const botMessage = {
-          id: Math.random().toString(),
-          type: 'text' as ChatMessageType,
-          sequenceId: Math.random().toString(),
-          version: 'openAiDeployment',
-          messageType: 'custom',
-          createdOn: new Date(),
-          messageId: Math.random().toString(),
-          content: { message: response }
-        };
+        const response = await askAI(msgToBot, displayName, history);
+        await sendMessage(response, {
+          senderDisplayName: 'Bot',
+          type: 'text'
+        });
+        // const botMessage = {
+        //   id: Math.random().toString(),
+        //   type: 'text' as ChatMessageType,
+        //   sequenceId: Math.random().toString(),
+        //   version: 'openAiDeployment',
+        //   messageType: 'custom',
+        //   createdOn: new Date(),
+        //   messageId: Math.random().toString(),
+        //   content: { message: response }
+        // };
 
-        adapter.getState().thread.chatMessages['bot'] = {
-          ...botMessage,
-          status: 'delivered'
-        };
+        // adapter.getState().thread.chatMessages['bot'] = {
+        //   ...botMessage,
+        //   status: 'delivered'
+        // };
 
         return;
       }
