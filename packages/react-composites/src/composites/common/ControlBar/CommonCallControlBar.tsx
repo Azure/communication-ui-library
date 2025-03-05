@@ -79,8 +79,6 @@ export interface CommonCallControlBarProps {
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
-  peopleButtonRef?: RefObject<IButton>;
-  cameraButtonRef?: RefObject<IButton>;
   videoBackgroundPickerRef?: RefObject<IButton>;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
@@ -449,7 +447,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
                         splitButtonsForDeviceSelection={!props.mobileView}
                         disabled={props.disableButtonsForHoldScreen || isDisabled(options.cameraButton)}
                         onClickVideoEffects={props.onClickVideoEffects}
-                        componentRef={props.cameraButtonRef}
                         disableTooltip={props.mobileView}
                       />
                     )}
@@ -596,7 +593,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
                     }
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}
-                    componentRef={props.peopleButtonRef}
                     chatButtonPresent={isEnabled(options.chatButton)}
                     peoplePaneDismissButtonRef={props.sidePaneDismissButtonRef}
                   />

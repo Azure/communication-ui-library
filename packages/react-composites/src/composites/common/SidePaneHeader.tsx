@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { CommandBarButton, DefaultButton, IButton, Stack, concatStyleSets } from '@fluentui/react';
-import { useTheme } from '@internal/react-components';
+import { useTheme, useAccessibility } from '@internal/react-components';
 import React, { useMemo, RefObject, useCallback } from 'react';
 import { sidePaneHeaderContainerStyles, sidePaneHeaderStyles } from '../common/styles/ParticipantContainer.styles';
 import {
@@ -27,6 +27,7 @@ export const SidePaneHeader = (props: {
   chatButtonPresent?: boolean;
 }): JSX.Element => {
   const theme = useTheme();
+  const accessibility = useAccessibility();
   const sidePaneCloseButtonStyles = useMemo(
     () => ({
       root: {
@@ -71,8 +72,9 @@ export const SidePaneHeader = (props: {
           styles={sidePaneCloseButtonStyles}
           iconProps={{ iconName: 'cancel' }}
           onClick={() => {
+            accessibility.componentRef?.focus();
+            console.log('close', accessibility.componentRef);
             props.onClose();
-            props.paneOpenerButton?.current?.focus();
           }}
           onKeyDown={handleShiftTab}
           componentRef={props.dismissButtonComponentRef}
