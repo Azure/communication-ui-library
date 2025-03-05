@@ -7,9 +7,8 @@ import {
   useAzureCommunicationChatAdapter
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
-import { AzureOpenAI } from 'openai';
-import { ChatCompletionMessageParam } from 'openai/resources';
 import React, { useMemo, useEffect, useState } from 'react';
+import { askAI, ContextItem } from './AIClient';
 
 export type ContainerProps = {
   /** UserIdentifier is of type CommunicationUserIdentifier see below how to construct it from a string input */
@@ -60,13 +59,28 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
   async function parseMessageBeforeSend(adapter: ChatAdapter): Promise<ChatAdapter> {
     const sendMessage = adapter.sendMessage.bind(adapter);
     adapter.sendMessage = async (content: string): Promise<void> => {
+      console.log('Previous messages:', adapter.getState().thread.chatMessages);
       // Look for the token `/bot` in the message content.
       console.log('Content is ', content);
       if (content.startsWith('/bot')) {
         // If the token is found, remove it from the message content.
         const msgToBot = content.slice(4).trim();
         // Send the message to the OpenAI API.
-        const response = await sendMessageToOpenAI(msgToBot);
+        const context: ContextItem[] = [
+          { senderName: 'Josh', content: 'Hello, how are you?' },
+          { senderName: 'Leah', content: 'I am doing great, thanks for asking!' },
+          { senderName: 'Josh', content: 'How is the AI project going?' },
+          { senderName: 'Leah', content: 'It is going well, we are making good progress!' },
+          { senderName: 'Josh', content: 'Should I invite Jim to join this chat?' },
+          { senderName: 'Leah', content: 'Of course' },
+          { senderName: 'system', content: 'Jim has been invited to join the chat' },
+          {
+            senderName: 'AI Assistant',
+            content: 'The project name is openai ABC.'
+          },
+          { senderName: 'Jim', content: 'Hi everyone, glad to join this project.' }
+        ];
+        const response = await askAI(context, msgToBot);
         console.log('Response from OpenAI:', response);
         return;
       }
@@ -98,34 +112,4 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     return <>Failed to construct credential. Provided token is malformed.</>;
   }
   return <>Initializing...</>;
-};
-
-const apiVersion = '';
-const openAiEndpoint = '';
-const openAiKey = '';
-const openAiDeployment = '';
-export const azureOpenAIClient = new AzureOpenAI({
-  endpoint: openAiEndpoint,
-  apiKey: openAiKey,
-  apiVersion: apiVersion,
-  deployment: openAiDeployment,
-  dangerouslyAllowBrowser: true
-});
-
-export const sendMessageToOpenAI = async (message: string): Promise<string> => {
-  try {
-    const messages: ChatCompletionMessageParam[] = [];
-    messages.push({ role: 'system', content: 'You are a personal assistant to me in this chat' });
-    messages.push({ role: 'user', content: message });
-    const stream = await azureOpenAIClient.chat.completions.create({
-      model: openAiDeployment,
-      messages: messages,
-      stream: false
-    });
-
-    return stream.choices[0]?.message?.content ?? 'undefined';
-  } catch (error) {
-    console.error('Error sending message to OpenAI:', error);
-    throw error;
-  }
 };
