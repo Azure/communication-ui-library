@@ -143,3 +143,45 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
     throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
   }
 };
+
+export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): ComponentProps<Component> => {
+  const chatSelector = getChatSelector(component);
+  const chatProps = useChatSelector(chatSelector);
+  const chatHandlers = useChatHandlers<Parameters<Component>[0]>(component);
+
+  if (chatProps) {
+    if (!chatHandlers) {
+      throw 'Please initialize chatClient and chatThreadClient first!';
+    }
+    return { ...chatProps, ...chatHandlers } as any;
+  }
+
+  if (!chatSelector) {
+    throw "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.";
+  } else {
+    throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
+  }
+};
+
+export const useCallingPropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): ComponentProps<Component> => {
+  const callingSelector = getCallingSelector(component);
+  const callProps = useCallingSelector(callingSelector);
+  const callingHandlers = useCallingHandlers<Parameters<Component>[0]>(component);
+
+  if (callProps) {
+    if (!callingHandlers) {
+      throw 'Please initialize callClient first!';
+    }
+    return { ...callProps, ...callingHandlers } as any;
+  }
+
+  if (!callingSelector) {
+    throw "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.";
+  } else {
+    throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
+  }
+};
