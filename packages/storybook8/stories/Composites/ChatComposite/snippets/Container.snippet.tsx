@@ -80,7 +80,6 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
         const displayName = adapter.getState().displayName;
         const history: ContextItem[] = [];
         for (const [_, message] of Object.entries(messages)) {
-          console.log(`Message from ${message.senderDisplayName}: ${message.content}`);
           history.push({
             senderName: message.senderDisplayName ?? '',
             content: message.content?.message ?? ''
