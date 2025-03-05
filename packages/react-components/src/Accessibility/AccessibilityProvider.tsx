@@ -25,13 +25,7 @@ const AccessibilityContext = createContext<AccessibilityContextType | null>(null
  * @returns The A11yContext
  * @public
  */
-export const useAccessibility = (): AccessibilityContextType => {
-  const context = useContext(AccessibilityContext);
-  if (!context) {
-    throw new Error('useAccessibility must be used within an AccessibilityProvider');
-  }
-  return context;
-};
+export const useAccessibility = (): AccessibilityContextType | null => useContext(AccessibilityContext);
 
 /**
  * Props for the AccessibilityProvider
