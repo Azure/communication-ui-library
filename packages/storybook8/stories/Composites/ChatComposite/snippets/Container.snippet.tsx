@@ -77,29 +77,17 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
         const msgToBot = content.slice(4).trim();
         // get the history of the thread
         const messages = adapter.getState().thread?.chatMessages;
-        console.log(messages);
-        const history = [];
+        const displayName = adapter.getState().displayName;
+        const history: ContextItem[] = [];
         for (const [_, message] of Object.entries(messages)) {
           console.log(`Message from ${message.senderDisplayName}: ${message.content}`);
-          history.push(message.content?.message ?? '');
+          history.push({
+            senderName: message.senderDisplayName ?? '',
+            content: message.content?.message ?? ''
+          });
         }
 
-        // Send the message to the OpenAI API.
-        const context: ContextItem[] = [
-          { senderName: 'Josh', content: 'Hello, how are you?' },
-          { senderName: 'Leah', content: 'I am doing great, thanks for asking!' },
-          { senderName: 'Josh', content: 'How is the AI project going?' },
-          { senderName: 'Leah', content: 'It is going well, we are making good progress!' },
-          { senderName: 'Josh', content: 'Should I invite Jim to join this chat?' },
-          { senderName: 'Leah', content: 'Of course' },
-          { senderName: 'system', content: 'Jim has been invited to join the chat' },
-          {
-            senderName: 'AI Assistant',
-            content: 'The project name is openai ABC.'
-          },
-          { senderName: 'Jim', content: 'Hi everyone, glad to join this project.' }
-        ];
-        const response = await askAI(context, msgToBot, history);
+        const response = await askAI(history, msgToBot, displayName);
         // await sendMessage(response, {
         //   senderDisplayName: 'Bot',
         //   type: 'text'
@@ -108,7 +96,7 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
           id: Math.random().toString(),
           type: 'text' as ChatMessageType,
           sequenceId: Math.random().toString(),
-          version: openAiDeployment,
+          version: 'openAiDeployment',
           messageType: 'custom',
           createdOn: new Date(),
           messageId: Math.random().toString(),
