@@ -30,10 +30,10 @@ const meta: Meta<typeof MessageThreadComponent> = {
   name: 'Rich Text Editor Support',
   component: MessageThreadComponent,
   argTypes: {
-    // isEnableRTE: { control: 'boolean', name: 'Enable Rich Text Editor' }
+    isEnableRTE: { control: 'boolean', name: 'Enable Rich Text Editor' }
   },
   args: {
-    // isEnableRTE: true
+    isEnableRTE: true
   },
   parameters: {
     controls: {
