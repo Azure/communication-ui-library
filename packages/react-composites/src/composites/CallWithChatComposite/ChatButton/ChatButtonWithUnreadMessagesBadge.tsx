@@ -68,7 +68,7 @@ export const ChatButtonWithUnreadMessagesBadge = (props: ChatButtonWithUnreadMes
       onRenderOnIcon={onRenderOnIcon}
       strings={chatStrings}
       onClick={(event) => {
-        accessibility.setComponentRef(chatButtonRef.current);
+        accessibility?.setComponentRef(chatButtonRef.current);
         props.onClick?.(event);
       }}
       componentRef={chatButtonRef}

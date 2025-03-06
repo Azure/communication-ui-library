@@ -352,7 +352,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
           setAnnouncerPresent(true);
         }}
         onBlur={() => {
-          accessibility.setComponentRef(micButtonRef.current);
+          accessibility?.setComponentRef(micButtonRef.current);
           setAnnouncerPresent(false);
         }}
         componentRef={micButtonRef}

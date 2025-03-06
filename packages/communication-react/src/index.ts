@@ -368,6 +368,13 @@ export type {
 } from '../../react-components/src';
 export type { AttachmentMetadata } from '../../acs-ui-common/src';
 
+export { AccessibilityProvider, useAccessibility } from '../../react-components/src';
+export type {
+  AccessibilityProviderProps,
+  AccessibilityComponentRef,
+  AccessibilityContextType
+} from '../../react-components/src';
+
 /* @conditional-compile-remove(file-sharing-acs) */
 export type { AttachmentMetadataInProgress, AttachmentProgressError } from '../../acs-ui-common/src';
 

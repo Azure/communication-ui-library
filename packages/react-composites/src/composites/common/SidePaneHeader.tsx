@@ -72,8 +72,7 @@ export const SidePaneHeader = (props: {
           styles={sidePaneCloseButtonStyles}
           iconProps={{ iconName: 'cancel' }}
           onClick={() => {
-            accessibility.componentRef?.focus();
-            console.log('close', accessibility.componentRef);
+            accessibility?.componentRef?.focus();
             props.onClose();
           }}
           onKeyDown={handleShiftTab}

@@ -326,7 +326,7 @@ export const CameraButton = (props: CameraButtonProps): JSX.Element => {
         aria-description={strings.cameraButtonAriaDescription}
         aria-roledescription={props.enableDeviceSelectionMenu ? strings.cameraButtonSplitRoleDescription : undefined}
         ariaLabel={ariaLabel}
-        onMenuClick={() => accessibility.setComponentRef(cameraButtonRef.current)}
+        onMenuClick={() => accessibility?.setComponentRef(cameraButtonRef.current)}
         componentRef={cameraButtonRef}
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         splitButtonMenuProps={splitButtonMenuProps}

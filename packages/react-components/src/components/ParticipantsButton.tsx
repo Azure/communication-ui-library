@@ -379,7 +379,7 @@ export const ParticipantsButton = (props: ParticipantsButtonProps): JSX.Element 
         labelKey={props.labelKey ?? 'participantsButtonLabel'}
         componentRef={participantsButtonRef}
         onBlur={() => {
-          accessibility.setComponentRef(participantsButtonRef.current);
+          accessibility?.setComponentRef(participantsButtonRef.current);
         }}
       />
     </>

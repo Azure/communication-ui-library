@@ -52,6 +52,7 @@ import { DominantSpeakersInfo } from '@azure/communication-calling';
 import { DtmfTone as DtmfTone_2 } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import { GroupCallLocator } from '@azure/communication-calling';
+import { IButton } from '@fluentui/react';
 import { IButtonProps } from '@fluentui/react';
 import { IButtonStyles } from '@fluentui/react';
 import { IContextualMenuItem } from '@fluentui/react';
@@ -96,6 +97,7 @@ import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import { Reaction as Reaction_2 } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
+import { ReactNode } from 'react';
 import { RealTimeTextInfo as RealTimeTextInfo_2 } from '@azure/communication-calling';
 import { RealTimeTextResultType } from '@azure/communication-calling';
 import { RecordingInfo } from '@azure/communication-calling';
@@ -128,6 +130,23 @@ export interface AcceptedTransfer {
     callId: string;
     timestamp: Date;
 }
+
+// @public
+export type AccessibilityComponentRef = IButton | null;
+
+// @public
+export interface AccessibilityContextType {
+    componentRef: AccessibilityComponentRef;
+    setComponentRef: (ref: AccessibilityComponentRef) => void;
+}
+
+// @public
+export const AccessibilityProvider: (props: AccessibilityProviderProps) => JSX.Element;
+
+// @public
+export type AccessibilityProviderProps = {
+    children: ReactNode;
+};
 
 // @public
 export interface ActiveErrorMessage {
@@ -5488,6 +5507,9 @@ export type UploadChatImageResult = {
     attachmentType?: 'image' | 'file' | 'unknown';
     name?: string;
 };
+
+// @public
+export const useAccessibility: () => AccessibilityContextType | null;
 
 // @public
 export const useAzureCommunicationCallAdapter: (args: Partial<AzureCommunicationCallAdapterArgs | AzureCommunicationOutboundCallAdapterArgs>, afterCreate?: (adapter: CallAdapter) => Promise<CallAdapter>, beforeDispose?: (adapter: CallAdapter) => Promise<void>) => CallAdapter | undefined;

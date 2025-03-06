@@ -10,7 +10,11 @@ import { useEffect } from 'react';
  */
 export type AccessibilityComponentRef = IButton | null;
 
-interface AccessibilityContextType {
+/**
+ * Type for the context that holds the reference to the last used control
+ * @public
+ */
+export interface AccessibilityContextType {
   /** function to set the reference to the last used control */
   setComponentRef: (ref: AccessibilityComponentRef) => void;
   /** reference to the last used control */

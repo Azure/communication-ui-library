@@ -73,7 +73,7 @@ export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
       onRenderOnIcon={onRenderOnIcon ?? icon}
       onRenderOffIcon={onRenderOffIcon ?? icon}
       onClick={(event: React.MouseEvent<HTMLElement>) => {
-        accessibility.setComponentRef(peopleButtonRef.current);
+        accessibility?.setComponentRef(peopleButtonRef.current);
         handleClick(event);
       }}
       onKeyDown={handleTab}

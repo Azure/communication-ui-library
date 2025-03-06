@@ -259,7 +259,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
                 styles={effectsButtonStyles(theme, !cameraPermissionGranted)}
                 onClick={() => {
                   if (props.onClickVideoEffects) {
-                    accessibility.setComponentRef(videoEffectsButtonRef.current);
+                    accessibility?.setComponentRef(videoEffectsButtonRef.current);
                     props.onClickVideoEffects();
                   }
                 }}
