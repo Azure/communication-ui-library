@@ -1,19 +1,16 @@
-import { ChatMessageType } from '@azure/communication-chat';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   ChatAdapter,
   ChatComposite,
   CompositeLocale,
   fromFlatCommunicationIdentifier,
-  useAzureCommunicationChatAdapter,
   MessageProps,
-  MessageRenderer,
-  ChatMessageWithStatus
+  MessageRenderer
 } from '@azure/communication-react';
 import { PartialTheme, Theme } from '@fluentui/react';
 import { ChatMessage as FluentChatMessage } from '@fluentui-contrib/react-chat';
 import React, { useMemo, useEffect, useState } from 'react';
-import { askAI, ContextItem } from './AIClient';
+import { createStatefulClient } from './CustomStatefulClient';
 
 export type ContainerProps = {
   /** UserIdentifier is of type CommunicationUserIdentifier see below how to construct it from a string input */
@@ -56,64 +53,37 @@ export const ContosoChatContainer = (props: ContainerProps): JSX.Element => {
     return () => clearTimeout(handle);
   }, [props.displayName]);
 
-  const adapter = useAzureCommunicationChatAdapter(
-    {
-      endpoint: props.endpointUrl,
-      userId,
-      displayName,
-      credential,
-      threadId: props.threadId
-    },
-    parseMessageBeforeSend
-  );
+  const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
 
-  async function parseMessageBeforeSend(adapter: ChatAdapter): Promise<ChatAdapter> {
-    const sendMessage = adapter.sendMessage.bind(adapter);
-    adapter.sendMessage = async (content: string): Promise<void> => {
-      console.log('Previous messages:', adapter.getState().thread.chatMessages);
-      // Look for the token `/bot` in the message content.
-      if (content.startsWith('/bot')) {
-        // If the token is found, remove it from the message content.
-        const msgToBot = content.slice(4).trim();
-        // get the history of the thread
-        const messages = adapter.getState().thread?.chatMessages;
-        const displayName = adapter.getState().displayName;
-        const history: ContextItem[] = [];
-        for (const [_, message] of Object.entries(messages)) {
-          history.push({
-            senderName: message.senderDisplayName ?? '',
-            content: message.content?.message ?? ''
-          });
-        }
-
-        const response = await askAI(msgToBot, displayName, history);
-        await sendMessage(response, {
-          senderDisplayName: 'Bot',
-          type: 'text'
-        });
-        // const botMessage = {
-        //   id: Math.random().toString(),
-        //   type: 'text' as ChatMessageType,
-        //   sequenceId: Math.random().toString(),
-        //   version: 'openAiDeployment',
-        //   messageType: 'custom',
-        //   createdOn: new Date(),
-        //   messageId: Math.random().toString(),
-        //   content: { message: response }
-        // };
-
-        // adapter.getState().thread.chatMessages['bot'] = {
-        //   ...botMessage,
-        //   status: 'delivered'
-        // };
-
+  useEffect(() => {
+    if (adapter) {
+      return;
+    }
+    const createAdapter = async (): Promise<void> => {
+      if (credential === undefined || displayName === undefined) {
         return;
       }
+      const adapter = await createStatefulClient(
+        userId.communicationUserId,
+        displayName,
+        props.endpointUrl,
+        credential,
+        props.threadId
+      );
+      console.log('Adapter created', adapter);
 
-      await sendMessage(content);
+      setAdapter(adapter);
     };
-    return adapter;
-  }
+    createAdapter();
+  }, [
+    adapter,
+    credential,
+    displayName,
+    props.displayName,
+    props.endpointUrl,
+    props.threadId,
+    userId.communicationUserId
+  ]);
 
   if (adapter) {
     return (
