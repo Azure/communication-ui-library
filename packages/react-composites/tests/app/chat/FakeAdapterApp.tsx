@@ -21,6 +21,8 @@ import {
   customOnRenderMessage,
   customOnRenderTypingIndicator
 } from './CustomDataModel';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { customOnRenderAvatar } from './CustomDataModel';
 import { FakeChatClient, Model, Thread } from '@internal/fake-backends';
 import { HiddenChatComposites } from '../lib/HiddenChatComposites';
 
@@ -94,6 +96,8 @@ export const FakeAdapterApp = (): JSX.Element => {
             onFetchAvatarPersonaData={
               fakeChatAdapterArgs.customDataModelEnabled ? customOnFetchAvatarPersonaData : undefined
             }
+            /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+            onRenderAvatar={fakeChatAdapterArgs.customDataModelEnabled ? customOnRenderAvatar : undefined}
             fluentTheme={fakeChatAdapterArgs.theme === 'dark' ? darkTheme : lightTheme}
           />
         </_IdentifierProvider>

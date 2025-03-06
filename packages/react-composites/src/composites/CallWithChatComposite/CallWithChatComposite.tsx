@@ -21,6 +21,8 @@ import { CallWithChatCompositeIcons } from '../common/icons';
 import { AvatarPersonaDataCallback } from '../common/AvatarPersona';
 import { CallWithChatAdapterState } from './state/CallWithChatAdapterState';
 import { CallSurveyImprovementSuggestions } from '@internal/react-components';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 import {
   ParticipantMenuItemsCallback,
   _useContainerHeight,
@@ -290,6 +292,8 @@ type CallWithChatScreenProps = {
   joinInvitationURL?: string;
   callControls?: boolean | CallWithChatControlOptions;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   /* @conditional-compile-remove(file-sharing-acs) */
   attachmentOptions?: AttachmentOptions;
@@ -601,6 +605,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         fluentTheme={theme}
         options={chatCompositeOptions}
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
+        /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+        onRenderAvatar={props.onRenderAvatar}
       />
     );
   }, [
@@ -609,7 +615,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     chatCompositeOptions,
     theme,
     /* @conditional-compile-remove(breakout-rooms) */ isChatInitialized,
-    /* @conditional-compile-remove(breakout-rooms) */ chatSpinnerLabel
+    /* @conditional-compile-remove(breakout-rooms) */ chatSpinnerLabel,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */ props.onRenderAvatar
   ]);
 
   let chatPaneTitle = callWithChatStrings.chatPaneTitle;
