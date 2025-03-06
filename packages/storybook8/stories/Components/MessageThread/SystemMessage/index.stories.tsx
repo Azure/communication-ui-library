@@ -16,7 +16,7 @@ export const SystemMessageDocsOnly = {
 
 // Main story meta export
 const meta: Meta<typeof MessageThreadComponent> = {
-  title: 'Components/Message Thread/Message Thread With System Message',
+  title: 'Components/Message Thread/MessageThread With System Message',
   component: MessageThreadComponent,
   argTypes: {
     content: { control: 'text', name: 'System Content' },
