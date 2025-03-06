@@ -179,7 +179,8 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
 
       if (imageUrl && imageUrl.length > 10) {
         console.log('image url - ', imageBase64ToBlob(imageUrl));
-        await detectHandGestures(imageUrl);
+        // await detectHandGestures(imageUrl);
+        await detectHeadMovements(imageUrl);
       }
       animationFrameId = requestAnimationFrame(analyzeFrame);
     }
@@ -211,11 +212,11 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     return null;
   }
   async function detectHandGestures1(imageBase64: string) {
-    const CUSTOM_VISION_ENDPOINT = 'https://azureaiinsravan.cognitiveservices.azure.com';
+    // const CUSTOM_VISION_ENDPOINT = 'https://azureaiinsravan.cognitiveservices.azure.com';
     const CUSTOM_VISION_KEY = 'Ffnb7EK1Z65PWAn9o31l5dxMV8kP1C6rIMAn2vbPRzZ3EidaEKjvJQQJ99BBACYeBjFXJ3w3AAAFACOGXhO6';
     const PREDICTION_KEY = 'ebc77a8a52e04e9394125c19f2dc8a16';
-    const PROJECT_ID = 'daaea539-0d1a-456b-a0fc-31e121039d56';
-    const MODEL_NAME = 'FaceExpressionAndHandGestures';
+    // const PROJECT_ID = 'daaea539-0d1a-456b-a0fc-31e121039d56';
+    // const MODEL_NAME = 'FaceExpressionAndHandGestures';
 
     const response = await fetch(
       //`${CUSTOM_VISION_ENDPOINT}/customvision/v3.0/Prediction/${PROJECT_ID}/classify/iterations/${MODEL_NAME}/url`,
@@ -239,11 +240,11 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     console.log(data);
   }
   async function detectHandGestures(imageBase64: string) {
-    const CUSTOM_VISION_ENDPOINT = 'https://azureaiinsravan.cognitiveservices.azure.com';
+    // const CUSTOM_VISION_ENDPOINT = 'https://azureaiinsravan.cognitiveservices.azure.com';
     const CUSTOM_VISION_KEY = 'Ffnb7EK1Z65PWAn9o31l5dxMV8kP1C6rIMAn2vbPRzZ3EidaEKjvJQQJ99BBACYeBjFXJ3w3AAAFACOGXhO6';
     const PREDICTION_KEY = 'ebc77a8a52e04e9394125c19f2dc8a16';
-    const PROJECT_ID = 'daaea539-0d1a-456b-a0fc-31e121039d56';
-    const MODEL_NAME = 'FaceExpressionAndHandGestures';
+    // const PROJECT_ID = 'daaea539-0d1a-456b-a0fc-31e121039d56';
+    // const MODEL_NAME = 'FaceExpressionAndHandGestures';
 
     const response = await fetch(
       //`${CUSTOM_VISION_ENDPOINT}/customvision/v3.0/Prediction/${PROJECT_ID}/classify/iterations/${MODEL_NAME}/url`,
@@ -260,9 +261,9 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     );
 
     const data = await response.json();
-    console.log('Gesture detected data - \n');
-    console.log(data);
+    console.log(`CHUK ==== ${JSON.stringify(data)}`);
   }
+
   function imageBase64ToBlob(base64: string) {
     const base64Data = base64.split(',')[1];
     if (!base64Data) {
@@ -288,6 +289,38 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
   //   }
   //   return new Blob([new Uint8Array(byteNumbers)], { type: 'image/jpeg' });
   // }
+
+  async function detectHeadMovements(imageBase64: string): Promise<void> {
+    const FACE_API_ENDPOINT = '<YOUR_FACE_API';
+    const FACE_API_KEY = '<YOUR_FACE_API';
+
+    const response = await fetch(`${FACE_API_ENDPOINT}/face/v1.0/detect?returnFaceAttributes=headPose`, {
+      method: 'POST',
+      headers: {
+        'Ocp-Apim-Subscription-Key': FACE_API_KEY,
+        'Content-Type': 'application/octet-stream'
+      },
+      body: imageBase64ToBlob(imageBase64)
+    });
+
+    const data = await response.json();
+    processHeadMovements(data);
+  }
+
+  function processHeadMovements(data: { faceAttributes: { headPose: { yaw: number; pitch: number } } }[]): void {
+    data.forEach((face: { faceAttributes: { headPose: { yaw: number; pitch: number } } }) => {
+      const { yaw, pitch } = face.faceAttributes.headPose;
+      let resultText = '';
+
+      if (pitch > 10) {
+        resultText = '✅ Nodding (Yes)';
+      } else if (yaw > 15 || yaw < -15) {
+        resultText = '❌ Shaking Head (No)';
+      }
+
+      console.log(`HeadMovement ====> ${resultText}`);
+    });
+  }
 
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
@@ -418,6 +451,7 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
     console.log('Gesture detected data - \n');
     console.log(data);
   }
+
   function imageBase64ToBlob(base64: string) {
     const base64Data = base64.split(',')[1];
     if (!base64Data) {
