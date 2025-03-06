@@ -100,7 +100,7 @@ export function defaultMockCallAdapterState(
       /* @conditional-compile-remove(together-mode) */
       togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
       pptLive: { isActive: false },
-      role: 'Presenter',
+      role: role ?? 'Unknown',
       dominantSpeakers: dominantSpeakers,
       totalParticipantCount:
         Object.values(remoteParticipants).length > 0 ? Object.values(remoteParticipants).length + 1 : undefined,
@@ -140,8 +140,8 @@ export function defaultMockCallAdapterState(
         }
       : undefined,
     userId: isTeamsUser
-      ? { kind: 'microsoftTeamsUser', microsoftTeamsUserId: '8:orgid:localUser' }
-      : { kind: 'communicationUser', communicationUserId: '8:orgid:localUser' },
+      ? { kind: 'microsoftTeamsUser', microsoftTeamsUserId: '1' }
+      : { kind: 'communicationUser', communicationUserId: '1' },
     devices: {
       isSpeakerSelectionAvailable: true,
       selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
