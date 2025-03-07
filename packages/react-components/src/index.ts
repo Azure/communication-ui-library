@@ -32,6 +32,7 @@ export { COMPONENT_LOCALE_ZH_TW } from './localization/locales/zh-TW/ComponentLo
 export type { ComponentStrings, ComponentLocale, LocalizationProviderProps } from './localization';
 export * from './theming';
 export * from './theming/generateTheme';
+export * from './Accessibility';
 
 export type {
   BaseCustomStyles,

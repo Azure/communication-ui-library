@@ -11,7 +11,7 @@ import {
   Theme,
   useTheme
 } from '@fluentui/react';
-import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
+import { FluentThemeProvider, ParticipantMenuItemsCallback, AccessibilityProvider } from '@internal/react-components';
 import React, { createContext, useContext } from 'react';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
@@ -122,7 +122,9 @@ export const BaseProvider = (
       }
       <Customizer scopedSettings={{ Layer: { hostId: globalLayerHostId } }}>
         <ACSAudioProvider audioContext={compositeAudioContext}>
-          <WithBackgroundColor>{props.children}</WithBackgroundColor>
+          <AccessibilityProvider>
+            <WithBackgroundColor>{props.children}</WithBackgroundColor>
+          </AccessibilityProvider>
         </ACSAudioProvider>
       </Customizer>
       <LayerHost id={globalLayerHostId} className={mergeStyles(globalLayerHostStyle)} />
