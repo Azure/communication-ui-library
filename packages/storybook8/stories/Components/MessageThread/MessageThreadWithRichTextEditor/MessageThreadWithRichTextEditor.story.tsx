@@ -10,7 +10,7 @@ const storyControls = {
   isEnableRTE: { control: 'boolean', name: 'Enable Rich Text Editor' }
 };
 
-const RichTextEditorForEditingStory = (args: ArgsFrom<typeof storyControls>): JSX.Element => {
+const MessageThreadWithRichTextEditorStory = (args: ArgsFrom<typeof storyControls>): JSX.Element => {
   const [messages, setMessages] = useState(GetHistoryHTMLChatMessages());
   const onUpdateMessage = useCallback(
     (messageId: string, content: string): Promise<void> => {
@@ -42,4 +42,4 @@ const RichTextEditorForEditingStory = (args: ArgsFrom<typeof storyControls>): JS
   );
 };
 
-export const MessageThreadWithRichTextEditor = RichTextEditorForEditingStory.bind({});
+export const MessageThreadWithRichTextEditor = MessageThreadWithRichTextEditorStory.bind({});
