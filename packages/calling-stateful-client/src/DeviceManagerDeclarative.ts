@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { AudioDeviceInfo, DeviceAccess, DeviceManager, VideoDeviceInfo } from '@azure/communication-calling';
-import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 
 import { LocalVideoStream } from '@azure/communication-calling';
@@ -30,6 +29,22 @@ export interface StatefulDeviceManager extends DeviceManager {
   getUnparentedVideoStreams: () => LocalVideoStream[];
 }
 
+/** @private */
+export interface IDeclarativeDeviceManagerContext {
+  setDeviceManagerIsSpeakerSelectionAvailable: (isSpeakerSelectionAvailable: boolean) => void;
+  setDeviceManagerSelectedMicrophone: (selectedMicrophone: AudioDeviceInfo | undefined) => void;
+  setDeviceManagerSelectedSpeaker: (selectedSpeaker: AudioDeviceInfo | undefined) => void;
+  setDeviceManagerCameras: (cameras: VideoDeviceInfo[]) => void;
+  setDeviceManagerMicrophones: (microphones: AudioDeviceInfo[]) => void;
+  setDeviceManagerSpeakers: (speakers: AudioDeviceInfo[]) => void;
+  setDeviceManagerSelectedCamera: (selectedCamera: VideoDeviceInfo) => void;
+  setDeviceManagerDeviceAccess: (deviceAccessState: DeviceAccess) => void;
+  withAsyncErrorTeedToState<Args extends unknown[], R>(
+    action: (...args: Args) => Promise<R>,
+    target: unknown
+  ): (...args: Args) => Promise<R>;
+}
+
 /**
  * ProxyDeviceManager proxies DeviceManager and subscribes to all events that affect device manager state. State updates
  * are set on the provided context. Also any queries for state are proxied and stored in state as well. Only one device
@@ -39,9 +54,9 @@ export interface StatefulDeviceManager extends DeviceManager {
  */
 class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
   private _deviceManager: DeviceManager;
-  private _context: CallContext;
+  private _context: IDeclarativeDeviceManagerContext;
 
-  constructor(deviceManager: DeviceManager, context: CallContext) {
+  constructor(deviceManager: DeviceManager, context: IDeclarativeDeviceManagerContext) {
     this._deviceManager = deviceManager;
     this._context = context;
 
@@ -284,7 +299,7 @@ const dedupeById = <T extends { id: string }>(devices: T[]): T[] => {
  */
 export const deviceManagerDeclaratify = (
   deviceManager: DeviceManager,
-  context: CallContext,
+  context: IDeclarativeDeviceManagerContext,
   internalContext: InternalCallContext
 ): DeviceManager => {
   const proxyDeviceManager = new ProxyDeviceManager(deviceManager, context);

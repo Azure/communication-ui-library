@@ -1,6 +1,9 @@
 {
   "homepage": "https://azure.github.io/communication-ui-library/",
   "license": "MIT",
+  "scripts": {
+    "auth": "npx vsts-npm-auth -config common/config/rush/.npmrc"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/Azure/communication-ui-library.git"
