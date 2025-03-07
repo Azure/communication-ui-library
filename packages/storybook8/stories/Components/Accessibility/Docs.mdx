@@ -26,6 +26,40 @@ const Main = () => (
 );
 ```
 
-Then when you are wanting to make sure that you are
+One you have this setup you can access the provider and set the reference on the control by doing the following
+
+```tsx
+import { useAccessibility } from '@azure/communication-react';
+
+const yourButton = () => {
+  const { accessibility } = useAccessibility();
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  return <button ref={buttonRef}>Click me</button>;
+};
+```
+
+Then in your transient UI do the following with the controls that close this UI.
+
+```tsx
+import { useAccessibility } from '@azure/communication-react';
+
+const yourSidePanel = (): JSX.ELement => {
+  const accessibility = useAccessibility();
+  return (
+    <Stack>
+      <button
+        onClick={() => {
+          // your functionality for closing your side panel
+          accessibility?.componentRef?.current.focus();
+        }}
+      >
+        Close
+      </button>
+    </Stack>
+  );
+};
+```
+
+This will cause the focus of your application when using the keyboard to return to the control that opened your side pane.
 
 <ArgTypes of={AccessibilityProvider} />

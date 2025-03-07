@@ -8,7 +8,7 @@ import { useEffect } from 'react';
  * Type for reference to the last component used
  * @public
  */
-export type AccessibilityComponentRef = IButton | null;
+export type AccessibilityComponentRef = IButton | HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null;
 
 /**
  * Type for the context that holds the reference to the last used control
