@@ -191,131 +191,7 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
     };
   }, [adapter]);
 
-  useEffect(() => {
-    let animationFrameId: number;
-
-    async function analyzeFrame() {
-      const imageUrl = await captureFrame();
-
-      if (imageUrl && imageUrl.length > 10) {
-        console.log('image url - ', imageBase64ToBlob(imageUrl));
-        if (Date.now() % 5000 < 100) {
-          await detectHandGestures(imageUrl);
-        }
-        //await detectHeadMovements(imageUrl);
-      }
-      animationFrameId = requestAnimationFrame(analyzeFrame);
-    }
-
-    function startAnalyzing() {
-      animationFrameId = requestAnimationFrame(analyzeFrame);
-    }
-
-    startAnalyzing();
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [adapter]);
-
-  async function captureFrame() {
-    //console.log('Capturing frame...');
-    if (videoRef.current && canvasRef.current) {
-      const video = videoRef.current;
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      if (ctx) {
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      }
-      return canvas.toDataURL('image/jpeg');
-    }
-    return null;
-  }
-
-  async function detectHandGestures(imageBase64: string) {
-    //const CUSTOM_VISION_ENDPOINT = 'CUSTOM_VISION_ENDPOINT';
-    const CUSTOM_VISION_KEY = 'CUSTOM_VISION_KEY';
-    const PREDICTION_KEY = 'PREDICTION_KEY';
-    //const PROJECT_ID = 'PROJECT_ID';
-    //const MODEL_NAME = 'MODEL_NAME';
-
-    const response = await fetch(
-      //`${CUSTOM_VISION_ENDPOINT}/customvision/v3.0/Prediction/${PROJECT_ID}/classify/iterations/${MODEL_NAME}/url`,
-      `https://azureaiinsravan.cognitiveservices.azure.com/customvision/v3.0/Prediction/daaea539-0d1a-456b-a0fc-31e121039d56/detect/iterations/Iteration2/image`,
-      {
-        method: 'POST',
-        headers: {
-          'Ocp-Apim-Subscription-Key': CUSTOM_VISION_KEY,
-          'Prediction-Key': PREDICTION_KEY,
-          'Content-Type': 'application/octet-stream'
-        },
-        body: imageBase64ToBlob(imageBase64)
-      }
-    );
-
-    const data = await response.json();
-    console.log('Gesture detected data - \n');
-    console.log(data);
-    processHandGestureResults(data);
-  }
-  function processHandGestureResults(data: any) {
-    if (!data || !data.predictions || data.predictions.length === 0) {
-      console.log('⚠️ No gestures detected.');
-      return;
-    }
-
-    // Get the most confident prediction
-    const topGesture = data.predictions.reduce((prev: any, current: any) =>
-      prev.probability > current.probability ? prev : current
-    );
-
-    console.log(`✋ Detected Gesture: ${topGesture.tagName} (${(topGesture.probability * 100).toFixed(2)}%)`);
-
-    // Define thresholds for triggering actions
-    if (topGesture.probability > 0.5) {
-      switch (topGesture.tagName) {
-        case 'Stop':
-          //sendRealTimeAlert("🛑 'Stop' gesture detected! Action required.");
-          adapter?.raiseHand();
-          setTimeout(() => {
-            adapter?.lowerHand();
-          }, 5000);
-          break;
-        case 'thumbsup':
-          adapter?.onReactionClick('like');
-          console.log('👍 Positive gesture detected. No alert needed.');
-          break;
-        case 'Pointing':
-          console.log('👉 Pointing gesture detected.');
-          break;
-        case 'happy':
-          //adapter?.onReactionClick('laugh');
-          break;
-        case 'love':
-          adapter?.onReactionClick('heart');
-          break;
-        default:
-          console.log(`🤔 Unrecognized gesture: ${topGesture.tagName}`);
-      }
-    } else {
-      console.log('🔍 Gesture detected but confidence is low. No action taken.');
-    }
-  }
-
-  function imageBase64ToBlob(base64: string) {
-    const base64Data = base64.split(',')[1];
-    if (!base64Data) {
-      throw new Error('Invalid base64 string');
-    }
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    return new Blob([new Uint8Array(byteNumbers)], { type: 'image/jpeg' });
-  }
+  useFrameAnalyzer(adapter, videoRef, canvasRef);
 
   return (
     <div style={{ height: '100%' }}>
@@ -426,162 +302,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     };
   }, [adapter]);
 
-  useEffect(() => {
-    let animationFrameId: number;
-
-    async function analyzeFrame() {
-      const imageUrl = await captureFrame();
-
-      if (imageUrl && imageUrl.length > 10) {
-        console.log('image url - ', imageBase64ToBlob(imageUrl));
-        if (Date.now() % 5000 < 100) {
-          await detectHandGestures(imageUrl);
-        }
-        //await detectHeadMovements(imageUrl);
-      }
-      animationFrameId = requestAnimationFrame(analyzeFrame);
-    }
-
-    function startAnalyzing() {
-      animationFrameId = requestAnimationFrame(analyzeFrame);
-    }
-
-    startAnalyzing();
-
-    return () => {
-      cancelAnimationFrame(animationFrameId);
-    };
-  }, [adapter]);
-
-  async function captureFrame() {
-    //console.log('Capturing frame...');
-    if (videoRef.current && canvasRef.current) {
-      const video = videoRef.current;
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      if (ctx) {
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-      }
-      return canvas.toDataURL('image/jpeg');
-    }
-    return null;
-  }
-
-  async function detectHandGestures(imageBase64: string) {
-    //const CUSTOM_VISION_ENDPOINT = 'CUSTOM_VISION_ENDPOINT';
-    const CUSTOM_VISION_KEY = 'CUSTOM_VISION_KEY';
-    const PREDICTION_KEY = 'PREDICTION_KEY';
-    //const PROJECT_ID = 'PROJECT_ID';
-    //const MODEL_NAME = 'MODEL_NAME';
-
-    const response = await fetch(
-      //`${CUSTOM_VISION_ENDPOINT}/customvision/v3.0/Prediction/${PROJECT_ID}/classify/iterations/${MODEL_NAME}/url`,
-      `https://azureaiinsravan.cognitiveservices.azure.com/customvision/v3.0/Prediction/daaea539-0d1a-456b-a0fc-31e121039d56/detect/iterations/Iteration2/image`,
-      {
-        method: 'POST',
-        headers: {
-          'Ocp-Apim-Subscription-Key': CUSTOM_VISION_KEY,
-          'Prediction-Key': PREDICTION_KEY,
-          'Content-Type': 'application/octet-stream'
-        },
-        body: imageBase64ToBlob(imageBase64)
-      }
-    );
-
-    const data = await response.json();
-    console.log('Gesture detected data - \n');
-    console.log(data);
-    processHandGestureResults(data);
-  }
-  // async function detectHeadMovements(imageBase64: string): Promise<void> {
-  //   const FACE_API_ENDPOINT = 'FACE_ENDPOINT';
-  //   const FACE_API_KEY = 'FACE_API_KEY';
-
-  //   const response = await fetch(`${FACE_API_ENDPOINT}/face/v1.0/detect?returnFaceAttributes=headPose`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Ocp-Apim-Subscription-Key': FACE_API_KEY,
-  //       'Content-Type': 'application/octet-stream'
-  //     },
-  //     body: imageBase64ToBlob(imageBase64)
-  //   });
-
-  //   const data = await response.json();
-  //   processHeadMovements(data);
-  // }
-
-  // function processHeadMovements(data: { faceAttributes: { headPose: { yaw: number; pitch: number } } }[]): void {
-  //   data.forEach((face: { faceAttributes: { headPose: { yaw: number; pitch: number } } }) => {
-  //     const { yaw, pitch } = face.faceAttributes.headPose;
-  //     let resultText = '';
-
-  //     if (pitch > 10) {
-  //       resultText = '✅ Nodding (Yes)';
-  //     } else if (yaw > 15 || yaw < -15) {
-  //       resultText = '❌ Shaking Head (No)';
-  //     }
-
-  //     console.log(`HeadMovement ====> ${resultText}`);
-  //   });
-  // }
-  function processHandGestureResults(data: any) {
-    if (!data || !data.predictions || data.predictions.length === 0) {
-      console.log('⚠️ No gestures detected.');
-      return;
-    }
-
-    // Get the most confident prediction
-    const topGesture = data.predictions.reduce((prev: any, current: any) =>
-      prev.probability > current.probability ? prev : current
-    );
-
-    console.log(`✋ Detected Gesture: ${topGesture.tagName} (${(topGesture.probability * 100).toFixed(2)}%)`);
-
-    // Define thresholds for triggering actions
-    if (topGesture.probability > 0.5) {
-      switch (topGesture.tagName) {
-        case 'Stop':
-          //sendRealTimeAlert("🛑 'Stop' gesture detected! Action required.");
-          adapter?.raiseHand();
-          setTimeout(() => {
-            adapter?.lowerHand();
-          }, 5000);
-          break;
-        case 'thumbsup':
-          adapter?.onReactionClick('like');
-          console.log('👍 Positive gesture detected. No alert needed.');
-          break;
-        case 'Pointing':
-          console.log('👉 Pointing gesture detected.');
-          break;
-        case 'happy':
-          //adapter?.onReactionClick('laugh');
-          break;
-        case 'love':
-          adapter?.onReactionClick('heart');
-          break;
-        default:
-          console.log(`🤔 Unrecognized gesture: ${topGesture.tagName}`);
-      }
-    } else {
-      console.log('🔍 Gesture detected but confidence is low. No action taken.');
-    }
-  }
-
-  function imageBase64ToBlob(base64: string) {
-    const base64Data = base64.split(',')[1];
-    if (!base64Data) {
-      throw new Error('Invalid base64 string');
-    }
-    const byteCharacters = atob(base64Data);
-    const byteNumbers = new Array(byteCharacters.length);
-    for (let i = 0; i < byteCharacters.length; i++) {
-      byteNumbers[i] = byteCharacters.charCodeAt(i);
-    }
-    return new Blob([new Uint8Array(byteNumbers)], { type: 'image/jpeg' });
-  }
+  useFrameAnalyzer(adapter, videoRef, canvasRef);
 
   return (
     <div style={{ height: '100%' }}>
@@ -647,6 +368,127 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
       <CallCompositeContainer {...props} adapter={adapter} />
     </div>
   );
+};
+
+const useFrameAnalyzer = (
+  adapter: CommonCallAdapter | undefined,
+  videoRef: React.RefObject<HTMLVideoElement>,
+  canvasRef: React.RefObject<HTMLCanvasElement>
+) => {
+  useEffect(() => {
+    let animationFrameId: number;
+    async function analyzeFrame() {
+      const imageUrl = await captureFrame();
+      if (imageUrl && imageUrl.length > 10) {
+        console.log('image url - ', imageBase64ToBlob(imageUrl));
+        if (Date.now() % 5000 < 100) {
+          await detectHandGestures(imageUrl);
+        }
+      }
+      animationFrameId = requestAnimationFrame(analyzeFrame);
+    }
+    function startAnalyzing() {
+      animationFrameId = requestAnimationFrame(analyzeFrame);
+    }
+    startAnalyzing();
+    return () => {
+      cancelAnimationFrame(animationFrameId);
+    };
+  }, [adapter]);
+  async function captureFrame() {
+    if (videoRef.current && canvasRef.current) {
+      const video = videoRef.current;
+      const canvas = canvasRef.current;
+      const ctx = canvas.getContext('2d');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      if (ctx) {
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+      }
+      return canvas.toDataURL('image/jpeg');
+    }
+    return null;
+  }
+  async function detectHandGestures(imageBase64: string) {
+    const CUSTOM_VISION_ENDPOINT = 'CUSTOM_VISION_ENDPOINT';
+    const CUSTOM_VISION_KEY = 'CUSTOM_VISION_KEY';
+    const PREDICTION_KEY = 'PREDICTION_KEY';
+    const PROJECT_ID = 'PROJECT_ID';
+    const MODEL_NAME = 'MODEL_NAME';
+
+    const response = await fetch(
+      `${CUSTOM_VISION_ENDPOINT}/customvision/v3.0/Prediction/${PROJECT_ID}/detect/iterations/${MODEL_NAME}/image`,
+      {
+        method: 'POST',
+        headers: {
+          'Ocp-Apim-Subscription-Key': CUSTOM_VISION_KEY,
+          'Prediction-Key': PREDICTION_KEY,
+          'Content-Type': 'application/octet-stream'
+        },
+        body: imageBase64ToBlob(imageBase64)
+      }
+    );
+
+    const data = await response.json();
+    console.log('Gesture detected data - \n');
+    console.log(data);
+    processHandGestureResults(data);
+  }
+  function processHandGestureResults(data: any) {
+    if (!data || !data.predictions || data.predictions.length === 0) {
+      console.log('⚠️ No gestures detected.');
+      return;
+    }
+
+    // Get the most confident prediction
+    const topGesture = data.predictions.reduce((prev: any, current: any) =>
+      prev.probability > current.probability ? prev : current
+    );
+
+    console.log(`✋ Detected Gesture: ${topGesture.tagName} (${(topGesture.probability * 100).toFixed(2)}%)`);
+
+    // Define thresholds for triggering actions
+    if (topGesture.probability > 0.5) {
+      switch (topGesture.tagName) {
+        case 'Stop':
+          //sendRealTimeAlert("🛑 'Stop' gesture detected! Action required.");
+          adapter?.raiseHand();
+          setTimeout(() => {
+            adapter?.lowerHand();
+          }, 5000);
+          break;
+        case 'thumbsup':
+          adapter?.onReactionClick('like');
+          console.log('👍 Positive gesture detected. No alert needed.');
+          break;
+        case 'Pointing':
+          console.log('👉 Pointing gesture detected.');
+          break;
+        case 'happy':
+          //adapter?.onReactionClick('laugh');
+          break;
+        case 'love':
+          adapter?.onReactionClick('heart');
+          break;
+        default:
+          console.log(`🤔 Unrecognized gesture: ${topGesture.tagName}`);
+      }
+    } else {
+      console.log('🔍 Gesture detected but confidence is low. No action taken.');
+    }
+  }
+  function imageBase64ToBlob(base64: string) {
+    const base64Data = base64.split(',')[1];
+    if (!base64Data) {
+      throw new Error('Invalid base64 string');
+    }
+    const byteCharacters = atob(base64Data);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    return new Blob([new Uint8Array(byteNumbers)], { type: 'image/jpeg' });
+  }
 };
 
 const convertPageStateToString = (state: CallAdapterState): string => {
