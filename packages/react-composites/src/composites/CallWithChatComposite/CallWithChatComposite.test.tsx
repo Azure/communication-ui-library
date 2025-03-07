@@ -63,6 +63,8 @@ describe('CallWithChatComposite', () => {
       locale: COMPOSITE_LOCALE_ZH_TW,
       rtl: true,
       onFetchAvatarPersonaData: jest.fn(),
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      onRenderAvatar: jest.fn(),
       onFetchParticipantMenuItems: jest.fn()
     };
 

@@ -8,6 +8,8 @@ import {
   PersonaPresence,
   PersonaSize
 } from '@fluentui/react';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { PersonaInitialsColor } from '@fluentui/react';
 import { ParticipantState } from '.';
 
 /**
@@ -21,8 +23,25 @@ export type CustomAvatarOptions = {
   coinSize?: number;
   /** Only show Coin and Initials  */
   hidePersonaDetails?: boolean;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  /**
+   * The background color when the user's initials are displayed.
+   * @defaultvalue Derived from `text`
+   */
+  initialsColor?: PersonaInitialsColor | string;
   /** Text color of initials inside the coin  */
   initialsTextColor?: string;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  /**
+   * Image URL to use, should be a square aspect ratio and big enough to fit in the image area.
+   */
+  imageUrl?: string;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  /**
+   * The user's initials to display in the image area when there is no image.
+   * @defaultvalue Derived from `text`
+   */
+  imageInitials?: string;
   /** Optional property to set the aria label of the video tile if there is no available stream. */
   noVideoAvailableAriaLabel?: string;
   /** User status  */
