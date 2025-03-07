@@ -11,6 +11,10 @@ It is important to note that the AccessibilityProvider component should be used 
 
 <Canvas of={AccessibilityStories.AccessibilityProvider} />
 
+With the usage of the accessibility you can make your code cleaner when working with Accessibility by no needing to pass around a
+reference from one component to another by sending it up and down the component tree through props. When you use the AccessibilityProvider
+you can set the reference in the component that opens any transient UI and then call focus back to the control that opened it when it is closed.
+
 ## Usage
 
 To use the provider you need to make sure that your application is wrapped in the AccessibilityProvider component. This can be done by wrapping your application in the provider in your main entry file or at a higher level in your component tree.

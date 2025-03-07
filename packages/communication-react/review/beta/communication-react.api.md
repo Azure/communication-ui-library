@@ -132,7 +132,7 @@ export interface AcceptedTransfer {
 }
 
 // @public
-export type AccessibilityComponentRef = IButton | null;
+export type AccessibilityComponentRef = IButton | HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement | null;
 
 // @public
 export interface AccessibilityContextType {
