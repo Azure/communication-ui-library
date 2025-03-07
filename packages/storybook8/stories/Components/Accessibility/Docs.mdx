@@ -1,0 +1,31 @@
+import { AccessibilityProvider } from '@azure/communication-react';
+import * as AccessibilityStories from './index.stories';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+
+<Meta of={AccessibilityStories} />
+
+# AccessibilityProvider
+
+The AccessibilityProvider component is used to provide accessibility features to the components within its context. It allows you to customize the accessibility behavior of the components in your application.
+It is important to note that the AccessibilityProvider component should be used at the root of your application or at a higher level in the component tree to ensure that all child components can access the accessibility features.
+
+<Canvas of={AccessibilityStories.AccessibilityProvider} />
+
+## Usage
+
+To use the provider you need to make sure that your application is wrapped in the AccessibilityProvider component. This can be done by wrapping your application in the provider in your main entry file or at a higher level in your component tree.
+
+```tsx
+import { AccessibilityProvider } from '@azure/communication-react';
+import { App } from './App';
+
+const Main = () => (
+  <AccessibilityProvider>
+    <App />
+  </AccessibilityProvider>
+);
+```
+
+Then when you are wanting to make sure that you are
+
+<ArgTypes of={AccessibilityProvider} />
