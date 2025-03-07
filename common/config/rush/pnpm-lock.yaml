@@ -5559,6 +5559,15 @@ packages:
       '@sinonjs/commons': 3.0.1
     dev: false
 
+  /@skype/spool-sdk@2025.7.0-0.20-internal-vbhce653:
+    resolution: {integrity: sha1-Fmp/Xc+IDE9Q8muvEp9rHzOk0eM=}
+    dependencies:
+      '@azure/communication-common': 2.3.0
+      '@azure/logger': 1.1.4
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@storybook/addon-actions@8.2.6(storybook@8.2.6):
     resolution: {integrity: sha512-iCsf3V28/jJ95w2zd8aSvR4denoA2UYV3fpNCTGOURqICyKOG3cyVxvqKp8Hhcwn7trNOsK+HlL6q5gpv56ViA==}
     peerDependencies:
@@ -18677,7 +18686,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-G+lUQbqTok0MKu64KW1JvrFupeneHkThNbDgY4zI0eMtAaViqKq3+vjcTuP4OQDSNroPbCILnS2F5MGLyOD5vQ==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-KoJBnKf7+LR88rppnbrN9wpHSVbf3nVeeUkONS1Gf81HYLKzIe8aZ288vQ5p9b2ia9GBcTKTp/DRwwjytomUBw==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -18687,6 +18696,7 @@ packages:
       '@azure/logger': 1.1.4
       '@babel/cli': 7.26.4(@babel/core@7.26.9)
       '@babel/core': 7.26.9
+      '@skype/spool-sdk': 2025.7.0-0.20-internal-vbhce653
       '@types/events': 3.0.3
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
@@ -19239,7 +19249,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-ElAiMLa8/iz74fJabjGWqsMjc/Kd6+M34/jPUXaQr7BM2dqICCnxqcsH2U1KiYVf9ISUxxQ09FoFyGoUXmAGkA==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-72suHnT80wIUQiGcXjawYyWmbpNDIbSouXjzYIaZFMHkSwW59ZQB55k1mHlHrNIAJCQkTuwyqwqgNezniw9WaA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -19263,6 +19273,7 @@ packages:
       '@microsoft/api-documenter': 7.26.13(@types/node@22.10.10)
       '@microsoft/api-extractor': 7.48.1(@types/node@22.10.10)
       '@rollup/plugin-json': 6.1.0(rollup@4.32.1)
+      '@skype/spool-sdk': 2025.7.0-0.20-internal-vbhce653
       '@testing-library/jest-dom': 6.6.3
       '@testing-library/react': 16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@types/dompurify': 3.2.0
