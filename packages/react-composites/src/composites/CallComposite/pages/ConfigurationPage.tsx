@@ -103,6 +103,18 @@ export interface ConfigurationPageProps {
   backgroundImage?: {
     url: string;
   };
+  /**
+   * Options for settings related to joining a call.
+   */
+  joinCallOptions?: {
+    /**
+     * options for checking microphone permissions when joining a call.
+     * block on access will block the user from joining the call if the microphone permission is not granted.
+     * skip will allow the user to join the call without granting the microphone permission.
+     * @defaultValue 'requireMicrophoneAvailable'
+     */
+    microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
+  };
 }
 
 /**
@@ -115,7 +127,8 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     modalLayerHostId,
     /* @conditional-compile-remove(call-readiness) */ deviceChecks,
     /* @conditional-compile-remove(call-readiness) */ onPermissionsTroubleshootingClick,
-    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick
+    /* @conditional-compile-remove(call-readiness) */ onNetworkingTroubleShootingClick,
+    joinCallOptions = { microphoneCheck: 'requireMicrophoneAvailable' }
   } = props;
 
   const theme = useTheme();
@@ -144,7 +157,9 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const microphones = useSelector(getMicrophones);
   const environmentInfo = useSelector(getEnvironmentInfo);
 
-  let disableStartCallButton = !microphonePermissionGranted || microphones?.length === 0;
+  let disableStartCallButton =
+    (!microphonePermissionGranted || microphones?.length === 0) &&
+    joinCallOptions.microphoneCheck === 'requireMicrophoneAvailable';
   const role = useSelector(getRole);
 
   const isCameraOn = useSelector(localVideoSelector).isAvailable;

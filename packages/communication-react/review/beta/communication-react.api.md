@@ -799,6 +799,9 @@ export type CallCompositeOptions = {
     spotlight?: {
         hideSpotlightButtons?: boolean;
     };
+    joinCallOptions?: {
+        microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
+    };
 };
 
 // @public
@@ -1641,6 +1644,9 @@ export type CallWithChatCompositeOptions = {
         hideSpotlightButtons?: boolean;
     };
     richTextEditor?: boolean;
+    joinCallOptions?: {
+        microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
+    };
 };
 
 // @public
