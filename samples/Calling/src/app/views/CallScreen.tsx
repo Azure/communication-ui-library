@@ -318,7 +318,7 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
   }
 
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <video ref={videoRef} autoPlay style={{ display: 'none', height: 0 }} />
       <canvas ref={canvasRef} style={{ display: 'none', height: 0 }} />
       <CallCompositeContainer {...props} adapter={adapter} />
@@ -584,7 +584,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
   }
 
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <video ref={videoRef} autoPlay style={{ display: 'none', height: 0 }} />
       <canvas ref={canvasRef} style={{ display: 'none', height: 0 }} />
       <CallCompositeContainer {...props} adapter={adapter} />
@@ -641,7 +641,7 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
   );
 
   return (
-    <div>
+    <div style={{ height: '100%' }}>
       <video ref={videoRef} autoPlay style={{ display: 'none', height: 0 }} />
       <canvas ref={canvasRef} style={{ display: 'none', height: 0 }} />
       <CallCompositeContainer {...props} adapter={adapter} />
