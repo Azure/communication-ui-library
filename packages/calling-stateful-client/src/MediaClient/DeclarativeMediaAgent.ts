@@ -44,7 +44,7 @@ class ProxyMediaSessionAgent implements ProxyHandler<DeclarativeMediaSessionAgen
  * Creates a declarative CallAgent by proxying CallAgent with ProxyCallAgent which will track state updates by updating
  * the given context.
  *
- * @private
+ * @alpha
  */
 export const mediaSessionAgentDeclaratify = (
   mediaSessionAgent: MediaSessionAgent,

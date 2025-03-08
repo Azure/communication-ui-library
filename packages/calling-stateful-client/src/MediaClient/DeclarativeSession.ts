@@ -6,12 +6,12 @@ import { MediaContext } from './MediaClientContext';
 
 /**
  * TODO [jaburnsi] remove this when session ids are exposed in the SDK
- * @private
+ * @internal
  */
-export const SESSION_PLACEHOLDER_ID = 'placeholder-session-id';
+export const _SESSION_PLACEHOLDER_ID = 'placeholder-session-id';
 
 /**
- * @private
+ * @alpha
  */
 export interface DeclarativeMediaStreamSession extends MediaStreamSession {}
 
@@ -28,14 +28,14 @@ class ProxyMediaStreamSession implements ProxyHandler<MediaStreamSession> {
         return this._context.withAsyncErrorTeedToState(async (...args: Parameters<MediaStreamSession['mute']>) => {
           await target.mute(...args);
           // TODO: replace with session.on('muteChanged') when available
-          this._context.setSessionMuted(SESSION_PLACEHOLDER_ID, true);
+          this._context.setSessionMuted(_SESSION_PLACEHOLDER_ID, true);
         }, 'MediaStreamSession.mute');
       }
       case 'unmute': {
         return this._context.withAsyncErrorTeedToState(async (...args: Parameters<MediaStreamSession['unmute']>) => {
           await target.unmute(...args);
           // TODO: replace with session.on('muteChanged') when available
-          this._context.setSessionMuted(SESSION_PLACEHOLDER_ID, false);
+          this._context.setSessionMuted(_SESSION_PLACEHOLDER_ID, false);
         }, 'MediaStreamSession.unmute');
       }
       default:
@@ -45,7 +45,7 @@ class ProxyMediaStreamSession implements ProxyHandler<MediaStreamSession> {
 }
 
 /**
- * @private
+ * @alpha
  */
 export const mediaStreamSessionDeclaratify = (
   mediaStreamSession: MediaStreamSession,

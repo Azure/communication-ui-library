@@ -49,6 +49,9 @@ export function createHandlers<AgentType extends CallAgent | TeamsCallAgent>(
       callAgent,
       deviceManager,
       call,
+      undefined,
+      undefined,
+      undefined,
       options
     ) as CallHandlersOf<AgentType>;
   }

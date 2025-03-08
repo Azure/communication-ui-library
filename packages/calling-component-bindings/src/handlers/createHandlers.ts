@@ -20,6 +20,7 @@ import { createDefaultCommonCallingHandlers, CommonCallingHandlers } from './cre
 
 import { VideoBackgroundEffectsDependency } from './createCommonHandlers';
 import { DeepNoiseSuppressionEffectDependency } from './createCommonHandlers';
+import { MediaClient, MediaSessionAgent, MediaStreamSession } from '@skype/spool-sdk';
 
 /**
  * Object containing all the handlers required for calling components.
@@ -56,7 +57,9 @@ export type CreateDefaultCallingHandlers = (
   callAgent: CallAgent | undefined,
   deviceManager: StatefulDeviceManager | undefined,
   call: Call | undefined,
-
+  mediaClient: MediaClient | undefined,
+  mediaSessionAgent: MediaSessionAgent | undefined,
+  mediaStreamSession: MediaStreamSession | undefined,
   options?: CallingHandlersOptions
 ) => CallingHandlers;
 
@@ -69,8 +72,18 @@ export type CreateDefaultCallingHandlers = (
  * @public
  */
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers = memoizeOne((...args) => {
-  const [callClient, callAgent, deviceManager, call, options] = args;
-  const commonCallingHandlers = createDefaultCommonCallingHandlers(callClient, deviceManager, call, options);
+  const [callClient, callAgent, deviceManager, call, mediaClient, mediaSessionAgent, mediaStreamSession, options] =
+    args;
+  const commonCallingHandlers = createDefaultCommonCallingHandlers(
+    callClient,
+    deviceManager,
+    call,
+    // TODO: [jaburnsi]: use fn overload instead of multiple arguments
+    mediaClient,
+    mediaSessionAgent,
+    mediaStreamSession,
+    options
+  );
   return {
     ...commonCallingHandlers,
     // FIXME: onStartCall API should use string, not the underlying SDK types.

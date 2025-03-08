@@ -14,7 +14,6 @@ import { DeclarativeMediaSessionAgent, mediaSessionAgentDeclaratify } from './De
 /**
  * Arguments to construct the StatefulMediaClient.
  *
- * @public
  * @alpha
  */
 export type StatefulMediaClientArgs = {
@@ -25,7 +24,7 @@ export type StatefulMediaClientArgs = {
   userId: CommunicationUserIdentifier;
 };
 
-/** @public @alpha */
+/** @alpha */
 export interface StatefulMediaClient extends MediaClient {
   getState(): MediaClientState;
   onStateChange(handler: (state: MediaClientState) => void): void;
@@ -107,7 +106,7 @@ class ProxyMediaClient implements ProxyHandler<MediaClient> {
   }
 }
 
-/** @public @alpha */
+/** @alpha */
 export const createStatefulMediaClient = (args: StatefulMediaClientArgs): StatefulMediaClient => {
   const context = new MediaContext(getIdentifierKind(args.userId));
   const internalContext = new InternalCallContext();

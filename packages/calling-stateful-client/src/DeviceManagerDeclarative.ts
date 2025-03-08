@@ -29,7 +29,7 @@ export interface StatefulDeviceManager extends DeviceManager {
   getUnparentedVideoStreams: () => LocalVideoStream[];
 }
 
-/** @private */
+/** @public */
 export interface IDeclarativeDeviceManagerContext {
   setDeviceManagerIsSpeakerSelectionAvailable: (isSpeakerSelectionAvailable: boolean) => void;
   setDeviceManagerSelectedMicrophone: (selectedMicrophone: AudioDeviceInfo | undefined) => void;

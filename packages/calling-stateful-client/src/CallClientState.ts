@@ -16,8 +16,7 @@ import {
   ParticipantRole,
   RemoteParticipantState as RemoteParticipantStatus,
   ScalingMode,
-  VideoDeviceInfo,
-  CommunicationServicesError
+  VideoDeviceInfo
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';

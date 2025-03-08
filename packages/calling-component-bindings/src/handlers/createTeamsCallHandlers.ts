@@ -60,7 +60,7 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
     }
   ): TeamsCallingHandlers => {
     return {
-      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, options),
+      ...createDefaultCommonCallingHandlers(callClient, deviceManager, call, undefined, undefined, undefined, options),
       onStartCall: (participants, options) => {
         /* @conditional-compile-remove(teams-identity-support-beta) */
         const threadId = options?.threadId;

@@ -23,7 +23,7 @@ import {
   VideoStreamRendererViewState
 } from '../CallClientState';
 
-/** @private */
+/** @alpha */
 export class MediaContext implements IDeclarativeDeviceManagerContext {
   private _state: MediaClientState;
   private _emitter: EventEmitter;

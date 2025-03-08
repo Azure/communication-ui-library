@@ -36,20 +36,13 @@ export type { _ComponentCallingHandlers, CallingHandlersOptions } from './handle
 
 export { useTeamsCall, useTeamsCallAgent } from './providers';
 
-export {
-  CallAgentProvider,
-  CallClientProvider,
-  CallProvider,
-  useCall,
-  useCallAgent,
-  useCallClient,
-  useDeviceManager
-} from './providers';
+export { CallAgentProvider, CallClientProvider, CallProvider, useCall, useCallAgent, useCallClient } from './providers';
 export type { CallAgentProviderProps, CallClientProviderProps, CallProviderProps } from './providers';
 
 export { usePropsFor as useCallingPropsFor, getSelector as getCallingSelector } from './hooks/usePropsFor';
 export type { GetSelector as GetCallingSelector, EmptySelector } from './hooks/usePropsFor';
 
+export { useDeviceManager } from './hooks/useDeviceManager';
 export { useSelector as useCallingSelector } from './hooks/useSelector';
 export { useHandlers as useCallingHandlers } from './hooks/useHandlers';
 

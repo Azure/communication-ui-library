@@ -86,15 +86,3 @@ export const useCallClient = (): StatefulCallClient => {
   }
   return context.callClient;
 };
-
-/**
- * Hook to obtain {@link StatefulDeviceManager} from the provider.
- *
- * Useful when implementing a custom component that utilizes the providers
- * exported from this library.
- *
- * @public
- */
-export const useDeviceManager = (): StatefulDeviceManager | undefined => {
-  return useContext(CallClientContext)?.deviceManager;
-};

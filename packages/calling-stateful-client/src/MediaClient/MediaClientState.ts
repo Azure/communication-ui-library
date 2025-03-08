@@ -5,7 +5,7 @@ import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { DeviceManagerState, LocalVideoStreamState } from '../CallClientState';
 import { StatefulError } from '../Error';
 
-/** @public @alpha */
+/** @alpha */
 export type MediaErrorTarget =
   | 'MediaClient.createSessionAgent'
   | 'MediaClient.getDeviceManager'
@@ -16,7 +16,6 @@ export type MediaErrorTarget =
 /**
  * Error thrown from failed stateful API methods.
  *
- * @public
  * @alpha
  */
 export class MediaError extends StatefulError<MediaErrorTarget> {
@@ -25,15 +24,15 @@ export class MediaError extends StatefulError<MediaErrorTarget> {
   }
 }
 
-/** @public @alpha */
+/** @alpha */
 export type MediaErrors = {
   [target in MediaErrorTarget]: MediaError;
 };
 
-/** @public @alpha */
+/** @alpha */
 export type SessionStatus = 'Connected' | 'Disconnected' | 'Connecting' | 'Idle';
 
-/** @public @alpha */
+/** @alpha */
 export interface MediaClientState {
   sessions: {
     [sessionId: string]: MediaSessionState;
@@ -43,7 +42,7 @@ export interface MediaClientState {
   userId: CommunicationIdentifierKind;
 }
 
-/** @public @alpha */
+/** @alpha */
 export interface MediaSessionState {
   id: string;
   deepNoiseSuppression: {
@@ -57,8 +56,8 @@ export interface MediaSessionState {
   state: SessionStatus;
 }
 
-/** @public @alpha @todo */
+/** @alpha @todo */
 export interface LocalAudioStreamState {}
 
-/** @public @alpha @todo */
+/** @alpha @todo */
 export interface RemoteAudioStreamState {}

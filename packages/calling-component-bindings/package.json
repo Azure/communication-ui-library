@@ -35,6 +35,7 @@
     "@internal/calling-stateful-client": "1.25.0-beta.1",
     "@internal/react-components": "1.25.0-beta.1",
     "@azure/communication-common": "^2.3.1",
+    "@skype/spool-sdk": "2025.9.0-0.90-internal-vbh72453",
     "memoize-one": "^5.2.1",
     "reselect": "^4.0.0"
   },

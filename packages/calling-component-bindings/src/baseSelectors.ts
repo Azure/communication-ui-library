@@ -39,12 +39,18 @@ export type CallingBaseSelectorProps = {
 /**
  * @private
  */
-export const getDeviceManager = (state: CallClientState): DeviceManagerState => state.deviceManager;
+export const getDeviceManager = (state: { deviceManager: DeviceManagerState }): DeviceManagerState =>
+  state.deviceManager;
 
 /**
  * @private
  */
 export const getRole = (state: CallClientState, props: CallingBaseSelectorProps): ParticipantRole | undefined => {
+  if ('sessions' in state) {
+    // MediaClientState does not have roles yet
+    return undefined;
+  }
+
   return state.calls[props.callId]?.role;
 };
 

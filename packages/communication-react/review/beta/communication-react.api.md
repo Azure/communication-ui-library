@@ -76,8 +76,11 @@ import { LatestMediaDiagnostics } from '@azure/communication-calling';
 import { LatestNetworkDiagnostics } from '@azure/communication-calling';
 import { LocalRecordingInfo } from '@azure/communication-calling';
 import { LocalVideoStream } from '@azure/communication-calling';
+import { MediaClient } from '@skype/spool-sdk';
 import type { MediaDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import type { MediaDiagnosticType } from '@azure/communication-calling';
+import { MediaSessionAgent } from '@skype/spool-sdk';
+import { MediaStreamSession } from '@skype/spool-sdk';
 import { MediaStreamType } from '@azure/communication-calling';
 import { MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
@@ -1085,13 +1088,8 @@ export type CallControlOptions = CommonCallControlOptions & {
 export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 
 // @public
-export class CallError extends Error {
+export class CallError extends StatefulError<CallErrorTarget> {
     constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
-    code?: number;
-    innerError: Error;
-    subCode?: number;
-    target: CallErrorTarget;
-    timestamp: Date;
 }
 
 // @public
@@ -2824,7 +2822,7 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @public
-export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, mediaClient: MediaClient | undefined, mediaSessionAgent: MediaSessionAgent | undefined, mediaStreamSession: MediaStreamSession | undefined, options?: CallingHandlersOptions) => CallingHandlers;
 
 // @public
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
@@ -2843,6 +2841,9 @@ export const createStatefulCallClient: (args: StatefulCallClientArgs, options?: 
 
 // @public
 export const createStatefulChatClient: (args: StatefulChatClientArgs, options?: StatefulChatClientOptions) => StatefulChatClient;
+
+// @alpha (undocumented)
+export const createStatefulMediaClient: (args: StatefulMediaClientArgs) => StatefulMediaClient;
 
 // @public (undocumented)
 export const createTeamsCallAdapter: (args: TeamsCallAdapterArgs | /* @conditional-compile-remove(teams-identity-support-beta) */ TeamsOutboundCallAdapterArgs) => Promise<TeamsCallAdapter>;
@@ -2920,6 +2921,13 @@ export const darkTheme: PartialTheme & CallingTheme;
 
 // @public
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
+
+// @public (undocumented)
+export type DeclarativeMediaSessionAgent = MediaSessionAgent;
+
+// @alpha (undocumented)
+export interface DeclarativeMediaStreamSession extends MediaStreamSession {
+}
 
 // @public
 export type DeclarativeTeamsCallAgent = TeamsCallAgent & TeamsIncomingCallManagement;
@@ -3546,6 +3554,28 @@ export interface HorizontalGalleryStyles extends BaseCustomStyles {
     previousButton?: IStyle;
 }
 
+// @public (undocumented)
+export interface IDeclarativeDeviceManagerContext {
+    // (undocumented)
+    setDeviceManagerCameras: (cameras: VideoDeviceInfo[]) => void;
+    // (undocumented)
+    setDeviceManagerDeviceAccess: (deviceAccessState: DeviceAccess) => void;
+    // (undocumented)
+    setDeviceManagerIsSpeakerSelectionAvailable: (isSpeakerSelectionAvailable: boolean) => void;
+    // (undocumented)
+    setDeviceManagerMicrophones: (microphones: AudioDeviceInfo[]) => void;
+    // (undocumented)
+    setDeviceManagerSelectedCamera: (selectedCamera: VideoDeviceInfo) => void;
+    // (undocumented)
+    setDeviceManagerSelectedMicrophone: (selectedMicrophone: AudioDeviceInfo | undefined) => void;
+    // (undocumented)
+    setDeviceManagerSelectedSpeaker: (selectedSpeaker: AudioDeviceInfo | undefined) => void;
+    // (undocumented)
+    setDeviceManagerSpeakers: (speakers: AudioDeviceInfo[]) => void;
+    // (undocumented)
+    withAsyncErrorTeedToState<Args extends unknown[], R>(action: (...args: Args) => Promise<R>, target: unknown): (...args: Args) => Promise<R>;
+}
+
 // @internal
 export const _IdentifierProvider: (props: _IdentifierProviderProps) => JSX.Element;
 
@@ -3762,6 +3792,10 @@ export type LoadingState = 'loading' | 'none' | 'reconnecting';
 // @public
 export const loadOutboundCallComposite: (loaderArgs: OutboundCallCompositeLoaderProps, htmlElement: HTMLElement) => Promise<CallAdapter | undefined>;
 
+// @alpha (undocumented)
+export interface LocalAudioStreamState {
+}
+
 // @public
 export const LocalizationProvider: (props: LocalizationProviderProps) => JSX.Element;
 
@@ -3824,6 +3858,63 @@ export interface MediaAccessState {
     isVideoPermitted: boolean;
 }
 
+// @alpha (undocumented)
+export interface MediaClientState {
+    // (undocumented)
+    deviceManager: DeviceManagerState;
+    // (undocumented)
+    latestErrors: MediaErrors;
+    // (undocumented)
+    sessions: {
+        [sessionId: string]: MediaSessionState;
+    };
+    // (undocumented)
+    userId: CommunicationIdentifierKind;
+}
+
+// @alpha (undocumented)
+export class MediaContext implements IDeclarativeDeviceManagerContext {
+    constructor(userId: CommunicationIdentifierKind, maxListeners?: number);
+    // (undocumented)
+    deleteDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void;
+    // (undocumented)
+    getState(): MediaClientState;
+    // (undocumented)
+    modifyState(modifier: (draft: MediaClientState) => void): void;
+    // (undocumented)
+    offStateChange(handler: (state: MediaClientState) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: MediaClientState) => void): void;
+    // (undocumented)
+    setDeviceManagerCameras(cameras: VideoDeviceInfo[]): void;
+    // (undocumented)
+    setDeviceManagerDeviceAccess(deviceAccess: DeviceAccess): void;
+    // (undocumented)
+    setDeviceManagerIsSpeakerSelectionAvailable(isSpeakerSelectionAvailable: boolean): void;
+    // (undocumented)
+    setDeviceManagerMicrophones(microphones: AudioDeviceInfo[]): void;
+    // (undocumented)
+    setDeviceManagerSelectedCamera(selectedCamera?: VideoDeviceInfo): void;
+    // (undocumented)
+    setDeviceManagerSelectedMicrophone(selectedMicrophone?: AudioDeviceInfo): void;
+    // (undocumented)
+    setDeviceManagerSelectedSpeaker(selectedSpeaker?: AudioDeviceInfo): void;
+    // (undocumented)
+    setDeviceManagerSpeakers(speakers: AudioDeviceInfo[]): void;
+    // (undocumented)
+    setDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState, view: VideoStreamRendererViewState | undefined): void;
+    // (undocumented)
+    setDeviceManagerUnparentedViewVideoEffects(localVideoStream: LocalVideoStreamState, videoEffects: LocalVideoStreamVideoEffectsState): void;
+    // (undocumented)
+    setSession(session: MediaSessionState): void;
+    // (undocumented)
+    setSessionConnectedState(sessionId: string, isConnected: SessionStatus): void;
+    // (undocumented)
+    setSessionMuted(sessionId: string, isMuted: boolean): void;
+    // (undocumented)
+    withAsyncErrorTeedToState<Args extends unknown[], R>(action: (...args: Args) => Promise<R>, target: MediaErrorTarget): (...args: Args) => Promise<R>;
+}
+
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';
@@ -3834,6 +3925,48 @@ export interface MediaDiagnosticsState {
     // (undocumented)
     latest: LatestMediaDiagnostics;
 }
+
+// @alpha
+class MediaError_2 extends StatefulError<MediaErrorTarget> {
+    constructor(target: MediaErrorTarget, innerError: Error, timestamp?: Date);
+}
+export { MediaError_2 as MediaError }
+
+// @alpha (undocumented)
+export type MediaErrors = {
+    [target in MediaErrorTarget]: MediaError_2;
+};
+
+// @alpha (undocumented)
+export type MediaErrorTarget = 'MediaClient.createSessionAgent' | 'MediaClient.getDeviceManager' | 'MediaSessionAgent.joinSession' | 'MediaStreamSession.unmute' | 'MediaStreamSession.mute';
+
+// @alpha
+export const mediaSessionAgentDeclaratify: (mediaSessionAgent: MediaSessionAgent, context: MediaContext) => DeclarativeMediaSessionAgent;
+
+// @alpha (undocumented)
+export interface MediaSessionState {
+    // (undocumented)
+    deepNoiseSuppression: {
+        isEnabled: boolean;
+    };
+    // (undocumented)
+    id: string;
+    // (undocumented)
+    isIncomingAudioMuted: boolean;
+    // (undocumented)
+    isMuted: boolean;
+    // (undocumented)
+    localAudioStreams: LocalAudioStreamState[];
+    // (undocumented)
+    localVideoStreams: LocalVideoStreamState[];
+    // (undocumented)
+    remoteAudioStreams: RemoteAudioStreamState[];
+    // (undocumented)
+    state: SessionStatus;
+}
+
+// @alpha (undocumented)
+export const mediaStreamSessionDeclaratify: (mediaStreamSession: MediaStreamSession, context: MediaContext) => DeclarativeMediaStreamSession;
 
 // @public
 export interface MeetingConferencePhoneInfoModalStrings {
@@ -4705,6 +4838,10 @@ export interface RecordingCallFeature {
     lastStoppedRecording?: RecordingInfo[];
 }
 
+// @alpha (undocumented)
+export interface RemoteAudioStreamState {
+}
+
 // @beta
 export type RemoteDiagnosticState = {
     readonly diagnostic: RemoteDiagnosticType;
@@ -4930,6 +5067,12 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     textField?: IStyle;
     textFieldContainer?: IStyle;
 }
+
+// @internal
+export const _SESSION_PLACEHOLDER_ID = "placeholder-session-id";
+
+// @alpha (undocumented)
+export type SessionStatus = 'Connected' | 'Disconnected' | 'Connecting' | 'Idle';
 
 // @beta
 export type SitePermissionsStrings = {
@@ -5184,6 +5327,31 @@ export interface StatefulDeviceManager extends DeviceManager {
     getUnparentedVideoStreams: () => LocalVideoStream[];
     selectCamera: (device: VideoDeviceInfo) => void;
 }
+
+// @public
+export class StatefulError<T> extends Error {
+    constructor(target: T, innerError: Error, name: string, timestamp?: Date);
+    code?: number;
+    innerError: Error;
+    subCode?: number;
+    target: T;
+    timestamp: Date;
+}
+
+// @alpha (undocumented)
+export interface StatefulMediaClient extends MediaClient {
+    // (undocumented)
+    getState(): MediaClientState;
+    // (undocumented)
+    offStateChange(handler: (state: MediaClientState) => void): void;
+    // (undocumented)
+    onStateChange(handler: (state: MediaClientState) => void): void;
+}
+
+// @alpha
+export type StatefulMediaClientArgs = {
+    userId: CommunicationUserIdentifier;
+};
 
 // @public
 export interface StopCaptionsAdapterOptions {

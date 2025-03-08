@@ -3,7 +3,7 @@
 
 export { createStatefulCallClient } from './StatefulCallClient';
 export type { StatefulCallClient, StatefulCallClientArgs, StatefulCallClientOptions } from './StatefulCallClient';
-export type { StatefulDeviceManager } from './DeviceManagerDeclarative';
+export type { StatefulDeviceManager, IDeclarativeDeviceManagerContext } from './DeviceManagerDeclarative';
 export type {
   CallAgentState,
   CallClientState,
@@ -60,3 +60,11 @@ export type { BreakoutRoomsState } from './CallClientState';
 export type { MediaAccessState } from './CallClientState';
 /* @conditional-compile-remove(rtt) */
 export type { RealTimeTextInfo, RealTimeTextCallFeatureState } from './CallClientState';
+
+// TODO [jaburnsi]: Only export internal and public things
+export * from './MediaClient/MediaClientState';
+export * from './MediaClient/MediaClientContext';
+export * from './MediaClient/StatefulMediaClient';
+export * from './MediaClient/DeclarativeMediaAgent';
+export * from './MediaClient/DeclarativeSession';
+export { StatefulError } from './Error';

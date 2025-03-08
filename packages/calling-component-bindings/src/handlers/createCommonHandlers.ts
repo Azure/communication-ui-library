@@ -47,6 +47,7 @@ import { Reaction } from '@azure/communication-calling';
 import { _ComponentCallingHandlers } from './createHandlers';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
+import { MediaClient, MediaSessionAgent, MediaStreamSession } from '@skype/spool-sdk';
 /**
  * Object containing all the handlers required for calling components.
  *
@@ -217,6 +218,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     callClient: StatefulCallClient,
     deviceManager: StatefulDeviceManager | undefined,
     call: Call | TeamsCall | undefined,
+    mediaClient: MediaClient | undefined,
+    mediaSessionAgent: MediaSessionAgent | undefined,
+    mediaStreamSession: MediaStreamSession | undefined,
     options?: {
       onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
       onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
@@ -417,6 +421,18 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     const onToggleMicrophone = async (): Promise<void> => {
+      if (mediaClient && !callClient) {
+        if (mediaStreamSession) {
+          console.log(
+            'Invoking media stream session toggle microphone, current local audio streams length:',
+            mediaStreamSession.localAudioStreams.length
+          );
+          return mediaStreamSession.localAudioStreams.length > 0
+            ? mediaStreamSession.mute()
+            : mediaStreamSession.unmute();
+        }
+      }
+
       if (!call || !(_isInCall(call.state) || _isInLobbyOrConnecting(call.state))) {
         throw new Error(`Please invoke onToggleMicrophone after call is started`);
       }

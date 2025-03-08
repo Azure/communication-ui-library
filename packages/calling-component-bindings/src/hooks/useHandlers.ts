@@ -10,7 +10,10 @@ import {
   _isTeamsCallAgent
 } from '@internal/calling-stateful-client';
 import { createDefaultCallingHandlersForComponent } from '../handlers/createDefaultCallingHandlersForComponent';
-import { CallAgentContext, CallClientContext, CallContext, useDeviceManager } from '../providers';
+import { CallAgentContext, CallClientContext, CallContext, MediaStreamSessionContext } from '../providers';
+import { useDeviceManager } from './useDeviceManager';
+import { MediaClientContext } from '../providers/MediaClientProvider';
+import { MediaSessionAgentContext } from '../providers/MediaSessionAgentProvider';
 
 /**
  * Hook to obtain a handler for a specified component.
@@ -24,9 +27,13 @@ import { CallAgentContext, CallClientContext, CallContext, useDeviceManager } fr
 export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement | null) => {
   const callClient: StatefulCallClient = (useContext(CallClientContext) as any)?.callClient;
   const deviceManager = useDeviceManager();
-  const call = useContext(CallContext)?.call;
   const callAgent = useContext(CallAgentContext)?.callAgent;
-  if (!callClient) {
+  const call = useContext(CallContext)?.call;
+  const mediaClient = useContext(MediaClientContext)?.mediaClient;
+  const mediaSessionAgent = useContext(MediaSessionAgentContext)?.mediaSessionAgent;
+  const mediaStreamSession = useContext(MediaStreamSessionContext)?.session;
+
+  if (!callClient && !mediaClient) {
     return undefined;
   }
 
@@ -43,5 +50,14 @@ export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement |
     }
   }
 
-  return createDefaultCallingHandlersForComponent(callClient, callAgent, deviceManager, call, component);
+  return createDefaultCallingHandlersForComponent(
+    callClient,
+    callAgent,
+    deviceManager,
+    call,
+    mediaClient,
+    mediaSessionAgent,
+    mediaStreamSession,
+    component
+  );
 };
