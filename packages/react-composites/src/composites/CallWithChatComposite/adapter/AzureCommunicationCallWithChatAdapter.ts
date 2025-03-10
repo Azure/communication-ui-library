@@ -113,12 +113,21 @@ import { busyWait } from '../../common/utils';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
+/**
+ * For each time that we use the hook {@link useSelector} in the {@link CallWithChatComposite} we add another listener
+ * to the `stateChanged` event on the this adapter. This number is set in relation to the number of
+ * times that we are using the hook useSelector in the CallComposite.
+ *
+ * We will need to update this as the threshold is reached with more usages of useSelector.
+ */
+const MAX_EVENT_LISTENERS = 125;
+
 /** Context of Call with Chat, which is a centralized context for all state updates */
 class CallWithChatContext {
   private emitter = new EventEmitter();
   private state: CallWithChatAdapterState;
 
-  constructor(clientState: CallWithChatAdapterState, maxListeners = 50) {
+  constructor(clientState: CallWithChatAdapterState, maxListeners = MAX_EVENT_LISTENERS) {
     this.state = clientState;
     this.emitter.setMaxListeners(maxListeners);
   }
