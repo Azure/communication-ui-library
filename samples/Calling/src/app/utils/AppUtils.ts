@@ -26,9 +26,9 @@ export const fetchTokenResponse = async (): Promise<any> => {
 export const fetchPredictionKey = async (): Promise<any> => {
   const response = await fetch('predictionKey');
   if (response.ok) {
-    const responseAsJson = await response.json();
-    const predictionKey = responseAsJson.predictionKey;
-    if (predictionKey) {
+    const responseAsJson = await response.text();
+
+    if (responseAsJson) {
       return responseAsJson;
     }
   }
@@ -36,17 +36,10 @@ export const fetchPredictionKey = async (): Promise<any> => {
 };
 
 export const fetchCustomVisionKey = async (): Promise<any> => {
-  const requestOptions = {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  };
-  const response = await fetch('customVisionKey', requestOptions);
+  const response = await fetch('customVisionKey');
   if (response.ok) {
-    const responseAsJson = await response.json();
-    const customVisionKey = responseAsJson.customVisionKey;
-    if (customVisionKey) {
+    const responseAsJson = await response.text();
+    if (responseAsJson) {
       return responseAsJson;
     }
   }
