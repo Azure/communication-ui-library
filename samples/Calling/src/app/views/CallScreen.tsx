@@ -33,6 +33,8 @@ export interface CallScreenProps {
   displayName: string;
   alternateCallerId?: string;
   isTeamsIdentityCall?: boolean;
+  predictionKey?: string;
+  customVisionKey?: string;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
@@ -191,7 +193,7 @@ const TeamsCallScreen = (props: TeamsCallScreenProps): JSX.Element => {
     };
   }, [adapter]);
 
-  useFrameAnalyzer(adapter, videoRef, canvasRef);
+  useFrameAnalyzer(adapter, videoRef, canvasRef, props);
 
   return (
     <div style={{ height: '100%' }}>
@@ -302,7 +304,7 @@ const AzureCommunicationCallScreen = (props: AzureCommunicationCallScreenProps):
     };
   }, [adapter]);
 
-  useFrameAnalyzer(adapter, videoRef, canvasRef);
+  useFrameAnalyzer(adapter, videoRef, canvasRef, props);
 
   return (
     <div style={{ height: '100%' }}>
@@ -373,15 +375,16 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
 const useFrameAnalyzer = (
   adapter: CommonCallAdapter | undefined,
   videoRef: React.RefObject<HTMLVideoElement>,
-  canvasRef: React.RefObject<HTMLCanvasElement>
+  canvasRef: React.RefObject<HTMLCanvasElement>,
+  props: CallScreenProps
 ) => {
   useEffect(() => {
     let animationFrameId: number;
     async function analyzeFrame() {
       const imageUrl = await captureFrame();
       if (imageUrl && imageUrl.length > 10) {
-        console.log('image url - ', imageBase64ToBlob(imageUrl));
-        if (Date.now() % 5000 < 100) {
+        //console.log('image url - ', imageBase64ToBlob(imageUrl));
+        if (Date.now() % 3000 < 100) {
           await detectHandGestures(imageUrl);
         }
       }
@@ -410,14 +413,11 @@ const useFrameAnalyzer = (
     return null;
   }
   async function detectHandGestures(imageBase64: string) {
-    const CUSTOM_VISION_ENDPOINT = 'CUSTOM_VISION_ENDPOINT';
-    const CUSTOM_VISION_KEY = 'CUSTOM_VISION_KEY';
-    const PREDICTION_KEY = 'PREDICTION_KEY';
-    const PROJECT_ID = 'PROJECT_ID';
-    const MODEL_NAME = 'MODEL_NAME';
+    const CUSTOM_VISION_KEY = props.customVisionKey || '';
+    const PREDICTION_KEY = props.predictionKey || '';
 
     const response = await fetch(
-      `${CUSTOM_VISION_ENDPOINT}/customvision/v3.0/Prediction/${PROJECT_ID}/detect/iterations/${MODEL_NAME}/image`,
+      `https://azureaiinsravan.cognitiveservices.azure.com/customvision/v3.0/Prediction/daaea539-0d1a-456b-a0fc-31e121039d56/detect/iterations/Iteration6/image`,
       {
         method: 'POST',
         headers: {
@@ -448,7 +448,7 @@ const useFrameAnalyzer = (
     console.log(`✋ Detected Gesture: ${topGesture.tagName} (${(topGesture.probability * 100).toFixed(2)}%)`);
 
     // Define thresholds for triggering actions
-    if (topGesture.probability > 0.5) {
+    if (topGesture.probability > 0.7) {
       switch (topGesture.tagName) {
         case 'Stop':
           //sendRealTimeAlert("🛑 'Stop' gesture detected! Action required.");
@@ -461,11 +461,8 @@ const useFrameAnalyzer = (
           adapter?.onReactionClick('like');
           console.log('👍 Positive gesture detected. No alert needed.');
           break;
-        case 'Pointing':
-          console.log('👉 Pointing gesture detected.');
-          break;
-        case 'happy':
-          //adapter?.onReactionClick('laugh');
+        case 'clap':
+          adapter?.onReactionClick('applause');
           break;
         case 'love':
           adapter?.onReactionClick('heart');

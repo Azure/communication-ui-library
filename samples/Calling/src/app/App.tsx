@@ -15,6 +15,8 @@ import {
   commitID,
   communicationReactSDKVersion,
   createGroupId,
+  fetchCustomVisionKey,
+  fetchPredictionKey,
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
@@ -53,14 +55,21 @@ const App = (): JSX.Element => {
   const [displayName, setDisplayName] = useState<string>('');
   const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
   const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
-
+  const [predictionKey, setPredictionKey] = useState<string>(''); // This is used to set the alternate caller id for PSTN calls>
+  const [customVisionKey, setCustomVisionKey] = useState<string>('');
   // Get Azure Communications Service token from the server
   useEffect(() => {
     (async () => {
       try {
-        const { token, user } = await fetchTokenResponse();
+        const [{ token, user }, predictionKey, customVisionKey] = await Promise.all([
+          fetchTokenResponse(),
+          fetchPredictionKey(),
+          fetchCustomVisionKey()
+        ]);
         setToken(token);
         setUserId(user);
+        setPredictionKey(predictionKey);
+        setCustomVisionKey(customVisionKey);
       } catch (e) {
         console.error(e);
         setUserCredentialFetchError(true);
@@ -197,6 +206,8 @@ const App = (): JSX.Element => {
           targetCallees={targetCallees}
           alternateCallerId={alternateCallerId}
           isTeamsIdentityCall={isTeamsCall}
+          predictionKey={predictionKey}
+          customVisionKey={customVisionKey}
         />
       );
     }

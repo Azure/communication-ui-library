@@ -9,13 +9,17 @@ let appSettings: {
   EndpointUrl: string;
   AdminUserId: string;
   AzureBlobStorageConnectionString: string;
+  PredictionKey: string;
+  CustomVisionKey: string;
 };
 if (
   !(
     process.env['ResourceConnectionString'] ||
     process.env['EndpointUrl'] ||
     process.env['AdminUserId'] ||
-    process.env['AzureBlobStorageConnectionString']
+    process.env['AzureBlobStorageConnectionString'] ||
+    process.env['PredictionKey'] ||
+    process.env['CustomVisionKey']
   )
 ) {
   if (!fs.existsSync(appSettingsPath)) {
@@ -40,6 +44,26 @@ export const getResourceConnectionString = (): string => {
 export const getEndpoint = (): string => {
   const uri = new URL(process.env['EndpointUrl'] || appSettings.EndpointUrl);
   return `${uri.protocol}//${uri.host}`;
+};
+
+export const getPredictionKey = (): string => {
+  const predictionKey = process.env['PredictionKey'] || appSettings.PredictionKey;
+
+  if (!predictionKey) {
+    throw new Error('No ACS Prediction Key provided');
+  }
+
+  return predictionKey;
+};
+
+export const getCustomVisionKey = (): string => {
+  const customVisionKey = process.env['CustomVisionKey'] || appSettings.CustomVisionKey;
+
+  if (!customVisionKey) {
+    throw new Error('No ACS Custom Vision Key provided');
+  }
+
+  return customVisionKey;
 };
 
 export const getAdminUserId = (): string => {

@@ -16,6 +16,8 @@ import addUser from './routes/addUser';
 import createRoom from './routes/createRoom';
 import addUserToRoom from './routes/addUserToRoom';
 import uploadToAzureBlobStorage from './routes/uploadToAzureBlobStorage';
+import getPredictionKey from './routes/getPredictionKey';
+import getCustomVisionKey from './routes/getCustomVisionKey';
 
 const app = express();
 
@@ -77,6 +79,10 @@ app.use('/addUserToRoom', cors(), addUserToRoom);
  * purpose: Get tokens and endpoints for uploading logs to Azure Blob Storage
  */
 app.use('/uploadToAzureBlobStorage', cors(), uploadToAzureBlobStorage);
+
+app.use('/predictionKey', cors(), getPredictionKey);
+
+app.use('/customVisionKey', cors(), getCustomVisionKey);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

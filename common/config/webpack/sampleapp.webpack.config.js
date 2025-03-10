@@ -128,6 +128,14 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         {
           path: '/uploadToAzureBlobStorage',
           target: 'http://[::1]:8080'
+        },
+        {
+          path: '/customVisionKey',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/predictionKey',
+          target: 'http://[::1]:8080'
         }
       ]
     }

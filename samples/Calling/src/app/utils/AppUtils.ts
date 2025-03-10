@@ -14,13 +14,43 @@ import { v1 as generateGUID } from 'uuid';
 export const fetchTokenResponse = async (): Promise<any> => {
   const response = await fetch('token?scope=voip');
   if (response.ok) {
-    const responseAsJson = await response.json(); //(await response.json())?.value?.token;
+    const responseAsJson = await response.json();
     const token = responseAsJson.token;
     if (token) {
       return responseAsJson;
     }
   }
   throw new Error('Invalid token response');
+};
+
+export const fetchPredictionKey = async (): Promise<any> => {
+  const response = await fetch('predictionKey');
+  if (response.ok) {
+    const responseAsJson = await response.json();
+    const predictionKey = responseAsJson.predictionKey;
+    if (predictionKey) {
+      return responseAsJson;
+    }
+  }
+  throw new Error('Invalid prediction key response');
+};
+
+export const fetchCustomVisionKey = async (): Promise<any> => {
+  const requestOptions = {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  };
+  const response = await fetch('customVisionKey', requestOptions);
+  if (response.ok) {
+    const responseAsJson = await response.json();
+    const customVisionKey = responseAsJson.customVisionKey;
+    if (customVisionKey) {
+      return responseAsJson;
+    }
+  }
+  throw new Error('Invalid custom vision key response');
 };
 
 /**
