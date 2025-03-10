@@ -76,6 +76,8 @@ describe('ChatComposite', () => {
       locale: COMPOSITE_LOCALE_ZH_TW,
       rtl: true,
       onFetchAvatarPersonaData: jest.fn(),
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      onRenderAvatar: jest.fn(),
       options: {
         richTextEditor: true
       }
@@ -95,6 +97,8 @@ describe('ChatComposite', () => {
       locale: COMPOSITE_LOCALE_ZH_TW,
       rtl: true,
       onFetchAvatarPersonaData: jest.fn(),
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      onRenderAvatar: jest.fn(),
       options: {
         richTextEditor: false
       }
@@ -146,6 +150,8 @@ describe('ChatComposite - text only mode', () => {
       locale: COMPOSITE_LOCALE_ZH_TW,
       rtl: true,
       onFetchAvatarPersonaData: jest.fn(),
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      onRenderAvatar: jest.fn(),
       options: {
         richTextEditor: richTextEditor,
         attachmentOptions: {

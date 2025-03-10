@@ -70,7 +70,9 @@ module.exports = {
     // Feature for RTT
     "rtt",
     // Feature for together mode
-    "together-mode"
+    "together-mode",
+    // Feature for exposing the onRenderAvatar API into the composites
+    "composite-onRenderAvatar-API"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
