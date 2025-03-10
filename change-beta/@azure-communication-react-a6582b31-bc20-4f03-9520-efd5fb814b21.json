@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "CallAdapter",
-  "comment": "Update the Max number of event listeners on a event in the CallAdapter",
+  "workstream": "Bugs",
+  "comment": "update the max number of listeners that the CallWIthChat adapter has",
   "packageName": "@azure/communication-react",
   "email": "dmceachern@microsoft.com",
   "dependentChangeType": "patch"

@@ -278,6 +278,8 @@ export interface CallAdapter extends CommonCallAdapter {
 // @public
 export type CallAdapterCallEndedEvent = {
     callId: string;
+    code?: number;
+    subCode?: number;
 };
 
 // @public @deprecated
@@ -899,7 +901,9 @@ export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 // @public
 export class CallError extends Error {
     constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
+    code?: number;
     innerError: Error;
+    subCode?: number;
     target: CallErrorTarget;
     timestamp: Date;
 }
@@ -948,7 +952,7 @@ export type CallingHandlersOptions = {
 };
 
 // @public
-export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
+export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends ((state: CallClientState, props: any) => any) ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
 
 // @public
 export type CallingSounds = {
@@ -1953,7 +1957,7 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 };
 
 // @public
-export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
+export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends ((state: ChatClientState, props: any) => any) ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;

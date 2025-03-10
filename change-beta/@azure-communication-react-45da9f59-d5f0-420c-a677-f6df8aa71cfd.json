@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "fix",
+  "area": "improvement",
   "workstream": "",
-  "comment": "Resolve issue where toolbar was not focused when opening formatting options for rich text",
+  "comment": "Port saving display name to local storage from CallwithChat Sample to Chat Sample",
   "packageName": "@azure/communication-react",
   "email": "palatter@microsoft.com",
   "dependentChangeType": "patch"

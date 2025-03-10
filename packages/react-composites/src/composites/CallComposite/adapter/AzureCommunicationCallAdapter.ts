@@ -312,7 +312,18 @@ class CallContext {
       /* @conditional-compile-remove(unsupported-browser) */ environmentInfo
     );
     if (!IsCallEndedPage(oldPage) && IsCallEndedPage(newPage)) {
-      this.emitter.emit('callEnded', { callId: this.callId });
+      /**
+       * We want to make sure that the id of the call that is ending
+       * is the same as the call in the adapter as this is a scenario where
+       * the call has ended and not been transferred and report the codes for this call.
+       */
+      if (this.callId === latestEndedCall?.id) {
+        this.emitter.emit('callEnded', {
+          callId: latestEndedCall?.id,
+          code: latestEndedCall?.callEndReason?.code,
+          subCode: latestEndedCall?.callEndReason?.subCode
+        });
+      }
       // Reset the callId to undefined as the call has ended.
       this.setCurrentCallId(undefined);
       // Make sure that the call is set to undefined in the state.

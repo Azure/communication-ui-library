@@ -1,8 +1,8 @@
 {
-  "type": "patch",
+  "type": "minor",
   "area": "fix",
-  "workstream": "A11y",
-  "comment": "Update aria-level for heading on the config screen",
+  "workstream": "Error handling",
+  "comment": "Add code and subcode to calling errors to help with debugging",
   "packageName": "@azure/communication-react",
   "email": "dmceachern@microsoft.com",
   "dependentChangeType": "patch"
