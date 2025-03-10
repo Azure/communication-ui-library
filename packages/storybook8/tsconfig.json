@@ -2,6 +2,15 @@
   "baseUrl": ".",
   "extends": "../../common/config/tsc/tsconfig.json",
   "compilerOptions": {
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "rootDir": "./",
     "outDir": "./dist",
     "paths": {
       "@azure/communication-react": ["../communication-react/src"],
@@ -16,6 +25,6 @@
     }
   },
   "typeRoots": ["./node_modules/@types"],
-  "include": ["stories/**/*"],
+  "include": ["stories/**/*","src", "test"],
   "exclude": ["dist", "node_modules"]
 }
