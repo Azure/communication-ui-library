@@ -1,0 +1,69 @@
+import { AccessibilityProvider } from '@azure/communication-react';
+import { Canvas, Meta, ArgTypes } from '@storybook/blocks';
+import * as AccessibilityStories from './index.stories';
+
+<Meta of={AccessibilityStories} />
+
+# AccessibilityProvider
+
+The AccessibilityProvider component is used to provide accessibility features to the components within its context. It allows you to customize the accessibility behavior of the components in your application.
+It is important to note that the AccessibilityProvider component should be used at the root of your application or at a higher level in the component tree to ensure that all child components can access the accessibility features.
+
+<Canvas of={AccessibilityStories.AccessibilityProvider} />
+
+With the usage of the accessibility you can make your code cleaner when working with Accessibility by no needing to pass around a
+reference from one component to another by sending it up and down the component tree through props. When you use the AccessibilityProvider
+you can set the reference in the component that opens any transient UI and then call focus back to the control that opened it when it is closed.
+
+## Usage
+
+To use the provider you need to make sure that your application is wrapped in the AccessibilityProvider component. This can be done by wrapping your application in the provider in your main entry file or at a higher level in your component tree.
+
+```tsx
+import { AccessibilityProvider } from '@azure/communication-react';
+import { App } from './App';
+
+const Main = () => (
+  <AccessibilityProvider>
+    <App />
+  </AccessibilityProvider>
+);
+```
+
+One you have this setup you can access the provider and set the reference on the control by doing the following
+
+```tsx
+import { useAccessibility } from '@azure/communication-react';
+
+const yourButton = () => {
+  const { accessibility } = useAccessibility();
+  const buttonRef = React.useRef<HTMLButtonElement>(null);
+  return <button ref={buttonRef}>Click me</button>;
+};
+```
+
+Then in your transient UI do the following with the controls that close this UI.
+
+```tsx
+import { useAccessibility } from '@azure/communication-react';
+
+const yourSidePanel = (): JSX.ELement => {
+  const accessibility = useAccessibility();
+  return (
+    <Stack>
+      <button
+        onClick={() => {
+          // your functionality for closing your side panel
+          accessibility?.componentRef?.current.focus();
+        }}
+      >
+        Close
+      </button>
+    </Stack>
+  );
+};
+```
+
+This will cause the focus of your application when using the keyboard to return to the control that opened your side pane.
+
+<ArgTypes of={AccessibilityProvider} />
