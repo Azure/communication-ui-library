@@ -262,8 +262,7 @@ export const useChatMessageStyles = makeStyles({
     minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
     marginRight: '0rem',
     paddingBottom: '10px',
-    // Ensure the focus border around the message bubble doesn't overlap on top of more options button
-    zIndex: 2,
+    zIndex: CHAT_MESSAGE_ZINDEX,
     // This makes message bubble show border in high contrast mode making each message distinguishable
     ...shorthands.border('1px', 'solid', 'transparent'),
     '& > div:first-of-type': {
