@@ -8,7 +8,7 @@ import { StreamMedia } from '../StreamMedia';
 import { VideoTile } from '../VideoTile';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '../../types';
 import { ReactionResources, VideoGalleryLocalParticipant, VideoGalleryRemoteParticipant } from '../../types';
-import { loadingStyle } from './styles/RemoteScreenShare.styles';
+import { loadingLabelStyles, loadingStyle } from './styles/RemoteScreenShare.styles';
 import { _formatString } from '@internal/acs-ui-common';
 import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
 
@@ -110,7 +110,12 @@ export const RemoteScreenShare = React.memo(
 export const LoadingSpinner = (props: { loadingMessage: string }): JSX.Element => {
   return (
     <Stack verticalAlign="center" className={loadingStyle}>
-      <Spinner label={props.loadingMessage} size={SpinnerSize.xSmall} aria-live={'assertive'} />
+      <Spinner
+        styles={loadingLabelStyles}
+        label={props.loadingMessage}
+        size={SpinnerSize.xSmall}
+        aria-live={'assertive'}
+      />
     </Stack>
   );
 };
