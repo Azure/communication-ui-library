@@ -314,6 +314,13 @@ export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeat
   }
   /* @conditional-compile-remove(calling-beta-sdk) */
   public remote = {
+    isSendingDiagnosticsEnabled: true,
+    startSendingDiagnostics(): void {
+      /* Stub to appease types */
+    },
+    stopSendingDiagnostics(): void {
+      /* Stub to appease types */
+    },
     getLatest(): RemoteParticipantDiagnosticsData {
       return { diagnostics: [] };
     },
