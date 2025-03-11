@@ -955,7 +955,7 @@ export type CallingHandlersOptions = {
 };
 
 // @public
-export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
+export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends ((state: CallClientState, props: any) => any) ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
 
 // @public
 export type CallingSounds = {
@@ -1963,7 +1963,7 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 };
 
 // @public
-export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
+export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends ((state: ChatClientState, props: any) => any) ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
