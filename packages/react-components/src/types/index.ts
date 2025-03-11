@@ -17,3 +17,4 @@ export * from './ReactionTypes';
 export * from './Attachment';
 /* @conditional-compile-remove(together-mode) */
 export * from './TogetherModeTypes';
+export * from './TranscriptionTypes';

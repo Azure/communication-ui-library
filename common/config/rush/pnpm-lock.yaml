@@ -145,6 +145,25 @@ packages:
       tslib: 2.8.1
     dev: false
 
+  /@azure/communication-call-automation@1.4.0-beta.1:
+    resolution: {integrity: sha512-OvE05dq0Jd+vZX6u8K+HBi4kgFy2aNXNoRijfB5FZGT4GMEFaVZDJbz/lqaB7R82CrRL6goiMp196DBN04z9vQ==}
+    engines: {node: '>=18.0.0'}
+    dependencies:
+      '@azure/abort-controller': 2.1.2
+      '@azure/communication-common': 2.3.1
+      '@azure/core-auth': 1.9.0
+      '@azure/core-client': 1.9.2
+      '@azure/core-paging': 1.6.2
+      '@azure/core-rest-pipeline': 1.18.2
+      '@azure/core-tracing': 1.2.0
+      '@azure/core-util': 1.11.0
+      '@azure/logger': 1.1.4
+      events: 3.3.0
+      tslib: 2.8.1
+    transitivePeerDependencies:
+      - supports-color
+    dev: false
+
   /@azure/communication-calling-effects@1.1.2:
     resolution: {integrity: sha512-1BNh/zja7+NYgFdfxmdXq+GospZmzKdZtfP/Q8XhSP9AjKIKdm7VvZdaDdswANEuRMUXGjPhRnHr24KkdJhl9A==}
     dependencies:
@@ -19828,10 +19847,11 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-+Vdr1eIySESE7B8RdVnvYKRmTyzQGgjQt501U0G8GWSAwO69pkvjcM1d7vL3pS3ufbJQ220doFb/po43EAu0Mg==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-6eEzIBXn2YNUvaF6zmv61peeYkNNVyf7/fi1Nffzz33mnJfjaxJRwHVrH2eNPYLA7Rj16JFeL3bNNPls6JXRdw==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
+      '@azure/communication-call-automation': 1.4.0-beta.1
       '@azure/communication-chat': 1.6.0-beta.3
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
@@ -19848,6 +19868,7 @@ packages:
       '@types/node': 22.10.10
       '@types/supertest': 2.0.16
       '@types/webpack-node-externals': 3.0.4(webpack-cli@5.1.4)
+      '@types/ws': 8.5.14
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
       '@typescript-eslint/parser': 7.18.0(eslint@8.57.1)(typescript@5.4.5)
       copy-webpack-plugin: 11.0.0(webpack@5.95.0)
@@ -19882,6 +19903,7 @@ packages:
       webpack: 5.95.0(webpack-cli@5.1.4)
       webpack-cli: 5.1.4(webpack-bundle-analyzer@4.10.2)(webpack@5.95.0)
       webpack-node-externals: 3.0.0
+      ws: 8.18.0
     transitivePeerDependencies:
       - '@babel/core'
       - '@babel/plugin-syntax-flow'
@@ -19894,11 +19916,13 @@ packages:
       - '@webpack-cli/generators'
       - babel-jest
       - babel-plugin-macros
+      - bufferutil
       - encoding
       - esbuild
       - node-notifier
       - supports-color
       - uglify-js
+      - utf-8-validate
       - webpack-bundle-analyzer
       - webpack-dev-server
     dev: false

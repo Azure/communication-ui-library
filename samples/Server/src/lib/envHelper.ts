@@ -4,12 +4,19 @@
 import * as fs from 'fs';
 import * as path from 'path';
 const appSettingsPath = path.join(__dirname, '../../appsettings.json');
-let appSettings: {
+
+type serverConfig = {
   ResourceConnectionString: string;
   EndpointUrl: string;
   AdminUserId: string;
   AzureBlobStorageConnectionString: string;
+  ServerHttpUrl: string;
+  ServerWebSocketPort: string;
+  ServerWebSocketUrl: string;
+  CallAutomationCallbackUrl: string;
 };
+
+let appSettings: serverConfig;
 if (
   !(
     process.env['ResourceConnectionString'] ||
@@ -66,3 +73,17 @@ export const getAzureBlobStorageConnectionString = (): string => {
 
   return accountName;
 };
+
+const throwIfUnset = (envVar: string): string => {
+  const value = process.env[envVar] || appSettings[envVar as keyof serverConfig];
+  if (!value) {
+    throw new Error(`No ${envVar} provided`);
+  }
+  return value;
+};
+
+export const getServerHttpUrl = (): string => throwIfUnset('ServerHttpUrl');
+export const getServerWebSocketPort = (): number => Number(throwIfUnset('ServerWebSocketPort'));
+export const getServerWebSocketUrl = (): string => throwIfUnset('ServerWebSocketUrl');
+export const getCallAutomationCallbackUrl = (): string => getServerHttpUrl() + '/api/callAutomationEvent';
+export const getCognitionAPIEndpoint = (): string => throwIfUnset('CognitionAPIEndpoint');
