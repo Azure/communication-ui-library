@@ -205,6 +205,7 @@ export const useChatMyMessageStyles = makeStyles({
     top: '-19px',
     right: '0',
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
+    // Ensure the focus border around the message bubble doesn't overlap on top of more options button
     zIndex: 2,
     lineHeight: tokens.lineHeightBase100,
     visibility: 'hidden',
