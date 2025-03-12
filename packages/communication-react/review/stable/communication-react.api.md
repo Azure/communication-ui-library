@@ -611,6 +611,7 @@ export type CallCompositeOptions = {
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+        localScreenShareView?: 'stream' | 'placeholderMessage';
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -635,7 +636,6 @@ export type CallCompositeOptions = {
     joinCallOptions?: {
         microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
     };
-    hideLocalScreenShareStream?: boolean;
 };
 
 // @public
@@ -1390,6 +1390,7 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+        localScreenShareView?: 'stream' | 'placeholderMessage';
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -1414,7 +1415,6 @@ export type CallWithChatCompositeOptions = {
     joinCallOptions?: {
         microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
     };
-    hideLocalScreenShareStream?: boolean;
 };
 
 // @public
@@ -4787,9 +4787,9 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
-    hideLocalScreenShareStream?: boolean;
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
+    localScreenShareView?: 'stream' | 'placeholderMessage';
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;

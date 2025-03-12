@@ -388,10 +388,9 @@ export interface VideoGalleryProps {
    */
   onPermitVideo?: (userIds: string[]) => Promise<void>;
   /**
-   * Whether to hide the local screen share stream
-   * @defaultValue false
+   * Controls the view of the local screenshare stream in the gallery
    */
-  hideLocalScreenShareStream?: boolean;
+  localScreenShareView?: 'stream' | 'placeholderMessage';
 }
 
 /**
@@ -497,7 +496,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onPermitAudio,
     onForbidVideo,
     onPermitVideo,
-    hideLocalScreenShareStream
+    localScreenShareView
   } = props;
 
   const ids = useIdentifiers();
@@ -792,7 +791,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       isAvailable={localParticipant.screenShareStream?.isAvailable}
       onCreateLocalStreamView={onCreateLocalStreamView}
       onDisposeLocalScreenShareStreamView={onDisposeLocalScreenShareStreamView}
-      hideLocalScreenShareStream={hideLocalScreenShareStream}
+      localScreenShareView={localScreenShareView}
     />
   );
 

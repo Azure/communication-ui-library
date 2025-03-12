@@ -262,6 +262,10 @@ export type CallCompositeOptions = {
      * Layout for the gallery when the call starts
      */
     layout?: VideoGalleryLayout;
+    /**
+     * Controls the view of the local screenshare stream in the gallery
+     */
+    localScreenShareView?: 'stream' | 'placeholderMessage';
   };
   /**
    * Options for end of call survey
@@ -361,11 +365,6 @@ export type CallCompositeOptions = {
      */
     microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
   };
-  /**
-   * Options for hiding the local screen share stream
-   * @defaultValue false
-   */
-  hideLocalScreenShareStream?: boolean;
 };
 
 type MainScreenProps = {

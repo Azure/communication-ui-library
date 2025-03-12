@@ -185,6 +185,10 @@ export type CallWithChatCompositeOptions = {
      * Layout for the gallery when the call starts
      */
     layout?: VideoGalleryLayout;
+    /**
+     * Controls the view of the local screenshare stream in the gallery
+     */
+    localScreenShareView?: 'stream' | 'placeholderMessage';
   };
   /**
    * Options for end of call survey
@@ -293,11 +297,6 @@ export type CallWithChatCompositeOptions = {
      */
     microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
   };
-  /**
-   * Options for hiding the local screen share stream
-   * @defaultValue false
-   */
-  hideLocalScreenShareStream?: boolean;
 };
 
 type CallWithChatScreenProps = {
@@ -326,6 +325,7 @@ type CallWithChatScreenProps = {
   localVideoTile?: boolean | LocalVideoTileOptions;
   galleryOptions?: {
     layout?: VideoGalleryLayout;
+    localScreenShareView?: 'stream' | 'placeholderMessage';
   };
   /**
    * Options for end of call survey
@@ -389,11 +389,6 @@ type CallWithChatScreenProps = {
      */
     microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
   };
-  /**
-   * Options for hiding the local screen share stream
-   * @defaultValue false
-   */
-  hideLocalScreenShareStream?: boolean;
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -574,8 +569,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         backgroundImage: props.backgroundImage
       },
       spotlight: props.spotlight,
-      joinCallOptions: props.joinCallOptions,
-      hideLocalScreenShareStream: props.hideLocalScreenShareStream
+      joinCallOptions: props.joinCallOptions
     }),
     [
       props.callControls,
@@ -598,8 +592,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       props.logo,
       props.backgroundImage,
       props.spotlight,
-      props.joinCallOptions,
-      props.hideLocalScreenShareStream
+      props.joinCallOptions
     ]
   );
 
@@ -772,7 +765,6 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         /* @conditional-compile-remove(rich-text-editor-composite-support) */
         richTextEditor={options?.richTextEditor}
         joinCallOptions={options?.joinCallOptions}
-        hideLocalScreenShareStream={options?.hideLocalScreenShareStream}
       />
     </BaseProvider>
   );

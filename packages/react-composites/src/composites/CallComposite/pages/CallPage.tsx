@@ -200,7 +200,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           hideSpotlightButtons={options?.spotlight?.hideSpotlightButtons}
           videoTilesOptions={options?.videoTilesOptions}
           captionsOptions={options?.captionsBanner}
-          hideLocalScreenShareStream={options?.hideLocalScreenShareStream}
+          localScreenShareView={options?.galleryOptions?.localScreenShareView}
         />
       );
     }

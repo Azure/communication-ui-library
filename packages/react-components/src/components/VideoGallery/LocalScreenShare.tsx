@@ -30,7 +30,7 @@ export const LocalScreenShare = React.memo(
     isAvailable?: boolean;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalScreenShareStreamView?: () => Promise<void>;
-    hideLocalScreenShareStream?: boolean;
+    localScreenShareView?: 'stream' | 'placeholderMessage';
   }) => {
     const {
       localParticipant,
@@ -38,11 +38,11 @@ export const LocalScreenShare = React.memo(
       isAvailable,
       onCreateLocalStreamView,
       onDisposeLocalScreenShareStreamView,
-      hideLocalScreenShareStream
+      localScreenShareView = 'stream'
     } = props;
     const locale = useLocale();
     const theme = useTheme();
-    if (!renderElement) {
+    if (!renderElement && localScreenShareView === 'stream') {
       onCreateLocalStreamView && onCreateLocalStreamView();
     }
 
@@ -56,7 +56,7 @@ export const LocalScreenShare = React.memo(
     if (!localParticipant || !localParticipant.isScreenSharingOn) {
       return null;
     }
-    const localScreenSharingNotification = (
+    const localScreenSharingPlaceholder = (
       <Stack horizontalAlign="center" verticalAlign="center" className={screenSharingContainerStyle}>
         <Stack
           horizontalAlign="center"
@@ -80,10 +80,10 @@ export const LocalScreenShare = React.memo(
 
     const loadingMessage = locale.strings.videoGallery.localScreenShareLoadingMessage;
 
-    if (hideLocalScreenShareStream) {
+    if (localScreenShareView === 'placeholderMessage') {
       return (
         <VideoTile displayName={displayName} isMuted={localParticipant?.isMuted} onRenderPlaceholder={() => <></>}>
-          {localScreenSharingNotification}
+          {localScreenSharingPlaceholder}
         </VideoTile>
       );
     }
