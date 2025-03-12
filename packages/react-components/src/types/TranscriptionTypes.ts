@@ -44,5 +44,5 @@ export type TranscriptionPaneParticipant = {
   /**
    * The display name of the participant.
    */
-  displayName: string;
+  displayName?: string;
 };
