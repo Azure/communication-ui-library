@@ -85,5 +85,5 @@ const throwIfUnset = (envVar: string): string => {
 export const getServerHttpUrl = (): string => throwIfUnset('ServerHttpUrl');
 export const getServerWebSocketPort = (): number => Number(throwIfUnset('ServerWebSocketPort'));
 export const getServerWebSocketUrl = (): string => throwIfUnset('ServerWebSocketUrl');
-export const getCallAutomationCallbackUrl = (): string => getServerHttpUrl() + '/api/callAutomationEvent';
+export const getCallAutomationCallbackUrl = (): string => getServerHttpUrl() + '/callAutomationEvent';
 export const getCognitionAPIEndpoint = (): string => throwIfUnset('CognitionAPIEndpoint');

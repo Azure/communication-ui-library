@@ -411,6 +411,14 @@ export type {
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 export type { MessagingPolicy } from '../../chat-stateful-client/src';
 
+export { TranscriptionPane } from '../../react-components/src';
+export type { TranscriptionPaneProps } from '../../react-components/src';
+export type {
+  TranscriptionSentence,
+  TranscriptionPaneParticipant,
+  CallTranscription
+} from '../../react-components/src';
+
 export type { ResourceFetchResult } from '../../chat-stateful-client/src';
 export * from '../../react-composites/src/index-public';
 export * from './mergedHooks';

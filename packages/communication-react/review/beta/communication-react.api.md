@@ -1266,6 +1266,9 @@ export interface CallSurveyImprovementSuggestions {
     videoRating?: string;
 }
 
+// @beta
+export type CallTranscription = Array<TranscriptionSentence>;
+
 // @public
 export interface CallWithChatAdapter extends CallWithChatAdapterManagement, AdapterState<CallWithChatAdapterState>, Disposable_2, CallWithChatAdapterSubscriptions {
 }
@@ -5387,6 +5390,29 @@ export interface TopicUpdatedSystemMessage extends SystemMessageCommon {
 export interface TranscriptionCallFeature {
     isTranscriptionActive: boolean;
 }
+
+// @beta
+export const TranscriptionPane: (props: TranscriptionPaneProps) => JSX.Element;
+
+// @beta
+export type TranscriptionPaneParticipant = {
+    id: string;
+    displayName: string;
+};
+
+// @beta
+export type TranscriptionPaneProps = {
+    transcript: TranscriptionSentence[];
+    participants?: TranscriptionPaneParticipant[];
+};
+
+// @beta
+export type TranscriptionSentence = {
+    text: string;
+    confidence: number;
+    participantId: string;
+    resultState: 'intermediate' | 'final';
+};
 
 // @public
 export type TransferAcceptedListener = (event: TransferEventArgs) => void;

@@ -11,6 +11,7 @@ interface connectToRoomsCallRequest {
 
 router.post('/', async function (req, res, next) {
   const { serverCallId }: connectToRoomsCallRequest = req.body;
+
   console.log('Connecting to call:', serverCallId);
   try {
     await connectRoomsCall(serverCallId);

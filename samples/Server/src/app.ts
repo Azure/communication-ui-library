@@ -18,11 +18,12 @@ import createRoom from './routes/createRoom';
 import addUserToRoom from './routes/addUserToRoom';
 import uploadToAzureBlobStorage from './routes/uploadToAzureBlobStorage';
 import { getServerWebSocketPort } from './lib/envHelper';
-import { connectRoomsCall, handleTranscriptionEvent, startTranscriptionForCall } from './lib/callAutomationUtils';
+import { handleTranscriptionEvent } from './lib/callAutomationUtils';
 import startTranscription from './routes/startTranscription';
 import fetchTranscript from './routes/fetchTranscript';
 import startCallWithTranscription from './routes/startCallWithTranscription';
 import callAutomationEvent from './routes/callAutomationEvent';
+import connectRoomsCall from './routes/connectToRoomsCall';
 
 const app = express();
 

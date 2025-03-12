@@ -54,6 +54,8 @@ const App = (): JSX.Element => {
   const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
   const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
 
+  const [enableTranscription, setEnableTranscription] = useState<boolean>(false);
+
   // Get Azure Communications Service token from the server
   useEffect(() => {
     (async () => {
@@ -123,7 +125,7 @@ const App = (): JSX.Element => {
             }
 
             // There is an API call involved with creating a room so lets only create one if we know we have to
-            if (callDetails.option === 'StartRooms') {
+            if (callDetails.option === 'StartRooms' || callDetails.option === 'RoomsTranscription') {
               let roomId = '';
               try {
                 roomId = await createRoom();
@@ -132,6 +134,9 @@ const App = (): JSX.Element => {
               }
 
               callLocator = { roomId: roomId };
+              if (callDetails.option === 'RoomsTranscription') {
+                setEnableTranscription(true);
+              }
             }
 
             if (callLocator && 'roomId' in callLocator) {
@@ -197,6 +202,7 @@ const App = (): JSX.Element => {
           targetCallees={targetCallees}
           alternateCallerId={alternateCallerId}
           isTeamsIdentityCall={isTeamsCall}
+          enableTranscription={enableTranscription}
         />
       );
     }

@@ -44,6 +44,7 @@ export type CallOption =
   | 'TeamsMeeting'
   | 'Rooms'
   | 'StartRooms'
+  | 'RoomsTranscription'
   | 'TeamsIdentity'
   | '1:N'
   | 'PSTN'
@@ -74,6 +75,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const callOptions: ICallChoiceGroupOption[] = [
     { key: 'ACSCall', text: 'Start a call' },
     { key: 'StartRooms', text: 'Start a Rooms call' },
+    { key: 'RoomsTranscription', text: 'Start a Rooms Call with Transcription' },
     { key: 'TeamsMeeting', text: 'Join a Teams meeting using ACS identity' },
     { key: 'Rooms', text: 'Join a Rooms Call' },
     { key: 'TeamsIdentity', text: 'Join a Teams call using Teams identity' },
@@ -106,22 +108,42 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [teamsId, setTeamsId] = useState<string>();
   const [outboundTeamsUsers, setOutboundTeamsUsers] = useState<string | undefined>();
   const [alternateCallerIdCalloutVisible, setAlternateCallerIdCalloutVisible] = useState<boolean>(false);
-  const startGroupCall: boolean = chosenCallOption.key === 'ACSCall';
   const teamsCallChosen: boolean = chosenCallOption.key === 'TeamsMeeting';
   const teamsIdentityChosen = chosenCallOption.key === 'TeamsIdentity';
   const pstnCallChosen: boolean = chosenCallOption.key === 'PSTN';
   const acsCallChosen: boolean = chosenCallOption.key === '1:N';
   const teamsAdhocChosen: boolean = chosenCallOption.key === 'TeamsAdhoc';
-  const buttonEnabled =
-    (displayName || teamsToken) &&
-    (startGroupCall ||
-      (teamsCallChosen && callLocator) ||
-      (((chosenCallOption.key === 'Rooms' && callLocator) || chosenCallOption.key === 'StartRooms') &&
-        chosenRoomsRoleOption) ||
-      (pstnCallChosen && dialPadParticipant && alternateCallerId) ||
-      (teamsAdhocChosen && outboundTeamsUsers) ||
-      (outboundParticipants && acsCallChosen) ||
-      (teamsIdentityChosen && callLocator && teamsToken && teamsId));
+  const buttonEnabled = (() => {
+    // Basic requirement: must have display name or Teams token
+    const hasIdentifier = displayName || teamsToken;
+    if (!hasIdentifier) {
+      return false;
+    }
+
+    // Different conditions based on call option
+    switch (chosenCallOption.key) {
+      case 'ACSCall':
+        return true;
+      case 'TeamsMeeting':
+        return !!callLocator;
+      case 'Rooms':
+        return !!callLocator && !!chosenRoomsRoleOption;
+      case 'StartRooms':
+        return !!callLocator && !!chosenRoomsRoleOption;
+      case 'RoomsTranscription':
+        return !!chosenRoomsRoleOption;
+      case 'PSTN':
+        return !!dialPadParticipant && !!alternateCallerId;
+      case '1:N':
+        return !!outboundParticipants;
+      case 'TeamsAdhoc':
+        return !!outboundTeamsUsers;
+      case 'TeamsIdentity':
+        return !!callLocator && !!teamsToken && !!teamsId;
+      default:
+        return false;
+    }
+  })();
 
   registerIcons({ icons: { DialpadBackspace: <Backspace20Regular /> } });
   const isMobileSession = useIsMobile();
@@ -253,7 +275,10 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 />
               </Stack>
             )}
-            {(chosenCallOption.key === 'Rooms' || chosenCallOption.key === 'StartRooms' || getRoomIdFromUrl()) && (
+            {(chosenCallOption.key === 'Rooms' ||
+              chosenCallOption.key === 'StartRooms' ||
+              chosenCallOption.key === 'RoomsTranscription' ||
+              getRoomIdFromUrl()) && (
               <ChoiceGroup
                 styles={callOptionsGroupStyles}
                 label={roomsRoleGroupLabel}

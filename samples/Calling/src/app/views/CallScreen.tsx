@@ -20,10 +20,11 @@ import {
   useTeamsCallAdapter
 } from '@azure/communication-react';
 import type { Profile, StartCallIdentifier, TeamsAdapterOptions } from '@azure/communication-react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
+import { connectToCallAutomation } from '../utils/CallAutomationUtils';
 
 export interface CallScreenProps {
   token: string;
@@ -33,34 +34,42 @@ export interface CallScreenProps {
   displayName: string;
   alternateCallerId?: string;
   isTeamsIdentityCall?: boolean;
+  enableTranscription?: boolean;
 }
 
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
-  const { token, userId, isTeamsIdentityCall } = props;
+  const { token, userId, isTeamsIdentityCall, enableTranscription } = props;
   const callIdRef = useRef<string>();
+  const [callAutomationStarted, setCallAutomationStarted] = useState(false);
+  console.log('enableTranscription', enableTranscription);
+  const subscribeAdapterEvents = useCallback(
+    (adapter: CommonCallAdapter) => {
+      adapter.on('error', (e) => {
+        // Error is already acted upon by the Call composite, but the surrounding application could
+        // add top-level error handling logic here (e.g. reporting telemetry).
+        console.log('Adapter error event:', e);
+      });
+      adapter.onStateChange(async (state: CallAdapterState) => {
+        const pageTitle = convertPageStateToString(state);
+        document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
 
-  const subscribeAdapterEvents = useCallback((adapter: CommonCallAdapter) => {
-    adapter.on('error', (e) => {
-      // Error is already acted upon by the Call composite, but the surrounding application could
-      // add top-level error handling logic here (e.g. reporting telemetry).
-      console.log('Adapter error event:', e);
-    });
-    adapter.onStateChange((state: CallAdapterState) => {
-      const pageTitle = convertPageStateToString(state);
-      document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
-
-      if (state?.call?.id && callIdRef.current !== state?.call?.id) {
-        callIdRef.current = state?.call?.id;
-        console.log(`Call Id: ${callIdRef.current}`);
-      }
-    });
-    adapter.on('transferAccepted', (event) => {
-      console.log('Call being transferred to: ' + event);
-    });
-    adapter.on('callEnded', (event) => {
-      console.log('Call ended id: ' + event.callId + ' code: ' + event.code, 'subcode: ' + event.subCode);
-    });
-  }, []);
+        if (state?.call?.id && callIdRef.current !== state?.call?.id) {
+          callIdRef.current = state?.call?.id;
+          console.log(`Call Id: ${callIdRef.current}`);
+        }
+        if (enableTranscription) {
+          await connectToCallAutomation(state, callAutomationStarted, setCallAutomationStarted);
+        }
+      });
+      adapter.on('transferAccepted', (event) => {
+        console.log('Call being transferred to: ' + event);
+      });
+      adapter.on('callEnded', (event) => {
+        console.log('Call ended id: ' + event.callId + ' code: ' + event.code, 'subcode: ' + event.subCode);
+      });
+    },
+    [callAutomationStarted, enableTranscription]
+  );
 
   const afterCallAdapterCreate = useCallback(
     async (adapter: CallAdapter): Promise<CallAdapter> => {
@@ -226,6 +235,8 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
       alternateCallerId: adapterArgs.alternateCallerId
     };
   }, [adapterArgs.alternateCallerId]);
+
+  // const AzureCommunicationCallAutomationCallScreen = (props: AzureCommunicationCallScreenProps): JSX.Element => {};
 
   const adapter = useAzureCommunicationCallAdapter(
     {

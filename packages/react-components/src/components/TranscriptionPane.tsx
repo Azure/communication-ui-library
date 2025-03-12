@@ -7,6 +7,7 @@ import React from 'react';
 
 /**
  * Props for the TranscriptionPane component.
+ * @beta
  * @property {CallTranscription} transcript - The transcript data to be displayed.
  */
 export type TranscriptionPaneProps = {
