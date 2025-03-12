@@ -283,7 +283,7 @@ type AzureCommunicationCallAutomationCallScreenProps = AzureCommunicationCallScr
 const AzureCommunicationCallAutomationCallScreen = (
   props: AzureCommunicationCallAutomationCallScreenProps
 ): JSX.Element => {
-  const { afterCreate, callLocator: locator, userId, enableTranscription, callConnected, ...adapterArgs } = props;
+  const { afterCreate, callLocator: locator, userId, callConnected, ...adapterArgs } = props;
 
   const [transcription, setTranscription] = useState<CallTranscription>([]);
   const [remoteParticipants, setRemoteParticipants] = useState<TranscriptionPaneParticipant[]>([]);
@@ -342,7 +342,7 @@ const AzureCommunicationCallAutomationCallScreen = (
 
     const transcript = await fetchTranscript(callId);
     setTranscription(transcript);
-    console.log('Transcript', transcript);
+    // console.log('Transcript', transcript);
   }, [adapter]);
 
   useEffect(() => {
