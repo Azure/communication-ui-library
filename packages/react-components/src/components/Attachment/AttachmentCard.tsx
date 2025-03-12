@@ -99,7 +99,6 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
   }, [attachment]);
   return (
     <div data-is-focusable={true}>
-      <Announcer announcementString={announcerString} ariaLive={'polite'} />
       <Card
         className={mergeClasses(
           attachmentCardStyles.root,
@@ -111,6 +110,7 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
         aria-label={attachment.name}
         data-testid={'attachment-card'}
       >
+        <Announcer announcementString={announcerString} ariaLive={'polite'} />
         <CardHeader
           className={attachmentCardStyles.content}
           image={{

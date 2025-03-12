@@ -185,6 +185,10 @@ export type CallWithChatCompositeOptions = {
      * Layout for the gallery when the call starts
      */
     layout?: VideoGalleryLayout;
+    /**
+     * Controls the view of the local screenshare stream in the gallery
+     */
+    localScreenShareView?: 'stream' | 'placeholderMessage';
   };
   /**
    * Options for end of call survey
@@ -281,6 +285,18 @@ export type CallWithChatCompositeOptions = {
    * @beta
    */
   richTextEditor?: boolean;
+  /**
+   * Options for settings related to joining a call.
+   */
+  joinCallOptions?: {
+    /**
+     * options for checking microphone permissions when joining a call.
+     * block on access will block the user from joining the call if the microphone permission is not granted.
+     * skip will allow the user to join the call without granting the microphone permission.
+     * @defaultValue 'requireMicrophoneAvailable'
+     */
+    microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
+  };
 };
 
 type CallWithChatScreenProps = {
@@ -309,6 +325,7 @@ type CallWithChatScreenProps = {
   localVideoTile?: boolean | LocalVideoTileOptions;
   galleryOptions?: {
     layout?: VideoGalleryLayout;
+    localScreenShareView?: 'stream' | 'placeholderMessage';
   };
   /**
    * Options for end of call survey
@@ -360,6 +377,18 @@ type CallWithChatScreenProps = {
   };
   /* @conditional-compile-remove(rich-text-editor-composite-support) */
   richTextEditor?: boolean;
+  /**
+   * Options for settings related to joining a call.
+   */
+  joinCallOptions?: {
+    /**
+     * options for checking microphone permissions when joining a call.
+     * block on access will block the user from joining the call if the microphone permission is not granted.
+     * skip will allow the user to join the call without granting the microphone permission.
+     * @defaultValue 'requireMicrophoneAvailable'
+     */
+    microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
+  };
 };
 
 const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
@@ -539,7 +568,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         logo: props.logo,
         backgroundImage: props.backgroundImage
       },
-      spotlight: props.spotlight
+      spotlight: props.spotlight,
+      joinCallOptions: props.joinCallOptions
     }),
     [
       props.callControls,
@@ -561,7 +591,8 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
       surveyOptions,
       props.logo,
       props.backgroundImage,
-      props.spotlight
+      props.spotlight,
+      props.joinCallOptions
     ]
   );
 
@@ -733,6 +764,7 @@ export const CallWithChatComposite = (props: CallWithChatCompositeProps): JSX.El
         spotlight={options?.spotlight}
         /* @conditional-compile-remove(rich-text-editor-composite-support) */
         richTextEditor={options?.richTextEditor}
+        joinCallOptions={options?.joinCallOptions}
       />
     </BaseProvider>
   );
