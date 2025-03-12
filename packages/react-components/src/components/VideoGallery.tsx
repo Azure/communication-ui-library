@@ -387,6 +387,11 @@ export interface VideoGalleryProps {
    * This callback is to permit video for remote participant(s)
    */
   onPermitVideo?: (userIds: string[]) => Promise<void>;
+  /**
+   * Whether to hide the local screen share stream
+   * @defaultValue false
+   */
+  hideLocalScreenShareStream?: boolean;
 }
 
 /**
@@ -491,7 +496,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onForbidAudio,
     onPermitAudio,
     onForbidVideo,
-    onPermitVideo
+    onPermitVideo,
+    hideLocalScreenShareStream
   } = props;
 
   const ids = useIdentifiers();
@@ -786,6 +792,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       isAvailable={localParticipant.screenShareStream?.isAvailable}
       onCreateLocalStreamView={onCreateLocalStreamView}
       onDisposeLocalScreenShareStreamView={onDisposeLocalScreenShareStreamView}
+      hideLocalScreenShareStream={hideLocalScreenShareStream}
     />
   );
 

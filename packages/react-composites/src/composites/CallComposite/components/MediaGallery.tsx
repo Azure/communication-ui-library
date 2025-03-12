@@ -69,6 +69,7 @@ export interface MediaGalleryProps {
   captionsOptions?: {
     height: 'full' | 'default';
   };
+  hideLocalScreenShareStream?: boolean;
 }
 
 /**
@@ -224,6 +225,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             ? videoGalleryProps.onMuteParticipant
             : undefined
         }
+        hideLocalScreenShareStream={props.hideLocalScreenShareStream}
       />
     );
   }, [
@@ -250,7 +252,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     onStartRemoteSpotlightWithPrompt,
     onStopRemoteSpotlightWithPrompt,
     layoutBasedOnTilePosition,
-    capabilities?.muteOthers
+    capabilities?.muteOthers,
+    props.hideLocalScreenShareStream
   ]);
 
   return (

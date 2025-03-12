@@ -361,6 +361,11 @@ export type CallCompositeOptions = {
      */
     microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
   };
+  /**
+   * Options for hiding the local screen share stream
+   * @defaultValue false
+   */
+  hideLocalScreenShareStream?: boolean;
 };
 
 type MainScreenProps = {

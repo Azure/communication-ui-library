@@ -635,6 +635,7 @@ export type CallCompositeOptions = {
     joinCallOptions?: {
         microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
     };
+    hideLocalScreenShareStream?: boolean;
 };
 
 // @public
@@ -1413,6 +1414,7 @@ export type CallWithChatCompositeOptions = {
     joinCallOptions?: {
         microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
     };
+    hideLocalScreenShareStream?: boolean;
 };
 
 // @public
@@ -4785,6 +4787,7 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
+    hideLocalScreenShareStream?: boolean;
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
