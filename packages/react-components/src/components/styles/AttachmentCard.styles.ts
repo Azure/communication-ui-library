@@ -46,9 +46,6 @@ export const useAttachmentCardStyles = makeStyles({
     textOverflow: 'ellipsis'
   },
   actions: {
-    '& > * button:focus': {
-      border: `black solid ${_pxToRem(1)}`
-    },
     // don't shrink the actions container
     flexShrink: 0
   }
