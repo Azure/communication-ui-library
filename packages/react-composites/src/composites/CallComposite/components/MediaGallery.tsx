@@ -69,6 +69,7 @@ export interface MediaGalleryProps {
   captionsOptions?: {
     height: 'full' | 'default';
   };
+  localScreenShareView?: 'stream' | 'placeholderMessage';
 }
 
 /**
@@ -224,6 +225,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             ? videoGalleryProps.onMuteParticipant
             : undefined
         }
+        localScreenShareView={props.localScreenShareView}
       />
     );
   }, [
@@ -250,7 +252,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     onStartRemoteSpotlightWithPrompt,
     onStopRemoteSpotlightWithPrompt,
     layoutBasedOnTilePosition,
-    capabilities?.muteOthers
+    capabilities?.muteOthers,
+    props.localScreenShareView
   ]);
 
   return (

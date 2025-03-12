@@ -185,6 +185,10 @@ export type CallWithChatCompositeOptions = {
      * Layout for the gallery when the call starts
      */
     layout?: VideoGalleryLayout;
+    /**
+     * Controls the view of the local screenshare stream in the gallery
+     */
+    localScreenShareView?: 'stream' | 'placeholderMessage';
   };
   /**
    * Options for end of call survey
@@ -321,6 +325,7 @@ type CallWithChatScreenProps = {
   localVideoTile?: boolean | LocalVideoTileOptions;
   galleryOptions?: {
     layout?: VideoGalleryLayout;
+    localScreenShareView?: 'stream' | 'placeholderMessage';
   };
   /**
    * Options for end of call survey

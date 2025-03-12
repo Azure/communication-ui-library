@@ -778,6 +778,7 @@ export type CallCompositeOptions = {
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+        localScreenShareView?: 'stream' | 'placeholderMessage';
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -1622,6 +1623,7 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+        localScreenShareView?: 'stream' | 'placeholderMessage';
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -5624,6 +5626,7 @@ export interface VideoGalleryProps {
     isTogetherModeActive?: boolean;
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
+    localScreenShareView?: 'stream' | 'placeholderMessage';
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
