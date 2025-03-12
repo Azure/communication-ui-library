@@ -120,6 +120,12 @@ export const getOutboundParticipants = (outboundParticipants?: string[]): StartC
   return undefined;
 };
 
+export const getTranscriptionEnabledFromUrl = (): boolean => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const transcriptionEnabled = urlParams.get('isTranscription');
+  return transcriptionEnabled === 'true';
+};
+
 /*
  * TODO:
  *  Remove this method once the SDK improves error handling for unsupported browser.

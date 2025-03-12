@@ -18,6 +18,7 @@ import {
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
+  getTranscriptionEnabledFromUrl,
   isLandscape,
   isOnIphoneAndNotSafari,
   navigateToHomePage,
@@ -104,6 +105,8 @@ const App = (): JSX.Element => {
               getGroupIdFromUrl() ||
               createGroupId();
 
+            setEnableTranscription(getTranscriptionEnabledFromUrl());
+
             if (callDetails.option === 'Rooms') {
               callLocator = getRoomIdFromUrl() || callDetails.callLocator;
             }
@@ -159,7 +162,8 @@ const App = (): JSX.Element => {
                 window.location.origin +
                   window.location.pathname +
                   getJoinParams(callLocator) +
-                  getIsCTEParam(!!callDetails.teamsToken)
+                  getIsCTEParam(!!callDetails.teamsToken) +
+                  getIsTranscriptionParam(callDetails.option === 'RoomsTranscription')
               );
             }
             setIsTeamsCall(!!callDetails.teamsToken);
@@ -214,6 +218,10 @@ const App = (): JSX.Element => {
 
 const getIsCTEParam = (isCTE?: boolean): string => {
   return isCTE ? '&isCTE=true' : '';
+};
+
+const getIsTranscriptionParam = (isTranscription?: boolean): string => {
+  return isTranscription ? '&isTranscription=true' : '';
 };
 
 const getJoinParams = (locator: CallAdapterLocator): string => {
