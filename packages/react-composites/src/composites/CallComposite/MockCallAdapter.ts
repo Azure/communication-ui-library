@@ -119,8 +119,9 @@ export class _MockCallAdapter implements CallAdapter {
     throw Error('startTogetherMode not implemented');
   }
   /* @conditional-compile-remove(together-mode) */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setTogetherModeSceneSize(width: number, height: number): void {
-    throw Error(`Setting Together Mode scene to width ${width} and height ${height} is not implemented`);
+    return;
   }
   disposeStreamView(): Promise<void> {
     return Promise.resolve();

@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Resolve issue where link color was incorrect in dark mode",
+  "packageName": "@azure/communication-react",
+  "email": "palatter@microsoft.com",
+  "dependentChangeType": "patch"
+}
