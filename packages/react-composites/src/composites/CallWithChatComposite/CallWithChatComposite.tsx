@@ -3,13 +3,11 @@
 
 import React, { useCallback, useState, useMemo, useEffect, useRef } from 'react';
 import { mergeStyles, PartialTheme, Stack, Theme } from '@fluentui/react';
-/* @conditional-compile-remove(breakout-rooms) */
 import { Spinner, SpinnerSize } from '@fluentui/react';
 import { CallCompositePage } from '../CallComposite';
 import { CallSurvey } from '@azure/communication-calling';
 import { CallState } from '@azure/communication-calling';
 import { callCompositeContainerStyles, compositeOuterContainerStyles } from './styles/CallWithChatCompositeStyles';
-/* @conditional-compile-remove(breakout-rooms) */
 import { chatSpinnerContainerStyles } from './styles/CallWithChatCompositeStyles';
 import { CallWithChatAdapter } from './adapter/CallWithChatAdapter';
 import { CallWithChatBackedCallAdapter } from './adapter/CallWithChatBackedCallAdapter';
@@ -50,7 +48,6 @@ import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker'
 import { VideoGalleryLayout } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentOptions } from '@internal/react-components';
-/* @conditional-compile-remove(breakout-rooms) */
 import { useLocale } from '../localization';
 
 /**
@@ -614,11 +611,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
     ]
   );
 
-  /* @conditional-compile-remove(breakout-rooms) */
   const chatSpinnerLabel = useLocale().strings.callWithChat.chatContentSpinnerLabel;
 
   const onRenderChatContent = useCallback((): JSX.Element => {
-    /* @conditional-compile-remove(breakout-rooms) */
     if (!isChatInitialized) {
       return (
         <Stack styles={chatSpinnerContainerStyles}>
@@ -634,17 +629,9 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
         onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
       />
     );
-  }, [
-    chatAdapter,
-    props.onFetchAvatarPersonaData,
-    chatCompositeOptions,
-    theme,
-    /* @conditional-compile-remove(breakout-rooms) */ isChatInitialized,
-    /* @conditional-compile-remove(breakout-rooms) */ chatSpinnerLabel
-  ]);
+  }, [chatAdapter, props.onFetchAvatarPersonaData, chatCompositeOptions, theme, isChatInitialized, chatSpinnerLabel]);
 
   let chatPaneTitle = callWithChatStrings.chatPaneTitle;
-  /* @conditional-compile-remove(breakout-rooms) */
   // If breakout room settings are defined then we know we are in a breakout room so we should
   // use the breakout room chat pane title.
   if (callAdapter.getState().call?.breakoutRooms?.breakoutRoomSettings) {

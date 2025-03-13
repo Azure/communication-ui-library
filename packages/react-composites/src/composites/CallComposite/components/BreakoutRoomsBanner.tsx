@@ -1,24 +1,15 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(breakout-rooms) */
 import { Stack } from '@fluentui/react';
-/* @conditional-compile-remove(breakout-rooms) */
 import React from 'react';
-/* @conditional-compile-remove(breakout-rooms) */
 import { bannerNotificationStyles } from '../styles/CallPage.styles';
-/* @conditional-compile-remove(breakout-rooms) */
 import { CommonCallAdapter } from '../adapter';
-/* @conditional-compile-remove(breakout-rooms) */
 import { CompositeLocale } from '../../localization';
-/* @conditional-compile-remove(breakout-rooms) */
 import { useSelector } from '../hooks/useSelector';
-/* @conditional-compile-remove(breakout-rooms) */
 import { getAssignedBreakoutRoom, getBreakoutRoomSettings, getLatestNotifications } from '../selectors/baseSelectors';
-/* @conditional-compile-remove(breakout-rooms) */
 import { Banner } from './Banner';
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @private
  */

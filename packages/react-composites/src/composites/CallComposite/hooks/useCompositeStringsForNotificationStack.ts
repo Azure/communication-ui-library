@@ -1,16 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(breakout-rooms) */
 import { NotificationStackStrings } from '@internal/react-components';
-/* @conditional-compile-remove(breakout-rooms) */
 import { useSelector } from './useSelector';
-/* @conditional-compile-remove(breakout-rooms) */
 import { CompositeLocale } from '../../localization';
-/* @conditional-compile-remove(breakout-rooms) */
 import { getBreakoutRoomDisplayName } from '../selectors/baseSelectors';
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @private
  */

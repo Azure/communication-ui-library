@@ -75,8 +75,6 @@ module.exports = {
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
-    "stabilizedDemo",
-    // Feature for breakout rooms
-    "breakout-rooms"
+    "stabilizedDemo"
   ]
 }

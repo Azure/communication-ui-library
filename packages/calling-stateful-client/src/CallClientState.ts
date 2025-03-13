@@ -3,6 +3,8 @@
 
 import {
   AudioDeviceInfo,
+  BreakoutRoom,
+  BreakoutRoomsSettings,
   CallDirection,
   CallEndReason,
   CallerInfo,
@@ -19,8 +21,6 @@ import {
   VideoDeviceInfo,
   CommunicationServicesError
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */
-import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 /* @conditional-compile-remove(remote-ufd) */
 import type {
   ServerDiagnosticType,
@@ -254,7 +254,6 @@ export interface SpotlightState {
   spotlightedOrderPosition?: number;
 }
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * Breakout rooms state
  *
@@ -819,7 +818,6 @@ export interface CallState {
    */
   meetingConference?: { conferencePhones: ConferencePhoneInfo[] };
 
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Proxy of {@link @azure/communication-calling#BreakoutRoomsFeature}.
    */
@@ -1221,12 +1219,12 @@ export interface CallNotification {
 
 /** @public */
 export type NotificationTarget =
-  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpened'
-  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpenedPromptJoin'
-  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomChanged'
-  | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomClosed'
-  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomJoined'
-  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomClosingSoon'
+  | 'assignedBreakoutRoomOpened'
+  | 'assignedBreakoutRoomOpenedPromptJoin'
+  | 'assignedBreakoutRoomChanged'
+  | 'assignedBreakoutRoomClosed'
+  | 'breakoutRoomJoined'
+  | 'breakoutRoomClosingSoon'
   | 'capabilityTurnVideoOnPresent'
   | 'capabilityTurnVideoOnAbsent'
   | 'capabilityUnmuteMicPresent'

@@ -39,7 +39,6 @@ import {
 } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
@@ -553,7 +552,6 @@ export interface CallWithChatAdapterManagement {
    * Mute a participant
    */
   muteAllRemoteParticipants(): Promise<void>;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Return to origin call of breakout room
    */
@@ -610,7 +608,6 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(breakout-rooms) */
   on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
   off(event: 'callEnded', listener: CallEndedListener): void;
   off(event: 'isMutedChanged', listener: IsMutedChangedListener): void;
@@ -631,7 +628,6 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(breakout-rooms) */
   off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 
   // Chat subscriptions
@@ -701,7 +697,7 @@ export type CallWithChatEvent =
   | /* @conditional-compile-remove(rtt) */ 'realTimeTextReceived'
   | 'capabilitiesChanged'
   | 'spotlightChanged'
-  | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated'
+  | 'breakoutRoomsUpdated'
   | 'messageReceived'
   | 'messageEdited'
   | 'messageDeleted'

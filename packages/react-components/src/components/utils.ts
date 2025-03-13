@@ -350,17 +350,11 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   recordingAndTranscriptionStopped: 'NotificationBarRecording',
   recordingStoppedStillTranscribing: 'NotificationBarRecording',
   transcriptionStoppedStillRecording: 'NotificationBarRecording',
-  /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomOpened: 'NotificationBarBreakoutRoomOpened',
-  /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomOpenedPromptJoin: 'NotificationBarBreakoutRoomPromptJoin',
-  /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomChanged: 'NotificationBarBreakoutRoomChanged',
-  /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomClosed: 'NotificationBarBreakoutRoomClosed',
-  /* @conditional-compile-remove(breakout-rooms) */
   breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
-  /* @conditional-compile-remove(breakout-rooms) */
   breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon',
   capabilityTurnVideoOnPresent: 'ControlButtonCameraOff',
   capabilityTurnVideoOnAbsent: 'ControlButtonCameraProhibited',
