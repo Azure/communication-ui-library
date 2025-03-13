@@ -611,7 +611,7 @@ export type CallCompositeOptions = {
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
-        localScreenShareView?: 'stream' | 'placeholderMessage';
+        localScreenShareView?: LocalScreenShareView;
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -1390,7 +1390,7 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
-        localScreenShareView?: 'stream' | 'placeholderMessage';
+        localScreenShareView?: LocalScreenShareView;
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -3355,6 +3355,9 @@ export type LocalizationProviderProps = {
 };
 
 // @public (undocumented)
+export type LocalScreenShareView = 'stream' | 'placeholderMessage';
+
+// @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     ariaDescription?: string;
     cameras?: OptionsDevice[];
@@ -4789,7 +4792,7 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
-    localScreenShareView?: 'stream' | 'placeholderMessage';
+    localScreenShareView?: LocalScreenShareView;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;

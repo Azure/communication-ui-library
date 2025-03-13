@@ -17,6 +17,7 @@ import {
   screenSharingNotificationIconStyle,
   screenSharingNotificationTextStyle
 } from './styles/LocalScreenShare.styles';
+import { LocalScreenShareView } from '../VideoGallery';
 
 /**
  * A memoized version of local screen share component. React.memo is used for a performance
@@ -30,7 +31,7 @@ export const LocalScreenShare = React.memo(
     isAvailable?: boolean;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onDisposeLocalScreenShareStreamView?: () => Promise<void>;
-    localScreenShareView?: 'stream' | 'placeholderMessage';
+    localScreenShareView?: LocalScreenShareView;
   }) => {
     const {
       localParticipant,
