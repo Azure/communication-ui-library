@@ -51,7 +51,13 @@ export const SystemMessage = (props: SystemMessageProps): JSX.Element => {
   return (
     <>
       <LiveMessage message={liveMessage} ariaLive="polite" clearOnUnmount={true} />
-      <Stack horizontal className={mergeStyles(props?.containerStyle as IStyle)} role="status" aria-label={content} tabIndex={0}>
+      <Stack
+        horizontal
+        className={mergeStyles(props?.containerStyle as IStyle)}
+        role="status"
+        aria-label={content}
+        tabIndex={0}
+      >
         {Icon}
         <Text style={{ wordBreak: 'break-word' }} variant={'small'}>
           {content}
