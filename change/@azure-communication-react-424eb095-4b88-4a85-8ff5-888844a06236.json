@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "A11y",
+  "comment": "Fix issue where system message announces Group instead of content",
+  "packageName": "@azure/communication-react",
+  "email": "email not defined",
+  "dependentChangeType": "patch"
+}
