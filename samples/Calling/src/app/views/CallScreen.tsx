@@ -32,8 +32,13 @@ import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
-import { connectToCallAutomation, fetchTranscript } from '../utils/CallAutomationUtils';
-import { Stack } from '@fluentui/react';
+import {
+  connectToCallAutomation,
+  fetchTranscript,
+  getCallSummaryFromServer,
+  SummarizeResult
+} from '../utils/CallAutomationUtils';
+import { Spinner, Stack, Text } from '@fluentui/react';
 
 export interface CallScreenProps {
   token: string;
@@ -51,6 +56,8 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const callIdRef = useRef<string>();
   const callAutomationStarted = useRef(false);
   const [callConnected, setCallConnected] = useState(false);
+  const [summarizationStatus, setSummarizationStatus] = useState<'None' | 'InProgress' | 'Complete'>('None');
+  const [summary, setSummary] = useState<SummarizeResult>();
   console.log('enableTranscription', enableTranscription);
   const subscribeAdapterEvents = useCallback(
     (adapter: CommonCallAdapter) => {
@@ -79,8 +86,13 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter.on('transferAccepted', (event) => {
         console.log('Call being transferred to: ' + event);
       });
-      adapter.on('callEnded', (event) => {
+      adapter.on('callEnded', async (event) => {
         console.log('Call ended id: ' + event.callId + ' code: ' + event.code, 'subcode: ' + event.subCode);
+        if (callAutomationStarted.current) {
+          setSummary(undefined);
+          setSummarizationStatus('InProgress');
+          setSummary(await getCallSummaryFromServer(adapter).finally(() => setSummarizationStatus('Complete')));
+        }
       });
     },
     [callAutomationStarted, enableTranscription]
@@ -114,13 +126,31 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }
   if (enableTranscription) {
     return (
-      <AzureCommunicationCallAutomationCallScreen
-        afterCreate={afterCallAdapterCreate}
-        credential={credential}
-        callConnected={callConnected}
-        enableTranscription={enableTranscription}
-        {...props}
-      />
+      <Stack>
+        <AzureCommunicationCallAutomationCallScreen
+          afterCreate={afterCallAdapterCreate}
+          credential={credential}
+          callConnected={callConnected}
+          enableTranscription={enableTranscription}
+          {...props}
+        />
+        {summarizationStatus === 'InProgress' && (
+          <Spinner styles={{ root: { marginTop: '2rem' } }} label="Summarizing conversation..." />
+        )}
+        {summarizationStatus === 'Complete' && summary && (
+          <Stack styles={{ root: { marginTop: '1rem' } }}>
+            <Text styles={{ root: { marginTop: '0.5rem', fontWeight: 600 } }} variant="large">
+              Summary
+            </Text>
+            <Text styles={{ root: { marginTop: '0.5rem', marginBottom: '1rem', fontStyle: 'italic' } }}>
+              {summary.recap}
+            </Text>
+            {summary.chapters.map((chapter, index) => (
+              <Chapter key={index} title={chapter.chapterTitle} narrative={chapter.narrative} />
+            ))}
+          </Stack>
+        )}
+      </Stack>
     );
   }
   if (props.callLocator) {
@@ -380,7 +410,7 @@ const AzureCommunicationCallAutomationCallScreen = (
   return (
     <Stack horizontal styles={{ root: { height: '100%', width: '100%' } }}>
       <CallCompositeContainer {...props} adapter={adapter}></CallCompositeContainer>
-      <TranscriptionPane transcript={transcription} participants={remoteParticipants} />
+      {/* <TranscriptionPane transcript={transcription} participants={remoteParticipants} /> */}
     </Stack>
   );
 };
@@ -437,3 +467,21 @@ const videoBackgroundImages = [
     tooltipText: 'Living Room Background'
   }
 ];
+
+const Chapter = (props: { title: string; narrative: string }): JSX.Element => {
+  return (
+    <Stack
+      styles={{
+        root: {
+          paddingLeft: '2rem',
+          marginTop: '0.5rem',
+          marginBottom: '0.5rem',
+          borderLeft: '2px solid #ccc'
+        }
+      }}
+    >
+      <Text styles={{ root: { marginBottom: '0.25rem', fontWeight: 600 } }}>{props.title}</Text>
+      <Text>{props.narrative}</Text>
+    </Stack>
+  );
+};

@@ -24,6 +24,7 @@ import fetchTranscript from './routes/fetchTranscript';
 import startCallWithTranscription from './routes/startCallWithTranscription';
 import callAutomationEvent from './routes/callAutomationEvent';
 import connectRoomsCall from './routes/connectToRoomsCall';
+import summarizeTranscript from './routes/summarizeTranscript';
 
 const app = express();
 
@@ -101,6 +102,12 @@ app.use('/startCallWithTranscription', cors(), startCallWithTranscription);
  * purpose: Call Automation: receive call automation events
  */
 app.use('/callAutomationEvent', cors(), callAutomationEvent);
+
+/**
+ * route: /summarizeTranscript
+ * purpose: Sends transcript to AI summarization service
+ */
+app.use('/summarizeTranscript', cors(), summarizeTranscript);
 
 /**
  * route: /addUserToRoom

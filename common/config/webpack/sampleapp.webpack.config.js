@@ -148,6 +148,10 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         {
           path: '/startTranscription',
           target: 'http://[::1]:8080'
+        },
+        {
+          path: '/summarizeTranscript',
+          target: 'http://[::1]:8080'
         }
       ]
     }

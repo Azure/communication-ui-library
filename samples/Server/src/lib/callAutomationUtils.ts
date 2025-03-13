@@ -14,6 +14,7 @@ import {
   getCognitionAPIEndpoint,
   getResourceConnectionString
 } from './envHelper';
+import { ConversationSummaryInput } from './summarizationHelper';
 
 export interface CallTranscription {
   metadata: TranscriptionMetadata;
@@ -175,4 +176,20 @@ export const handleTranscriptionDataEvent = (eventData: TranscriptionData, event
     }
     TRANSCRIPTION_STORE[eventId].data.push(eventData);
   }
+};
+
+/**
+ * function to format the transcription data for summarization
+ * @param transcription - the transcription data to format
+ * @returns transcription data formatted for summarization
+ */
+export const formatTranscriptionForSummarization = async (
+  transcription: CallTranscription
+): Promise<ConversationSummaryInput> => {
+  const formattedTranscription: ConversationSummaryInput = transcription.data.map((data) => ({
+    author: 'Participant', // TODO: get displayName by having the server collect and store the chosen display name
+    text: data.text
+  }));
+
+  return formattedTranscription;
 };
