@@ -68,7 +68,7 @@ export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Prom
       throw new Error('Call ID not found');
     }
 
-    const response = await fetch('/api/summarizeTranscript', {
+    const response = await fetch('/summarizeTranscript', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
