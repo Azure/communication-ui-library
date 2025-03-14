@@ -25,6 +25,8 @@ import startCallWithTranscription from './routes/startCallWithTranscription';
 import callAutomationEvent from './routes/callAutomationEvent';
 import connectRoomsCall from './routes/connectToRoomsCall';
 import summarizeTranscript from './routes/summarizeTranscript';
+import updateRemoteParticipants from './routes/updateRemoteParticipants';
+import updateLocalParticipant from './routes/updateLocalParticipant';
 
 const app = express();
 
@@ -108,6 +110,18 @@ app.use('/callAutomationEvent', cors(), callAutomationEvent);
  * purpose: Sends transcript to AI summarization service
  */
 app.use('/summarizeTranscript', cors(), summarizeTranscript);
+
+/**
+ * route: /updateRemoteParticipants
+ * purpose: Update remote participants in the call
+ */
+app.use('/updateRemoteParticipants', cors(), updateRemoteParticipants);
+
+/**
+ * route: /updateLocalParticipant
+ * purpose: Update local participant in the call
+ */
+app.use('/updateLocalParticipant', cors(), updateLocalParticipant);
 
 /**
  * route: /addUserToRoom

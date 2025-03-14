@@ -101,6 +101,24 @@ export const TRANSCRIPTION_STORE: { [key: string]: Partial<CallTranscription> } 
  */
 export const CALLCONNECTION_ID_TO_CORRELATION_ID: { [key: string]: { correlationId?: string; callId?: string } } = {};
 
+/**
+ * used to store the remote participants in the call
+ * This object is keyed off the callId and contains the communicationUserId and displayName of the remote participants
+ *
+ * Keeps track of all participants who have ever joined the call so we can show their display name in the transcription and summary.
+ */
+export const REMOTE_PARTICIPANTS_IN_CALL: { [key: string]: { communicationUserId: string; displayName: string }[] } =
+  {};
+
+/**
+ * used to store the local participant in the call
+ * This is keyed off the callId and contains the communicationUserId and displayName of the local participant
+ *
+ * This is important because the server can track the user across multiple calls if they change their display name so we can show
+ * the correct display name in the transcription and summary.
+ */
+export const LOCAL_PARTICIPANT: { [key: string]: { communicationUserId?: string; displayName?: string } } = {};
+
 export const getTranscriptionData = (callId: string): CallTranscription | undefined => {
   const connectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find(
     (key) => CALLCONNECTION_ID_TO_CORRELATION_ID[key].callId === callId

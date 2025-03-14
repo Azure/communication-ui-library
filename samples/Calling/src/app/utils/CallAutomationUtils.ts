@@ -1,7 +1,13 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallAdapter, CallAdapterState, CallTranscription, CommonCallAdapter } from '@azure/communication-react';
+import {
+  CallAdapter,
+  CallAdapterState,
+  CallTranscription,
+  CommonCallAdapter,
+  RemoteParticipantState
+} from '@azure/communication-react';
 
 export type SummarizeResult = {
   recap: string;
@@ -90,4 +96,69 @@ export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Prom
     console.error('Error fetching summary:', error);
     throw error;
   }
+};
+
+/**
+ * updateRemoteParticipants - This function is used to update the remote participants in the call. to be
+ * stored in the server to be used in the transcription and summary.
+ * @param callAdapter - The call adapter instance.
+ */
+export const updateRemoteParticipants = async (callAdapter: CallAdapter): Promise<void> => {
+  const remoteParticipants = callAdapter.getState().call?.remoteParticipants;
+  if (!remoteParticipants) {
+    console.warn('no remote participants found');
+    return;
+  }
+  const remoteParticipantsDisplayInfo = Object.values(remoteParticipants).map((participant: RemoteParticipantState) => {
+    if ('communicationUserId' in participant.identifier) {
+      return {
+        communicationUserId: participant.identifier.communicationUserId,
+        displayName: participant.displayName
+      };
+    } else {
+      return {};
+    }
+  });
+
+  const response = await fetch('/updateRemoteParticipants', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      callCorrelationId: callAdapter.getState().call?.id,
+      remoteParticipants: remoteParticipantsDisplayInfo
+    })
+  });
+  if (!response.ok) {
+    console.error('Failed to update remote participants:', response);
+  }
+  console.log('Updated remote participants:', remoteParticipantsDisplayInfo);
+};
+
+export const updateLocalParticipant = async (callAdapter: CallAdapter): Promise<void> => {
+  const localParticipant = callAdapter.getState().localParticipant;
+  if (!localParticipant) {
+    console.warn('no local participant found');
+    return;
+  }
+  const localParticipantDisplayInfo = {
+    communicationUserId: localParticipant.identifier.communicationUserId,
+    displayName: localParticipant.displayName
+  };
+
+  const response = await fetch('/updateLocalParticipant', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      callCorrelationId: callAdapter.getState().call?.id,
+      localParticipant: localParticipantDisplayInfo
+    })
+  });
+  if (!response.ok) {
+    console.error('Failed to update local participant:', response);
+  }
+  console.log('Updated local participant:', localParticipantDisplayInfo);
 };

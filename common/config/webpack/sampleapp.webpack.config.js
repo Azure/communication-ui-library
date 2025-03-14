@@ -152,6 +152,14 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         {
           path: '/summarizeTranscript',
           target: 'http://[::1]:8080'
+        },
+        {
+          path: '/updateRemoeteParticipants',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/updateLocalParticipant',
+          target: 'http://[::1]:8080'
         }
       ]
     }

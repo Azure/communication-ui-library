@@ -58,7 +58,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const [callConnected, setCallConnected] = useState(false);
   const [summarizationStatus, setSummarizationStatus] = useState<'None' | 'InProgress' | 'Complete'>('None');
   const [summary, setSummary] = useState<SummarizeResult>();
-  console.log('enableTranscription', enableTranscription);
+
   const subscribeAdapterEvents = useCallback(
     (adapter: CommonCallAdapter) => {
       adapter.on('error', (e) => {
@@ -126,19 +126,25 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   }
   if (enableTranscription) {
     return (
-      <Stack>
-        <AzureCommunicationCallAutomationCallScreen
-          afterCreate={afterCallAdapterCreate}
-          credential={credential}
-          callConnected={callConnected}
-          enableTranscription={enableTranscription}
-          {...props}
-        />
+      <Stack horizontal styles={{ root: { height: '100%', width: '100%' } }}>
+        {summarizationStatus === 'None' && (
+          <AzureCommunicationCallAutomationCallScreen
+            afterCreate={afterCallAdapterCreate}
+            credential={credential}
+            callConnected={callConnected}
+            enableTranscription={enableTranscription}
+            {...props}
+          />
+        )}
         {summarizationStatus === 'InProgress' && (
           <Spinner styles={{ root: { marginTop: '2rem' } }} label="Summarizing conversation..." />
         )}
         {summarizationStatus === 'Complete' && summary && (
-          <Stack styles={{ root: { marginTop: '1rem' } }}>
+          <Stack
+            horizontalAlign={'center'}
+            verticalAlign={'center'}
+            styles={{ root: { marginTop: '1rem', width: '100%' } }}
+          >
             <Text styles={{ root: { marginTop: '0.5rem', fontWeight: 600 } }} variant="large">
               Summary
             </Text>
@@ -408,9 +414,11 @@ const AzureCommunicationCallAutomationCallScreen = (
   }, [adapter]);
 
   return (
-    <Stack horizontal styles={{ root: { height: '100%', width: '100%' } }}>
+    <Stack horizontal horizontalAlign={'center'} styles={{ root: { height: '100%', width: '100%' } }}>
       <CallCompositeContainer {...props} adapter={adapter}></CallCompositeContainer>
-      {/* <TranscriptionPane transcript={transcription} participants={remoteParticipants} /> */}
+      <Stack styles={{ root: { width: '17rem', maxHeight: '40rem' } }}>
+        <TranscriptionPane transcript={transcription} participants={remoteParticipants} />
+      </Stack>
     </Stack>
   );
 };
