@@ -1,6 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { RemoteParticipant } from '@azure/communication-calling';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 import {
   CallAdapter,
   CallAdapterState,
@@ -33,6 +35,31 @@ export const fetchTranscript = async (callId: string): Promise<CallTranscription
   }
 
   return ((await response.json()) as { transcript: CallTranscription }).transcript;
+};
+
+export const startTranscription = async (
+  callId: string,
+  transcriptionOptions?: {
+    locale?: string;
+  }
+): Promise<boolean> => {
+  console.log('Starting transcription for call:', callId);
+  const response = await fetch('/startTranscription', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      callId,
+      options: transcriptionOptions
+    })
+  });
+  if (!response.ok) {
+    console.error('Failed to start transcription:', response);
+    return false;
+  }
+  console.log('Started transcription:', transcriptionOptions);
+  return true;
 };
 
 export const connectToCallAutomation = async (
@@ -103,13 +130,15 @@ export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Prom
  * stored in the server to be used in the transcription and summary.
  * @param callAdapter - The call adapter instance.
  */
-export const updateRemoteParticipants = async (callAdapter: CallAdapter): Promise<void> => {
-  const remoteParticipants = callAdapter.getState().call?.remoteParticipants;
+export const updateRemoteParticipants = async (
+  remoteParticipants: RemoteParticipant[],
+  callId: string
+): Promise<void> => {
   if (!remoteParticipants) {
     console.warn('no remote participants found');
     return;
   }
-  const remoteParticipantsDisplayInfo = Object.values(remoteParticipants).map((participant: RemoteParticipantState) => {
+  const remoteParticipantsDisplayInfo = remoteParticipants.map((participant: RemoteParticipantState) => {
     if ('communicationUserId' in participant.identifier) {
       return {
         communicationUserId: participant.identifier.communicationUserId,
@@ -126,7 +155,7 @@ export const updateRemoteParticipants = async (callAdapter: CallAdapter): Promis
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      callCorrelationId: callAdapter.getState().call?.id,
+      callCorrelationId: callId,
       remoteParticipants: remoteParticipantsDisplayInfo
     })
   });
@@ -137,13 +166,16 @@ export const updateRemoteParticipants = async (callAdapter: CallAdapter): Promis
 };
 
 export const updateLocalParticipant = async (callAdapter: CallAdapter): Promise<void> => {
-  const localParticipant = callAdapter.getState().localParticipant;
+  const localParticipant = {
+    communicationUserId: (callAdapter.getState().userId as CommunicationUserIdentifier).communicationUserId,
+    displayName: callAdapter.getState().displayName
+  };
   if (!localParticipant) {
     console.warn('no local participant found');
     return;
   }
   const localParticipantDisplayInfo = {
-    communicationUserId: localParticipant.identifier.communicationUserId,
+    communicationUserId: localParticipant.communicationUserId,
     displayName: localParticipant.displayName
   };
 

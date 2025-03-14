@@ -23,6 +23,7 @@ import {
 } from '@azure/communication-react';
 import type {
   CallTranscription,
+  CustomCallControlButtonCallback,
   Profile,
   StartCallIdentifier,
   TeamsAdapterOptions,
@@ -36,7 +37,9 @@ import {
   connectToCallAutomation,
   fetchTranscript,
   getCallSummaryFromServer,
-  SummarizeResult
+  startTranscription,
+  SummarizeResult,
+  updateRemoteParticipants
 } from '../utils/CallAutomationUtils';
 import { Spinner, Stack, Text } from '@fluentui/react';
 
@@ -86,6 +89,12 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter.on('transferAccepted', (event) => {
         console.log('Call being transferred to: ' + event);
       });
+      adapter.on('participantsJoined', (event) => {
+        console.log('Participants joined: ' + event);
+        if (callIdRef.current) {
+          updateRemoteParticipants(event.joined, callIdRef.current);
+        }
+      });
       adapter.on('callEnded', async (event) => {
         console.log('Call ended id: ' + event.callId + ' code: ' + event.code, 'subcode: ' + event.subCode);
         if (callAutomationStarted.current) {
@@ -133,6 +142,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
             credential={credential}
             callConnected={callConnected}
             enableTranscription={enableTranscription}
+            callId={callIdRef.current}
             {...props}
           />
         )}
@@ -314,19 +324,39 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
 type AzureCommunicationCallAutomationCallScreenProps = AzureCommunicationCallScreenProps & {
   enableTranscription?: boolean;
   callConnected?: boolean;
+  callId?: string;
 };
 
 const AzureCommunicationCallAutomationCallScreen = (
   props: AzureCommunicationCallAutomationCallScreenProps
 ): JSX.Element => {
-  const { afterCreate, callLocator: locator, userId, callConnected, ...adapterArgs } = props;
+  const { afterCreate, callLocator: locator, userId, callConnected, callId, ...adapterArgs } = props;
 
   const [transcription, setTranscription] = useState<CallTranscription>([]);
   const [remoteParticipants, setRemoteParticipants] = useState<TranscriptionPaneParticipant[]>([]);
+  // const [showTranscriptionDropdown, setShowTranscriptionDropdown] = useState(false);
+  const [transcriptionStarted, setTranscriptionStarted] = useState(false);
 
   if (!('communicationUserId' in userId)) {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
   }
+
+  const customButtonOptions: CustomCallControlButtonCallback[] = [
+    () => ({
+      placement: 'overflow',
+      strings: {
+        label: 'Start Transcription'
+      },
+      iconProps: { iconName: 'Emoji2' },
+      onItemClick: async () => {
+        console.log('Start transcription button clicked');
+        if (callId) {
+          setTranscriptionStarted(await startTranscription(callId));
+        }
+      },
+      tooltipText: 'Start Transcription'
+    })
+  ];
 
   const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
     return {
@@ -386,7 +416,9 @@ const AzureCommunicationCallAutomationCallScreen = (
 
     if (callConnected) {
       intervalId = setInterval(() => {
-        pullTranscriptionFromServer();
+        if (transcriptionStarted) {
+          pullTranscriptionFromServer();
+        }
       }, 2000);
     }
 
@@ -395,7 +427,7 @@ const AzureCommunicationCallAutomationCallScreen = (
         clearInterval(intervalId);
       }
     };
-  }, [callConnected, pullTranscriptionFromServer]);
+  }, [callConnected, pullTranscriptionFromServer, transcriptionStarted]);
 
   useEffect(() => {
     const participants = adapter?.getState().call?.remoteParticipants;
@@ -415,7 +447,7 @@ const AzureCommunicationCallAutomationCallScreen = (
 
   return (
     <Stack horizontal horizontalAlign={'center'} styles={{ root: { height: '100%', width: '100%' } }}>
-      <CallCompositeContainer {...props} adapter={adapter}></CallCompositeContainer>
+      <CallCompositeContainer {...props} adapter={adapter} customButtons={customButtonOptions}></CallCompositeContainer>
       <Stack styles={{ root: { width: '17rem', maxHeight: '40rem' } }}>
         <TranscriptionPane transcript={transcription} participants={remoteParticipants} />
       </Stack>

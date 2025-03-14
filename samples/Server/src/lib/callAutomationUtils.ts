@@ -6,7 +6,8 @@ import {
   CallLocator,
   StreamingData,
   TranscriptionData,
-  TranscriptionMetadata
+  TranscriptionMetadata,
+  TranscriptionOptions
 } from '@azure/communication-call-automation';
 import {
   getCallAutomationCallbackUrl,
@@ -87,11 +88,14 @@ export const connectRoomsCall = async (serverCallId: string): Promise<void> => {
   };
 };
 
-export const startTranscriptionForCall = async (callConnectionId: string): Promise<void> => {
+export const startTranscriptionForCall = async (
+  callConnectionId: string,
+  options?: TranscriptionOptions
+): Promise<void> => {
   console.log('Starting transcription for call:', callConnectionId);
   const callConnection = await getCallAutomationClient().getCallConnection(callConnectionId);
 
-  return await callConnection.getCallMedia().startTranscription();
+  return await callConnection.getCallMedia().startTranscription(options);
 };
 
 export const TRANSCRIPTION_STORE: { [key: string]: Partial<CallTranscription> } = {};
