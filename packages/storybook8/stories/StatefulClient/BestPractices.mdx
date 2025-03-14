@@ -17,6 +17,11 @@ By using the stateful client for calling or chat, you are on our recommended pat
 If you are using our provided UI Components, `usePropsFor` will help you get integrated with the underlying functionality quickly. This provides a series of properties our
 provided components are expecting from the stateful client to render an experience your users will be expecting. This is the fastest way to get your experience up and running with Azure Communication Services.
 
+If you are building calling specific or chat specific scenarios it may be advantageous to use the `useCallingPropsFor` or `useChatPropsFor` functions instead of `usePropsFor`.
+Since `usePropsFor` can grab references to calling or chat components it tells the treeshaking process I am going to need both Calling and Chat functionality and will not treeshake out those dependencies.
+If you are looking to reduce the bundle size further and you are building a chat scenario we would recommend using `useChatPropsFor` instead of `usePropsFor` and skip pulling in any calling dependencies.
+Similarly for calling scenarios you will want to use `useCallingPropsFor` and treeshake out any chat specific dependencies.
+
 ## You can use your own UI Components
 
 Today you can use `useSelector` to connect your own components to create your own experiences! We use `useSelector` under the hood when you leverage our `usePropsFor` hook.
