@@ -158,7 +158,7 @@ export const useCallingPropsFor = <Component extends (props: any) => JSX.Element
 ): ComponentProps<Component> => {
   const props = useCallingPropsForInternal(component);
   if (props === undefined) {
-    throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
+    throw 'Could not find props for this calling component, ensure the component is wrapped by appropriate providers. Please see storybook for more information: https://azure.github.io/communication-ui-library/?path=/docs/stateful-client-best-practices--docs#use-usepropsfor';
   }
   return props as ComponentProps<Component>;
 };
@@ -175,7 +175,7 @@ export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
 ): ComponentProps<Component> => {
   const props = useChatPropsForInternal(component);
   if (props === undefined) {
-    throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
+    throw 'Could not find props for this chat component, ensure the component is wrapped by appropriate providers. Please see storybook for more information: https://azure.github.io/communication-ui-library/?path=/docs/stateful-client-best-practices--docs#use-usepropsfor';
   }
   return props as ComponentProps<Component>;
 };
