@@ -2,7 +2,13 @@
 // Licensed under the MIT License.
 
 import { GroupCallLocator, TeamsMeetingLinkLocator } from '@azure/communication-calling';
-import { CallAdapterLocator, CallComposite, CallCompositeOptions, CommonCallAdapter } from '@azure/communication-react';
+import {
+  CallAdapterLocator,
+  CallComposite,
+  CallCompositeOptions,
+  CommonCallAdapter,
+  CustomCallControlButtonCallback
+} from '@azure/communication-react';
 import { Spinner, Stack } from '@fluentui/react';
 import React, { useEffect, useMemo } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
@@ -10,7 +16,10 @@ import { useIsMobile } from '../utils/useIsMobile';
 import { isIOS } from '../utils/utils';
 import { CallScreenProps } from './CallScreen';
 
-export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };
+export type CallCompositeContainerProps = CallScreenProps & {
+  adapter?: CommonCallAdapter;
+  customButtons?: CustomCallControlButtonCallback[];
+};
 
 export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.Element => {
   const { adapter } = props;
@@ -43,11 +52,12 @@ export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.
         screenShareButton: shouldHideScreenShare ? false : undefined,
         endCallButton: {
           hangUpForEveryone: 'endCallOptions'
-        }
+        },
+        onFetchCustomButtonProps: props.customButtons
       },
       disableAutoShowDtmfDialer: { dialerBehavior: 'autoShow' }
     }),
-    [shouldHideScreenShare]
+    [props.customButtons, shouldHideScreenShare]
   );
 
   // Dispose of the adapter in the window's before unload event.
