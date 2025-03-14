@@ -17,7 +17,8 @@
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "node ./scripts/lint.mjs",
     "lint:fix": "rushx lint --fix --",
-    "lint:quiet": "rushx lint -- --quiet"
+    "lint:quiet": "rushx lint -- --quiet",
+    "test:stories": "npx playwright test -c test/playwright.config.ts"
   },
   "license": "MIT",
   "dependencies": {
@@ -116,6 +117,10 @@
     "ts-loader": "^8.0.12",
     "ts-node": "^10.9.2",
     "typescript": "5.4.5",
-    "webpack": "5.95.0"
+    "webpack": "5.95.0",
+    "@playwright/test": "~1.50.1",
+    "dotenv": "^10.0.0",
+    "express": "^5.0.1",
+    "path": "0.12.7"
   }
 }
