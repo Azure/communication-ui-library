@@ -6,7 +6,7 @@ import {
   GetCallingSelector,
   useCallingHandlers,
   useCallingSelector,
-  useCallingPropsFor
+  useCallingPropsFor as useCallingPropsForInternal
 } from '@internal/calling-component-bindings';
 import {
   ChatHandlers,
@@ -14,7 +14,7 @@ import {
   GetChatSelector,
   useChatHandlers,
   useChatSelector,
-  useChatPropsFor
+  useChatPropsFor as useChatPropsForInternal
 } from '@internal/chat-component-bindings';
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { CallClientState } from '@internal/calling-stateful-client';
@@ -146,4 +146,36 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   }
 };
 
-export { useCallingPropsFor, useChatPropsFor };
+/**
+ * Helper function to pull the necessary properties for a calling component. There is a general usePropsFor
+ * function however since it can pull in for both calling and chat you will not be able to leverage any treeshaking
+ * functionality.
+ *
+ * @public
+ */
+export const useCallingPropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): ComponentProps<Component> => {
+  const props = useCallingPropsForInternal(component);
+  if (props === undefined) {
+    throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
+  }
+  return props as ComponentProps<Component>;
+};
+
+/**
+ * Helper function to pull the necessary properties for a chat component. There is a general usePropsFor
+ * function however since it can pull in for both calling and chat you will not be able to leverage any treeshaking
+ * functionality.
+ *
+ * @public
+ */
+export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): ComponentProps<Component> => {
+  const props = useChatPropsForInternal(component);
+  if (props === undefined) {
+    throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
+  }
+  return props as ComponentProps<Component>;
+};
