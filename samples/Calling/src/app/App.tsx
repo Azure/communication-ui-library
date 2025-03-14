@@ -18,6 +18,7 @@ import {
   fetchTokenResponse,
   getGroupIdFromUrl,
   getTeamsLinkFromUrl,
+  getTranscriptionEnabledFromUrl,
   isLandscape,
   isOnIphoneAndNotSafari,
   navigateToHomePage,
@@ -53,6 +54,8 @@ const App = (): JSX.Element => {
   const [displayName, setDisplayName] = useState<string>('');
   const [isTeamsCall, setIsTeamsCall] = useState<boolean>(false);
   const [alternateCallerId, setAlternateCallerId] = useState<string | undefined>();
+
+  const [enableTranscription, setEnableTranscription] = useState<boolean>(false);
 
   // Get Azure Communications Service token from the server
   useEffect(() => {
@@ -102,6 +105,8 @@ const App = (): JSX.Element => {
               getGroupIdFromUrl() ||
               createGroupId();
 
+            setEnableTranscription(getTranscriptionEnabledFromUrl());
+
             if (callDetails.option === 'Rooms') {
               callLocator = getRoomIdFromUrl() || callDetails.callLocator;
             }
@@ -123,7 +128,7 @@ const App = (): JSX.Element => {
             }
 
             // There is an API call involved with creating a room so lets only create one if we know we have to
-            if (callDetails.option === 'StartRooms') {
+            if (callDetails.option === 'StartRooms' || callDetails.option === 'RoomsTranscription') {
               let roomId = '';
               try {
                 roomId = await createRoom();
@@ -132,6 +137,9 @@ const App = (): JSX.Element => {
               }
 
               callLocator = { roomId: roomId };
+              if (callDetails.option === 'RoomsTranscription') {
+                setEnableTranscription(true);
+              }
             }
 
             if (callLocator && 'roomId' in callLocator) {
@@ -154,7 +162,8 @@ const App = (): JSX.Element => {
                 window.location.origin +
                   window.location.pathname +
                   getJoinParams(callLocator) +
-                  getIsCTEParam(!!callDetails.teamsToken)
+                  getIsCTEParam(!!callDetails.teamsToken) +
+                  getIsTranscriptionParam(callDetails.option === 'RoomsTranscription')
               );
             }
             setIsTeamsCall(!!callDetails.teamsToken);
@@ -197,6 +206,7 @@ const App = (): JSX.Element => {
           targetCallees={targetCallees}
           alternateCallerId={alternateCallerId}
           isTeamsIdentityCall={isTeamsCall}
+          enableTranscription={enableTranscription}
         />
       );
     }
@@ -208,6 +218,10 @@ const App = (): JSX.Element => {
 
 const getIsCTEParam = (isCTE?: boolean): string => {
   return isCTE ? '&isCTE=true' : '';
+};
+
+const getIsTranscriptionParam = (isTranscription?: boolean): string => {
+  return isTranscription ? '&isTranscription=true' : '';
 };
 
 const getJoinParams = (locator: CallAdapterLocator): string => {

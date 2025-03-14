@@ -128,6 +128,26 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         {
           path: '/uploadToAzureBlobStorage',
           target: 'http://[::1]:8080'
+        },
+        {
+          path: '/callAutomationEvent',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/fetchTranscript',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/startCallWithTranscription',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/connectRoomsCall',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/startTranscription',
+          target: 'http://[::1]:8080'
         }
       ]
     }

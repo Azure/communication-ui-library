@@ -41,6 +41,14 @@ export type {
 
 export type { ImageOverlayProps } from './ImageOverlay';
 
+export { TranscriptionPane } from './TranscriptionPane';
+export type { TranscriptionPaneProps } from './TranscriptionPane';
+export type {
+  TranscriptionSentence,
+  TranscriptionPaneParticipant,
+  CallTranscription
+} from '../types/TranscriptionTypes';
+
 export type { InlineImageOptions, InlineImage } from './ChatMessage/ChatMessageContent';
 
 export { MessageStatusIndicator } from './MessageStatusIndicator';
