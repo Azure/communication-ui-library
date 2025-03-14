@@ -152,6 +152,11 @@ export interface VideoGalleryStrings {
 /**
  * @public
  */
+export type LocalScreenShareView = 'stream' | 'placeholderMessage';
+
+/**
+ * @public
+ */
 export type VideoGalleryLayout =
   | 'default'
   | 'floatingLocalVideo'
@@ -390,7 +395,7 @@ export interface VideoGalleryProps {
   /**
    * Controls the view of the local screenshare stream in the gallery
    */
-  localScreenShareView?: 'stream' | 'placeholderMessage';
+  localScreenShareView?: LocalScreenShareView;
 }
 
 /**

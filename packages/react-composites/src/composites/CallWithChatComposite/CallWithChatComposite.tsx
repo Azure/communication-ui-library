@@ -47,7 +47,7 @@ import {
 import { SidePaneHeader } from '../common/SidePaneHeader';
 import { CallControlOptions } from '../CallComposite/types/CallControlOptions';
 import { useUnreadMessagesTracker } from './ChatButton/useUnreadMessagesTracker';
-import { VideoGalleryLayout } from '@internal/react-components';
+import { VideoGalleryLayout, LocalScreenShareView } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentOptions } from '@internal/react-components';
 /* @conditional-compile-remove(breakout-rooms) */
@@ -188,7 +188,7 @@ export type CallWithChatCompositeOptions = {
     /**
      * Controls the view of the local screenshare stream in the gallery
      */
-    localScreenShareView?: 'stream' | 'placeholderMessage';
+    localScreenShareView?: LocalScreenShareView;
   };
   /**
    * Options for end of call survey
@@ -325,7 +325,7 @@ type CallWithChatScreenProps = {
   localVideoTile?: boolean | LocalVideoTileOptions;
   galleryOptions?: {
     layout?: VideoGalleryLayout;
-    localScreenShareView?: 'stream' | 'placeholderMessage';
+    localScreenShareView?: LocalScreenShareView;
   };
   /**
    * Options for end of call survey
