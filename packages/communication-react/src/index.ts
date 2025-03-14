@@ -36,7 +36,10 @@ export type {
   GetCallingSelector,
   CallingHandlers,
   CallingBaseSelectorProps,
-  CommonCallingHandlers
+  CommonCallingHandlers,
+  MediaClientProviderProps,
+  MediaStreamSessionProviderProps,
+  MediaSessionAgentProviderProps
 } from '../../calling-component-bindings/src';
 
 export type {
@@ -67,7 +70,13 @@ export {
   useCall,
   useDeviceManager,
   getCallingSelector,
-  createDefaultCallingHandlers
+  createDefaultCallingHandlers,
+  MediaClientProvider,
+  MediaSessionAgentProvider,
+  MediaStreamSessionProvider,
+  useMediaClient,
+  useMediaSessionAgent,
+  useMediaStreamSession
 } from '../../calling-component-bindings/src';
 
 export {

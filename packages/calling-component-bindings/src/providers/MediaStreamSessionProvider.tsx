@@ -58,7 +58,7 @@ export const MediaStreamSessionProvider = (props: MediaStreamSessionProviderProp
  *
  * @public
  */
-export const useSession = (): MediaStreamSession | undefined => {
+export const useMediaStreamSession = (): MediaStreamSession | undefined => {
   const session = useContext(MediaStreamSessionContext)?.session;
   return session;
 };

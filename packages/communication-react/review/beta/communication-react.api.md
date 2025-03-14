@@ -3858,6 +3858,17 @@ export interface MediaAccessState {
     isVideoPermitted: boolean;
 }
 
+// @public
+export const MediaClientProvider: (props: MediaClientProviderProps) => JSX.Element;
+
+// @public
+export interface MediaClientProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    mediaClient: StatefulMediaClient;
+}
+
 // @alpha (undocumented)
 export interface MediaClientState {
     // (undocumented)
@@ -3943,6 +3954,17 @@ export type MediaErrorTarget = 'MediaClient.createSessionAgent' | 'MediaClient.g
 // @alpha
 export const mediaSessionAgentDeclaratify: (mediaSessionAgent: MediaSessionAgent, context: MediaContext) => DeclarativeMediaSessionAgent;
 
+// @public
+export const MediaSessionAgentProvider: (props: MediaSessionAgentProviderProps) => JSX.Element;
+
+// @public
+export interface MediaSessionAgentProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    mediaSessionAgent?: MediaSessionAgent;
+}
+
 // @alpha (undocumented)
 export interface MediaSessionState {
     // (undocumented)
@@ -3967,6 +3989,17 @@ export interface MediaSessionState {
 
 // @alpha (undocumented)
 export const mediaStreamSessionDeclaratify: (mediaStreamSession: MediaStreamSession, context: MediaContext) => DeclarativeMediaStreamSession;
+
+// @public
+export const MediaStreamSessionProvider: (props: MediaStreamSessionProviderProps) => JSX.Element;
+
+// @public
+export interface MediaStreamSessionProviderProps {
+    // (undocumented)
+    children: React_2.ReactNode;
+    // (undocumented)
+    session?: MediaStreamSession;
+}
 
 // @public
 export interface MeetingConferencePhoneInfoModalStrings {
@@ -5683,6 +5716,15 @@ export const useChatThreadClient: () => ChatThreadClient;
 
 // @public
 export const useDeviceManager: () => StatefulDeviceManager | undefined;
+
+// @public
+export const useMediaClient: () => StatefulMediaClient;
+
+// @public
+export const useMediaSessionAgent: () => MediaSessionAgent | undefined;
+
+// @public
+export const useMediaStreamSession: () => MediaStreamSession | undefined;
 
 // @public
 export const usePropsFor: <Component extends (props: any) => JSX.Element>(component: Component, type?: 'calling' | 'chat') => ComponentProps<Component>;

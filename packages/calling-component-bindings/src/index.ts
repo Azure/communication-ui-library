@@ -39,6 +39,20 @@ export { useTeamsCall, useTeamsCallAgent } from './providers';
 export { CallAgentProvider, CallClientProvider, CallProvider, useCall, useCallAgent, useCallClient } from './providers';
 export type { CallAgentProviderProps, CallClientProviderProps, CallProviderProps } from './providers';
 
+export {
+  MediaSessionAgentProvider,
+  MediaClientProvider,
+  MediaStreamSessionProvider,
+  useMediaSessionAgent,
+  useMediaClient,
+  useMediaStreamSession
+} from './providers';
+export type {
+  MediaSessionAgentProviderProps,
+  MediaClientProviderProps,
+  MediaStreamSessionProviderProps
+} from './providers';
+
 export { usePropsFor as useCallingPropsFor, getSelector as getCallingSelector } from './hooks/usePropsFor';
 export type { GetSelector as GetCallingSelector, EmptySelector } from './hooks/usePropsFor';
 

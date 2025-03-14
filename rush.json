@@ -91,6 +91,11 @@
       "reviewCategory": "sample"
     },
     {
+      "packageName": "@internal/media-session-sample",
+      "projectFolder": "samples/MediaSession",
+      "reviewCategory": "sample"
+    },
+    {
       "packageName": "@internal/server",
       "projectFolder": "samples/Server",
       "reviewCategory": "sample"
