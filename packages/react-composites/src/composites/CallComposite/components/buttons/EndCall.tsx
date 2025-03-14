@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { concatStyleSets, Stack } from '@fluentui/react';
-/* @conditional-compile-remove(breakout-rooms) */
 import { IContextualMenuProps } from '@fluentui/react';
 import { ControlBarButtonStyles, EndCallButton } from '@internal/react-components';
 import React, { useMemo } from 'react';
@@ -20,7 +19,6 @@ export const EndCall = (props: {
   mobileView?: boolean;
   enableEndCallMenu?: boolean;
   disableEndCallModal?: boolean;
-  /* @conditional-compile-remove(breakout-rooms) */
   returnFromBreakoutRoom?: () => Promise<void>;
 }): JSX.Element => {
   const compactMode = props.displayType === 'compact';
@@ -99,9 +97,7 @@ export const EndCall = (props: {
     [compactMode, props.styles]
   );
 
-  /* @conditional-compile-remove(breakout-rooms) */
   const enableBreakoutRoomMenu = !!props.returnFromBreakoutRoom;
-  /* @conditional-compile-remove(breakout-rooms) */
   const breakoutRoomMenuProps: IContextualMenuProps = {
     items: [
       {
@@ -131,7 +127,6 @@ export const EndCall = (props: {
         styles={styles}
         showLabel={!compactMode}
         enableEndCallMenu={props.enableEndCallMenu ?? false}
-        /* @conditional-compile-remove(breakout-rooms) */
         menuProps={enableBreakoutRoomMenu ? breakoutRoomMenuProps : undefined}
       />
       {

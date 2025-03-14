@@ -3,14 +3,13 @@
 
 import {
   CallingBaseSelectorProps,
+  getAssignedBreakoutRoom,
   getDeviceManager,
   getDiagnostics,
   getLatestErrors,
   getEnvironmentInfo,
   getCallState
 } from './baseSelectors';
-/* @conditional-compile-remove(breakout-rooms) */
-import { getAssignedBreakoutRoom } from './baseSelectors';
 
 import { getLatestNotifications } from './baseSelectors';
 
@@ -55,7 +54,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     getCallState,
     getEnvironmentInfo,
     getMeetingConferencePhones,
-    /* @conditional-compile-remove(breakout-rooms) */ getAssignedBreakoutRoom
+    getAssignedBreakoutRoom
   ],
   (
     latestErrors: CallErrors,
@@ -65,7 +64,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     callStatus,
     environmentInfo,
     meetingConference,
-    /* @conditional-compile-remove(breakout-rooms) */ assignedBreakoutRoom
+    assignedBreakoutRoom
   ): { activeErrorMessages: ActiveNotification[]; activeNotifications: ActiveNotification[] } => {
     // The order in which the errors are returned is significant: The `Notification` shows errors on the UI in that order.
     // There are several options for the ordering:
@@ -238,14 +237,12 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         ariaLive: 'off' // "You're muted" is too noisy, so we don't want to announce it.
       });
     }
-    /* @conditional-compile-remove(breakout-rooms) */
     if (latestNotifications['assignedBreakoutRoomOpened']) {
       activeNotifications.push({
         type: 'assignedBreakoutRoomOpened',
         timestamp: latestNotifications['assignedBreakoutRoomOpened'].timestamp
       });
     }
-    /* @conditional-compile-remove(breakout-rooms) */
     if (latestNotifications['assignedBreakoutRoomOpenedPromptJoin'] && assignedBreakoutRoom) {
       activeNotifications.push({
         type: 'assignedBreakoutRoomOpenedPromptJoin',
@@ -253,28 +250,24 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         onClickPrimaryButton: () => assignedBreakoutRoom.join()
       });
     }
-    /* @conditional-compile-remove(breakout-rooms) */
     if (latestNotifications['assignedBreakoutRoomChanged']) {
       activeNotifications.push({
         type: 'assignedBreakoutRoomChanged',
         timestamp: latestNotifications['assignedBreakoutRoomChanged'].timestamp
       });
     }
-    /* @conditional-compile-remove(breakout-rooms) */
     if (latestNotifications['assignedBreakoutRoomClosed']) {
       activeNotifications.push({
         type: 'assignedBreakoutRoomClosed',
         timestamp: latestNotifications['assignedBreakoutRoomClosed'].timestamp
       });
     }
-    /* @conditional-compile-remove(breakout-rooms) */
     if (latestNotifications['breakoutRoomJoined']) {
       activeNotifications.push({
         type: 'breakoutRoomJoined',
         timestamp: latestNotifications['breakoutRoomJoined'].timestamp
       });
     }
-    /* @conditional-compile-remove(breakout-rooms) */
     if (latestNotifications['breakoutRoomClosingSoon']) {
       activeNotifications.push({
         type: 'breakoutRoomClosingSoon',

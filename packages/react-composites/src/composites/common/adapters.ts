@@ -54,7 +54,6 @@ export interface AdapterError extends Error {
  */
 export type AdapterErrors = { [target: string]: AdapterError };
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * Notification from call client state stored in adapter state.
  *
@@ -71,7 +70,6 @@ export interface AdapterNotification {
   timestamp: Date;
 }
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * Adapters stores the latest notification for each target.
  *

@@ -49,7 +49,6 @@ import { TeamsCallAgent } from '@azure/communication-calling';
 import { Features } from '@azure/communication-calling';
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */
 import type { BreakoutRoom, BreakoutRoomsEventData, BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { EventEmitter } from 'events';
 import {
@@ -152,7 +151,6 @@ class CallContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: CallContextState;
   private callId: string | undefined;
-  /* @conditional-compile-remove(breakout-rooms) */
   private isReturningFromBreakoutRoom: boolean = false;
   private displayNameModifier: AdapterStateModifier | undefined;
 
@@ -188,7 +186,7 @@ class CallContext {
       targetCallees: targetCallees as CommunicationIdentifier[],
       page: 'configuration',
       latestErrors: clientState.latestErrors,
-      /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: clientState.latestNotifications,
+      latestNotifications: clientState.latestNotifications,
       isTeamsCall,
       isTeamsMeeting,
       isRoomsCall,
@@ -266,7 +264,6 @@ class CallContext {
     this.setState({ ...this.state, targetCallees });
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public setIsReturningFromBreakoutRoom(isReturningFromBreakoutRoom: boolean): void {
     this.isReturningFromBreakoutRoom = isReturningFromBreakoutRoom;
   }
@@ -295,13 +292,11 @@ class CallContext {
       : undefined;
     const transferCall = latestAcceptedTransfer ? clientState.calls[latestAcceptedTransfer.callId] : undefined;
 
-    /* @conditional-compile-remove(breakout-rooms) */
     if (call?.state === 'Connected' || call?.state === 'Connecting') {
       this.setIsReturningFromBreakoutRoom(false);
     }
 
     let isReturningFromBreakoutRoom = false;
-    /* @conditional-compile-remove(breakout-rooms) */
     isReturningFromBreakoutRoom = this.isReturningFromBreakoutRoom;
 
     const newPage = getCallCompositePage(
@@ -340,7 +335,7 @@ class CallContext {
         endedCall: latestEndedCall,
         devices: clientState.deviceManager,
         latestErrors: clientState.latestErrors,
-        /* @conditional-compile-remove(breakout-rooms) */ latestNotifications: clientState.latestNotifications,
+        latestNotifications: clientState.latestNotifications,
         cameraStatus:
           call?.localVideoStreams.find((s) => s.mediaStreamType === 'Video') ||
           clientState.deviceManager.unparentedViews.find((s) => s.mediaStreamType === 'Video')
@@ -424,7 +419,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private emitter: EventEmitter = new EventEmitter();
   private callingSoundSubscriber: CallingSoundSubscriber | undefined;
   private onClientStateChange: (clientState: CallClientState) => void;
-  /* @conditional-compile-remove(breakout-rooms) */
   private originCall: CallCommon | undefined;
   private onResolveVideoBackgroundEffectsDependency?: () => Promise<VideoBackgroundEffectsDependency>;
   private onResolveDeepNoiseSuppressionDependency?: () => Promise<DeepNoiseSuppressionEffectDependency>;
@@ -755,7 +749,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           : {};
       const call = this._joinCall(audioOptions, videoOptions);
 
-      /* @conditional-compile-remove(breakout-rooms) */
       this.originCall = call;
       this.processNewCall(call);
       return call;
@@ -1241,7 +1234,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.handlers.onPermitOthersVideo?.();
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
     const callState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
     const assignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
@@ -1294,7 +1286,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'roleChanged', listener: PropertyChangedEvent): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
-  /* @conditional-compile-remove(breakout-rooms) */
   on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -1370,9 +1361,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
     /* @conditional-compile-remove(rtt) */
     this.call?.feature(Features.RealTimeText).on('realTimeTextReceived', this.realTimeTextReceived.bind(this));
-    /* @conditional-compile-remove(breakout-rooms) */
     const breakoutRoomsFeature = this.call?.feature(Features.BreakoutRooms);
-    /* @conditional-compile-remove(breakout-rooms) */
     if (breakoutRoomsFeature) {
       breakoutRoomsFeature.on('breakoutRoomsUpdated', this.breakoutRoomsUpdated.bind(this));
     }
@@ -1395,9 +1384,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     if (this.callingSoundSubscriber) {
       this.callingSoundSubscriber.unsubscribeAll();
     }
-    /* @conditional-compile-remove(breakout-rooms) */
     const breakoutRoomsFeature = this.call?.feature(Features.BreakoutRooms);
-    /* @conditional-compile-remove(breakout-rooms) */
     if (breakoutRoomsFeature) {
       breakoutRoomsFeature.off('breakoutRoomsUpdated', this.breakoutRoomsUpdated.bind(this));
     }
@@ -1511,7 +1498,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('spotlightChanged', args);
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomsUpdated(eventData: BreakoutRoomsEventData): void {
     if (eventData.type === 'assignedBreakoutRooms') {
       this.assignedBreakoutRoomUpdated(eventData.data);
@@ -1521,7 +1507,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.emitter.emit('breakoutRoomsUpdated', eventData);
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   private assignedBreakoutRoomUpdated(breakoutRoom?: BreakoutRoom): void {
     if (!this.call?.id) {
       return;
@@ -1531,7 +1516,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     }
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomJoined(call: Call | TeamsCall): void {
     if (this.call?.id !== call.id) {
       this.processNewCall(call);
@@ -1540,7 +1524,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.hangupOtherBreakoutRoomCalls(call.id);
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   private hangupOtherBreakoutRoomCalls(currentBreakoutRoomCallId: string): void {
     // Get other breakout room calls by checking which other calls have breakout room settings defined
     const otherBreakoutRoomCallStates = Object.values(this.callClient.getState().calls).filter((callState) => {
@@ -1592,7 +1575,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'roleChanged', listener: PropertyChangedEvent): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
-  /* @conditional-compile-remove(breakout-rooms) */
   off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

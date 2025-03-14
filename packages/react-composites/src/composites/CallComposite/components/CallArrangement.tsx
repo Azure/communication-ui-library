@@ -89,9 +89,7 @@ import {
 import { getIsTeamsCall, getMediaAccessSetting } from '../selectors/baseSelectors';
 import { useHandlers } from '../hooks/useHandlers';
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
-/* @conditional-compile-remove(breakout-rooms) */
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
-/* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
 import { DtmfDialPadOptions } from '../CallComposite';
 
@@ -511,11 +509,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
       )
     : props.capabilitiesChangedNotificationBarProps?.capabilitiesChangedNotifications;
 
-  /* @conditional-compile-remove(breakout-rooms) */
   const notificationStackStrings = useCompositeStringsForNotificationStackStrings(locale);
 
   let latestNotifications = props.latestNotifications;
-  /* @conditional-compile-remove(breakout-rooms) */
   // Filter out breakout room notification that prompts user to join breakout room when in mobile view. We will
   // replace it with a non-dismissible banner
   latestNotifications = props.mobileView
@@ -544,10 +540,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={galleryContainerStyles}>
                   <Stack.Item styles={notificationsContainerStyles}>
-                    {
-                      /* @conditional-compile-remove(breakout-rooms) */
-                      props.mobileView && <BreakoutRoomsBanner locale={locale} adapter={adapter} />
-                    }
+                    {props.mobileView && <BreakoutRoomsBanner locale={locale} adapter={adapter} />}
                     {props.showErrorNotifications && (
                       <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
                         <NotificationStack
@@ -561,7 +554,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                         <NotificationStack
                           activeNotifications={latestNotifications}
                           onDismissNotification={props.onDismissNotification}
-                          /* @conditional-compile-remove(breakout-rooms) */
                           strings={notificationStackStrings}
                         />
                       </Stack>

@@ -257,7 +257,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     return this.callWithChatAdapter.muteAllRemoteParticipants();
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
     return this.callWithChatAdapter.returnFromBreakoutRoom();
   }
@@ -309,7 +308,6 @@ function callAdapterStateFromCallWithChatAdapterState(
     isTeamsMeeting: callWithChatAdapterState.isTeamsMeeting,
     isRoomsCall: false,
     latestErrors: callWithChatAdapterState.latestCallErrors,
-    /* @conditional-compile-remove(breakout-rooms) */
     latestNotifications: callWithChatAdapterState.latestCallNotifications,
     alternateCallerId: callWithChatAdapterState.alternateCallerId,
     environmentInfo: callWithChatAdapterState.environmentInfo,
