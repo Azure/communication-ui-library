@@ -26,6 +26,8 @@ import {
 } from '../styles/TransferPage.styles';
 import { reduceCallControlsForMobile } from '../utils';
 import { LobbyPageProps } from './LobbyPage';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 
 // Which should be participant shown in the transfer page
 type TransferPageSubject = 'transferor' | 'transferTarget';
@@ -37,6 +39,8 @@ export const TransferPage = (
   props: LobbyPageProps & {
     /** Callback function that can be used to provide custom data to Persona Icon rendered */
     onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+    onRenderAvatar?: OnRenderAvatarCallback;
   }
 ): JSX.Element => {
   const errorBarProps = usePropsFor(ErrorBar);
@@ -131,7 +135,13 @@ interface TransferTileProps {
   /** User id for `onFetchAvatarPersonaData` callback to provide custom data to avatars rendered */
   userId?: string;
   /** Callback function that can be used to provide custom data to Persona Icon rendered */
+  /** This callback will be ignored if onRenderAvatar is provided. */
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  /**
+   * Optional callback to override render of the avatar.
+   */
+  onRenderAvatar?: OnRenderAvatarCallback;
   /**
    * Display name of the transferor or transfer target to be shown in the label.
    * @remarks `displayName` is used to generate avatar initials if `initialsName` is not provided.
@@ -148,7 +158,14 @@ interface TransferTileProps {
 }
 
 const TransferTile = (props: TransferTileProps): JSX.Element => {
-  const { displayName, initialsName, userId, onFetchAvatarPersonaData, statusText } = props;
+  const {
+    displayName,
+    initialsName,
+    userId,
+    onFetchAvatarPersonaData,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */ onRenderAvatar,
+    statusText
+  } = props;
 
   const [personaSize, setPersonaSize] = useState<number>();
   const tileRef = useRef<HTMLDivElement>(null);
@@ -197,11 +214,25 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
 
   const defaultAvatar = useMemo(() => defaultOnRenderAvatar(), [defaultOnRenderAvatar]);
 
+  const onRenderAvatarCallback = useCallback(() => {
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+    if (onRenderAvatar) {
+      return onRenderAvatar(userId, placeholderOptions, defaultOnRenderAvatar);
+    }
+    return defaultAvatar;
+  }, [
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */ onRenderAvatar,
+    userId,
+    placeholderOptions,
+    defaultOnRenderAvatar,
+    defaultAvatar
+  ]);
+
   return (
     <div ref={tileRef} className={mergeStyles(tileContainerStyles)} data-is-focusable={true}>
       <Stack className={mergeStyles(tileContentStyles)} tokens={{ childrenGap: '1rem' }}>
         <Stack horizontalAlign="center" tokens={{ childrenGap: '0.5rem' }}>
-          {defaultAvatar}
+          {onRenderAvatarCallback()}
           <Text className={mergeStyles(displayNameStyles)}>{displayName}</Text>
         </Stack>
         <Stack horizontal horizontalAlign="center" verticalAlign="center" tokens={{ childrenGap: '0.5rem' }}>
