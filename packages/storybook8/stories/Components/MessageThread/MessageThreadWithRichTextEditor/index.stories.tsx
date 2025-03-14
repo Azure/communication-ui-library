@@ -10,7 +10,7 @@ import { MessageThreadWithRichTextEditorInlineImagesExample } from './snippets/W
 import { MessageThreadWithWithRichTextEditorOnPasteExample } from './snippets/WithRichTextEditorOnPaste.snippet';
 
 // Main story
-export { MessageThreadWithRichTextEditor } from './RichTextEditorForEditing.story';
+export { MessageThreadWithRichTextEditor } from './MessageThreadWithRichTextEditor.story';
 
 export const RichTextEditorTextDocsOnly = {
   render: MessageThreadWithRichTextEditorExample
@@ -27,6 +27,7 @@ export const RichTextEditorOnPasteTextDocsOnly = {
 // Main story meta export
 const meta: Meta<typeof MessageThreadComponent> = {
   title: 'Components/Message Thread/Rich Text Editor Support',
+  name: 'Rich Text Editor Support',
   component: MessageThreadComponent,
   argTypes: {
     isEnableRTE: { control: 'boolean', name: 'Enable Rich Text Editor' }

@@ -9,7 +9,8 @@ import {
   CustomAvatarOptions,
   Announcer,
   VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps
+  VideoTileDrawerMenuProps,
+  LocalScreenShareView
 } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
@@ -69,6 +70,7 @@ export interface MediaGalleryProps {
   captionsOptions?: {
     height: 'full' | 'default';
   };
+  localScreenShareView?: LocalScreenShareView;
 }
 
 /**
@@ -224,6 +226,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             ? videoGalleryProps.onMuteParticipant
             : undefined
         }
+        localScreenShareView={props.localScreenShareView}
       />
     );
   }, [
@@ -250,7 +253,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     onStartRemoteSpotlightWithPrompt,
     onStopRemoteSpotlightWithPrompt,
     layoutBasedOnTilePosition,
-    capabilities?.muteOthers
+    capabilities?.muteOthers,
+    props.localScreenShareView
   ]);
 
   return (

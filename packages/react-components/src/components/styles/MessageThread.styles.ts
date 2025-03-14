@@ -123,10 +123,7 @@ export const useChatMessageRenderStyles = makeStyles({
     marginBottom: '0',
     backgroundColor: 'transparent',
     maxWidth: '100%',
-    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`,
-    '&:focus-visible': {
-      outlineStyle: 'auto'
-    }
+    minWidth: `${CHAT_MESSAGE_CONTAINER_MIN_WIDTH_REM}rem`
   },
   bodyMyMessage: {
     width: '100%',
@@ -184,9 +181,6 @@ export const useChatMyMessageStyles = makeStyles({
       color: tokens.colorStatusWarningBackground3,
       fontWeight: 600
     },
-    '&:focus-visible': {
-      outlineStyle: 'auto'
-    },
     '& img': {
       maxWidth: '100%',
       height: 'auto'
@@ -211,7 +205,8 @@ export const useChatMyMessageStyles = makeStyles({
     top: '-19px',
     right: '0',
     ...shorthands.borderRadius(tokens.borderRadiusMedium),
-    zIndex: 1,
+    // Ensure the focus border around the message bubble doesn't overlap on top of more options button
+    zIndex: 2,
     lineHeight: tokens.lineHeightBase100,
     visibility: 'hidden',
 
@@ -311,9 +306,6 @@ export const useChatMessageStyles = makeStyles({
     },
     '& code': {
       whiteSpace: 'pre-wrap'
-    },
-    '&:focus-visible': {
-      outlineStyle: 'auto'
     }
   },
   bodyWithoutAvatar: {

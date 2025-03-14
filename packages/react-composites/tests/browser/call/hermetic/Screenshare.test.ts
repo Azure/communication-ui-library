@@ -13,12 +13,52 @@ import { expect } from '@playwright/test';
 import { dataUiId, dragToRight, existsOnPage, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS } from '../../common/constants';
 import type { MockCallState } from '../../../common';
+import type { CallCompositeOptions } from '../../../../src';
 
 test.describe('Screenshare tests', async () => {
-  test('Local screenshare notification should be displayed in grid area of VideoGallery when local participant is screensharing', async ({
+  test('Local screenshare notification should be displayed in grid area of VideoGallery when local participant is screensharing when localScreenShareView is set to placeholderMessage', async ({
     page,
     serverUrl
   }) => {
+    const paul = defaultMockRemoteParticipant('Paul Bridges');
+    addVideoStream(paul, true);
+    paul.isSpeaking = true;
+    const fiona = defaultMockRemoteParticipant('Fiona Harper');
+    addVideoStream(fiona, true);
+    const reina = defaultMockRemoteParticipant('Reina Takizawa');
+    reina.isSpeaking = true;
+    const vasily = defaultMockRemoteParticipant('Vasily Podkolzin');
+    vasily.isMuted = true;
+
+    const participants = [
+      paul,
+      defaultMockRemoteParticipant('Eryka Klein'),
+      fiona,
+      defaultMockRemoteParticipant('Pardeep Singh'),
+      reina,
+      vasily,
+      defaultMockRemoteParticipant('Luciana Rodriguez'),
+      defaultMockRemoteParticipant('Antonie van Leeuwenhoek'),
+      defaultMockRemoteParticipant('Gerald Ho')
+    ];
+    const initialState = defaultMockCallAdapterState(participants);
+    (initialState.call as MockCallState).isScreenSharingOn = true;
+    const testOptions: CallCompositeOptions = {
+      galleryOptions: {
+        localScreenShareView: 'placeholderMessage'
+      }
+    };
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, {
+        customCallCompositeOptions: JSON.stringify(testOptions)
+      })
+    );
+
+    await waitForSelector(page, dataUiId(IDS.videoGallery));
+    expect(await stableScreenshot(page)).toMatchSnapshot('local-screenshare-placeholderMessage.png');
+  });
+
+  test('Local screenshare should be showing screen share video stream', async ({ page, serverUrl }) => {
     const paul = defaultMockRemoteParticipant('Paul Bridges');
     addVideoStream(paul, true);
     paul.isSpeaking = true;

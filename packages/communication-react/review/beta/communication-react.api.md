@@ -778,6 +778,7 @@ export type CallCompositeOptions = {
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+        localScreenShareView?: LocalScreenShareView;
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -798,6 +799,9 @@ export type CallCompositeOptions = {
     };
     spotlight?: {
         hideSpotlightButtons?: boolean;
+    };
+    joinCallOptions?: {
+        microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
     };
 };
 
@@ -1619,6 +1623,7 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+        localScreenShareView?: LocalScreenShareView;
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -1641,6 +1646,9 @@ export type CallWithChatCompositeOptions = {
         hideSpotlightButtons?: boolean;
     };
     richTextEditor?: boolean;
+    joinCallOptions?: {
+        microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
+    };
 };
 
 // @public
@@ -3779,6 +3787,9 @@ export interface LocalRecordingCallFeatureState {
 }
 
 // @public (undocumented)
+export type LocalScreenShareView = 'stream' | 'placeholderMessage';
+
+// @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     ariaDescription?: string;
     cameras?: OptionsDevice[];
@@ -5618,6 +5629,7 @@ export interface VideoGalleryProps {
     isTogetherModeActive?: boolean;
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
+    localScreenShareView?: LocalScreenShareView;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
