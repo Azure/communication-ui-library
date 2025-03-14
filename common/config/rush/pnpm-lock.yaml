@@ -5559,8 +5559,8 @@ packages:
       '@sinonjs/commons': 3.0.1
     dev: false
 
-  /@skype/spool-sdk@2025.7.0-0.20-internal-vbhce653:
-    resolution: {integrity: sha1-Fmp/Xc+IDE9Q8muvEp9rHzOk0eM=}
+  /@skype/spool-sdk@2025.9.0-0.90-internal-vbh72453:
+    resolution: {integrity: sha1-9nIe6c1ynbEK2ogAuZFg4ymaD1s=}
     dependencies:
       '@azure/communication-common': 2.3.0
       '@azure/logger': 1.1.4
@@ -18639,7 +18639,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-bh5u85ryQJKFxX5a8CCMAxezWLRijUPEyNGH3P3NLNsIMSlaIvj+I4rn0lBnB2KPpFSv0bDh2RUMIgefTfhHpA==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-BsCctDlz6VaUITWM4tacbal1tDNl+V/rqsqd6j8ehXOBGLPUFAXbTc6UtntzONF0vbvbcl0tBzp2aqPKMSQkSw==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -18648,7 +18648,7 @@ packages:
       '@azure/communication-common': 2.3.1
       '@babel/cli': 7.26.4(@babel/core@7.26.9)
       '@babel/core': 7.26.9
-      '@skype/spool-sdk': 2025.7.0-0.20-internal-vbhce653
+      '@skype/spool-sdk': 2025.9.0-0.90-internal-vbh72453
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
       '@typescript-eslint/eslint-plugin': 7.18.0(@typescript-eslint/parser@7.18.0)(eslint@8.57.1)(typescript@5.4.5)
@@ -18687,7 +18687,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-KoJBnKf7+LR88rppnbrN9wpHSVbf3nVeeUkONS1Gf81HYLKzIe8aZ288vQ5p9b2ia9GBcTKTp/DRwwjytomUBw==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-yJn3ZCwkXUqvXrxYs9VoYzvelt5GE/gOqI3Bh69/oiuGr1LXXAcsWrC28ICtjRX0DgJ6vd1ztz4u8y/Ao2u4yw==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -18697,7 +18697,7 @@ packages:
       '@azure/logger': 1.1.4
       '@babel/cli': 7.26.4(@babel/core@7.26.9)
       '@babel/core': 7.26.9
-      '@skype/spool-sdk': 2025.7.0-0.20-internal-vbhce653
+      '@skype/spool-sdk': 2025.9.0-0.90-internal-vbh72453
       '@types/events': 3.0.3
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
@@ -19250,7 +19250,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-72suHnT80wIUQiGcXjawYyWmbpNDIbSouXjzYIaZFMHkSwW59ZQB55k1mHlHrNIAJCQkTuwyqwqgNezniw9WaA==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-C0Kv94kCk7HZGd3gDCF0Rd9SW1tXt8s1xohTdw6SoHtKuCkqdnmIXfSppDJAITI4llNBvMUmifdSPDVMR//EeA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -19274,7 +19274,7 @@ packages:
       '@microsoft/api-documenter': 7.26.13(@types/node@22.10.10)
       '@microsoft/api-extractor': 7.48.1(@types/node@22.10.10)
       '@rollup/plugin-json': 6.1.0(rollup@4.32.1)
-      '@skype/spool-sdk': 2025.7.0-0.20-internal-vbhce653
+      '@skype/spool-sdk': 2025.9.0-0.90-internal-vbh72453
       '@testing-library/jest-dom': 6.6.3
       '@testing-library/react': 16.2.0(@testing-library/dom@10.4.0)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@types/dompurify': 3.2.0
