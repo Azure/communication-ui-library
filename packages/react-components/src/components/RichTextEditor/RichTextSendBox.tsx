@@ -597,3 +597,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     </Stack>
   );
 };
+
+// Add component type check to assist in identification for usePropsFor
+// to avoid issue where production build does not have the component name
+RichTextSendBox.isRichTextSendBox = true;

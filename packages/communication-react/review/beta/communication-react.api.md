@@ -4792,7 +4792,10 @@ export interface RichTextEditorOptions {
 }
 
 // @beta
-export const RichTextSendBox: (props: RichTextSendBoxProps) => JSX.Element;
+export const RichTextSendBox: {
+    (props: RichTextSendBoxProps): JSX.Element;
+    isRichTextSendBox: boolean;
+};
 
 // @beta
 export interface RichTextSendBoxProps {

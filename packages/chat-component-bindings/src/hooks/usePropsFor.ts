@@ -98,8 +98,11 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
     }
     return messageThreadSelectorImpl;
   };
+
+  // Add component type check to assist in identification for usePropsFor
+  // to avoid issue where production build does not have the component name
   /* @conditional-compile-remove(rich-text-editor) */
-  if (typeof component === 'function' && component.name === 'RichTextSendBox') {
+  if (typeof component === 'function' && (component as any).isRichTextSendBox) {
     return sendBoxSelector;
   }
   switch (component) {
