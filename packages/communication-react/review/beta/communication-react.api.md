@@ -424,6 +424,8 @@ export interface CallAdapter extends CommonCallAdapter {
 // @public
 export type CallAdapterCallEndedEvent = {
     callId: string;
+    code?: number;
+    subCode?: number;
 };
 
 // @public @deprecated
@@ -776,6 +778,7 @@ export type CallCompositeOptions = {
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+        localScreenShareView?: LocalScreenShareView;
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -796,6 +799,9 @@ export type CallCompositeOptions = {
     };
     spotlight?: {
         hideSpotlightButtons?: boolean;
+    };
+    joinCallOptions?: {
+        microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
     };
 };
 
@@ -1085,7 +1091,9 @@ export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 // @public
 export class CallError extends Error {
     constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
+    code?: number;
     innerError: Error;
+    subCode?: number;
     target: CallErrorTarget;
     timestamp: Date;
 }
@@ -1615,6 +1623,7 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+        localScreenShareView?: LocalScreenShareView;
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -1637,6 +1646,9 @@ export type CallWithChatCompositeOptions = {
         hideSpotlightButtons?: boolean;
     };
     richTextEditor?: boolean;
+    joinCallOptions?: {
+        microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
+    };
 };
 
 // @public
@@ -3775,6 +3787,9 @@ export interface LocalRecordingCallFeatureState {
 }
 
 // @public (undocumented)
+export type LocalScreenShareView = 'stream' | 'placeholderMessage';
+
+// @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     ariaDescription?: string;
     cameras?: OptionsDevice[];
@@ -5614,6 +5629,7 @@ export interface VideoGalleryProps {
     isTogetherModeActive?: boolean;
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
+    localScreenShareView?: LocalScreenShareView;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;

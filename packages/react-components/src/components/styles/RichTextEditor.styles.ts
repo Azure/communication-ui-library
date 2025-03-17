@@ -52,6 +52,10 @@ export const richTextEditorWrapperStyle = (theme: Theme): string => {
           verticalAlign: 'top'
         }
       }
+    },
+    '& a': {
+      color: theme.palette.themePrimary,
+      textDecoration: 'underline'
     }
   });
 };

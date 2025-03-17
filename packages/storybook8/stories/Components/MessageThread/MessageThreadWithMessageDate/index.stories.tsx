@@ -17,7 +17,7 @@ export const DateExampleDocsOnly = {
 
 // Main story meta export
 const meta: Meta<typeof MessageThreadComponent> = {
-  title: 'Components/Message Thread/Message Thread With Message Date',
+  title: 'Components/Message Thread/MessageThread With Message Date',
   component: MessageThreadComponent,
   argTypes: {
     messages: {

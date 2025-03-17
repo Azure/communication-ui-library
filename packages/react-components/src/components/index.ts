@@ -90,6 +90,7 @@ export type {
   VideoGalleryStrings,
   VideoGalleryStyles,
   VideoGalleryLayout,
+  LocalScreenShareView,
   VideoTileContextualMenuProps,
   VideoTileDrawerMenuProps,
   VideoTilesOptions

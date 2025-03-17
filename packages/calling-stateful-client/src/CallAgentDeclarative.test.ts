@@ -18,7 +18,8 @@ import {
   RoomLocator,
   TeamsMeetingIdLocator,
   ConnectionStateChangedEvent,
-  ConnectionState
+  ConnectionState,
+  HandleIncomingCallEvent
 } from '@azure/communication-calling';
 /* @conditional-compile-remove(calling-beta-sdk) */
 import {
@@ -116,12 +117,14 @@ class MockCallAgent implements CallAgent {
   dispose(): Promise<void> {
     return Promise.resolve();
   }
+  on(event: 'handleIncomingCall', listener: HandleIncomingCallEvent): void;
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
   on(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
+  off(event: 'handleIncomingCall', listener: HandleIncomingCallEvent): void;
   off(event: 'incomingCall', listener: IncomingCallEvent): void;
   off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
   off(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;

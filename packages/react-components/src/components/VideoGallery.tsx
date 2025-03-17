@@ -152,6 +152,11 @@ export interface VideoGalleryStrings {
 /**
  * @public
  */
+export type LocalScreenShareView = 'stream' | 'placeholderMessage';
+
+/**
+ * @public
+ */
 export type VideoGalleryLayout =
   | 'default'
   | 'floatingLocalVideo'
@@ -387,6 +392,10 @@ export interface VideoGalleryProps {
    * This callback is to permit video for remote participant(s)
    */
   onPermitVideo?: (userIds: string[]) => Promise<void>;
+  /**
+   * Controls the view of the local screenshare stream in the gallery
+   */
+  localScreenShareView?: LocalScreenShareView;
 }
 
 /**
@@ -491,7 +500,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onForbidAudio,
     onPermitAudio,
     onForbidVideo,
-    onPermitVideo
+    onPermitVideo,
+    localScreenShareView
   } = props;
 
   const ids = useIdentifiers();
@@ -786,6 +796,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       isAvailable={localParticipant.screenShareStream?.isAvailable}
       onCreateLocalStreamView={onCreateLocalStreamView}
       onDisposeLocalScreenShareStreamView={onDisposeLocalScreenShareStreamView}
+      localScreenShareView={localScreenShareView}
     />
   );
 
