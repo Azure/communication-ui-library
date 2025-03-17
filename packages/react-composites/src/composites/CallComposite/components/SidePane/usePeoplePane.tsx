@@ -7,6 +7,8 @@ import { SidePaneHeader } from '../../../common/SidePaneHeader';
 import { PeoplePaneContent } from '../../../common/PeoplePaneContent';
 import { useLocale } from '../../../localization';
 import { ParticipantMenuItemsCallback, _DrawerMenuItemProps, MediaAccess } from '@internal/react-components';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 import { AvatarPersonaDataCallback } from '../../../common/AvatarPersona';
 import { IButton, IContextualMenuProps, IContextualMenuItem } from '@fluentui/react';
 import { useSelector } from '../../hooks/useSelector';
@@ -21,6 +23,8 @@ export const usePeoplePane = (props: {
   setDrawerMenuItems: (items: _DrawerMenuItemProps[]) => void;
   inviteLink?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   mobileView?: boolean;
   peopleButtonRef?: RefObject<IButton>;
@@ -58,6 +62,8 @@ export const usePeoplePane = (props: {
     updateSidePaneRenderer,
     inviteLink,
     onFetchAvatarPersonaData,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+    onRenderAvatar,
     onFetchParticipantMenuItems,
     setDrawerMenuItems,
     mobileView,
@@ -623,6 +629,8 @@ export const usePeoplePane = (props: {
         <PeoplePaneContent
           inviteLink={inviteLink}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+          onRenderAvatar={onRenderAvatar}
           onFetchParticipantMenuItems={onFetchParticipantMenuItemsForCallComposite}
           setDrawerMenuItems={setDrawerMenuItems}
           mobileView={mobileView}
@@ -659,6 +667,8 @@ export const usePeoplePane = (props: {
     showPermitOthersVideoPrompt,
     inviteLink,
     onFetchAvatarPersonaData,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+    onRenderAvatar,
     onFetchParticipantMenuItemsForCallComposite,
     setDrawerMenuItems,
     mobileView,

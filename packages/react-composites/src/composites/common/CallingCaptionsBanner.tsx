@@ -4,6 +4,8 @@
 import React from 'react';
 import { useState, useEffect, useCallback } from 'react';
 import { CaptionsBanner, CaptionsBannerStrings, CustomAvatarOptions } from '@internal/react-components';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 import { _DrawerMenu, _DrawerMenuItemProps, _DrawerSurface } from '@internal/react-components';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { CallingCaptionsSettingsModal } from './CallingCaptionsSettingsModal';
@@ -19,12 +21,16 @@ export const CallingCaptionsBanner = (props: {
   isMobile: boolean;
   useTeamsCaptions?: boolean;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   captionsOptions?: {
     height: 'full' | 'default';
   };
   /* @conditional-compile-remove(rtt) */
   isRealTimeTextOn?: boolean;
 }): JSX.Element => {
+  const { onFetchAvatarPersonaData, /* @conditional-compile-remove(composite-onRenderAvatar-API) */ onRenderAvatar } =
+    props;
   const captionsBannerProps = usePropsFor(CaptionsBanner);
   const [isCaptionsSettingsOpen, setIsCaptionsSettingsOpen] = useState<boolean>(false);
 
@@ -78,11 +84,25 @@ export const CallingCaptionsBanner = (props: {
     minimizeButtonAriaLabel: strings.minimizeButtonAriaLabel
   };
 
-  const onRenderAvatar = useCallback(
+  const defaultOnRenderAvatar = useCallback(
     (userId?: string, options?: CustomAvatarOptions) => {
-      return <AvatarPersona userId={userId} {...options} dataProvider={props.onFetchAvatarPersonaData} />;
+      return <AvatarPersona userId={userId} {...options} dataProvider={onFetchAvatarPersonaData} />;
     },
-    [props.onFetchAvatarPersonaData]
+    [onFetchAvatarPersonaData]
+  );
+
+  const onRenderAvatarCallback = useCallback(
+    (userId?: string, options?: CustomAvatarOptions) => {
+      /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+      if (onRenderAvatar) {
+        const defaultOnRenderAvatarWrapper = (options: CustomAvatarOptions): JSX.Element => {
+          return defaultOnRenderAvatar(userId, options);
+        };
+        return onRenderAvatar(userId, options, defaultOnRenderAvatarWrapper);
+      }
+      return defaultOnRenderAvatar(userId, options);
+    },
+    [defaultOnRenderAvatar, /* @conditional-compile-remove(composite-onRenderAvatar-API) */ onRenderAvatar]
   );
 
   const { innerWidth: width } = window;
@@ -115,7 +135,7 @@ export const CallingCaptionsBanner = (props: {
             <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
               <CaptionsBanner
                 captionsOptions={props.captionsOptions}
-                onRenderAvatar={onRenderAvatar}
+                onRenderAvatar={onRenderAvatarCallback}
                 formFactor={props.isMobile ? 'compact' : 'default'}
                 strings={captionsBannerStrings}
                 {...captionsBannerProps}

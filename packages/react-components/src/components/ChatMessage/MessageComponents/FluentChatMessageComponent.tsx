@@ -22,6 +22,7 @@ import { ChatMessageComponentWrapperProps } from '../ChatMessageComponentWrapper
 import { BlockedMessage } from '../../../types/ChatMessage';
 import { ChatMessage } from '../../../types/ChatMessage';
 import { ChatMessageComponentAsMessageBubble } from './ChatMessageComponentAsMessageBubble';
+import { CustomAvatarOptions } from '../../../types';
 
 /**
  * Props for {@link FluentChatMessageComponentWrapper}
@@ -119,17 +120,28 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     return { className: mergeClasses(chatMessageRenderStyles.rootMessage, chatMessageRenderStyles.rootCommon) };
   }, [chatMessageRenderStyles.rootCommon, chatMessageRenderStyles.rootMessage]);
 
-  const avatar = useMemo(() => {
-    const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
-    const personaOptions: IPersona = {
+  const personaOptions: IPersona = useMemo(
+    () => ({
       hidePersonaDetails: true,
       size: PersonaSize.size32,
       text: message.senderDisplayName,
       showOverflowTooltip: false
-    };
+    }),
+    [message.senderDisplayName]
+  );
+
+  const defaultOnRenderAvatar = useCallback(
+    (props: CustomAvatarOptions) => {
+      return <Persona {...{ ...personaOptions, ...props }} />;
+    },
+    [personaOptions]
+  );
+
+  const avatar = useMemo(() => {
+    const chatAvatarStyle = shouldShowAvatar ? gutterWithAvatar : gutterWithHiddenAvatar;
     let renderedAvatar;
     if (onRenderAvatar) {
-      const avatarComponent = onRenderAvatar?.(message.senderId, personaOptions);
+      const avatarComponent = onRenderAvatar?.(message.senderId, personaOptions, defaultOnRenderAvatar);
       if (!avatarComponent) {
         return undefined;
       } else {
@@ -138,10 +150,10 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
     }
     return (
       <div className={mergeStyles(chatAvatarStyle)}>
-        {renderedAvatar ? renderedAvatar : <Persona {...personaOptions} />}
+        {renderedAvatar ? renderedAvatar : defaultOnRenderAvatar(personaOptions)}
       </div>
     );
-  }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar]);
+  }, [defaultOnRenderAvatar, message.senderId, onRenderAvatar, personaOptions, shouldShowAvatar]);
 
   const setMessageContainerRef = useCallback((node: HTMLDivElement | null) => {
     removeFluentUIKeyboardNavigationStyles(node);

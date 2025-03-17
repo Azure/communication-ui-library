@@ -34,6 +34,8 @@ import {
   mainScreenContainerStyleMobile
 } from './styles/CallComposite.styles';
 import { CallControlOptions } from './types/CallControlOptions';
+/* @conditional-compile-remove(composite-onRenderAvatar-API) */
+import { OnRenderAvatarCallback } from '@internal/react-components';
 
 import { LayerHost, mergeStyles } from '@fluentui/react';
 import { modalLayerHostStyle } from '../common/styles/ModalLocalAndRemotePIP.styles';
@@ -372,6 +374,8 @@ type MainScreenProps = {
   modalLayerHostId: string;
   callInvitationUrl?: string;
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
+  /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+  onRenderAvatar?: OnRenderAvatarCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   options?: CallCompositeOptions;
   overrideSidePane?: InjectedSidePaneProps;
@@ -424,7 +428,12 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     micHasPermission
   ]);
 
-  const { callInvitationUrl, onFetchAvatarPersonaData, onFetchParticipantMenuItems } = props;
+  const {
+    callInvitationUrl,
+    onFetchAvatarPersonaData,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */ onRenderAvatar,
+    onFetchParticipantMenuItems
+  } = props;
   const page = useSelector(getPage);
   const endedCall = useSelector(getEndedCall);
 
@@ -709,6 +718,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           updateSidePaneRenderer={setSidePaneRenderer}
           mobileChatTabHeader={props.mobileChatTabHeader}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+          onRenderAvatar={onRenderAvatar}
           latestErrors={latestInCallErrors}
           latestNotifications={latestNotifications}
           onDismissError={onDismissError}
@@ -722,6 +733,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         <CallPage
           callInvitationURL={callInvitationUrl}
           onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+          /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+          onRenderAvatar={onRenderAvatar}
           onFetchParticipantMenuItems={onFetchParticipantMenuItems}
           mobileView={props.mobileView}
           modalLayerHostId={props.modalLayerHostId}
@@ -773,6 +786,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       <CallPage
         callInvitationURL={callInvitationUrl}
         onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+        /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+        onRenderAvatar={onRenderAvatar}
         onFetchParticipantMenuItems={onFetchParticipantMenuItems}
         mobileView={props.mobileView}
         modalLayerHostId={props.modalLayerHostId}
@@ -858,6 +873,8 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
     adapter,
     callInvitationUrl,
     onFetchAvatarPersonaData,
+    /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+    onRenderAvatar,
     onFetchParticipantMenuItems,
     options,
     formFactor = 'desktop'
@@ -877,6 +894,8 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
           <MainScreen
             callInvitationUrl={callInvitationUrl}
             onFetchAvatarPersonaData={onFetchAvatarPersonaData}
+            /* @conditional-compile-remove(composite-onRenderAvatar-API) */
+            onRenderAvatar={onRenderAvatar}
             onFetchParticipantMenuItems={onFetchParticipantMenuItems}
             mobileView={mobileView}
             modalLayerHostId={modalLayerHostId}
