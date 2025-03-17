@@ -935,7 +935,6 @@ export type CallFeatureStreamName = 'togetherMode';
 
 // @public
 export interface CallFeatureStreamState extends RemoteVideoStreamState {
-    // (undocumented)
     feature?: CallFeatureStreamName;
 }
 
@@ -1067,7 +1066,6 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
-    // @beta
     togetherMode: TogetherModeCallFeatureState;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
@@ -2107,7 +2105,6 @@ export interface CommonCallingHandlers {
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    // @beta
     onCreateTogetherModeStreamView: (options?: TogetherModeStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     // (undocumented)
     onDisposeLocalScreenShareStreamView: () => Promise<void>;
@@ -2119,7 +2116,6 @@ export interface CommonCallingHandlers {
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
-    // @beta
     onDisposeTogetherModeStreamView: () => Promise<void>;
     onForbidAudio?: (userIds: string[]) => Promise<void>;
     onForbidOthersAudio?: () => Promise<void>;
@@ -2163,7 +2159,6 @@ export interface CommonCallingHandlers {
     onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
-    // @beta
     onSetTogetherModeSceneSize: (width: number, height: number) => void;
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
@@ -2177,7 +2172,6 @@ export interface CommonCallingHandlers {
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
     onStartSpotlight: (userIds?: string[]) => Promise<void>;
-    // @beta
     onStartTogetherMode: () => Promise<void>;
     // (undocumented)
     onStopAllSpotlight: () => Promise<void>;
@@ -3785,9 +3779,7 @@ export interface NotificationStackStrings {
     stopScreenShareGeneric?: NotificationStrings;
     stopVideoGeneric?: NotificationStrings;
     teamsMeetingCallNetworkQualityLow?: NotificationStrings;
-    // (undocumented)
     togetherModeEnded?: NotificationStrings;
-    // (undocumented)
     togetherModeStarted?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
     transcriptionStopped?: NotificationStrings;
@@ -4640,7 +4632,6 @@ export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier
 
 // @public
 export interface TogetherModeCallFeatureState {
-    // (undocumented)
     isActive: boolean;
     seatingPositions: TogetherModeParticipantSeatingState;
     streams: TogetherModeStreamsState;
@@ -4651,31 +4642,24 @@ export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSea
 
 // @public
 export interface TogetherModeSeatingPositionState {
-    // (undocumented)
     height: number;
-    // (undocumented)
     left: number;
-    // (undocumented)
     top: number;
-    // (undocumented)
     width: number;
 }
 
 // @public
 export interface TogetherModeStreamOptions extends VideoStreamOptions {
-    // (undocumented)
     viewKind?: 'main' | 'panoramic';
 }
 
 // @public
 export interface TogetherModeStreamsState {
-    // (undocumented)
     mainVideoStream?: CallFeatureStreamState;
 }
 
 // @public
 export interface TogetherModeStreamViewResult {
-    // (undocumented)
     mainVideoView?: CreateVideoStreamViewResult;
 }
 
@@ -4999,19 +4983,14 @@ export type VideoGalleryTogetherModeParticipantPosition = Record<string, VideoGa
 
 // @public
 export interface VideoGalleryTogetherModeSeatingInfo {
-    // (undocumented)
     height: number;
-    // (undocumented)
     left: number;
-    // (undocumented)
     top: number;
-    // (undocumented)
     width: number;
 }
 
 // @public
 export interface VideoGalleryTogetherModeStreams {
-    // (undocumented)
     mainVideoStream?: VideoGalleryStream;
 }
 
