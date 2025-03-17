@@ -308,7 +308,6 @@ export const getCallCompositePage: GetCallCompositePageFunction = (
     return 'transferring';
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   if (isReturningFromBreakoutRoom) {
     return 'returningFromBreakoutRoom';
   }

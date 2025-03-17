@@ -243,32 +243,26 @@ export interface NotificationStackStrings {
    * Transcription stopped but recording still going on message
    */
   transcriptionStoppedStillRecording?: NotificationStrings;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Message shown in notification when the user will be automatically to their assigned breakout room that is opened
    */
   assignedBreakoutRoomOpened?: NotificationStrings;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Message shown in notification when the user is prompted to join their assigned breakout room that is opened
    */
   assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Message shown in notification when the user's assigned breakout room is changed
    */
   assignedBreakoutRoomChanged?: NotificationStrings;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Message shown in notification when the user's assigned breakout room is closed
    */
   assignedBreakoutRoomClosed?: NotificationStrings;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Message shown in notification when breakout room is joined
    */
   breakoutRoomJoined?: NotificationStrings;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Message shown in notification when breakout room is closing soon
    */
@@ -405,7 +399,6 @@ export const NotificationStack = (props: NotificationStackProps): JSX.Element =>
               : props.onDismissNotification?.(notification);
             notification.onDismiss && notification.onDismiss();
           };
-          /* @conditional-compile-remove(breakout-rooms) */
           if (notification.type === 'assignedBreakoutRoomOpenedPromptJoin') {
             // If notification is of type assignedBreakoutRoomOpenedPromptJoin then set onClickSecondaryButton to
             // onDismiss if it is not defined

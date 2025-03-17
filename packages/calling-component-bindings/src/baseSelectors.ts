@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { CallState, DominantSpeakersInfo, EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom } from '@azure/communication-calling';
 import { ParticipantCapabilities } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
@@ -300,7 +299,6 @@ export const getRemovedIncomingCalls = (state: CallClientState): IncomingCallSta
   return Object.values(state.incomingCallsEnded);
 };
 
-/* @conditional-compile-remove(breakout-rooms) */
 /** @private */
 export const getAssignedBreakoutRoom = (
   state: CallClientState,

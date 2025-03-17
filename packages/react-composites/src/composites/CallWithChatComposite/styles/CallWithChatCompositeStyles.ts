@@ -47,7 +47,6 @@ export const ChatButtonContainerStyles: IStackStyles = {
   }
 };
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * Style for stack containing the chat spinner used to delay showing chat composite until it is ready.
  * @private

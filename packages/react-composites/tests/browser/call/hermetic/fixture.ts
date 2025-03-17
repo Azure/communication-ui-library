@@ -162,7 +162,6 @@ export function defaultMockCallAdapterState(
     isTeamsMeeting: false,
     isRoomsCall: isRoomsCall ?? false,
     latestErrors: {},
-    /* @conditional-compile-remove(breakout-rooms) */
     latestNotifications: {},
     targetCallees: undefined,
     reactions: undefined
@@ -433,7 +432,6 @@ const consumerCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   forbidOthersAudio: {
     isPresent: false,
@@ -483,7 +481,6 @@ const attendeeCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   forbidOthersAudio: {
     isPresent: false,
@@ -533,7 +530,6 @@ const presenterCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
-  /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   forbidOthersAudio: {
     isPresent: false,
@@ -583,7 +579,6 @@ const presenterCapabilitiesInTeamsCall = (): ParticipantCapabilities => ({
   },
   /* @conditional-compile-remove(calling-beta-sdk) */
   startTogetherMode: { isPresent: true, reason: 'Capable' },
-  /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: true, reason: 'Capable' },
   forbidOthersAudio: {
     isPresent: true,

@@ -12,7 +12,6 @@ import {
   EnvironmentInfo
 } from '@azure/communication-calling';
 
-/* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
 import {
   CallState,
@@ -36,9 +35,7 @@ import {
   DeepNoiseSuppressionEffectDependency,
   VideoBackgroundEffectsDependency
 } from '@internal/calling-component-bindings';
-import { AdapterErrors } from '../../common/adapters';
-/* @conditional-compile-remove(breakout-rooms) */
-import { AdapterNotifications } from '../../common/adapters';
+import { AdapterErrors, AdapterNotifications } from '../../common/adapters';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
@@ -274,28 +271,24 @@ export const getStartTime = (state: CallAdapterState): Date | undefined => state
 export const getSpotlightedParticipants = (state: CallAdapterState): SpotlightedParticipant[] | undefined =>
   state.call?.spotlight?.spotlightedParticipants;
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @private
  */
 export const getAssignedBreakoutRoom = (state: CallAdapterState): BreakoutRoom | undefined =>
   state.call?.breakoutRooms?.assignedBreakoutRoom;
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @private
  */
 export const getBreakoutRoomSettings = (state: CallAdapterState): BreakoutRoomsSettings | undefined =>
   state.call?.breakoutRooms?.breakoutRoomSettings;
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @private
  */
 export const getBreakoutRoomDisplayName = (state: CallAdapterState): string | undefined =>
   state.call?.breakoutRooms?.breakoutRoomDisplayName;
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @private
  */
