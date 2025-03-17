@@ -347,6 +347,9 @@ export type CallFeatureStreamName = 'togetherMode';
  * @public
  */
 export interface CallFeatureStreamState extends RemoteVideoStreamState {
+  /**
+   * The name of the call feature stream.
+   */
   feature?: CallFeatureStreamName;
 }
 
@@ -358,13 +361,21 @@ export interface CallFeatureStreamState extends RemoteVideoStreamState {
  * Represents the seating position of a participant in Together Mode.
  */
 export interface TogetherModeSeatingPositionState {
-  /* The top left offset from the top of the together mode view.*/
+  /**
+   * The top left offset from the top of the together mode view.
+   */
   top: number;
-  /* The left offset position from the left of the together mode view. */
+  /**
+   * The left offset position from the left of the together mode view.
+   */
   left: number;
-  /*  The width of the seating area */
+  /**
+   * The width of the seating area
+   */
   width: number;
-  /* The height of the seating area. */
+  /**
+   * The height of the seating area.
+   */
   height: number;
 }
 
@@ -383,6 +394,9 @@ export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSea
  * @public
  */
 export interface TogetherModeStreamsState {
+  /**
+   * The main video stream in Together Mode.
+   */
   mainVideoStream?: CallFeatureStreamState;
 }
 
@@ -393,6 +407,9 @@ export interface TogetherModeStreamsState {
  * @public
  */
 export interface TogetherModeCallFeatureState {
+  /**
+   * Flag indicating if Together Mode is active in the call
+   */
   isActive: boolean;
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
@@ -736,7 +753,6 @@ export interface CallState {
   /* @conditional-compile-remove(together-mode) */
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature}.
-   * @beta
    */
   togetherMode: TogetherModeCallFeatureState;
   /**
