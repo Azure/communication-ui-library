@@ -69,7 +69,7 @@ export const useSelector = <SelectorT extends (state: any, props: any) => any, P
     if (!callClient || !selector) {
       return;
     }
-    const onStateChange = (state: CallClientState | MediaClientState): void => {
+    const onStateChange = (state: CallClientState): void => {
       if (!mounted.current) {
         return;
       }
@@ -83,5 +83,25 @@ export const useSelector = <SelectorT extends (state: any, props: any) => any, P
       callClient.offStateChange(onStateChange);
     };
   }, [callClient, selector, selectorProps, callIdConfigProps, mounted]);
+
+  useEffect(() => {
+    if (!mediaClient || !selector) {
+      return;
+    }
+    const onStateChange = (state: MediaClientState): void => {
+      if (!mounted.current) {
+        return;
+      }
+      const newProps = selector(state, selectorProps ?? sessionIdConfigProps);
+      if (propRef.current !== newProps) {
+        setProps(newProps);
+      }
+    };
+    mediaClient.onStateChange(onStateChange);
+    return () => {
+      mediaClient.offStateChange(onStateChange);
+    };
+  }, [mediaClient, selector, selectorProps, sessionIdConfigProps, mounted]);
+
   return selector ? props : undefined;
 };

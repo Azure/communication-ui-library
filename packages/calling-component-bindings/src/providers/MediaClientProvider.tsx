@@ -86,3 +86,8 @@ export const useMediaClient = (): StatefulMediaClient => {
   }
   return context.mediaClient;
 };
+
+/** @internal */
+export const _useIsMediaSession = (): boolean => {
+  return !!useContext(MediaClientContext);
+};

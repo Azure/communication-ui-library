@@ -12,7 +12,7 @@ import {
   createStatefulMediaClient,
   StatefulMediaClient
 } from '@azure/communication-react';
-import { Text, initializeIcons, registerIcons } from '@fluentui/react';
+import { Stack, Text, initializeIcons, registerIcons } from '@fluentui/react';
 import { SessionScreen } from './views/SessionScreen';
 import { HomeScreen } from './views/HomeScreen';
 import { MediaStreamSession } from '@skype/spool-sdk';
@@ -23,7 +23,7 @@ const SESSION_ID = 'SESSION_ID';
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
 
-function App(): JSX.Element {
+function AppContent(): JSX.Element {
   const [error, setError] = useState<string>();
   const [statefulMediaClient, setStatefulMediaClient] = useState<StatefulMediaClient>();
   const [mediaSessionAgent, setMediaSessionAgent] = useState<DeclarativeMediaSessionAgent>();
@@ -53,6 +53,17 @@ function App(): JSX.Element {
             const mediaClient = createStatefulMediaClient({ userId: { communicationUserId: credentials.userId } });
             setStatefulMediaClient(mediaClient);
 
+            const deviceManager = await mediaClient.getDeviceManager();
+            await deviceManager.askDevicePermission({
+              audio: true,
+              video: true
+            });
+            await Promise.all([
+              deviceManager.getMicrophones(),
+              deviceManager.getSpeakers(),
+              deviceManager.getCameras()
+            ]);
+
             const sessionAgent = await mediaClient.createSessionAgent(
               new AzureCommunicationTokenCredential(credentials.token)
             );
@@ -81,6 +92,14 @@ function App(): JSX.Element {
     </FluentThemeProvider>
   );
 }
+
+const App = (): JSX.Element => {
+  return (
+    <Stack horizontalAlign="center" verticalFill verticalAlign="center" id="app">
+      <AppContent />
+    </Stack>
+  );
+};
 
 export default App;
 

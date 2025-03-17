@@ -26,6 +26,7 @@ export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/c
 
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
+export type { MediaCallingHandlers } from './mediaSessionSelectors/createHandlers';
 
 export type {
   DeepNoiseSuppressionEffectDependency,
@@ -34,7 +35,7 @@ export type {
 
 export type { _ComponentCallingHandlers, CallingHandlersOptions } from './handlers/createHandlers';
 
-export { useTeamsCall, useTeamsCallAgent } from './providers';
+export { useTeamsCall, useTeamsCallAgent, _useIsMediaSession } from './providers';
 
 export { CallAgentProvider, CallClientProvider, CallProvider, useCall, useCallAgent, useCallClient } from './providers';
 export type { CallAgentProviderProps, CallClientProviderProps, CallProviderProps } from './providers';

@@ -8,8 +8,16 @@ import React from 'react';
 export const SessionScreen = (): JSX.Element => {
   const microphoneButtonProps = usePropsFor(MicrophoneButton);
   return (
-    <Stack style={{ width: '100%', height: '100%', margin: 'auto', position: 'relative' }}>
-      <MicrophoneButton {...microphoneButtonProps} />
+    <Stack
+      id="session-screen"
+      horizontalAlign="center"
+      verticalAlign="center"
+      verticalFill
+      tokens={{ childrenGap: '1rem' }}
+    >
+      <Stack.Item>
+        <MicrophoneButton {...microphoneButtonProps} />
+      </Stack.Item>
     </Stack>
   );
 };

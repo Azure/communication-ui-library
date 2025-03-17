@@ -4,6 +4,7 @@
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { DeviceManagerState, LocalVideoStreamState } from '../CallClientState';
 import { StatefulError } from '../Error';
+import { AudioDeviceInfo, MediaStreamType } from '@skype/spool-sdk';
 
 /** @alpha */
 export type MediaErrorTarget =
@@ -57,7 +58,10 @@ export interface MediaSessionState {
 }
 
 /** @alpha @todo */
-export interface LocalAudioStreamState {}
+export interface LocalAudioStreamState {
+  mediaStreamType: MediaStreamType;
+  source: AudioDeviceInfo;
+}
 
 /** @alpha @todo */
 export interface RemoteAudioStreamState {}

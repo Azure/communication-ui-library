@@ -15,25 +15,21 @@ const headerImage = { src: heroSVG.toString() };
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const [starting, setStarting] = useState(false);
   return (
-    <Stack horizontal tokens={{ childrenGap: '1rem' }}>
-      <Stack verticalAlign="center">
-        <Image alt="Welcome to the ACS Media Stream Sample App" className={imgStyle} {...headerImage} />
-      </Stack>
-      <Stack tokens={{ childrenGap: '1rem' }} style={{ minWidth: '20rem', margin: 'auto' }}>
-        <PrimaryButton
-          disabled={starting}
-          onClick={async () => {
-            setStarting(true);
-            try {
-              await props.onStartClick();
-            } finally {
-              setStarting(false);
-            }
-          }}
-        >
-          Start Session
-        </PrimaryButton>
-      </Stack>
+    <Stack tokens={{ childrenGap: '1rem' }}>
+      <Image alt="Welcome to the ACS Media Stream Sample App" className={imgStyle} {...headerImage} />
+      <PrimaryButton
+        disabled={starting}
+        onClick={async () => {
+          setStarting(true);
+          try {
+            await props.onStartClick();
+          } finally {
+            setStarting(false);
+          }
+        }}
+      >
+        Start Media Session
+      </PrimaryButton>
     </Stack>
   );
 };

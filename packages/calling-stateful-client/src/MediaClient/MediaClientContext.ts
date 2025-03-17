@@ -3,14 +3,15 @@
 
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { EventEmitter } from 'events';
-import { Patch, produce } from 'immer';
+import { Patch, enablePatches, produce } from 'immer';
 import {
   MediaError,
   MediaErrors,
   MediaErrorTarget,
   MediaClientState,
   SessionStatus,
-  MediaSessionState
+  MediaSessionState,
+  LocalAudioStreamState
 } from './MediaClientState';
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 import { _safeJSONStringify } from '@internal/acs-ui-common';
@@ -22,6 +23,9 @@ import {
   LocalVideoStreamVideoEffectsState,
   VideoStreamRendererViewState
 } from '../CallClientState';
+
+// Needed to generate state diff for verbose logging.
+enablePatches();
 
 /** @alpha */
 export class MediaContext implements IDeclarativeDeviceManagerContext {
@@ -79,8 +83,8 @@ export class MediaContext implements IDeclarativeDeviceManagerContext {
 
   public setSession(session: MediaSessionState): void {
     this.modifyState((draft: MediaClientState) => {
-      const latestCallId = this.mapToLatestSessionId(session.id);
-      const existingSession = draft.sessions[latestCallId];
+      const latestSessionId = this.mapToLatestSessionId(session.id);
+      const existingSession = draft.sessions[latestSessionId];
       if (existingSession) {
         existingSession.deepNoiseSuppression = session.deepNoiseSuppression;
         existingSession.isMuted = session.isMuted;
@@ -90,7 +94,7 @@ export class MediaContext implements IDeclarativeDeviceManagerContext {
         existingSession.remoteAudioStreams = session.remoteAudioStreams;
         existingSession.state = session.state;
       } else {
-        draft.sessions[latestCallId] = session;
+        draft.sessions[latestSessionId] = session;
       }
     });
   }
@@ -111,6 +115,24 @@ export class MediaContext implements IDeclarativeDeviceManagerContext {
       const session = draft.sessions[latestSessionId];
       if (session) {
         session.isMuted = isMuted;
+      }
+    });
+  }
+
+  public setSessionLocalAudioStream(sessionId: string, localAudioStream: LocalAudioStreamState | undefined): void {
+    this.modifyState((draft: MediaClientState) => {
+      const latestSessionId = this.mapToLatestSessionId(sessionId);
+      const session = draft.sessions[latestSessionId];
+      if (session) {
+        // TODO: [jaburnsi] properly evict the localAudioStream
+        if (!localAudioStream) {
+          session.localAudioStreams = [];
+        } else {
+          session.localAudioStreams = session.localAudioStreams.filter(
+            (stream) => stream.source !== localAudioStream.source
+          );
+          session.localAudioStreams.push(localAudioStream);
+        }
       }
     });
   }

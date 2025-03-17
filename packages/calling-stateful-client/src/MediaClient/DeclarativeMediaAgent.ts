@@ -3,7 +3,11 @@
 
 import { MediaSessionAgent } from '@skype/spool-sdk';
 import { MediaContext } from './MediaClientContext';
-import { DeclarativeMediaStreamSession, mediaStreamSessionDeclaratify } from './DeclarativeSession';
+import {
+  DeclarativeMediaStreamSession,
+  convertSdkSessionToDeclarativeSession,
+  mediaStreamSessionDeclaratify
+} from './DeclarativeSession';
 
 /**
  * @public
@@ -30,7 +34,12 @@ class ProxyMediaSessionAgent implements ProxyHandler<DeclarativeMediaSessionAgen
         return this._context.withAsyncErrorTeedToState(
           async (...args: Parameters<MediaSessionAgent['joinSession']>): Promise<DeclarativeMediaStreamSession> => {
             const session = await target.joinSession(...args);
-            return mediaStreamSessionDeclaratify(session, this._context);
+            const statefulSession = mediaStreamSessionDeclaratify(session, this._context);
+
+            // TODO [jaburnsi] add session to context properly on(sessionAdded) API when available
+            this._context.setSession(convertSdkSessionToDeclarativeSession(statefulSession));
+
+            return statefulSession;
           },
           'MediaSessionAgent.joinSession'
         );

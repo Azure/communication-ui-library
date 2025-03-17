@@ -56,6 +56,9 @@ import {
   captionsBannerSelector,
   startCaptionsButtonSelector
 } from '../captionsSelector';
+import { useContext } from 'react';
+import { MediaStreamSessionContext } from '../providers/MediaStreamSessionProvider';
+import { microphoneButtonMediaSessionSelector } from '../mediaSessionSelectors/callControlSelectors';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.
@@ -81,7 +84,8 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   ? ReturnType<GetSelector<Component>> &
       Common<CommonCallingHandlers & _ComponentCallingHandlers, Parameters<Component>[0]>
   : undefined => {
-  const selector = getSelector(component);
+  const isMediaSession = !!useContext(MediaStreamSessionContext);
+  const selector = getSelector(component, isMediaSession);
   const props = useSelector(selector);
   const handlers = useHandlers<Parameters<Component>[0]>(component);
   if (props !== undefined) {
@@ -155,9 +159,10 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
  */
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
-  component: Component
+  component: Component,
+  isMediaSession: boolean
 ): GetSelector<Component> => {
-  return findSelector(component);
+  return isMediaSession ? findMediaSessionSelector(component) : findSelector(component);
 };
 
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
@@ -204,6 +209,15 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
   }
   return undefined;
 };
+
+const findMediaSessionSelector = (component: (props: any) => JSX.Element | undefined): any => {
+  switch (component) {
+    case MicrophoneButton:
+      return microphoneButtonMediaSessionSelector;
+  }
+  return undefined;
+};
+
 /**
  * Selector for new components that are conditionally compiled. Comment out when there is no CC'd components
  */

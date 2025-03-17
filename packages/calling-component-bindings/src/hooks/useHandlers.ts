@@ -14,6 +14,7 @@ import { CallAgentContext, CallClientContext, CallContext, MediaStreamSessionCon
 import { useDeviceManager } from './useDeviceManager';
 import { MediaClientContext } from '../providers/MediaClientProvider';
 import { MediaSessionAgentContext } from '../providers/MediaSessionAgentProvider';
+import { createMediaHandlers } from '../mediaSessionSelectors/createHandlers';
 
 /**
  * Hook to obtain a handler for a specified component.
@@ -35,6 +36,10 @@ export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement |
 
   if (!callClient && !mediaClient) {
     return undefined;
+  }
+
+  if (mediaClient) {
+    return createMediaHandlers(mediaClient, deviceManager, mediaStreamSession);
   }
 
   // Handle edge case, validate if call and callAgent are the same type (ACS/Teams)

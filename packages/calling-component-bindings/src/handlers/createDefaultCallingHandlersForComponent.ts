@@ -42,7 +42,7 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   mediaStreamSession: MediaStreamSession | undefined,
   _Component: (props: Props) => ReactElement | null
 ): Common<CommonCallingHandlers, Props> => {
-  if (!callAgent && !call && !deviceManager) {
+  if (mediaClient || (!callAgent && !call && !deviceManager)) {
     return createDefaultCallingHandlers(
       callClient,
       callAgent,

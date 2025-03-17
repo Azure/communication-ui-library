@@ -1,6 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import {
+  _useIsMediaSession,
   CallingHandlers,
   getCallingSelector,
   GetCallingSelector,
@@ -116,7 +117,8 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component,
   type?: 'calling' | 'chat'
 ): ComponentProps<Component> => {
-  const callingSelector = type === 'calling' || !type ? getCallingSelector(component) : undefined;
+  const isMediaSession = !!_useIsMediaSession();
+  const callingSelector = type === 'calling' || !type ? getCallingSelector(component, isMediaSession) : undefined;
   const chatSelector = type === 'chat' || !type ? getChatSelector(component) : undefined;
   const callProps = useCallingSelector(callingSelector);
   const chatProps = useChatSelector(chatSelector);

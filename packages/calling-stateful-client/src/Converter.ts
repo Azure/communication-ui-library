@@ -47,6 +47,7 @@ import { RaisedHand } from '@azure/communication-calling';
 import { RaisedHandState } from './CallClientState';
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 import { ConferencePhoneInfo } from './CallClientState';
+import { MediaStreamSession } from '@skype/spool-sdk';
 
 /**
  * @private
