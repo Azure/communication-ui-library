@@ -9,7 +9,8 @@ import {
   CustomAvatarOptions,
   Announcer,
   VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps
+  VideoTileDrawerMenuProps,
+  LocalScreenShareView
 } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { _useContainerWidth, _useContainerHeight } from '@internal/react-components';
@@ -69,7 +70,7 @@ export interface MediaGalleryProps {
   captionsOptions?: {
     height: 'full' | 'default';
   };
-  localScreenShareView?: 'stream' | 'placeholderMessage';
+  localScreenShareView?: LocalScreenShareView;
 }
 
 /**
