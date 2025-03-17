@@ -125,10 +125,8 @@ export const controlButtonStyles: IButtonStyles = {
     }
   },
   splitButtonMenuButton: {
-    border: 'none'
-  },
-  flexContainer: {
-    display: 'unset'
+    border: 'none',
+    background: 'none'
   },
   label: {
     fontSize: '0.625rem',
