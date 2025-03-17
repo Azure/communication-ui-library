@@ -20,7 +20,8 @@ import {
   RoomLocator,
   TeamsMeetingIdLocator,
   ConnectionState,
-  ConnectionStateChangedEvent
+  ConnectionStateChangedEvent,
+  HandleIncomingCallEvent
 } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
 import {
@@ -307,6 +308,7 @@ export class MockCallAgent implements CallAgent {
   dispose(): Promise<void> {
     return Promise.resolve();
   }
+  on(event: 'handleIncomingCall', listener: HandleIncomingCallEvent): void;
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
   on(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
@@ -314,6 +316,7 @@ export class MockCallAgent implements CallAgent {
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
+  off(event: 'handleIncomingCall', listener: HandleIncomingCallEvent): void;
   off(event: 'incomingCall', listener: IncomingCallEvent): void;
   off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
   off(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;

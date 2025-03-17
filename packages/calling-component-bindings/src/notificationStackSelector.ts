@@ -6,7 +6,8 @@ import {
   getDeviceManager,
   getDiagnostics,
   getLatestErrors,
-  getEnvironmentInfo
+  getEnvironmentInfo,
+  getCallState
 } from './baseSelectors';
 /* @conditional-compile-remove(breakout-rooms) */
 import { getAssignedBreakoutRoom } from './baseSelectors';
@@ -51,6 +52,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     getLatestNotifications,
     getDiagnostics,
     getDeviceManager,
+    getCallState,
     getEnvironmentInfo,
     getMeetingConferencePhones,
     /* @conditional-compile-remove(breakout-rooms) */ getAssignedBreakoutRoom
@@ -60,6 +62,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     latestNotifications,
     diagnostics,
     deviceManager,
+    callStatus,
     environmentInfo,
     meetingConference,
     /* @conditional-compile-remove(breakout-rooms) */ assignedBreakoutRoom
@@ -106,13 +109,13 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
     if (deviceManager.deviceAccess?.audio === false && isSafari()) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDeniedSafari' });
     }
-    if (deviceManager.deviceAccess?.audio === false && !isSafari()) {
-      activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
-    }
 
     if (diagnostics?.media.latest.microphonePermissionDenied?.value === true && isMacOS()) {
       activeErrorMessages.push({ type: 'callMacOsMicrophoneAccessDenied' });
-    } else if (diagnostics?.media.latest.microphonePermissionDenied?.value === true) {
+    } else if (
+      (deviceManager.deviceAccess?.audio === false && !isSafari()) ||
+      (diagnostics?.media.latest.microphonePermissionDenied?.value === true && !isMacOS())
+    ) {
       activeErrorMessages.push({ type: 'callMicrophoneAccessDenied' });
     }
 
@@ -223,7 +226,11 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
 
     //below is for active notifications
     const activeNotifications: ActiveNotification[] = [];
-    if (diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value) {
+    if (
+      diagnostics?.media.latest.speakingWhileMicrophoneIsMuted?.value &&
+      // only show this notification when the participant is in an active call and not on screens such as Lobby
+      callStatus === 'Connected'
+    ) {
       activeNotifications.push({
         type: 'speakingWhileMuted',
         timestamp: new Date(Date.now()),

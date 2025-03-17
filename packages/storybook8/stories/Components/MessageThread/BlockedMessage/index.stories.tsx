@@ -17,7 +17,7 @@ export const BlockedMessagesDocsOnly = {
 
 // Main story meta export
 const meta: Meta<typeof MessageThreadComponent> = {
-  title: 'Components/Message Thread/Message Thread With Blocked Message',
+  title: 'Components/Message Thread/MessageThread With Blocked Message',
   component: MessageThreadComponent,
   argTypes: {
     displayName: { control: 'text', name: 'displayName' },

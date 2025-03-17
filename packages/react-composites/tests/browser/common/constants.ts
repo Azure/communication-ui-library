@@ -44,7 +44,8 @@ export const IDS = {
   reactionButtonSubMenu: 'reaction-sub-menu',
   reactionMobileDrawerMenuItem: 'reaction-mobile-drawer-menu-item',
   cameraButton: 'call-composite-camera-button',
-  microphoneButton: 'call-composite-microphone-button'
+  microphoneButton: 'call-composite-microphone-button',
+  togetherModeStream: 'together-mode-layout'
 };
 
 export const spokenLanguageStrings = [
@@ -208,4 +209,130 @@ export const captionsFeatureStateArabic = {
   startCaptionsInProgress: true,
 
   captionsKind: 'Captions' as const
+};
+
+export const togetherModeSeatingPosition_w_1912_h_600 = {
+  '8:orgid:Participant-1-id': {
+    top: 121.50823529411764,
+    left: 858.175834509804,
+    width: 198.83478588235292,
+    height: 149.10745098039214
+  },
+  '8:orgid:Participant-2-id': {
+    top: 298.93176470588236,
+    left: 635.1239913725491,
+    width: 208.3941505882353,
+    height: 156.27607843137255
+  },
+  '8:orgid:Participant-3-id': {
+    top: 298.93176470588236,
+    left: 851.8029247058824,
+    width: 208.3941505882353,
+    height: 156.27607843137255
+  },
+  '8:orgid:Participant-4-id': {
+    top: 206.45647058823528,
+    left: 747.9244949019608,
+    width: 202.6585317647059,
+    height: 151.9749019607843
+  },
+  '8:orgid:Participant-5-id': {
+    top: 298.93176470588236,
+    left: 1071.6683129411765,
+    width: 208.3941505882353,
+    height: 156.27607843137255
+  },
+  '8:orgid:Participant-6-id': {
+    top: 36.20156862745097,
+    left: 961.4169733333333,
+    width: 193.09916705882353,
+    height: 144.80627450980393
+  },
+  '8:orgid:Participant-7-id': {
+    top: 206.45647058823528,
+    left: 961.4169733333333,
+    width: 202.6585317647059,
+    height: 151.9749019607843
+  },
+  '8:orgid:Participant-8-id': {
+    top: 121.50823529411764,
+    left: 647.8698109803921,
+    width: 198.83478588235292,
+    height: 149.10745098039214
+  },
+  '8:orgid:Participant-9-id': {
+    top: 36.20156862745097,
+    left: 757.4838596078431,
+    width: 193.09916705882353,
+    height: 144.80627450980393
+  },
+  '8:orgid:Participant-10-id': {
+    top: 121.50823529411764,
+    left: 1065.2954031372549,
+    width: 198.83478588235292,
+    height: 149.10745098039214
+  }
+};
+
+export const togetherModeSeatingPosition_w_700_h_500 = {
+  '8:orgid:Participant-1-id': {
+    top: 48.92235294117647,
+    left: 214.6134650980392,
+    width: 80.0560188235294,
+    height: 60.03450980392157
+  },
+  '8:orgid:Participant-2-id': {
+    top: 120.35764705882352,
+    left: 124.8070337254902,
+    width: 83.90486588235292,
+    height: 62.920784313725484
+  },
+  '8:orgid:Participant-3-id': {
+    top: 120.35764705882352,
+    left: 212.04756705882352,
+    width: 83.90486588235292,
+    height: 62.920784313725484
+  },
+  '8:orgid:Participant-4-id': {
+    top: 83.12470588235294,
+    left: 170.22342901960783,
+    width: 81.59555764705883,
+    height: 61.189019607843136
+  },
+  '8:orgid:Participant-5-id': {
+    top: 120.35764705882352,
+    left: 300.57104941176476,
+    width: 83.90486588235292,
+    height: 62.920784313725484
+  },
+  '8:orgid:Participant-6-id': {
+    top: 14.5756862745098,
+    left: 256.18101333333334,
+    width: 77.74671058823529,
+    height: 58.30274509803922
+  },
+  '8:orgid:Participant-7-id': {
+    top: 83.12470588235294,
+    left: 256.18101333333334,
+    width: 81.59555764705883,
+    height: 61.189019607843136
+  },
+  '8:orgid:Participant-8-id': {
+    top: 48.92235294117647,
+    left: 129.93882980392158,
+    width: 80.0560188235294,
+    height: 60.03450980392157
+  },
+  '8:orgid:Participant-9-id': {
+    top: 14.5756862745098,
+    left: 174.0722760784314,
+    width: 77.74671058823529,
+    height: 58.30274509803922
+  },
+  '8:orgid:Participant-10-id': {
+    top: 48.92235294117647,
+    left: 298.005151372549,
+    width: 80.0560188235294,
+    height: 60.03450980392157
+  }
 };

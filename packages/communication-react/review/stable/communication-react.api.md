@@ -278,6 +278,8 @@ export interface CallAdapter extends CommonCallAdapter {
 // @public
 export type CallAdapterCallEndedEvent = {
     callId: string;
+    code?: number;
+    subCode?: number;
 };
 
 // @public @deprecated
@@ -609,6 +611,7 @@ export type CallCompositeOptions = {
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+        localScreenShareView?: LocalScreenShareView;
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -629,6 +632,9 @@ export type CallCompositeOptions = {
     };
     spotlight?: {
         hideSpotlightButtons?: boolean;
+    };
+    joinCallOptions?: {
+        microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
     };
 };
 
@@ -899,7 +905,9 @@ export type CallEndedListener = (event: CallAdapterCallEndedEvent) => void;
 // @public
 export class CallError extends Error {
     constructor(target: CallErrorTarget, innerError: Error, timestamp?: Date);
+    code?: number;
     innerError: Error;
+    subCode?: number;
     target: CallErrorTarget;
     timestamp: Date;
 }
@@ -948,7 +956,7 @@ export type CallingHandlersOptions = {
 };
 
 // @public
-export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends (state: CallClientState, props: any) => any ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
+export type CallingReturnProps<Component extends (props: any) => JSX.Element> = GetCallingSelector<Component> extends ((state: CallClientState, props: any) => any) ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]> : never;
 
 // @public
 export type CallingSounds = {
@@ -1382,6 +1390,7 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
+        localScreenShareView?: LocalScreenShareView;
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -1402,6 +1411,9 @@ export type CallWithChatCompositeOptions = {
     };
     spotlight?: {
         hideSpotlightButtons?: boolean;
+    };
+    joinCallOptions?: {
+        microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
     };
 };
 
@@ -1953,7 +1965,7 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 };
 
 // @public
-export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
+export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends ((state: ChatClientState, props: any) => any) ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
 // @public
 export const ChatThreadClientProvider: (props: ChatThreadClientProviderProps) => JSX.Element;
@@ -3341,6 +3353,9 @@ export type LocalizationProviderProps = {
     locale: ComponentLocale;
     children: React_2.ReactNode;
 };
+
+// @public (undocumented)
+export type LocalScreenShareView = 'stream' | 'placeholderMessage';
 
 // @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
@@ -4777,6 +4792,7 @@ export interface VideoGalleryProps {
     dominantSpeakers?: string[];
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
+    localScreenShareView?: LocalScreenShareView;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
