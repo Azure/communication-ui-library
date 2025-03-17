@@ -7,7 +7,7 @@ import { CreateVideoStreamViewResult, VideoGalleryStream, VideoStreamOptions } f
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the result of a Together Mode stream view.
- * @beta
+ * @public
  */
 export interface TogetherModeStreamOptions extends VideoStreamOptions {
   viewKind?: 'main' | 'panoramic';
@@ -15,7 +15,7 @@ export interface TogetherModeStreamOptions extends VideoStreamOptions {
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the result of a Together Mode stream view.
- * @beta
+ * @public
  */
 export interface TogetherModeStreamViewResult {
   mainVideoView?: CreateVideoStreamViewResult;
@@ -24,7 +24,7 @@ export interface TogetherModeStreamViewResult {
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the streams in Together Mode.
- * @beta
+ * @public
  */
 export interface VideoGalleryTogetherModeStreams {
   mainVideoStream?: VideoGalleryStream;
@@ -33,7 +33,7 @@ export interface VideoGalleryTogetherModeStreams {
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the seating information in Together Mode.
- * @beta
+ * @public
  */
 export interface VideoGalleryTogetherModeSeatingInfo {
   /* The top left offset from the top of the together mode view.*/
@@ -49,6 +49,6 @@ export interface VideoGalleryTogetherModeSeatingInfo {
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the position of a participant in Together Mode.
- * @beta
+ * @public
  */
 export type VideoGalleryTogetherModeParticipantPosition = Record<string, VideoGalleryTogetherModeSeatingInfo>;
