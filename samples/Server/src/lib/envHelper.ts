@@ -87,3 +87,4 @@ export const getServerWebSocketPort = (): number => Number(throwIfUnset('ServerW
 export const getServerWebSocketUrl = (): string => throwIfUnset('ServerWebSocketUrl');
 export const getCallAutomationCallbackUrl = (): string => getServerHttpUrl() + '/callAutomationEvent';
 export const getCognitionAPIEndpoint = (): string => throwIfUnset('CognitionAPIEndpoint');
+export const getLanguageAPIKey = (): string => throwIfUnset('LanguageAPIKey');

@@ -6,7 +6,8 @@ import {
   CallLocator,
   StreamingData,
   TranscriptionData,
-  TranscriptionMetadata
+  TranscriptionMetadata,
+  TranscriptionOptions
 } from '@azure/communication-call-automation';
 import {
   getCallAutomationCallbackUrl,
@@ -14,6 +15,7 @@ import {
   getCognitionAPIEndpoint,
   getResourceConnectionString
 } from './envHelper';
+import { ConversationSummaryInput } from './summarizationHelper';
 
 export interface CallTranscription {
   metadata: TranscriptionMetadata;
@@ -86,11 +88,14 @@ export const connectRoomsCall = async (serverCallId: string): Promise<void> => {
   };
 };
 
-export const startTranscriptionForCall = async (callConnectionId: string): Promise<void> => {
+export const startTranscriptionForCall = async (
+  callConnectionId: string,
+  options?: TranscriptionOptions
+): Promise<void> => {
   console.log('Starting transcription for call:', callConnectionId);
   const callConnection = await getCallAutomationClient().getCallConnection(callConnectionId);
 
-  return await callConnection.getCallMedia().startTranscription();
+  return await callConnection.getCallMedia().startTranscription(options);
 };
 
 export const TRANSCRIPTION_STORE: { [key: string]: Partial<CallTranscription> } = {};
@@ -99,6 +104,24 @@ export const TRANSCRIPTION_STORE: { [key: string]: Partial<CallTranscription> } 
  * call automation events.
  */
 export const CALLCONNECTION_ID_TO_CORRELATION_ID: { [key: string]: { correlationId?: string; callId?: string } } = {};
+
+/**
+ * used to store the remote participants in the call
+ * This object is keyed off the callId and contains the communicationUserId and displayName of the remote participants
+ *
+ * Keeps track of all participants who have ever joined the call so we can show their display name in the transcription and summary.
+ */
+export const REMOTE_PARTICIPANTS_IN_CALL: { [key: string]: { communicationUserId: string; displayName: string }[] } =
+  {};
+
+/**
+ * used to store the local participant in the call
+ * This is keyed off the callId and contains the communicationUserId and displayName of the local participant
+ *
+ * This is important because the server can track the user across multiple calls if they change their display name so we can show
+ * the correct display name in the transcription and summary.
+ */
+export const LOCAL_PARTICIPANT: { [key: string]: { communicationUserId?: string; displayName?: string } } = {};
 
 export const getTranscriptionData = (callId: string): CallTranscription | undefined => {
   const connectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find(
@@ -175,4 +198,20 @@ export const handleTranscriptionDataEvent = (eventData: TranscriptionData, event
     }
     TRANSCRIPTION_STORE[eventId].data.push(eventData);
   }
+};
+
+/**
+ * function to format the transcription data for summarization
+ * @param transcription - the transcription data to format
+ * @returns transcription data formatted for summarization
+ */
+export const formatTranscriptionForSummarization = async (
+  transcription: CallTranscription
+): Promise<ConversationSummaryInput> => {
+  const formattedTranscription: ConversationSummaryInput = transcription.data.map((data) => ({
+    author: 'Participant', // TODO: get displayName by having the server collect and store the chosen display name
+    text: data.text
+  }));
+
+  return formattedTranscription;
 };

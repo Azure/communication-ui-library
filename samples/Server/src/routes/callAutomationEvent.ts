@@ -11,7 +11,6 @@ router.post('/', async function (req, res) {
   console.log('/automationEvent received', req.body);
   try {
     if (req.body[0].type === 'Microsoft.Communication.CallConnected') {
-      startTranscriptionForCall(req.body[0].data.callConnectionId);
       /**
        * We want to make a mapping here between the callConnectionId and the correlationId
        * The correlationId in the data is the id of the call that we are using to start the transcription this id
