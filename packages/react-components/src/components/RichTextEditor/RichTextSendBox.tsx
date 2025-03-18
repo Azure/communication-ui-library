@@ -597,3 +597,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     </Stack>
   );
 };
+
+/* @conditional-compile-remove(rich-text-editor) */
+const _isRichTextSendBox = Symbol('isRichTextSendBox');
+
+/* @conditional-compile-remove(rich-text-editor) */
+// Add the internal property to the component
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(RichTextSendBox as any)[_isRichTextSendBox] = true;
