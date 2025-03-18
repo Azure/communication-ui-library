@@ -431,7 +431,7 @@ const consumerCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -481,7 +481,7 @@ const attendeeCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -531,7 +531,7 @@ const presenterCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: true,
     reason: 'Capable'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -581,7 +581,7 @@ const presenterCapabilitiesInTeamsCall = (): ParticipantCapabilities => ({
     isPresent: true,
     reason: 'Capable'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: true, reason: 'Capable' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: true, reason: 'Capable' },
