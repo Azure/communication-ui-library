@@ -41,7 +41,8 @@ import {
   SummarizeResult,
   updateRemoteParticipants
 } from '../utils/CallAutomationUtils';
-import { Spinner, Stack, Text } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
+import { SummaryEndCallScreen } from './SummaryEndCall';
 
 export interface CallScreenProps {
   token: string;
@@ -136,36 +137,16 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   if (enableTranscription) {
     return (
       <Stack horizontal styles={{ root: { height: '100%', width: '100%' } }}>
-        {summarizationStatus === 'None' && (
-          <AzureCommunicationCallAutomationCallScreen
-            afterCreate={afterCallAdapterCreate}
-            credential={credential}
-            callConnected={callConnected}
-            enableTranscription={enableTranscription}
-            callId={callIdRef.current}
-            {...props}
-          />
-        )}
-        {summarizationStatus === 'InProgress' && (
-          <Spinner styles={{ root: { marginTop: '2rem' } }} label="Summarizing conversation..." />
-        )}
-        {summarizationStatus === 'Complete' && summary && (
-          <Stack
-            horizontalAlign={'center'}
-            verticalAlign={'center'}
-            styles={{ root: { marginTop: '1rem', width: '100%' } }}
-          >
-            <Text styles={{ root: { marginTop: '0.5rem', fontWeight: 600 } }} variant="large">
-              Summary
-            </Text>
-            <Text styles={{ root: { marginTop: '0.5rem', marginBottom: '1rem', fontStyle: 'italic' } }}>
-              {summary.recap}
-            </Text>
-            {summary.chapters.map((chapter, index) => (
-              <Chapter key={index} title={chapter.chapterTitle} narrative={chapter.narrative} />
-            ))}
-          </Stack>
-        )}
+        <AzureCommunicationCallAutomationCallScreen
+          afterCreate={afterCallAdapterCreate}
+          credential={credential}
+          callConnected={callConnected}
+          enableTranscription={enableTranscription}
+          callId={callIdRef.current}
+          summarizationStatus={summarizationStatus}
+          summary={summary}
+          {...props}
+        />
       </Stack>
     );
   }
@@ -325,12 +306,24 @@ type AzureCommunicationCallAutomationCallScreenProps = AzureCommunicationCallScr
   enableTranscription?: boolean;
   callConnected?: boolean;
   callId?: string;
+  showSummaryEndCallScreen?: boolean;
+  summarizationStatus?: 'None' | 'InProgress' | 'Complete';
+  summary?: SummarizeResult;
 };
 
 const AzureCommunicationCallAutomationCallScreen = (
   props: AzureCommunicationCallAutomationCallScreenProps
 ): JSX.Element => {
-  const { afterCreate, callLocator: locator, userId, callConnected, callId, ...adapterArgs } = props;
+  const {
+    afterCreate,
+    callLocator: locator,
+    userId,
+    callConnected,
+    callId,
+    summarizationStatus,
+    summary,
+    ...adapterArgs
+  } = props;
 
   const [transcription, setTranscription] = useState<CallTranscription>([]);
   const [remoteParticipants, setRemoteParticipants] = useState<TranscriptionPaneParticipant[]>([]);
@@ -445,6 +438,10 @@ const AzureCommunicationCallAutomationCallScreen = (
     }
   }, [adapter]);
 
+  if ((summarizationStatus === 'Complete' && adapter) || (summarizationStatus === 'InProgress' && adapter)) {
+    return <SummaryEndCallScreen adapter={adapter} summarizationStatus={summarizationStatus} summary={summary} />;
+  }
+
   return (
     <Stack horizontal horizontalAlign={'center'} styles={{ root: { height: '100%', width: '100%' } }}>
       <CallCompositeContainer {...props} adapter={adapter} customButtons={customButtonOptions}></CallCompositeContainer>
@@ -507,21 +504,3 @@ const videoBackgroundImages = [
     tooltipText: 'Living Room Background'
   }
 ];
-
-const Chapter = (props: { title: string; narrative: string }): JSX.Element => {
-  return (
-    <Stack
-      styles={{
-        root: {
-          paddingLeft: '2rem',
-          marginTop: '0.5rem',
-          marginBottom: '0.5rem',
-          borderLeft: '2px solid #ccc'
-        }
-      }}
-    >
-      <Text styles={{ root: { marginBottom: '0.25rem', fontWeight: 600 } }}>{props.title}</Text>
-      <Text>{props.narrative}</Text>
-    </Stack>
-  );
-};

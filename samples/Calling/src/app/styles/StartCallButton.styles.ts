@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { mergeStyles } from '@fluentui/react';
+import { IButtonStyles, mergeStyles } from '@fluentui/react';
 
 export const videoCameraIconStyle = mergeStyles({
   marginRight: '0.375rem',
@@ -17,3 +17,17 @@ export const buttonStyle = mergeStyles({
   maxWidth: '18.75rem',
   minWidth: '12.5rem'
 });
+
+export const buttonWithIconStyles: IButtonStyles = {
+  textContainer: {
+    display: 'contents'
+  }
+};
+
+// export const buttonStyle = mergeStyles({
+//   fontWeight: 600,
+//   height: '2.5rem',
+//   width: '9.875rem',
+//   fontSize: '0.875rem', // 14px
+//   padding: 0
+// });
