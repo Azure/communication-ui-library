@@ -606,12 +606,12 @@ const _isRichTextSendBox = Symbol('isRichTextSendBox');
 
 // Add the internal property to the component
 /* @conditional-compile-remove(rich-text-editor) */
-(RichTextSendBox as unknown as { [_isRichTextSendBox]?: boolean })[_isRichTextSendBox] = true;
+(RichTextSendBox as any)[_isRichTextSendBox] = true;
 
 /* @conditional-compile-remove(rich-text-editor) */
 /**
  * @internal
  */
-export const isRichTextSendBox = (component: unknown): boolean => {
-  return (component as { [_isRichTextSendBox]?: boolean })?.[_isRichTextSendBox] === true;
+export const isRichTextSendBox = (component: any): boolean => {
+  return component?.[_isRichTextSendBox] === true;
 };
