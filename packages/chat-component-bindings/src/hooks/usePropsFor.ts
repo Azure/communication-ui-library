@@ -4,6 +4,7 @@ import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } fr
 
 /* @conditional-compile-remove(rich-text-editor) */
 import type { RichTextSendBox } from '@internal/react-components';
+/* @conditional-compile-remove(rich-text-editor) */
 import { isRichTextSendBox } from '@internal/react-components';
 
 import { useHandlers } from './useHandlers';

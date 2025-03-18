@@ -20,6 +20,7 @@ export type { SendBoxProps, SendBoxStrings, SendBoxStylesProps } from './SendBox
 
 /* @conditional-compile-remove(rich-text-editor) */
 export { RichTextSendBox } from './RichTextEditor/RichTextSendBox';
+/* @conditional-compile-remove(rich-text-editor) */
 export { isRichTextSendBox } from './RichTextEditor/RichTextSendBox';
 // TODO: This component is exported only for testing purposes. Remove this when this component is added to composites
 /* @conditional-compile-remove(rich-text-editor) */
