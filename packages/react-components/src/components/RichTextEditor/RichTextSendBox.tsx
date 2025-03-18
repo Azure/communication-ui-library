@@ -597,23 +597,3 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     </Stack>
   );
 };
-
-// Add component type check to assist in identification for usePropsFor
-// to avoid issue where production build does not have the component name
-// Define a unique symbol to mark the component as RichTextSendBox
-/* @conditional-compile-remove(rich-text-editor) */
-const _isRichTextSendBox = Symbol('isRichTextSendBox');
-
-// Add the internal property to the component
-/* @conditional-compile-remove(rich-text-editor) */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-(RichTextSendBox as any)[_isRichTextSendBox] = true;
-
-/* @conditional-compile-remove(rich-text-editor) */
-/**
- * @internal
- */
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const isRichTextSendBox = (component: any): boolean => {
-  return component?.[_isRichTextSendBox] === true;
-};
