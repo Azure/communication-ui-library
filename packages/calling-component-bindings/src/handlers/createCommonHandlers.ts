@@ -114,30 +114,22 @@ export interface CommonCallingHandlers {
   /* @conditional-compile-remove(together-mode) */
   /**
    * Call back to create a view for together mode
-   *
-   * @beta
    */
   onCreateTogetherModeStreamView: (options?: TogetherModeStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
 
   /* @conditional-compile-remove(together-mode) */
   /**
    * Call back to create a view for together mode
-   *
-   * @beta
    */
   onStartTogetherMode: () => Promise<void>;
   /* @conditional-compile-remove(together-mode) */
   /**
    * Call set together mode scene size
-   *
-   * @beta
    */
   onSetTogetherModeSceneSize: (width: number, height: number) => void;
   /* @conditional-compile-remove(together-mode) */
   /**
    * Call back to dispose together mode views
-   *
-   * @beta
    */
   onDisposeTogetherModeStreamView: () => Promise<void>;
   /**
