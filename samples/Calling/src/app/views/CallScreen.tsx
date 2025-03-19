@@ -14,28 +14,23 @@ import {
   CommonCallAdapter,
   onResolveDeepNoiseSuppressionDependencyLazy,
   onResolveVideoEffectDependencyLazy,
-  RemoteParticipantState,
   TeamsCallAdapter,
   toFlatCommunicationIdentifier,
-  TranscriptionPane,
   useAzureCommunicationCallAdapter,
   useTeamsCallAdapter
 } from '@azure/communication-react';
 import type {
-  CallTranscription,
   CustomCallControlButtonCallback,
   Profile,
   StartCallIdentifier,
-  TeamsAdapterOptions,
-  TranscriptionPaneParticipant
+  TeamsAdapterOptions
 } from '@azure/communication-react';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
 import {
   connectToCallAutomation,
-  fetchTranscript,
   getCallSummaryFromServer,
   startTranscription,
   SummarizeResult,
@@ -59,9 +54,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, isTeamsIdentityCall, enableTranscription } = props;
   const callIdRef = useRef<string>();
   const callAutomationStarted = useRef(false);
-  const [callConnected, setCallConnected] = useState(false);
   const [summarizationStatus, setSummarizationStatus] = useState<'None' | 'InProgress' | 'Complete'>('None');
   const [summary, setSummary] = useState<SummarizeResult>();
+  const [callConnected, setCallConnected] = useState(false);
 
   const subscribeAdapterEvents = useCallback(
     (adapter: CommonCallAdapter) => {
@@ -73,10 +68,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter.onStateChange(async (state: CallAdapterState) => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
+
         if (state?.call?.state === 'Connected') {
           setCallConnected(true);
-        } else if (state?.call?.state === 'Disconnected') {
-          setCallConnected(false);
         }
 
         if (state?.call?.id && callIdRef.current !== state?.call?.id) {
@@ -99,6 +93,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter.on('callEnded', async (event) => {
         console.log('Call ended id: ' + event.callId + ' code: ' + event.code, 'subcode: ' + event.subCode);
         if (callAutomationStarted.current) {
+          setCallConnected(false);
           setSummary(undefined);
           setSummarizationStatus('InProgress');
           setSummary(await getCallSummaryFromServer(adapter).finally(() => setSummarizationStatus('Complete')));
@@ -140,10 +135,11 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         <AzureCommunicationCallAutomationCallScreen
           afterCreate={afterCallAdapterCreate}
           credential={credential}
-          callConnected={callConnected}
           enableTranscription={enableTranscription}
           callId={callIdRef.current}
           summarizationStatus={summarizationStatus}
+          callConnected={callConnected}
+          setCallConnected={setCallConnected}
           summary={summary}
           {...props}
         />
@@ -304,9 +300,10 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
 
 type AzureCommunicationCallAutomationCallScreenProps = AzureCommunicationCallScreenProps & {
   enableTranscription?: boolean;
-  callConnected?: boolean;
   callId?: string;
   showSummaryEndCallScreen?: boolean;
+  setCallConnected: (connected: boolean) => void;
+  callConnected: boolean;
   summarizationStatus?: 'None' | 'InProgress' | 'Complete';
   summary?: SummarizeResult;
 };
@@ -318,15 +315,13 @@ const AzureCommunicationCallAutomationCallScreen = (
     afterCreate,
     callLocator: locator,
     userId,
-    callConnected,
     callId,
     summarizationStatus,
     summary,
+    callConnected,
+    setCallConnected,
     ...adapterArgs
   } = props;
-
-  // const [showTranscriptionDropdown, setShowTranscriptionDropdown] = useState(false);
-  const [transcriptionStarted, setTranscriptionStarted] = useState(false);
 
   if (!('communicationUserId' in userId)) {
     throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
@@ -342,7 +337,7 @@ const AzureCommunicationCallAutomationCallScreen = (
       onItemClick: async () => {
         console.log('Start transcription button clicked');
         if (callId) {
-          setTranscriptionStarted(await startTranscription(callId));
+          await startTranscription(callId);
         }
       },
       tooltipText: 'Start Transcription'
@@ -385,8 +380,21 @@ const AzureCommunicationCallAutomationCallScreen = (
     afterCreate
   );
 
-  if ((summarizationStatus === 'Complete' && adapter) || (summarizationStatus === 'InProgress' && adapter)) {
-    return <SummaryEndCallScreen adapter={adapter} summarizationStatus={summarizationStatus} summary={summary} />;
+  if (
+    (summarizationStatus === 'Complete' && adapter && !callConnected) ||
+    (summarizationStatus === 'InProgress' && adapter && !callConnected)
+  ) {
+    return (
+      <SummaryEndCallScreen
+        callId={callId}
+        summarizationStatus={summarizationStatus}
+        summary={summary?.recap}
+        reJoinCall={() => {
+          adapter.joinCall();
+          setCallConnected(true);
+        }}
+      />
+    );
   }
 
   return (
