@@ -17,7 +17,8 @@ import {
   TeamsCallAdapter,
   toFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter,
-  useTeamsCallAdapter
+  useTeamsCallAdapter,
+  useTheme
 } from '@azure/communication-react';
 import type {
   CustomCallControlButtonCallback,
@@ -38,6 +39,7 @@ import {
 } from '../utils/CallAutomationUtils';
 import { Stack } from '@fluentui/react';
 import { SummaryEndCallScreen } from './SummaryEndCall';
+import { SlideTextEdit20Regular } from '@fluentui/react-icons';
 
 export interface CallScreenProps {
   token: string;
@@ -324,8 +326,9 @@ const AzureCommunicationCallAutomationCallScreen = (
   } = props;
 
   if (!('communicationUserId' in userId)) {
-    throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
+    throw new Error('A ACS user ID must be provided for Rooms call.');
   }
+  const theme = useTheme();
 
   const customButtonOptions: CustomCallControlButtonCallback[] = [
     () => ({
@@ -333,7 +336,9 @@ const AzureCommunicationCallAutomationCallScreen = (
       strings: {
         label: 'Start Transcription'
       },
-      iconProps: { iconName: 'Emoji2' },
+      onRenderIcon: () => (
+        <SlideTextEdit20Regular style={{ color: theme.palette.themePrimary, margin: '0rem 0.2rem' }} />
+      ),
       onItemClick: async () => {
         console.log('Start transcription button clicked');
         if (callId) {
