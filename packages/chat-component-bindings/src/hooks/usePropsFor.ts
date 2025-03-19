@@ -5,7 +5,7 @@ import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } fr
 /* @conditional-compile-remove(rich-text-editor) */
 import type { RichTextSendBox } from '@internal/react-components';
 /* @conditional-compile-remove(rich-text-editor) */
-import { isRichTextSendBox } from '@internal/react-components';
+import { _isRichTextSendBox } from '@internal/react-components';
 
 import { useHandlers } from './useHandlers';
 import { useSelector } from './useSelector';
@@ -104,7 +104,7 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
   // Add component type check to assist in identification for usePropsFor
   // to avoid issue where production build does not have the component name
   /* @conditional-compile-remove(rich-text-editor) */
-  if (isRichTextSendBox(component)) {
+  if (_isRichTextSendBox(component)) {
     return sendBoxSelector;
   }
 
