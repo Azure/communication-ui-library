@@ -600,6 +600,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 };
 
 /* @conditional-compile-remove(rich-text-editor) */
-// Add the internal property to the component
+// Add component type check to assist in identification for usePropsFor
+// to avoid issue where production build does not have the component name
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (RichTextSendBox as any)[_isRichTextSendBox] = true;
