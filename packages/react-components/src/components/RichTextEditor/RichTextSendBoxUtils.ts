@@ -5,6 +5,9 @@
 // to avoid issue where production build does not have the component name
 
 /* @conditional-compile-remove(rich-text-editor) */
+/**
+ * @internal
+ */
 export const _isRichTextSendBox = Symbol('isRichTextSendBox');
 
 /* @conditional-compile-remove(rich-text-editor) */

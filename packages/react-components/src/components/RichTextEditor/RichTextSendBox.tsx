@@ -40,6 +40,7 @@ import { SendBoxErrorBarType } from '../SendBoxErrorBar';
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
+/* @conditional-compile-remove(rich-text-editor) */
 import { _isRichTextSendBox } from './RichTextSendBoxUtils';
 
 /**
