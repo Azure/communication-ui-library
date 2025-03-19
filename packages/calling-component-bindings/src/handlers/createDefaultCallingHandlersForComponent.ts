@@ -16,7 +16,6 @@ import { ReactElement } from 'react';
 import { createDefaultTeamsCallingHandlers } from './createTeamsCallHandlers';
 import { createDefaultCallingHandlers } from './createHandlers';
 import { CommonCallingHandlers } from './createCommonHandlers';
-import { MediaClient, MediaSessionAgent, MediaStreamSession } from '@skype/spool-sdk';
 
 /**
  * Create a set of default handlers for given component. Memoization is applied to the result. Multiple invocations with
@@ -37,36 +36,17 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   callAgent: CallAgentCommon | undefined,
   deviceManager: StatefulDeviceManager | undefined,
   call: CallCommon | undefined,
-  mediaClient: MediaClient | undefined,
-  mediaSessionAgent: MediaSessionAgent | undefined,
-  mediaStreamSession: MediaStreamSession | undefined,
   _Component: (props: Props) => ReactElement | null
 ): Common<CommonCallingHandlers, Props> => {
-  if (mediaClient || (!callAgent && !call && !deviceManager)) {
-    return createDefaultCallingHandlers(
-      callClient,
-      callAgent,
-      deviceManager,
-      call,
-      mediaClient,
-      mediaSessionAgent,
-      mediaStreamSession
-    );
+  if (!callAgent && !call && !deviceManager) {
+    return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
   }
 
   if (callAgent && _isTeamsCallAgent(callAgent) && (!call || (call && _isTeamsCall(call)))) {
     return createDefaultTeamsCallingHandlers(callClient, callAgent, deviceManager, call);
   }
   if (callAgent && _isACSCallAgent(callAgent) && (!call || (call && _isACSCall(call)))) {
-    return createDefaultCallingHandlers(
-      callClient,
-      callAgent,
-      deviceManager,
-      call,
-      mediaClient,
-      mediaSessionAgent,
-      mediaStreamSession
-    );
+    return createDefaultCallingHandlers(callClient, callAgent, deviceManager, call);
   }
   throw new Error('CallAgent type and Call type are not compatible!');
 };

@@ -29,11 +29,6 @@ class ProxyMediaStreamSession implements ProxyHandler<MediaStreamSession> {
         return this._context.withAsyncErrorTeedToState(async (...args: Parameters<MediaStreamSession['mute']>) => {
           await target.mute(...args);
           // TODO: [jaburnsi] replace with session.on('muteChanged') when available
-          this._context.setSessionLocalAudioStream(
-            _SESSION_PLACEHOLDER_ID,
-            // mocking this value for now until sdk is ready...
-            convertSdkLocalAudioStreamToDeclarativeLocalAudioStream(undefined)
-          );
           this._context.setSessionMuted(_SESSION_PLACEHOLDER_ID, true);
         }, 'MediaStreamSession.mute');
       }
@@ -55,7 +50,7 @@ class ProxyMediaStreamSession implements ProxyHandler<MediaStreamSession> {
 }
 
 /**
- * @alpha
+ * @private
  */
 export const mediaStreamSessionDeclaratify = (
   mediaStreamSession: MediaStreamSession,

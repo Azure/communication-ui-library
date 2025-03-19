@@ -13,8 +13,7 @@ import { createDefaultCallingHandlersForComponent } from '../handlers/createDefa
 import { CallAgentContext, CallClientContext, CallContext, MediaStreamSessionContext } from '../providers';
 import { useDeviceManager } from './useDeviceManager';
 import { MediaClientContext } from '../providers/MediaClientProvider';
-import { MediaSessionAgentContext } from '../providers/MediaSessionAgentProvider';
-import { createMediaHandlers } from '../mediaSessionSelectors/createHandlers';
+import { createMediaHandlers } from '../mediaSession/createHandlers';
 
 /**
  * Hook to obtain a handler for a specified component.
@@ -31,7 +30,6 @@ export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement |
   const callAgent = useContext(CallAgentContext)?.callAgent;
   const call = useContext(CallContext)?.call;
   const mediaClient = useContext(MediaClientContext)?.mediaClient;
-  const mediaSessionAgent = useContext(MediaSessionAgentContext)?.mediaSessionAgent;
   const mediaStreamSession = useContext(MediaStreamSessionContext)?.session;
 
   if (!callClient && !mediaClient) {
@@ -55,14 +53,5 @@ export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement |
     }
   }
 
-  return createDefaultCallingHandlersForComponent(
-    callClient,
-    callAgent,
-    deviceManager,
-    call,
-    mediaClient,
-    mediaSessionAgent,
-    mediaStreamSession,
-    component
-  );
+  return createDefaultCallingHandlersForComponent(callClient, callAgent, deviceManager, call, component);
 };

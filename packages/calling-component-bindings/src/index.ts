@@ -26,7 +26,7 @@ export type { CallingHandlers, CreateDefaultCallingHandlers } from './handlers/c
 
 export type { TeamsCallingHandlers } from './handlers/createTeamsCallHandlers';
 export type { CommonCallingHandlers } from './handlers/createCommonHandlers';
-export type { MediaCallingHandlers } from './mediaSessionSelectors/createHandlers';
+export type { MediaCallingHandlers } from './mediaSession/createHandlers';
 
 export type {
   DeepNoiseSuppressionEffectDependency,

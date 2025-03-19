@@ -53,9 +53,6 @@ describe('createHandlers', () => {
       undefined,
       undefined,
       undefined,
-      undefined,
-      undefined,
-      undefined,
       TestCallClientComponent
     );
     expect(handlers).toBeDefined();

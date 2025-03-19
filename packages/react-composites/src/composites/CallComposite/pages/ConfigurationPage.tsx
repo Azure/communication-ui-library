@@ -120,7 +120,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
 
   const theme = useTheme();
 
-  const options = useAdaptedSelector(getCallingSelector(DevicesButton));
+  const options = useAdaptedSelector(getCallingSelector(DevicesButton, false));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
   /* @conditional-compile-remove(call-readiness) */

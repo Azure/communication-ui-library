@@ -61,10 +61,18 @@ export type { MediaAccessState } from './CallClientState';
 /* @conditional-compile-remove(rtt) */
 export type { RealTimeTextInfo, RealTimeTextCallFeatureState } from './CallClientState';
 
-// TODO [jaburnsi]: Only export internal and public things
-export * from './MediaClient/MediaClientState';
-export * from './MediaClient/MediaClientContext';
-export * from './MediaClient/StatefulMediaClient';
-export * from './MediaClient/DeclarativeMediaAgent';
-export * from './MediaClient/DeclarativeSession';
+export type {
+  MediaErrorTarget,
+  MediaErrors,
+  SessionStatus,
+  MediaClientState,
+  MediaSessionState,
+  LocalAudioStreamState,
+  RemoteAudioStreamState
+} from './MediaClient/MediaClientState';
+export { MediaError } from './MediaClient/MediaClientState';
+export type { StatefulMediaClient, StatefulMediaClientArgs } from './MediaClient/StatefulMediaClient';
+export { createStatefulMediaClient } from './MediaClient/StatefulMediaClient';
+export type { DeclarativeMediaSessionAgent } from './MediaClient/DeclarativeMediaAgent';
+export type { DeclarativeMediaStreamSession } from './MediaClient/DeclarativeSession';
 export { StatefulError } from './Error';

@@ -58,7 +58,7 @@ import {
 } from '../captionsSelector';
 import { useContext } from 'react';
 import { MediaStreamSessionContext } from '../providers/MediaStreamSessionProvider';
-import { microphoneButtonMediaSessionSelector } from '../mediaSessionSelectors/callControlSelectors';
+import { microphoneButtonMediaSessionSelector } from '../mediaSession/callControlSelectors';
 
 /**
  * Primary hook to get all hooks necessary for a calling Component.

@@ -8,6 +8,7 @@
 
 import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { AudioDeviceInfo } from '@azure/communication-calling';
+import { AudioDeviceInfo as AudioDeviceInfo_2 } from '@skype/spool-sdk';
 import { AudioEffectsStartConfig } from '@azure/communication-calling';
 import { BackgroundBlurConfig } from '@azure/communication-calling';
 import { BackgroundBlurEffect } from '@azure/communication-calling';
@@ -82,6 +83,7 @@ import type { MediaDiagnosticType } from '@azure/communication-calling';
 import { MediaSessionAgent } from '@skype/spool-sdk';
 import { MediaStreamSession } from '@skype/spool-sdk';
 import { MediaStreamType } from '@azure/communication-calling';
+import { MediaStreamType as MediaStreamType_2 } from '@skype/spool-sdk';
 import { MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
@@ -2822,7 +2824,7 @@ export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, user
 export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
 
 // @public
-export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, mediaClient: MediaClient | undefined, mediaSessionAgent: MediaSessionAgent | undefined, mediaStreamSession: MediaStreamSession | undefined, options?: CallingHandlersOptions) => CallingHandlers;
+export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
 
 // @public
 export const createDefaultCallingHandlers: CreateDefaultCallingHandlers;
@@ -2922,7 +2924,7 @@ export const darkTheme: PartialTheme & CallingTheme;
 // @public
 export type DeclarativeCallAgent = CallAgent & IncomingCallManagement;
 
-// @public (undocumented)
+// @alpha (undocumented)
 export type DeclarativeMediaSessionAgent = MediaSessionAgent;
 
 // @alpha (undocumented)
@@ -3502,7 +3504,7 @@ export const fromFlatCommunicationIdentifier: (id: string) => CommunicationIdent
 export type GetCallingSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof VideoGallery> extends true ? VideoGallerySelector : AreEqual<Component, typeof DevicesButton> extends true ? DevicesButtonSelector : AreEqual<Component, typeof MicrophoneButton> extends true ? MicrophoneButtonSelector : AreEqual<Component, typeof CameraButton> extends true ? CameraButtonSelector : AreEqual<Component, typeof ScreenShareButton> extends true ? ScreenShareButtonSelector : AreEqual<Component, typeof ParticipantList> extends true ? ParticipantListSelector : AreEqual<Component, typeof ParticipantsButton> extends true ? ParticipantsButtonSelector : AreEqual<Component, typeof EndCallButton> extends true ? EmptySelector : AreEqual<Component, typeof ErrorBar> extends true ? CallErrorBarSelector : AreEqual<Component, typeof Dialpad> extends true ? EmptySelector : AreEqual<Component, typeof HoldButton> extends true ? HoldButtonSelector : AreEqual<Component, typeof NotificationStack> extends true ? NotificationStackSelector : AreEqual<Component, typeof IncomingCallStack> extends true ? IncomingCallStackSelector : AreEqual<Component, typeof ReactionButton> extends true ? RaiseHandButtonSelector : AreEqual<Component, typeof CaptionsSettingsModal> extends true ? CaptionSettingsSelector : AreEqual<Component, typeof CaptionsBanner> extends true ? CaptionsBannerSelector : AreEqual<Component, typeof StartCaptionsButton> extends true ? StartCaptionsButtonSelector : AreEqual<Component, typeof RaiseHandButton> extends true ? EmptySelector : undefined;
 
 // @public
-export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component) => GetCallingSelector<Component>;
+export const getCallingSelector: <Component extends (props: any) => JSX.Element | undefined>(component: Component, isMediaSession: boolean) => GetCallingSelector<Component>;
 
 // @public
 export type GetChatSelector<Component extends (props: any) => JSX.Element | undefined> = AreEqual<Component, typeof SendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof RichTextSendBox> extends true ? SendBoxSelector : AreEqual<Component, typeof MessageThread> extends true ? MessageThreadSelector : AreEqual<Component, typeof TypingIndicator> extends true ? TypingIndicatorSelector : AreEqual<Component, typeof ParticipantList> extends true ? ChatParticipantListSelector : AreEqual<Component, typeof ErrorBar> extends true ? ChatErrorBarSelector : undefined;
@@ -3794,6 +3796,10 @@ export const loadOutboundCallComposite: (loaderArgs: OutboundCallCompositeLoader
 
 // @alpha (undocumented)
 export interface LocalAudioStreamState {
+    // (undocumented)
+    mediaStreamType: MediaStreamType_2;
+    // (undocumented)
+    source: AudioDeviceInfo_2;
 }
 
 // @public
@@ -3883,49 +3889,6 @@ export interface MediaClientState {
     userId: CommunicationIdentifierKind;
 }
 
-// @alpha (undocumented)
-export class MediaContext implements IDeclarativeDeviceManagerContext {
-    constructor(userId: CommunicationIdentifierKind, maxListeners?: number);
-    // (undocumented)
-    deleteDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState): void;
-    // (undocumented)
-    getState(): MediaClientState;
-    // (undocumented)
-    modifyState(modifier: (draft: MediaClientState) => void): void;
-    // (undocumented)
-    offStateChange(handler: (state: MediaClientState) => void): void;
-    // (undocumented)
-    onStateChange(handler: (state: MediaClientState) => void): void;
-    // (undocumented)
-    setDeviceManagerCameras(cameras: VideoDeviceInfo[]): void;
-    // (undocumented)
-    setDeviceManagerDeviceAccess(deviceAccess: DeviceAccess): void;
-    // (undocumented)
-    setDeviceManagerIsSpeakerSelectionAvailable(isSpeakerSelectionAvailable: boolean): void;
-    // (undocumented)
-    setDeviceManagerMicrophones(microphones: AudioDeviceInfo[]): void;
-    // (undocumented)
-    setDeviceManagerSelectedCamera(selectedCamera?: VideoDeviceInfo): void;
-    // (undocumented)
-    setDeviceManagerSelectedMicrophone(selectedMicrophone?: AudioDeviceInfo): void;
-    // (undocumented)
-    setDeviceManagerSelectedSpeaker(selectedSpeaker?: AudioDeviceInfo): void;
-    // (undocumented)
-    setDeviceManagerSpeakers(speakers: AudioDeviceInfo[]): void;
-    // (undocumented)
-    setDeviceManagerUnparentedView(localVideoStream: LocalVideoStreamState, view: VideoStreamRendererViewState | undefined): void;
-    // (undocumented)
-    setDeviceManagerUnparentedViewVideoEffects(localVideoStream: LocalVideoStreamState, videoEffects: LocalVideoStreamVideoEffectsState): void;
-    // (undocumented)
-    setSession(session: MediaSessionState): void;
-    // (undocumented)
-    setSessionConnectedState(sessionId: string, isConnected: SessionStatus): void;
-    // (undocumented)
-    setSessionMuted(sessionId: string, isMuted: boolean): void;
-    // (undocumented)
-    withAsyncErrorTeedToState<Args extends unknown[], R>(action: (...args: Args) => Promise<R>, target: MediaErrorTarget): (...args: Args) => Promise<R>;
-}
-
 // @public
 export type MediaDiagnosticChangedEvent = MediaDiagnosticChangedEventArgs & {
     type: 'media';
@@ -3950,9 +3913,6 @@ export type MediaErrors = {
 
 // @alpha (undocumented)
 export type MediaErrorTarget = 'MediaClient.createSessionAgent' | 'MediaClient.getDeviceManager' | 'MediaSessionAgent.joinSession' | 'MediaStreamSession.unmute' | 'MediaStreamSession.mute';
-
-// @alpha
-export const mediaSessionAgentDeclaratify: (mediaSessionAgent: MediaSessionAgent, context: MediaContext) => DeclarativeMediaSessionAgent;
 
 // @public
 export const MediaSessionAgentProvider: (props: MediaSessionAgentProviderProps) => JSX.Element;
@@ -3986,9 +3946,6 @@ export interface MediaSessionState {
     // (undocumented)
     state: SessionStatus;
 }
-
-// @alpha (undocumented)
-export const mediaStreamSessionDeclaratify: (mediaStreamSession: MediaStreamSession, context: MediaContext) => DeclarativeMediaStreamSession;
 
 // @public
 export const MediaStreamSessionProvider: (props: MediaStreamSessionProviderProps) => JSX.Element;
@@ -5100,9 +5057,6 @@ export interface SendBoxStylesProps extends BaseCustomStyles {
     textField?: IStyle;
     textFieldContainer?: IStyle;
 }
-
-// @internal
-export const _SESSION_PLACEHOLDER_ID = "placeholder-session-id";
 
 // @alpha (undocumented)
 export type SessionStatus = 'Connected' | 'Disconnected' | 'Connecting' | 'Idle';

@@ -10,7 +10,7 @@ import {
 } from './DeclarativeSession';
 
 /**
- * @public
+ * @alpha
  */
 export type DeclarativeMediaSessionAgent = MediaSessionAgent;
 
@@ -53,7 +53,7 @@ class ProxyMediaSessionAgent implements ProxyHandler<DeclarativeMediaSessionAgen
  * Creates a declarative CallAgent by proxying CallAgent with ProxyCallAgent which will track state updates by updating
  * the given context.
  *
- * @alpha
+ * @private
  */
 export const mediaSessionAgentDeclaratify = (
   mediaSessionAgent: MediaSessionAgent,

@@ -27,7 +27,7 @@ import {
 // Needed to generate state diff for verbose logging.
 enablePatches();
 
-/** @alpha */
+/** @private */
 export class MediaContext implements IDeclarativeDeviceManagerContext {
   private _state: MediaClientState;
   private _emitter: EventEmitter;
