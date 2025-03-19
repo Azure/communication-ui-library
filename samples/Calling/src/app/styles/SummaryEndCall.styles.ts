@@ -15,7 +15,7 @@ export const containerStyle: IStyle = {
  * @private
  */
 export const containerItemGap: IStackTokens = {
-  childrenGap: '0.5rem'
+  childrenGap: '1rem'
 };
 
 /**

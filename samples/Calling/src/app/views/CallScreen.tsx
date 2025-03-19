@@ -325,8 +325,6 @@ const AzureCommunicationCallAutomationCallScreen = (
     ...adapterArgs
   } = props;
 
-  const [transcription, setTranscription] = useState<CallTranscription>([]);
-  const [remoteParticipants, setRemoteParticipants] = useState<TranscriptionPaneParticipant[]>([]);
   // const [showTranscriptionDropdown, setShowTranscriptionDropdown] = useState(false);
   const [transcriptionStarted, setTranscriptionStarted] = useState(false);
 
@@ -386,57 +384,6 @@ const AzureCommunicationCallAutomationCallScreen = (
     },
     afterCreate
   );
-  const pullTranscriptionFromServer = useCallback(async () => {
-    if (!adapter) {
-      return;
-    }
-    console.log('Pulling transcription from server...');
-
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const callId = adapter.getState().call?.id;
-    if (!callId) {
-      console.error('Call ID not found');
-      return;
-    }
-
-    const transcript = await fetchTranscript(callId);
-    setTranscription(transcript);
-    // console.log('Transcript', transcript);
-  }, [adapter]);
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-
-    if (callConnected) {
-      intervalId = setInterval(() => {
-        if (transcriptionStarted) {
-          pullTranscriptionFromServer();
-        }
-      }, 2000);
-    }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [callConnected, pullTranscriptionFromServer, transcriptionStarted]);
-
-  useEffect(() => {
-    const participants = adapter?.getState().call?.remoteParticipants;
-    if (participants) {
-      const remoteParticipantsArray = Object.values(participants);
-      const transcriptionParticipants: TranscriptionPaneParticipant[] = remoteParticipantsArray.map(
-        (participant: RemoteParticipantState) => {
-          return {
-            id: (participant.identifier as CommunicationUserIdentifier).communicationUserId,
-            displayName: participant.displayName
-          };
-        }
-      );
-      setRemoteParticipants(transcriptionParticipants);
-    }
-  }, [adapter]);
 
   if ((summarizationStatus === 'Complete' && adapter) || (summarizationStatus === 'InProgress' && adapter)) {
     return <SummaryEndCallScreen adapter={adapter} summarizationStatus={summarizationStatus} summary={summary} />;
@@ -445,9 +392,6 @@ const AzureCommunicationCallAutomationCallScreen = (
   return (
     <Stack horizontal horizontalAlign={'center'} styles={{ root: { height: '100%', width: '100%' } }}>
       <CallCompositeContainer {...props} adapter={adapter} customButtons={customButtonOptions}></CallCompositeContainer>
-      <Stack styles={{ root: { width: '17rem', maxHeight: '40rem' } }}>
-        <TranscriptionPane transcript={transcription} participants={remoteParticipants} />
-      </Stack>
     </Stack>
   );
 };

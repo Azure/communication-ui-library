@@ -24,10 +24,10 @@ export const buttonWithIconStyles: IButtonStyles = {
   }
 };
 
-// export const buttonStyle = mergeStyles({
-//   fontWeight: 600,
-//   height: '2.5rem',
-//   width: '9.875rem',
-//   fontSize: '0.875rem', // 14px
-//   padding: 0
-// });
+export const rejoinButtonStyle = mergeStyles({
+  fontWeight: 600,
+  height: '2.5rem',
+  width: '22.5rem',
+  fontSize: '0.875rem', // 14px
+  padding: 0
+});

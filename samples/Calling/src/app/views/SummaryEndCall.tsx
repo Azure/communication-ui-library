@@ -2,7 +2,18 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { IButtonProps, IStyle, mergeStyles, PrimaryButton, Spinner, Stack, Text } from '@fluentui/react';
+import {
+  DefaultButton,
+  IButtonProps,
+  Icon,
+  IStyle,
+  mergeStyles,
+  PrimaryButton,
+  Spinner,
+  Stack,
+  Text,
+  useTheme
+} from '@fluentui/react';
 import {
   containerStyle,
   moreDetailsStyles,
@@ -11,9 +22,9 @@ import {
   rejoinCallButtonContainerStyles
 } from '../styles/SummaryEndCall.styles';
 import { CallCompositeIcons, CommonCallAdapter } from '@azure/communication-react';
-import { Video20Filled, CallEnd20Filled } from '@fluentui/react-icons';
-import { buttonStyle, buttonWithIconStyles, videoCameraIconStyle } from '../styles/StartCallButton.styles';
-import { SummarizeResult } from '../utils/CallAutomationUtils';
+import { Video20Filled, CallEnd20Filled, SlideText20Regular } from '@fluentui/react-icons';
+import { buttonWithIconStyles, rejoinButtonStyle, videoCameraIconStyle } from '../styles/StartCallButton.styles';
+import { fetchTranscript, SummarizeResult } from '../utils/CallAutomationUtils';
 /**
  * @private
  */
@@ -34,56 +45,124 @@ export interface SummaryEndCallScreenProps {
 export const SummaryEndCallScreen = (props: SummaryEndCallScreenProps): JSX.Element => {
   const { adapter, summarizationStatus, summary } = props;
 
+  const theme = useTheme();
+
+  const callId = adapter.getState().call?.id;
+
   return (
     <Stack
       className={mergeStyles(props.pageStyle)}
       verticalFill
+      styles={{ root: { width: '100%' } }}
       verticalAlign="center"
       horizontalAlign="center"
-      data-ui-id={props.dataUiId}
       aria-atomic
     >
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
-        <CallEnd20Filled />
-        <Text className={mergeStyles(titleStyles)} aria-live="assertive" role="alert">
-          {'You left the call'}
-        </Text>
-        <Text className={mergeStyles(moreDetailsStyles)} aria-live="assertive">
-          {'If this was a mistake , re-join the call.'}
-        </Text>
-        {!props.disableStartCallButton && (
-          <Stack styles={rejoinCallButtonContainerStyles}>
-            <StartCallButton
-              onClick={() => {
-                adapter.joinCall();
-              }}
-              disabled={false}
-              rejoinCall={true}
-              autoFocus
-            />
-          </Stack>
-        )}
-      </Stack>
-      {summarizationStatus === 'InProgress' && (
-        <Spinner styles={{ root: { marginTop: '2rem' } }} label="Summarizing conversation..." />
-      )}
-      {summarizationStatus === 'Complete' && summary && (
-        <Stack
-          horizontalAlign={'center'}
-          verticalAlign={'center'}
-          styles={{ root: { marginTop: '1rem', width: '100%' } }}
-        >
-          <Text styles={{ root: { marginTop: '0.5rem', fontWeight: 600 } }} variant="large">
-            Summary
+        <Stack>
+          <CallEnd20Filled />
+          <Text className={mergeStyles(titleStyles)} aria-live="assertive" role="alert">
+            {'You left the call'}
           </Text>
-          <Text styles={{ root: { marginTop: '0.5rem', marginBottom: '1rem', fontStyle: 'italic' } }}>
-            {summary.recap}
+          <Text className={mergeStyles(moreDetailsStyles)} aria-live="assertive">
+            {'If this was a mistake , re-join the call.'}
           </Text>
-          {summary.chapters.map((chapter, index) => (
-            <Chapter key={index} title={chapter.chapterTitle} narrative={chapter.narrative} />
-          ))}
+          {!props.disableStartCallButton && (
+            <Stack styles={rejoinCallButtonContainerStyles}>
+              <StartCallButton
+                className={mergeStyles(rejoinButtonStyle)}
+                onClick={() => {
+                  adapter.joinCall();
+                }}
+                disabled={false}
+                rejoinCall={true}
+                autoFocus
+              />
+            </Stack>
+          )}
         </Stack>
-      )}
+
+        <Stack tokens={containerItemGap}>
+          {summarizationStatus === 'InProgress' && (
+            <Spinner styles={{ root: { marginTop: '2rem' } }} label="Summarizing conversation..." />
+          )}
+          {summarizationStatus === 'Complete' && summary && (
+            <Stack
+              styles={{
+                root: {
+                  width: '100%',
+                  borderRadius: theme.effects.roundedCorner4,
+                  boxShadow: theme.effects.elevation8
+                }
+              }}
+            >
+              <Stack styles={{ root: { padding: '1rem' } }}>
+                <Text styles={{ root: { fontWeight: 600 } }} variant="large">
+                  Meeting Summary
+                </Text>
+              </Stack>
+
+              <Stack styles={{ root: { padding: '0 1rem' } }}>
+                <Stack
+                  styles={{
+                    root: {
+                      width: '100%',
+                      height: '1px',
+                      backgroundColor: theme.palette.neutralLight
+                    }
+                  }}
+                />
+              </Stack>
+
+              <Stack tokens={{ childrenGap: '0.5rem', padding: '1rem' }}>
+                <Stack horizontal tokens={{ childrenGap: '0.5rem' }} verticalAlign="center">
+                  <Icon style={{ color: theme.palette.neutralSecondary }} iconName={'Info'}></Icon>
+                  <Text styles={{ root: { fontWeight: 400, color: theme.palette.neutralSecondary } }}>
+                    {'Generated by AI. Check for accuracy.'}
+                  </Text>
+                </Stack>
+                <Text styles={{ root: { fontWeight: 400 } }}>{summary.recap}</Text>
+                <DefaultButton
+                  text="Transcript"
+                  onClick={async () => {
+                    if (summary && callId) {
+                      const transcript = await fetchTranscript(callId);
+                      if (!transcript) {
+                        console.error('Failed to fetch transcript');
+                        return;
+                      }
+                      const transcriptionSentences = transcript.map(
+                        (sentence) => sentence.participantId + ': ' + sentence.text
+                      );
+                      const blob = new Blob(transcriptionSentences, { type: 'text/plain' });
+                      const url = URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'meeting-transcript.txt';
+                      document.body.appendChild(a);
+                      a.click();
+                      document.body.removeChild(a);
+                      URL.revokeObjectURL(url);
+                    }
+                  }}
+                  styles={{
+                    root: {
+                      borderRadius: theme.effects.roundedCorner4,
+                      borderColor: theme.palette.neutralTertiary,
+                      minWidth: '5.75rem',
+                      maxWidth: '6.5rem'
+                    }
+                  }}
+                  onRenderIcon={() => <SlideText20Regular />}
+                />
+                <Text styles={{ root: { fontWeight: 400, color: theme.palette.neutralSecondary } }}>
+                  {'Summary and transcript are held in memory and available shortly at the end of the meeting.'}
+                </Text>
+              </Stack>
+            </Stack>
+          )}
+        </Stack>
+      </Stack>
     </Stack>
   );
 };
@@ -108,28 +187,10 @@ const StartCallButton = (props: StartCallButtonProps): JSX.Element => {
     <PrimaryButton
       {...props}
       data-ui-id="call-composite-start-call-button"
-      className={mergeStyles(buttonStyle, props.className)}
+      className={mergeStyles(props.className)}
       styles={buttonWithIconStyles}
       text={rejoinCall ? 'Re-join call' : 'Start call'}
       onRenderIcon={props.hideIcon ? undefined : () => <Video20Filled className={videoCameraIconStyle} />}
     />
-  );
-};
-
-const Chapter = (props: { title: string; narrative: string }): JSX.Element => {
-  return (
-    <Stack
-      styles={{
-        root: {
-          paddingLeft: '2rem',
-          marginTop: '0.5rem',
-          marginBottom: '0.5rem',
-          borderLeft: '2px solid #ccc'
-        }
-      }}
-    >
-      <Text styles={{ root: { marginBottom: '0.25rem', fontWeight: 600 } }}>{props.title}</Text>
-      <Text>{props.narrative}</Text>
-    </Stack>
   );
 };
