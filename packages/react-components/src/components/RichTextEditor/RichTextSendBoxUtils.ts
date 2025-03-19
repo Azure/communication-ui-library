@@ -8,7 +8,7 @@
 /**
  * @private
  */
-export const _isRichTextSendBoxSymbol = Symbol('isRichTextSendBox');
+export const richTextSendBoxIdentifier = Symbol('richTextSendBoxIdentifier');
 
 /* @conditional-compile-remove(rich-text-editor) */
 /**
@@ -16,5 +16,5 @@ export const _isRichTextSendBoxSymbol = Symbol('isRichTextSendBox');
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const _isRichTextSendBox = (component: any): boolean => {
-  return component?.[_isRichTextSendBoxSymbol] === true;
+  return component?.[richTextSendBoxIdentifier] === true;
 };
