@@ -7,48 +7,65 @@ import { CreateVideoStreamViewResult, VideoGalleryStream, VideoStreamOptions } f
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the result of a Together Mode stream view.
- * @beta
+ * @public
  */
 export interface TogetherModeStreamOptions extends VideoStreamOptions {
+  /**
+   * The kind of together mode view to be created. Default is 'main'.
+   */
   viewKind?: 'main' | 'panoramic';
 }
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the result of a Together Mode stream view.
- * @beta
+ * @public
  */
 export interface TogetherModeStreamViewResult {
+  /**
+   * Together mode stream view id.
+   */
   mainVideoView?: CreateVideoStreamViewResult;
 }
 
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the streams in Together Mode.
- * @beta
+ * @public
  */
 export interface VideoGalleryTogetherModeStreams {
+  /**
+   * The main video stream in Together Mode.
+   */
   mainVideoStream?: VideoGalleryStream;
 }
 
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the seating information in Together Mode.
- * @beta
+ * @public
  */
 export interface VideoGalleryTogetherModeSeatingInfo {
-  /* The top left offset from the top of the together mode view.*/
+  /**
+   * The top left offset from the top of the together mode view.
+   */
   top: number;
-  /* The left offset position from the left of the together mode view. */
+  /**
+   * The left offset position from the left of the together mode view.
+   */
   left: number;
-  /*  The width of the seating area */
+  /**
+   *The width of the seating area
+   */
   width: number;
-  /* The height of the seating area. */
+  /**
+   * The height of the seating area.
+   */
   height: number;
 }
 
 /* @conditional-compile-remove(together-mode) */
 /**
  * Interface representing the position of a participant in Together Mode.
- * @beta
+ * @public
  */
 export type VideoGalleryTogetherModeParticipantPosition = Record<string, VideoGalleryTogetherModeSeatingInfo>;

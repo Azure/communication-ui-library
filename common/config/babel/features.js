@@ -68,15 +68,15 @@ module.exports = {
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
     // Feature for RTT
-    "rtt",
-    // Feature for together mode
-    "together-mode"
+    "rtt"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
     // Feature for breakout rooms
-    "breakout-rooms"
+    "breakout-rooms",
+    // Feature for together mode
+    "together-mode"
   ]
 }

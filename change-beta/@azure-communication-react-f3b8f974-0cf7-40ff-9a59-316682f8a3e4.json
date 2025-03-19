@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "",
+  "comment": "Resolve issue where RichTextBox could not be found when running in production with a minimized bundle.",
+  "packageName": "@azure/communication-react",
+  "email": "palatter@microsoft.com",
+  "dependentChangeType": "patch"
+}
