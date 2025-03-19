@@ -6,15 +6,15 @@
 
 /* @conditional-compile-remove(rich-text-editor) */
 /**
- * @internal
+ * @private
  */
-export const _isRichTextSendBox = Symbol('isRichTextSendBox');
+export const _isRichTextSendBoxSymbol = Symbol('isRichTextSendBox');
 
 /* @conditional-compile-remove(rich-text-editor) */
 /**
  * @internal
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const isRichTextSendBox = (component: any): boolean => {
-  return component?.[_isRichTextSendBox] === true;
+export const _isRichTextSendBox = (component: any): boolean => {
+  return component?.[_isRichTextSendBoxSymbol] === true;
 };

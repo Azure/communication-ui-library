@@ -41,7 +41,7 @@ import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
 /* @conditional-compile-remove(rich-text-editor) */
-import { _isRichTextSendBox } from './RichTextSendBoxUtils';
+import { _isRichTextSendBoxSymbol } from './RichTextSendBoxUtils';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -604,4 +604,4 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 // Add component type check to assist in identification for usePropsFor
 // to avoid issue where production build does not have the component name
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(RichTextSendBox as any)[_isRichTextSendBox] = true;
+(RichTextSendBox as any)[_isRichTextSendBoxSymbol] = true;
