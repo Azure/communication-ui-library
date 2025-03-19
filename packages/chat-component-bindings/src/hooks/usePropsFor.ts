@@ -101,6 +101,8 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
     return messageThreadSelectorImpl;
   };
 
+  console.log('findSelector - component', component);
+
   // Add component type check to assist in identification for usePropsFor
   // to avoid issue where production build does not have the component name
   /* @conditional-compile-remove(rich-text-editor) */

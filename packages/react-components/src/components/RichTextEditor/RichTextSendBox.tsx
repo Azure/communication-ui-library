@@ -40,6 +40,7 @@ import { SendBoxErrorBarType } from '../SendBoxErrorBar';
 import { attachmentUploadCardsStyles } from '../styles/SendBox.styles';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { FluentV9ThemeProvider } from '../../theming/FluentV9ThemeProvider';
+import { _isRichTextSendBox } from './RichTextSendBoxUtils';
 
 /**
  * Strings of {@link RichTextSendBox} that can be overridden.
@@ -597,9 +598,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     </Stack>
   );
 };
-
-/* @conditional-compile-remove(rich-text-editor) */
-const _isRichTextSendBox = Symbol('isRichTextSendBox');
 
 /* @conditional-compile-remove(rich-text-editor) */
 // Add the internal property to the component
