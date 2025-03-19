@@ -156,7 +156,7 @@ export const _VideoEffectsItem = (props: _VideoEffectsItemProps): JSX.Element =>
           styles={containerStyles()}
           onClick={disabled ? undefined : () => props.onSelect?.(props.itemKey)}
           componentRef={props.componentRef as React.RefObject<IButton>}
-          ariaLabel={props.ariaLabel ?? (props.tooltipProps?.content as string) ?? props.itemKey}
+          ariaLabel={props.ariaLabel ?? `${props.title}, ${props.tooltipProps?.content as string}` ?? props.itemKey}
           aria-disabled={props.disabled}
           role="radio"
           aria-checked={isSelected}

@@ -56,7 +56,7 @@ import { CachedComplianceNotificationProps, computeComplianceNotification } from
 import { TrackedNotifications } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
-import { VideoGalleryLayout } from '@internal/react-components';
+import { VideoGalleryLayout, LocalScreenShareView } from '@internal/react-components';
 import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
@@ -262,6 +262,10 @@ export type CallCompositeOptions = {
      * Layout for the gallery when the call starts
      */
     layout?: VideoGalleryLayout;
+    /**
+     * Controls the view of the local screenshare stream in the gallery
+     */
+    localScreenShareView?: LocalScreenShareView;
   };
   /**
    * Options for end of call survey
@@ -348,6 +352,18 @@ export type CallCompositeOptions = {
      * @defaultValue false
      */
     hideSpotlightButtons?: boolean;
+  };
+  /**
+   * Options for settings related to joining a call.
+   */
+  joinCallOptions?: {
+    /**
+     * options for checking microphone permissions when joining a call.
+     * block on access will block the user from joining the call if the microphone permission is not granted.
+     * skip will allow the user to join the call without granting the microphone permission.
+     * @defaultValue 'requireMicrophoneAvailable'
+     */
+    microphoneCheck?: 'requireMicrophoneAvailable' | 'skip';
   };
 };
 
@@ -556,6 +572,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     case 'configuration':
       pageElement = (
         <ConfigurationPage
+          joinCallOptions={props.options?.joinCallOptions}
           mobileView={props.mobileView}
           startCallHandler={(): void => {
             if (callees) {

@@ -291,9 +291,15 @@ export interface NotificationStackStrings {
   capabilityUnmuteMicAbsent?: NotificationStrings;
 
   /* @conditional-compile-remove(together-mode) */
+  /**
+   * Message shown in notification when together mode is started
+   */
   togetherModeStarted?: NotificationStrings;
 
   /* @conditional-compile-remove(together-mode) */
+  /**
+   * Message shown in notification when together mode ends
+   */
   togetherModeEnded?: NotificationStrings;
 }
 
