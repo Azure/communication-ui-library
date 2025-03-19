@@ -131,7 +131,7 @@ export const SummaryEndCallScreen = (props: SummaryEndCallScreenProps): JSX.Elem
                         return;
                       }
                       const transcriptionSentences = transcript.map(
-                        (sentence) => sentence.participantId + ': ' + sentence.text
+                        (sentence) => sentence.participant.communicationUserId + ': ' + sentence.text + '\n'
                       );
                       const blob = new Blob(transcriptionSentences, { type: 'text/plain' });
                       const url = URL.createObjectURL(blob);

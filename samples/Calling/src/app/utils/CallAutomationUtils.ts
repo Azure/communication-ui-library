@@ -3,13 +3,7 @@
 
 import { RemoteParticipant } from '@azure/communication-calling';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
-import {
-  CallAdapter,
-  CallAdapterState,
-  CallTranscription,
-  CommonCallAdapter,
-  RemoteParticipantState
-} from '@azure/communication-react';
+import { CallAdapter, CallAdapterState, CommonCallAdapter, RemoteParticipantState } from '@azure/communication-react';
 
 export type SummarizeResult = {
   recap: string;
@@ -18,6 +12,13 @@ export type SummarizeResult = {
     narrative: string;
   }[];
 };
+
+export type CallTranscription = {
+  text: string;
+  confidence: number;
+  participant: CommunicationUserIdentifier;
+  resultState: 'intermediate' | 'final';
+}[];
 
 export const fetchTranscript = async (callId: string): Promise<CallTranscription> => {
   const response = await fetch(`/fetchTranscript`, {

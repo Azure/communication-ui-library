@@ -16,6 +16,7 @@ import {
   getResourceConnectionString
 } from './envHelper';
 import { ConversationSummaryInput } from './summarizationHelper';
+import { CommunicationUserIdentifier } from '@azure/communication-common';
 
 export interface CallTranscription {
   metadata: TranscriptionMetadata;
@@ -209,7 +210,7 @@ export const formatTranscriptionForSummarization = async (
   transcription: CallTranscription
 ): Promise<ConversationSummaryInput> => {
   const formattedTranscription: ConversationSummaryInput = transcription.data.map((data) => ({
-    author: 'Participant', // TODO: get displayName by having the server collect and store the chosen display name
+    author: (data.participant as CommunicationUserIdentifier).communicationUserId, // TODO: get displayName by having the server collect and store the chosen display name
     text: data.text
   }));
 
