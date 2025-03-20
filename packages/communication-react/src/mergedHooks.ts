@@ -160,26 +160,13 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
 export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): ComponentProps<Component> => {
-  const chatSelector = getChatSelector(component);
-  const chatProps = useChatSelector(chatSelector);
-  const chatHandlers = useChatHandlers<Parameters<Component>[0]>(component);
-
-  if (chatProps) {
-    if (!chatHandlers) {
-      throw new Error('Please initialize chatClient and chatThreadClient first!');
-    }
-    return { ...chatProps, ...chatHandlers } as any;
-  }
-
-  if (!chatSelector) {
-    throw new Error(
-      "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List."
-    );
-  } else {
+  const props = useChatPropsForInternal(component);
+  if (props === undefined) {
     throw new Error(
       'Could not find props for this component, ensure the component is wrapped by appropriate providers.'
     );
   }
+  return props as ComponentProps<Component>;
 };
 
 /**
@@ -192,24 +179,11 @@ export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
 export const useCallingPropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): ComponentProps<Component> => {
-  const callingSelector = getCallingSelector(component);
-  const callProps = useCallingSelector(callingSelector);
-  const callingHandlers = useCallingHandlers<Parameters<Component>[0]>(component);
-
-  if (callProps) {
-    if (!callingHandlers) {
-      throw new Error('Please initialize callClient first!');
-    }
-    return { ...callProps, ...callingHandlers } as any;
-  }
-
-  if (!callingSelector) {
-    throw new Error(
-      "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List."
-    );
-  } else {
+  const props = useCallingPropsForInternal(component);
+  if (props === undefined) {
     throw new Error(
       'Could not find props for this component, ensure the component is wrapped by appropriate providers.'
     );
   }
+  return props as ComponentProps<Component>;
 };
