@@ -402,28 +402,28 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   };
 
   /* @conditional-compile-remove(together-mode) */
-  const togetherModeOption = {
-    itemKey: 'togetherModeSelectionKey',
-    text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,
-    onItemClick: () => {
-      props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
-      onLightDismiss();
-    },
-    iconProps: {
-      iconName: 'TogetherModeLayout',
-      styles: { root: { lineHeight: 0 } }
-    },
-    disabled: !(
-      (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
-      isTogetherModeActive
-    ),
-    secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
-  };
+  const togetherModeOption =
+    (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
+    isTogetherModeActive
+      ? {
+          itemKey: 'togetherModeSelectionKey',
+          text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,
+          onItemClick: () => {
+            props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
+            onLightDismiss();
+          },
+          iconProps: {
+            iconName: 'TogetherModeLayout',
+            styles: { root: { lineHeight: 0 } }
+          },
+          secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
+        }
+      : undefined;
 
   /* @conditional-compile-remove(gallery-layout-composite) */
   galleryLayoutOptions.subMenuProps?.push(galleryOption);
   /* @conditional-compile-remove(together-mode) */
-  if (isTeamsCall || isTeamsMeeting) {
+  if (togetherModeOption && (isTeamsCall || isTeamsMeeting)) {
     galleryLayoutOptions.subMenuProps?.push(togetherModeOption);
   }
 

@@ -410,27 +410,27 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     };
 
     /* @conditional-compile-remove(together-mode) */
-    const togetherModeOption = {
-      key: 'togetherModeSelectionKey',
-      text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,
-      canCheck: true,
-      itemProps: {
-        styles: buttonFlyoutIncreasedSizeStyles
-      },
-      isChecked: props.userSetGalleryLayout === 'togetherMode',
-      onClick: () => {
-        props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
-        setFocusedContentOn(false);
-      },
-      disabled: !(
-        (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
-        isTogetherModeActive
-      ),
-      iconProps: {
-        iconName: 'TogetherModeLayout',
-        styles: { root: { lineHeight: 0 } }
-      }
-    };
+    const togetherModeOption =
+      (participantId?.kind === 'microsoftTeamsUser' && participantCapability?.startTogetherMode?.isPresent) ||
+      isTogetherModeActive
+        ? {
+            key: 'togetherModeSelectionKey',
+            text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,
+            canCheck: true,
+            itemProps: {
+              styles: buttonFlyoutIncreasedSizeStyles
+            },
+            isChecked: props.userSetGalleryLayout === 'togetherMode',
+            onClick: () => {
+              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
+              setFocusedContentOn(false);
+            },
+            iconProps: {
+              iconName: 'TogetherModeLayout',
+              styles: { root: { lineHeight: 0 } }
+            }
+          }
+        : undefined;
 
     /* @conditional-compile-remove(overflow-top-composite) */
     const overflowGalleryOption = {
@@ -463,7 +463,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
     /* @conditional-compile-remove(together-mode) */
-    if (isTeamsCall || isTeamsMeeting) {
+    if (togetherModeOption && (isTeamsCall || isTeamsMeeting)) {
       galleryOptions.subMenuProps?.items?.push(togetherModeOption);
     }
     if (props.callControls === true || (props.callControls as CallControlOptions)?.galleryControlsButton !== false) {
