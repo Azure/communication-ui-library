@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "fixes treeshaking issue with usePropsFor by supporting useChatPropsFor and useCallingPropsFor",
-  "comment": "re-exporting functions and handling undefined case to match top-level usePropsFor function",
-  "packageName": "@azure/communication-react",
-  "email": "alkwa@microsoft.com",
-  "dependentChangeType": "patch"
-}
