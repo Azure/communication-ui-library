@@ -4744,7 +4744,13 @@ export const useCallAgent: () => CallAgent | undefined;
 export const useCallClient: () => StatefulCallClient;
 
 // @public
+export const useCallingPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ComponentProps<Component>;
+
+// @public
 export const useChatClient: () => StatefulChatClient;
+
+// @public
+export const useChatPropsFor: <Component extends (props: any) => JSX.Element>(component: Component) => ComponentProps<Component>;
 
 // @public
 export const useChatThreadClient: () => ChatThreadClient;
