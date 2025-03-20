@@ -5,16 +5,14 @@ import {
   getCallingSelector,
   GetCallingSelector,
   useCallingHandlers,
-  useCallingSelector,
-  useCallingPropsFor as useCallingPropsForInternal
+  useCallingSelector
 } from '@internal/calling-component-bindings';
 import {
   ChatHandlers,
   getChatSelector,
   GetChatSelector,
   useChatHandlers,
-  useChatSelector,
-  useChatPropsFor as useChatPropsForInternal
+  useChatSelector
 } from '@internal/chat-component-bindings';
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { CallClientState } from '@internal/calling-stateful-client';
@@ -127,63 +125,21 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
 
   if (chatProps) {
     if (!chatHandlers) {
-      throw new Error('Please initialize chatClient and chatThreadClient first!');
+      throw 'Please initialize chatClient and chatThreadClient first!';
     }
     return { ...chatProps, ...chatHandlers } as any;
   }
 
   if (callProps) {
     if (!callingHandlers) {
-      throw new Error('Please initialize callClient first!');
+      throw 'Please initialize callClient first!';
     }
     return { ...callProps, ...callingHandlers } as any;
   }
 
   if (!chatSelector && !callingSelector) {
-    throw new Error(
-      "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List."
-    );
+    throw "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.";
   } else {
-    throw new Error(
-      'Could not find props for this component, ensure the component is wrapped by appropriate providers.'
-    );
+    throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
   }
-};
-
-/**
- * Helper function to pull the necessary properties for a chat component. There is a general usePropsFor
- * function however since it can pull in for both calling and chat you will not be able to leverage any treeshaking
- * functionality.
- *
- * @public
- */
-export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
-  component: Component
-): ComponentProps<Component> => {
-  const props = useChatPropsForInternal(component);
-  if (props === undefined) {
-    throw new Error(
-      'Could not find props for this component, ensure the component is wrapped by appropriate providers.'
-    );
-  }
-  return props as ComponentProps<Component>;
-};
-
-/**
- * Helper function to pull the necessary properties for a calling component. There is a general usePropsFor
- * function however since it can pull in for both calling and chat you will not be able to leverage any treeshaking
- * functionality.
- *
- * @public
- */
-export const useCallingPropsFor = <Component extends (props: any) => JSX.Element>(
-  component: Component
-): ComponentProps<Component> => {
-  const props = useCallingPropsForInternal(component);
-  if (props === undefined) {
-    throw new Error(
-      'Could not find props for this component, ensure the component is wrapped by appropriate providers.'
-    );
-  }
-  return props as ComponentProps<Component>;
 };
