@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "",
+  "comment": "Fix returned types for useChatPropsFor and useCallingPropsFor",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
