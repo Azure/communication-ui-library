@@ -159,14 +159,14 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
  */
 export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
-): ComponentProps<Component> => {
+): ChatReturnProps<Component> => {
   const props = useChatPropsForInternal(component);
   if (props === undefined) {
     throw new Error(
       'Could not find props for this component, ensure the component is wrapped by appropriate providers.'
     );
   }
-  return props as ComponentProps<Component>;
+  return props as ChatReturnProps<Component>;
 };
 
 /**
@@ -178,12 +178,12 @@ export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
  */
 export const useCallingPropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
-): ComponentProps<Component> => {
+): CallingReturnProps<Component> => {
   const props = useCallingPropsForInternal(component);
   if (props === undefined) {
     throw new Error(
       'Could not find props for this component, ensure the component is wrapped by appropriate providers.'
     );
   }
-  return props as ComponentProps<Component>;
+  return props as CallingReturnProps<Component>;
 };
