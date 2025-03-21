@@ -3,7 +3,7 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useState, useEffect, useRef, useMemo } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 import memoizeOne from 'memoize-one';
 import { useAdapter } from '../adapter/CallAdapterProvider';
@@ -52,14 +52,8 @@ export const useSelectorWithAdaptation = <
   });
 
   const callId = adapter.getState().call?.id;
-  const callConfigProps = useMemo(
-    () => ({
-      callId
-    }),
-    [callId]
-  );
 
-  const [props, setProps] = useState(selector(adaptState(adapter.getState()), selectorProps ?? callConfigProps));
+  const [props, setProps] = useState(selector(adaptState(adapter.getState()), selectorProps ?? { callId }));
   const propRef = useRef(props);
   propRef.current = props;
 
@@ -68,7 +62,7 @@ export const useSelectorWithAdaptation = <
       if (!mounted.current) {
         return;
       }
-      const newProps = selector(adaptState(state), selectorProps ?? callConfigProps);
+      const newProps = selector(adaptState(state), selectorProps ?? { callId: state.call?.id });
       if (propRef.current !== newProps) {
         setProps(newProps);
       }
@@ -77,7 +71,7 @@ export const useSelectorWithAdaptation = <
     return () => {
       adapter.offStateChange(onStateChange);
     };
-  }, [adaptState, adapter, selector, selectorProps, callConfigProps]);
+  }, [adaptState, adapter, selector, selectorProps]);
   return props;
 };
 
