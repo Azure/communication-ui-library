@@ -136,11 +136,12 @@ export const FluentChatMessageComponent = (props: FluentChatMessageComponentWrap
         renderedAvatar = avatarComponent;
       }
     }
-    return (
+    return !renderedAvatar?.props ? (
       <div className={mergeStyles(chatAvatarStyle)}>
         {renderedAvatar ? renderedAvatar : <Persona {...personaOptions} />}
       </div>
-    );
+    ) : // When pass undefined to FluentChatMessage component, it will remove the unnecessary left margin
+    undefined;
   }, [message.senderDisplayName, message.senderId, onRenderAvatar, shouldShowAvatar]);
 
   const setMessageContainerRef = useCallback((node: HTMLDivElement | null) => {
