@@ -63,6 +63,26 @@ export const startTranscription = async (
   return true;
 };
 
+export const stopTranscription = async (callId: string): Promise<boolean> => {
+  console.log('Stopping transcription for call:', callId);
+
+  const response = await fetch('/stopTranscription', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+      callId
+    })
+  });
+  if (!response.ok) {
+    console.error('Failed to stop transcription:', response);
+    return false;
+  }
+  console.log('Stopped transcription');
+  return true;
+};
+
 export const connectToCallAutomation = async (
   callAdaterState: CallAdapterState,
   callAutomationStarted: boolean

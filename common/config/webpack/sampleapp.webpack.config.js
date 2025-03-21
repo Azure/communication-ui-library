@@ -150,6 +150,10 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           target: 'http://[::1]:8080'
         },
         {
+          path: '/stopTranscription',
+          target: 'http://[::1]:8080'
+        },
+        {
           path: '/summarizeTranscript',
           target: 'http://[::1]:8080'
         },

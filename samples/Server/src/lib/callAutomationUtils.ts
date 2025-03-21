@@ -99,6 +99,12 @@ export const startTranscriptionForCall = async (
   return await callConnection.getCallMedia().startTranscription(options);
 };
 
+export const stopTranscriptionForCall = async (callConnectionId: string): Promise<void> => {
+  console.log('Stopping transcription for call:', callConnectionId);
+  const callConnection = await getCallAutomationClient().getCallConnection(callConnectionId);
+  return await callConnection.getCallMedia().stopTranscription();
+};
+
 export const TRANSCRIPTION_STORE: { [key: string]: Partial<CallTranscription> } = {};
 /**
  * Used to map between the call connection id and the correlation id from both transcription and
@@ -175,6 +181,7 @@ export const handleTranscriptionDataEvent = (eventData: TranscriptionData, event
   console.log('--------------------------------------------');
   console.log('Transcription Data');
   console.log('TEXT:-->' + eventData.text);
+  console.log('CALL CONNECTION ID: -->' + eventId);
   console.log('FORMAT:-->' + eventData.format);
   console.log('CONFIDENCE:-->' + eventData.confidence);
   console.log('OFFSET IN TICKS:-->' + eventData.offsetInTicks);

@@ -34,6 +34,7 @@ import {
   connectToCallAutomation,
   getCallSummaryFromServer,
   startTranscription,
+  stopTranscription,
   SummarizeResult,
   updateRemoteParticipants
 } from '../utils/CallAutomationUtils';
@@ -324,6 +325,7 @@ const AzureCommunicationCallAutomationCallScreen = (
     setCallConnected,
     ...adapterArgs
   } = props;
+  const [transcriptionStarted, setTranscriptionStarted] = useState(false);
 
   if (!('communicationUserId' in userId)) {
     throw new Error('A ACS user ID must be provided for Rooms call.');
@@ -334,15 +336,17 @@ const AzureCommunicationCallAutomationCallScreen = (
     () => ({
       placement: 'overflow',
       strings: {
-        label: 'Start Transcription'
+        label: transcriptionStarted ? 'Stop Transcription' : 'Start Transcription'
       },
       onRenderIcon: () => (
         <SlideTextEdit20Regular style={{ color: theme.palette.themePrimary, margin: '0rem 0.2rem' }} />
       ),
       onItemClick: async () => {
         console.log('Start transcription button clicked');
-        if (callId) {
-          await startTranscription(callId);
+        if (callId && !transcriptionStarted) {
+          setTranscriptionStarted(await startTranscription(callId));
+        } else if (callId && transcriptionStarted) {
+          setTranscriptionStarted(await !stopTranscription(callId));
         }
       },
       tooltipText: 'Start Transcription'
