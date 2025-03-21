@@ -71,7 +71,7 @@ export const useSelectorWithAdaptation = <
     return () => {
       adapter.offStateChange(onStateChange);
     };
-  }, [adaptState, adapter, selector, selectorProps, callId]);
+  }, [adaptState, adapter, selector, selectorProps]);
   return props;
 };
 
