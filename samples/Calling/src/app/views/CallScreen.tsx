@@ -4,6 +4,7 @@
 import {
   AzureCommunicationTokenCredential,
   CommunicationUserIdentifier,
+  isPhoneNumberIdentifier,
   MicrosoftTeamsUserIdentifier
 } from '@azure/communication-common';
 import {
@@ -35,6 +36,8 @@ export interface CallScreenProps {
   isTeamsIdentityCall?: boolean;
 }
 
+const ringingSound = new Audio('assets/sounds/callRinging.mp3');
+
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, isTeamsIdentityCall } = props;
   const callIdRef = useRef<string>();
@@ -48,6 +51,20 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     adapter.onStateChange((state: CallAdapterState) => {
       const pageTitle = convertPageStateToString(state);
       document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
+      console.log(state?.call?.state);
+      const hasPhoneUser = (participants: StartCallIdentifier[] | undefined): boolean => {
+        return participants
+          ? participants.some((participant) => {
+              return isPhoneNumberIdentifier(participant);
+            })
+          : false;
+      };
+
+      if (state?.call?.state === 'Connecting' && hasPhoneUser(props.targetCallees)) {
+        ringingSound.play();
+      } else if (state?.call?.state === 'EarlyMedia') {
+        ringingSound.pause();
+      }
 
       if (state?.call?.id && callIdRef.current !== state?.call?.id) {
         callIdRef.current = state?.call?.id;
