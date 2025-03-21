@@ -30,7 +30,7 @@
     "@internal/acs-ui-javascript-loaders": "1.26.0-beta.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.9",
+    "@babel/core": "^7.26.10",
     "@babel/plugin-transform-export-namespace-from": "^7.22.11",
     "babel-loader": "8.1.0",
     "eslint": "^8.57.0",
