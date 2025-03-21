@@ -13,7 +13,8 @@ import {
   TogetherModeStreamViewResult,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
-  VideoStreamOptions
+  VideoStreamOptions,
+  TogetherModeStreamOptions
 } from '../../types';
 /* @conditional-compile-remove(together-mode) */
 import { StreamMedia } from '../StreamMedia';
@@ -33,7 +34,9 @@ export const TogetherModeStream = memo(
   (props: {
     startTogetherModeEnabled?: boolean;
     isTogetherModeActive?: boolean;
-    onCreateTogetherModeStreamView?: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
+    onCreateTogetherModeStreamView?: (
+      options?: TogetherModeStreamOptions
+    ) => Promise<void | TogetherModeStreamViewResult>;
     onStartTogetherMode?: (options?: VideoStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     onDisposeTogetherModeStreamView?: () => Promise<void>;
     onSetTogetherModeSceneSize?: (width: number, height: number) => void;
@@ -73,10 +76,14 @@ export const TogetherModeStream = memo(
 
     // Create stream view if not already created
     useEffect(() => {
-      if (!togetherModeStreams?.mainVideoStream?.renderElement) {
+      if (togetherModeStreams?.mainVideoStream?.isAvailable && !togetherModeStreams?.mainVideoStream?.renderElement) {
         onCreateTogetherModeStreamView?.();
       }
-    }, [togetherModeStreams?.mainVideoStream?.renderElement, onCreateTogetherModeStreamView]);
+    }, [
+      togetherModeStreams?.mainVideoStream?.renderElement,
+      togetherModeStreams?.mainVideoStream?.isAvailable,
+      onCreateTogetherModeStreamView
+    ]);
 
     // Update scene size only when container dimensions change
     useMemo(() => {
