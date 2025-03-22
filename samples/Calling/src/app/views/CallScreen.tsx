@@ -14,34 +14,33 @@ import {
   CommonCallAdapter,
   onResolveDeepNoiseSuppressionDependencyLazy,
   onResolveVideoEffectDependencyLazy,
-  RemoteParticipantState,
   TeamsCallAdapter,
   toFlatCommunicationIdentifier,
-  TranscriptionPane,
   useAzureCommunicationCallAdapter,
-  useTeamsCallAdapter
+  useTeamsCallAdapter,
+  useTheme
 } from '@azure/communication-react';
 import type {
-  CallTranscription,
   CustomCallControlButtonCallback,
   Profile,
   StartCallIdentifier,
-  TeamsAdapterOptions,
-  TranscriptionPaneParticipant
+  TeamsAdapterOptions
 } from '@azure/communication-react';
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
 import {
   connectToCallAutomation,
-  fetchTranscript,
   getCallSummaryFromServer,
   startTranscription,
+  stopTranscription,
   SummarizeResult,
   updateRemoteParticipants
 } from '../utils/CallAutomationUtils';
-import { Spinner, Stack, Text } from '@fluentui/react';
+import { Stack } from '@fluentui/react';
+import { SummaryEndCallScreen } from './SummaryEndCall';
+import { SlideTextEdit20Regular } from '@fluentui/react-icons';
 
 export interface CallScreenProps {
   token: string;
@@ -58,9 +57,10 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, isTeamsIdentityCall, enableTranscription } = props;
   const callIdRef = useRef<string>();
   const callAutomationStarted = useRef(false);
-  const [callConnected, setCallConnected] = useState(false);
   const [summarizationStatus, setSummarizationStatus] = useState<'None' | 'InProgress' | 'Complete'>('None');
   const [summary, setSummary] = useState<SummarizeResult>();
+  const [callConnected, setCallConnected] = useState(false);
+  const [serverCallId, setServerCallId] = useState<string | undefined>(undefined);
 
   const subscribeAdapterEvents = useCallback(
     (adapter: CommonCallAdapter) => {
@@ -72,18 +72,25 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter.onStateChange(async (state: CallAdapterState) => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
+
         if (state?.call?.state === 'Connected') {
           setCallConnected(true);
-        } else if (state?.call?.state === 'Disconnected') {
-          setCallConnected(false);
+          setServerCallId(await state.call.info?.getServerCallId());
         }
 
         if (state?.call?.id && callIdRef.current !== state?.call?.id) {
           callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
         }
-        if (enableTranscription && !callAutomationStarted.current) {
-          callAutomationStarted.current = await connectToCallAutomation(state, callAutomationStarted.current);
+        if (enableTranscription && !callAutomationStarted.current && state.call?.state === 'Connected') {
+          callAutomationStarted.current = true;
+          try {
+            console.log('Connecting to call automation...');
+            await connectToCallAutomation(state);
+          } catch (e) {
+            console.error('Error connecting to call automation:', e);
+            callAutomationStarted.current = false;
+          }
         }
       });
       adapter.on('transferAccepted', (event) => {
@@ -98,6 +105,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       adapter.on('callEnded', async (event) => {
         console.log('Call ended id: ' + event.callId + ' code: ' + event.code, 'subcode: ' + event.subCode);
         if (callAutomationStarted.current) {
+          setCallConnected(false);
           setSummary(undefined);
           setSummarizationStatus('InProgress');
           setSummary(await getCallSummaryFromServer(adapter).finally(() => setSummarizationStatus('Complete')));
@@ -136,36 +144,18 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   if (enableTranscription) {
     return (
       <Stack horizontal styles={{ root: { height: '100%', width: '100%' } }}>
-        {summarizationStatus === 'None' && (
-          <AzureCommunicationCallAutomationCallScreen
-            afterCreate={afterCallAdapterCreate}
-            credential={credential}
-            callConnected={callConnected}
-            enableTranscription={enableTranscription}
-            callId={callIdRef.current}
-            {...props}
-          />
-        )}
-        {summarizationStatus === 'InProgress' && (
-          <Spinner styles={{ root: { marginTop: '2rem' } }} label="Summarizing conversation..." />
-        )}
-        {summarizationStatus === 'Complete' && summary && (
-          <Stack
-            horizontalAlign={'center'}
-            verticalAlign={'center'}
-            styles={{ root: { marginTop: '1rem', width: '100%' } }}
-          >
-            <Text styles={{ root: { marginTop: '0.5rem', fontWeight: 600 } }} variant="large">
-              Summary
-            </Text>
-            <Text styles={{ root: { marginTop: '0.5rem', marginBottom: '1rem', fontStyle: 'italic' } }}>
-              {summary.recap}
-            </Text>
-            {summary.chapters.map((chapter, index) => (
-              <Chapter key={index} title={chapter.chapterTitle} narrative={chapter.narrative} />
-            ))}
-          </Stack>
-        )}
+        <AzureCommunicationCallAutomationCallScreen
+          afterCreate={afterCallAdapterCreate}
+          credential={credential}
+          enableTranscription={enableTranscription}
+          callId={callIdRef.current}
+          summarizationStatus={summarizationStatus}
+          callConnected={callConnected}
+          setCallConnected={setCallConnected}
+          summary={summary}
+          serverCallId={serverCallId}
+          {...props}
+        />
       </Stack>
     );
   }
@@ -323,35 +313,53 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
 
 type AzureCommunicationCallAutomationCallScreenProps = AzureCommunicationCallScreenProps & {
   enableTranscription?: boolean;
-  callConnected?: boolean;
   callId?: string;
+  showSummaryEndCallScreen?: boolean;
+  setCallConnected: (connected: boolean) => void;
+  callConnected: boolean;
+  summarizationStatus?: 'None' | 'InProgress' | 'Complete';
+  summary?: SummarizeResult;
+  serverCallId?: string;
 };
 
 const AzureCommunicationCallAutomationCallScreen = (
   props: AzureCommunicationCallAutomationCallScreenProps
 ): JSX.Element => {
-  const { afterCreate, callLocator: locator, userId, callConnected, callId, ...adapterArgs } = props;
-
-  const [transcription, setTranscription] = useState<CallTranscription>([]);
-  const [remoteParticipants, setRemoteParticipants] = useState<TranscriptionPaneParticipant[]>([]);
-  // const [showTranscriptionDropdown, setShowTranscriptionDropdown] = useState(false);
+  const {
+    afterCreate,
+    callLocator: locator,
+    userId,
+    callId,
+    summarizationStatus,
+    summary,
+    callConnected,
+    setCallConnected,
+    serverCallId,
+    ...adapterArgs
+  } = props;
   const [transcriptionStarted, setTranscriptionStarted] = useState(false);
 
   if (!('communicationUserId' in userId)) {
-    throw new Error('A MicrosoftTeamsUserIdentifier must be provided for Teams Identity Call.');
+    throw new Error('A ACS user ID must be provided for Rooms call.');
   }
+  const theme = useTheme();
 
   const customButtonOptions: CustomCallControlButtonCallback[] = [
     () => ({
       placement: 'overflow',
       strings: {
-        label: 'Start Transcription'
+        label: transcriptionStarted ? 'Stop Transcription' : 'Start Transcription'
       },
-      iconProps: { iconName: 'Emoji2' },
+      onRenderIcon: () => (
+        <SlideTextEdit20Regular style={{ color: theme.palette.themePrimary, margin: '0rem 0.2rem' }} />
+      ),
       onItemClick: async () => {
-        console.log('Start transcription button clicked');
-        if (callId) {
-          setTranscriptionStarted(await startTranscription(callId));
+        if (serverCallId && !transcriptionStarted) {
+          console.log('Starting transcription');
+          setTranscriptionStarted(await startTranscription(serverCallId));
+        } else if (serverCallId && transcriptionStarted) {
+          console.log('Stopping transcription');
+          setTranscriptionStarted(await !stopTranscription(serverCallId));
         }
       },
       tooltipText: 'Start Transcription'
@@ -393,64 +401,27 @@ const AzureCommunicationCallAutomationCallScreen = (
     },
     afterCreate
   );
-  const pullTranscriptionFromServer = useCallback(async () => {
-    if (!adapter) {
-      return;
-    }
-    console.log('Pulling transcription from server...');
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const callId = adapter.getState().call?.id;
-    if (!callId) {
-      console.error('Call ID not found');
-      return;
-    }
-
-    const transcript = await fetchTranscript(callId);
-    setTranscription(transcript);
-    // console.log('Transcript', transcript);
-  }, [adapter]);
-
-  useEffect(() => {
-    let intervalId: NodeJS.Timeout;
-
-    if (callConnected) {
-      intervalId = setInterval(() => {
-        if (transcriptionStarted) {
-          pullTranscriptionFromServer();
-        }
-      }, 2000);
-    }
-
-    return () => {
-      if (intervalId) {
-        clearInterval(intervalId);
-      }
-    };
-  }, [callConnected, pullTranscriptionFromServer, transcriptionStarted]);
-
-  useEffect(() => {
-    const participants = adapter?.getState().call?.remoteParticipants;
-    if (participants) {
-      const remoteParticipantsArray = Object.values(participants);
-      const transcriptionParticipants: TranscriptionPaneParticipant[] = remoteParticipantsArray.map(
-        (participant: RemoteParticipantState) => {
-          return {
-            id: (participant.identifier as CommunicationUserIdentifier).communicationUserId,
-            displayName: participant.displayName
-          };
-        }
-      );
-      setRemoteParticipants(transcriptionParticipants);
-    }
-  }, [adapter]);
+  if (
+    (summarizationStatus === 'Complete' && adapter && !callConnected) ||
+    (summarizationStatus === 'InProgress' && adapter && !callConnected)
+  ) {
+    return (
+      <SummaryEndCallScreen
+        callId={callId}
+        summarizationStatus={summarizationStatus}
+        summary={summary?.recap}
+        reJoinCall={() => {
+          adapter.joinCall();
+          setCallConnected(true);
+        }}
+      />
+    );
+  }
 
   return (
     <Stack horizontal horizontalAlign={'center'} styles={{ root: { height: '100%', width: '100%' } }}>
       <CallCompositeContainer {...props} adapter={adapter} customButtons={customButtonOptions}></CallCompositeContainer>
-      <Stack styles={{ root: { width: '17rem', maxHeight: '40rem' } }}>
-        <TranscriptionPane transcript={transcription} participants={remoteParticipants} />
-      </Stack>
     </Stack>
   );
 };
@@ -507,21 +478,3 @@ const videoBackgroundImages = [
     tooltipText: 'Living Room Background'
   }
 ];
-
-const Chapter = (props: { title: string; narrative: string }): JSX.Element => {
-  return (
-    <Stack
-      styles={{
-        root: {
-          paddingLeft: '2rem',
-          marginTop: '0.5rem',
-          marginBottom: '0.5rem',
-          borderLeft: '2px solid #ccc'
-        }
-      }}
-    >
-      <Text styles={{ root: { marginBottom: '0.25rem', fontWeight: 600 } }}>{props.title}</Text>
-      <Text>{props.narrative}</Text>
-    </Stack>
-  );
-};

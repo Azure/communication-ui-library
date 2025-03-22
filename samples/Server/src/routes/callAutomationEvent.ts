@@ -8,9 +8,29 @@ import { startTranscriptionForCall } from '../lib/callAutomationUtils';
 const router = express.Router();
 
 router.post('/', async function (req, res) {
-  console.log('/automationEvent received', req.body);
   try {
     if (req.body[0].type === 'Microsoft.Communication.CallConnected') {
+      console.log('/automationEvent received', req.body);
+      const connectionId = req.body[0].data.callConnectionId;
+      /**
+       * this id in the CallAutomation event is the CallId that we get
+       * from the calling SDK in the client.
+       */
+      const correlationId = req.body[0].data.correlationId;
+
+      /**
+       * if the call already exists in the mapping we don't want to start a
+       */
+      if (CALLCONNECTION_ID_TO_CORRELATION_ID[req.body[0].data.callConnectionId]) {
+        console.log('CallConnectionId already exists in mapping');
+        if (CALLCONNECTION_ID_TO_CORRELATION_ID[connectionId].callId !== correlationId) {
+          console.log('CallId does not match callId from event - updating mapping');
+          CALLCONNECTION_ID_TO_CORRELATION_ID[connectionId].callId = correlationId;
+        }
+
+        res.status(200).end();
+        return;
+      }
       /**
        * We want to make a mapping here between the callConnectionId and the correlationId
        * The correlationId in the data is the id of the call that we are using to start the transcription this id

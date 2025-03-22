@@ -2,17 +2,15 @@
 // Licensed under the MIT License.
 
 import * as express from 'express';
-import { CALLCONNECTION_ID_TO_CORRELATION_ID, startTranscriptionForCall } from '../lib/callAutomationUtils';
-import { TranscriptionOptions } from '@azure/communication-call-automation/types/communication-call-automation';
+import { CALLCONNECTION_ID_TO_CORRELATION_ID, stopTranscriptionForCall } from '../lib/callAutomationUtils';
 
 const router = express.Router();
 interface StartTranscriptionRequest {
   serverCallId: string;
-  options?: TranscriptionOptions;
 }
 
 router.post('/', async function (req, res, next) {
-  const { serverCallId, options }: StartTranscriptionRequest = req.body;
+  const { serverCallId }: StartTranscriptionRequest = req.body;
 
   const callConnectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find(
     (key) => CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId === serverCallId
@@ -23,10 +21,10 @@ router.post('/', async function (req, res, next) {
   }
 
   try {
-    await startTranscriptionForCall(callConnectionId, options);
+    await stopTranscriptionForCall(callConnectionId);
   } catch (e) {
-    console.error('Error starting transcription:', e);
-    res.status(500).send('Error starting transcription');
+    console.error('Error stopping transcription:', e);
+    res.status(500).send('Error stopping transcription');
     return;
   }
 
