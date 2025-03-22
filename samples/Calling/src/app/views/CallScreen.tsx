@@ -60,6 +60,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const [summarizationStatus, setSummarizationStatus] = useState<'None' | 'InProgress' | 'Complete'>('None');
   const [summary, setSummary] = useState<SummarizeResult>();
   const [callConnected, setCallConnected] = useState(false);
+  const [serverCallId, setServerCallId] = useState<string | undefined>(undefined);
 
   const subscribeAdapterEvents = useCallback(
     (adapter: CommonCallAdapter) => {
@@ -74,14 +75,22 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
 
         if (state?.call?.state === 'Connected') {
           setCallConnected(true);
+          setServerCallId(await state.call.info?.getServerCallId());
         }
 
         if (state?.call?.id && callIdRef.current !== state?.call?.id) {
           callIdRef.current = state?.call?.id;
           console.log(`Call Id: ${callIdRef.current}`);
         }
-        if (enableTranscription && !callAutomationStarted.current) {
-          callAutomationStarted.current = await connectToCallAutomation(state, callAutomationStarted.current);
+        if (enableTranscription && !callAutomationStarted.current && state.call?.state === 'Connected') {
+          callAutomationStarted.current = true;
+          try {
+            console.log('Connecting to call automation...');
+            await connectToCallAutomation(state);
+          } catch (e) {
+            console.error('Error connecting to call automation:', e);
+            callAutomationStarted.current = false;
+          }
         }
       });
       adapter.on('transferAccepted', (event) => {
@@ -144,6 +153,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           callConnected={callConnected}
           setCallConnected={setCallConnected}
           summary={summary}
+          serverCallId={serverCallId}
           {...props}
         />
       </Stack>
@@ -309,6 +319,7 @@ type AzureCommunicationCallAutomationCallScreenProps = AzureCommunicationCallScr
   callConnected: boolean;
   summarizationStatus?: 'None' | 'InProgress' | 'Complete';
   summary?: SummarizeResult;
+  serverCallId?: string;
 };
 
 const AzureCommunicationCallAutomationCallScreen = (
@@ -323,6 +334,7 @@ const AzureCommunicationCallAutomationCallScreen = (
     summary,
     callConnected,
     setCallConnected,
+    serverCallId,
     ...adapterArgs
   } = props;
   const [transcriptionStarted, setTranscriptionStarted] = useState(false);
@@ -342,11 +354,12 @@ const AzureCommunicationCallAutomationCallScreen = (
         <SlideTextEdit20Regular style={{ color: theme.palette.themePrimary, margin: '0rem 0.2rem' }} />
       ),
       onItemClick: async () => {
-        console.log('Start transcription button clicked');
-        if (callId && !transcriptionStarted) {
-          setTranscriptionStarted(await startTranscription(callId));
-        } else if (callId && transcriptionStarted) {
-          setTranscriptionStarted(await !stopTranscription(callId));
+        if (serverCallId && !transcriptionStarted) {
+          console.log('Starting transcription');
+          setTranscriptionStarted(await startTranscription(serverCallId));
+        } else if (serverCallId && transcriptionStarted) {
+          console.log('Stopping transcription');
+          setTranscriptionStarted(await !stopTranscription(serverCallId));
         }
       },
       tooltipText: 'Start Transcription'

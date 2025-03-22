@@ -20,14 +20,14 @@ export type CallTranscription = {
   resultState: 'intermediate' | 'final';
 }[];
 
-export const fetchTranscript = async (callId: string): Promise<CallTranscription> => {
+export const fetchTranscript = async (serverCallId: string): Promise<CallTranscription> => {
   const response = await fetch(`/fetchTranscript`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      callId
+      serverCallId
     })
   });
   if (!response.ok) {
@@ -39,19 +39,19 @@ export const fetchTranscript = async (callId: string): Promise<CallTranscription
 };
 
 export const startTranscription = async (
-  callId: string,
+  serverCallId: string,
   transcriptionOptions?: {
     locale?: string;
   }
 ): Promise<boolean> => {
-  console.log('Starting transcription for call:', callId);
+  console.log('Starting transcription for call:', serverCallId);
   const response = await fetch('/startTranscription', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      callId,
+      serverCallId,
       options: transcriptionOptions
     })
   });
@@ -63,8 +63,8 @@ export const startTranscription = async (
   return true;
 };
 
-export const stopTranscription = async (callId: string): Promise<boolean> => {
-  console.log('Stopping transcription for call:', callId);
+export const stopTranscription = async (serverCallId: string): Promise<boolean> => {
+  console.log('Stopping transcription for call:', serverCallId);
 
   const response = await fetch('/stopTranscription', {
     method: 'POST',
@@ -72,7 +72,7 @@ export const stopTranscription = async (callId: string): Promise<boolean> => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      callId
+      serverCallId
     })
   });
   if (!response.ok) {
@@ -83,15 +83,8 @@ export const stopTranscription = async (callId: string): Promise<boolean> => {
   return true;
 };
 
-export const connectToCallAutomation = async (
-  callAdaterState: CallAdapterState,
-  callAutomationStarted: boolean
-): Promise<boolean> => {
-  if (
-    callAdaterState.call?.info !== undefined &&
-    callAdaterState.call?.state === 'Connected' &&
-    callAutomationStarted === false
-  ) {
+export const connectToCallAutomation = async (callAdaterState: CallAdapterState): Promise<boolean> => {
+  if (callAdaterState.call?.info !== undefined && callAdaterState.call?.state === 'Connected') {
     const serverCallID = await callAdaterState.call.info.getServerCallId();
     console.log('Server call ID:', serverCallID);
     const response = await fetch('/connectRoomsCall', {
@@ -116,8 +109,8 @@ export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Prom
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const callId = adapter.getState().call?.id;
-    if (!callId) {
+    const serverCallId = adapter.getState().call?.info?.getServerCallId();
+    if (!serverCallId) {
       console.error('Call ID not found');
       throw new Error('Call ID not found');
     }
@@ -127,7 +120,7 @@ export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Prom
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ callId })
+      body: JSON.stringify({ serverCallId })
     });
     console.log('/summarizeTranscript response', response);
 

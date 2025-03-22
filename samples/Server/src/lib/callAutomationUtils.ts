@@ -94,6 +94,7 @@ export const startTranscriptionForCall = async (
   options?: TranscriptionOptions
 ): Promise<void> => {
   console.log('Starting transcription for call:', callConnectionId);
+  console.log(CALLCONNECTION_ID_TO_CORRELATION_ID);
   const callConnection = await getCallAutomationClient().getCallConnection(callConnectionId);
 
   return await callConnection.getCallMedia().startTranscription(options);
@@ -101,16 +102,24 @@ export const startTranscriptionForCall = async (
 
 export const stopTranscriptionForCall = async (callConnectionId: string): Promise<void> => {
   console.log('Stopping transcription for call:', callConnectionId);
+  console.log(CALLCONNECTION_ID_TO_CORRELATION_ID);
   const callConnection = await getCallAutomationClient().getCallConnection(callConnectionId);
   return await callConnection.getCallMedia().stopTranscription();
 };
 
+/**
+ * We should be storing this based on the connectionId and not the correlationId
+ * We should re-write all the fetches based on the callId to use the serverCallId. This is
+ * because all of the clients that join can have different callId's and we need to make sure we are
+ * pulling the correct transcription data.
+ */
 export const TRANSCRIPTION_STORE: { [key: string]: Partial<CallTranscription> } = {};
 /**
  * Used to map between the call connection id and the correlation id from both transcription and
  * call automation events.
  */
-export const CALLCONNECTION_ID_TO_CORRELATION_ID: { [key: string]: { correlationId?: string; callId?: string } } = {};
+export const CALLCONNECTION_ID_TO_CORRELATION_ID: { [key: string]: { correlationId?: string; serverCallId?: string } } =
+  {};
 
 /**
  * used to store the remote participants in the call
@@ -130,9 +139,10 @@ export const REMOTE_PARTICIPANTS_IN_CALL: { [key: string]: { communicationUserId
  */
 export const LOCAL_PARTICIPANT: { [key: string]: { communicationUserId?: string; displayName?: string } } = {};
 
-export const getTranscriptionData = (callId: string): CallTranscription | undefined => {
+export const getTranscriptionData = (serverCallId: string): CallTranscription | undefined => {
+  console.log('Getting transcription data for call:', serverCallId);
   const connectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find(
-    (key) => CALLCONNECTION_ID_TO_CORRELATION_ID[key].callId === callId
+    (key) => CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId === serverCallId
   );
   const correlationId = CALLCONNECTION_ID_TO_CORRELATION_ID[connectionId]?.correlationId;
   return TRANSCRIPTION_STORE[correlationId] as CallTranscription;
@@ -181,7 +191,7 @@ export const handleTranscriptionDataEvent = (eventData: TranscriptionData, event
   console.log('--------------------------------------------');
   console.log('Transcription Data');
   console.log('TEXT:-->' + eventData.text);
-  console.log('CALL CONNECTION ID: -->' + eventId);
+  console.log('CALL CORELLATION ID: -->' + eventId);
   console.log('FORMAT:-->' + eventData.format);
   console.log('CONFIDENCE:-->' + eventData.confidence);
   console.log('OFFSET IN TICKS:-->' + eventData.offsetInTicks);
