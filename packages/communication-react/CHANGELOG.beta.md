@@ -6,23 +6,21 @@
 
 ## [1.26.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.26.0-beta.1)
 
-Mon, 24 Mar 2025 20:31:15 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.25.0...1.26.0-beta.1)
+Mon, 24 Mar 2025 20:31:15 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.25.0-beta.1...1.26.0-beta.1)
 
 ### Features
-- We are excited to announce that the Azure Communication Services Web UI Library now supports Together Mode in Teams interop scenarios. Together Mode is a feature that creates a virtual shared space for meeting participants. By using AI segmentation technology, it places participants in a common background, such as a conference room or auditorium, making it look like everyone is sitting together. This mode is designed to make meetings feel more engaging and reduce virtual meeting fatigue. It can help improve participants' sense of connection and collaboration by mimicking the experience of being in the same physical location. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). Participants receive together Mode in Teams Interop Meetings, change views to and from Together mode and view reactions and raised hands in the Together mode view  ([PR #5711](https://github.com/azure/communication-ui-library/pull/5711) by nwankwojustin93@gmail.com)
-- Composite option to hide local screenshare stream ([PR #5699](https://github.com/azure/communication-ui-library/pull/5699) by 96077406+carocao-msft@users.noreply.github.com)
+
+- Add composite option to hide local screenshare stream ([PR #5699](https://github.com/azure/communication-ui-library/pull/5699) by 96077406+carocao-msft@users.noreply.github.com)
 - Add composite option to allow join without microphone access ([PR #5671](https://github.com/azure/communication-ui-library/pull/5671) by 96077406+carocao-msft@users.noreply.github.com)
-- Promote together mode to stable ([PR #5711](https://github.com/azure/communication-ui-library/pull/5711) by nwankwojustin93@gmail.com)
-- Promote together mode to stable ([PR #5711](https://github.com/azure/communication-ui-library/pull/5711) by nwankwojustin93@gmail.com)
-- Update the enums to a type ([PR #5710](https://github.com/azure/communication-ui-library/pull/5710) by 96077406+carocao-msft@users.noreply.github.com)
-- Update the enums to a type ([PR #5710](https://github.com/azure/communication-ui-library/pull/5710) by 96077406+carocao-msft@users.noreply.github.com)
+
 ### Improvements
+
+- Update calling-effects package to 1.1.3 ([PR #5644](https://github.com/azure/communication-ui-library/pull/5644) by dmceachern@microsoft.com)
 - Update calling from 1.33.2-beta.1 to 1.34.1-beta.1 ([PR #5696](https://github.com/azure/communication-ui-library/pull/5696) by 79475487+mgamis-msft@users.noreply.github.com)
-- Port saving display name to local storage from CallwithChat Sample to Chat Sample ([PR #5681](https://github.com/azure/communication-ui-library/pull/5681) by palatter@microsoft.com)
-- Add e2e test for screenshare options ([PR #5703](https://github.com/azure/communication-ui-library/pull/5703) by 96077406+carocao-msft@users.noreply.github.com)
+
 ### Bug Fixes
-- Rename story to move into correct area ([PR #5687](https://github.com/azure/communication-ui-library/pull/5687) by 3941071+emlynmac@users.noreply.github.com)
+
 - Resolve issue where RichTextBox could not be found when running in production with a minimized bundle. ([PR #5712](https://github.com/azure/communication-ui-library/pull/5712) by palatter@microsoft.com)
 
 
