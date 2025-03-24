@@ -227,6 +227,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
             : undefined
         }
         localScreenShareView={props.localScreenShareView}
+        isMobileView={props.isMobile}
       />
     );
   }, [

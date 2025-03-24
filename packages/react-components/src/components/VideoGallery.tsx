@@ -26,7 +26,7 @@ import {
 import { ViewScalingMode } from '../types';
 import { HorizontalGalleryStyles } from './HorizontalGallery';
 import { _RemoteVideoTile } from './RemoteVideoTile';
-import { isNarrowWidth, _useContainerHeight, _useContainerWidth } from './utils/responsive';
+import { _useContainerHeight, _useContainerWidth } from './utils/responsive';
 import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
@@ -396,6 +396,10 @@ export interface VideoGalleryProps {
    * Controls the view of the local screenshare stream in the gallery
    */
   localScreenShareView?: LocalScreenShareView;
+  /**
+   * Boolean to indicate if it is mobile or desktop
+   */
+  isMobileView?: boolean;
 }
 
 /**
@@ -501,7 +505,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     onPermitAudio,
     onForbidVideo,
     onPermitVideo,
-    localScreenShareView
+    localScreenShareView,
+    isMobileView
   } = props;
 
   const ids = useIdentifiers();
@@ -520,7 +525,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
-  const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;
 
   const [pinnedParticipantsState, setPinnedParticipantsState] = React.useState<string[]>([]);
   const [selectedScalingModeState, setselectedScalingModeState] = React.useState<Record<string, VideoStreamOptions>>(
@@ -558,7 +562,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const showLocalVideoTileLabel =
-    !((localTileNotInGrid && isNarrow) || localVideoTileSize === '9:16') || layout === 'default';
+    !((localTileNotInGrid && isMobileView) || localVideoTileSize === '9:16') || layout === 'default';
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
@@ -583,7 +587,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
     const showDisplayNameTrampoline = (): string => {
-      return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
+      return layout === 'default' ? strings.localVideoLabel : isMobileView ? '' : strings.localVideoLabel;
     };
 
     return (
@@ -625,7 +629,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       </Stack>
     );
   }, [
-    isNarrow,
     localParticipant,
     localVideoCameraCycleButtonProps,
     localVideoViewOptions,
@@ -650,7 +653,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     drawerMenuHostId,
     reactionResources,
     videoTilesOptions,
-    remoteParticipants.length
+    remoteParticipants.length,
+    isMobileView
   ]);
 
   const onPinParticipant = useCallback(

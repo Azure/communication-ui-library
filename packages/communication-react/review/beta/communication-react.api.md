@@ -5602,6 +5602,7 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
+    isMobileView?: boolean;
     isTogetherModeActive?: boolean;
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
