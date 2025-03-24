@@ -22,6 +22,7 @@ Mon, 24 Mar 2025 20:31:15 GMT
 ### Bug Fixes
 
 - Resolve issue where RichTextBox could not be found when running in production with a minimized bundle. ([PR #5712](https://github.com/azure/communication-ui-library/pull/5712) by palatter@microsoft.com)
+- Add code and subcode to calling errors to help with debugging ([PR #5672](https://github.com/azure/communication-ui-library/pull/5672) by dmceachern@microsoft.com)
 
 
 ## [1.25.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.25.0-beta.1)
