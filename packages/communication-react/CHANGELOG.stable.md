@@ -1,8 +1,48 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 10 Feb 2025 18:17:45 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 18 Mar 2025 17:01:36 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.25.0](https://github.com/azure/communication-ui-library/tree/1.25.0)
+
+Tue, 18 Mar 2025 17:01:36 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.25.0-beta.1...1.25.0)
+
+### Features
+
+#### TogetherMode
+
+We are excited to announce that the Azure Communication Services Web UI Library now supports Together Mode in Teams interop scenarios. Together Mode is a feature that creates a virtual shared space for meeting participants. By using AI segmentation technology, it places participants in a common background, such as a conference room or auditorium, making it look like everyone is sitting together. This mode is designed to make meetings feel more engaging and reduce virtual meeting fatigue. It can help improve participants' sense of connection and collaboration by mimicking the experience of being in the same physical location. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). Participants receive together Mode in Teams Interop Meetings, change views to and from Together mode and view reactions and raised hands in the Together mode view.
+
+### Improvements
+
+- Update calling-effects package to 1.1.3 ([PR #5644](https://github.com/azure/communication-ui-library/pull/5644) by dmceachern@microsoft.com)
+- Update `@azure/communication-calling` to 1.33.4 ([PR #5713](https://github.com/azure/communication-ui-library/pull/5713) by 2684369+JamesBurnside@users.noreply.github.com)
+
+### Bug Fixes
+
+- Resolve issue where link color was incorrect in dark mode ([PR #5700](https://github.com/azure/communication-ui-library/pull/5700) by palatter@microsoft.com)
+- Fix control bar button and more button A11y issues, announcing collapsed and expanded state ([PR #5639](https://github.com/azure/communication-ui-library/pull/5639) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix screenshare button text to be black in dark mode to match fluent dark mode primary button ([PR #5654](https://github.com/azure/communication-ui-library/pull/5654) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix issue where system message announces Group instead of content ([PR #5707](https://github.com/azure/communication-ui-library/pull/5707) by 77021369+jimchou-dev@users.noreply.github.com)
+- In Call Composites do not show You're Muted notification on lobby screen ([PR #5651](https://github.com/azure/communication-ui-library/pull/5651) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix bug where switching camera on iphone may cause stream to freeze for remote participants ([PR #5650](https://github.com/azure/communication-ui-library/pull/5650) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix bug where microphone error shows twice ([PR #5668](https://github.com/azure/communication-ui-library/pull/5668) by 96077406+carocao-msft@users.noreply.github.com)
+- Update aria-level for heading on the config screen ([PR #5638](https://github.com/azure/communication-ui-library/pull/5638) by dmceachern@microsoft.com)
+- Fix bug where chat thread is stuck on spinner when immediately returning to main meeting from breakout room ([PR #5640](https://github.com/azure/communication-ui-library/pull/5640) by 79475487+mgamis-msft@users.noreply.github.com)
+- Change aria label of video effects radio button to begin with button title ([PR #5673](https://github.com/azure/communication-ui-library/pull/5673) by 79475487+mgamis-msft@users.noreply.github.com)
+- Resolve initial focus order when call screen first appears ([PR #5631](https://github.com/azure/communication-ui-library/pull/5631) by edwardlee@microsoft.com)
+- Update the max number of listeners that the CallWithChat adapter has ([PR #5692](https://github.com/azure/communication-ui-library/pull/5692) by dmceachern@microsoft.com)
+- Update configuration screen to support use at 400% zoom ([PR #5633](https://github.com/azure/communication-ui-library/pull/5633) by dmceachern@microsoft.com)
+- Ensure createChatAdapterCallback is set for AzureCommunicationCallWithChatAdapter in createAzureCommunicationCallWithChatAdapterFromClients so that a new ChatAdapter can be created when joining a breakout room ([PR #5683](https://github.com/azure/communication-ui-library/pull/5683) by 79475487+mgamis-msft@users.noreply.github.com)
+- Resolve issue where focus border for dismiss button shows incorrect color for dark theme. ([PR #5698](https://github.com/azure/communication-ui-library/pull/5698) by palatter@microsoft.com)
+- Fix an issue where attachments card group had incorrect children roles ([PR #5704](https://github.com/azure/communication-ui-library/pull/5704) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Fix move/close menu not showing on draggable video tile when ctrl+alt+space shortcut is used ([PR #5652](https://github.com/azure/communication-ui-library/pull/5652) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add aria-modal to sidepane ([PR #5695](https://github.com/azure/communication-ui-library/pull/5695) by edwardlee@microsoft.com)
+- Update the max number of event listeners on a event in the CallAdapter ([PR #5660](https://github.com/azure/communication-ui-library/pull/5660) by dmceachern@microsoft.com)
+- Update styles for screenshare loading spinner to better handle long names on mobile and desktop ([PR #5677](https://github.com/azure/communication-ui-library/pull/5677) by dmceachern@microsoft.com)
+- Add code and subcode to calling errors to help with debugging ([PR #5672](https://github.com/azure/communication-ui-library/pull/5672) by dmceachern@microsoft.com)
 
 ## [1.24.0](https://github.com/azure/communication-ui-library/tree/1.24.0)
 
