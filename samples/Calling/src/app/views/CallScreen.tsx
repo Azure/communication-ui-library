@@ -148,7 +148,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           afterCreate={afterCallAdapterCreate}
           credential={credential}
           enableTranscription={enableTranscription}
-          callId={callIdRef.current}
           summarizationStatus={summarizationStatus}
           callConnected={callConnected}
           setCallConnected={setCallConnected}
@@ -313,7 +312,6 @@ const AzureCommunicationOutboundCallScreen = (props: AzureCommunicationCallScree
 
 type AzureCommunicationCallAutomationCallScreenProps = AzureCommunicationCallScreenProps & {
   enableTranscription?: boolean;
-  callId?: string;
   showSummaryEndCallScreen?: boolean;
   setCallConnected: (connected: boolean) => void;
   callConnected: boolean;
@@ -329,7 +327,6 @@ const AzureCommunicationCallAutomationCallScreen = (
     afterCreate,
     callLocator: locator,
     userId,
-    callId,
     summarizationStatus,
     summary,
     callConnected,
@@ -408,7 +405,7 @@ const AzureCommunicationCallAutomationCallScreen = (
   ) {
     return (
       <SummaryEndCallScreen
-        callId={callId}
+        serverCallId={serverCallId}
         summarizationStatus={summarizationStatus}
         summary={summary?.recap}
         reJoinCall={() => {

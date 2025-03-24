@@ -32,7 +32,7 @@ export interface SummaryEndCallScreenProps {
   iconName?: keyof CallCompositeIcons;
   disableStartCallButton?: boolean;
   pageStyle?: IStyle;
-  callId?: string;
+  serverCallId?: string;
   summary?: string;
   summarizationStatus: 'InProgress' | 'Complete' | 'None';
   reJoinCall: () => void;
@@ -44,7 +44,7 @@ export interface SummaryEndCallScreenProps {
  * @private
  */
 export const SummaryEndCallScreen = (props: SummaryEndCallScreenProps): JSX.Element => {
-  const { callId, summarizationStatus, summary, reJoinCall } = props;
+  const { serverCallId, summarizationStatus, summary, reJoinCall } = props;
 
   const theme = useTheme();
 
@@ -124,8 +124,8 @@ export const SummaryEndCallScreen = (props: SummaryEndCallScreenProps): JSX.Elem
                 <DefaultButton
                   text="Transcript"
                   onClick={async () => {
-                    if (summary && callId) {
-                      const transcript = await fetchTranscript(callId);
+                    if (summary && serverCallId) {
+                      const transcript = await fetchTranscript(serverCallId);
                       if (!transcript) {
                         console.error('Failed to fetch transcript');
                         return;
