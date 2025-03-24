@@ -1,8 +1,8 @@
 {
-  "type": "patch",
-  "area": "fix",
+  "type": "prerelease",
+  "area": "improvement",
   "workstream": "",
-  "comment": "In Call Composites do not show You're Muted notification on lobby screen",
+  "comment": "Update @azure/communication-calling to 1.34.1-beta.2",
   "packageName": "@azure/communication-react",
   "email": "2684369+JamesBurnside@users.noreply.github.com",
   "dependentChangeType": "patch"
