@@ -2,6 +2,241 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 18 Mar 2025 17:01:36 GMT",
+      "version": "1.25.0",
+      "tag": "@azure/communication-react_v1.25.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "161068e68c26c038545793bfdebc5098ae64243d",
+            "area": "improvement",
+            "workstream": "Calling dependency",
+            "comment": "Update calling from 1.33.1 to 1.33.3"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d41a40b6df018aecf8297ecae756a89599b776cf",
+            "area": "improvement",
+            "workstream": "Updates",
+            "comment": "Update calling-effects package to 1.1.3"
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "fddf3c8c80ac711d00ed4aa8949ccb50153575c9",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve issue where link color was incorrect in dark mode"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ea87c09afaf1e174e8b70ba14b74f56fc366ad1a",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix control bar button and more button A11y issues, announcing collapsed and expanded state"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0c21167a29431a5741611aac2be49a748b6c7d80",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix screenshare button text to be black in dark mode to match fluent dark mode primary button"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "924b6a5e3060d99085e7e945fad0726ec6e134e8",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix issue where system message announces Group instead of content"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a29bb6357ff13bb49c6135fd337c937a7c40ce3d",
+            "area": "fix",
+            "workstream": "",
+            "comment": "In Call Composites do not show You're Muted notification on lobby screen"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6ad1e1adcdac0b22c6863ecf7f8e56e6578ffe43",
+            "area": "fix",
+            "workstream": "Fix up Rich Text Editor location in storybook",
+            "comment": "Rename story to move into correct area"
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a85e3cf00c7b5fd36bb17bb011ed6d10c4d850d5",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Port saving display name to local storage from CallwithChat Sample to Chat Sample"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5127860ee1fa6a91183a30e45c7baf15b5810da6",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix bug where switching camera on iphone may cause stream to freeze for remote participants"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "893b40f16a3c7f602e9b563be82548b0c810b862",
+            "area": "fix",
+            "workstream": "Fix bug where microphone error shows twice",
+            "comment": "Fix bug where microphone error shows twice"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "01ec29b62e61941601b3aa56984529f5b8f7b625",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update aria-level for heading on the config screen"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "78eef1fc1520b94fe1e4c5214057ded1d97645bf",
+            "area": "fix",
+            "workstream": "Breakout rooms",
+            "comment": "Fix bug where chat thread is stuck on spinner when immediately returning to main meeting from breakout room"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e0e167deda502faa5edea7f2ef0c1eaeb935e239",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Change aria label of video effects radio button to begin with button title"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8f04b062fb904a0a55dade8ff3c8c27b433b1fa2",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Resolve initial focus order when call screen first appears"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ee694fee34bac533b639585a993f75eff345cb52",
+            "area": "fix",
+            "workstream": "Bugs",
+            "comment": "update the max number of listeners that the CallWIthChat adapter has"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c521e8a19d30dc8c36a44b08980b99de854c4c4a",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Update configuration screen to support use at 400% zoom"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2cd5e81759120691e969ee028ecc3e7e9c1d6692",
+            "area": "fix",
+            "workstream": "Breakout rooms",
+            "comment": "Ensure createChatAdapterCallback is set for AzureCommunicationCallWithChatAdapter in createAzureCommunicationCallWithChatAdapterFromClients so that a new ChatAdapter can be created when joining a breakout room"
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c97d8e6d2503d8555bc4b8c6cc8a8960d70b458c",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve issue where focus border for dismiss button shows incorrect color for dark theme."
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "83e21453d736fcefbecaad2059de8584caf9783b",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix an issue where attachments card group had incorrect children roles"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6f3fd7a1d61d9718a956738960e054782c3045b3",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Bug Fix: Fix move/close menu not showing on draggable video tile when ctrl+alt+space shortcut is used"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "fd9df9865b7fdc686075f9fecf8b2a485d98ce3e",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Add aria-modal to sidepane"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "998514cd4669c230bf82049c5889cd812fbf52b5",
+            "area": "fix",
+            "workstream": "CallAdapter",
+            "comment": "Update the Max number of event listeners on a event in the CallAdapter"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "bed031ef2e69344d59b1f4b8e668399c5deb7121",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update `@azure/communication-calling` to 1.33.4"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "203fe3cf17781ae0053f1321eee1ad8e6348850e",
+            "area": "improvement",
+            "workstream": "Governance",
+            "comment": "As per component governance bump esbuild version"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8fea7e81b9a0cdf2c518d0e1c24beb653378c5c5",
+            "area": "fix",
+            "workstream": "VideoGallery",
+            "comment": "Update styles for screenshare loading spinner to better handle long names on mobile and desktop"
+          }
+        ],
+        "minor": [
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a19b51ccd34510996e56efea9d4ae0722609f15b",
+            "area": "fix",
+            "workstream": "Error handling",
+            "comment": "Add code and subcode to calling errors to help with debugging"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "37eb027355294ccdeeeb7e3aba3f96c7213cf24a",
+            "area": "improvement",
+            "workstream": "ScreenShare",
+            "comment": "Add e2e test for screenshare options"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Feb 2025 23:41:46 GMT",
       "version": "1.25.0-beta.1",
       "tag": "@azure/communication-react_v1.25.0-beta.1",
