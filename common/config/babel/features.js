@@ -70,7 +70,9 @@ module.exports = {
     // Feature for RTT
     "rtt",
     // Feature for together mode
-    "together-mode"
+    "together-mode",
+    // Feature for on fetch profile
+    "on-fetch-profile"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
