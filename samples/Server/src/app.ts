@@ -27,6 +27,7 @@ import connectRoomsCall from './routes/connectToRoomsCall';
 import summarizeTranscript from './routes/summarizeTranscript';
 import updateRemoteParticipants from './routes/updateRemoteParticipants';
 import updateLocalParticipant from './routes/updateLocalParticipant';
+import stopTranscriptionForCall from './routes/stopTranscription';
 
 const app = express();
 
@@ -87,6 +88,12 @@ app.use('/connectRoomsCall', cors(), connectRoomsCall);
  * purpose: Start transcription for an established call
  */
 app.use('/startTranscription', cors(), startTranscription);
+
+/**
+ * route: /stopTranscription
+ * purpose: Stop transcription for an established call
+ */
+app.use('/stopTranscription', cors(), stopTranscriptionForCall);
 
 /**
  * route: /fetchTranscript

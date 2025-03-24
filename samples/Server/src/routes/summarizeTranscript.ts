@@ -8,13 +8,13 @@ import { formatTranscriptionForSummarization, getTranscriptionData } from '../li
 const router = express.Router();
 interface SummarizeTranscriptRequest {
   /** CallId of the transcript to summarize */
-  callId: string;
+  serverCallId: string;
 }
 
 router.post('/', async function (req, res, next) {
   try {
-    const { callId }: SummarizeTranscriptRequest = req.body;
-    const transcription = getTranscriptionData(callId);
+    const { serverCallId }: SummarizeTranscriptRequest = req.body;
+    const transcription = getTranscriptionData(serverCallId);
 
     if (!transcription) {
       res.status(404).send('Transcription not found');

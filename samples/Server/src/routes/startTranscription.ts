@@ -7,18 +7,19 @@ import { TranscriptionOptions } from '@azure/communication-call-automation/types
 
 const router = express.Router();
 interface StartTranscriptionRequest {
-  callId: string;
+  serverCallId: string;
   options?: TranscriptionOptions;
 }
 
 router.post('/', async function (req, res, next) {
-  const { callId, options }: StartTranscriptionRequest = req.body;
-  console.log('Starting transcription for call:', callId);
+  const { serverCallId, options }: StartTranscriptionRequest = req.body;
 
+  console.log('Starting transcription for call:', serverCallId);
   console.log(CALLCONNECTION_ID_TO_CORRELATION_ID);
-  const callConnectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find(
-    (key) => CALLCONNECTION_ID_TO_CORRELATION_ID[key].callId === callId
+  const callConnectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
+    CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(serverCallId)
   );
+  console.log('Call connection id:', callConnectionId);
   if (!callConnectionId) {
     res.status(404).send('Call not found');
     return;
