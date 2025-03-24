@@ -14,7 +14,12 @@ import type {
 } from '../../../common';
 import type { CallKind, DominantSpeakersInfo, ParticipantRole } from '@azure/communication-calling';
 import type { ParticipantCapabilities } from '@azure/communication-calling';
-import { CallState, CapabilitiesFeatureState } from '@internal/calling-stateful-client';
+import {
+  CallFeatureStreamState,
+  CallState,
+  CapabilitiesFeatureState,
+  TogetherModeStreamsState
+} from '@internal/calling-stateful-client';
 
 const SERVER_URL = 'http://localhost';
 const APP_DIR = path.join(__dirname, '../../../app/call');
@@ -56,7 +61,8 @@ export function defaultMockCallAdapterState(
   role?: ParticipantRole,
   isRoomsCall?: boolean,
   callEndReasonSubCode?: number,
-  isReactionCapability?: boolean
+  isReactionCapability?: boolean,
+  isTeamsUser?: boolean
 ): MockCallAdapterState {
   const remoteParticipants: Record<string, MockRemoteParticipantState> = {};
   participants?.forEach((p) => {
@@ -133,7 +139,9 @@ export function defaultMockCallAdapterState(
           }
         }
       : undefined,
-    userId: { kind: 'communicationUser', communicationUserId: '1' },
+    userId: isTeamsUser
+      ? { kind: 'microsoftTeamsUser', microsoftTeamsUserId: '1' }
+      : { kind: 'communicationUser', communicationUserId: '1' },
     devices: {
       isSpeakerSelectionAvailable: true,
       selectedCamera: { id: 'camera1', name: '1st Camera', deviceType: 'UsbCamera' },
@@ -166,9 +174,17 @@ export function defaultMockCallAdapterState(
  *
  * Use this to add participants to state created via {@link defaultCallAdapterState}.
  */
-export function defaultMockRemoteParticipant(displayName?: string): MockRemoteParticipantState {
+export function defaultMockRemoteParticipant(
+  displayName?: string,
+  isTeamsUser: boolean = false
+): MockRemoteParticipantState {
   return {
-    identifier: { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
+    identifier: isTeamsUser
+      ? {
+          kind: 'microsoftTeamsUser',
+          microsoftTeamsUserId: `${displayName}-id`
+        }
+      : { kind: 'communicationUser', communicationUserId: `8:acs:${displayName}-id` },
     state: 'Connected',
     videoStreams: {
       1: {
@@ -260,6 +276,33 @@ export function addScreenshareStream(
     throw new Error(`Expected 1 screenshare stream for ${participant.displayName}, got ${streams.length}`);
   }
   addDummyView(streams[0], isReceiving, scalingMode);
+}
+
+/* conditional-compile-remove(together-mode) */
+/**
+ * Add a screenshare stream to {@link MockRemoteParticipantState}.
+ *
+ * Use to add video to participant created via {@link defaultMockRemoteParticipant}.
+ */
+export function addTogetherModeStream(
+  togetherModeStreamState: TogetherModeStreamsState,
+  isReceiving: boolean,
+  scalingMode?: 'Stretch' | 'Crop' | 'Fit'
+): void {
+  const togetherModeStream =
+    togetherModeStreamState.mainVideoStream ||
+    ({
+      feature: 'togetherMode',
+      mediaStreamType: 'Video',
+      isAvailable: true,
+      isReceiving: true
+    } as CallFeatureStreamState);
+  if (!togetherModeStream) {
+    throw new Error(`Expected togetherMode Stream to be active`);
+  }
+  if (togetherModeStreamState.mainVideoStream) {
+    addDummyView(togetherModeStreamState.mainVideoStream, isReceiving, scalingMode);
+  }
 }
 
 /**
@@ -388,7 +431,7 @@ const consumerCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -438,7 +481,7 @@ const attendeeCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -488,7 +531,7 @@ const presenterCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: true,
     reason: 'Capable'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
@@ -538,7 +581,7 @@ const presenterCapabilitiesInTeamsCall = (): ParticipantCapabilities => ({
     isPresent: true,
     reason: 'Capable'
   },
-  /* @conditional-compile-remove(calling-beta-sdk) */
+  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: true, reason: 'Capable' },
   /* @conditional-compile-remove(breakout-rooms) */
   joinBreakoutRooms: { isPresent: true, reason: 'Capable' },

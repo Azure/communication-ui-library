@@ -79,6 +79,8 @@ module.exports = {
     // Do not use in production code.
     "stabilizedDemo",
     // Feature for breakout rooms
-    "breakout-rooms"
+    "breakout-rooms",
+    // Feature for together mode
+    "together-mode"
   ]
 }
