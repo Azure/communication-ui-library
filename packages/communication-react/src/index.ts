@@ -1,487 +1,151 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
+import {
+  CallingHandlers,
+  getCallingSelector,
+  GetCallingSelector,
+  useCallingHandlers,
+  useCallingSelector,
+  useCallingPropsFor
+} from '@internal/calling-component-bindings';
+import {
+  ChatHandlers,
+  getChatSelector,
+  GetChatSelector,
+  useChatHandlers,
+  useChatSelector,
+  useChatPropsFor
+} from '@internal/chat-component-bindings';
+import { ChatClientState } from '@internal/chat-stateful-client';
+import { CallClientState } from '@internal/calling-stateful-client';
+import { Common } from '@internal/acs-ui-common';
 
 /**
- * `@azure/communication-react` is an npm package that exports the functionality of the Azure Communication Services - UI Library.
+ * Centralized state for {@link @azure/communication-calling#CallClient} or {@link @azure/communication-chat#ChatClient}.
  *
- * This package makes it easy for you to build modern communications user experiences using Azure Communication Services. It gives you a library of production-ready UI components that you can drop into your applications:
- *   - Composites: These components are turn-key solutions that implement common communication scenarios. You can quickly add video calling or chat experiences to your applications. Composites are open-source higher order components built using UI components.
- *   - UI Components - These components are open-source building blocks that let you build custom communications experience. Components are offered for both calling and chat capabilities that can be combined to build experiences.
- *
- * These UI client libraries all use Microsoft's Fluent design language and assets. Fluent UI provides a foundational layer for the UI Library and is actively used across Microsoft products.
- *
- * In conjunction with the UI components, the UI Library exposes a stateful client library for calling and chat. This client is agnostic to any specific state management framework and can be integrated with common state managers like Redux or React Context.
- * This stateful client library can be used with the UI Components to pass props and methods for the UI Components to render data. For more information, see Stateful Client Overview.
- *
- * For more information visit: https://aka.ms/acsstorybook
- *
- * @packageDocumentation
+ * See also: {@link CallClientState}, {@link ChatClientState}.
+ * @public
  */
+export type ClientState = CallClientState & ChatClientState;
 
-export { fromFlatCommunicationIdentifier, toFlatCommunicationIdentifier } from '../../acs-ui-common/src';
-export type {
-  AreEqual,
-  CommonProperties,
-  MessageStatus,
-  Common,
-  AreTypeEqual,
-  AreParamEqual
-} from '../../acs-ui-common/src';
+/**
+ * An optimized selector that refines {@link ClientState} updates into props for React Components in this library.
+ *
+ * @public
+ */
+export type Selector = (state: ClientState, props: any) => any;
 
-// Not to export chat/calling specific hook from binding package
-export type {
-  CallClientProviderProps,
-  CallAgentProviderProps,
-  CallProviderProps,
-  GetCallingSelector,
-  CallingHandlers,
-  CallingBaseSelectorProps,
-  CommonCallingHandlers
-} from '../../calling-component-bindings/src';
+/**
+ * Hook to obtain a selector for a specified component.
+ *
+ * Useful when implementing a custom component that utilizes the providers
+ * exported from this library.
+ *
+ * @public
+ */
+export const useSelector = <ParamT extends Selector | undefined>(
+  selector: ParamT,
+  selectorProps?: ParamT extends Selector ? Parameters<ParamT>[1] : undefined,
+  type?: 'calling' | 'chat'
+): ParamT extends Selector ? ReturnType<ParamT> : undefined => {
+  // Because of react hooks rules, hooks can't be conditionally called
+  // We call both call and chat hooks and detect current context
+  // Return undefined and skip execution when not in that context
+  const callingMode = !type || type === 'calling';
+  const chatMode = !type || type === 'chat';
+  const callProps = useCallingSelector(callingMode ? (selector as any) : undefined, selectorProps);
+  const chatProps = useChatSelector(chatMode ? (selector as any) : undefined, selectorProps);
+  return callProps ?? chatProps;
+};
 
-export type {
-  DeepNoiseSuppressionEffectDependency,
-  VideoBackgroundEffectsDependency,
-  CallingHandlersOptions
-} from '../../calling-component-bindings/src';
+/**
+ * Helper type for {@link usePropsFor}.
+ *
+ * @public
+ */
+export type ChatReturnProps<Component extends (props: any) => JSX.Element> =
+  GetChatSelector<Component> extends (state: ChatClientState, props: any) => any
+    ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]>
+    : never;
 
-export type {
-  ChatClientProviderProps,
-  ChatThreadClientProviderProps,
-  GetChatSelector,
-  ChatHandlers,
-  ChatBaseSelectorProps
-} from '../../chat-component-bindings/src';
+/**
+ * Helper type for {@link usePropsFor}.
+ *
+ * @public
+ */
+export type CallingReturnProps<Component extends (props: any) => JSX.Element> =
+  GetCallingSelector<Component> extends (state: CallClientState, props: any) => any
+    ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]>
+    : never;
 
-/* @conditional-compile-remove(file-sharing-acs) */
-export type { MessageOptions, ChatMessageType } from '../../acs-ui-common/src';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-export type { UploadChatImageResult } from '../../acs-ui-common/src';
+/**
+ * Helper type for {@link usePropsFor}.
+ *
+ * @public
+ */
+export type ComponentProps<Component extends (props: any) => JSX.Element> =
+  ChatReturnProps<Component> extends never
+    ? CallingReturnProps<Component> extends never
+      ? undefined
+      : CallingReturnProps<Component>
+    : ChatReturnProps<Component>;
 
-export {
-  CallClientProvider,
-  CallAgentProvider,
-  CallProvider,
-  useCallClient,
-  useCallAgent,
-  useCall,
-  useDeviceManager,
-  getCallingSelector,
-  createDefaultCallingHandlers
-} from '../../calling-component-bindings/src';
+/**
+ * Primary hook to get all hooks necessary for a React Component from this library.
+ *
+ * To call this hook, the component requires to be wrapped under these providers:
+ *
+ * 1. For chat components: {@link ChatClientProvider} and {@link ChatThreadClientProvider}.
+ *
+ * 2. For calling components: {@link CallClientProvider}, {@link CallAgentProvider} and {@link CallAgentProvider}.
+ *
+ * Most straightforward usage of a components looks like:
+ *
+ * @example
+ * ```
+ *     import { ParticipantList, usePropsFor } from '@azure/communication-react';
+ *
+ *     const App = (): JSX.Element => {
+ *         // ... code to setup Providers ...
+ *
+ *         return <ParticipantList {...usePropsFor(ParticipantList)}/>
+ *     }
+ * ```
+ *
+ * @public
+ */
+export const usePropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component,
+  type?: 'calling' | 'chat'
+): ComponentProps<Component> => {
+  if (type === 'calling') {
+    return useCallingPropsFor(component) as ComponentProps<Component>;
+  } else if (type === 'chat') {
+    return useChatPropsFor(component) as ComponentProps<Component>;
+  } else {
+    const callingSelector = getCallingSelector(component);
+    const chatSelector = getChatSelector(component);
+    const callProps = useCallingSelector(callingSelector);
+    const chatProps = useChatSelector(chatSelector);
+    const callingHandlers = useCallingHandlers<Parameters<Component>[0]>(component);
+    const chatHandlers = useChatHandlers<Parameters<Component>[0]>(component);
 
-export {
-  useTeamsCallAgent,
-  useTeamsCall,
-  createDefaultTeamsCallingHandlers
-} from '../../calling-component-bindings/src';
+    if (chatProps) {
+      if (!chatHandlers) {
+        throw 'Please initialize chatClient and chatThreadClient first!';
+      }
+      return { ...chatProps, ...chatHandlers } as any;
+    }
 
-export type { TeamsCallingHandlers } from '../../calling-component-bindings/src';
+    if (callProps) {
+      if (!callingHandlers) {
+        throw 'Please initialize callClient first!';
+      }
+      return { ...callProps, ...callingHandlers } as any;
+    }
 
-export type {
-  ScreenShareButtonSelector,
-  CameraButtonSelector,
-  VideoGallerySelector,
-  DevicesButtonSelector,
-  EmptySelector,
-  ErrorBarSelector as CallErrorBarSelector,
-  ParticipantListSelector,
-  MicrophoneButtonSelector,
-  ParticipantsButtonSelector,
-  CreateDefaultCallingHandlers,
-  CaptionSettingsSelector,
-  CaptionsBannerSelector,
-  StartCaptionsButtonSelector
-} from '../../calling-component-bindings/src';
-
-export type { HoldButtonSelector } from '../../calling-component-bindings/src';
-
-export type { RaiseHandButtonSelector } from '../../calling-component-bindings/src';
-
-export type { NotificationStackSelector } from '../../calling-component-bindings/src';
-export type { IncomingCallStackSelector } from '../../calling-component-bindings/src';
-
-export {
-  ChatClientProvider,
-  ChatThreadClientProvider,
-  useChatClient,
-  useChatThreadClient,
-  getChatSelector,
-  createDefaultChatHandlers
-} from '../../chat-component-bindings/src';
-
-export type {
-  MessageThreadSelector,
-  TypingIndicatorSelector,
-  ChatParticipantListSelector,
-  SendBoxSelector,
-  ErrorBarSelector as ChatErrorBarSelector
-} from '../../chat-component-bindings/src';
-
-export {
-  _IdentifierProvider,
-  CameraButton,
-  ControlBar,
-  ControlBarButton,
-  DevicesButton,
-  EndCallButton,
-  ErrorBar,
-  GridLayout,
-  LocalizationProvider,
-  MessageStatusIndicator,
-  MessageThread,
-  MicrophoneButton,
-  ParticipantItem,
-  ParticipantList,
-  ParticipantsButton,
-  ScreenShareButton,
-  SendBox,
-  StreamMedia,
-  TypingIndicator,
-  VideoGallery,
-  VideoTile,
-  COMPONENT_LOCALE_EN_GB,
-  COMPONENT_LOCALE_AR_SA,
-  COMPONENT_LOCALE_CS_CZ,
-  COMPONENT_LOCALE_CY_GB,
-  COMPONENT_LOCALE_DE_DE,
-  COMPONENT_LOCALE_ES_ES,
-  COMPONENT_LOCALE_ES_MX,
-  COMPONENT_LOCALE_FI_FI,
-  COMPONENT_LOCALE_FR_FR,
-  COMPONENT_LOCALE_FR_CA,
-  COMPONENT_LOCALE_HE_IL,
-  COMPONENT_LOCALE_IT_IT,
-  COMPONENT_LOCALE_JA_JP,
-  COMPONENT_LOCALE_KO_KR,
-  COMPONENT_LOCALE_NB_NO,
-  COMPONENT_LOCALE_NL_NL,
-  COMPONENT_LOCALE_PL_PL,
-  COMPONENT_LOCALE_PT_BR,
-  COMPONENT_LOCALE_RU_RU,
-  COMPONENT_LOCALE_SV_SE,
-  COMPONENT_LOCALE_TR_TR,
-  COMPONENT_LOCALE_ZH_CN,
-  COMPONENT_LOCALE_ZH_TW
-} from '../../react-components/src';
-export { ImageOverlay } from '../../react-components/src';
-export { HoldButton } from '../../react-components/src';
-
-export { RaiseHandButton } from '../../react-components/src';
-
-export { Dialpad } from '../../react-components/src';
-
-export { IncomingCallNotification, IncomingCallStack } from '../../react-components/src';
-export type {
-  IncomingCallNotificationProps,
-  IncomingCallNotificationStrings,
-  IncomingCallNotificationStyles,
-  IncomingCallStackProps,
-  IncomingCallStackCall
-} from '../../react-components/src';
-
-/* @conditional-compile-remove(call-readiness) */
-export {
-  CameraAndMicrophoneSitePermissions,
-  MicrophoneSitePermissions,
-  CameraSitePermissions
-} from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export type {
-  CameraAndMicrophoneSitePermissionsStrings,
-  CameraAndMicrophoneSitePermissionsProps,
-  CameraSitePermissionsStrings,
-  CameraSitePermissionsProps,
-  CommonSitePermissionsProps,
-  SitePermissionsStrings,
-  SitePermissionsStyles,
-  MicrophoneSitePermissionsStrings,
-  MicrophoneSitePermissionsProps
-} from '../../react-components/src';
-
-/* @conditional-compile-remove(total-participant-count) */
-export type { ParticipantListStrings } from '../../react-components/src';
-
-/* @conditional-compile-remove(mention) */
-export type {
-  MentionOptions,
-  MentionDisplayOptions,
-  MentionLookupOptions,
-  Mention,
-  MentionPopoverStrings
-} from '../../react-components/src';
-
-export type {
-  _IdentifierProviderProps,
-  _Identifiers,
-  ActiveErrorMessage,
-  BaseCustomStyles,
-  CallParticipantListParticipant,
-  CameraButtonContextualMenuStyles,
-  CameraButtonProps,
-  CameraButtonStrings,
-  CameraButtonStyles,
-  ChatMessage,
-  CommunicationParticipant,
-  ComponentLocale,
-  ComponentSlotStyle,
-  ComponentStrings,
-  ContentSystemMessage,
-  ControlBarButtonProps,
-  ControlBarButtonStrings,
-  ControlBarButtonStyles,
-  ControlBarLayout,
-  ControlBarProps,
-  CreateVideoStreamViewResult,
-  CustomAvatarOptions,
-  CustomMessage,
-  DevicesButtonContextualMenuStyles,
-  DevicesButtonProps,
-  DevicesButtonStrings,
-  DevicesButtonStyles,
-  EndCallButtonProps,
-  EndCallButtonStrings,
-  ErrorBarProps,
-  ErrorBarStrings,
-  ErrorType,
-  GridLayoutProps,
-  GridLayoutStyles,
-  HorizontalGalleryStyles,
-  JumpToNewMessageButtonProps,
-  LocalizationProviderProps,
-  LocalVideoCameraCycleButtonProps,
-  LoadingState,
-  Message,
-  MessageAttachedStatus,
-  MessageCommon,
-  MessageContentType,
-  MessageProps,
-  MessageRenderer,
-  MessageStatusIndicatorProps,
-  MessageStatusIndicatorStrings,
-  MessageThreadProps,
-  MessageThreadStrings,
-  MessageThreadStyles,
-  MicrophoneButtonContextualMenuStyles,
-  MicrophoneButtonProps,
-  MicrophoneButtonStrings,
-  MicrophoneButtonStyles,
-  OnRenderAvatarCallback,
-  OptionsDevice,
-  ParticipantAddedSystemMessage,
-  ParticipantItemProps,
-  ParticipantItemStrings,
-  ParticipantItemStyles,
-  ParticipantListItemStyles,
-  ParticipantListParticipant,
-  ParticipantListProps,
-  ParticipantListStyles,
-  ParticipantMenuItemsCallback,
-  ParticipantRemovedSystemMessage,
-  ParticipantState,
-  ParticipantsButtonContextualMenuStyles,
-  ParticipantsButtonProps,
-  ParticipantsButtonStrings,
-  ParticipantsButtonStyles,
-  ReadReceiptsBySenderId,
-  ScreenShareButtonProps,
-  ScreenShareButtonStrings,
-  SendBoxProps,
-  SendBoxStrings,
-  SendBoxStylesProps,
-  StreamMediaProps,
-  SystemMessage,
-  SystemMessageCommon,
-  TopicUpdatedSystemMessage,
-  TypingIndicatorProps,
-  TypingIndicatorStrings,
-  TypingIndicatorStylesProps,
-  UpdateMessageCallback,
-  CancelEditCallback,
-  VideoGalleryLayout,
-  VideoGalleryLocalParticipant,
-  VideoGalleryParticipant,
-  VideoGalleryProps,
-  VideoGalleryRemoteParticipant,
-  VideoGalleryStream,
-  VideoGalleryStrings,
-  VideoGalleryStyles,
-  VideoStreamOptions,
-  VideoTileProps,
-  VideoTileStylesProps,
-  ViewScalingMode,
-  VideoTileContextualMenuProps,
-  VideoTileDrawerMenuProps,
-  VideoTilesOptions,
-  LocalScreenShareView
-} from '../../react-components/src';
-
-/* @conditional-compile-remove(together-mode) */
-export type {
-  TogetherModeStreamViewResult,
-  VideoGalleryTogetherModeStreams,
-  VideoGalleryTogetherModeParticipantPosition,
-  VideoGalleryTogetherModeSeatingInfo,
-  TogetherModeStreamOptions
-} from '../../react-components/src';
-
-export type { RaiseHandButtonProps, RaiseHandButtonStrings, RaisedHand } from '../../react-components/src';
-export type {
-  ReactionButtonStrings,
-  Reaction,
-  ReactionButtonProps,
-  ReactionResources,
-  ReactionSprite,
-  ReactionButtonReaction
-} from '../../react-components/src';
-
-export { ReactionButton } from '../../react-components/src';
-/* @conditional-compile-remove(rich-text-editor) */
-export { RichTextSendBox } from '../../react-components/src';
-/* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextSendBoxProps, RichTextSendBoxStrings, RichTextStrings } from '../../react-components/src';
-export type { Spotlight } from '../../react-components/src';
-export type { ImageOverlayProps, ImageOverlayStrings } from '../../react-components/src';
-/* @conditional-compile-remove(data-loss-prevention) */
-export type { BlockedMessage } from '../../react-components/src';
-export type {
-  DialpadMode,
-  DialpadProps,
-  DialpadStrings,
-  DialpadStyles,
-  DtmfTone,
-  LongPressTrigger
-} from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing-acs) */
-export type { AttachmentOptions } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing-acs) */
-export type { SendBoxErrorBarError } from '../../react-components/src';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-export type { SendBoxErrorBarType } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing-acs) */
-export type { AttachmentActionHandler } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing-acs) */
-export type {
-  AttachmentSelectionHandler,
-  AttachmentRemovalHandler,
-  AttachmentUploadOptions,
-  AttachmentUploadTask
-} from '../../react-components/src';
-export type { AttachmentMetadata } from '../../acs-ui-common/src';
-
-/* @conditional-compile-remove(file-sharing-acs) */
-export type { AttachmentMetadataInProgress, AttachmentProgressError } from '../../acs-ui-common/src';
-
-/* @conditional-compile-remove(file-sharing-acs) */
-export type { AttachmentMenuAction, AttachmentDownloadOptions } from '../../react-components/src';
-/* @conditional-compile-remove(file-sharing-acs) */
-export { defaultAttachmentMenuAction } from '../../react-components/src';
-export type { ChatAttachmentType } from '../../react-components/src';
-export type { InlineImageOptions, InlineImage } from '../../react-components/src';
-/* @conditional-compile-remove(rich-text-editor) */
-export type { RichTextEditorOptions, RichTextEditBoxOptions } from '../../react-components/src';
-export type { HoldButtonProps, HoldButtonStrings } from '../../react-components/src';
-export type { VideoTileStrings } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export type { BrowserPermissionDeniedStrings, BrowserPermissionDeniedProps } from '../../react-components/src';
-/* @conditional-compile-remove(call-readiness) */
-export type {
-  BrowserPermissionDeniedIOSStrings,
-  BrowserPermissionDeniedStyles,
-  BrowserPermissionDeniedIOSProps
-} from '../../react-components/src';
-export type { OverflowGalleryPosition } from '../../react-components/src';
-export type { LocalVideoTileSize } from '../../react-components/src';
-export * from '../../react-components/src/localization/locales';
-export * from '../../react-components/src/theming';
-export * from '../../calling-stateful-client/src/index-public';
-export type { DeclarativeCallAgent } from '../../calling-stateful-client/src';
-export { createStatefulChatClient } from '../../chat-stateful-client/src';
-export type {
-  StatefulChatClient,
-  StatefulChatClientArgs,
-  StatefulChatClientOptions,
-  ChatMessageWithStatus,
-  ChatClientState,
-  ChatError,
-  ChatErrors,
-  ChatThreadClientState,
-  ChatThreadProperties,
-  ChatErrorTarget
-} from '../../chat-stateful-client/src';
-/* @conditional-compile-remove(rich-text-editor-image-upload) */
-export type { MessagingPolicy } from '../../chat-stateful-client/src';
-
-export type { ResourceFetchResult } from '../../chat-stateful-client/src';
-export * from '../../react-composites/src/index-public';
-export * from './mergedHooks';
-
-/* @conditional-compile-remove(unsupported-browser) */
-export { UnsupportedBrowser } from '../../react-components/src';
-/* @conditional-compile-remove(unsupported-browser) */
-export type { UnsupportedBrowserStrings, UnsupportedBrowserProps } from '../../react-components/src';
-/* @conditional-compile-remove(unsupported-browser) */
-export { UnsupportedBrowserVersion } from '../../react-components/src';
-/* @conditional-compile-remove(unsupported-browser) */
-export type { UnsupportedBrowserVersionStrings, UnsupportedBrowserVersionProps } from '../../react-components/src';
-/* @conditional-compile-remove(unsupported-browser) */
-export { UnsupportedOperatingSystem } from '../../react-components/src';
-/* @conditional-compile-remove(unsupported-browser) */
-export type { UnsupportedOperatingSystemStrings, UnsupportedOperatingSystemProps } from '../../react-components/src';
-export type {
-  VerticalGalleryStyles,
-  VerticalGalleryStrings,
-  VerticalGalleryControlBarStyles
-} from '../../react-components/src';
-
-export type { SpokenLanguageStrings, CaptionLanguageStrings } from '../../react-components/src';
-
-export type { SurveyIssues } from '../../react-components/src';
-
-export type { SurveyIssuesHeadingStrings } from '../../react-components/src';
-
-export type { CallSurveyImprovementSuggestions } from '../../react-components/src';
-
-export { NotificationStack, Notification } from '../../react-components/src';
-
-export type {
-  NotificationStackProps,
-  NotificationProps,
-  NotificationStrings,
-  NotificationStackStrings,
-  NotificationType,
-  ActiveNotification,
-  NotificationStyles
-} from '../../react-components/src';
-export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';
-/* @conditional-compile-remove(rtt) */
-export type { RealTimeTextModalStrings, RealTimeTextModalProps } from '../../react-components/src';
-/* @conditional-compile-remove(rtt) */
-export { RealTimeTextModal } from '../../react-components/src';
-/* @conditional-compile-remove(rtt) */
-export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
-/* @conditional-compile-remove(rtt) */
-export { RealTimeText } from '../../react-components/src/components/RealTimeText';
-/* @conditional-compile-remove(rtt) */
-export { StartRealTimeTextButton } from '../../react-components/src/components/StartRealTimeTextButton';
-/* @conditional-compile-remove(rtt) */
-export type {
-  StartRealTimeTextButtonProps,
-  StartRealTimeTextButtonStrings
-} from '../../react-components/src/components/StartRealTimeTextButton';
-export type { CaptionsSettingsModalStrings, CaptionsSettingsModalProps, MediaAccess } from '../../react-components/src';
-export { CaptionsSettingsModal } from '../../react-components/src';
-export type { SupportedCaptionLanguage, SupportedSpokenLanguage, CaptionsOptions } from '../../react-components/src';
-export type {
-  CaptionsBannerProps,
-  CaptionsInformation,
-  CaptionsBannerStrings
-} from '../../react-components/src/components/CaptionsBanner';
-export { CaptionsBanner } from '../../react-components/src/components/CaptionsBanner';
-export { StartCaptionsButton } from '../../react-components/src/components/StartCaptionsButton';
-export type {
-  StartCaptionsButtonProps,
-  StartCaptionsButtonStrings
-} from '../../react-components/src/components/StartCaptionsButton';
-/* @conditional-compile-remove(rtt) */
-export type { RealTimeTextInformation } from '../../react-components/src/components/CaptionsBanner';
+    if (!chatSelector && !callingSelector) {
+      throw "Can't find corresponding selector for this component. Please check the supported components from Azure Communication UI Feature Component List.";
+    } else {
+      throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
+    }
+  }
+};

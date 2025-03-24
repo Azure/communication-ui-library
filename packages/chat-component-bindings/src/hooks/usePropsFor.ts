@@ -1,5 +1,3 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
 import { ErrorBar, MessageThread, ParticipantList, SendBox, TypingIndicator } from '@internal/react-components';
 
 /* @conditional-compile-remove(rich-text-editor) */
@@ -37,7 +35,7 @@ import { useContext } from 'react';
  *
  * @public
  */
-export const usePropsFor = <Component extends (props: any) => JSX.Element>(
+export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
   ? ReturnType<GetSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]>

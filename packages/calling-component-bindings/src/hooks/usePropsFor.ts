@@ -1,6 +1,3 @@
-// Copyright (c) Microsoft Corporation.
-// Licensed under the MIT License.
-
 import {
   CameraButton,
   EndCallButton,
@@ -64,18 +61,18 @@ import {
  *
  * @example
  * ```
- *     import { ParticipantList, usePropsFor } from '@azure/communication-react';
+ *     import { ParticipantList, useCallingPropsFor } from '@azure/communication-react';
  *
  *     const App = (): JSX.Element => {
  *         // ... code to setup Providers ...
  *
- *         return <ParticipantList {...usePropsFor(ParticipantList)}/>
+ *         return <ParticipantList {...useCallingPropsFor(ParticipantList)}/>
  *     }
  * ```
  *
  * @public
  */
-export const usePropsFor = <Component extends (props: any) => JSX.Element>(
+export const useCallingPropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetSelector<Component> extends (props: any) => any
   ? ReturnType<GetSelector<Component>> &
@@ -93,7 +90,7 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
 /**
  * A type for trivial selectors that return no data.
  *
- * Used as a default return value if {@link usePropsFor} is called for a component that requires no data.
+ * Used as a default return value if {@link useCallingPropsFor} is called for a component that requires no data.
  *
  * @public
  */
