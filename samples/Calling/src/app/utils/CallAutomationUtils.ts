@@ -109,7 +109,7 @@ export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Prom
 
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const serverCallId = adapter.getState().call?.info?.getServerCallId();
+    const serverCallId = await adapter.getState().call?.info?.getServerCallId();
     if (!serverCallId) {
       console.error('Call ID not found');
       throw new Error('Call ID not found');
@@ -120,7 +120,7 @@ export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Prom
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ serverCallId })
+      body: JSON.stringify({ serverCallId: serverCallId })
     });
     console.log('/summarizeTranscript response', response);
 

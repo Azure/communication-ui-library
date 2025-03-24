@@ -84,9 +84,6 @@ export const connectRoomsCall = async (serverCallId: string): Promise<void> => {
   console.log('Connect call result', res);
   const callConnection = res.callConnection;
   console.log('Call connection', callConnection);
-  CALLCONNECTION_ID_TO_CORRELATION_ID[(await callConnection.getCallConnectionProperties()).callConnectionId] = {
-    correlationId: (await callConnection.getCallConnectionProperties()).correlationId
-  };
 };
 
 export const startTranscriptionForCall = async (
@@ -141,8 +138,8 @@ export const LOCAL_PARTICIPANT: { [key: string]: { communicationUserId?: string;
 
 export const getTranscriptionData = (serverCallId: string): CallTranscription | undefined => {
   console.log('Getting transcription data for call:', serverCallId);
-  const connectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find(
-    (key) => CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId === serverCallId
+  const connectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
+    CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(serverCallId)
   );
   const correlationId = CALLCONNECTION_ID_TO_CORRELATION_ID[connectionId]?.correlationId;
   return TRANSCRIPTION_STORE[correlationId] as CallTranscription;
@@ -182,6 +179,15 @@ export const handleTranscriptionMetadataEvent = (eventData: TranscriptionMetadat
 
   TRANSCRIPTION_STORE[eventData.correlationId] = {
     metadata: eventData
+  };
+
+  /**
+   * Set the correlation ID for the call from the transcription event
+   * This is the id that we will use to fetch the transcription data later.
+   */
+  CALLCONNECTION_ID_TO_CORRELATION_ID[eventData.callConnectionId] = {
+    serverCallId: CALLCONNECTION_ID_TO_CORRELATION_ID[eventData.callConnectionId]?.serverCallId,
+    correlationId: eventData.correlationId
   };
 
   return eventData.correlationId;

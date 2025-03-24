@@ -14,9 +14,12 @@ interface StartTranscriptionRequest {
 router.post('/', async function (req, res, next) {
   const { serverCallId, options }: StartTranscriptionRequest = req.body;
 
-  const callConnectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find(
-    (key) => CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId === serverCallId
+  console.log('Starting transcription for call:', serverCallId);
+  console.log(CALLCONNECTION_ID_TO_CORRELATION_ID);
+  const callConnectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
+    CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(serverCallId)
   );
+  console.log('Call connection id:', callConnectionId);
   if (!callConnectionId) {
     res.status(404).send('Call not found');
     return;

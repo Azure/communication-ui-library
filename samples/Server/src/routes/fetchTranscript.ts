@@ -7,21 +7,21 @@ import { TranscriptionData } from '@azure/communication-call-automation';
 
 const router = express.Router();
 interface FetchTranscriptRequest {
-  callId: string;
+  serverCallId: string;
 }
 interface FetchTranscriptResponse {
   transcript: TranscriptionData[];
 }
 
 router.post('/', async function (req, res, next) {
-  const { callId }: FetchTranscriptRequest = req.body;
-  console.log('Fetching transcript for call:', callId, 'available calls:', Object.keys(TRANSCRIPTION_STORE));
+  const { serverCallId }: FetchTranscriptRequest = req.body;
+  console.log('Fetching transcript for call:', serverCallId, 'available calls:', Object.keys(TRANSCRIPTION_STORE));
   /**
    * callId here is the correlationId in the Automation event saying transcription has started
    * we need to use this to get the call connectionId from the callAutomation client
    */
-  const connectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find(
-    (key) => CALLCONNECTION_ID_TO_CORRELATION_ID[key].callId === callId
+  const connectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
+    CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(serverCallId)
   );
   const correlationId = CALLCONNECTION_ID_TO_CORRELATION_ID[connectionId]?.correlationId;
 

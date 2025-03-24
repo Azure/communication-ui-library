@@ -355,7 +355,7 @@ const AzureCommunicationCallAutomationCallScreen = (
       ),
       onItemClick: async () => {
         if (serverCallId && !transcriptionStarted) {
-          console.log('Starting transcription');
+          console.log('Starting transcription', serverCallId);
           setTranscriptionStarted(await startTranscription(serverCallId));
         } else if (serverCallId && transcriptionStarted) {
           console.log('Stopping transcription');

@@ -16,17 +16,13 @@ router.post('/', async function (req, res) {
        * this id in the CallAutomation event is the CallId that we get
        * from the calling SDK in the client.
        */
-      const correlationId = req.body[0].data.correlationId;
+      const serverCallId = req.body[0].data.serverCallId;
 
       /**
        * if the call already exists in the mapping we don't want to start a
        */
       if (CALLCONNECTION_ID_TO_CORRELATION_ID[req.body[0].data.callConnectionId]) {
         console.log('CallConnectionId already exists in mapping');
-        if (CALLCONNECTION_ID_TO_CORRELATION_ID[connectionId].callId !== correlationId) {
-          console.log('CallId does not match callId from event - updating mapping');
-          CALLCONNECTION_ID_TO_CORRELATION_ID[connectionId].callId = correlationId;
-        }
 
         res.status(200).end();
         return;
@@ -38,7 +34,7 @@ router.post('/', async function (req, res) {
        * service. We need to store this mapping so that we can fetch the transcription later.
        */
       CALLCONNECTION_ID_TO_CORRELATION_ID[req.body[0].data.callConnectionId] = {
-        callId: req.body[0].data.correlationId,
+        serverCallId: req.body[0].data.serverCallId,
         correlationId: CALLCONNECTION_ID_TO_CORRELATION_ID[req.body[0].data.callConnectionId]?.correlationId
       };
     }
