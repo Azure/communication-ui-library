@@ -4,7 +4,7 @@ import {
   GetCallingSelector,
   useCallingHandlers,
   useCallingSelector,
-  usePropsFor as useCallingPropsFor
+  useCallingPropsFor as useCallingPropsFor
 } from '@internal/calling-component-bindings';
 import {
   ChatHandlers,
@@ -12,7 +12,7 @@ import {
   GetChatSelector,
   useChatHandlers,
   useChatSelector,
-  usePropsFor as useChatPropsFor
+  useChatPropsFor as useChatPropsFor
 } from '@internal/chat-component-bindings';
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { CallClientState } from '@internal/calling-stateful-client';
