@@ -52,7 +52,8 @@ export const config: BeachballConfig = {
       name: "@azure/communication-react and its packlets",
       include: "packages/*",
       disallowedChangeTypes: [
-        "major"
+        "major",
+        "none"
       ]
     }
   ]
