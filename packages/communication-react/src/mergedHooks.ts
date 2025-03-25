@@ -17,8 +17,6 @@ import {
 import { ChatClientState } from '@internal/chat-stateful-client';
 import { CallClientState } from '@internal/calling-stateful-client';
 import { Common } from '@internal/acs-ui-common';
-import { usePropsFor as useChatPropsFor } from '@internal/chat-component-bindings/src/hooks/usePropsFor';
-import { usePropsFor as useCallingPropsFor } from '@internal/calling-component-bindings/src/hooks/usePropsFor';
 
 /**
  * Centralized state for {@link @azure/communication-calling#CallClient} or {@link @azure/communication-chat#ChatClient}.
@@ -183,5 +181,3 @@ export const useCallingPropsFor = <Component extends (props: any) => JSX.Element
   }
   throw new Error("Can't find the correct selector for the component.");
 };
-
-export { useChatPropsFor, useCallingPropsFor };
