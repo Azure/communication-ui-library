@@ -78,7 +78,8 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         __COMMITID__: `"${process.env.REACT_APP_COMMIT_SHA || ''}"`,
       }),
       new BundleAnalyzerPlugin({
-        analyzerMode: 'json'
+        analyzerMode: 'static',
+        openAnalyzer: true
       }),
       new CopyPlugin({
         patterns: [
