@@ -143,3 +143,41 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
     throw 'Could not find props for this component, ensure the component is wrapped by appropriate providers.';
   }
 };
+
+/**
+ * Hook to obtain props for a chat component.
+ *
+ * @public
+ */
+export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): GetChatSelector<Component> extends (props: any) => any
+  ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]>
+  : never => {
+  const selector = getChatSelector(component);
+  const props = useChatSelector(selector);
+  const handlers = useChatHandlers<Parameters<Component>[0]>(component);
+  if (props !== undefined) {
+    return { ...props, ...handlers } as any;
+  }
+  throw new Error("Can't find the correct selector for the component.");
+};
+
+/**
+ * Hook to obtain props for a calling component.
+ *
+ * @public
+ */
+export const useCallingPropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): GetCallingSelector<Component> extends (props: any) => any
+  ? ReturnType<GetCallingSelector<Component>> & Common<CallingHandlers, Parameters<Component>[0]>
+  : never => {
+  const selector = getCallingSelector(component);
+  const props = useCallingSelector(selector);
+  const handlers = useCallingHandlers<Parameters<Component>[0]>(component);
+  if (props !== undefined) {
+    return { ...props, ...handlers } as any;
+  }
+  throw new Error("Can't find the correct selector for the component.");
+};
