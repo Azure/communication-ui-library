@@ -211,3 +211,23 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
 //   switch (component) {
 //   }
 // };
+
+/**
+ * Hook to obtain props for a calling component.
+ *
+ * @public
+ */
+export const useCallingPropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): GetSelector<Component> extends (props: any) => any
+  ? ReturnType<GetSelector<Component>> &
+      Common<CommonCallingHandlers & _ComponentCallingHandlers, Parameters<Component>[0]>
+  : undefined => {
+  const selector = getSelector(component);
+  const props = useSelector(selector);
+  const handlers = useHandlers<Parameters<Component>[0]>(component);
+  if (props !== undefined) {
+    return { ...props, ...handlers } as any;
+  }
+  throw new Error("Can't find the correct selector for the component.");
+};

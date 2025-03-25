@@ -122,3 +122,22 @@ const findSelector = (component: (props: any) => JSX.Element | undefined): any =
   }
   return undefined;
 };
+
+/**
+ * Hook to obtain props for a chat component.
+ *
+ * @public
+ */
+export const useChatPropsFor = <Component extends (props: any) => JSX.Element>(
+  component: Component
+): GetSelector<Component> extends (props: any) => any
+  ? ReturnType<GetSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]>
+  : undefined => {
+  const selector = getSelector(component);
+  const props = useSelector(selector);
+  const handlers = useHandlers<Parameters<Component>[0]>(component);
+  if (props !== undefined) {
+    return { ...props, ...handlers } as any;
+  }
+  throw new Error("Can't find the correct selector for the component.");
+};
