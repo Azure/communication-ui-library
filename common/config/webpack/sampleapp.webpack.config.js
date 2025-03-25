@@ -158,7 +158,11 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
           target: 'http://[::1]:8080'
         },
         {
-          path: '/updateRemoeteParticipants',
+          path: '/fetchTranscriptionState',
+          target: 'http://[::1]:8080'
+        },
+        {
+          path: '/updateRemoteParticipants',
           target: 'http://[::1]:8080'
         },
         {

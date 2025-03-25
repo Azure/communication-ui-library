@@ -28,6 +28,7 @@ import summarizeTranscript from './routes/summarizeTranscript';
 import updateRemoteParticipants from './routes/updateRemoteParticipants';
 import updateLocalParticipant from './routes/updateLocalParticipant';
 import stopTranscriptionForCall from './routes/stopTranscription';
+import fetchTranscriptState from './routes/fetchTranscriptState';
 
 const app = express();
 
@@ -111,6 +112,12 @@ app.use('/startCallWithTranscription', cors(), startCallWithTranscription);
  * purpose: Call Automation: receive call automation events
  */
 app.use('/callAutomationEvent', cors(), callAutomationEvent);
+
+/**
+ * route:/fetchTranscriptionState
+ * purpose: Fetch the transcription state for a call
+ */
+app.use('/fetchTranscriptionState', cors(), fetchTranscriptState);
 
 /**
  * route: /summarizeTranscript

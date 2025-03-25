@@ -26,12 +26,13 @@ import type {
   StartCallIdentifier,
   TeamsAdapterOptions
 } from '@azure/communication-react';
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
 import {
   connectToCallAutomation,
+  fetchTranscriptState,
   getCallSummaryFromServer,
   startTranscription,
   stopTranscription,
@@ -335,6 +336,18 @@ const AzureCommunicationCallAutomationCallScreen = (
     ...adapterArgs
   } = props;
   const [transcriptionStarted, setTranscriptionStarted] = useState(false);
+
+  useEffect(() => {
+    if (serverCallId && callConnected) {
+      fetchTranscriptState(serverCallId).then((transcriptState) => {
+        if (transcriptState === true) {
+          setTranscriptionStarted(true);
+        } else {
+          setTranscriptionStarted(false);
+        }
+      });
+    }
+  }, [serverCallId, callConnected]);
 
   if (!('communicationUserId' in userId)) {
     throw new Error('A ACS user ID must be provided for Rooms call.');
