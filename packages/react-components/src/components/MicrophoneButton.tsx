@@ -15,11 +15,14 @@ import {
   Stack,
   IStyleFunctionOrObject,
   IToggleStyleProps,
-  IToggleStyles
+  IToggleStyles,
+  IButton
 } from '@fluentui/react';
 import { ControlBarButtonStyles } from './ControlBarButton';
 import { OptionsDevice, generateDefaultDeviceMenuProps } from './DevicesButton';
 import { Announcer } from './Announcer';
+import { useAccessibility } from '../Accessibility';
+import { useRef } from 'react';
 
 /**
  * Strings of {@link MicrophoneButton} that can be overridden.
@@ -221,6 +224,10 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   const onRenderMicOffIcon = (): JSX.Element => {
     return <_HighContrastAwareIcon disabled={disabled} iconName="ControlButtonMicOff" />;
   };
+  // activate the context
+  const accessibility = useAccessibility();
+  // create a ref for the local component - this only works when it is not a split button.
+  const micButtonRef = useRef<IButton | null>(null);
 
   const isMicOn = props.checked;
 
@@ -313,7 +320,7 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   };
 
   return (
-    <>
+    <div>
       {announcerPresent && <Announcer announcementString={announcerString} ariaLive={'polite'} />}
       <ControlBarButton
         {...props}
@@ -341,9 +348,15 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
         splitButtonAriaLabel={props.enableDeviceSelectionMenu ? splitButtonAriaString : undefined}
         disabled={disabled}
         primaryDisabled={primaryDisabled}
-        onFocus={() => setAnnouncerPresent(true)}
-        onBlur={() => setAnnouncerPresent(false)}
+        onFocus={() => {
+          setAnnouncerPresent(true);
+        }}
+        onBlur={() => {
+          accessibility?.setComponentRef(micButtonRef.current);
+          setAnnouncerPresent(false);
+        }}
+        componentRef={micButtonRef}
       />
-    </>
+    </div>
   );
 };
