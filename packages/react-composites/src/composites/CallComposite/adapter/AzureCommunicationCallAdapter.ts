@@ -675,10 +675,12 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.permitOthersAudio.bind(this);
   }
 
-  public dispose(): void {
+  public async dispose(options?: { doNotDisposeCallAgent?: boolean }): Promise<void> {
     this.resetDiagnosticsForwarder();
     this.callClient.offStateChange(this.onClientStateChange);
-    this.callAgent.dispose();
+    if (!options?.doNotDisposeCallAgent) {
+      await this.callAgent.dispose();
+    }
   }
 
   public async queryCameras(): Promise<VideoDeviceInfo[]> {
@@ -2028,7 +2030,7 @@ function useAzureCommunicationCallAdapterGeneric<
           if (beforeDisposeRef.current) {
             await beforeDisposeRef.current(adapterRef.current);
           }
-          adapterRef.current.dispose();
+          await adapterRef.current.dispose();
           adapterRef.current = undefined;
         }
         let newAdapter: Adapter | undefined = undefined;
@@ -2122,7 +2124,7 @@ function useAzureCommunicationCallAdapterGeneric<
           if (beforeDisposeRef.current) {
             await beforeDisposeRef.current(adapterRef.current);
           }
-          adapterRef.current.dispose();
+          await adapterRef.current.dispose();
           adapterRef.current = undefined;
         }
       })();
