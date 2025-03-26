@@ -883,8 +883,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       pinnedParticipantUserIds: pinnedParticipants,
       overflowGalleryPosition,
       localVideoTileSize,
-      spotlightedParticipantUserIds: spotlightedParticipants,
-      togetherModeStreamComponent
+      spotlightedParticipantUserIds: spotlightedParticipants
     }),
     [
       remoteParticipants,
@@ -902,8 +901,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       pinnedParticipants,
       overflowGalleryPosition,
       localVideoTileSize,
-      spotlightedParticipants,
-      togetherModeStreamComponent
+      spotlightedParticipants
     ]
   );
 
