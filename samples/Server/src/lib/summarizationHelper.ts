@@ -1,13 +1,12 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { getLanguageAPIKey } from './envHelper';
+import { getLanguageAPIKey, getCognitionAPIEndpoint } from './envHelper';
 
 /**
  * Information on how this URL is contructued here: https://learn.microsoft.com/en-us/azure/ai-services/language-service/summarization/how-to/conversation-summarization
  */
-const API_URL =
-  'https://<your-language-resource-endpoint>/language/analyze-conversations/jobs?api-version=2023-11-15-preview';
+const API_URL = `${getCognitionAPIEndpoint()}/language/analyze-conversations/jobs?api-version=2023-11-15-preview`;
 
 const apiHeaders = (): HeadersInit => ({
   'Content-Type': 'application/json',
