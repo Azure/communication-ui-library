@@ -10,13 +10,14 @@ initializeIcons();
 // locator is a different type of custom locator to aggregate a call locator and a chat thread
 // locator = { callLocator: CallLocator, chatThreadId : string }
 export const loadCallWithChatComposite = async function (args, htmlElement, props) {
-  const { userId, token, displayName, endpoint, locator, threadId } = args;
+  const { userId, token, displayName, endpoint, locator, threadId, callAdapterOptions } = args;
   const adapter = await createAzureCommunicationCallWithChatAdapter({
     userId,
     displayName: displayName ?? 'anonymous',
     credential: new AzureCommunicationTokenCredential(token),
     endpoint: endpoint,
-    locator: locator
+    locator: locator,
+    callAdapterOptions: callAdapterOptions
   });
 
   if (!htmlElement) {
