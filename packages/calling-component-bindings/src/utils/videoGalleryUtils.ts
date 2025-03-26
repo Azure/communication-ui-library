@@ -262,3 +262,8 @@ export const memoizeTogetherModeStreams = memoizeOne((togetherModeStreams) => ({
     streamSize: togetherModeStreams?.mainVideoStream?.streamSize
   }
 }));
+
+/** @private */
+export const memoizeTogetherModeSeatingPositions = memoizeOne(
+  (togetherModeSeatingCoordinates) => togetherModeSeatingCoordinates
+);
