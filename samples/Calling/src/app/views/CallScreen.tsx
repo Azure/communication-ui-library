@@ -34,6 +34,7 @@ import {
   connectToCallAutomation,
   fetchTranscriptState,
   getCallSummaryFromServer,
+  LocaleCode,
   startTranscription,
   stopTranscription,
   SummarizeResult,
@@ -42,6 +43,7 @@ import {
 import { Stack } from '@fluentui/react';
 import { SummaryEndCallScreen } from './SummaryEndCall';
 import { SlideTextEdit20Regular } from '@fluentui/react-icons';
+import { TranscriptionOptionsModal } from '../components/TranscriptionOptionsModal';
 
 export interface CallScreenProps {
   token: string;
@@ -335,7 +337,9 @@ const AzureCommunicationCallAutomationCallScreen = (
     serverCallId,
     ...adapterArgs
   } = props;
+
   const [transcriptionStarted, setTranscriptionStarted] = useState(false);
+  const [showTranscriptionModal, setShowTranscriptionModal] = useState(false);
 
   useEffect(() => {
     if (serverCallId && callConnected) {
@@ -365,8 +369,8 @@ const AzureCommunicationCallAutomationCallScreen = (
       ),
       onItemClick: async () => {
         if (serverCallId && !transcriptionStarted) {
-          console.log('Starting transcription', serverCallId);
-          setTranscriptionStarted(await startTranscription(serverCallId));
+          console.log('Starting transcription');
+          setShowTranscriptionModal(true);
         } else if (serverCallId && transcriptionStarted) {
           console.log('Stopping transcription');
           setTranscriptionStarted(await !stopTranscription(serverCallId));
@@ -431,6 +435,15 @@ const AzureCommunicationCallAutomationCallScreen = (
 
   return (
     <Stack horizontal horizontalAlign={'center'} styles={{ root: { height: '100%', width: '100%' } }}>
+      <TranscriptionOptionsModal
+        isOpen={showTranscriptionModal}
+        setIsOpen={setShowTranscriptionModal}
+        startTranscription={async (locale: LocaleCode) => {
+          if (serverCallId) {
+            setTranscriptionStarted(await startTranscription(serverCallId, { locale }));
+          }
+        }}
+      ></TranscriptionOptionsModal>
       <CallCompositeContainer {...props} adapter={adapter} customButtons={customButtonOptions}></CallCompositeContainer>
     </Stack>
   );
