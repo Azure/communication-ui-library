@@ -54,8 +54,11 @@ export type SummarizeResult = {
   }[];
 };
 
-export async function SummarizeConversation(input: ConversationSummaryInput): Promise<SummarizeResult> {
-  const requestResponse = await requestConversationSummary(input as unknown as ConversationSummaryInput);
+export async function SummarizeConversation(
+  input: ConversationSummaryInput,
+  language?: SummarizationLocales
+): Promise<SummarizeResult> {
+  const requestResponse = await requestConversationSummary(input as unknown as ConversationSummaryInput, language);
   console.log('Request response:', requestResponse);
 
   const jobResult = await pollJobStatus(requestResponse.jobUrl);
@@ -99,7 +102,10 @@ export async function SummarizeConversation(input: ConversationSummaryInput): Pr
  * This could be replaced another service, such as Azure OpenAI.
  * @returns the summary of the transcription which includes the recap and chapters.
  */
-const requestConversationSummary = async (input: ConversationSummaryInput): Promise<SummarizeRestRequestResponse> => {
+const requestConversationSummary = async (
+  input: ConversationSummaryInput,
+  localeCode: SummarizationLocales
+): Promise<SummarizeRestRequestResponse> => {
   /**
    * The request body is a JSON object that contains the following properties:
    * - displayName: A string that represents the name of the conversation task.
@@ -112,11 +118,13 @@ const requestConversationSummary = async (input: ConversationSummaryInput): Prom
    *     - summaryAspects: An array of strings that represent the aspects of the summary to be generated.
    * The response will contain the operation location URL, which can be used to poll for the job status.
    */
+  console.log('localeCode:', localeCode);
   const requestData = JSON.stringify({
     displayName: 'Conversation Task Example',
     analysisInput: {
       conversations: [
         {
+          language: localeCode,
           conversationItems: input.map((item, index) => ({
             text: item.text,
             id: index.toString(),
@@ -225,3 +233,40 @@ const fetchJobResult = async (jobUrl: string): Promise<JobRestResponse> => {
     };
   }
 };
+
+/**
+ * The locales supported by the Language API for summarization.
+ * See https://learn.microsoft.com/en-us/azure/ai-services/language-service/language-support
+ * for the full list of supported locales.
+ */
+export type SummarizationLocales =
+  | 'ar'
+  | 'da'
+  | 'de'
+  | 'en'
+  | 'es'
+  | 'fi'
+  | 'fr'
+  | 'hi'
+  | 'it'
+  | 'ja'
+  | 'ko'
+  | 'nb'
+  | 'nl'
+  | 'pl'
+  | 'pt'
+  | 'ru'
+  | 'sv'
+  | 'zh-hans'
+  | 'zh-hant'
+  | 'cs'
+  | 'tr'
+  | 'vi'
+  | 'th'
+  | 'he'
+  | 'cy'
+  | 'uk'
+  | 'el'
+  | 'hu'
+  | 'ro'
+  | 'sk';

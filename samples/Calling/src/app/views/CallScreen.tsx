@@ -60,8 +60,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, isTeamsIdentityCall, enableTranscription } = props;
   const callIdRef = useRef<string>();
   const callAutomationStarted = useRef(false);
-  const [summarizationStatus, setSummarizationStatus] = useState<'None' | 'InProgress' | 'Complete'>('None');
-  const [summary, setSummary] = useState<SummarizeResult>();
   const [callConnected, setCallConnected] = useState(false);
   const [serverCallId, setServerCallId] = useState<string | undefined>(undefined);
 
@@ -109,9 +107,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         console.log('Call ended id: ' + event.callId + ' code: ' + event.code, 'subcode: ' + event.subCode);
         if (callAutomationStarted.current) {
           setCallConnected(false);
-          setSummary(undefined);
-          setSummarizationStatus('InProgress');
-          setSummary(await getCallSummaryFromServer(adapter).finally(() => setSummarizationStatus('Complete')));
         }
       });
     },
@@ -151,10 +146,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
           afterCreate={afterCallAdapterCreate}
           credential={credential}
           enableTranscription={enableTranscription}
-          summarizationStatus={summarizationStatus}
           callConnected={callConnected}
           setCallConnected={setCallConnected}
-          summary={summary}
+          automationStarted={callAutomationStarted.current}
           serverCallId={serverCallId}
           {...props}
         />
@@ -317,9 +311,8 @@ type AzureCommunicationCallAutomationCallScreenProps = AzureCommunicationCallScr
   enableTranscription?: boolean;
   showSummaryEndCallScreen?: boolean;
   setCallConnected: (connected: boolean) => void;
+  automationStarted: boolean;
   callConnected: boolean;
-  summarizationStatus?: 'None' | 'InProgress' | 'Complete';
-  summary?: SummarizeResult;
   serverCallId?: string;
 };
 
@@ -330,16 +323,18 @@ const AzureCommunicationCallAutomationCallScreen = (
     afterCreate,
     callLocator: locator,
     userId,
-    summarizationStatus,
-    summary,
     callConnected,
     setCallConnected,
     serverCallId,
+    automationStarted,
     ...adapterArgs
   } = props;
 
   const [transcriptionStarted, setTranscriptionStarted] = useState(false);
   const [showTranscriptionModal, setShowTranscriptionModal] = useState(false);
+  const [summarizationLanguage, setSummarizationLanguage] = useState<LocaleCode>('en-US');
+  const [summary, setSummary] = useState<SummarizeResult>();
+  const [summarizationStatus, setSummarizationStatus] = useState<'None' | 'InProgress' | 'Complete'>('None');
 
   useEffect(() => {
     if (serverCallId && callConnected) {
@@ -416,6 +411,32 @@ const AzureCommunicationCallAutomationCallScreen = (
     afterCreate
   );
 
+  useEffect(() => {
+    if (adapter) {
+      const callEndedHandler = async (): Promise<void> => {
+        if (automationStarted) {
+          console.log(summarizationLanguage);
+          setCallConnected(false);
+          setSummary(undefined);
+          setSummarizationStatus('InProgress');
+          setSummary(
+            await getCallSummaryFromServer(adapter, summarizationLanguage).finally(() =>
+              setSummarizationStatus('Complete')
+            )
+          );
+        }
+      };
+
+      adapter.on('callEnded', callEndedHandler);
+
+      return () => {
+        adapter.off('callEnded', callEndedHandler);
+      };
+    } else {
+      return () => {};
+    }
+  }, [adapter, automationStarted, setCallConnected, summarizationLanguage]);
+
   if (
     (summarizationStatus === 'Complete' && adapter && !callConnected) ||
     (summarizationStatus === 'InProgress' && adapter && !callConnected)
@@ -440,6 +461,7 @@ const AzureCommunicationCallAutomationCallScreen = (
         setIsOpen={setShowTranscriptionModal}
         startTranscription={async (locale: LocaleCode) => {
           if (serverCallId) {
+            setSummarizationLanguage(locale);
             setTranscriptionStarted(await startTranscription(serverCallId, { locale }));
           }
         }}

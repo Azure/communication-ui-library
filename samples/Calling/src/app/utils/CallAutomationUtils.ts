@@ -124,9 +124,12 @@ export const connectToCallAutomation = async (callAdaterState: CallAdapterState)
   return false;
 };
 
-export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Promise<SummarizeResult> => {
+export const getCallSummaryFromServer = async (
+  adapter: CommonCallAdapter,
+  locale: LocaleCode
+): Promise<SummarizeResult> => {
   console.log('Getting summary from server...');
-
+  console.log('Locale:', locale);
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const serverCallId = await adapter.getState().call?.info?.getServerCallId();
@@ -140,7 +143,7 @@ export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Prom
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ serverCallId: serverCallId })
+      body: JSON.stringify({ serverCallId: serverCallId, locale: locale })
     });
     console.log('/summarizeTranscript response', response);
 

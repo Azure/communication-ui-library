@@ -2,18 +2,20 @@
 // Licensed under the MIT License.
 
 import * as express from 'express';
-import { SummarizeConversation } from '../lib/summarizationHelper';
+import { SummarizationLocales, SummarizeConversation } from '../lib/summarizationHelper';
 import { formatTranscriptionForSummarization, getTranscriptionData } from '../lib/callAutomationUtils';
 
 const router = express.Router();
 interface SummarizeTranscriptRequest {
   /** CallId of the transcript to summarize */
   serverCallId: string;
+  locale?: string;
 }
 
 router.post('/', async function (req, res, next) {
   try {
-    const { serverCallId }: SummarizeTranscriptRequest = req.body;
+    const { serverCallId, locale }: SummarizeTranscriptRequest = req.body;
+    const summarizationLocale = locale ? locale.split('-')[0] : 'en';
     const transcription = getTranscriptionData(serverCallId);
 
     if (!transcription) {
@@ -23,7 +25,7 @@ router.post('/', async function (req, res, next) {
 
     const formattedTranscript = await formatTranscriptionForSummarization(transcription);
 
-    const summarized = await SummarizeConversation(formattedTranscript);
+    const summarized = await SummarizeConversation(formattedTranscript, summarizationLocale as SummarizationLocales);
     res.send(summarized);
   } catch (e) {
     console.error('Error summarizing transcript:', e);
