@@ -32,7 +32,8 @@ import {
   _dominantSpeakersWithFlatId,
   convertRemoteParticipantToVideoGalleryRemoteParticipant,
   memoizeLocalParticipant,
-  /* @conditional-compile-remove(together-mode) */ memoizeTogetherModeStreams
+  /* @conditional-compile-remove(together-mode) */ memoizeTogetherModeStreams,
+  /* @conditional-compile-remove(together-mode) */ memoizeTogetherModeSeatingPositions
 } from './utils/videoGalleryUtils';
 import { memoizeSpotlightedParticipantIds } from './utils/videoGalleryUtils';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
@@ -165,7 +166,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       /* @conditional-compile-remove(together-mode) */
       togetherModeStreams: memoizeTogetherModeStreams(togetherModeCallFeature?.streams),
       /* @conditional-compile-remove(together-mode) */
-      togetherModeSeatingCoordinates: togetherModeCallFeature?.seatingPositions,
+      togetherModeSeatingCoordinates: memoizeTogetherModeSeatingPositions(togetherModeCallFeature?.seatingPositions),
       /* @conditional-compile-remove(together-mode) */
       isTogetherModeActive: togetherModeCallFeature?.isActive,
       /* @conditional-compile-remove(together-mode) */
