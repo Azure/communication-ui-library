@@ -558,7 +558,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const showLocalVideoTileLabel =
-    !((localTileNotInGrid && isNarrow) || localVideoTileSize === '9:16') || layout === 'default';
+    !((localTileNotInGrid && isNarrow && localVideoTileSize !== '16:9') || localVideoTileSize === '9:16') ||
+    layout === 'default';
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
@@ -583,7 +584,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
     const showDisplayNameTrampoline = (): string => {
-      return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
+      return layout === 'default'
+        ? strings.localVideoLabel
+        : isNarrow && localVideoTileSize !== '16:9'
+          ? ''
+          : strings.localVideoLabel;
     };
 
     return (
