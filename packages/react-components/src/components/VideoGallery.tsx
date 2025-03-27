@@ -583,7 +583,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     const initialsName = !localParticipant.displayName ? '' : localParticipant.displayName;
 
     const showDisplayNameTrampoline = (): string => {
-      return layout === 'default' ? strings.localVideoLabel : isNarrow ? '' : strings.localVideoLabel;
+      return layout === 'default'
+        ? strings.localVideoLabel
+        : isNarrow && localVideoTileSize !== '16:9'
+          ? ''
+          : strings.localVideoLabel;
     };
 
     return (
