@@ -558,7 +558,8 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const showLocalVideoTileLabel =
-    !((localTileNotInGrid && isNarrow) || localVideoTileSize === '9:16') || layout === 'default';
+    !((localTileNotInGrid && isNarrow && localVideoTileSize !== '16:9') || localVideoTileSize === '9:16') ||
+    layout === 'default';
   /**
    * Utility function for memoized rendering of LocalParticipant.
    */
