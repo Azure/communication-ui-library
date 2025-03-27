@@ -68,7 +68,11 @@ module.exports = {
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
     // Feature for RTT
-    "rtt"
+    "rtt",
+    // Feature for together mode
+    "together-mode",
+    // Feature for on fetch profile
+    "on-fetch-profile"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.

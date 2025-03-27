@@ -2815,7 +2815,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, onFetchProfile?: OnFetchChatProfileCallback): Promise<ChatAdapter>;
 
 // @public
 export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
@@ -4273,6 +4273,9 @@ export type NotificationTarget = /* @conditional-compile-remove(breakout-rooms) 
 export type NotificationType = keyof NotificationStackStrings;
 
 // @public
+export type OnFetchChatProfileCallback = (userId: string, defaultProfile?: Profile_2) => Promise<Profile_2 | undefined>;
+
+// @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
 
 // @public
@@ -4511,6 +4514,11 @@ export interface PPTLiveCallFeatureState {
 
 // @public
 export type Profile = {
+    displayName?: string;
+};
+
+// @public
+export type Profile_2 = {
     displayName?: string;
 };
 
