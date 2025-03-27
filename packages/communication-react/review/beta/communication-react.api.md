@@ -775,6 +775,7 @@ export type CallCompositeOptions = {
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     videoTilesOptions?: VideoTilesOptions;
+    notificationOptions?: NotificationStackOptions;
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
@@ -4182,6 +4183,11 @@ export interface NotificationProps {
 
 // @public
 export const NotificationStack: (props: NotificationStackProps) => JSX.Element;
+
+// @public
+export interface NotificationStackOptions {
+    showCallNotifications?: 'hidden' | 'visible';
+}
 
 // @public
 export interface NotificationStackProps {

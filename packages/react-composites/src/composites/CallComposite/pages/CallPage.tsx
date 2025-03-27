@@ -18,7 +18,7 @@ import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
 /* @conditional-compile-remove(breakout-rooms) */
 import { AvatarPersona } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
-import { CallCompositeOptions, DtmfDialPadOptions } from '../CallComposite';
+import { CallCompositeOptions, DtmfDialPadOptions, NotificationStackOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { MediaGallery } from '../components/MediaGallery';
 import { NetworkReconnectTile } from '../components/NetworkReconnectTile';
@@ -70,6 +70,7 @@ export interface CallPageProps {
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   compositeAudioContext?: AudioContext;
   disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
+  notificationOptions?: NotificationStackOptions;
 }
 
 /**
@@ -257,6 +258,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
         captionsOptions={options?.captionsBanner}
         dtmfDialerOptions={disableAutoShowDtmfDialer}
+        notificationOptions={props.notificationOptions}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>
