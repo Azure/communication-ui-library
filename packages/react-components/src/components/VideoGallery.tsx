@@ -821,25 +821,36 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       : undefined;
 
   /* @conditional-compile-remove(together-mode) */
+  // Current implementation of capabilities is only based on user role.
+  // This logic checks for the user role and if the user is a Teams user.
+  const canSwitchToTogetherModeLayout =
+    isTogetherModeActive || (_isIdentityMicrosoftTeamsUser(localParticipant.userId) && startTogetherModeEnabled);
+
+  /* @conditional-compile-remove(together-mode) */
   const togetherModeStreamComponent = useMemo(
-    () => (
-      <TogetherModeStream
-        startTogetherModeEnabled={startTogetherModeEnabled}
-        isTogetherModeActive={isTogetherModeActive}
-        onCreateTogetherModeStreamView={onCreateTogetherModeStreamView}
-        onStartTogetherMode={onStartTogetherMode}
-        onDisposeTogetherModeStreamView={onDisposeTogetherModeStreamView}
-        onSetTogetherModeSceneSize={onSetTogetherModeSceneSize}
-        togetherModeStreams={togetherModeStreams}
-        seatingCoordinates={togetherModeSeatingCoordinates}
-        localParticipant={localParticipant}
-        remoteParticipants={remoteParticipants}
-        reactionResources={reactionResources}
-        containerWidth={containerWidth}
-        containerHeight={containerHeight}
-      />
-    ),
+    () =>
+      // Avoids unnecessary rendering of TogetherModeStream component when it is not needed
+      !screenShareComponent && canSwitchToTogetherModeLayout && layout === 'togetherMode' ? (
+        <TogetherModeStream
+          startTogetherModeEnabled={startTogetherModeEnabled}
+          isTogetherModeActive={isTogetherModeActive}
+          onCreateTogetherModeStreamView={onCreateTogetherModeStreamView}
+          onStartTogetherMode={onStartTogetherMode}
+          onDisposeTogetherModeStreamView={onDisposeTogetherModeStreamView}
+          onSetTogetherModeSceneSize={onSetTogetherModeSceneSize}
+          togetherModeStreams={togetherModeStreams}
+          seatingCoordinates={togetherModeSeatingCoordinates}
+          localParticipant={localParticipant}
+          remoteParticipants={remoteParticipants}
+          reactionResources={reactionResources}
+          containerWidth={containerWidth}
+          containerHeight={containerHeight}
+        />
+      ) : undefined,
     [
+      layout,
+      screenShareComponent,
+      canSwitchToTogetherModeLayout,
       startTogetherModeEnabled,
       isTogetherModeActive,
       onCreateTogetherModeStreamView,
@@ -855,11 +866,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       containerHeight
     ]
   );
-  /* @conditional-compile-remove(together-mode) */
-  // Current implementation of capabilities is only based on user role.
-  // This logic checks for the user role and if the user is a Teams user.
-  const canSwitchToTogetherModeLayout =
-    isTogetherModeActive || (_isIdentityMicrosoftTeamsUser(localParticipant.userId) && startTogetherModeEnabled);
 
   const layoutProps = useMemo<LayoutProps>(
     () => ({
@@ -917,15 +923,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     /* @conditional-compile-remove(together-mode) */
     // Teams users can switch to Together mode layout only if they have the capability,
     // while ACS users can do so only if Together mode is enabled.
-    if (!screenShareComponent && layout === 'togetherMode' && canSwitchToTogetherModeLayout) {
+    if (togetherModeStreamComponent && layout === 'togetherMode') {
       return <TogetherModeLayout togetherModeStreamComponent={togetherModeStreamComponent} />;
     }
     return <DefaultLayout {...layoutProps} />;
   }, [
-    /* @conditional-compile-remove(together-mode) */ canSwitchToTogetherModeLayout,
     layout,
     layoutProps,
-    screenShareComponent,
     screenShareParticipant,
     /* @conditional-compile-remove(together-mode) */ togetherModeStreamComponent
   ]);
