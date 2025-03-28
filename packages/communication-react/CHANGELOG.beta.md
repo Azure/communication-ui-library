@@ -1,8 +1,29 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 24 Feb 2025 23:41:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 24 Mar 2025 20:31:15 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.26.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.26.0-beta.1)
+
+Mon, 24 Mar 2025 20:31:15 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.25.0-beta.1...1.26.0-beta.1)
+
+### Features
+
+- Add composite option to hide local screenshare stream ([PR #5699](https://github.com/azure/communication-ui-library/pull/5699) by 96077406+carocao-msft@users.noreply.github.com)
+- Add composite option to allow join without microphone access ([PR #5671](https://github.com/azure/communication-ui-library/pull/5671) by 96077406+carocao-msft@users.noreply.github.com)
+
+### Improvements
+
+- Update calling-effects package to 1.1.3 ([PR #5644](https://github.com/azure/communication-ui-library/pull/5644) by dmceachern@microsoft.com)
+- Update calling from 1.33.2-beta.1 to 1.34.1-beta.1 ([PR #5696](https://github.com/azure/communication-ui-library/pull/5696) by 79475487+mgamis-msft@users.noreply.github.com)
+
+### Bug Fixes
+
+- Resolve issue where RichTextBox could not be found when running in production with a minimized bundle. ([PR #5712](https://github.com/azure/communication-ui-library/pull/5712) by palatter@microsoft.com)
+- Add code and subcode to calling errors to help with debugging ([PR #5672](https://github.com/azure/communication-ui-library/pull/5672) by dmceachern@microsoft.com)
+- Fix issues where together mode stream keeps loading until views are changed ([PR #5724](https://github.com/azure/communication-ui-library/pull/5724) by nwankwojustin93@gmail.com)
 
 ## [1.25.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.25.0-beta.1)
 
