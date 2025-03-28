@@ -21,11 +21,16 @@ import {
   StatefulCallClient,
   useTeamsCallAdapter,
   useTheme,
-  createAzureCommunicationCallAdapterFromClient
+  createAzureCommunicationCallAdapterFromClient,
+  CallClientProvider,
+  CallAgentProvider,
+  CallProvider
 } from '@azure/communication-react';
 import type {
+  ActiveNotification,
   CustomCallControlButtonCallback,
   DeclarativeCallAgent,
+  NotificationProps,
   Profile,
   StartCallIdentifier,
   TeamsAdapterOptions
@@ -44,11 +49,12 @@ import {
   SummarizeResult,
   updateRemoteParticipants
 } from '../utils/CallAutomationUtils';
-import { Stack } from '@fluentui/react';
+import { Spinner, Stack } from '@fluentui/react';
 import { SummaryEndCallScreen } from './SummaryEndCall';
 import { SlideTextEdit20Regular } from '@fluentui/react-icons';
 import { TranscriptionOptionsModal } from '../components/TranscriptionOptionsModal';
-import { after } from 'node:test';
+import { Call, TeamsCall } from '@azure/communication-calling';
+import { CustomNotifications } from '../components/CustomNotifications';
 
 export interface CallScreenProps {
   token: string;
@@ -340,9 +346,11 @@ const AzureCommunicationCallAutomationCallScreen = (
   const [summarizationLanguage, setSummarizationLanguage] = useState<LocaleCode>('en-US');
   const [summary, setSummary] = useState<SummarizeResult>();
   const [summarizationStatus, setSummarizationStatus] = useState<'None' | 'InProgress' | 'Complete'>('None');
-  const [statefulClient, setStatefulClient] = useState<StatefulCallClient | undefined>(undefined);
-  const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | undefined>(undefined);
-  const [callAdapter, setCallAdapter] = useState<CommonCallAdapter | undefined>(undefined);
+  const [statefulClient, setStatefulClient] = useState<StatefulCallClient>();
+  const [callAgent, setCallAgent] = useState<DeclarativeCallAgent>();
+  const [call, setCall] = useState<Call | TeamsCall | undefined>();
+  const [callAdapter, setCallAdapter] = useState<CommonCallAdapter>();
+  const [customNotications, setCustomNotifications] = useState<ActiveNotification[]>([]);
 
   useEffect(() => {
     if (serverCallId && callConnected) {
@@ -377,6 +385,20 @@ const AzureCommunicationCallAutomationCallScreen = (
         } else if (serverCallId && transcriptionStarted) {
           console.log('Stopping transcription');
           setTranscriptionStarted(await !stopTranscription(serverCallId));
+          const newCustomNotifcaitons = customNotications
+            .filter((notification) => notification.type !== 'transcriptionStarted')
+            .concat([
+              {
+                type: 'transcriptionStopped',
+                autoDismiss: true,
+                onDismiss: () => {
+                  setCustomNotifications((prev) =>
+                    prev.filter((notification) => notification.type !== 'transcriptionStopped')
+                  );
+                }
+              }
+            ]);
+          setCustomNotifications(newCustomNotifcaitons);
         }
       },
       tooltipText: 'Start Transcription'
@@ -409,6 +431,11 @@ const AzureCommunicationCallAutomationCallScreen = (
     };
   }, [adapterArgs.alternateCallerId]);
 
+  /**
+   * We want to set up the call adapter through the usage of the create from clients method
+   * this allows us to use the usePropsFor hook to access the notifications from state
+   * and create our own notification Stack with the notifications disabled in the composite
+   */
   useEffect(() => {
     const createCallAgent = async (): Promise<void> => {
       if (statefulClient && !callAgent) {
@@ -419,7 +446,12 @@ const AzureCommunicationCallAutomationCallScreen = (
 
     const createAdapter = async (): Promise<void> => {
       if (callAgent && statefulClient && locator && afterCreate) {
-        const adapter = await createAzureCommunicationCallAdapterFromClient(statefulClient, callAgent, locator);
+        const adapter = await createAzureCommunicationCallAdapterFromClient(
+          statefulClient,
+          callAgent,
+          locator,
+          callAdapterOptions
+        );
         setCallAdapter(await afterCreate(adapter));
       }
     };
@@ -433,7 +465,7 @@ const AzureCommunicationCallAutomationCallScreen = (
     if (callAgent && statefulClient && locator) {
       createAdapter();
     }
-  }, [adapterArgs.credential, afterCreate, callAgent, locator, statefulClient, userId]);
+  }, [adapterArgs.credential, afterCreate, callAdapterOptions, callAgent, locator, statefulClient, userId]);
 
   useEffect(() => {
     if (callAdapter) {
@@ -450,6 +482,16 @@ const AzureCommunicationCallAutomationCallScreen = (
           );
         }
       };
+      const adapterStateChangedHandler = async (state: CallAdapterState): Promise<void> => {
+        if (state.call && callAgent) {
+          const call = callAgent?.calls.find((call) => call.id === state.call?.id);
+          if (call) {
+            setCall(call);
+          }
+        }
+      };
+
+      callAdapter.onStateChange(adapterStateChangedHandler);
 
       callAdapter.on('callEnded', callEndedHandler);
 
@@ -459,7 +501,7 @@ const AzureCommunicationCallAutomationCallScreen = (
     } else {
       return () => {};
     }
-  }, [callAdapter, automationStarted, setCallConnected, summarizationLanguage]);
+  }, [callAdapter, automationStarted, setCallConnected, summarizationLanguage, callAgent]);
 
   if (
     (summarizationStatus === 'Complete' && callAdapter && !callConnected) ||
@@ -477,25 +519,64 @@ const AzureCommunicationCallAutomationCallScreen = (
       />
     );
   }
+  if (!statefulClient && !callAgent) {
+    return <></>;
+  }
 
   return (
-    <Stack horizontal horizontalAlign={'center'} styles={{ root: { height: '100%', width: '100%' } }}>
-      <TranscriptionOptionsModal
-        isOpen={showTranscriptionModal}
-        setIsOpen={setShowTranscriptionModal}
-        startTranscription={async (locale: LocaleCode) => {
-          if (serverCallId) {
-            setSummarizationLanguage(locale);
-            setTranscriptionStarted(await startTranscription(serverCallId, { locale }));
-          }
-        }}
-      ></TranscriptionOptionsModal>
-      <CallCompositeContainer
-        {...props}
-        adapter={callAdapter}
-        customButtons={customButtonOptions}
-      ></CallCompositeContainer>
-    </Stack>
+    <>
+      {!statefulClient && (
+        <Stack horizontal horizontalAlign={'center'} styles={{ root: { height: '100%', width: '100%' } }}>
+          <Spinner label="Loading..." />
+        </Stack>
+      )}
+      {statefulClient && (
+        <CallClientProvider callClient={statefulClient}>
+          <CallAgentProvider callAgent={callAgent}>
+            <Stack
+              horizontal
+              horizontalAlign={'center'}
+              styles={{ root: { height: '100%', width: '100%', position: 'relative' } }}
+            >
+              {call && (
+                <CallProvider call={call as Call}>
+                  <CustomNotifications customNotifications={customNotications} />
+                </CallProvider>
+              )}
+              <TranscriptionOptionsModal
+                isOpen={showTranscriptionModal}
+                setIsOpen={setShowTranscriptionModal}
+                startTranscription={async (locale: LocaleCode) => {
+                  if (serverCallId) {
+                    setSummarizationLanguage(locale);
+                    const transcriptionResponse = await startTranscription(serverCallId, { locale });
+                    setTranscriptionStarted(transcriptionResponse);
+                    setCustomNotifications(
+                      customNotications.concat([
+                        {
+                          type: 'transcriptionStarted',
+                          autoDismiss: false,
+                          onDismiss: () => {
+                            setCustomNotifications((prev) =>
+                              prev.filter((notification) => notification.type !== 'transcriptionStarted')
+                            );
+                          }
+                        }
+                      ])
+                    );
+                  }
+                }}
+              ></TranscriptionOptionsModal>
+              <CallCompositeContainer
+                {...props}
+                adapter={callAdapter}
+                customButtons={customButtonOptions}
+              ></CallCompositeContainer>
+            </Stack>
+          </CallAgentProvider>
+        </CallClientProvider>
+      )}
+    </>
   );
 };
 
