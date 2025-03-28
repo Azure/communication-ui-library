@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "improvement",
-  "workstream": "",
-  "comment": "Port saving display name to local storage from CallwithChat Sample to Chat Sample",
-  "packageName": "@azure/communication-react",
-  "email": "palatter@microsoft.com",
-  "dependentChangeType": "patch"
-}
