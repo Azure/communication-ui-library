@@ -174,7 +174,7 @@ export const useChatMyMessageStyles = makeStyles({
     '@media (hover: hover)': {
       '&:hover .ChatMyMessage__actions': {
         visibility: 'visible'
-      },
+      }
     },
 
     '&:focus .ChatMyMessage__actions': {
