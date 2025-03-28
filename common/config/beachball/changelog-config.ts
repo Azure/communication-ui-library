@@ -12,6 +12,7 @@ export const config: BeachballConfig = {
           { value: 'fix', title: 'Bug fix' },
           { value: 'feature', title: 'Feature' },
           { value: 'improvement', title: 'Improvement' },
+          { value: 'storybook', title: 'Storybook' },
         ],
       };
       const workstreamPrompt = {
