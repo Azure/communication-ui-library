@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "storybook",
+  "workstream": "Update changelog to include storybook related changes",
+  "comment": "Update changelog to include storybook related changes",
+  "packageName": "@azure/communication-react",
+  "email": "96077406+carocao-msft@users.noreply.github.com",
+  "dependentChangeType": "minor"
+}
