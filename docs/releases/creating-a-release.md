@@ -52,7 +52,7 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ### Step 0.1: Create a Thread in the WebUI channel to Track Release Progress
 
-Create a release thread in the WebUI channel and keep it up to date so the whole team knows where we are at.
+Create a release thread in the WebUI channel and keep it up to date so the whole team knows where we are at. [Internal documentation link with a template for the message.](https://skype.visualstudio.com/SPOOL/_wiki/wikis/SPOOL.wiki/50000/Release-Process-and-Drivers?anchor=template-for-the-release-details-post)
 
 ### Step 0.2: Pre-Release ChangeLog and Update Feature List
 
