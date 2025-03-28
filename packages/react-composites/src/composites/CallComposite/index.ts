@@ -8,6 +8,7 @@ export type { DeviceCheckOptions } from './CallComposite';
 export type { LocalVideoTileOptions } from './CallComposite';
 export type { CallControlOptions } from './types/CallControlOptions';
 export type { DtmfDialPadOptions } from './CallComposite';
+export type { NotificationStackOptions } from './CallComposite';
 
 export * from './Strings';
 
