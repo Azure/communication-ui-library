@@ -12,16 +12,20 @@ import {
   CallAdapterLocator,
   CallAdapterState,
   CommonCallAdapter,
+  createStatefulCallClient,
   onResolveDeepNoiseSuppressionDependencyLazy,
   onResolveVideoEffectDependencyLazy,
   TeamsCallAdapter,
   toFlatCommunicationIdentifier,
   useAzureCommunicationCallAdapter,
+  StatefulCallClient,
   useTeamsCallAdapter,
-  useTheme
+  useTheme,
+  createAzureCommunicationCallAdapterFromClient
 } from '@azure/communication-react';
 import type {
   CustomCallControlButtonCallback,
+  DeclarativeCallAgent,
   Profile,
   StartCallIdentifier,
   TeamsAdapterOptions
@@ -44,6 +48,7 @@ import { Stack } from '@fluentui/react';
 import { SummaryEndCallScreen } from './SummaryEndCall';
 import { SlideTextEdit20Regular } from '@fluentui/react-icons';
 import { TranscriptionOptionsModal } from '../components/TranscriptionOptionsModal';
+import { after } from 'node:test';
 
 export interface CallScreenProps {
   token: string;
@@ -335,6 +340,9 @@ const AzureCommunicationCallAutomationCallScreen = (
   const [summarizationLanguage, setSummarizationLanguage] = useState<LocaleCode>('en-US');
   const [summary, setSummary] = useState<SummarizeResult>();
   const [summarizationStatus, setSummarizationStatus] = useState<'None' | 'InProgress' | 'Complete'>('None');
+  const [statefulClient, setStatefulClient] = useState<StatefulCallClient | undefined>(undefined);
+  const [callAgent, setCallAgent] = useState<DeclarativeCallAgent | undefined>(undefined);
+  const [callAdapter, setCallAdapter] = useState<CommonCallAdapter | undefined>(undefined);
 
   useEffect(() => {
     if (serverCallId && callConnected) {
@@ -401,18 +409,34 @@ const AzureCommunicationCallAutomationCallScreen = (
     };
   }, [adapterArgs.alternateCallerId]);
 
-  const adapter = useAzureCommunicationCallAdapter(
-    {
-      ...adapterArgs,
-      userId,
-      locator,
-      options: callAdapterOptions
-    },
-    afterCreate
-  );
+  useEffect(() => {
+    const createCallAgent = async (): Promise<void> => {
+      if (statefulClient && !callAgent) {
+        const callAgent = await statefulClient.createCallAgent(adapterArgs.credential);
+        setCallAgent(callAgent);
+      }
+    };
+
+    const createAdapter = async (): Promise<void> => {
+      if (callAgent && statefulClient && locator && afterCreate) {
+        const adapter = await createAzureCommunicationCallAdapterFromClient(statefulClient, callAgent, locator);
+        setCallAdapter(await afterCreate(adapter));
+      }
+    };
+
+    if (!statefulClient) {
+      setStatefulClient(createStatefulCallClient({ userId }));
+    }
+    if (statefulClient) {
+      createCallAgent();
+    }
+    if (callAgent && statefulClient && locator) {
+      createAdapter();
+    }
+  }, [adapterArgs.credential, afterCreate, callAgent, locator, statefulClient, userId]);
 
   useEffect(() => {
-    if (adapter) {
+    if (callAdapter) {
       const callEndedHandler = async (): Promise<void> => {
         if (automationStarted) {
           console.log(summarizationLanguage);
@@ -420,26 +444,26 @@ const AzureCommunicationCallAutomationCallScreen = (
           setSummary(undefined);
           setSummarizationStatus('InProgress');
           setSummary(
-            await getCallSummaryFromServer(adapter, summarizationLanguage).finally(() =>
+            await getCallSummaryFromServer(callAdapter, summarizationLanguage).finally(() =>
               setSummarizationStatus('Complete')
             )
           );
         }
       };
 
-      adapter.on('callEnded', callEndedHandler);
+      callAdapter.on('callEnded', callEndedHandler);
 
       return () => {
-        adapter.off('callEnded', callEndedHandler);
+        callAdapter.off('callEnded', callEndedHandler);
       };
     } else {
       return () => {};
     }
-  }, [adapter, automationStarted, setCallConnected, summarizationLanguage]);
+  }, [callAdapter, automationStarted, setCallConnected, summarizationLanguage]);
 
   if (
-    (summarizationStatus === 'Complete' && adapter && !callConnected) ||
-    (summarizationStatus === 'InProgress' && adapter && !callConnected)
+    (summarizationStatus === 'Complete' && callAdapter && !callConnected) ||
+    (summarizationStatus === 'InProgress' && callAdapter && !callConnected)
   ) {
     return (
       <SummaryEndCallScreen
@@ -447,7 +471,7 @@ const AzureCommunicationCallAutomationCallScreen = (
         summarizationStatus={summarizationStatus}
         summary={summary?.recap}
         reJoinCall={() => {
-          adapter.joinCall();
+          callAdapter.joinCall();
           setCallConnected(true);
         }}
       />
@@ -466,7 +490,11 @@ const AzureCommunicationCallAutomationCallScreen = (
           }
         }}
       ></TranscriptionOptionsModal>
-      <CallCompositeContainer {...props} adapter={adapter} customButtons={customButtonOptions}></CallCompositeContainer>
+      <CallCompositeContainer
+        {...props}
+        adapter={callAdapter}
+        customButtons={customButtonOptions}
+      ></CallCompositeContainer>
     </Stack>
   );
 };
