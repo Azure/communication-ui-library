@@ -166,7 +166,16 @@ wss.on('connection', (ws) => {
 
   ws.on('message', (message) => {
     console.log('/message received', message);
-    transcriptionCorrelationId = handleTranscriptionEvent(message, transcriptionCorrelationId);
+    const decoder = new TextDecoder();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const messageData = JSON.parse(decoder.decode(message as any));
+
+    if (
+      ('kind' in messageData && messageData.kind === 'TranscriptionMetadata') ||
+      ('kind' in messageData && messageData.kind === 'TranscriptionData')
+    ) {
+      transcriptionCorrelationId = handleTranscriptionEvent(message, transcriptionCorrelationId);
+    }
   });
 
   ws.on('close', () => {

@@ -180,6 +180,7 @@ export const handleTranscriptionEvent = (packetData: unknown, packetId: string |
   const decoder = new TextDecoder();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const stringJson = decoder.decode(packetData as any);
+
   const parsedData = StreamingData.parse(stringJson);
 
   if ('locale' in parsedData) {

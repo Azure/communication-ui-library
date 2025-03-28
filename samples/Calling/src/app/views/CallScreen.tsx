@@ -30,7 +30,6 @@ import type {
   ActiveNotification,
   CustomCallControlButtonCallback,
   DeclarativeCallAgent,
-  NotificationProps,
   Profile,
   StartCallIdentifier,
   TeamsAdapterOptions
@@ -351,6 +350,57 @@ const AzureCommunicationCallAutomationCallScreen = (
   const [call, setCall] = useState<Call | TeamsCall | undefined>();
   const [callAdapter, setCallAdapter] = useState<CommonCallAdapter>();
   const [customNotications, setCustomNotifications] = useState<ActiveNotification[]>([]);
+
+  const socketRef = useRef<WebSocket | null>(null);
+
+  useEffect(() => {
+    // Create WebSocket connection
+    const socket = new WebSocket('wss://vcxdtzkv-8081.usw2.devtunnels.ms/');
+    socketRef.current = socket;
+
+    // Connection opened
+    socket.addEventListener('open', (event) => {
+      console.log('WebSocket connection established');
+      // socket.send(JSON.stringify({ message: 'Hello Server!' }));
+    });
+
+    // Listen for messages
+    socket.addEventListener('message', (event) => {
+      console.log('Message from server:', event.data);
+      try {
+        const data = JSON.parse(event.data);
+        console.log('Parsed data:', data);
+      } catch (error) {
+        console.error('Error parsing WebSocket message:', error);
+      }
+    });
+
+    // Connection closed
+    socket.addEventListener('close', (event) => {
+      console.log('WebSocket connection closed:', event.code, event.reason);
+    });
+
+    // Connection error
+    socket.addEventListener('error', (error) => {
+      console.error('WebSocket error:', error);
+    });
+
+    // Clean up on unmount
+    return () => {
+      if (socketRef.current) {
+        socketRef.current.close();
+      }
+    };
+  }, []);
+
+  // Function to send messages to the server
+  const sendToServer = useCallback((message: any) => {
+    if (socketRef.current && socketRef.current.readyState === WebSocket.OPEN) {
+      socketRef.current.send(JSON.stringify(message));
+    } else {
+      console.warn('WebSocket is not connected.');
+    }
+  }, []);
 
   useEffect(() => {
     if (serverCallId && callConnected) {
