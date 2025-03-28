@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 /**
  *  Helper function to detect whether a test is for a mobile broswer or not.
  *  TestInfo comes from the playwright config which gives different information about what platform the
