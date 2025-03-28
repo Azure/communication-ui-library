@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "Bugs",
-  "comment": "update the max number of listeners that the CallWIthChat adapter has",
+  "workstream": "Calls",
+  "comment": "update useAdapted selector to always use the up to date callId",
   "packageName": "@azure/communication-react",
   "email": "dmceachern@microsoft.com",
   "dependentChangeType": "patch"
