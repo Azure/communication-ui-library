@@ -56,6 +56,7 @@ export async function renderPackageChangelog(renderInfo: PackageChangelogRenderI
   let features: ChangelogEntry[] = [];
   let improvements: ChangelogEntry[] = [];
   let bugs: ChangelogEntry[] = [];
+  let storybookChanges: ChangelogEntry[] = [];
   let unknowns: ChangelogEntry[] = [];
 
   changelog = renderHeader(renderInfo) + '\n\n';
@@ -64,6 +65,7 @@ export async function renderPackageChangelog(renderInfo: PackageChangelogRenderI
       features = features.concat(filterByArea(entries, 'feature'));
       improvements = improvements.concat(filterByArea(entries, 'improvement'));
       bugs = bugs.concat(filterByArea(entries, 'fix'));
+      storybookChanges = storybookChanges.concat(filterByArea(entries, 'storybook'));
       unknowns = unknowns.concat(filterUnknown(entries));
     }
   }
@@ -76,6 +78,9 @@ export async function renderPackageChangelog(renderInfo: PackageChangelogRenderI
   }
   if (bugs.length > 0) {
     changelog += await renderSubsection('Bug Fixes', bugs);
+  }
+  if (storybookChanges.length > 0) {
+    changelog += await renderSubsection('Storybook Changes', storybookChanges);
   }
   if (unknowns.length > 0) {
     changelog += await renderSubsection('Other Changes', unknowns);

@@ -171,9 +171,12 @@ export const useChatMyMessageStyles = makeStyles({
     // This makes message bubble show border in high contrast mode making each message distinguishable
     ...shorthands.border('1px', 'solid', 'transparent'),
 
-    '&:hover .ChatMyMessage__actions': {
-      visibility: 'visible'
+    '@media (hover: hover)': {
+      '&:hover .ChatMyMessage__actions': {
+        visibility: 'visible'
+      }
     },
+
     '&:focus .ChatMyMessage__actions': {
       visibility: 'visible'
     },
