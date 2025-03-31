@@ -103,9 +103,6 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
       },
       /* @conditional-compile-remove(on-fetch-profile) */
       onFetchProfile: async (userId: string, defaultProfile?: Profile): Promise<Profile | undefined> => {
-        if (userId.includes('8:orgid:')) {
-          return { displayName: 'Agent' };
-        }
         if (userId === '<28:orgid:Enter your teams app here>') {
           return { displayName: 'Teams app display name' };
         }

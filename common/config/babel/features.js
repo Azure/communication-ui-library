@@ -67,10 +67,6 @@ module.exports = {
     "teams-identity-support-beta",
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
-    // Feature for RTT
-    "rtt",
-    // Feature for together mode
-    "together-mode",
     // Feature for on fetch profile
     "on-fetch-profile"
   ],

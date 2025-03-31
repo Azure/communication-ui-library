@@ -9,7 +9,7 @@ export {
 export type { AzureCommunicationChatAdapterArgs } from './adapter/AzureCommunicationChatAdapter';
 export { ChatComposite } from './ChatComposite';
 /* @conditional-compile-remove(on-fetch-profile) */
-export type { OnFetchChatProfileCallback, Profile as Profile_2 } from './adapter/OnFetchProfileCallback';
+export type { OnFetchChatProfileCallback, Profile as ChatProfile } from './adapter/OnFetchProfileCallback';
 export type { ChatCompositeProps, ChatCompositeOptions } from './ChatComposite';
 
 export type {

@@ -2258,6 +2258,11 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 };
 
 // @public
+export type ChatProfile = {
+    displayName?: string;
+};
+
+// @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
 // @public
@@ -4273,7 +4278,7 @@ export type NotificationTarget = /* @conditional-compile-remove(breakout-rooms) 
 export type NotificationType = keyof NotificationStackStrings;
 
 // @public
-export type OnFetchChatProfileCallback = (userId: string, defaultProfile?: Profile_2) => Promise<Profile_2 | undefined>;
+export type OnFetchChatProfileCallback = (userId: string, defaultProfile?: ChatProfile) => Promise<ChatProfile | undefined>;
 
 // @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
@@ -4514,11 +4519,6 @@ export interface PPTLiveCallFeatureState {
 
 // @public
 export type Profile = {
-    displayName?: string;
-};
-
-// @public
-export type Profile_2 = {
     displayName?: string;
 };
 

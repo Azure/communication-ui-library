@@ -76,25 +76,38 @@ export const createProfileStateModifier = (
       (id: string, chatMessage: ChatMessageWithStatus): ChatMessageWithStatus | undefined => {
         const originalChatMessage = { ...chatMessage };
         if (originalChatMessage.content?.participants) {
-          const newParticipants = originalChatMessage.content.participants.map((participant) => {
-            if (
-              participant.id &&
-              typeof participant.id === 'object' &&
-              'communicationUserId' in participant.id &&
-              cachedDisplayName[participant.id.communicationUserId]
-            ) {
-              return { ...participant, displayName: cachedDisplayName[participant.id.communicationUserId] };
-            } else if (
-              participant.id &&
-              typeof participant.id === 'object' &&
-              'rawId' in participant.id &&
-              participant.id.rawId &&
-              cachedDisplayName[participant.id.rawId]
-            ) {
-              return { ...participant, displayName: cachedDisplayName[participant.id.rawId] };
-            } else {
-              return participant;
+          const newParticipants = originalChatMessage.content.participants.map((participant: ChatParticipant) => {
+            if (participant.id) {
+              if ('communicationUserId' in participant.id && cachedDisplayName[participant.id.communicationUserId]) {
+                return { ...participant, displayName: cachedDisplayName[participant.id.communicationUserId] };
+              } else if (
+                'microsoftTeamsUserId' in participant.id &&
+                'rawId' in participant.id &&
+                participant.id.rawId &&
+                cachedDisplayName[participant.id.rawId]
+              ) {
+                return { ...participant, displayName: cachedDisplayName[participant.id.rawId] };
+              } else if (
+                'teamsAppId' in participant.id &&
+                'rawId' in participant.id &&
+                participant.id.rawId &&
+                cachedDisplayName[participant.id.rawId]
+              ) {
+                return { ...participant, displayName: cachedDisplayName[participant.id.rawId] };
+              } else if (
+                'phoneNumber' in participant.id &&
+                'rawId' in participant.id &&
+                participant.id.rawId &&
+                cachedDisplayName[participant.id.rawId]
+              ) {
+                return { ...participant, displayName: cachedDisplayName[participant.id.rawId] };
+              } else if ('id' in participant.id && cachedDisplayName[participant.id.id]) {
+                return { ...participant, displayName: cachedDisplayName[participant.id.id] };
+              } else {
+                return participant;
+              }
             }
+            return participant;
           });
           originalChatMessage.content = {
             ...originalChatMessage.content,
@@ -110,6 +123,24 @@ export const createProfileStateModifier = (
             originalChatMessage.senderDisplayName = cachedDisplayName[originalChatMessage.sender.communicationUserId];
           } else if (
             originalChatMessage.sender.kind === 'microsoftTeamsUser' &&
+            originalChatMessage.sender.rawId &&
+            cachedDisplayName[originalChatMessage.sender.rawId]
+          ) {
+            originalChatMessage.senderDisplayName = cachedDisplayName[originalChatMessage.sender.rawId];
+          } else if (
+            originalChatMessage.sender.kind === 'phoneNumber' &&
+            originalChatMessage.sender.phoneNumber &&
+            cachedDisplayName[originalChatMessage.sender.phoneNumber]
+          ) {
+            originalChatMessage.senderDisplayName = cachedDisplayName[originalChatMessage.sender.phoneNumber];
+          } else if (
+            originalChatMessage.sender.kind === 'unknown' &&
+            originalChatMessage.sender.id &&
+            cachedDisplayName[originalChatMessage.sender.id]
+          ) {
+            originalChatMessage.senderDisplayName = cachedDisplayName[originalChatMessage.sender.id];
+          } else if (
+            originalChatMessage.sender.kind === 'microsoftTeamsApp' &&
             originalChatMessage.sender.rawId &&
             cachedDisplayName[originalChatMessage.sender.rawId]
           ) {
