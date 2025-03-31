@@ -104,9 +104,12 @@ export const connectToCallAutomation = async (callAdaterState: CallAdapterState)
   return false;
 };
 
-export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Promise<SummarizeResult> => {
+export const getCallSummaryFromServer = async (
+  adapter: CommonCallAdapter,
+  locale: LocaleCode
+): Promise<SummarizeResult> => {
   console.log('Getting summary from server...');
-
+  console.log('Locale:', locale);
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const serverCallId = await adapter.getState().call?.info?.getServerCallId();
@@ -120,7 +123,7 @@ export const getCallSummaryFromServer = async (adapter: CommonCallAdapter): Prom
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ serverCallId: serverCallId })
+      body: JSON.stringify({ serverCallId: serverCallId, locale: locale })
     });
     console.log('/summarizeTranscript response', response);
 
@@ -207,4 +210,97 @@ export const updateLocalParticipant = async (callAdapter: CallAdapter): Promise<
     console.error('Failed to update local participant:', response);
   }
   console.log('Updated local participant:', localParticipantDisplayInfo);
+};
+
+/**
+ * Language codes used in the localization of the components.
+ */
+export type LocaleCode =
+  | 'ar-AE'
+  | 'ar-SA'
+  | 'da-DK'
+  | 'de-DE'
+  | 'en-AU'
+  | 'en-CA'
+  | 'en-GB'
+  | 'en-IN'
+  | 'en-NZ'
+  | 'en-US'
+  | 'es-ES'
+  | 'es-MX'
+  | 'fi-FI'
+  | 'fr-CA'
+  | 'fr-FR'
+  | 'hi-IN'
+  | 'it-IT'
+  | 'ja-JP'
+  | 'ko-KR'
+  | 'nb-NO'
+  | 'nl-BE'
+  | 'nl-NL'
+  | 'pl-PL'
+  | 'pt-BR'
+  | 'ru-RU'
+  | 'sv-SE'
+  | 'zh-CN'
+  | 'zh-HK'
+  | 'cs-CZ'
+  | 'pt-PT'
+  | 'tr-TR'
+  | 'vi-VN'
+  | 'th-TH'
+  | 'he-IL'
+  | 'cy-GB'
+  | 'uk-UA'
+  | 'el-GR'
+  | 'hu-HU'
+  | 'ro-RO'
+  | 'sk-SK'
+  | 'zh-TW';
+
+/**
+ * Mapping of locale codes to their display names.
+ */
+export const localeDisplayNames: Record<LocaleCode, string> = {
+  'ar-AE': 'Arabic - U.A.E.',
+  'ar-SA': 'Arabic - Saudi Arabia',
+  'da-DK': 'Danish',
+  'de-DE': 'German - Germany',
+  'en-AU': 'English - Australia',
+  'en-CA': 'English - Canada',
+  'en-GB': 'English - United Kingdom',
+  'en-IN': 'English - India',
+  'en-NZ': 'English - New Zealand',
+  'en-US': 'English - United States',
+  'es-ES': 'Spanish - Spain (Modern Sort)',
+  'es-MX': 'Spanish - Mexico',
+  'fi-FI': 'Finnish',
+  'fr-CA': 'French - Canada',
+  'fr-FR': 'French - France',
+  'hi-IN': 'Hindi',
+  'it-IT': 'Italian - Italy',
+  'ja-JP': 'Japanese',
+  'ko-KR': 'Korean',
+  'nb-NO': 'Norwegian (Bokmål)',
+  'nl-BE': 'Dutch - Belgium',
+  'nl-NL': 'Dutch - Netherlands',
+  'pl-PL': 'Polish',
+  'pt-BR': 'Portuguese - Brazil',
+  'ru-RU': 'Russian',
+  'sv-SE': 'Swedish',
+  'zh-CN': "Chinese - People's Republic of China",
+  'zh-HK': 'Chinese - Hong Kong SAR',
+  'cs-CZ': 'Czech',
+  'pt-PT': 'Portuguese - Portugal',
+  'tr-TR': 'Turkish',
+  'vi-VN': 'Vietnamese',
+  'th-TH': 'Thai',
+  'he-IL': 'Hebrew',
+  'cy-GB': 'Welsh',
+  'uk-UA': 'Ukrainian',
+  'el-GR': 'Greek',
+  'hu-HU': 'Hungarian',
+  'ro-RO': 'Romanian',
+  'sk-SK': 'Slovak',
+  'zh-TW': 'Chinese - Taiwan'
 };

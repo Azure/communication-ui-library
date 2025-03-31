@@ -67,6 +67,19 @@ export const connectRoomsCall = async (serverCallId: string): Promise<void> => {
     locale: 'en-US',
     startTranscription: false
   };
+
+  const connectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
+    CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(serverCallId)
+  );
+
+  /**
+   * Check if the call automation client and connection for the call already exists. If it does, we don't need to create a new one.
+   */
+  if (connectionId) {
+    console.log('Call connection for call already exists:', connectionId);
+    return;
+  }
+
   const options = {
     callIntelligenceOptions: {
       cognitiveServicesEndpoint: getCognitionAPIEndpoint()
@@ -146,12 +159,28 @@ export const getTranscriptionData = (serverCallId: string): CallTranscription | 
 };
 
 /**
+ * Check if transcription has started for the call
+ */
+export const checkIfTranscriptionStarted = (serverCallId: string): boolean => {
+  console.log('Checking if transcription started for call:', serverCallId);
+  const connectionId = Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
+    CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(serverCallId)
+  );
+  if (!connectionId) {
+    return false;
+  }
+  const correlationId = CALLCONNECTION_ID_TO_CORRELATION_ID[connectionId]?.correlationId;
+  return !!TRANSCRIPTION_STORE[correlationId];
+};
+
+/**
  * @returns id to correlate future transcription data
  */
 export const handleTranscriptionEvent = (packetData: unknown, packetId: string | undefined): string | undefined => {
   const decoder = new TextDecoder();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const stringJson = decoder.decode(packetData as any);
+
   const parsedData = StreamingData.parse(stringJson);
 
   if ('locale' in parsedData) {

@@ -18,7 +18,7 @@ import createRoom from './routes/createRoom';
 import addUserToRoom from './routes/addUserToRoom';
 import uploadToAzureBlobStorage from './routes/uploadToAzureBlobStorage';
 import { getServerWebSocketPort } from './lib/envHelper';
-import { handleTranscriptionEvent } from './lib/callAutomationUtils';
+import { CALLCONNECTION_ID_TO_CORRELATION_ID, handleTranscriptionEvent } from './lib/callAutomationUtils';
 import startTranscription from './routes/startTranscription';
 import fetchTranscript from './routes/fetchTranscript';
 import startCallWithTranscription from './routes/startCallWithTranscription';
@@ -28,6 +28,7 @@ import summarizeTranscript from './routes/summarizeTranscript';
 import updateRemoteParticipants from './routes/updateRemoteParticipants';
 import updateLocalParticipant from './routes/updateLocalParticipant';
 import stopTranscriptionForCall from './routes/stopTranscription';
+import fetchTranscriptState from './routes/fetchTranscriptState';
 
 const app = express();
 
@@ -113,6 +114,12 @@ app.use('/startCallWithTranscription', cors(), startCallWithTranscription);
 app.use('/callAutomationEvent', cors(), callAutomationEvent);
 
 /**
+ * route:/fetchTranscriptionState
+ * purpose: Fetch the transcription state for a call
+ */
+app.use('/fetchTranscriptionState', cors(), fetchTranscriptState);
+
+/**
  * route: /summarizeTranscript
  * purpose: Sends transcript to AI summarization service
  */
@@ -158,14 +165,53 @@ wss.on('connection', (ws) => {
   });
 
   ws.on('message', (message) => {
-    console.log('/message received', message);
-    transcriptionCorrelationId = handleTranscriptionEvent(message, transcriptionCorrelationId);
+    const decoder = new TextDecoder();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const messageData = JSON.parse(decoder.decode(message as any));
+    console.log('Received message:', messageData);
+    if (messageData.type === 'ping') {
+      ws.send(JSON.stringify({ type: 'pong' }));
+      return;
+    } else if (messageData.type === 'join') {
+      const transcriptionStatus = !!Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
+        CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(messageData.serverCallId)
+      );
+      sendMessageToWebSocket(
+        JSON.stringify({
+          kind: 'TranscriptionStatus',
+          transcriptionStatus: transcriptionStatus,
+          serverCallId: messageData.serverCallId
+        })
+      );
+    } else if (
+      ('kind' in messageData && messageData.kind === 'TranscriptionMetadata') ||
+      ('kind' in messageData && messageData.kind === 'TranscriptionData')
+    ) {
+      transcriptionCorrelationId = handleTranscriptionEvent(message, transcriptionCorrelationId);
+    }
   });
 
   ws.on('close', () => {
     console.log('WebSocket closed');
   });
 });
+
+export const sendMessageToWebSocket = (message: string): Promise<void> => {
+  return new Promise((resolve, reject) => {
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message, (error) => {
+          if (error) {
+            console.error('Error sending message:', error);
+            reject(error);
+          } else {
+            resolve();
+          }
+        });
+      }
+    });
+  });
+};
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
