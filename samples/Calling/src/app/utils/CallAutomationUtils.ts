@@ -38,26 +38,6 @@ export const fetchTranscript = async (serverCallId: string): Promise<CallTranscr
   return ((await response.json()) as { transcript: CallTranscription }).transcript;
 };
 
-export const fetchTranscriptState = async (serverCallId: string): Promise<boolean> => {
-  console.log('Fetching transcript state for call:', serverCallId);
-  const response = await fetch('/fetchTranscriptionState', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      serverCallId
-    })
-  });
-  if (!response.ok) {
-    console.error('Failed to fetch transcript state:', response);
-    return false;
-  }
-  const { transcriptStarted } = (await response.json()) as { transcriptStarted: boolean };
-  console.log('Transcript started:', transcriptStarted);
-  return transcriptStarted;
-};
-
 export const startTranscription = async (
   serverCallId: string,
   transcriptionOptions?: {
