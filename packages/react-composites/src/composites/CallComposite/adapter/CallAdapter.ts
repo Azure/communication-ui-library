@@ -629,7 +629,6 @@ export interface CallAdapterCallOperations {
    * @remarks
    * This method is implemented for composite
    *
-   * @param featureName - Name of feature to render
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @beta
@@ -663,9 +662,6 @@ export interface CallAdapterCallOperations {
    * @remarks
    * This method is implemented for composite
    *
-   *
-   * @param featureName - Name of the feature to dispose
-   * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
    * @beta
    */

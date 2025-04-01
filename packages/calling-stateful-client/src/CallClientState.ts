@@ -335,7 +335,7 @@ export interface RaiseHandCallFeatureState {
 /* @conditional-compile-remove(together-mode) */
 /**
  * Represents the name of the call feature stream
- * @beta
+ * @public
  */
 export type CallFeatureStreamName = 'togetherMode';
 
@@ -343,27 +343,38 @@ export type CallFeatureStreamName = 'togetherMode';
 /**
  * State only version of {@link @azure/communication-calling#CallFeatureStream}.
  * Represents call feature stream state.
- * @beta
+ * @public
  */
 export interface CallFeatureStreamState extends RemoteVideoStreamState {
+  /**
+   * The name of the call feature stream.
+   */
   feature?: CallFeatureStreamName;
 }
 
 /* @conditional-compile-remove(together-mode) */
 /**
  * State only version of {@link @azure/communication-calling#TogetherModeSeatingMap}.
- * @beta
+ * @public
  *
  * Represents the seating position of a participant in Together Mode.
  */
 export interface TogetherModeSeatingPositionState {
-  /* The top left offset from the top of the together mode view.*/
+  /**
+   * The top left offset from the top of the together mode view.
+   */
   top: number;
-  /* The left offset position from the left of the together mode view. */
+  /**
+   * The left offset position from the left of the together mode view.
+   */
   left: number;
-  /*  The width of the seating area */
+  /**
+   * The width of the seating area
+   */
   width: number;
-  /* The height of the seating area. */
+  /**
+   * The height of the seating area.
+   */
   height: number;
 }
 
@@ -371,7 +382,7 @@ export interface TogetherModeSeatingPositionState {
 /**
  * Represents the seating positions of participants in Together Mode.
  *
- * @beta
+ * @public
  */
 export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
 
@@ -379,9 +390,12 @@ export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSea
 /**
  * Represents the streams in Together Mode.
  *
- * @beta
+ * @public
  */
 export interface TogetherModeStreamsState {
+  /**
+   * The main video stream in Together Mode.
+   */
   mainVideoStream?: CallFeatureStreamState;
 }
 
@@ -389,9 +403,12 @@ export interface TogetherModeStreamsState {
 /**
  * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient}.
  * Represents the state of the Together Mode feature.
- * @beta
+ * @public
  */
 export interface TogetherModeCallFeatureState {
+  /**
+   * Flag indicating if Together Mode is active in the call
+   */
   isActive: boolean;
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature.togetherModeStream}.
@@ -735,7 +752,6 @@ export interface CallState {
   /* @conditional-compile-remove(together-mode) */
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature}.
-   * @beta
    */
   togetherMode: TogetherModeCallFeatureState;
   /**

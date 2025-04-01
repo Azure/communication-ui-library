@@ -434,6 +434,69 @@ You can set the gallery layout using the following:
 <CallComposite options={galleryOptions: {layout: 'togetherMode'}} />
 ```
 
+## Customizing Screen Sharing
+
+We offer enhanced screen sharing capabilities during video calls. By default, what you share is rendered on your own screen, providing a seamless experience for both you and other participants. Alternatively, we provide a legacy view that simply shows a placeholder indicating that you’re sharing your screen—giving you the flexibility to select the experience that best suits your needs.
+
+### Presenter’s Perspective (default)
+
+While screen sharing, the call window displays the shared content back to the presenter, making it clear that screen sharing is active.
+
+### Presenter Notification Layout (legacy)
+
+While screen sharing, the call window displays a grey placeholder to the presenter, indicating that screen sharing is active.
+
+<Stack horizontal horizontalAlign="space-between" tokens={{ childrenGap: '0.5rem'}}>
+  <Stack>
+    Presenter perspective layout
+    <img
+      style={{ width: '100%', maxWidth: '30rem' }}
+      src="images/callcomposite-screenshare-default.png"
+      alt="Dynamic layout for composite video gallery"
+    />
+    <div style={{ width: '100%', maxWidth: '30rem' }}>
+
+    ```ts
+    <CallComposite options={galleryOptions: {localScreenShareView: 'stream'}} />
+    ```
+
+    </div>
+    - this is default and you will not need this code at all
+
+  </Stack>
+  <Stack>
+    Presenter notification layout
+      <img
+      style={{ width: '100%', maxWidth: '30rem' }}
+        src="images/callcomposite-screenshare-legacy.png"
+        alt="Focused content layout for composite video gallery"
+      />
+    <div style={{ width: '100%', maxWidth: '30rem' }}>
+
+    ```ts
+    <CallComposite options={galleryOptions: {localScreenShareView: 'placeholderMessage'}} />
+    ```
+
+    </div>
+
+  </Stack>
+</Stack>
+
+### FAQ:
+
+#### Why is it that when I am screensharing, I’m seeing a recursive view of my screen?
+
+When you share your screen during a video call and choose to render what you are sharing, you might end up sharing the call window itself. This creates a recursive effect where the shared screen displays the call window, which in turn shows the shared screen again, leading to an infinite recursion effect. This behavior is enabled automatically as part of the default experience and allows users to see that screen sharing is enabled and working.
+
+<img
+  style={{ width: '100%' }}
+  src="images/callcomposite-screenshare-recursive.png"
+  alt="Focused content layout for composite video gallery"
+/>
+To avoid this recursion, you can opt for the alternate or legacy view, where the shared screen will display a grey
+placeholder instead of the call window. This way, you can prevent the infinite recursion effect and still indicate that
+screen sharing is active.
+
 ## PSTN and 1:N Calling
 
 <SingleLineBetaBanner version={'1.3.2-beta.1'} />

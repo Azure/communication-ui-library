@@ -56,7 +56,7 @@ import { CachedComplianceNotificationProps, computeComplianceNotification } from
 import { TrackedNotifications } from './types/ErrorTracking';
 import { usePropsFor } from './hooks/usePropsFor';
 import { deviceCountSelector } from './selectors/deviceCountSelector';
-import { VideoGalleryLayout } from '@internal/react-components';
+import { VideoGalleryLayout, LocalScreenShareView } from '@internal/react-components';
 import { capabilitiesChangedInfoAndRoleSelector } from './selectors/capabilitiesChangedInfoAndRoleSelector';
 import { useTrackedCapabilityChangedNotifications } from './utils/TrackCapabilityChangedNotifications';
 import { useEndedCallConsoleErrors } from './utils/useConsoleErrors';
@@ -265,7 +265,7 @@ export type CallCompositeOptions = {
     /**
      * Controls the view of the local screenshare stream in the gallery
      */
-    localScreenShareView?: 'stream' | 'placeholderMessage';
+    localScreenShareView?: LocalScreenShareView;
   };
   /**
    * Options for end of call survey

@@ -778,7 +778,7 @@ export type CallCompositeOptions = {
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
-        localScreenShareView?: 'stream' | 'placeholderMessage';
+        localScreenShareView?: LocalScreenShareView;
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -1111,12 +1111,11 @@ export type CallErrors = {
 // @public
 export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant' | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll' | 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
 
-// @beta
+// @public
 export type CallFeatureStreamName = 'togetherMode';
 
-// @beta
+// @public
 export interface CallFeatureStreamState extends RemoteVideoStreamState {
-    // (undocumented)
     feature?: CallFeatureStreamName;
 }
 
@@ -1255,7 +1254,6 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
-    // @beta
     togetherMode: TogetherModeCallFeatureState;
     totalParticipantCount?: number;
     transcription: TranscriptionCallFeature;
@@ -1623,7 +1621,7 @@ export type CallWithChatCompositeOptions = {
     localVideoTile?: boolean | LocalVideoTileOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
-        localScreenShareView?: 'stream' | 'placeholderMessage';
+        localScreenShareView?: LocalScreenShareView;
     };
     surveyOptions?: {
         disableSurvey?: boolean;
@@ -2394,7 +2392,6 @@ export interface CommonCallingHandlers {
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
-    // @beta
     onCreateTogetherModeStreamView: (options?: TogetherModeStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     // (undocumented)
     onDisposeLocalScreenShareStreamView: () => Promise<void>;
@@ -2406,7 +2403,6 @@ export interface CommonCallingHandlers {
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
-    // @beta
     onDisposeTogetherModeStreamView: () => Promise<void>;
     onForbidAudio?: (userIds: string[]) => Promise<void>;
     onForbidOthersAudio?: () => Promise<void>;
@@ -2452,7 +2448,6 @@ export interface CommonCallingHandlers {
     onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
-    // @beta
     onSetTogetherModeSceneSize: (width: number, height: number) => void;
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
@@ -2466,7 +2461,6 @@ export interface CommonCallingHandlers {
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
     onStartSpotlight: (userIds?: string[]) => Promise<void>;
-    // @beta
     onStartTogetherMode: () => Promise<void>;
     // (undocumented)
     onStopAllSpotlight: () => Promise<void>;
@@ -3793,6 +3787,9 @@ export interface LocalRecordingCallFeatureState {
 }
 
 // @public (undocumented)
+export type LocalScreenShareView = 'stream' | 'placeholderMessage';
+
+// @public (undocumented)
 export interface LocalVideoCameraCycleButtonProps {
     ariaDescription?: string;
     cameras?: OptionsDevice[];
@@ -4253,9 +4250,7 @@ export interface NotificationStackStrings {
     stopScreenShareGeneric?: NotificationStrings;
     stopVideoGeneric?: NotificationStrings;
     teamsMeetingCallNetworkQualityLow?: NotificationStrings;
-    // (undocumented)
     togetherModeEnded?: NotificationStrings;
-    // (undocumented)
     togetherModeStarted?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
     transcriptionStopped?: NotificationStrings;
@@ -5343,44 +5338,36 @@ export type TeamsOutboundCallAdapterArgs = TeamsCallAdapterArgsCommon & {
 // @public
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
-// @beta
+// @public
 export interface TogetherModeCallFeatureState {
-    // (undocumented)
     isActive: boolean;
     seatingPositions: TogetherModeParticipantSeatingState;
     streams: TogetherModeStreamsState;
 }
 
-// @beta
+// @public
 export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
 
-// @beta
+// @public
 export interface TogetherModeSeatingPositionState {
-    // (undocumented)
     height: number;
-    // (undocumented)
     left: number;
-    // (undocumented)
     top: number;
-    // (undocumented)
     width: number;
 }
 
-// @beta
+// @public
 export interface TogetherModeStreamOptions extends VideoStreamOptions {
-    // (undocumented)
     viewKind?: 'main' | 'panoramic';
 }
 
-// @beta
+// @public
 export interface TogetherModeStreamsState {
-    // (undocumented)
     mainVideoStream?: CallFeatureStreamState;
 }
 
-// @beta
+// @public
 export interface TogetherModeStreamViewResult {
-    // (undocumented)
     mainVideoView?: CreateVideoStreamViewResult;
 }
 
@@ -5632,7 +5619,7 @@ export interface VideoGalleryProps {
     isTogetherModeActive?: boolean;
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
-    localScreenShareView?: 'stream' | 'placeholderMessage';
+    localScreenShareView?: LocalScreenShareView;
     localVideoCameraCycleButtonProps?: LocalVideoCameraCycleButtonProps;
     localVideoTileSize?: LocalVideoTileSize;
     localVideoViewOptions?: VideoStreamOptions;
@@ -5757,24 +5744,19 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     verticalGallery?: VerticalGalleryStyles;
 }
 
-// @beta
+// @public
 export type VideoGalleryTogetherModeParticipantPosition = Record<string, VideoGalleryTogetherModeSeatingInfo>;
 
-// @beta
+// @public
 export interface VideoGalleryTogetherModeSeatingInfo {
-    // (undocumented)
     height: number;
-    // (undocumented)
     left: number;
-    // (undocumented)
     top: number;
-    // (undocumented)
     width: number;
 }
 
-// @beta
+// @public
 export interface VideoGalleryTogetherModeStreams {
-    // (undocumented)
     mainVideoStream?: VideoGalleryStream;
 }
 
