@@ -17,7 +17,7 @@ router.post('/', async function (req, res, next) {
 
   res.status(200).json(transcriptStarted);
   // Send SSE event to clients
-  sendEventToClients('TranscriptionStateChecked', { serverCallId, transcriptStarted });
+  sendEventToClients('TranscriptionStatus', { serverCallId, transcriptStarted });
 });
 
 export default router;

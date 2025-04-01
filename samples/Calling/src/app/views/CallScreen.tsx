@@ -40,6 +40,7 @@ import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
 import {
   connectToCallAutomation,
+  fetchTranscriptionStatus,
   getCallSummaryFromServer,
   LocaleCode,
   startTranscription,
@@ -356,81 +357,17 @@ const AzureCommunicationCallAutomationCallScreen = (
     let eventSource: EventSource | null = null;
 
     if (serverCallId) {
-      // Create EventSource connection when serverCallId is available
-      eventSource = new EventSource(`<Endpoint where events come from>`, {
-        withCredentials: true
-      });
+      // Create EventSource connection when serverCallId is available. The URL provided here is for your server.
+      eventSource = new EventSource(`http://<server-url>/events`);
+      console.log(eventSource);
       eventSourceRef.current = eventSource; // Store reference for cleanup
 
-      // Connection opened
+      // Connection opened so we want to have the status of the transcription sent from the server to push the notification
       eventSource.onopen = () => {
-        console.log('EventSource connection established');
+        fetchTranscriptionStatus(serverCallId);
       };
-
-      eventSource.addEventListener('TranscriptionStarted', (event) => {
-        if (event.data.serverCallId === serverCallId) {
-          console.log('Transcription started', event.data);
-          setTranscriptionStarted(true);
-          setCustomNotifications(
-            customNotications.concat([
-              {
-                type: 'transcriptionStarted',
-                autoDismiss: false,
-                onDismiss: () => {
-                  setCustomNotifications((prev) =>
-                    prev.filter((notification) => notification.type !== 'transcriptionStarted')
-                  );
-                }
-              }
-            ])
-          );
-        }
-      });
-
-      eventSource.addEventListener('TranscriptionStopped', (event) => {
-        if (event.data.serverCallId === serverCallId) {
-          console.log('Transcription stopped', event.data);
-          setTranscriptionStarted(false);
-          const newCustomNotifcaitons = customNotications
-            .filter((notification) => notification.type !== 'transcriptionStarted')
-            .concat([
-              {
-                type: 'transcriptionStopped',
-                autoDismiss: false,
-                onDismiss: () => {
-                  setCustomNotifications((prev) =>
-                    prev.filter((notification) => notification.type !== 'transcriptionStopped')
-                  );
-                }
-              }
-            ]);
-          setCustomNotifications(newCustomNotifcaitons);
-        }
-      });
-      eventSource.addEventListener('TranscriptionStatus', (event) => {
-        if (event.data.serverCallId === serverCallId) {
-          const transcriptionStarted = event.data.transcriptionStatus;
-          console.log('TranscriptionStatus:', transcriptionStarted);
-          if (transcriptionStarted) {
-            setTranscriptionStarted(true);
-            if (customNotications.find((notification) => notification.type === 'transcriptionStarted')) {
-              return;
-            }
-            setCustomNotifications(
-              customNotications.concat([
-                {
-                  type: 'transcriptionStarted',
-                  autoDismiss: false,
-                  onDismiss: () => {
-                    setCustomNotifications((prev) =>
-                      prev.filter((notification) => notification.type !== 'transcriptionStarted')
-                    );
-                  }
-                }
-              ])
-            );
-          }
-        }
+      eventSource.addEventListener('message', (event) => {
+        console.log('EventSource connection event:', event);
       });
 
       // Connection error
@@ -447,9 +384,89 @@ const AzureCommunicationCallAutomationCallScreen = (
     // Clean up on unmount or when serverCallId changes
     return () => {
       if (eventSource) {
+        console.log('Closing EventSource connection');
         eventSource.close();
       }
     };
+  }, [serverCallId]);
+
+  useEffect(() => {
+    if (!eventSourceRef.current) {
+      return;
+    }
+    eventSourceRef.current.addEventListener('TranscriptionStarted', (event) => {
+      const parsedData = JSON.parse(event.data);
+      if (parsedData.serverCallId === serverCallId) {
+        console.log('Transcription started', event.data);
+        setTranscriptionStarted(true);
+        setCustomNotifications(
+          customNotications
+            .filter((notification) => notification.type !== 'transcriptionStarted')
+            .filter((notification) => notification.type !== 'transcriptionStopped')
+            .concat([
+              {
+                type: 'transcriptionStarted',
+                autoDismiss: false,
+                onDismiss: () => {
+                  setCustomNotifications((prev) =>
+                    prev.filter((notification) => notification.type !== 'transcriptionStarted')
+                  );
+                }
+              }
+            ])
+        );
+      }
+    });
+
+    eventSourceRef.current.addEventListener('TranscriptionStopped', (event) => {
+      const parsedData = JSON.parse(event.data);
+      if (parsedData.serverCallId === serverCallId) {
+        console.log('Transcription stopped', event.data);
+        setTranscriptionStarted(false);
+        const newCustomNotifcaitons = customNotications
+          .filter((notification) => notification.type !== 'transcriptionStarted')
+          .filter((notification) => notification.type !== 'transcriptionStopped')
+          .concat([
+            {
+              type: 'transcriptionStopped',
+              autoDismiss: false,
+              onDismiss: () => {
+                setCustomNotifications((prev) =>
+                  prev.filter((notification) => notification.type !== 'transcriptionStopped')
+                );
+              }
+            }
+          ]);
+        setCustomNotifications(newCustomNotifcaitons);
+      }
+    });
+    eventSourceRef.current.addEventListener('TranscriptionStatus', (event) => {
+      console.log('TranscriptionStatus event:', event);
+      const parsedData = JSON.parse(event.data);
+      if (parsedData.serverCallId === serverCallId) {
+        const transcriptionStarted = parsedData.transcriptStarted;
+        console.log('TranscriptionStatus:', transcriptionStarted);
+        if (transcriptionStarted) {
+          setTranscriptionStarted(true);
+          if (customNotications.find((notification) => notification.type === 'transcriptionStarted')) {
+            return;
+          }
+          setCustomNotifications(
+            customNotications.concat([
+              {
+                type: 'transcriptionStarted',
+                autoDismiss: false,
+                onDismiss: () => {
+                  setCustomNotifications((prev) =>
+                    prev.filter((notification) => notification.type !== 'transcriptionStarted')
+                  );
+                }
+              }
+            ])
+          );
+        }
+      }
+    });
   }, [serverCallId, customNotications]);
 
   // Removed the separate message event listener and join message effects

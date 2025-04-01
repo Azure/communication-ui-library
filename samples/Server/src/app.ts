@@ -29,9 +29,10 @@ import updateRemoteParticipants from './routes/updateRemoteParticipants';
 import updateLocalParticipant from './routes/updateLocalParticipant';
 import stopTranscriptionForCall from './routes/stopTranscription';
 import fetchTranscriptState from './routes/fetchTranscriptState';
+import events from './routes/events';
 
 const app = express();
-const clients: express.Response[] = []; // Store connected clients
+export const clients: express.Response[] = []; // Store connected clients
 
 app.use(logger('tiny'));
 app.use(express.json({ limit: '50mb' }));
@@ -150,21 +151,7 @@ app.use('/addUserToRoom', cors(), addUserToRoom);
  */
 app.use('/uploadToAzureBlobStorage', cors(), uploadToAzureBlobStorage);
 
-app.post('/events', cors(), (req, res) => {
-  res.setHeader('Content-Type', 'text/event-stream');
-  res.setHeader('Cache-Control', 'no-cache');
-  res.setHeader('Connection', 'keep-alive');
-  // Add the client to the list of connected clients
-  clients.push(res);
-
-  // Remove the client when the connection is closed
-  req.on('close', () => {
-    const index = clients.indexOf(res);
-    if (index !== -1) {
-      clients.splice(index, 1);
-    }
-  });
-});
+app.use('/events', cors(), events);
 
 /**
  * route: wss://<host>/
@@ -186,18 +173,6 @@ wss.on('connection', (ws) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const messageData = JSON.parse(decoder.decode(message as any));
     console.log('Received message:', messageData);
-    // if (messageData.type === 'ping') {
-    //   ws.send(JSON.stringify({ type: 'pong' }));
-    //   return;
-    // } else if (messageData.type === 'join') {
-    //   const transcriptionStatus = !!Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
-    //     CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(messageData.serverCallId)
-    //   );
-    //   sendEventToClients('TranscriptionStatus', {
-    //     transcriptionStatus: transcriptionStatus,
-    //     serverCallId: messageData.serverCallId
-    //   });
-    // } else
     if (
       ('kind' in messageData && messageData.kind === 'TranscriptionMetadata') ||
       ('kind' in messageData && messageData.kind === 'TranscriptionData')
