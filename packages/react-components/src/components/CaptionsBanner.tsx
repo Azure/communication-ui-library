@@ -348,8 +348,9 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     /* @conditional-compile-remove(rtt) */
     return (
       <>
-        {mergedCaptions.map((caption) => {
-          if (caption) {
+        {mergedCaptions
+          .filter((caption) => caption)
+          .map((caption) => {
             if ('message' in caption) {
               return (
                 <li key={`RealTimeText - ${caption.id}`} className={captionContainerClassName} data-is-focusable={true}>
@@ -362,9 +363,8 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
                 <_Caption {...(caption as CaptionsInformation)} onRenderAvatar={onRenderAvatar} />
               </li>
             );
-          }
-          return <></>;
-        })}
+            return <></>;
+          })}
       </>
     );
 
