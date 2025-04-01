@@ -4,7 +4,7 @@
 import * as express from 'express';
 import { CALLCONNECTION_ID_TO_CORRELATION_ID, startTranscriptionForCall } from '../lib/callAutomationUtils';
 import { TranscriptionOptions } from '@azure/communication-call-automation/types/communication-call-automation';
-import { sendMessageToWebSocket } from '../app';
+import { sendEventToClients } from '../app';
 
 const router = express.Router();
 interface StartTranscriptionRequest {
@@ -35,12 +35,9 @@ router.post('/', async function (req, res, next) {
   }
 
   res.status(200).end();
-  sendMessageToWebSocket(
-    JSON.stringify({
-      kind: 'TranscriptionStarted',
-      serverCallId: serverCallId
-    })
-  );
+
+  // Send SSE event to clients
+  sendEventToClients('TranscriptionStarted', { serverCallId });
 });
 
 export default router;

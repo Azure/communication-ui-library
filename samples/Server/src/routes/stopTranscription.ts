@@ -3,7 +3,7 @@
 
 import * as express from 'express';
 import { CALLCONNECTION_ID_TO_CORRELATION_ID, stopTranscriptionForCall } from '../lib/callAutomationUtils';
-import { sendMessageToWebSocket } from '../app';
+import { sendEventToClients } from '../app';
 
 const router = express.Router();
 interface StartTranscriptionRequest {
@@ -30,7 +30,9 @@ router.post('/', async function (req, res, next) {
   }
 
   res.status(200).end();
-  sendMessageToWebSocket(JSON.stringify({ kind: 'TranscriptionStopped', serverCallId: serverCallId }));
+
+  // Send SSE event to clients
+  sendEventToClients('TranscriptionStopped', { serverCallId });
 });
 
 export default router;

@@ -31,6 +31,7 @@ import stopTranscriptionForCall from './routes/stopTranscription';
 import fetchTranscriptState from './routes/fetchTranscriptState';
 
 const app = express();
+const clients: express.Response[] = []; // Store connected clients
 
 app.use(logger('tiny'));
 app.use(express.json({ limit: '50mb' }));
@@ -149,6 +150,22 @@ app.use('/addUserToRoom', cors(), addUserToRoom);
  */
 app.use('/uploadToAzureBlobStorage', cors(), uploadToAzureBlobStorage);
 
+app.post('/events', cors(), (req, res) => {
+  res.setHeader('Content-Type', 'text/event-stream');
+  res.setHeader('Cache-Control', 'no-cache');
+  res.setHeader('Connection', 'keep-alive');
+  // Add the client to the list of connected clients
+  clients.push(res);
+
+  // Remove the client when the connection is closed
+  req.on('close', () => {
+    const index = clients.indexOf(res);
+    if (index !== -1) {
+      clients.splice(index, 1);
+    }
+  });
+});
+
 /**
  * route: wss://<host>/
  * purpose: WebSocket endpoint to receive transcription events
@@ -169,21 +186,19 @@ wss.on('connection', (ws) => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const messageData = JSON.parse(decoder.decode(message as any));
     console.log('Received message:', messageData);
-    if (messageData.type === 'ping') {
-      ws.send(JSON.stringify({ type: 'pong' }));
-      return;
-    } else if (messageData.type === 'join') {
-      const transcriptionStatus = !!Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
-        CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(messageData.serverCallId)
-      );
-      sendMessageToWebSocket(
-        JSON.stringify({
-          kind: 'TranscriptionStatus',
-          transcriptionStatus: transcriptionStatus,
-          serverCallId: messageData.serverCallId
-        })
-      );
-    } else if (
+    // if (messageData.type === 'ping') {
+    //   ws.send(JSON.stringify({ type: 'pong' }));
+    //   return;
+    // } else if (messageData.type === 'join') {
+    //   const transcriptionStatus = !!Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
+    //     CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(messageData.serverCallId)
+    //   );
+    //   sendEventToClients('TranscriptionStatus', {
+    //     transcriptionStatus: transcriptionStatus,
+    //     serverCallId: messageData.serverCallId
+    //   });
+    // } else
+    if (
       ('kind' in messageData && messageData.kind === 'TranscriptionMetadata') ||
       ('kind' in messageData && messageData.kind === 'TranscriptionData')
     ) {
@@ -196,21 +211,10 @@ wss.on('connection', (ws) => {
   });
 });
 
-export const sendMessageToWebSocket = (message: string): Promise<void> => {
-  return new Promise((resolve, reject) => {
-    wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(message, (error) => {
-          if (error) {
-            console.error('Error sending message:', error);
-            reject(error);
-          } else {
-            resolve();
-          }
-        });
-      }
-    });
-  });
+// Function to send events to all connected clients
+export const sendEventToClients = (event: string, data: object): void => {
+  const message = `event: ${event}\ndata: ${JSON.stringify(data)}\n\n`;
+  clients.forEach((client) => client.write(message));
 };
 
 // catch 404 and forward to error handler

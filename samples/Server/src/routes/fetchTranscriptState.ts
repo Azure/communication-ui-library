@@ -3,6 +3,7 @@
 
 import * as express from 'express';
 import { checkIfTranscriptionStarted } from '../lib/callAutomationUtils';
+import { sendEventToClients } from '../app';
 
 const router = express.Router();
 interface FetchTranscriptStateRequest {
@@ -15,6 +16,8 @@ router.post('/', async function (req, res, next) {
   const transcriptStarted = checkIfTranscriptionStarted(serverCallId);
 
   res.status(200).json(transcriptStarted);
+  // Send SSE event to clients
+  sendEventToClients('TranscriptionStateChecked', { serverCallId, transcriptStarted });
 });
 
 export default router;

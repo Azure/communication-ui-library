@@ -350,67 +350,26 @@ const AzureCommunicationCallAutomationCallScreen = (
   const [callAdapter, setCallAdapter] = useState<CommonCallAdapter>();
   const [customNotications, setCustomNotifications] = useState<ActiveNotification[]>([]);
 
-  const socketRef = useRef<WebSocket | null>(null);
+  const eventSourceRef = useRef<EventSource | null>(null);
 
   useEffect(() => {
-    const socket = new WebSocket('wss:<//your-websocket-url>');
-    let heartbeatInterval: NodeJS.Timeout | null = null;
-    socketRef.current = socket;
+    let eventSource: EventSource | null = null;
 
-    // Connection opened
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    socket.addEventListener('open', (event) => {
-      console.log('WebSocket connection established');
-      // Start sending heartbeat messages every 30 seconds
-      heartbeatInterval = setInterval(() => {
-        if (socket.readyState === WebSocket.OPEN) {
-          socket.send(JSON.stringify({ type: 'ping' }));
-        }
-      }, 30000); // 30 seconds
-    });
+    if (serverCallId) {
+      // Create EventSource connection when serverCallId is available
+      eventSource = new EventSource(`<Endpoint where events come from>`, {
+        withCredentials: true
+      });
+      eventSourceRef.current = eventSource; // Store reference for cleanup
 
-    // Connection closed
-    socket.addEventListener('close', (event) => {
-      console.log('WebSocket connection closed:', event.code, event.reason);
-      if (heartbeatInterval) {
-        clearInterval(heartbeatInterval);
-        heartbeatInterval = null;
-      }
-    });
+      // Connection opened
+      eventSource.onopen = () => {
+        console.log('EventSource connection established');
+      };
 
-    // Connection error
-    socket.addEventListener('error', (error) => {
-      console.error('WebSocket error:', error);
-    });
-
-    // Clean up on unmount
-    return () => {
-      if (heartbeatInterval) {
-        clearInterval(heartbeatInterval);
-      }
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.close();
-      }
-    };
-  }, []);
-
-  useEffect(() => {
-    // Listen for messages
-    if (!socketRef.current) {
-      return;
-    }
-    socketRef.current.addEventListener('message', (event) => {
-      console.log('Message from server:', event.data);
-      const data = JSON.parse(event.data);
-      if (data.type === 'pong') {
-        console.log('Heartbeat acknowledged');
-        return;
-      }
-      try {
-        const data = JSON.parse(event.data);
-        console.log('Parsed data:', data);
-        if ('kind' in data && data.kind === 'TranscriptionStarted' && data.serverCallId === serverCallId) {
-          console.log('Transcription started', data);
+      eventSource.addEventListener('TranscriptionStarted', (event) => {
+        if (event.data.serverCallId === serverCallId) {
+          console.log('Transcription started', event.data);
           setTranscriptionStarted(true);
           setCustomNotifications(
             customNotications.concat([
@@ -425,7 +384,12 @@ const AzureCommunicationCallAutomationCallScreen = (
               }
             ])
           );
-        } else if ('kind' in data && data.kind === 'TranscriptionStopped' && data.serverCallId === serverCallId) {
+        }
+      });
+
+      eventSource.addEventListener('TranscriptionStopped', (event) => {
+        if (event.data.serverCallId === serverCallId) {
+          console.log('Transcription stopped', event.data);
           setTranscriptionStarted(false);
           const newCustomNotifcaitons = customNotications
             .filter((notification) => notification.type !== 'transcriptionStarted')
@@ -441,9 +405,12 @@ const AzureCommunicationCallAutomationCallScreen = (
               }
             ]);
           setCustomNotifications(newCustomNotifcaitons);
-        } else if ('kind' in data && data.kind === 'TranscriptionStatus') {
-          const transcriptionStarted = data.transcriptionStatus;
-          console.log('Transcription status:', transcriptionStarted);
+        }
+      });
+      eventSource.addEventListener('TranscriptionStatus', (event) => {
+        if (event.data.serverCallId === serverCallId) {
+          const transcriptionStarted = event.data.transcriptionStatus;
+          console.log('TranscriptionStatus:', transcriptionStarted);
           if (transcriptionStarted) {
             setTranscriptionStarted(true);
             if (customNotications.find((notification) => notification.type === 'transcriptionStarted')) {
@@ -464,22 +431,29 @@ const AzureCommunicationCallAutomationCallScreen = (
             );
           }
         }
-      } catch (error) {
-        console.error('Error parsing WebSocket message:', error);
-      }
-    });
-  }, [customNotications, serverCallId, socketRef]);
+      });
 
-  useEffect(() => {
-    if (socketRef.current && serverCallId) {
-      socketRef.current.send(
-        JSON.stringify({
-          type: 'join',
-          serverCallId: serverCallId
-        })
-      );
+      // Connection error
+      eventSource.onerror = (error) => {
+        console.error('EventSource error:', error);
+
+        // Attempt to reconnect if the connection is closed
+        if (eventSource && eventSource.readyState === EventSource.CLOSED) {
+          console.log('EventSource connection closed, attempting to reconnect');
+        }
+      };
     }
-  }, [serverCallId]);
+
+    // Clean up on unmount or when serverCallId changes
+    return () => {
+      if (eventSource) {
+        eventSource.close();
+      }
+    };
+  }, [serverCallId, customNotications]);
+
+  // Removed the separate message event listener and join message effects
+  // as EventSource handles reconnection automatically and doesn't support sending data
 
   if (!('communicationUserId' in userId)) {
     throw new Error('A ACS user ID must be provided for Rooms call.');

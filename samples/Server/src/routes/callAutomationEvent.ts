@@ -4,6 +4,7 @@
 import * as express from 'express';
 import { CALLCONNECTION_ID_TO_CORRELATION_ID } from '../lib/callAutomationUtils';
 import { startTranscriptionForCall } from '../lib/callAutomationUtils';
+import { sendEventToClients } from '../app';
 
 const router = express.Router();
 
@@ -37,6 +38,19 @@ router.post('/', async function (req, res) {
         serverCallId: req.body[0].data.serverCallId,
         correlationId: CALLCONNECTION_ID_TO_CORRELATION_ID[req.body[0].data.callConnectionId]?.correlationId
       };
+    } else if (req.body[0].type === 'Microsoft.Communication.ParticipantAdded') {
+      console.log('Participant added event received', req.body);
+      const connectionId = req.body[0].data.callConnectionId;
+      const serverCallId = CALLCONNECTION_ID_TO_CORRELATION_ID[connectionId]?.serverCallId;
+      const transcriptionStatus = !!Object.keys(CALLCONNECTION_ID_TO_CORRELATION_ID).find((key) =>
+        CALLCONNECTION_ID_TO_CORRELATION_ID[key].serverCallId.includes(serverCallId)
+      );
+
+      if (serverCallId) {
+        console.log('Starting transcription for call:', serverCallId);
+        await startTranscriptionForCall(connectionId);
+        sendEventToClients('TranscriptionStatus', { serverCallId, transcriptionStatus });
+      }
     }
   } catch (e) {
     console.error('Error processing automation event:', e);
