@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "A11y",
-  "comment": "Fix issue where system message announces Group instead of content",
+  "workstream": "attachment-download",
+  "comment": "Fix ChatMyMessage download button issue",
   "packageName": "@azure/communication-react",
   "email": "77021369+jimchou-dev@users.noreply.github.com",
   "dependentChangeType": "patch"
