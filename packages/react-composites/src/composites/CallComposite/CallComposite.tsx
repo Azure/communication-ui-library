@@ -159,7 +159,7 @@ export interface NotificationStackOptions {
    * Whether to show the notifications in the composite. useful
    * for hiding the notifications in the composite to replace with your own custom notifications.
    */
-  showCallNotifications?: 'hidden' | 'visible';
+  hideAllNotifications?: boolean;
 }
 
 /**

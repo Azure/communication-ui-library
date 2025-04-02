@@ -3700,7 +3700,7 @@ export const NotificationStack: (props: NotificationStackProps) => JSX.Element;
 
 // @public
 export interface NotificationStackOptions {
-    showCallNotifications?: 'hidden' | 'visible';
+    hideAllNotifications?: boolean;
 }
 
 // @public

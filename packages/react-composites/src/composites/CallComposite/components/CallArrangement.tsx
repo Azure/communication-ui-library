@@ -544,7 +544,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             <Stack.Item style={callCompositeContainerCSS}>
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={galleryContainerStyles}>
-                  {props.notificationOptions?.showCallNotifications !== 'hidden' && (
+                  {!props.notificationOptions?.hideAllNotifications && (
                     <Stack.Item styles={notificationsContainerStyles}>
                       {
                         /* @conditional-compile-remove(breakout-rooms) */
