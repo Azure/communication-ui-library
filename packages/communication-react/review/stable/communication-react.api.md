@@ -608,7 +608,7 @@ export type CallCompositeOptions = {
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     videoTilesOptions?: VideoTilesOptions;
-    notificationOptions?: NotificationStackOptions;
+    notificationOptions?: NotificationOptions_2;
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
@@ -3681,6 +3681,12 @@ const Notification_2: (props: NotificationProps) => JSX.Element;
 export { Notification_2 as Notification }
 
 // @public
+interface NotificationOptions_2 {
+    hideAllNotifications?: boolean;
+}
+export { NotificationOptions_2 as NotificationOptions }
+
+// @public
 export interface NotificationProps {
     ariaLive?: 'assertive' | 'off' | 'polite';
     autoDismiss?: boolean;
@@ -3697,11 +3703,6 @@ export interface NotificationProps {
 
 // @public
 export const NotificationStack: (props: NotificationStackProps) => JSX.Element;
-
-// @public
-export interface NotificationStackOptions {
-    hideAllNotifications?: boolean;
-}
 
 // @public
 export interface NotificationStackProps {

@@ -93,7 +93,7 @@ import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 /* @conditional-compile-remove(breakout-rooms) */
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
-import { DtmfDialPadOptions, NotificationStackOptions } from '../CallComposite';
+import { DtmfDialPadOptions, NotificationOptions } from '../CallComposite';
 
 /**
  * @private
@@ -133,7 +133,7 @@ export interface CallArrangementProps {
   captionsOptions?: {
     height: 'full' | 'default';
   };
-  notificationOptions?: NotificationStackOptions;
+  notificationOptions?: NotificationOptions;
 }
 
 /**

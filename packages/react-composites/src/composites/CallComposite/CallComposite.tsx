@@ -154,7 +154,7 @@ export interface LocalVideoTileOptions {
  * Options for controlling the notifications in the composite.
  * @public
  */
-export interface NotificationStackOptions {
+export interface NotificationOptions {
   /**
    * Whether to show the notifications in the composite. useful
    * for hiding the notifications in the composite to replace with your own custom notifications.
@@ -262,7 +262,7 @@ export type CallCompositeOptions = {
   /**
    * Options for controlling the notifications in the composite.
    */
-  notificationOptions?: NotificationStackOptions;
+  notificationOptions?: NotificationOptions;
   /**
    * Whether to auto show the DTMF Dialer when the call starts in supported scenarios.
    * - Teams Voice Application like Call queue or Auto Attendant

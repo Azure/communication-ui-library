@@ -302,7 +302,7 @@ export interface NotificationStackStrings {
    */
   togetherModeEnded?: NotificationStrings;
   /**
-   * Message shown in notification when there was an error starting transcription
+   * Message shown in notification when there was an error with transcription.
    */
   transcriptionError?: NotificationStrings;
   /**
