@@ -40,6 +40,7 @@ import { WEB_APP_TITLE } from '../utils/AppUtils';
 import { CallCompositeContainer } from './CallCompositeContainer';
 import {
   connectToCallAutomation,
+  fetchTranscriptionStatus,
   getCallSummaryFromServer,
   LocaleCode,
   startTranscription,
@@ -350,68 +351,106 @@ const AzureCommunicationCallAutomationCallScreen = (
   const [callAdapter, setCallAdapter] = useState<CommonCallAdapter>();
   const [customNotications, setCustomNotifications] = useState<ActiveNotification[]>([]);
 
-  const socketRef = useRef<WebSocket | null>(null);
+  const eventSourceRef = useRef<EventSource | null>(null);
 
   useEffect(() => {
-    const socket = new WebSocket('wss:<//your-websocket-url>');
-    let heartbeatInterval: NodeJS.Timeout | null = null;
-    socketRef.current = socket;
+    let eventSource: EventSource | null = null;
 
-    // Connection opened
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    socket.addEventListener('open', (event) => {
-      console.log('WebSocket connection established');
-      // Start sending heartbeat messages every 30 seconds
-      heartbeatInterval = setInterval(() => {
-        if (socket.readyState === WebSocket.OPEN) {
-          socket.send(JSON.stringify({ type: 'ping' }));
+    if (serverCallId) {
+      // Create EventSource connection when serverCallId is available. The URL provided here is for your server.
+      eventSource = new EventSource(`http://<server-url>/events`);
+      console.log(eventSource);
+      eventSourceRef.current = eventSource; // Store reference for cleanup
+
+      // Connection opened so we want to have the status of the transcription sent from the server to push the notification
+      eventSource.onopen = () => {
+        fetchTranscriptionStatus(serverCallId);
+      };
+      eventSource.addEventListener('message', (event) => {
+        console.log('EventSource connection event:', event);
+      });
+
+      // Connection error
+      eventSource.onerror = (error) => {
+        console.error('EventSource error:', error);
+
+        // Attempt to reconnect if the connection is closed
+        if (eventSource && eventSource.readyState === EventSource.CLOSED) {
+          console.log('EventSource connection closed, attempting to reconnect');
         }
-      }, 30000); // 30 seconds
-    });
+      };
+    }
 
-    // Connection closed
-    socket.addEventListener('close', (event) => {
-      console.log('WebSocket connection closed:', event.code, event.reason);
-      if (heartbeatInterval) {
-        clearInterval(heartbeatInterval);
-        heartbeatInterval = null;
-      }
-    });
-
-    // Connection error
-    socket.addEventListener('error', (error) => {
-      console.error('WebSocket error:', error);
-    });
-
-    // Clean up on unmount
+    // Clean up on unmount or when serverCallId changes
     return () => {
-      if (heartbeatInterval) {
-        clearInterval(heartbeatInterval);
-      }
-      if (socket && socket.readyState === WebSocket.OPEN) {
-        socket.close();
+      if (eventSource) {
+        console.log('Closing EventSource connection');
+        eventSource.close();
       }
     };
-  }, []);
+  }, [serverCallId]);
 
   useEffect(() => {
-    // Listen for messages
-    if (!socketRef.current) {
+    if (!eventSourceRef.current) {
       return;
     }
-    socketRef.current.addEventListener('message', (event) => {
-      console.log('Message from server:', event.data);
-      const data = JSON.parse(event.data);
-      if (data.type === 'pong') {
-        console.log('Heartbeat acknowledged');
-        return;
+    eventSourceRef.current.addEventListener('TranscriptionStarted', (event) => {
+      const parsedData = JSON.parse(event.data);
+      if (parsedData.serverCallId === serverCallId) {
+        console.log('Transcription started', event.data);
+        setTranscriptionStarted(true);
+        setCustomNotifications(
+          customNotications
+            .filter((notification) => notification.type !== 'transcriptionStarted')
+            .filter((notification) => notification.type !== 'transcriptionStopped')
+            .concat([
+              {
+                type: 'transcriptionStarted',
+                autoDismiss: false,
+                onDismiss: () => {
+                  setCustomNotifications((prev) =>
+                    prev.filter((notification) => notification.type !== 'transcriptionStarted')
+                  );
+                }
+              }
+            ])
+        );
       }
-      try {
-        const data = JSON.parse(event.data);
-        console.log('Parsed data:', data);
-        if ('kind' in data && data.kind === 'TranscriptionStarted' && data.serverCallId === serverCallId) {
-          console.log('Transcription started', data);
+    });
+
+    eventSourceRef.current.addEventListener('TranscriptionStopped', (event) => {
+      const parsedData = JSON.parse(event.data);
+      if (parsedData.serverCallId === serverCallId) {
+        console.log('Transcription stopped', event.data);
+        setTranscriptionStarted(false);
+        const newCustomNotifcaitons = customNotications
+          .filter((notification) => notification.type !== 'transcriptionStarted')
+          .filter((notification) => notification.type !== 'transcriptionStopped')
+          .concat([
+            {
+              type: 'transcriptionStopped',
+              autoDismiss: false,
+              onDismiss: () => {
+                setCustomNotifications((prev) =>
+                  prev.filter((notification) => notification.type !== 'transcriptionStopped')
+                );
+              }
+            }
+          ]);
+        setCustomNotifications(newCustomNotifcaitons);
+      }
+    });
+    eventSourceRef.current.addEventListener('TranscriptionStatus', (event) => {
+      console.log('TranscriptionStatus event:', event);
+      const parsedData = JSON.parse(event.data);
+      if (parsedData.serverCallId === serverCallId) {
+        const transcriptionStarted = parsedData.transcriptStarted;
+        console.log('TranscriptionStatus:', transcriptionStarted);
+        if (transcriptionStarted) {
           setTranscriptionStarted(true);
+          if (customNotications.find((notification) => notification.type === 'transcriptionStarted')) {
+            return;
+          }
           setCustomNotifications(
             customNotications.concat([
               {
@@ -425,61 +464,13 @@ const AzureCommunicationCallAutomationCallScreen = (
               }
             ])
           );
-        } else if ('kind' in data && data.kind === 'TranscriptionStopped' && data.serverCallId === serverCallId) {
-          setTranscriptionStarted(false);
-          const newCustomNotifcaitons = customNotications
-            .filter((notification) => notification.type !== 'transcriptionStarted')
-            .concat([
-              {
-                type: 'transcriptionStopped',
-                autoDismiss: false,
-                onDismiss: () => {
-                  setCustomNotifications((prev) =>
-                    prev.filter((notification) => notification.type !== 'transcriptionStopped')
-                  );
-                }
-              }
-            ]);
-          setCustomNotifications(newCustomNotifcaitons);
-        } else if ('kind' in data && data.kind === 'TranscriptionStatus') {
-          const transcriptionStarted = data.transcriptionStatus;
-          console.log('Transcription status:', transcriptionStarted);
-          if (transcriptionStarted) {
-            setTranscriptionStarted(true);
-            if (customNotications.find((notification) => notification.type === 'transcriptionStarted')) {
-              return;
-            }
-            setCustomNotifications(
-              customNotications.concat([
-                {
-                  type: 'transcriptionStarted',
-                  autoDismiss: false,
-                  onDismiss: () => {
-                    setCustomNotifications((prev) =>
-                      prev.filter((notification) => notification.type !== 'transcriptionStarted')
-                    );
-                  }
-                }
-              ])
-            );
-          }
         }
-      } catch (error) {
-        console.error('Error parsing WebSocket message:', error);
       }
     });
-  }, [customNotications, serverCallId, socketRef]);
+  }, [serverCallId, customNotications]);
 
-  useEffect(() => {
-    if (socketRef.current && serverCallId) {
-      socketRef.current.send(
-        JSON.stringify({
-          type: 'join',
-          serverCallId: serverCallId
-        })
-      );
-    }
-  }, [serverCallId]);
+  // Removed the separate message event listener and join message effects
+  // as EventSource handles reconnection automatically and doesn't support sending data
 
   if (!('communicationUserId' in userId)) {
     throw new Error('A ACS user ID must be provided for Rooms call.');

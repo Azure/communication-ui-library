@@ -168,6 +168,10 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
         {
           path: '/updateLocalParticipant',
           target: 'http://[::1]:8080'
+        },
+        {
+          path: '/events',
+          target: 'http://[::1]:8080'
         }
       ]
     }
