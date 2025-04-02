@@ -371,7 +371,7 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(together-mode) */
   togetherModeEnded: 'NotificationBarTogetherModeIcon',
   transcriptionError: 'NotificationBarTranscriptionError',
-  transcriptionStartedLocally: 'NotificationBarTranscriptionStartedLocally'
+  transcriptionStartedByYou: 'NotificationBartranscriptionStartedByYou'
 };
 
 /**

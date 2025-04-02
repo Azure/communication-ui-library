@@ -214,7 +214,7 @@ const notificationOptions: NotificationType[] = [
   'togetherModeStarted',
   'togetherModeEnded',
   'transcriptionError',
-  'transcriptionStartedLocally'
+  'transcriptionStartedByYou'
 ];
 
 export const defaultActiveNotifications = ['callNoSpeakerFound'];

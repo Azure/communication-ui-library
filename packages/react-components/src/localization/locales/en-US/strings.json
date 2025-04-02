@@ -653,7 +653,7 @@
       "message": "Transcription has stopped. please try again later",
       "dismissButtonAriaLabel": "Close"
     },
-    "transcriptionStartedLocally": {
+    "transcriptionStartedByYou": {
       "title": "Transcription has started.",
       "message": "Started by you. Let everyone know they are being transcribed.",
       "dismissButtonAriaLabel": "Close"

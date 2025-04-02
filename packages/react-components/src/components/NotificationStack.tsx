@@ -308,7 +308,7 @@ export interface NotificationStackStrings {
   /**
    * Message shown when the local user starts transcription
    */
-  transcriptionStartedLocally?: NotificationStrings;
+  transcriptionStartedByYou?: NotificationStrings;
 }
 
 /**
