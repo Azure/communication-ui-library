@@ -56,6 +56,7 @@ import {
   Settings20Regular,
   ShareScreenStart20Filled,
   ShareScreenStop20Filled,
+  SlideTextEdit16Regular,
   Speaker220Regular,
   SpeakerMute16Filled,
   Star28Filled,
@@ -70,6 +71,7 @@ import {
   VideoPersonStar20Filled,
   VideoPersonStarOff20Filled,
   VideoProhibited16Filled,
+  Warning16Regular,
   WifiWarning20Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(together-mode) */
@@ -312,6 +314,8 @@ export const DEFAULT_COMPONENT_ICONS = {
   NotificationBarBreakoutRoomClosingSoon: <DoorArrowLeft16Regular />,
   /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomClosed: <DoorArrowLeft16Regular />,
+  NotificationBarTranscriptionError: <Warning16Regular />,
+  NotificationBarTranscriptionStartedLocally: <SlideTextEdit16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,

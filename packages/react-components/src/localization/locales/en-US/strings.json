@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Togethermode has ended",
       "dismissButtonAriaLabel": "Close"
+    },
+    "transcriptionError": {
+      "title": "Something went wrong with transcription.",
+      "message": "Transcription has stopped. please try again later",
+      "dismissButtonAriaLabel": "Close"
+    },
+    "transcriptionStartedLocally": {
+      "title": "Transcription has started.",
+      "message": "Started by you. Let everyone know they are being transcribed.",
+      "dismissButtonAriaLabel": "Close"
     }
   },
   "videoGallery": {
