@@ -9,3 +9,5 @@ export type { OutboundCallCompositeLoaderProps } from './outboundCallCompositeLo
 export type { CallCompositeLoaderProps } from './callCompositeLoader';
 export type { ChatCompositeLoaderProps } from './chatCompositeLoader';
 export type { CallWithChatCompositeLoaderProps } from './callWithChatCompositeLoader';
+export { loadCallComponent } from './callComponentLoader';
+export type { CallComponentLoaderProps } from './callComponentLoader';
