@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(breakout-rooms) */
 import {
   BreakoutRoom,
   BreakoutRoomsCallFeature,
@@ -10,17 +9,12 @@ import {
   Call,
   TeamsCall
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(breakout-rooms) */
 import { CallIdRef } from './CallIdRef';
-/* @conditional-compile-remove(breakout-rooms) */
 import { NotificationTarget } from './CallClientState';
 
-/* @conditional-compile-remove(breakout-rooms) */
 const MILLSECONDS_BEFORE_END_TIME_TO_SHOW_CLOSING_NOTIFICATION = 30000;
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @private
  */
