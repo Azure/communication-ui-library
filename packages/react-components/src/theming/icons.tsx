@@ -315,7 +315,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomClosed: <DoorArrowLeft16Regular />,
   NotificationBarTranscriptionError: <Warning16Regular />,
-  NotificationBartranscriptionStartedByYou: <SlideTextEdit16Regular />,
+  NotificationBarTranscriptionStartedByYou: <SlideTextEdit16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,
