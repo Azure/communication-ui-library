@@ -3218,16 +3218,16 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionCameraOn: React_2.JSX.Element;
     SplitButtonPrimaryActionCameraOff: React_2.JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: React_2.JSX.Element;
-    SplitButtonPrimaryActionMicMuted: React_2.JSX.Element;
-    VerticalGalleryLeftButton: React_2.JSX.Element;
-    VerticalGalleryRightButton: React_2.JSX.Element;
-    ControlButtonVideoEffectsOption: React_2.JSX.Element; /**
+    SplitButtonPrimaryActionMicMuted: React_2.JSX.Element; /**
     * Icon wrapper to use when including customizable icons inside the CallWithChatComposite.
     * This wrapper ensures the icon name is being type-checked helping ensure no typos
     * and ensure that icon is customizable through the composite API.
     *
     * @private
     */
+    VerticalGalleryLeftButton: React_2.JSX.Element;
+    VerticalGalleryRightButton: React_2.JSX.Element;
+    ControlButtonVideoEffectsOption: React_2.JSX.Element;
     ConfigurationScreenVideoEffectsButton: React_2.JSX.Element;
     CaptionsIcon: React_2.JSX.Element;
     CaptionsOffIcon: React_2.JSX.Element;
