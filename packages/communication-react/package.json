@@ -72,17 +72,19 @@
       "types": "./dist/communication-react.d.ts"
     },
     "./javascript-loaders": {
+      "main": "./dist/dist-cjs/javascript-loaders/src/index.js",
       "module": "./dist/dist-esm/communication-react/src/javascript-loaders.js",
       "types": "./dist/dist-esm/communication-react/src/javascript-loaders.d.ts"
     }
   },
   "scripts": {
+    "copy-cjs-loader": "cpy '../acs-ui-javascript-loaders/dist/dist-cjs/**' ./dist/dist-cjs/javascript-loaders/",
     "copy-original": "cpy '../*/src/**' ./preprocess-dist && renamer --find src --replace preprocessed ./preprocess-dist/**/*",
     "preprocess": "babel ../*/src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "copy-preprocess": "cpy '../*/preprocessed/**' ./preprocess-dist && renamer --find preprocessed --replace src ./preprocess-dist/**/*",
     "build:test": "tspc",
     "build": "rushx check-deps && rushx _by-flavor \"rushx _build:by-flavor\"",
-    "build:cjs": "rollup -c --silent",
+    "build:cjs": "rollup -c --silent && rushx copy-cjs-loader",
     "build:esm": "npm run _if-preprocess && rushx copy-original && rushx preprocess && rushx copy-preprocess  && tspc -project tsconfig.preprocess.json || (if-env COMMUNICATION_REACT_FLAVOR=beta && tspc)",
     "build:minify": "rollup -c rollup.config.mjs",
     "build:watch": "",
