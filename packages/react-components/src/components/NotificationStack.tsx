@@ -301,6 +301,14 @@ export interface NotificationStackStrings {
    * Message shown in notification when together mode ends
    */
   togetherModeEnded?: NotificationStrings;
+  /**
+   * Message shown in notification when there was an error with transcription.
+   */
+  transcriptionError?: NotificationStrings;
+  /**
+   * Message shown when the local user starts transcription
+   */
+  transcriptionStartedByYou?: NotificationStrings;
 }
 
 /**

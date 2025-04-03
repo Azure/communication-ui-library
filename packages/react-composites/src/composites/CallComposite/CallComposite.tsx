@@ -151,6 +151,18 @@ export interface LocalVideoTileOptions {
 }
 
 /**
+ * Options for controlling the notifications in the composite.
+ * @public
+ */
+export interface NotificationOptions {
+  /**
+   * Whether to show the notifications in the composite. useful
+   * for hiding the notifications in the composite to replace with your own custom notifications.
+   */
+  hideAllNotifications?: boolean;
+}
+
+/**
  * Options to determine the rendering behavior of the dtmfDialer in the CallComposite
  * @public
  */
@@ -247,6 +259,10 @@ export type CallCompositeOptions = {
    * Options for controlling video tile.
    */
   videoTilesOptions?: VideoTilesOptions;
+  /**
+   * Options for controlling the notifications in the composite.
+   */
+  notificationOptions?: NotificationOptions;
   /**
    * Whether to auto show the DTMF Dialer when the call starts in supported scenarios.
    * - Teams Voice Application like Call queue or Auto Attendant
@@ -742,6 +758,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           setPinnedParticipants={setPinnedParticipants}
           compositeAudioContext={compositeAudioContext}
           disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
+          notificationOptions={props.options?.notificationOptions}
         />
       );
       break;
@@ -793,6 +810,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
         setPinnedParticipants={setPinnedParticipants}
         compositeAudioContext={compositeAudioContext}
         disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
+        notificationOptions={props.options?.notificationOptions}
       />
     );
   }

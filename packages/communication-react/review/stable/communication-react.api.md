@@ -608,6 +608,7 @@ export type CallCompositeOptions = {
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     videoTilesOptions?: VideoTilesOptions;
+    notificationOptions?: NotificationOptions_2;
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
@@ -2632,6 +2633,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     NotificationBarBreakoutRoomJoined: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
+    NotificationBarTranscriptionError: React_2.JSX.Element;
+    NotificationBartranscriptionStartedByYou: React_2.JSX.Element;
     HorizontalGalleryLeftButton: React_2.JSX.Element;
     HorizontalGalleryRightButton: React_2.JSX.Element;
     MessageDelivered: React_2.JSX.Element;
@@ -2809,6 +2812,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NotificationBarBreakoutRoomJoined: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
+    NotificationBarTranscriptionError: React_2.JSX.Element;
+    NotificationBartranscriptionStartedByYou: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;
     HoldCallContextualMenuItem: React_2.JSX.Element;
@@ -3676,6 +3681,12 @@ const Notification_2: (props: NotificationProps) => JSX.Element;
 export { Notification_2 as Notification }
 
 // @public
+interface NotificationOptions_2 {
+    hideAllNotifications?: boolean;
+}
+export { NotificationOptions_2 as NotificationOptions }
+
+// @public
 export interface NotificationProps {
     ariaLive?: 'assertive' | 'off' | 'polite';
     autoDismiss?: boolean;
@@ -3754,7 +3765,9 @@ export interface NotificationStackStrings {
     stopScreenShareGeneric?: NotificationStrings;
     stopVideoGeneric?: NotificationStrings;
     teamsMeetingCallNetworkQualityLow?: NotificationStrings;
+    transcriptionError?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
+    transcriptionStartedByYou?: NotificationStrings;
     transcriptionStopped?: NotificationStrings;
     transcriptionStoppedStillRecording?: NotificationStrings;
     unableToStartVideoEffect?: NotificationStrings;
