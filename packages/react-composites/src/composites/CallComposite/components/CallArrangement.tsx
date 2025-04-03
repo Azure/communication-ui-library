@@ -91,7 +91,7 @@ import { useHandlers } from '../hooks/useHandlers';
 import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
-import { DtmfDialPadOptions } from '../CallComposite';
+import { DtmfDialPadOptions, NotificationOptions } from '../CallComposite';
 
 /**
  * @private
@@ -131,6 +131,7 @@ export interface CallArrangementProps {
   captionsOptions?: {
     height: 'full' | 'default';
   };
+  notificationOptions?: NotificationOptions;
 }
 
 /**
@@ -539,35 +540,37 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
             <Stack.Item style={callCompositeContainerCSS}>
               <Stack.Item styles={callGalleryStyles} grow>
                 <Stack verticalFill styles={galleryContainerStyles}>
-                  <Stack.Item styles={notificationsContainerStyles}>
-                    {props.mobileView && <BreakoutRoomsBanner locale={locale} adapter={adapter} />}
-                    {props.showErrorNotifications && (
-                      <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
-                        <NotificationStack
-                          onDismissNotification={props.onDismissError}
-                          activeNotifications={filteredLatestErrorNotifications}
-                        />
-                      </Stack>
-                    )}
-                    {latestNotifications && (
-                      <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
-                        <NotificationStack
-                          activeNotifications={latestNotifications}
-                          onDismissNotification={props.onDismissNotification}
-                          strings={notificationStackStrings}
-                        />
-                      </Stack>
-                    )}
-                    {props.capabilitiesChangedNotificationBarProps &&
-                      props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
-                        <Stack styles={bannerNotificationStyles}>
-                          <CapabilitiesChangedNotificationBar
-                            {...props.capabilitiesChangedNotificationBarProps}
-                            capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
+                  {!props.notificationOptions?.hideAllNotifications && (
+                    <Stack.Item styles={notificationsContainerStyles}>
+                      {props.mobileView && <BreakoutRoomsBanner locale={locale} adapter={adapter} />}
+                      {props.showErrorNotifications && (
+                        <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+                          <NotificationStack
+                            onDismissNotification={props.onDismissError}
+                            activeNotifications={filteredLatestErrorNotifications}
                           />
                         </Stack>
                       )}
-                  </Stack.Item>
+                      {latestNotifications && (
+                        <Stack styles={notificationStackStyles} horizontalAlign="center" verticalAlign="center">
+                          <NotificationStack
+                            activeNotifications={latestNotifications}
+                            onDismissNotification={props.onDismissNotification}
+                            strings={notificationStackStrings}
+                          />
+                        </Stack>
+                      )}
+                      {props.capabilitiesChangedNotificationBarProps &&
+                        props.capabilitiesChangedNotificationBarProps.capabilitiesChangedNotifications.length > 0 && (
+                          <Stack styles={bannerNotificationStyles}>
+                            <CapabilitiesChangedNotificationBar
+                              {...props.capabilitiesChangedNotificationBarProps}
+                              capabilitiesChangedNotifications={filteredCapabilitesChangedNotifications ?? []}
+                            />
+                          </Stack>
+                        )}
+                    </Stack.Item>
+                  )}
                   {renderGallery && props.onRenderGalleryContent && props.onRenderGalleryContent()}
                   {!isInLocalHold && (
                     <CallingCaptionsBanner

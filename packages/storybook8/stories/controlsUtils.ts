@@ -212,7 +212,9 @@ const notificationOptions: NotificationType[] = [
   'capabilityUnmuteMicAbsent',
   'capabilityUnmuteMicPresent',
   'togetherModeStarted',
-  'togetherModeEnded'
+  'togetherModeEnded',
+  'transcriptionError',
+  'transcriptionStartedByYou'
 ];
 
 export const defaultActiveNotifications = ['callNoSpeakerFound'];
