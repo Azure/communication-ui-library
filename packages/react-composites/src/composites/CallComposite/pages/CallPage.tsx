@@ -39,6 +39,7 @@ import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { mergeStyles, Stack } from '@fluentui/react';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 /**
  * @private
@@ -105,6 +106,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const callees = useSelector(getTargetCallees);
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected, disableAutoShowDtmfDialer);
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
+  const isPstnCall = callees?.some((callee) => isPhoneNumberIdentifier(callee));
 
   const strings = useLocale().strings.call;
 
@@ -250,6 +252,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         captionsOptions={options?.captionsBanner}
         dtmfDialerOptions={disableAutoShowDtmfDialer}
         notificationOptions={props.notificationOptions}
+        isPstnCall={isPstnCall}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>

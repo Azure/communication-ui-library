@@ -132,6 +132,7 @@ export interface CallArrangementProps {
     height: 'full' | 'default';
   };
   notificationOptions?: NotificationOptions;
+  isPstnCall?: boolean;
 }
 
 /**
@@ -657,7 +658,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onMoreButtonClicked={onMoreButtonClicked}
                   isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
                   /* @conditional-compile-remove(rtt) */
-                  isRealTimeTextSupported={hasJoinedCall}
+                  isRealTimeTextSupported={hasJoinedCall && !props.isPstnCall}
                   /* @conditional-compile-remove(rtt) */
                   onStartRealTimeText={onStartRealTimeText}
                   /* @conditional-compile-remove(rtt) */
@@ -692,7 +693,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 disableButtonsForHoldScreen={isInLocalHold}
                 isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
                 /* @conditional-compile-remove(rtt) */
-                isRealTimeTextSupported={hasJoinedCall}
+                isRealTimeTextSupported={hasJoinedCall && !props.isPstnCall}
                 /* @conditional-compile-remove(rtt) */
                 onStartRealTimeText={onStartRealTimeText}
                 /* @conditional-compile-remove(rtt) */
