@@ -645,6 +645,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
     realTimeTextDrawerItems.push({
       itemKey: 'ToggleRTTKey',
+      id: 'common-call-composite-rtt-start-button',
       text: localeStrings.strings.call.startRealTimeTextLabel,
       ariaLabel: rttDisabled
         ? localeStrings.strings.call.disabledStartRealTimeTextLabel
