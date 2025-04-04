@@ -1250,7 +1250,8 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
       displayName,
       credential,
       chatThreadAdapter.getChatThreadPromise(),
-      'CallWithChat' as _TelemetryImplementationHint
+      'CallWithChat' as _TelemetryImplementationHint,
+      callAdapterOptions?.onFetchProfile
     );
     callWithChatAdapter.setChatAdapterPromise(chatAdapterPromise);
     callWithChatAdapter.setCreateChatAdapterCallback((threadId: string) =>
@@ -1260,7 +1261,8 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
         displayName,
         credential,
         threadId,
-        'CallWithChat' as _TelemetryImplementationHint
+        'CallWithChat' as _TelemetryImplementationHint,
+        callAdapterOptions?.onFetchProfile
       )
     );
     return callWithChatAdapter;
@@ -1271,7 +1273,8 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
       displayName,
       credential,
       chatThreadAdapter.getChatThread(),
-      'CallWithChat' as _TelemetryImplementationHint
+      'CallWithChat' as _TelemetryImplementationHint,
+      callAdapterOptions?.onFetchProfile
     );
 
     const callWithChatAdapter = new AzureCommunicationCallWithChatAdapter(await callAdapter, await chatAdapter);
@@ -1282,7 +1285,8 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
         displayName,
         credential,
         threadId,
-        'CallWithChat' as _TelemetryImplementationHint
+        'CallWithChat' as _TelemetryImplementationHint,
+        callAdapterOptions?.onFetchProfile
       )
     );
     return callWithChatAdapter;

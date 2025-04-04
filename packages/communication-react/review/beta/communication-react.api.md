@@ -2267,6 +2267,11 @@ export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBa
 };
 
 // @public
+export type ChatProfile = {
+    displayName?: string;
+};
+
+// @public
 export type ChatReturnProps<Component extends (props: any) => JSX.Element> = GetChatSelector<Component> extends (state: ChatClientState, props: any) => any ? ReturnType<GetChatSelector<Component>> & Common<ChatHandlers, Parameters<Component>[0]> : never;
 
 // @public
@@ -2824,7 +2829,7 @@ export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClie
 export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, onFetchProfile?: OnFetchChatProfileCallback): Promise<ChatAdapter>;
 
 // @public
 export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
@@ -4298,6 +4303,9 @@ export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakou
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
+
+// @public
+export type OnFetchChatProfileCallback = (userId: string, defaultProfile?: ChatProfile) => Promise<ChatProfile | undefined>;
 
 // @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
