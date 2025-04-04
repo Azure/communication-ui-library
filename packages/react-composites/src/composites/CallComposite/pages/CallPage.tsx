@@ -5,17 +5,14 @@ import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
 import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
-/* @conditional-compile-remove(breakout-rooms) */
 import { CustomAvatarOptions, VideoTile } from '@internal/react-components';
 
 import { ActiveNotification } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import React, { useMemo } from 'react';
-/* @conditional-compile-remove(breakout-rooms) */
 import { useCallback } from 'react';
 import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-/* @conditional-compile-remove(breakout-rooms) */
 import { AvatarPersona } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
 import { CallCompositeOptions, DtmfDialPadOptions, NotificationOptions } from '../CallComposite';
@@ -41,7 +38,6 @@ import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(breakout-rooms) */
 import { mergeStyles, Stack } from '@fluentui/react';
 import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
@@ -131,14 +127,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const [isPromptOpen, setIsPromptOpen] = useState<boolean>(false);
   const [promptProps, setPromptProps] = useState<PromptProps>();
 
-  /* @conditional-compile-remove(breakout-rooms) */
   const page = useSelector((state) => state.page);
-  /* @conditional-compile-remove(breakout-rooms) */
   const userId = useSelector((state) => state.userId);
-  /* @conditional-compile-remove(breakout-rooms) */
   const displayName = useSelector((state) => state.displayName);
 
-  /* @conditional-compile-remove(breakout-rooms) */
   const onRenderAvatar = useCallback(
     (userId?: string, options?: CustomAvatarOptions) => {
       return (
@@ -155,7 +147,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   );
 
   let galleryContentWhenNotInCall = <></>;
-  /* @conditional-compile-remove(breakout-rooms) */
   if (!_isInCall(callStatus) && page === 'returningFromBreakoutRoom') {
     galleryContentWhenNotInCall = (
       <VideoTile

@@ -43,7 +43,6 @@ export type {
 export * from './localization/locales';
 export type { CompositeStrings, CompositeLocale } from './localization';
 export type { AdapterError, AdapterErrors } from './common/adapters';
-/* @conditional-compile-remove(breakout-rooms) */
 export type { AdapterNotification, AdapterNotifications } from './common/adapters';
 export type { BaseCompositeProps } from './common/BaseComposite';
 export type {
