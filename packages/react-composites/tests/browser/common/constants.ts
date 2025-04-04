@@ -1,5 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
+/* @conditional-compile-remove(rtt) */
+import { RealTimeTextCallFeatureState } from '@internal/calling-stateful-client';
 
 export const CHAT_TOPIC_NAME = 'Cowabunga';
 
@@ -335,4 +337,59 @@ export const togetherModeSeatingPosition_w_700_h_500 = {
     width: 80.0560188235294,
     height: 60.03450980392157
   }
+};
+
+/* @conditional-compile-remove(rtt) */
+export const realTimeTextFeatureState: RealTimeTextCallFeatureState = {
+  realTimeTexts: {
+    completedMessages: [
+      {
+        message: 'I am on top and I am finalized.',
+        sequenceId: 1,
+        sender: {
+          identifier: { communicationUserId: '1', kind: 'communicationUser' as const },
+          endpointDetails: [{ participantId: '1' }]
+        },
+        resultType: 'Final',
+        receivedTimestamp: new Date(0),
+        updatedTimestamp: new Date(1)
+      },
+      {
+        message: 'Hi there! I am finalized and I come in second.',
+        sequenceId: 2,
+        sender: {
+          identifier: { communicationUserId: '2', kind: 'communicationUser' as const },
+          endpointDetails: [{ participantId: '2' }]
+        },
+        resultType: 'Final',
+        receivedTimestamp: new Date(1),
+        updatedTimestamp: new Date(2)
+      }
+    ],
+    currentInProgress: [
+      {
+        message: 'Hi I am in progress and I am always at the bottom.',
+        sequenceId: 5,
+        sender: {
+          identifier: { communicationUserId: '2', kind: 'communicationUser' as const },
+          endpointDetails: [{ participantId: '2' }]
+        },
+        resultType: 'Partial',
+        receivedTimestamp: new Date(2.1),
+        updatedTimestamp: new Date(2.2)
+      }
+    ],
+    myInProgress: {
+      message: 'Hi! I am local participant and in progress, I am always at the very bottom',
+      sequenceId: 6,
+      sender: {
+        identifier: { communicationUserId: '5', kind: 'communicationUser' as const },
+        endpointDetails: [{ participantId: '5' }]
+      },
+      resultType: 'Partial',
+      receivedTimestamp: new Date(5),
+      updatedTimestamp: new Date(5)
+    }
+  },
+  isRealTimeTextFeatureActive: true
 };
