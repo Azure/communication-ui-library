@@ -1,9 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { ControlBar, CameraButton, CameraButtonProps } from '@internal/react-components';
-import { useCallingPropsFor } from '@internal/calling-component-bindings';
+import {
+  CaptionsBannerProps,
+  CaptionsSettingsModalProps,
+  ControlBarButton,
+  StartCaptionsButtonProps,
+  ControlBar
+} from '@internal/react-components';
 import React from 'react';
+import { useCall } from '@internal/calling-component-bindings';
+import { useCallingPropsFor } from '@internal/calling-component-bindings';
+import { StartCaptionsButton, CaptionsSettingsModal, CaptionsBanner } from '@internal/react-components';
+import { useState } from 'react';
+import { mergeStyles, Stack } from '@fluentui/react';
+import { StartRealTimeTextButton } from '@internal/react-components';
+import { RealTimeTextModal } from '@internal/react-components';
+import { LocalLanguage20Regular } from '@fluentui/react-icons';
+import { initializeIcons } from '@fluentui/react';
+
+initializeIcons();
 
 /**
  * return calling components.
@@ -11,96 +27,90 @@ import React from 'react';
  * @internal
  */
 export const StatefulComponents = (): JSX.Element => {
-  //   const call = useCall();
-  // const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
-  // const captionsSettingsModalProps = usePropsFor(CaptionsSettingsModal);
-  // const captionsBannerProps = usePropsFor(CaptionsBanner);
-  // const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
-  // const [isRealTimeTextStarted, setIsRealTimeTextStarted] = useState(false);
-  // const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] =
-  //   useState(false);
+  const call = useCall();
+  const startCaptionsButtonProps: StartCaptionsButtonProps | undefined = useCallingPropsFor(StartCaptionsButton);
+  const captionsSettingsModalProps: CaptionsSettingsModalProps | undefined = useCallingPropsFor(CaptionsSettingsModal);
+  const captionsBannerProps: CaptionsBannerProps | undefined = useCallingPropsFor(CaptionsBanner);
+  const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
+  const [isRealTimeTextStarted, setIsRealTimeTextStarted] = useState(false);
+  const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
 
-  //   console.log("captionsBannerProps", captionsBannerProps);
-  //   console.log("captionsSettingsModalProps", captionsSettingsModalProps);
-  //   console.log("startCaptionsButtonProps", startCaptionsButtonProps);
-  //   console.log("showRealTimeTextModal", showRealTimeTextModal);
-  //   console.log("isRealTimeTextStarted", isRealTimeTextStarted);
-  //   console.log("showCaptionsSettingsModal", showCaptionsSettingsModal);
-  //   console.log("call", call);
-
-  const cameraProps: CameraButtonProps | undefined = useCallingPropsFor(CameraButton);
-  console.log('cameraProps', cameraProps);
   return (
-    <ControlBar layout="floatingBottom">
-      {cameraProps && <CameraButton {...(cameraProps as CameraButtonProps)} />}
-    </ControlBar>
-    // <Stack className={mergeStyles({ height: "100%" })}>
-    //   {captionsSettingsModalProps?.isCaptionsFeatureActive && (
-    //     <CaptionsSettingsModal
-    //       {...captionsSettingsModalProps}
-    //       showModal={showCaptionsSettingsModal}
-    //       onDismissCaptionsSettings={() => {
-    //         setShowCaptionsSettingsModal(false);
-    //       }}
-    //     />
-    //   )}
-    //   {
-    //     /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
-    //       <RealTimeTextModal
-    //         showModal={showRealTimeTextModal}
-    //         onDismissModal={() => {
-    //           setShowRealTimeTextModal(false);
-    //         }}
-    //         onStartRealTimeText={() => {
-    //           setIsRealTimeTextStarted(true);
-    //         }}
-    //       />
-    //     )
-    //   }
-    //   {(captionsBannerProps?.isCaptionsOn ||
-    //     /* @conditional-compile-remove(rtt) */ captionsBannerProps.isRealTimeTextOn ||
-    //     /* @conditional-compile-remove(rtt) */ isRealTimeTextStarted) && (
-    //     <CaptionsBanner
-    //       {...captionsBannerProps}
-    //       /* @conditional-compile-remove(rtt) */
-    //       isRealTimeTextOn={
-    //         captionsBannerProps.isRealTimeTextOn || isRealTimeTextStarted
-    //       }
-    //     />
-    //   )}
+    <Stack className={mergeStyles({ height: '100%' })}>
+      {captionsSettingsModalProps &&
+        (captionsSettingsModalProps as CaptionsSettingsModalProps).isCaptionsFeatureActive && (
+          <CaptionsSettingsModal
+            {...(captionsSettingsModalProps as CaptionsSettingsModalProps)}
+            showModal={showCaptionsSettingsModal}
+            onDismissCaptionsSettings={() => {
+              setShowCaptionsSettingsModal(false);
+            }}
+          />
+        )}
+      {
+        /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
+          <RealTimeTextModal
+            showModal={showRealTimeTextModal}
+            onDismissModal={() => {
+              setShowRealTimeTextModal(false);
+            }}
+            onStartRealTimeText={() => {
+              setIsRealTimeTextStarted(true);
+            }}
+          />
+        )
+      }
+      {captionsBannerProps &&
+        ((captionsBannerProps as CaptionsBannerProps)?.isCaptionsOn ||
+          /* @conditional-compile-remove(rtt) */ (captionsBannerProps as CaptionsBannerProps).isRealTimeTextOn ||
+          /* @conditional-compile-remove(rtt) */ isRealTimeTextStarted) && (
+          <CaptionsBanner
+            {...(captionsBannerProps as CaptionsBannerProps)}
+            /* @conditional-compile-remove(rtt) */
+            isRealTimeTextOn={
+              (captionsBannerProps && (captionsBannerProps as CaptionsBannerProps).isRealTimeTextOn) ||
+              isRealTimeTextStarted
+            }
+          />
+        )}
 
-    //   {startCaptionsButtonProps && (
-    //     <StartCaptionsButton
-    //       {...startCaptionsButtonProps}
-    //       disabled={!(call?.state === "Connected")}
-    //       onStartCaptions={async () => {
-    //         setShowCaptionsSettingsModal(true);
-    //         startCaptionsButtonProps.onStartCaptions();
-    //       }}
-    //     />
-    //   )}
-    //   {startCaptionsButtonProps && (
-    //     <ControlBarButton
-    //       onRenderOnIcon={() => <LocalLanguage20Regular />}
-    //       onRenderOffIcon={() => <LocalLanguage20Regular />}
-    //       disabled={!captionsSettingsModalProps.isCaptionsFeatureActive}
-    //       onClick={() => {
-    //         setShowCaptionsSettingsModal(true);
-    //       }}
-    //     />
-    //   )}
-    //   {
-    //     <StartRealTimeTextButton
-    //       disabled={!(call?.state === "Connected")}
-    //       isRealTimeTextOn={
-    //         captionsBannerProps.isRealTimeTextOn || isRealTimeTextStarted
-    //       }
-    //       onStartRealTimeText={() => {
-    //         setShowRealTimeTextModal(true);
-    //       }}
-    //     />
-    //   }
-    // </Stack>
+      <Stack>
+        <ControlBar layout={'floatingBottom'}>
+          {startCaptionsButtonProps && (
+            <StartCaptionsButton
+              {...(startCaptionsButtonProps as StartCaptionsButtonProps)}
+              disabled={!(call?.state === 'Connected')}
+              onStartCaptions={async () => {
+                setShowCaptionsSettingsModal(true);
+                (startCaptionsButtonProps as StartCaptionsButtonProps).onStartCaptions();
+              }}
+            />
+          )}
+          {startCaptionsButtonProps && captionsSettingsModalProps && (
+            <ControlBarButton
+              onRenderOnIcon={() => <LocalLanguage20Regular />}
+              onRenderOffIcon={() => <LocalLanguage20Regular />}
+              disabled={!(captionsSettingsModalProps as CaptionsSettingsModalProps).isCaptionsFeatureActive}
+              onClick={() => {
+                setShowCaptionsSettingsModal(true);
+              }}
+            />
+          )}
+          {
+            <StartRealTimeTextButton
+              disabled={!(call?.state === 'Connected')}
+              isRealTimeTextOn={
+                (captionsBannerProps && (captionsBannerProps as CaptionsBannerProps).isRealTimeTextOn) ||
+                isRealTimeTextStarted
+              }
+              onStartRealTimeText={() => {
+                setShowRealTimeTextModal(true);
+              }}
+            />
+          }
+        </ControlBar>
+      </Stack>
+    </Stack>
   );
 };
 

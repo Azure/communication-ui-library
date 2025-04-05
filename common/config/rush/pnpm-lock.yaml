@@ -17410,7 +17410,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-Cd9GLdSCQYpxK8wMJSV2sI17DXY/Sv5+BGCeKH2XXt4Q8TkkOxwjY6AQ4UrFxirVzy9+YQ4qntlZX5DJ9RpGMA==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-rSORBBN02tfo12cIq8JbsNe8eCc1RJalBfdhL094M6vRNma2QEkSV+z4U3Gt2Lnpf8QgQC6+hP9PD2M4ynblpA==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -17420,6 +17420,7 @@ packages:
       '@babel/cli': 7.26.4(@babel/core@7.26.10)
       '@babel/core': 7.26.10
       '@fluentui/react': 8.122.11(@types/react-dom@18.3.5)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
+      '@fluentui/react-icons': 2.0.274(react@18.3.1)
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
       '@types/react-dom': 18.3.5(@types/react@18.3.12)

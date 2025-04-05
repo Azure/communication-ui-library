@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { initializeIcons } from '@fluentui/react';
 import { CallAgent, Call } from '@azure/communication-calling';
 import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { CallClientProvider, CallAgentProvider, CallProvider } from '@internal/calling-component-bindings';
@@ -24,7 +23,6 @@ export type CallComponentsProps = {
  * @internal
  */
 export const CallComponents = (props: CallComponentsProps): JSX.Element => {
-  initializeIcons();
   const { callClient, callAgent, call } = props;
 
   return (
