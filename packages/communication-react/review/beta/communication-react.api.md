@@ -659,6 +659,13 @@ export interface CallClientState {
 }
 
 // @public
+export type CallComponentLoaderProps = {
+    callClient: StatefulCallClient;
+    callAgent: CallAgent;
+    call: Call;
+};
+
+// @public
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
@@ -3759,6 +3766,9 @@ export interface JumpToNewMessageButtonProps {
 
 // @public
 export const lightTheme: PartialTheme & CallingTheme;
+
+// @public
+export const loadCallComponent: (loaderArgs: CallComponentLoaderProps, htmlElement: HTMLElement) => Promise<void>;
 
 // @public
 export const loadCallComposite: (loaderArgs: CallCompositeLoaderProps, htmlElement: HTMLElement) => Promise<CallAdapter | undefined>;
