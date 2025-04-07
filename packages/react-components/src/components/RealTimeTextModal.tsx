@@ -105,7 +105,11 @@ export const RealTimeTextModal = (props: RealTimeTextModalProps): JSX.Element =>
           <Text>{strings?.realTimeTextModalText}</Text>
 
           <Stack horizontal horizontalAlign="end" className={buttonsContainerClassName}>
-            <PrimaryButton styles={buttonStyles(theme)} onClick={onConfirm}>
+            <PrimaryButton
+              styles={buttonStyles(theme)}
+              onClick={onConfirm}
+              data-ui-id="realTimeText-modal-confirm-button"
+            >
               <span>{strings?.realTimeTextConfirmButtonLabel}</span>
             </PrimaryButton>
             <DefaultButton onClick={onDismiss} styles={buttonStyles(theme)}>

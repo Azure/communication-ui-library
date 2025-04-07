@@ -205,7 +205,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
     moreButtonContextualMenuItems.push({
       key: 'realTimeTextKey',
-      id: 'common-call-composite-captions-button',
+      id: 'common-call-composite-rtt-button',
       text: localeStrings.strings.call.realTimeTextLabel,
       iconProps: { iconName: 'RealTimeTextIcon', styles: { root: { lineHeight: 0 } } },
       itemProps: {

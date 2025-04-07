@@ -26,10 +26,9 @@ import { OptimalVideoCountSubscriber } from './OptimalVideoCountSubscriber';
 import { CapabilitiesSubscriber } from './CapabilitiesSubscriber';
 import { ReactionSubscriber } from './ReactionSubscriber';
 import { SpotlightSubscriber } from './SpotlightSubscriber';
+import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
-/* @conditional-compile-remove(breakout-rooms) */
-import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
 import { MediaAccessSubscriber } from './MediaAccessSubscriber';
@@ -66,7 +65,6 @@ export class CallSubscriber {
 
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
   private _spotlightSubscriber: SpotlightSubscriber;
-  /* @conditional-compile-remove(breakout-rooms) */
   private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
   /* @conditional-compile-remove(together-mode) */
   private _togetherModeSubscriber: TogetherModeSubscriber;
@@ -125,10 +123,8 @@ export class CallSubscriber {
       this._call.feature(Features.Spotlight)
     );
 
-    /* @conditional-compile-remove(breakout-rooms) */
     // Clear assigned breakout room closed notification for this call.
     this._context.deleteLatestNotification('assignedBreakoutRoomClosed');
-    /* @conditional-compile-remove(breakout-rooms) */
     this._breakoutRoomsSubscriber = new BreakoutRoomsSubscriber(
       this._callIdRef,
       this._context,
@@ -260,7 +256,6 @@ export class CallSubscriber {
     this._capabilitiesSubscriber.unsubscribe();
     this._reactionSubscriber?.unsubscribe();
     this._spotlightSubscriber.unsubscribe();
-    /* @conditional-compile-remove(breakout-rooms) */
     this._breakoutRoomsSubscriber.unsubscribe();
     /* @conditional-compile-remove(together-mode) */
     this._togetherModeSubscriber.unsubscribe();

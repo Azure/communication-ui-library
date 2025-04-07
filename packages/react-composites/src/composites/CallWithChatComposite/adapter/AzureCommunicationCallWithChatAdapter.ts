@@ -18,13 +18,11 @@ import {
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { AddPhoneNumberOptions, DeviceAccess } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */
-import type { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener, TeamsCall } from '@azure/communication-calling';
+import { BreakoutRoomsEventData, BreakoutRoomsUpdatedListener, TeamsCall } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(breakout-rooms) */
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
@@ -110,7 +108,6 @@ import { CapabilitiesChangedListener } from '../../CallComposite/adapter/CallAda
 import { SpotlightChangedListener } from '../../CallComposite/adapter/CallAdapter';
 import { VideoBackgroundImage, VideoBackgroundEffect } from '../../CallComposite';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */
 import { busyWait } from '../../common/utils';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
@@ -159,7 +156,6 @@ class CallWithChatContext {
     this.updateClientState(mergeChatAdapterStateIntoCallWithChatAdapterState(this.state, chatAdapterState));
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public unsetChatState(): void {
     this.updateClientState({ ...this.state, chat: undefined });
   }
@@ -181,11 +177,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   private onChatStateChange: (newChatAdapterState: ChatAdapterState) => void;
   private onCallStateChange: (newChatAdapterState: CallAdapterState) => void;
   private isAdapterDisposed: boolean = false;
-  /* @conditional-compile-remove(breakout-rooms) */
   private createChatAdapterCallback: ((threadId: string) => Promise<ChatAdapter>) | undefined;
-  /* @conditional-compile-remove(breakout-rooms) */
   private originCallChatAdapter: ChatAdapter | undefined;
-  /* @conditional-compile-remove(breakout-rooms) */
   private breakoutRoomChatAdapter: ChatAdapter | undefined;
 
   constructor(callAdapter: CallAdapter, chatAdapter?: ChatAdapter) {
@@ -200,7 +193,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.onChatStateChange = onChatStateChange;
     if (chatAdapter) {
       this.updateChatAdapter(chatAdapter);
-      /* @conditional-compile-remove(breakout-rooms) */
       this.originCallChatAdapter = chatAdapter;
     }
 
@@ -209,7 +201,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     };
 
     this.callAdapter.onStateChange(onCallStateChange);
-    /* @conditional-compile-remove(breakout-rooms) */
     this.callAdapter.on('breakoutRoomsUpdated', async (eventData: BreakoutRoomsEventData) => {
       if (eventData.type === 'join') {
         await this.breakoutRoomJoined(eventData.data);
@@ -224,7 +215,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         }
       }
     });
-    /* @conditional-compile-remove(breakout-rooms) */
     this.callAdapter.on('callEnded', () => {
       // If the call ended is a breakout room call with breakout room settings then update the chat adapter to the
       // origin call
@@ -244,7 +234,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     this.onCallStateChange = onCallStateChange;
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   private async breakoutRoomJoined(call: Call | TeamsCall): Promise<void> {
     const targetThreadId = call.info.threadId;
 
@@ -285,7 +274,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   private async setBreakoutRoomChatAdapterToThread(targetThreadId: string): Promise<ChatAdapter> {
     if (this.breakoutRoomChatAdapter) {
       // If the breakout room chat adapter is not set on the target thread then unsubscribe, dispose, and
@@ -309,18 +297,15 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     chatAdapter.then((adapter) => {
       if (!this.isAdapterDisposed) {
         this.updateChatAdapter(adapter);
-        /* @conditional-compile-remove(breakout-rooms) */
         this.originCallChatAdapter = adapter;
       }
     });
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public setCreateChatAdapterCallback(chatThreadCallBack: (threadId: string) => Promise<ChatAdapter>): void {
     this.createChatAdapterCallback = chatThreadCallBack;
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public createNewChatAdapterForThread(threadId: string): Promise<ChatAdapter> {
     if (this.createChatAdapterCallback) {
       return this.createChatAdapterCallback(threadId);
@@ -734,7 +719,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     return this.callAdapter.muteAllRemoteParticipants();
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public async returnFromBreakoutRoom(): Promise<void> {
     if (
       this.originCallChatAdapter &&
@@ -811,7 +795,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
-  /* @conditional-compile-remove(breakout-rooms) */
   on(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
   on(event: 'chatInitialized', listener: ChatInitializedListener): void;
 
@@ -916,7 +899,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'spotlightChanged':
         this.callAdapter.on('spotlightChanged', listener);
         break;
-      /* @conditional-compile-remove(breakout-rooms) */
       case 'breakoutRoomsUpdated':
         this.callAdapter.on('breakoutRoomsUpdated', listener);
         break;
@@ -953,7 +935,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
   off(event: 'chatInitialized', listener: ChatInitializedListener): void;
-  /* @conditional-compile-remove(breakout-rooms) */
   off(event: 'breakoutRoomsUpdated', listener: BreakoutRoomsUpdatedListener): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   off(event: CallWithChatEvent, listener: any): void {
@@ -1056,7 +1037,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       case 'spotlightChanged':
         this.callAdapter.off('spotlightChanged', listener);
         break;
-      /* @conditional-compile-remove(breakout-rooms) */
       case 'breakoutRoomsUpdated':
         this.callAdapter.off('breakoutRoomsUpdated', listener);
         break;
@@ -1281,7 +1261,6 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
       chatAdapterOptions
     );
     callWithChatAdapter.setChatAdapterPromise(chatAdapterPromise);
-    /* @conditional-compile-remove(breakout-rooms) */
     callWithChatAdapter.setCreateChatAdapterCallback((threadId: string) =>
       _createAzureCommunicationChatAdapterInner(
         endpoint,
@@ -1308,7 +1287,6 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
     );
 
     const callWithChatAdapter = new AzureCommunicationCallWithChatAdapter(await callAdapter, await chatAdapter);
-    /* @conditional-compile-remove(breakout-rooms) */
     callWithChatAdapter.setCreateChatAdapterCallback((threadId: string) =>
       _createAzureCommunicationChatAdapterInner(
         endpoint,
@@ -1495,7 +1473,6 @@ export const createAzureCommunicationCallWithChatAdapterFromClients = async ({
   );
   const chatAdapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient);
   const callWithChatAdapter = new AzureCommunicationCallWithChatAdapter(callAdapter, chatAdapter);
-  /* @conditional-compile-remove(breakout-rooms) */
   callWithChatAdapter.setCreateChatAdapterCallback((threadId: string) =>
     createAzureCommunicationChatAdapterFromClient(chatClient, chatClient.getChatThreadClient(threadId))
   );
