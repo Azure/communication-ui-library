@@ -46,11 +46,24 @@ import { createProfileStateModifier } from './OnFetchProfileCallback';
 /* @conditional-compile-remove(on-fetch-profile) */
 import type { OnFetchChatProfileCallback } from './OnFetchProfileCallback';
 
+/* @conditional-compile-remove(on-fetch-profile) */
 /**
  * @private
  */
 export type AdapterStateModifier = (state: ChatAdapterState) => ChatAdapterState;
 
+/* @conditional-compile-remove(on-fetch-profile) */
+/**
+ * Options for configuring the ChatAdapter.
+ *
+ * @public
+ */
+export type ChatAdapterOptions = {
+  /**
+   * Optional callback to fetch a chat profile
+   */
+  onFetchProfile?: OnFetchChatProfileCallback;
+};
 /**
  * Context of Chat, which is a centralized context for all state updates
  * @private
@@ -66,7 +79,7 @@ export class ChatContext {
     clientState: ChatClientState,
     threadId: string,
     /* @conditional-compile-remove(on-fetch-profile) */
-    onFetchProfile?: OnFetchChatProfileCallback
+    chatAdapterOptions?: ChatAdapterOptions
   ) {
     const thread = clientState.threads[threadId];
     this.threadId = threadId;
@@ -80,8 +93,8 @@ export class ChatContext {
       latestErrors: clientState.latestErrors
     };
     /* @conditional-compile-remove(on-fetch-profile) */
-    this.displayNameModifier = onFetchProfile
-      ? createProfileStateModifier(onFetchProfile, () => {
+    this.displayNameModifier = chatAdapterOptions?.onFetchProfile
+      ? createProfileStateModifier(chatAdapterOptions.onFetchProfile, () => {
           this.setState(this.getState());
         })
       : undefined;
@@ -143,12 +156,18 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   constructor(
     chatClient: StatefulChatClient,
     chatThreadClient: ChatThreadClient,
-    onFetchProfile?: OnFetchChatProfileCallback
+    /* @conditional-compile-remove(on-fetch-profile) */
+    chatAdapterOptions?: ChatAdapterOptions
   ) {
     this.bindAllPublicMethods();
     this.chatClient = chatClient;
     this.chatThreadClient = chatThreadClient;
-    this.context = new ChatContext(chatClient.getState(), chatThreadClient.threadId, onFetchProfile);
+    this.context = new ChatContext(
+      chatClient.getState(),
+      chatThreadClient.threadId,
+      /* @conditional-compile-remove(on-fetch-profile) */
+      chatAdapterOptions
+    );
 
     const onStateChange = (clientState: ChatClientState): void => {
       // unsubscribe when the instance gets disposed
@@ -535,7 +554,7 @@ export const _createAzureCommunicationChatAdapterInner = async (
   threadId: string,
   telemetryImplementationHint: _TelemetryImplementationHint = 'Chat',
   /* @conditional-compile-remove(on-fetch-profile) */
-  onFetchProfile?: OnFetchChatProfileCallback
+  chatAdapterOptions?: ChatAdapterOptions
 ): Promise<ChatAdapter> => {
   if (!_isValidIdentifier(userId)) {
     throw new Error('Provided userId is invalid. Please provide valid identifier object.');
@@ -554,7 +573,12 @@ export const _createAzureCommunicationChatAdapterInner = async (
   const chatThreadClient = await chatClient.getChatThreadClient(threadId);
   await chatClient.startRealtimeNotifications();
 
-  const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient, onFetchProfile);
+  const adapter = await createAzureCommunicationChatAdapterFromClient(
+    chatClient,
+    chatThreadClient,
+    /* @conditional-compile-remove(on-fetch-profile) */
+    chatAdapterOptions
+  );
 
   return adapter;
 };
@@ -572,7 +596,7 @@ export const _createLazyAzureCommunicationChatAdapterInner = async (
   threadId: Promise<string>,
   telemetryImplementationHint: _TelemetryImplementationHint = 'Chat',
   /* @conditional-compile-remove(on-fetch-profile) */
-  onFetchProfile?: OnFetchChatProfileCallback
+  chatAdapterOptions?: ChatAdapterOptions
 ): Promise<ChatAdapter> => {
   if (!_isValidIdentifier(userId)) {
     throw new Error('Provided userId is invalid. Please provide valid identifier object.');
@@ -598,7 +622,11 @@ export const _createLazyAzureCommunicationChatAdapterInner = async (
     const chatThreadClient = await chatClient.getChatThreadClient(threadId);
     await chatClient.startRealtimeNotifications();
 
-    const adapter = await createAzureCommunicationChatAdapterFromClient(chatClient, chatThreadClient, onFetchProfile);
+    const adapter = await createAzureCommunicationChatAdapterFromClient(
+      chatClient,
+      chatThreadClient,
+      chatAdapterOptions
+    );
 
     return adapter;
   });
@@ -730,9 +758,14 @@ export async function createAzureCommunicationChatAdapterFromClient(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
   /* @conditional-compile-remove(on-fetch-profile) */
-  onFetchProfile?: OnFetchChatProfileCallback
+  chatAdapterOptions?: ChatAdapterOptions
 ): Promise<ChatAdapter> {
-  return new AzureCommunicationChatAdapter(chatClient, chatThreadClient, onFetchProfile);
+  return new AzureCommunicationChatAdapter(
+    chatClient,
+    chatThreadClient,
+    /* @conditional-compile-remove(on-fetch-profile) */
+    chatAdapterOptions
+  );
 }
 
 const isChatError = (e: Error): e is ChatError => {

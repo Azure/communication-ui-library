@@ -20,7 +20,9 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
     // Feature for remote UFD
-    "remote-ufd"
+    "remote-ufd",
+    // Feature for on fetch profile
+    "on-fetch-profile"
   ],
   beta: [
     "call-readiness",
@@ -67,8 +69,6 @@ module.exports = {
     "teams-identity-support-beta",
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
-    // Feature for on fetch profile
-    "on-fetch-profile",
     // Feature for RTT
     "rtt",
     // Feature for together mode
@@ -79,7 +79,6 @@ module.exports = {
     // Do not use in production code.
     "stabilizedDemo",
     // Feature for breakout rooms
-    "breakout-rooms",
-    
+    "breakout-rooms"
   ]
 }

@@ -1,30 +1,40 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/* @conditional-compile-remove(on-fetch-profile) */
 import { ChatParticipant } from '@azure/communication-chat';
+/* @conditional-compile-remove(on-fetch-profile) */
 import { AdapterStateModifier } from './AzureCommunicationChatAdapter';
+/* @conditional-compile-remove(on-fetch-profile) */
 import { ChatAdapterState } from './ChatAdapter';
+/* @conditional-compile-remove(on-fetch-profile) */
 import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
 
+/* @conditional-compile-remove(on-fetch-profile) */
 /**
  * Callback function used to provide custom data to build profile for a user or bot.
  *
  * @public
  */
-export type OnFetchChatProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
+export type OnFetchChatProfileCallback = (
+  userId: string,
+  defaultProfile?: ChatProfile
+) => Promise<ChatProfile | undefined>;
 
+/* @conditional-compile-remove(on-fetch-profile) */
 /**
  * The profile of a user or bot.
  *
  * @public
  */
-export type Profile = {
+export type ChatProfile = {
   /**
    * Primary text to display, usually the name of the person.
    */
   displayName?: string;
 };
 
+/* @conditional-compile-remove(on-fetch-profile) */
 /**
  * @private
  */
@@ -154,6 +164,7 @@ export const createProfileStateModifier = (
   };
 };
 
+/* @conditional-compile-remove(on-fetch-profile) */
 /**
  * @private
  * This is the util function to create a participant modifier for remote participantList
@@ -209,6 +220,7 @@ export const createParticipantModifier = (
   };
 };
 
+/* @conditional-compile-remove(on-fetch-profile) */
 /**
  * @private
  * This is the util function to create a chat message modifier for remote participantList
