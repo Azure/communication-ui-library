@@ -110,6 +110,8 @@ import { busyWait } from '../../common/utils';
 
 type CallWithChatAdapterStateChangedHandler = (newState: CallWithChatAdapterState) => void;
 
+type Listener = (...args: unknown[]) => void;
+
 /**
  * For each time that we use the hook {@link useSelector} in the {@link CallWithChatComposite} we add another listener
  * to the `stateChanged` event on the this adapter. This number is set in relation to the number of
@@ -178,6 +180,24 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   private createChatAdapterCallback: ((threadId: string) => Promise<ChatAdapter>) | undefined;
   private originCallChatAdapter: ChatAdapter | undefined;
   private breakoutRoomChatAdapter: ChatAdapter | undefined;
+
+  private chatEventListeners: Map<string, Listener[]> = new Map();
+
+  private addListener(event: string, listener: Listener): void {
+    const listeners = this.chatEventListeners.get(event) || [];
+    this.chatEventListeners.set(event, [...listeners, listener]);
+  }
+
+  private getListeners(event: string): Listener[] {
+    return this.chatEventListeners.get(event) || [];
+  }
+
+  private removeListener(event: string, listener: Listener): void {
+    this.chatEventListeners.set(
+      event,
+      this.getListeners(event).filter((l) => l !== listener)
+    );
+  }
 
   constructor(callAdapter: CallAdapter, chatAdapter?: ChatAdapter) {
     this.bindPublicMethods();
@@ -313,10 +333,55 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
 
   private updateChatAdapter(chatAdapter: ChatAdapter): void {
     this.chatAdapter?.offStateChange(this.onChatStateChange);
+    this.updateChatEventListeners(chatAdapter);
     this.chatAdapter = chatAdapter;
     this.chatAdapter.onStateChange(this.onChatStateChange);
     this.context.updateClientStateWithChatState(chatAdapter.getState());
     this.emitter.emit('chatInitialized', this.chatAdapter);
+  }
+
+  private updateChatEventListeners(chatAdapter: ChatAdapter): void {
+    const messageReceivedListeners = this.getListeners('messageReceived');
+    for (const listener of messageReceivedListeners) {
+      this.chatAdapter?.off('messageReceived', listener as MessageReceivedListener);
+      chatAdapter.on('messageReceived', listener as MessageReceivedListener);
+    }
+
+    const messageSentListeners = this.getListeners('messageSent');
+    for (const listener of messageSentListeners) {
+      this.chatAdapter?.off('messageSent', listener as MessageReceivedListener);
+      chatAdapter.on('messageSent', listener as MessageReceivedListener);
+    }
+
+    const messageReadListeners = this.getListeners('messageRead');
+    for (const listener of messageReadListeners) {
+      this.chatAdapter?.off('messageRead', listener as MessageReadListener);
+      chatAdapter.on('messageRead', listener as MessageReadListener);
+    }
+
+    const messageEditedListeners = this.getListeners('messageEdited');
+    for (const listener of messageEditedListeners) {
+      this.chatAdapter?.off('messageEdited', listener as MessageEditedListener);
+      chatAdapter.on('messageEdited', listener as MessageEditedListener);
+    }
+
+    const messageDeletedListeners = this.getListeners('messageDeleted');
+    for (const listener of messageDeletedListeners) {
+      this.chatAdapter?.off('messageDeleted', listener as MessageDeletedListener);
+      chatAdapter.on('messageDeleted', listener as MessageDeletedListener);
+    }
+
+    const participantsAddedListeners = this.getListeners('participantsAdded');
+    for (const listener of participantsAddedListeners) {
+      this.chatAdapter?.off('participantsAdded', listener as ParticipantsAddedListener);
+      chatAdapter.on('participantsAdded', listener as ParticipantsAddedListener);
+    }
+
+    const participantsRemovedListeners = this.getListeners('participantsRemoved');
+    for (const listener of participantsRemovedListeners) {
+      this.chatAdapter?.off('participantsRemoved', listener as ParticipantsRemovedListener);
+      chatAdapter.on('participantsRemoved', listener as ParticipantsRemovedListener);
+    }
   }
 
   private bindPublicMethods(): void {
@@ -846,36 +911,43 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.callAdapter.on('isSpokenLanguageChanged', listener);
         break;
       case 'messageReceived':
+        this.addListener('messageReceived', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.on('messageReceived', listener);
         });
         break;
       case 'messageEdited':
+        this.addListener('messageEdited', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.on('messageEdited', listener);
         });
         break;
       case 'messageDeleted':
+        this.addListener('messageDeleted', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.on('messageDeleted', listener);
         });
         break;
       case 'messageSent':
+        this.addListener('messageSent', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.on('messageSent', listener);
         });
         break;
       case 'messageRead':
+        this.addListener('messageRead', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.on('messageRead', listener);
         });
         break;
       case 'chatParticipantsAdded':
+        this.addListener('participantsAdded', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.on('participantsAdded', listener);
         });
         break;
       case 'chatParticipantsRemoved':
+        this.addListener('participantsRemoved', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.on('participantsRemoved', listener);
         });
@@ -889,6 +961,7 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         });
         break;
       case 'chatInitialized':
+        this.addListener('chatInitialized', listener);
         this.emitter.on(event, listener);
         break;
       case 'capabilitiesChanged':
@@ -984,36 +1057,43 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.callAdapter.off('isSpokenLanguageChanged', listener);
         break;
       case 'messageReceived':
+        this.removeListener('messageReceived', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('messageReceived', listener);
         });
         break;
       case 'messageEdited':
+        this.removeListener('messageEdited', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('messageEdited', listener);
         });
         break;
       case 'messageDeleted':
+        this.removeListener('messageDeleted', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('messageDeleted', listener);
         });
         break;
       case 'messageSent':
+        this.removeListener('messageSent', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('messageSent', listener);
         });
         break;
       case 'messageRead':
+        this.removeListener('messageRead', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('messageRead', listener);
         });
         break;
       case 'chatParticipantsAdded':
+        this.removeListener('participantsAdded', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('participantsAdded', listener);
         });
         break;
       case 'chatParticipantsRemoved':
+        this.removeListener('participantsRemoved', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('participantsRemoved', listener);
         });
@@ -1022,11 +1102,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.callAdapter.off('error', listener);
         break;
       case 'chatError':
+        this.removeListener('chatError', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('error', listener);
         });
         break;
       case 'chatInitialized':
+        this.removeListener('chatInitialized', listener);
         this.emitter.off(event, listener);
         break;
       case 'capabilitiesChanged':
