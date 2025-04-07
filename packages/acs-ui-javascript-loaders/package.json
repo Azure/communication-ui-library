@@ -32,18 +32,18 @@
   "license": "ISC",
   "dependencies": {
     "@azure/communication-common": "^2.3.1",
-    "@internal/acs-ui-common": "1.26.0-beta.1",
-    "@internal/react-composites": "1.26.0-beta.1",
-    "@fluentui/react": "^8.122.11",
     "@azure/logger": "^1.0.4"
   },
   "peerDependencies": {
     "react": ">=16.8.0 <19.0.0",
     "@types/react": ">=16.8.0 <19.0.0",
     "@types/react-dom": ">=16.8.0 <19.0.0",
-    "react-dom": ">=16.8.0 <19.0.0"
+    "react-dom": ">=16.8.0 <19.0.0",
+    "@internal/acs-ui-common": "1.26.0-beta.1",
+    "@internal/react-composites": "1.26.0-beta.1",
+    "@fluentui/react": "^8.122.11"
   },
-  "devDependencies": {
+  "devDependencies": {  
     "@babel/cli": "^7.24.8",
     "@babel/core": "^7.26.10",
     "@types/jest": "^29.5.14",

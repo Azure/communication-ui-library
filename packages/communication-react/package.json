@@ -72,7 +72,7 @@
       "types": "./dist/communication-react.d.ts"
     },
     "./javascript-loaders": {
-      "main": "./dist/dist-cjs/javascript-loaders/src/index.js",
+      "require": "./dist/dist-cjs/javascript-loaders/index.js",
       "module": "./dist/dist-esm/communication-react/src/javascript-loaders.js",
       "types": "./dist/dist-esm/communication-react/src/javascript-loaders.d.ts"
     }
