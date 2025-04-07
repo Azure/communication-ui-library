@@ -32,7 +32,7 @@ jobs:
   create_pre-release:
     name: Bump versions and make changelog for release
     runs-on: ${{ vars.RUNS_ON }}
-    permissions: read-all
+    permissions: write-all
     steps:
       # Check-out repo
       - uses: actions/checkout@v4

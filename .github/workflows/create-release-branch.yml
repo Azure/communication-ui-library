@@ -19,7 +19,7 @@ jobs:
     if: ${{ startsWith(github.event.inputs.branch, 'prerelease') }}
     name: Create release branch
     runs-on: ${{ vars.RUNS_ON }}
-    permissions: read-all
+    permissions: write-all
     steps:
       # Check-out repo
       - uses: actions/checkout@v4
