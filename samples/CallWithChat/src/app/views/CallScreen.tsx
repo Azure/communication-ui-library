@@ -17,13 +17,14 @@ import {
 } from '@azure/communication-react';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { attachmentUploadOptions } from '../../../../Chat/src/app/utils/uploadHandler';
-import { Spinner } from '@fluentui/react';
+import { DefaultButton, Spinner } from '@fluentui/react';
 import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvider';
 import { createAutoRefreshingCredential } from '../utils/credential';
 import { WEB_APP_TITLE } from '../utils/constants';
 import { useIsMobile } from '../utils/useIsMobile';
 import { isIOS } from '../utils/utils';
+import { ChatMessage } from '@azure/communication-chat';
 
 export interface CallScreenProps {
   token: string;
@@ -151,6 +152,9 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         // add top-level error handling logic here (e.g. reporting telemetry).
         console.log('Adapter error event:', e);
       });
+      console.log('afterAdapterCreate...');
+      adapter.on('messageReceived', messageReceivedListener);
+      adapter.on('messageSent', messageSentListener);
       adapter.onStateChange((state: CallWithChatAdapterState) => {
         const pageTitle = convertPageStateToString(state);
         document.title = `${pageTitle} - ${WEB_APP_TITLE}`;
@@ -234,14 +238,20 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     callInvitationUrl = undefined;
   }
   return (
-    <CallWithChatComposite
-      adapter={adapter}
-      fluentTheme={currentTheme.theme}
-      rtl={currentRtl}
-      joinInvitationURL={callInvitationUrl}
-      options={options}
-      formFactor={isMobileSession ? 'mobile' : 'desktop'}
-    />
+    <>
+      <DefaultButton
+        text="Stop listening to received messages"
+        onClick={() => adapter.off('messageReceived', messageReceivedListener)}
+      />
+      <CallWithChatComposite
+        adapter={adapter}
+        fluentTheme={currentTheme.theme}
+        rtl={currentRtl}
+        joinInvitationURL={callInvitationUrl}
+        options={options}
+        formFactor={isMobileSession ? 'mobile' : 'desktop'}
+      />
+    </>
   );
 };
 
@@ -274,4 +284,12 @@ const isTeamsMeetingIdLocator = (
 
 const isGroupCallLocator = (locator: TeamsMeetingLinkLocator | CallAndChatLocator | TeamsMeetingIdLocator): boolean => {
   return 'callLocator' in locator && 'groupId' in locator.callLocator;
+};
+
+const messageReceivedListener = (e: { message: ChatMessage }): void => {
+  console.log('messageReceived: ', e);
+};
+
+const messageSentListener = (e: { message: ChatMessage }): void => {
+  console.log('messageSent: ', e);
 };
