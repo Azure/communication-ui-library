@@ -371,16 +371,22 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
       chatAdapter.on('messageDeleted', listener as MessageDeletedListener);
     }
 
-    const participantsAddedListeners = this.getListeners('participantsAdded');
+    const participantsAddedListeners = this.getListeners('chatParticipantsAdded');
     for (const listener of participantsAddedListeners) {
       this.chatAdapter?.off('participantsAdded', listener as ParticipantsAddedListener);
       chatAdapter.on('participantsAdded', listener as ParticipantsAddedListener);
     }
 
-    const participantsRemovedListeners = this.getListeners('participantsRemoved');
+    const participantsRemovedListeners = this.getListeners('chatParticipantsRemoved');
     for (const listener of participantsRemovedListeners) {
       this.chatAdapter?.off('participantsRemoved', listener as ParticipantsRemovedListener);
       chatAdapter.on('participantsRemoved', listener as ParticipantsRemovedListener);
+    }
+
+    const chatErrorListeners = this.getListeners('chatError');
+    for (const listener of chatErrorListeners) {
+      this.chatAdapter?.off('error', listener as (e: AdapterError) => void);
+      chatAdapter.on('error', listener as (e: AdapterError) => void);
     }
   }
 
@@ -941,13 +947,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         });
         break;
       case 'chatParticipantsAdded':
-        this.addListener('participantsAdded', listener);
+        this.addListener('chatParticipantsAdded', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.on('participantsAdded', listener);
         });
         break;
       case 'chatParticipantsRemoved':
-        this.addListener('participantsRemoved', listener);
+        this.addListener('chatParticipantsRemoved', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.on('participantsRemoved', listener);
         });
@@ -956,12 +962,12 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         this.callAdapter.on('error', listener);
         break;
       case 'chatError':
+        this.addListener('chatError', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.on('error', listener);
         });
         break;
       case 'chatInitialized':
-        this.addListener('chatInitialized', listener);
         this.emitter.on(event, listener);
         break;
       case 'capabilitiesChanged':
@@ -1087,13 +1093,13 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         });
         break;
       case 'chatParticipantsAdded':
-        this.removeListener('participantsAdded', listener);
+        this.removeListener('chatParticipantsAdded', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('participantsAdded', listener);
         });
         break;
       case 'chatParticipantsRemoved':
-        this.removeListener('participantsRemoved', listener);
+        this.removeListener('chatParticipantsRemoved', listener);
         this.executeWithResolvedChatAdapter((adapter) => {
           adapter.off('participantsRemoved', listener);
         });
@@ -1108,7 +1114,6 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
         });
         break;
       case 'chatInitialized':
-        this.removeListener('chatInitialized', listener);
         this.emitter.off(event, listener);
         break;
       case 'capabilitiesChanged':
