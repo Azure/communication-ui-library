@@ -1,8 +1,27 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Tue, 18 Mar 2025 17:01:36 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 07 Apr 2025 16:07:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.26.0](https://github.com/azure/communication-ui-library/tree/1.26.0)
+
+Mon, 07 Apr 2025 16:07:48 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.26.0-beta.1...1.26.0)
+
+### Improvements
+- Add API to disable the notifications in the CallComposite ([PR #5751](https://github.com/azure/communication-ui-library/pull/5751) by dmceachern@microsoft.com)
+### Bug Fixes
+- Add adapter options for CallWithChat JS bundle ([PR #5739](https://github.com/azure/communication-ui-library/pull/5739) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix dependabot alert for @babel/helpers (CVE-2025-27789) ([PR #5734](https://github.com/azure/communication-ui-library/pull/5734) by 2684369+JamesBurnside@users.noreply.github.com)
+- Ensure all Captions and RealTimeText messages contains key values ([PR #5754](https://github.com/azure/communication-ui-library/pull/5754) by edwardlee@microsoft.com)
+- Video Gallery should still show desktop view with name plate and 16:9 layout at 400% zoom ([PR #5745](https://github.com/azure/communication-ui-library/pull/5745) by 96077406+carocao-msft@users.noreply.github.com)
+- Resolve issue where RichTextBox could not be found when running in production with a minimized bundle. ([PR #5712](https://github.com/azure/communication-ui-library/pull/5712) by palatter@microsoft.com)
+- update useAdapted selector to always use the up to date callId ([PR #5725](https://github.com/azure/communication-ui-library/pull/5725) by dmceachern@microsoft.com)
+- Fix ChatMyMessage download button issue ([PR #5753](https://github.com/azure/communication-ui-library/pull/5753) by 77021369+jimchou-dev@users.noreply.github.com)
+### Storybook Changes
+- Update changelog to include storybook related changes ([PR #5731](https://github.com/azure/communication-ui-library/pull/5731) by 96077406+carocao-msft@users.noreply.github.com)
+
 
 ## [1.25.0](https://github.com/azure/communication-ui-library/tree/1.25.0)
 
