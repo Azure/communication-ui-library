@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Breakout rooms",
+  "comment": "Maintain muted state when joining and leaving breakout rooms",
+  "packageName": "@azure/communication-react",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

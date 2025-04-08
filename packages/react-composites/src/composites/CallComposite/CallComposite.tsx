@@ -784,7 +784,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
       break;
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   if (page === 'returningFromBreakoutRoom') {
     pageElement = (
       <CallPage

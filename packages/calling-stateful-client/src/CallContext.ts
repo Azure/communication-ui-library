@@ -14,9 +14,13 @@ import {
 import { RealTimeTextInfo } from './CallClientState';
 /* @conditional-compile-remove(rtt) */
 import { RealTimeTextInfo as AcsRealTimeTextInfo } from '@azure/communication-calling';
-import { RaisedHand, MediaAccess, MeetingMediaAccess } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */
-import { BreakoutRoom, BreakoutRoomsSettings } from '@azure/communication-calling';
+import {
+  BreakoutRoom,
+  BreakoutRoomsSettings,
+  MediaAccess,
+  MeetingMediaAccess,
+  RaisedHand
+} from '@azure/communication-calling';
 
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 import { convertConferencePhoneInfo } from './Converter';
@@ -96,7 +100,6 @@ export class CallContext {
   private _callIdHistory: CallIdHistory = new CallIdHistory();
   private _timeOutId: { [key: string]: ReturnType<typeof setTimeout> } = {};
   private _latestCallIdOfNotification: Partial<Record<NotificationTarget, string>> = {};
-  /* @conditional-compile-remove(breakout-rooms) */
   private _openBreakoutRoom: string | undefined;
 
   constructor(userId: CommunicationIdentifierKind, maxListeners = 50) {
@@ -253,7 +256,6 @@ export class CallContext {
         draft.calls[newCallId] = call;
       }
 
-      /* @conditional-compile-remove(breakout-rooms) */
       // Update call ids in latestCallIdsThatPushedNotifications
       Object.keys(this._latestCallIdOfNotification).forEach((key: string) => {
         if (this._latestCallIdOfNotification[key as NotificationTarget] === oldCallId) {
@@ -261,7 +263,6 @@ export class CallContext {
         }
       });
 
-      /* @conditional-compile-remove(breakout-rooms) */
       // Update the open breakout room call id if it matches the old call id
       if (this._openBreakoutRoom === oldCallId) {
         this._openBreakoutRoom = newCallId;
@@ -745,7 +746,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public setAssignedBreakoutRoom(callId: string, breakoutRoom?: BreakoutRoom): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -755,7 +755,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public setBreakoutRoomSettings(callId: string, breakoutRoomSettings: BreakoutRoomsSettings): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -765,7 +764,6 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public setBreakoutRoomDisplayName(callId: string, breakoutRoomDisplayName: string): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -775,17 +773,14 @@ export class CallContext {
     });
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public setOpenBreakoutRoom(callId: string): void {
     this._openBreakoutRoom = callId;
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public deleteOpenBreakoutRoom(): void {
     this._openBreakoutRoom = undefined;
   }
 
-  /* @conditional-compile-remove(breakout-rooms) */
   public getOpenBreakoutRoom(): string | undefined {
     return this._openBreakoutRoom;
   }
