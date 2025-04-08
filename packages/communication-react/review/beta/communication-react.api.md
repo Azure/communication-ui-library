@@ -311,6 +311,7 @@ export type AzureCommunicationChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
+    chatAdapterOptions?: ChatAdapterOptions;
 };
 
 // @public
@@ -2831,7 +2832,7 @@ export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId, chatAdapterOptions }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
 export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, chatAdapterOptions?: ChatAdapterOptions): Promise<ChatAdapter>;

@@ -522,6 +522,8 @@ export type AzureCommunicationChatAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   threadId: string;
+  /* @conditional-compile-remove(on-fetch-profile) */
+  chatAdapterOptions?: ChatAdapterOptions;
 };
 
 /**
@@ -536,9 +538,20 @@ export const createAzureCommunicationChatAdapter = async ({
   userId,
   displayName,
   credential,
-  threadId
+  threadId,
+  /* @conditional-compile-remove(on-fetch-profile) */
+  chatAdapterOptions
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
-  return _createAzureCommunicationChatAdapterInner(endpointUrl, userId, displayName, credential, threadId);
+  return _createAzureCommunicationChatAdapterInner(
+    endpointUrl,
+    userId,
+    displayName,
+    credential,
+    threadId,
+    'Chat' as _TelemetryImplementationHint,
+    /* @conditional-compile-remove(on-fetch-profile) */
+    chatAdapterOptions
+  );
 };
 
 /**
@@ -546,7 +559,7 @@ export const createAzureCommunicationChatAdapter = async ({
  *
  * @internal
  */
-export const _createAzureCommunicationChatAdapterInner = async (
+export const _createAzureCommunicationChatAdapterInner = async function (
   endpoint: string,
   userId: CommunicationUserIdentifier,
   displayName: string,
@@ -555,7 +568,7 @@ export const _createAzureCommunicationChatAdapterInner = async (
   telemetryImplementationHint: _TelemetryImplementationHint = 'Chat',
   /* @conditional-compile-remove(on-fetch-profile) */
   chatAdapterOptions?: ChatAdapterOptions
-): Promise<ChatAdapter> => {
+): Promise<ChatAdapter> {
   if (!_isValidIdentifier(userId)) {
     throw new Error('Provided userId is invalid. Please provide valid identifier object.');
   }
@@ -588,7 +601,7 @@ export const _createAzureCommunicationChatAdapterInner = async (
  * ThreadId is a promise to allow for lazy initialization of the adapter.
  * @internal
  */
-export const _createLazyAzureCommunicationChatAdapterInner = async (
+export const _createLazyAzureCommunicationChatAdapterInner = async function (
   endpoint: string,
   userId: CommunicationUserIdentifier,
   displayName: string,
@@ -597,7 +610,7 @@ export const _createLazyAzureCommunicationChatAdapterInner = async (
   telemetryImplementationHint: _TelemetryImplementationHint = 'Chat',
   /* @conditional-compile-remove(on-fetch-profile) */
   chatAdapterOptions?: ChatAdapterOptions
-): Promise<ChatAdapter> => {
+): Promise<ChatAdapter> {
   if (!_isValidIdentifier(userId)) {
     throw new Error('Provided userId is invalid. Please provide valid identifier object.');
   }
@@ -625,6 +638,7 @@ export const _createLazyAzureCommunicationChatAdapterInner = async (
     const adapter = await createAzureCommunicationChatAdapterFromClient(
       chatClient,
       chatThreadClient,
+      /* @conditional-compile-remove(on-fetch-profile) */
       chatAdapterOptions
     );
 
