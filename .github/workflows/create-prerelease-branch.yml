@@ -32,18 +32,12 @@ jobs:
   create_pre-release:
     name: Bump versions and make changelog for release
     runs-on: ${{ vars.RUNS_ON }}
-    permissions: read-all
+    permissions: write-all
     steps:
       # Check-out repo
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-          # Use a machine account when checking out. This is to workaround the issue were GitHub
-          # actions, when using the default account, cannot trigger other actions. And we want this
-          # action to trigger the regular CI pipeline on the created branch.
-          # This machine account is only for this PAT, pwd was created and thrown away
-          # If any update needed, create a new account, add access to the repo and generate a new PAT
-          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
 
       # Setup bot information for creating pull request
       # Here we use the id from the github actions bot: https://api.github.com/users/better-informatics%5Bbot%5D
