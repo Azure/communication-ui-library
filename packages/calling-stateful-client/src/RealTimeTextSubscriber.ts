@@ -25,7 +25,6 @@ export class RealTimeTextSubscriber {
 
   private subscribe = (): void => {
     this._realTimeTextFeature.on('realTimeTextReceived', this.realTimeTextReceived);
-    this._context.setIsRealTimeTextSupported(this._callIdRef.callId, true);
   };
 
   public unsubscribe = (): void => {

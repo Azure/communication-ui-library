@@ -4210,7 +4210,6 @@ export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
 // @public (undocumented)
 export interface RealTimeTextCallFeatureState {
     isRealTimeTextFeatureActive?: boolean;
-    isRealTimeTextSupported?: boolean;
     realTimeTexts: {
         completedMessages?: RealTimeTextInfo[];
         currentInProgress?: RealTimeTextInfo[];
