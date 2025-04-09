@@ -472,6 +472,8 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
     }
     this.callAdapter.offStateChange(this.onCallStateChange);
     this.callAdapter.dispose();
+    // Clear chat event listeners
+    this.chatEventListeners.clear();
   }
   /** Remove a participant from the Call only. */
   public async removeParticipant(userId: string | CommunicationIdentifier): Promise<void> {
