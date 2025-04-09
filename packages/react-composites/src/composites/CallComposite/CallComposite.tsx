@@ -473,13 +473,25 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   useEffect(() => {
     const closeSidePane = (): void => {
       setSidePaneRenderer(undefined);
-      setUserSetGalleryLayout('floatingLocalVideo');
     };
-    adapter.on('callEnded', closeSidePane);
+
+    /* @conditional-compile-remove(together-mode) */
+    const resetUserGalleryLayout = (): void => {
+      if (userSetGalleryLayout === 'togetherMode') {
+        setUserSetGalleryLayout('floatingLocalVideo');
+      }
+    };
+
+    const handleCallEnded = (): void => {
+      closeSidePane();
+      /* @conditional-compile-remove(together-mode) */
+      resetUserGalleryLayout();
+    };
+    adapter.on('callEnded', handleCallEnded);
     return () => {
-      adapter.off('callEnded', closeSidePane);
+      adapter.off('callEnded', handleCallEnded);
     };
-  }, [adapter]);
+  }, [adapter, /* @conditional-compile-remove(together-mode) */ userSetGalleryLayout]);
 
   const compositeAudioContext = useAudio();
 
