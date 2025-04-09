@@ -151,7 +151,7 @@ export class CallSubscriber {
         this._call.feature(Features.RealTimeText)
       );
     } catch (e) {
-      console.log('Real Time Text is not supported in this call');
+      console.log('RealTimeText feature is not supported');
     }
 
     this.subscribe();
@@ -254,7 +254,9 @@ export class CallSubscriber {
     this._pptLiveSubscriber.unsubscribe();
     this._CaptionsFeatureSubscriber?.unsubscribe();
     /* @conditional-compile-remove(rtt) */
-    this._realTimeTextSubscriber?.unsubscribe();
+    if (this._realTimeTextSubscriber) {
+      this._realTimeTextSubscriber.unsubscribe();
+    }
     this._raiseHandSubscriber?.unsubscribe();
 
     this._capabilitiesSubscriber.unsubscribe();
