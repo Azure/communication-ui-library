@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 
 <head>
   <meta charset="utf-8" />
@@ -17,6 +17,7 @@
   <!-- replace with https://github.com/Azure/communication-ui-library/releases/latest/download/callWithChatComposite.js for development and prototyping -->
   <script src="./callWithChatComposite.js"></script>
   <script src="./service.js"></script>
+  <script src="./videoEffectsDependency.js"></script>
   <script type="module">
     const testParams = service.loadConfigFromUrlQuery();
     const { user, token } = testParams.token
@@ -28,6 +29,13 @@
     const threadId = testParams.threadId ?? (await service.createChatThread());
     testParams.threadId ?? (await service.addChatUser(threadId, user, displayName));
     const endpoint = testParams.endpointUrl ?? (await service.getEndpointUrl());
+    const videoEffectsDependencyLazy = await videoEffectsDependency.loadVideoEffectsDependency();
+
+    const callAdapterOptions = {
+      videoBackgroundOptions: {
+        onResolveDependency: videoEffectsDependencyLazy
+      }
+    };
 
     const callWithChatAdapter = await callWithChatComposite.loadCallWithChatComposite(
       {
@@ -35,7 +43,8 @@
         token: token,
         displayName: displayName,
         endpoint: endpoint,
-        locator: { callLocator: { groupId: groupId }, chatThreadId: threadId }
+        locator: { callLocator: { groupId: groupId }, chatThreadId: threadId },
+        callAdapterOptions: callAdapterOptions
       },
       document.getElementById('callWithChat-composite-container')
     );
