@@ -473,6 +473,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   useEffect(() => {
     const closeSidePane = (): void => {
       setSidePaneRenderer(undefined);
+      setUserSetGalleryLayout('floatingLocalVideo');
     };
     adapter.on('callEnded', closeSidePane);
     return () => {
