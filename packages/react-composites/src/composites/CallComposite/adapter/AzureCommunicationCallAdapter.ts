@@ -1360,7 +1360,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
     /* @conditional-compile-remove(rtt) */
-    this.call?.feature(Features.RealTimeText).on('realTimeTextReceived', this.realTimeTextReceived.bind(this));
+    try {
+      this.call?.feature(Features.RealTimeText).on('realTimeTextReceived', this.realTimeTextReceived.bind(this));
+    } catch (e) {
+      console.log('RealTimeText feature is not supported');
+    }
     const breakoutRoomsFeature = this.call?.feature(Features.BreakoutRooms);
     if (breakoutRoomsFeature) {
       breakoutRoomsFeature.on('breakoutRoomsUpdated', this.breakoutRoomsUpdated.bind(this));
@@ -1380,7 +1384,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     this.unsubscribeFromCaptionEvents();
     /* @conditional-compile-remove(rtt) */
-    this.call?.feature(Features.RealTimeText).off('realTimeTextReceived', this.realTimeTextReceived.bind(this));
+    try {
+      this.call?.feature(Features.RealTimeText).off('realTimeTextReceived', this.realTimeTextReceived.bind(this));
+    } catch (e) {
+      console.log('RealTimeText feature is not supported');
+    }
     if (this.callingSoundSubscriber) {
       this.callingSoundSubscriber.unsubscribeAll();
     }
