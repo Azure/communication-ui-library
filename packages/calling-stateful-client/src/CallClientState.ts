@@ -101,7 +101,7 @@ export interface CaptionsInfo {
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  */
 export interface RealTimeTextInfo {
   /**
@@ -175,7 +175,7 @@ export interface CaptionsCallFeatureState {
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  */
 export interface RealTimeTextCallFeatureState {
   /**
@@ -190,6 +190,10 @@ export interface RealTimeTextCallFeatureState {
    * whether real time text is on/off
    */
   isRealTimeTextFeatureActive?: boolean;
+  /**
+   * whether real time test is supported in the call environment
+   */
+  isRealTimeTextSupported?: boolean;
 }
 
 /**

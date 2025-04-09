@@ -227,6 +227,12 @@ export const getSupportedSpokenLanguages = (state: CallAdapterState): string[] |
   return state.call?.captionsFeature.supportedSpokenLanguages;
 };
 
+/* @conditional-compile-remove(rtt) */
+/** @private */
+export const getRealTimeTextSupported = (state: CallAdapterState): boolean | undefined => {
+  return state.call?.realTimeTextFeature.isRealTimeTextSupported;
+};
+
 /**
  * @private
  */

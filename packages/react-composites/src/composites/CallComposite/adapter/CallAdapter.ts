@@ -401,7 +401,7 @@ export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: st
 /* @conditional-compile-remove(rtt) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'realTimeTextReceived' event.
- * @beta
+ * @public
  */
 export type RealTimeTextReceivedListener = (event: { realTimeText: RealTimeTextInfo }) => void;
 

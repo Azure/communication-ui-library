@@ -144,11 +144,15 @@ export class CallSubscriber {
       this._call.feature(Features.MediaAccess)
     );
     /* @conditional-compile-remove(rtt) */
-    this._realTimeTextSubscriber = new RealTimeTextSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.RealTimeText)
-    );
+    try {
+      this._realTimeTextSubscriber = new RealTimeTextSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.RealTimeText)
+      );
+    } catch (e) {
+      console.log('Real Time Text is not supported in this call');
+    }
 
     this.subscribe();
   }

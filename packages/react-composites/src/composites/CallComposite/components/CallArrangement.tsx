@@ -92,6 +92,8 @@ import { MoreDrawer } from '../../common/Drawer/MoreDrawer';
 import { useCompositeStringsForNotificationStackStrings } from '../hooks/useCompositeStringsForNotificationStack';
 import { BreakoutRoomsBanner } from './BreakoutRoomsBanner';
 import { DtmfDialPadOptions, NotificationOptions } from '../CallComposite';
+/* @conditional-compile-remove(rtt) */
+import { getRealTimeTextSupported } from '../selectors/baseSelectors';
 
 /**
  * @private
@@ -527,6 +529,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
   const onStartRealTimeText = useCallback(() => {
     setOpenRealTimeText(true);
   }, []);
+  /* @conditional-compile-remove(rtt) */
+  const isRealTimeTextSupported = useSelector(getRealTimeTextSupported);
 
   return (
     <div ref={containerRef} className={mergeStyles(containerDivStyles)} id={props.id}>
@@ -658,7 +662,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onMoreButtonClicked={onMoreButtonClicked}
                   isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
                   /* @conditional-compile-remove(rtt) */
-                  isRealTimeTextSupported={hasJoinedCall && !props.isPstnCall}
+                  isRealTimeTextSupported={hasJoinedCall && !props.isPstnCall && isRealTimeTextSupported}
                   /* @conditional-compile-remove(rtt) */
                   onStartRealTimeText={onStartRealTimeText}
                   /* @conditional-compile-remove(rtt) */

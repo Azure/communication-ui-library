@@ -4645,9 +4645,10 @@ export type ReadReceiptsBySenderId = {
 // @beta
 export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface RealTimeTextCallFeatureState {
     isRealTimeTextFeatureActive?: boolean;
+    isRealTimeTextSupported?: boolean;
     realTimeTexts: {
         completedMessages?: RealTimeTextInfo[];
         currentInProgress?: RealTimeTextInfo[];
@@ -4655,7 +4656,7 @@ export interface RealTimeTextCallFeatureState {
     };
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface RealTimeTextInfo {
     isMe?: boolean;
     message: string;
@@ -4666,7 +4667,7 @@ export interface RealTimeTextInfo {
     updatedTimestamp?: Date;
 }
 
-// @beta
+// @public
 export type RealTimeTextInformation = {
     id: number;
     displayName: string;
@@ -4688,7 +4689,7 @@ export interface RealTimeTextModalProps {
     strings?: RealTimeTextModalStrings;
 }
 
-// @beta
+// @public
 export interface RealTimeTextModalStrings {
     realTimeTextCancelButtonLabel?: string;
     realTimeTextCloseModalButtonAriaLabel?: string;
@@ -4710,12 +4711,12 @@ export interface RealTimeTextProps {
     userId?: string;
 }
 
-// @beta
+// @public
 export type RealTimeTextReceivedListener = (event: {
     realTimeText: RealTimeTextInfo_2;
 }) => void;
 
-// @beta
+// @public
 export interface RealTimeTextStrings {
     isTypingText?: string;
 }
@@ -5146,7 +5147,7 @@ export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
     strings?: StartRealTimeTextButtonStrings;
 }
 
-// @beta
+// @public
 export interface StartRealTimeTextButtonStrings {
     label: string;
     tooltipOffContent: string;
