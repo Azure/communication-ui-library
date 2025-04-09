@@ -119,6 +119,9 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
             const proxyFeature = new ProxySpotlightCallFeature(this._context);
             return new Proxy(spotlightFeature, proxyFeature);
           }
+          if (args[0] === Features.RealTimeText && this._context.getState().userId.kind === 'microsoftTeamsUser') {
+            return;
+          }
           return target.feature(...args);
         }, 'Call.feature');
       }

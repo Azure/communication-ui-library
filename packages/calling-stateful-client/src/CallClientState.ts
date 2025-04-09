@@ -190,10 +190,6 @@ export interface RealTimeTextCallFeatureState {
    * whether real time text is on/off
    */
   isRealTimeTextFeatureActive?: boolean;
-  /**
-   * whether real time test is supported in the call environment
-   */
-  isRealTimeTextSupported?: boolean;
 }
 
 /**
