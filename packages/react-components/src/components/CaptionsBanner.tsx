@@ -68,7 +68,7 @@ export type CaptionsInformation = {
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * information required for each line of real time text
  */
 export type RealTimeTextInformation = {

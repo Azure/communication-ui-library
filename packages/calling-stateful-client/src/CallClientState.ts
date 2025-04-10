@@ -101,7 +101,7 @@ export interface CaptionsInfo {
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  */
 export interface RealTimeTextInfo {
   /**
@@ -175,7 +175,7 @@ export interface CaptionsCallFeatureState {
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  */
 export interface RealTimeTextCallFeatureState {
   /**

@@ -143,12 +143,6 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.MediaAccess)
     );
-    /* @conditional-compile-remove(rtt) */
-    this._realTimeTextSubscriber = new RealTimeTextSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.RealTimeText)
-    );
 
     this.subscribe();
   }
@@ -159,6 +153,10 @@ export class CallSubscriber {
 
   private _safeSubscribeInitTeamsMeetingConference = (): void => {
     this._safeSubscribe(this.initTeamsMeetingConference);
+  };
+
+  private _safeSubscribeInitRealTimeText = (): void => {
+    this._safeSubscribe(this.initRealTimeText);
   };
 
   /* @conditional-compile-remove(local-recording-notification) */
@@ -182,6 +180,8 @@ export class CallSubscriber {
     /* @conditional-compile-remove(total-participant-count) */
     this._call.on('totalParticipantCountChanged', this.totalParticipantCountChangedHandler);
     this._call.on('mutedByOthers', this.mutedByOthersHandler);
+
+    this._safeSubscribeInitRealTimeText();
 
     for (const localVideoStream of this._call.localVideoStreams) {
       this._internalContext.setLocalRenderInfo(
@@ -250,7 +250,9 @@ export class CallSubscriber {
     this._pptLiveSubscriber.unsubscribe();
     this._CaptionsFeatureSubscriber?.unsubscribe();
     /* @conditional-compile-remove(rtt) */
-    this._realTimeTextSubscriber?.unsubscribe();
+    if (this._realTimeTextSubscriber) {
+      this._realTimeTextSubscriber.unsubscribe();
+    }
     this._raiseHandSubscriber?.unsubscribe();
 
     this._capabilitiesSubscriber.unsubscribe();
@@ -317,6 +319,16 @@ export class CallSubscriber {
           this._context.setTeamsMeetingConference(this._callIdRef.callId, teamsMeetingConferenceDetails);
         });
       this._call.off('stateChanged', this._safeSubscribeInitTeamsMeetingConference);
+    }
+  };
+
+  private initRealTimeText = (): void => {
+    if (this._context.getState().userId.kind !== 'microsoftTeamsUser') {
+      this._realTimeTextSubscriber = new RealTimeTextSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.RealTimeText)
+      );
     }
   };
 
