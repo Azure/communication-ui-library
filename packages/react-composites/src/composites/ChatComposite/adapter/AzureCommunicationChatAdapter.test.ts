@@ -179,6 +179,44 @@ describe('Error is reflected in state and events', () => {
   });
 });
 
+/* @conditional-compile-remove(on-fetch-profile) */
+describe('Adapter is created with chatAdapterOptions', () => {
+  it('should create adapter with onFetchProfile option', async () => {
+    const token = {
+      getToken: jest.fn(),
+      dispose: jest.fn()
+    };
+
+    ChatClientMock.mockImplementation((): ChatClient => {
+      return new StubChatClient(new StubChatThreadClient()) as unknown as ChatClient;
+    });
+
+    const onFetchProfile = jest.fn();
+    const adapter = await createAzureCommunicationChatAdapter({
+      endpoint: 'stubEndpointUrl',
+      userId: { communicationUserId: 'stubUserId' },
+      displayName: 'stubDisplayName',
+      credential: token,
+      threadId: 'stubThreadId',
+      chatAdapterOptions: { onFetchProfile }
+    });
+
+    expect(adapter).toBeDefined();
+  });
+
+  it('should create adapter with chatAdapterOptions', async () => {
+    const statefulChatClient = createStatefulChatClientMock(new StubChatThreadClient());
+    const threadClient = statefulChatClient.getChatThreadClient('threadId');
+    const onFetchProfile = jest.fn();
+
+    const adapter = await createAzureCommunicationChatAdapterFromClient(statefulChatClient, threadClient, {
+      onFetchProfile
+    });
+
+    expect(adapter).toBeDefined();
+  });
+});
+
 const createChatAdapterWithStubs = async (
   chatClient: StubChatClient,
   fakeToken?: CommunicationTokenCredential
