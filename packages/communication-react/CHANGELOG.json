@@ -2,6 +2,89 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 07 Apr 2025 16:07:48 GMT",
+      "version": "1.26.0",
+      "tag": "@azure/communication-react_v1.26.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1c29da045f6e23056042ab35f9f27f34012acfc4",
+            "area": "fix",
+            "workstream": "Add adapter options for CallWithChat JS bundle",
+            "comment": "Add adapter options for CallWithChat JS bundle"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "38dbba349f4c779bdb69c2a13a2750103977b1ed",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix dependabot alert for @babel/helpers (CVE-2025-27789)"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "0e4ddda12f1cc83c6d5458c2f9bde29e933c8342",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "Ensure all Captions and RealTimeText messages contains key values"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "974979e7be18cf7552eb6a7bbd99bc9d60078450",
+            "area": "fix",
+            "workstream": "Video Gallery",
+            "comment": "Video Gallery should still show desktop view with name plate and 16:9 layout at 400% zoom"
+          },
+          {
+            "author": "palatter@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b45490e69207cde6064a9b94beafe5d862de8858",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Resolve issue where RichTextBox could not be found when running in production with a minimized bundle."
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "013de1fee1506ca4f66bf66cfce4aee1e955d7fb",
+            "area": "fix",
+            "workstream": "Calls",
+            "comment": "update useAdapted selector to always use the up to date callId"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a5a59b74c9a11eb7d782da40bca3010d3678f295",
+            "area": "fix",
+            "workstream": "attachment-download",
+            "comment": "Fix ChatMyMessage download button issue"
+          }
+        ],
+        "minor": [
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3efdc5eb396c6e3e71faf8cb9b683d3c3267849a",
+            "area": "storybook",
+            "workstream": "Update changelog to include storybook related changes",
+            "comment": "Update changelog to include storybook related changes"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "8a05389de12a36cfffe4c3a96a780534c7746b07",
+            "area": "improvement",
+            "workstream": "Notifications",
+            "comment": "Add API to disable the notifications in the CallComposite"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Mar 2025 20:31:15 GMT",
       "version": "1.26.0-beta.1",
       "tag": "@azure/communication-react_v1.26.0-beta.1",
