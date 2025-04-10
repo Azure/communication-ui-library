@@ -11,6 +11,7 @@ Mon, 07 Apr 2025 16:07:48 GMT
 
 ### Improvements
 - Add API to disable the notifications in the CallComposite ([PR #5751](https://github.com/azure/communication-ui-library/pull/5751) by dmceachern@microsoft.com)
+- Update calling effects package to version 1.1.4 ([PR #5774](https://github.com/Azure/communication-ui-library/pull/5774) by dmceachern@microsoft.com)
 ### Bug Fixes
 - Fix dependabot alert for @babel/helpers (CVE-2025-27789) ([PR #5734](https://github.com/azure/communication-ui-library/pull/5734) by 2684369+JamesBurnside@users.noreply.github.com)
 - Ensure all Captions messages contains key values ([PR #5754](https://github.com/azure/communication-ui-library/pull/5754) by edwardlee@microsoft.com)
