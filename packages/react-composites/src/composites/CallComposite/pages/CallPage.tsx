@@ -107,6 +107,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected, disableAutoShowDtmfDialer);
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
   const isPstnCall = callees?.some((callee) => isPhoneNumberIdentifier(callee));
+  const isCTECall = useSelector((state) => state.userId.kind === 'microsoftTeamsUser');
 
   const strings = useLocale().strings.call;
 
@@ -252,7 +253,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         captionsOptions={options?.captionsBanner}
         dtmfDialerOptions={disableAutoShowDtmfDialer}
         notificationOptions={props.notificationOptions}
-        isPstnCall={isPstnCall}
+        isRTTSupportedCall={!isPstnCall && !isCTECall}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </>
