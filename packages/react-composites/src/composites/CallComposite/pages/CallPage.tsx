@@ -206,9 +206,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           videoTilesOptions={options?.videoTilesOptions}
           captionsOptions={options?.captionsBanner}
           localScreenShareView={options?.galleryOptions?.localScreenShareView}
-          containerWidth={containerWidth}
-          containerHeight={containerHeight}
-          containerAspectRatio={containerAspectRatio}
+          compositeContainerAspectRatio={containerAspectRatio}
         />
       );
     }
