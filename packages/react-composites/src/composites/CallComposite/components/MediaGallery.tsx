@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import React, { CSSProperties, useCallback, useMemo } from 'react';
-import { useRef } from 'react';
 import {
   VideoGallery,
   VideoStreamOptions,
@@ -71,6 +70,9 @@ export interface MediaGalleryProps {
     height: 'full' | 'default';
   };
   localScreenShareView?: LocalScreenShareView;
+  containerAspectRatio?: number;
+  containerWidth?: number;
+  containerHeight?: number;
 }
 
 /**
@@ -84,7 +86,10 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setPromptProps,
     hideSpotlightButtons,
     videoTilesOptions,
-    captionsOptions
+    captionsOptions,
+    containerAspectRatio,
+    containerWidth,
+    containerHeight
   } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -95,11 +100,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const userRole = useSelector(getRole);
   const capabilities = useSelector(getCapabilites);
   const isRoomsCall = useSelector(getIsRoomsCall);
-
-  const containerRef = useRef<HTMLDivElement>(null);
-  const containerWidth = _useContainerWidth(containerRef);
-  const containerHeight = _useContainerHeight(containerRef);
-  const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
   const reactionResources = useSelector(getReactionResources);
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = getVideoGalleryLayoutBasedOnLocalOptions(
@@ -209,7 +209,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoTileSize={
           props.localVideoTileOptions === false || userRole === 'Consumer' || (isRoomsCall && userRole === 'Unknown')
             ? 'hidden'
-            : props.isMobile && containerAspectRatio < 1
+            : props.isMobile && containerAspectRatio && containerAspectRatio < 1
               ? '9:16'
               : '16:9'
         }
@@ -258,7 +258,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   ]);
 
   return (
-    <div ref={containerRef} style={mediaGalleryContainerStyles}>
+    <div style={mediaGalleryContainerStyles}>
       <Announcer announcementString={announcerString} ariaLive={'polite'} />
       {VideoGalleryMemoized}
     </div>
