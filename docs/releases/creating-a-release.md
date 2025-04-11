@@ -50,6 +50,10 @@ _This document applies to normal releases, off of `main`. For hotfixing a prior 
 
 ## Step 0: Preparation
 
+### Step 0.0: Create a Release Train ADO Item
+
+Create a Release Train item, similar to [Beta release train item](https://skype.visualstudio.com/SPOOL/_workitems/edit/3991845) and [Stable release train Item](https://skype.visualstudio.com/SPOOL/_workitems/edit/3991844)
+
 ### Step 0.1: Create a Thread in the WebUI channel to Track Release Progress
 
 Create a release thread in the WebUI channel and keep it up to date so the whole team knows where we are at.
