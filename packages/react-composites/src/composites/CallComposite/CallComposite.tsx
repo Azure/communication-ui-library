@@ -474,11 +474,24 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
     const closeSidePane = (): void => {
       setSidePaneRenderer(undefined);
     };
-    adapter.on('callEnded', closeSidePane);
-    return () => {
-      adapter.off('callEnded', closeSidePane);
+
+    /* @conditional-compile-remove(together-mode) */
+    const resetUserGalleryLayout = (): void => {
+      if (userSetGalleryLayout === 'togetherMode') {
+        setUserSetGalleryLayout('floatingLocalVideo');
+      }
     };
-  }, [adapter]);
+
+    const handleCallEnded = (): void => {
+      closeSidePane();
+      /* @conditional-compile-remove(together-mode) */
+      resetUserGalleryLayout();
+    };
+    adapter.on('callEnded', handleCallEnded);
+    return () => {
+      adapter.off('callEnded', handleCallEnded);
+    };
+  }, [adapter, /* @conditional-compile-remove(together-mode) */ userSetGalleryLayout]);
 
   const compositeAudioContext = useAudio();
 

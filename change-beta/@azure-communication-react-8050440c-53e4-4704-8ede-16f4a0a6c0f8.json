@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "feature",
+  "workstream": "Breakout rooms",
+  "comment": "Fix listeners subscribed to chat events of AzureCallWithChatAdapter when the thread id is resolved late or is changed when moving to and from breakout rooms",
+  "packageName": "@azure/communication-react",
+  "email": "79475487+mgamis-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

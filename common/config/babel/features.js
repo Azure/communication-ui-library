@@ -20,7 +20,9 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
     // Feature for remote UFD
-    "remote-ufd"
+    "remote-ufd",
+    // Feature for on fetch profile
+    "on-fetch-profile"
   ],
   beta: [
     "call-readiness",
