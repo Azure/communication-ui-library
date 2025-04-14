@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { CSSProperties, useCallback, useMemo } from 'react';
-import { useRef } from 'react';
+import React, { CSSProperties, useCallback, useMemo, useRef } from 'react';
 import {
   VideoGallery,
   VideoStreamOptions,
@@ -71,6 +70,7 @@ export interface MediaGalleryProps {
     height: 'full' | 'default';
   };
   localScreenShareView?: LocalScreenShareView;
+  compositeContainerAspectRatio?: number;
 }
 
 /**
@@ -84,7 +84,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     setPromptProps,
     hideSpotlightButtons,
     videoTilesOptions,
-    captionsOptions
+    captionsOptions,
+    compositeContainerAspectRatio
   } = props;
 
   const videoGalleryProps = usePropsFor(VideoGallery);
@@ -95,12 +96,11 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const userRole = useSelector(getRole);
   const capabilities = useSelector(getCapabilites);
   const isRoomsCall = useSelector(getIsRoomsCall);
+  const reactionResources = useSelector(getReactionResources);
 
   const containerRef = useRef<HTMLDivElement>(null);
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
-  const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
-  const reactionResources = useSelector(getReactionResources);
 
   const layoutBasedOnTilePosition: VideoGalleryLayout = getVideoGalleryLayoutBasedOnLocalOptions(
     (props.localVideoTileOptions as LocalVideoTileOptions)?.position
@@ -209,7 +209,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
         localVideoTileSize={
           props.localVideoTileOptions === false || userRole === 'Consumer' || (isRoomsCall && userRole === 'Unknown')
             ? 'hidden'
-            : props.isMobile && containerAspectRatio < 1
+            : props.isMobile && compositeContainerAspectRatio && compositeContainerAspectRatio < 1
               ? '9:16'
               : '16:9'
         }
@@ -242,7 +242,6 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     overflowGalleryPosition,
     userRole,
     isRoomsCall,
-    containerAspectRatio,
     pinnedParticipants,
     onPinParticipant,
     onUnpinParticipant,
@@ -254,7 +253,8 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
     onStopRemoteSpotlightWithPrompt,
     layoutBasedOnTilePosition,
     capabilities?.muteOthers,
-    props.localScreenShareView
+    props.localScreenShareView,
+    compositeContainerAspectRatio
   ]);
 
   return (
