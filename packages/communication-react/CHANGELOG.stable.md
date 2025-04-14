@@ -9,6 +9,15 @@
 Mon, 07 Apr 2025 16:07:48 GMT 
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.26.0-beta.1...1.26.0)
 
+### Features
+
+#### Real Time Text
+We are excited to announce that the Azure Communication Services Web UI Library now supports RTT (Real Time Text). In an RTT enabled audio or video call, end-users augment the call with text. RTT text communications are transmitted immediately as they are typed, character-by-character, without the user hitting “send.” Users can enable RTT in a call, type to send real time text, or receive real time text from other users. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). This feature is a required by the EU as a core accessibility feature, with implementation needed by June 2025.
+
+* Receive and send Real Time Text messages
+* Seamless integration of real-time text with captions, allowing you to view both simultaneously
+* In our composites, Real Time Text turns on automatically for everyone when a message is first received/sent
+
 ### Improvements
 - Add API to disable the notifications in the CallComposite ([PR #5751](https://github.com/azure/communication-ui-library/pull/5751) by dmceachern@microsoft.com)
 - Update calling effects package to version 1.1.4 ([PR #5774](https://github.com/Azure/communication-ui-library/pull/5774) by dmceachern@microsoft.com)
