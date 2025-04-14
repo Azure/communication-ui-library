@@ -34,7 +34,7 @@ export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
 /* @conditional-compile-remove(rtt) */
 /**
  * Strings for the hold button labels
- * @beta
+ * @public
  */
 export interface StartRealTimeTextButtonStrings {
   /**
