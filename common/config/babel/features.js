@@ -69,14 +69,14 @@ module.exports = {
     "teams-identity-support-beta",
     // feature for tracking the callParticipantsLocator
     "call-participants-locator",
-    // Feature for RTT
-    "rtt",
     // Feature for together mode
     "together-mode"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
-    "stabilizedDemo"
+    "stabilizedDemo",
+     // Feature for RTT
+     "rtt",
   ]
 }

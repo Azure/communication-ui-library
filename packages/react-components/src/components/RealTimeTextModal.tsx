@@ -21,7 +21,7 @@ import { useLocale } from '../localization';
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * strings for realTimeText modal
  */
 export interface RealTimeTextModalStrings {

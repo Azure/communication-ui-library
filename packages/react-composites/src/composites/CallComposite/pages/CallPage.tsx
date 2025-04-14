@@ -4,12 +4,18 @@
 import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
-import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
+import {
+  _useContainerHeight,
+  _useContainerWidth,
+  ActiveErrorMessage,
+  ErrorBar,
+  ParticipantMenuItemsCallback
+} from '@internal/react-components';
 import { CustomAvatarOptions, VideoTile } from '@internal/react-components';
 
 import { ActiveNotification } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-import React, { useMemo } from 'react';
+import React, { useMemo, useRef } from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
@@ -107,6 +113,11 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected, disableAutoShowDtmfDialer);
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
   const isPstnCall = callees?.some((callee) => isPhoneNumberIdentifier(callee));
+  const isCTECall = useSelector((state) => state.userId.kind === 'microsoftTeamsUser');
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerWidth = _useContainerWidth(containerRef);
+  const containerHeight = _useContainerHeight(containerRef);
+  const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
 
   const strings = useLocale().strings.call;
 
@@ -195,13 +206,14 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           videoTilesOptions={options?.videoTilesOptions}
           captionsOptions={options?.captionsBanner}
           localScreenShareView={options?.galleryOptions?.localScreenShareView}
+          compositeContainerAspectRatio={containerAspectRatio}
         />
       );
     }
   };
 
   return (
-    <>
+    <div ref={containerRef} style={{ height: '100%', width: '100%' }}>
       <CallArrangement
         id={drawerMenuHostId}
         complianceBannerProps={{ ...complianceBannerProps, strings }}
@@ -252,10 +264,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         captionsOptions={options?.captionsBanner}
         dtmfDialerOptions={disableAutoShowDtmfDialer}
         notificationOptions={props.notificationOptions}
-        isPstnCall={isPstnCall}
+        isRTTSupportedCall={!isPstnCall && !isCTECall}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
-    </>
+    </div>
   );
 };
 
