@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "تم إنهاء وضع التجميع",
       "dismissButtonAriaLabel": "إغلاق"
+    },
+    "transcriptionError": {
+      "title": "حدث خطأ ما أثناء كتابة الحديث.",
+      "message": "تم إيقاف كتابة الحديث. الرجاء المحاولة مرة أخرى لاحقا",
+      "dismissButtonAriaLabel": "إغلاق"
+    },
+    "transcriptionStartedByYou": {
+      "title": "بدأت كتابة الحديث.",
+      "message": "تم البدء بواسطتك. اسمح للجميع بمعرفة أنها تتم كتابة حدثيهم.",
+      "dismissButtonAriaLabel": "إغلاق"
     }
   },
   "videoGallery": {

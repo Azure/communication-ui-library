@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Režim Togethermode skončil",
       "dismissButtonAriaLabel": "Zavřít"
+    },
+    "transcriptionError": {
+      "title": "Při přepisu došlo k nějaké chybě.",
+      "message": "Přepis se zastavil, zkuste to prosím znovu později",
+      "dismissButtonAriaLabel": "Zavřít"
+    },
+    "transcriptionStartedByYou": {
+      "title": "Přepis se spustil.",
+      "message": "Spuštěno vámi. Dejte všem vědět, že se přepisují.",
+      "dismissButtonAriaLabel": "Zavřít"
     }
   },
   "videoGallery": {

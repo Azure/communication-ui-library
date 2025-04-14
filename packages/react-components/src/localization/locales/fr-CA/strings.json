@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Togethermode est terminé",
       "dismissButtonAriaLabel": "Fermez"
+    },
+    "transcriptionError": {
+      "title": "Désolé, une erreur s’est produite lors de la transcription.",
+      "message": "Désolé, la transcription a été arrêtée. Veuillez réessayer plus tard",
+      "dismissButtonAriaLabel": "Fermer"
+    },
+    "transcriptionStartedByYou": {
+      "title": "La transcription a démarré.",
+      "message": "Démarrée par vous. Faites savoir à tout le monde qu'ils sont transcrits.",
+      "dismissButtonAriaLabel": "Fermer"
     }
   },
   "videoGallery": {

@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Yhdessä-tila on päättynyt",
       "dismissButtonAriaLabel": "Sulje"
+    },
+    "transcriptionError": {
+      "title": "Transkriptiossa tapahtui virhe.",
+      "message": "Transkriptio on pysäytetty. Yritä myöhemmin uudelleen",
+      "dismissButtonAriaLabel": "Sulje"
+    },
+    "transcriptionStartedByYou": {
+      "title": "Transkriptio on aloitettu.",
+      "message": "Sinun aloittamasi. Kerro kaikille, että heidän puheensa muunnetaan tekstiksi.",
+      "dismissButtonAriaLabel": "Sulje"
     }
   },
   "videoGallery": {

@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Togethermode が終了しました",
       "dismissButtonAriaLabel": "閉じる"
+    },
+    "transcriptionError": {
+      "title": "文字起こしに問題が発生しました。",
+      "message": "文字起こしが停止しました。後でもう一度お試しください",
+      "dismissButtonAriaLabel": "閉じる"
+    },
+    "transcriptionStartedByYou": {
+      "title": "文字起こしが開始しました。",
+      "message": "あなたが開始しました。文字起こしが行われていることを全員に知らせてください。",
+      "dismissButtonAriaLabel": "閉じる"
     }
   },
   "videoGallery": {

@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Togethermode הסתיים",
       "dismissButtonAriaLabel": "סגור"
+    },
+    "transcriptionError": {
+      "title": "משהו השתבש בתהליך התמלול.",
+      "message": "התמלול הופסק. נסה שוב מאוחר יותר",
+      "dismissButtonAriaLabel": "סגור"
+    },
+    "transcriptionStartedByYou": {
+      "title": "התמלול התחיל.",
+      "message": "הופעל על-ידך. עדכן את כולם שמבוצע תמלול של השיחה.",
+      "dismissButtonAriaLabel": "סגור"
     }
   },
   "videoGallery": {
