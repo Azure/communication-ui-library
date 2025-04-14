@@ -46,7 +46,7 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 ### Improvements
 
 - Update calling-effects package to 1.1.3 ([PR #5644](https://github.com/azure/communication-ui-library/pull/5644) by dmceachern@microsoft.com)
-- Update `@azure/communication-calling` to 1.33.4 ([PR #5713](https://github.com/azure/communication-ui-library/pull/5713) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update `@azure/communication-calling` to 1.34.1 ([PR #5769](https://github.com/Azure/communication-ui-library/pull/5769) by 96077406+carocao-msft@users.noreply.github.com)
 
 ### Bug Fixes
 
