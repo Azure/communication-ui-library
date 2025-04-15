@@ -1,6 +1,4 @@
-import { Stack } from '@fluentui/react';
 import { Meta } from '@storybook/addon-docs';
-import { overviewPageImagesStackStyle } from '../../constants';
 
 <Meta title="Concepts/On Fetch Profile" />
 
@@ -8,21 +6,19 @@ import { overviewPageImagesStackStyle } from '../../constants';
 
 ## Overview
 
-The onFetchProfile feature allows developers to customize the display names of remote participants in communication scenarios. This feature is particularly useful for scenarios where the identity of participants needs to be protected or modified, such as in customer support or sensitive communications.
+The onFetchProfile feature allows developers to customize the display names of remote participants in communication scenarios. This feature is particularly useful for scenarios where the identity of participants needs to be protected or modified, such as in customer support or sensitive communications.
 
 ## Why This Feature is Useful
 
-1. Identity Protection: In situations where the identity of an agent or participant needs to be protected, such as in customer support for sensitive issues, the onFetchProfile feature allows the display name to be changed to a generic or specific name that does not reveal the actual identity of the participant.
-
-2. Consistency Across Platforms: Ensures that display names are consistently updated across different communication platforms, including calls and chats. This is particularly useful for organizations that use multiple communication channels and need to maintain uniformity in participant identities.
-
-3. Customization: Provides flexibility for organizations to customize the display names based on specific requirements or scenarios. This can enhance the user experience by providing contextually relevant names that align with the communication purpose.
+- Identity Protection: In situations where the identity of an agent or participant needs to be protected, such as in customer support for sensitive issues, the onFetchProfile feature allows the display name to be changed to a generic or specific name that does not reveal the actual identity of the participant.
+- Consistency Across Platforms: Ensures that display names are consistently updated across different communication platforms, including calls and chats. This is particularly useful for organizations that use multiple communication channels and need to maintain uniformity in participant identities.
+- Customization: Provides flexibility for organizations to customize the display names based on specific requirements or scenarios. This can enhance the user experience by providing contextually relevant names that align with the communication purpose.
 
 ### API Integration
 
-The onFetchProfile API is integrated into both the Calling composite and the CallWithChat composite. This integration ensures that display names can be changed consistently across different communication scenarios, including calls and chats.
+The onFetchProfile API is integrated into both the Calling composite and the CallWithChat composite. This integration ensures that display names can be changed consistently across different communication scenarios, including calls and chats.
 
-The onFetchProfile  API allows the display name of a remote user to be edited based on their userId. Here is how to set this up:
+The onFetchProfile API allows the display name of a remote user to be edited based on their userId. Here is how to set this up:
 
 ```javascript
     onFetchProfile: async (userId: string, defaultProfile?: Profile): Promise<Profile | undefined> => {
