@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Togethermode is beëindigd",
       "dismissButtonAriaLabel": "Sluiten"
+    },
+    "transcriptionError": {
+      "title": "Er is iets misgegaan met de transcriptie.",
+      "message": "Transcriptie is gestopt. Probeer het later opnieuw",
+      "dismissButtonAriaLabel": "Sluiten"
+    },
+    "transcriptionStartedByYou": {
+      "title": "Transcriptie is gestart.",
+      "message": "Gestart door jou. Laat iedereen weten dat ze worden getranscribeerd.",
+      "dismissButtonAriaLabel": "Sluiten"
     }
   },
   "videoGallery": {

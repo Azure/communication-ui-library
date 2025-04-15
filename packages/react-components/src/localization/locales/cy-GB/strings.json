@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Mae Togethermode wedi dod i ben",
       "dismissButtonAriaLabel": "Cau"
+    },
+    "transcriptionError": {
+      "title": "Aeth rhywbeth o’i le gyda’r trawsgrifiad.",
+      "message": "Wedi stopio trawsgrifio. rhowch gynnig arall arni rywbryd eto",
+      "dismissButtonAriaLabel": "Cau"
+    },
+    "transcriptionStartedByYou": {
+      "title": "Wedi dechrau trawsgrifio.",
+      "message": "Dechreuwyd gennych chi. Rhowch wybod i bawb eu bod yn cael eu trawsgrifio.",
+      "dismissButtonAriaLabel": "Cau"
     }
   },
   "videoGallery": {

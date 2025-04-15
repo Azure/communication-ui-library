@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Tryb Togethermode został zakończony",
       "dismissButtonAriaLabel": "Zamknij"
+    },
+    "transcriptionError": {
+      "title": "Wystąpił problem z transkrypcją.",
+      "message": "Transkrypcja została zatrzymana. Spróbuj ponownie później",
+      "dismissButtonAriaLabel": "Zamknij"
+    },
+    "transcriptionStartedByYou": {
+      "title": "Rozpoczęto transkrypcję.",
+      "message": "Rozpoczęte przez Ciebie. Poinformuj wszystkich, że są transkrybowani.",
+      "dismissButtonAriaLabel": "Zamknij"
     }
   },
   "videoGallery": {

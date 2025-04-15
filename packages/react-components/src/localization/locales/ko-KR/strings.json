@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Togethermode가 종료되었습니다.",
       "dismissButtonAriaLabel": "닫기"
+    },
+    "transcriptionError": {
+      "title": "대화 내용 기록에 문제가 발생했습니다.",
+      "message": "대화 내용 기록이 중단되었습니다. 나중에 다시 시도하세요.",
+      "dismissButtonAriaLabel": "닫기"
+    },
+    "transcriptionStartedByYou": {
+      "title": "대화 내용 기록을 시작했습니다.",
+      "message": "사용자가 시작했습니다. 모든 사람들에게 대화가 기록되고 있다는 것을 알리세요.",
+      "dismissButtonAriaLabel": "닫기"
     }
   },
   "videoGallery": {
