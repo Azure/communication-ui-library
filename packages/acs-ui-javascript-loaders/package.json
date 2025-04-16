@@ -37,7 +37,7 @@
     "@internal/calling-stateful-client": "1.26.0-beta.1",
     "@internal/react-components": "1.26.0-beta.1",
     "@internal/calling-component-bindings": "1.26.0-beta.1",
-    "@azure/communication-calling": "1.34.1-beta.2 || ^1.33.4",
+    "@azure/communication-calling": "1.34.1-beta.2 || ^1.34.1",
     "@fluentui/react": "^8.122.11",
     "@fluentui/react-icons": "^2.0.274",
     "@azure/logger": "^1.0.4"
