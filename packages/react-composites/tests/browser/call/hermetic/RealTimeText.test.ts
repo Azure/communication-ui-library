@@ -58,10 +58,7 @@ test.describe('Real Time Text tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`realTimeText-modal.png`);
   });
 
-  test('Real Time Text Banner renders normally after start button is clicked', async ({
-    page,
-    serverUrl
-  }, testInfo) => {
+  test('Real Time Text Banner renders normally after start button is clicked', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await page.goto(buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true' }));
     await pageClick(page, dataUiId('common-call-composite-more-button'));
