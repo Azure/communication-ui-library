@@ -50,11 +50,7 @@ test.describe('Real Time Text tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`realTimeText-button-call.png`);
   });
 
-  test('Real Time Text Modal renders normally', async ({ page, serverUrl }, testInfo) => {
-    //skip this test for mobile
-    if (isTestProfileMobile(testInfo)) {
-      test.skip();
-    }
+  test('Real Time Text Modal renders normally', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await loadCallPage(page, serverUrl, initialState);
     await pageClick(page, dataUiId('common-call-composite-more-button'));
@@ -63,19 +59,13 @@ test.describe('Real Time Text tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`realTimeText-modal.png`);
   });
 
-  test('Real Time Text Banner renders normally after start button is clicked', async ({
-    page,
-    serverUrl
-  }, testInfo) => {
+  test('Real Time Text Banner renders normally after start button is clicked', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await loadCallPage(page, serverUrl, initialState);
     await pageClick(page, dataUiId('common-call-composite-more-button'));
     await pageClick(page, `[id="common-call-composite-rtt-button"]`);
     await pageClick(page, `[id="common-call-composite-rtt-start-button"]`);
-    if (!isTestProfileMobile(testInfo)) {
-      // need to click start for the modal
-      await pageClick(page, dataUiId('realTimeText-modal-confirm-button'));
-    }
+    await pageClick(page, dataUiId('realTimeText-modal-confirm-button'));
     expect(await stableScreenshot(page)).toMatchSnapshot(`realTimeText-banner.png`);
   });
 
