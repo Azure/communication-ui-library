@@ -77,6 +77,7 @@ import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import type { NetworkDiagnosticChangedEventArgs } from '@azure/communication-calling';
 import { PartialTheme } from '@fluentui/react';
 import { ParticipantCapabilities } from '@azure/communication-calling';
+import { ParticipantInfo } from '@azure/communication-calling';
 import { ParticipantRole } from '@azure/communication-calling';
 import { PermissionConstraints } from '@azure/communication-calling';
 import { PersonaInitialsColor } from '@fluentui/react';
@@ -87,6 +88,8 @@ import { PropertyChangedEvent } from '@azure/communication-calling';
 import { default as React_2 } from 'react';
 import { Reaction as Reaction_2 } from '@azure/communication-calling';
 import { ReactionMessage } from '@azure/communication-calling';
+import { RealTimeTextInfo as RealTimeTextInfo_2 } from '@azure/communication-calling';
+import { RealTimeTextResultType } from '@azure/communication-calling';
 import type { RemoteParticipant } from '@azure/communication-calling';
 import { RemoteParticipantState as RemoteParticipantState_2 } from '@azure/communication-calling';
 import { RoomCallLocator } from '@azure/communication-calling';
@@ -323,6 +326,7 @@ export interface CallAdapterCallOperations {
     resumeCall(): Promise<void>;
     returnFromBreakoutRoom(): Promise<void>;
     sendDtmfTone(dtmfTone: DtmfTone_2): Promise<void>;
+    sendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
     startCamera(options?: VideoStreamOptions): Promise<void>;
@@ -407,6 +411,7 @@ export interface CallAdapterSubscribers {
     off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     off(event: 'roleChanged', listener: PropertyChangedEvent): void;
@@ -429,6 +434,7 @@ export interface CallAdapterSubscribers {
     on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     on(event: 'roleChanged', listener: PropertyChangedEvent): void;
@@ -615,6 +621,7 @@ export type CallCompositeOptions = {
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     videoTilesOptions?: VideoTilesOptions;
+    notificationOptions?: NotificationOptions_2;
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
@@ -674,9 +681,11 @@ export interface CallCompositeStrings {
     cameraTurnedOff: string;
     capabilityChangedNotification?: CapabilityChangedNotificationStrings;
     captionLanguageStrings?: CaptionLanguageStrings;
+    captionsAndRealTimeTextContainerTitle?: string;
     captionsBannerMoreButtonCallingLabel?: string;
     captionsBannerMoreButtonTooltip?: string;
     captionsBannerSpinnerText?: string;
+    captionsOnlyContainerTitle?: string;
     captionsSettingsCancelButtonLabel?: string;
     captionsSettingsCaptionLanguageDropdownInfoText?: string;
     captionsSettingsCaptionLanguageDropdownLabel?: string;
@@ -713,6 +722,7 @@ export interface CallCompositeStrings {
     dialpadModalAriaLabel?: string;
     dialpadModalTitle?: string;
     dialpadStartCallButtonLabel?: string;
+    disabledStartRealTimeTextLabel?: string;
     dismissModalAriaLabel?: string;
     dismissSidePaneButtonLabel?: string;
     dtmfDialerButtonLabel?: string;
@@ -727,6 +737,7 @@ export interface CallCompositeStrings {
     endOfSurveyText: string;
     exitSpotlightButtonLabel: string;
     exitSpotlightButtonTooltip: string;
+    expandButtonAriaLabel?: string;
     failedToJoinCallDueToNoNetworkMoreDetails?: string;
     failedToJoinCallDueToNoNetworkTitle: string;
     failedToJoinTeamsMeetingReasonAccessDeniedMoreDetails?: string;
@@ -770,6 +781,7 @@ export interface CallCompositeStrings {
     manyUnnamedParticipantsLeft: string;
     microphonePermissionDenied: string;
     microphoneToggleInLobbyNotAllowed: string;
+    minimizeButtonAriaLabel?: string;
     moreButtonCallingLabel: string;
     moreButtonGalleryControlLabel?: string;
     moreButtonGalleryDefaultLayoutLabel?: string;
@@ -827,6 +839,19 @@ export interface CallCompositeStrings {
     pinParticipantMenuItemAriaLabel: string;
     pinParticipantMenuLabel: string;
     privacyPolicy: string;
+    realTimeTextBannerContent?: string;
+    realTimeTextBannerLinkLabel?: string;
+    realTimeTextBannerTitle?: string;
+    realTimeTextCancelButtonLabel: string;
+    realTimeTextCloseModalButtonAriaLabel: string;
+    realTimeTextConfirmButtonLabel: string;
+    realTimeTextInputBoxDefaultText?: string;
+    realTimeTextInputErrorMessage?: string;
+    realTimeTextLabel?: string;
+    realTimeTextModalAriaLabel: string;
+    realTimeTextModalText: string;
+    realTimeTextModalTitle: string;
+    realTimeTextOnlyContainerTitle?: string;
     rejoinCallButtonLabel: string;
     removeBackgroundEffectButtonLabel?: string;
     removeBackgroundTooltip?: string;
@@ -863,6 +888,7 @@ export interface CallCompositeStrings {
     startCaptionsButtonOnLabel?: string;
     startCaptionsButtonTooltipOffContent?: string;
     startCaptionsButtonTooltipOnContent?: string;
+    startRealTimeTextLabel?: string;
     startSpotlightMenuLabel: string;
     stopAllSpotlightMenuLabel: string;
     stopSpotlightMenuLabel: string;
@@ -1048,6 +1074,7 @@ export interface CallState {
     optimalVideoCount: OptimalVideoCountFeatureState;
     pptLive: PPTLiveCallFeatureState;
     raiseHand: RaiseHandCallFeature;
+    realTimeTextFeature: RealTimeTextCallFeatureState;
     recording: RecordingCallFeature;
     remoteParticipants: {
         [keys: string]: RemoteParticipantState;
@@ -1123,6 +1150,7 @@ export interface CallWithChatAdapterManagement {
     sendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     sendMessage(content: string, options?: SendMessageOptions): Promise<void>;
     sendReadReceipt(chatMessageId: string): Promise<void>;
+    sendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
     sendTypingIndicator(): Promise<void>;
     setCamera(sourceInfo: VideoDeviceInfo, options?: VideoStreamOptions): Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
@@ -1188,6 +1216,8 @@ export interface CallWithChatAdapterSubscriptions {
     // (undocumented)
     off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
     // (undocumented)
+    off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
+    // (undocumented)
     off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
     off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -1241,6 +1271,8 @@ export interface CallWithChatAdapterSubscriptions {
     on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
     // (undocumented)
     on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
+    // (undocumented)
+    on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
     // (undocumented)
     on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
     // (undocumented)
@@ -1487,7 +1519,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'capabilitiesChanged' | 'spotlightChanged' | 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'realTimeTextReceived' | 'capabilitiesChanged' | 'spotlightChanged' | 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @public
 export const CameraButton: (props: CameraButtonProps) => JSX.Element;
@@ -1656,7 +1688,15 @@ export interface CaptionsBannerProps {
     };
     formFactor?: 'default' | 'compact';
     isCaptionsOn?: boolean;
+    isRealTimeTextOn?: boolean;
+    latestLocalRealTimeText?: RealTimeTextInformation;
     onRenderAvatar?: OnRenderAvatarCallback;
+    onSendRealTimeText?: (text: string, isFinalized: boolean) => Promise<void>;
+    realTimeTexts?: {
+        completedMessages?: RealTimeTextInformation[];
+        currentInProgress?: RealTimeTextInformation[];
+        myInProgress?: RealTimeTextInformation;
+    };
     startCaptionsInProgress?: boolean;
     strings?: CaptionsBannerStrings;
 }
@@ -1664,13 +1704,30 @@ export interface CaptionsBannerProps {
 // @public
 export type CaptionsBannerSelector = (state: CallClientState, props: CallingBaseSelectorProps) => {
     captions: CaptionsInformation[];
+    realTimeTexts: {
+        completedMessages?: RealTimeTextInformation[];
+        currentInProgress?: RealTimeTextInformation[];
+        myInProgress?: RealTimeTextInformation;
+    };
     isCaptionsOn: boolean;
     startCaptionsInProgress: boolean;
+    isRealTimeTextOn: boolean;
+    latestLocalRealTimeText: RealTimeTextInformation;
 };
 
 // @public
 export interface CaptionsBannerStrings {
+    captionsAndRealTimeTextContainerTitle?: string;
     captionsBannerSpinnerText?: string;
+    captionsOnlyContainerTitle?: string;
+    expandButtonAriaLabel?: string;
+    minimizeButtonAriaLabel?: string;
+    realTimeTextBannerContent?: string;
+    realTimeTextBannerLinkLabel?: string;
+    realTimeTextBannerTitle?: string;
+    realTimeTextInputBoxDefaultText?: string;
+    realTimeTextInputErrorMessage?: string;
+    realTimeTextOnlyContainerTitle?: string;
 }
 
 // @public (undocumented)
@@ -1712,6 +1769,7 @@ export type CaptionsInformation = {
     displayName: string;
     captionText: string;
     userId?: string;
+    createdTimeStamp?: Date;
 };
 
 // @public
@@ -2143,6 +2201,8 @@ export interface CommonCallingHandlers {
     // (undocumented)
     onSendDtmfTone: (dtmfTone: DtmfTone_2) => Promise<void>;
     // (undocumented)
+    onSendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
+    // (undocumented)
     onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
@@ -2302,10 +2362,13 @@ export interface ComponentStrings {
     participantsButton: ParticipantsButtonStrings;
     raiseHandButton: RaiseHandButtonStrings;
     reactionButton: ReactionButtonStrings;
+    realTimeText: RealTimeTextStrings;
+    realTimeTextModal: RealTimeTextModalStrings;
     screenShareButton: ScreenShareButtonStrings;
     sendBox: SendBoxStrings;
     spokenLanguages: SpokenLanguageStrings;
     startCaptionsButton: StartCaptionsButtonStrings;
+    startRealTimeTextButton: StartRealTimeTextButtonStrings;
     typingIndicator: TypingIndicatorStrings;
     verticalGallery: VerticalGalleryStrings;
     videoGallery: VideoGalleryStrings;
@@ -2639,6 +2702,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     NotificationBarBreakoutRoomJoined: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
+    NotificationBarTranscriptionError: React_2.JSX.Element;
+    NotificationBarTranscriptionStartedByYou: React_2.JSX.Element;
     HorizontalGalleryLeftButton: React_2.JSX.Element;
     HorizontalGalleryRightButton: React_2.JSX.Element;
     MessageDelivered: React_2.JSX.Element;
@@ -2697,6 +2762,9 @@ export const DEFAULT_COMPONENT_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
+    RealTimeTextIcon: React_2.JSX.Element;
+    ExpandIcon: React_2.JSX.Element;
+    MinimizeIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -2816,6 +2884,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NotificationBarBreakoutRoomJoined: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
+    NotificationBarTranscriptionError: React_2.JSX.Element;
+    NotificationBarTranscriptionStartedByYou: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;
     HoldCallContextualMenuItem: React_2.JSX.Element;
@@ -2856,6 +2926,9 @@ export const DEFAULT_COMPOSITE_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
+    RealTimeTextIcon: React_2.JSX.Element;
+    ExpandIcon: React_2.JSX.Element;
+    MinimizeIcon: React_2.JSX.Element;
 };
 
 // @public
@@ -3686,6 +3759,12 @@ const Notification_2: (props: NotificationProps) => JSX.Element;
 export { Notification_2 as Notification }
 
 // @public
+interface NotificationOptions_2 {
+    hideAllNotifications?: boolean;
+}
+export { NotificationOptions_2 as NotificationOptions }
+
+// @public
 export interface NotificationProps {
     ariaLive?: 'assertive' | 'off' | 'polite';
     autoDismiss?: boolean;
@@ -3764,7 +3843,9 @@ export interface NotificationStackStrings {
     stopScreenShareGeneric?: NotificationStrings;
     stopVideoGeneric?: NotificationStrings;
     teamsMeetingCallNetworkQualityLow?: NotificationStrings;
+    transcriptionError?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
+    transcriptionStartedByYou?: NotificationStrings;
     transcriptionStopped?: NotificationStrings;
     transcriptionStoppedStillRecording?: NotificationStrings;
     unableToStartVideoEffect?: NotificationStrings;
@@ -4134,6 +4215,84 @@ export type ReadReceiptsBySenderId = {
 };
 
 // @public
+export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
+
+// @public (undocumented)
+export interface RealTimeTextCallFeatureState {
+    isRealTimeTextFeatureActive?: boolean;
+    realTimeTexts: {
+        completedMessages?: RealTimeTextInfo[];
+        currentInProgress?: RealTimeTextInfo[];
+        myInProgress?: RealTimeTextInfo;
+    };
+}
+
+// @public (undocumented)
+export interface RealTimeTextInfo {
+    isMe?: boolean;
+    message: string;
+    receivedTimestamp?: Date;
+    resultType: RealTimeTextResultType;
+    sender: ParticipantInfo;
+    sequenceId: number;
+    updatedTimestamp?: Date;
+}
+
+// @public
+export type RealTimeTextInformation = {
+    id: number;
+    displayName: string;
+    userId?: string;
+    message: string;
+    isTyping: boolean;
+    finalizedTimeStamp: Date;
+    isMe?: boolean;
+};
+
+// @public
+export const RealTimeTextModal: (props: RealTimeTextModalProps) => JSX.Element;
+
+// @public
+export interface RealTimeTextModalProps {
+    onDismissModal?: () => void;
+    onStartRealTimeText?: () => void;
+    showModal?: boolean;
+    strings?: RealTimeTextModalStrings;
+}
+
+// @public
+export interface RealTimeTextModalStrings {
+    realTimeTextCancelButtonLabel?: string;
+    realTimeTextCloseModalButtonAriaLabel?: string;
+    realTimeTextConfirmButtonLabel?: string;
+    realTimeTextModalAriaLabel?: string;
+    realTimeTextModalText?: string;
+    realTimeTextModalTitle?: string;
+}
+
+// @public
+export interface RealTimeTextProps {
+    displayName: string;
+    id: number;
+    isMe?: boolean;
+    isTyping?: boolean;
+    message: string;
+    onRenderAvatar?: OnRenderAvatarCallback;
+    strings?: RealTimeTextStrings;
+    userId?: string;
+}
+
+// @public
+export type RealTimeTextReceivedListener = (event: {
+    realTimeText: RealTimeTextInfo_2;
+}) => void;
+
+// @public
+export interface RealTimeTextStrings {
+    isTypingText?: string;
+}
+
+// @public
 export interface RecordingCallFeature {
     isRecordingActive: boolean;
 }
@@ -4420,6 +4579,22 @@ export interface StartCaptionsButtonStrings {
     onLabel: string;
     tooltipOffContent: string;
     tooltipOnContent: string;
+}
+
+// @public
+export const StartRealTimeTextButton: (props: StartRealTimeTextButtonProps) => JSX.Element;
+
+// @public
+export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
+    isRealTimeTextOn: boolean;
+    onStartRealTimeText: () => void;
+    strings?: StartRealTimeTextButtonStrings;
+}
+
+// @public
+export interface StartRealTimeTextButtonStrings {
+    label: string;
+    tooltipOffContent: string;
 }
 
 // @public

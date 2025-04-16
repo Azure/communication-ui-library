@@ -350,17 +350,11 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   recordingAndTranscriptionStopped: 'NotificationBarRecording',
   recordingStoppedStillTranscribing: 'NotificationBarRecording',
   transcriptionStoppedStillRecording: 'NotificationBarRecording',
-  /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomOpened: 'NotificationBarBreakoutRoomOpened',
-  /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomOpenedPromptJoin: 'NotificationBarBreakoutRoomPromptJoin',
-  /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomChanged: 'NotificationBarBreakoutRoomChanged',
-  /* @conditional-compile-remove(breakout-rooms) */
   assignedBreakoutRoomClosed: 'NotificationBarBreakoutRoomClosed',
-  /* @conditional-compile-remove(breakout-rooms) */
   breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
-  /* @conditional-compile-remove(breakout-rooms) */
   breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon',
   capabilityTurnVideoOnPresent: 'ControlButtonCameraOff',
   capabilityTurnVideoOnAbsent: 'ControlButtonCameraProhibited',
@@ -369,7 +363,9 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   /* @conditional-compile-remove(together-mode) */
   togetherModeStarted: 'NotificationBarTogetherModeIcon',
   /* @conditional-compile-remove(together-mode) */
-  togetherModeEnded: 'NotificationBarTogetherModeIcon'
+  togetherModeEnded: 'NotificationBarTogetherModeIcon',
+  transcriptionError: 'NotificationBarTranscriptionError',
+  transcriptionStartedByYou: 'NotificationBarTranscriptionStartedByYou'
 };
 
 /**

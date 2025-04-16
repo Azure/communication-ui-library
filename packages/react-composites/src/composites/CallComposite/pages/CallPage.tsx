@@ -4,21 +4,24 @@
 import { DiagnosticQuality } from '@azure/communication-calling';
 import { useId } from '@fluentui/react-hooks';
 import { _isInCall } from '@internal/calling-component-bindings';
-import { ActiveErrorMessage, ErrorBar, ParticipantMenuItemsCallback } from '@internal/react-components';
-/* @conditional-compile-remove(breakout-rooms) */
+import {
+  _useContainerHeight,
+  _useContainerWidth,
+  ActiveErrorMessage,
+  ErrorBar,
+  ParticipantMenuItemsCallback
+} from '@internal/react-components';
 import { CustomAvatarOptions, VideoTile } from '@internal/react-components';
 
 import { ActiveNotification } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
-import React, { useMemo } from 'react';
-/* @conditional-compile-remove(breakout-rooms) */
+import React, { useMemo, useRef } from 'react';
 import { useCallback } from 'react';
 import { useState } from 'react';
 import { AvatarPersonaDataCallback } from '../../common/AvatarPersona';
-/* @conditional-compile-remove(breakout-rooms) */
 import { AvatarPersona } from '../../common/AvatarPersona';
 import { useLocale } from '../../localization';
-import { CallCompositeOptions, DtmfDialPadOptions } from '../CallComposite';
+import { CallCompositeOptions, DtmfDialPadOptions, NotificationOptions } from '../CallComposite';
 import { CallArrangement } from '../components/CallArrangement';
 import { MediaGallery } from '../components/MediaGallery';
 import { NetworkReconnectTile } from '../components/NetworkReconnectTile';
@@ -41,8 +44,8 @@ import { showDtmfDialer } from '../utils/MediaGalleryUtils';
 import { getTargetCallees } from '../selectors/baseSelectors';
 import { Prompt, PromptProps } from '../components/Prompt';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(breakout-rooms) */
 import { mergeStyles, Stack } from '@fluentui/react';
+import { isPhoneNumberIdentifier } from '@azure/communication-common';
 
 /**
  * @private
@@ -70,6 +73,7 @@ export interface CallPageProps {
   setPinnedParticipants?: (pinnedParticipants: string[]) => void;
   compositeAudioContext?: AudioContext;
   disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
+  notificationOptions?: NotificationOptions;
 }
 
 /**
@@ -108,6 +112,12 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const callees = useSelector(getTargetCallees);
   const renderDtmfDialerFromStart = showDtmfDialer(callees, remoteParticipantsConnected, disableAutoShowDtmfDialer);
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
+  const isPstnCall = callees?.some((callee) => isPhoneNumberIdentifier(callee));
+  const isCTECall = useSelector((state) => state.userId.kind === 'microsoftTeamsUser');
+  const containerRef = useRef<HTMLDivElement>(null);
+  const containerWidth = _useContainerWidth(containerRef);
+  const containerHeight = _useContainerHeight(containerRef);
+  const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;
 
   const strings = useLocale().strings.call;
 
@@ -128,14 +138,10 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const [isPromptOpen, setIsPromptOpen] = useState<boolean>(false);
   const [promptProps, setPromptProps] = useState<PromptProps>();
 
-  /* @conditional-compile-remove(breakout-rooms) */
   const page = useSelector((state) => state.page);
-  /* @conditional-compile-remove(breakout-rooms) */
   const userId = useSelector((state) => state.userId);
-  /* @conditional-compile-remove(breakout-rooms) */
   const displayName = useSelector((state) => state.displayName);
 
-  /* @conditional-compile-remove(breakout-rooms) */
   const onRenderAvatar = useCallback(
     (userId?: string, options?: CustomAvatarOptions) => {
       return (
@@ -152,7 +158,6 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   );
 
   let galleryContentWhenNotInCall = <></>;
-  /* @conditional-compile-remove(breakout-rooms) */
   if (!_isInCall(callStatus) && page === 'returningFromBreakoutRoom') {
     galleryContentWhenNotInCall = (
       <VideoTile
@@ -201,13 +206,14 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
           videoTilesOptions={options?.videoTilesOptions}
           captionsOptions={options?.captionsBanner}
           localScreenShareView={options?.galleryOptions?.localScreenShareView}
+          compositeContainerAspectRatio={containerAspectRatio}
         />
       );
     }
   };
 
   return (
-    <>
+    <div ref={containerRef} style={{ height: '100%', width: '100%' }}>
       <CallArrangement
         id={drawerMenuHostId}
         complianceBannerProps={{ ...complianceBannerProps, strings }}
@@ -257,9 +263,11 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
         captionsOptions={options?.captionsBanner}
         dtmfDialerOptions={disableAutoShowDtmfDialer}
+        notificationOptions={props.notificationOptions}
+        isRTTSupportedCall={!isPstnCall && !isCTECall}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
-    </>
+    </div>
   );
 };
 

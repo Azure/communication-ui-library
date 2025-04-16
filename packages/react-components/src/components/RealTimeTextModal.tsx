@@ -21,7 +21,7 @@ import { useLocale } from '../localization';
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * strings for realTimeText modal
  */
 export interface RealTimeTextModalStrings {
@@ -40,7 +40,7 @@ export interface RealTimeTextModalStrings {
 }
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * RealTimeTextModal Component Props.
  */
 export interface RealTimeTextModalProps {
@@ -58,7 +58,7 @@ export interface RealTimeTextModalProps {
 }
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * a component for realTimeText modal
  */
 export const RealTimeTextModal = (props: RealTimeTextModalProps): JSX.Element => {
@@ -105,7 +105,11 @@ export const RealTimeTextModal = (props: RealTimeTextModalProps): JSX.Element =>
           <Text>{strings?.realTimeTextModalText}</Text>
 
           <Stack horizontal horizontalAlign="end" className={buttonsContainerClassName}>
-            <PrimaryButton styles={buttonStyles(theme)} onClick={onConfirm}>
+            <PrimaryButton
+              styles={buttonStyles(theme)}
+              onClick={onConfirm}
+              data-ui-id="realTimeText-modal-confirm-button"
+            >
               <span>{strings?.realTimeTextConfirmButtonLabel}</span>
             </PrimaryButton>
             <DefaultButton onClick={onDismiss} styles={buttonStyles(theme)}>

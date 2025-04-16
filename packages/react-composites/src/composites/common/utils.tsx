@@ -61,7 +61,6 @@ export const useMinMaxDragPosition = (modalLayerHostId: string, rtl?: boolean): 
  */
 export const defaultSpokenLanguage = 'en-us';
 
-/* @conditional-compile-remove(breakout-rooms) */
 /**
  * @private
  */

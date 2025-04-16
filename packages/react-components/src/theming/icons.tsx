@@ -56,6 +56,7 @@ import {
   Settings20Regular,
   ShareScreenStart20Filled,
   ShareScreenStop20Filled,
+  SlideTextEdit16Regular,
   Speaker220Regular,
   SpeakerMute16Filled,
   Star28Filled,
@@ -70,6 +71,7 @@ import {
   VideoPersonStar20Filled,
   VideoPersonStarOff20Filled,
   VideoProhibited16Filled,
+  Warning16Regular,
   WifiWarning20Filled
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(together-mode) */
@@ -96,7 +98,6 @@ import {
 /* @conditional-compile-remove(call-readiness) */
 import { Important20Filled, Sparkle20Filled } from '@fluentui/react-icons';
 import { VideoProhibited20Filled, MicProhibited20Filled } from '@fluentui/react-icons';
-/* @conditional-compile-remove(breakout-rooms) */
 import { ConferenceRoom16Regular, DoorArrowLeft16Regular, DoorArrowRight16Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ArrowDownload20Regular } from '@fluentui/react-icons';
@@ -300,18 +301,14 @@ export const DEFAULT_COMPONENT_ICONS = {
   ErrorBarCallVideoStoppedBySystem: <VideoProhibited16Filled />,
   ErrorBarMutedByRemoteParticipant: <MicOff16Regular />,
   NotificationBarRecording: <Record16Regular />,
-  /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomOpened: <DoorArrowRight16Regular />,
-  /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomPromptJoin: <DoorArrowRight16Regular />,
-  /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomChanged: <DoorArrowRight16Regular />,
-  /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomJoined: <ConferenceRoom16Regular />,
-  /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomClosingSoon: <DoorArrowLeft16Regular />,
-  /* @conditional-compile-remove(breakout-rooms) */
   NotificationBarBreakoutRoomClosed: <DoorArrowLeft16Regular />,
+  NotificationBarTranscriptionError: <Warning16Regular />,
+  NotificationBarTranscriptionStartedByYou: <SlideTextEdit16Regular />,
   HorizontalGalleryLeftButton: <GalleryLeftButton />,
   HorizontalGalleryRightButton: <GalleryRightButton />,
   MessageDelivered: <CheckmarkCircle16Regular />,

@@ -12,11 +12,10 @@ import {
   ITheme,
   mergeStyles,
   mergeStyleSets,
+  PrimaryButton,
   Stack,
   useTheme
 } from '@fluentui/react';
-/* @conditional-compile-remove(breakout-rooms) */
-import { PrimaryButton } from '@fluentui/react';
 import { controlBarContainerStyles } from '../../CallComposite/styles/CallControls.styles';
 import { callControlsContainerStyles } from '../../CallComposite/styles/CallPage.styles';
 import { useCallWithChatCompositeStrings } from '../../CallWithChatComposite/hooks/useCallWithChatCompositeStrings';
@@ -49,11 +48,9 @@ import { useLocale } from '../../localization';
 import { isBoolean } from '../utils';
 import { getEnvironmentInfo } from '../../CallComposite/selectors/baseSelectors';
 import { getIsTeamsCall } from '../../CallComposite/selectors/baseSelectors';
-/* @conditional-compile-remove(breakout-rooms) */
 import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../../CallComposite/selectors/baseSelectors';
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
-/* @conditional-compile-remove(breakout-rooms) */
 import { Timer } from './Timer';
 /* @conditional-compile-remove(rtt) */
 import { CallingRealTimeTextModal } from '../CallingRealTimeTextModal';
@@ -146,9 +143,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
     useSelector((state) => state.call?.capabilitiesFeature?.capabilities.hangUpForEveryOne.isPresent) ?? true;
   const isTeams = useSelector(getIsTeamsCall);
 
-  /* @conditional-compile-remove(breakout-rooms) */
   const assignedBreakoutRoom = useSelector(getAssignedBreakoutRoom);
-  /* @conditional-compile-remove(breakout-rooms) */
   const breakoutRoomSettings = useSelector(getBreakoutRoomSettings);
 
   const handleResize = useCallback((): void => {
@@ -323,9 +318,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
     !capabilitiesSelector?.capabilities ||
     capabilitiesSelector.capabilities.useReactions.isPresent;
 
-  /* @conditional-compile-remove(breakout-rooms) */
   const canReturnToMainMeeting = breakoutRoomSettings && breakoutRoomSettings.disableReturnToMainMeeting === false;
-  /* @conditional-compile-remove(breakout-rooms) */
   const returnFromBreakoutRoom = useCallback(() => props.callAdapter.returnFromBreakoutRoom(), [props.callAdapter]);
 
   // when options is false then we want to hide the whole control bar.
@@ -413,23 +406,20 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
                 */}
                 <div ref={controlBarContainerRef}>
                   <ControlBar layout={props.displayVertical ? 'vertical' : 'horizontal'} styles={centerContainerStyles}>
-                    {
-                      /* @conditional-compile-remove(breakout-rooms) */
-                      !props.mobileView &&
-                        assignedBreakoutRoom &&
-                        assignedBreakoutRoom.state === 'open' &&
-                        // Breakout room settings are only defined in a breakout room so we use this to ensure
-                        // the button is not shown when already in a breakout room
-                        !breakoutRoomSettings && (
-                          <PrimaryButton
-                            text={callStrings.joinBreakoutRoomButtonLabel}
-                            onClick={async (): Promise<void> => {
-                              assignedBreakoutRoom.join();
-                            }}
-                            styles={commonButtonStyles}
-                          />
-                        )
-                    }
+                    {!props.mobileView &&
+                      assignedBreakoutRoom &&
+                      assignedBreakoutRoom.state === 'open' &&
+                      // Breakout room settings are only defined in a breakout room so we use this to ensure
+                      // the button is not shown when already in a breakout room
+                      !breakoutRoomSettings && (
+                        <PrimaryButton
+                          text={callStrings.joinBreakoutRoomButtonLabel}
+                          onClick={async (): Promise<void> => {
+                            assignedBreakoutRoom.join();
+                          }}
+                          styles={commonButtonStyles}
+                        />
+                      )}
                     {microphoneButtonIsEnabled && (
                       <Microphone
                         displayType={options.displayType}
@@ -561,7 +551,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
                         // Only show the end call menu when the call is connected, user should not be able to end the call for everyone
                         // when they are not actively in the call to communicate they will.
                         callState.callStatus === 'Connected' &&
-                        /* @conditional-compile-remove(breakout-rooms) */
                         !canReturnToMainMeeting
                       }
                       disableEndCallModal={
@@ -569,7 +558,6 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
                         !isBoolean(props.callControls?.endCallButton) &&
                         props.callControls?.endCallButton?.disableEndCallModal
                       }
-                      /* @conditional-compile-remove(breakout-rooms) */
                       returnFromBreakoutRoom={canReturnToMainMeeting ? returnFromBreakoutRoom : undefined}
                     />
                   </ControlBar>
@@ -616,14 +604,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
             </div>
           </Stack.Item>
         )}
-        {
-          /* @conditional-compile-remove(breakout-rooms) */
-          breakoutRoomSettings?.roomEndTime && !props.mobileView && !isOutOfSpace && (
-            <Stack.Item>
-              <Timer timeStampInfo={breakoutRoomSettings?.roomEndTime.toString()} />
-            </Stack.Item>
-          )
-        }
+        {breakoutRoomSettings?.roomEndTime && !props.mobileView && !isOutOfSpace && (
+          <Stack.Item>
+            <Timer timeStampInfo={breakoutRoomSettings?.roomEndTime.toString()} />
+          </Stack.Item>
+        )}
       </Stack>
     </div>
   );

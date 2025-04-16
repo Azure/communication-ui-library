@@ -311,6 +311,7 @@ export type AzureCommunicationChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
+    chatAdapterOptions?: ChatAdapterOptions;
 };
 
 // @public
@@ -782,6 +783,7 @@ export type CallCompositeOptions = {
     remoteVideoTileMenuOptions?: RemoteVideoTileMenuOptions;
     localVideoTile?: boolean | LocalVideoTileOptions;
     videoTilesOptions?: VideoTilesOptions;
+    notificationOptions?: NotificationOptions_2;
     disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
     galleryOptions?: {
         layout?: VideoGalleryLayout;
@@ -813,7 +815,7 @@ export type CallCompositeOptions = {
 };
 
 // @public
-export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | 'transferring' | 'badRequest' | /* @conditional-compile-remove(breakout-rooms) */ 'returningFromBreakoutRoom';
+export type CallCompositePage = 'accessDeniedTeamsMeeting' | 'call' | 'configuration' | 'hold' | 'joinCallFailedDueToNoNetwork' | 'leftCall' | 'leaving' | 'lobby' | 'removedFromCall' | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment' | 'transferring' | 'badRequest' | 'returningFromBreakoutRoom';
 
 // @public
 export interface CallCompositeProps extends BaseCompositeProps<CallCompositeIcons> {
@@ -1719,7 +1721,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | /* @conditional-compile-remove(rtt) */ 'realTimeTextReceived' | 'capabilitiesChanged' | 'spotlightChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | /* @conditional-compile-remove(rtt) */ 'realTimeTextReceived' | 'capabilitiesChanged' | 'spotlightChanged' | 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -2046,6 +2048,11 @@ export interface CaptionsSettingsModalStrings {
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers;
 
 // @public
+export type ChatAdapterOptions = {
+    onFetchProfile?: OnFetchChatProfileCallback;
+};
+
+// @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 // @public
@@ -2270,6 +2277,11 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBaseSelectorProps) => {
     myUserId: string;
     participants: ParticipantListParticipant[];
+};
+
+// @public
+export type ChatProfile = {
+    displayName?: string;
 };
 
 // @public
@@ -2827,10 +2839,10 @@ export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId, chatAdapterOptions }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, chatAdapterOptions?: ChatAdapterOptions): Promise<ChatAdapter>;
 
 // @public
 export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
@@ -2989,6 +3001,8 @@ export const DEFAULT_COMPONENT_ICONS: {
     NotificationBarBreakoutRoomJoined: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
+    NotificationBarTranscriptionError: React_2.JSX.Element;
+    NotificationBarTranscriptionStartedByYou: React_2.JSX.Element;
     HorizontalGalleryLeftButton: React_2.JSX.Element;
     HorizontalGalleryRightButton: React_2.JSX.Element;
     MessageDelivered: React_2.JSX.Element;
@@ -3196,6 +3210,8 @@ export const DEFAULT_COMPOSITE_ICONS: {
     NotificationBarBreakoutRoomJoined: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosingSoon: React_2.JSX.Element;
     NotificationBarBreakoutRoomClosed: React_2.JSX.Element;
+    NotificationBarTranscriptionError: React_2.JSX.Element;
+    NotificationBarTranscriptionStartedByYou: React_2.JSX.Element;
     MessageResend: React_2.JSX.Element;
     ParticipantItemSpotlighted: React_2.JSX.Element;
     HoldCallContextualMenuItem: React_2.JSX.Element;
@@ -3220,7 +3236,13 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionCameraOn: React_2.JSX.Element;
     SplitButtonPrimaryActionCameraOff: React_2.JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: React_2.JSX.Element;
-    SplitButtonPrimaryActionMicMuted: React_2.JSX.Element;
+    SplitButtonPrimaryActionMicMuted: React_2.JSX.Element; /**
+    * Icon wrapper to use when including customizable icons inside the CallWithChatComposite.
+    * This wrapper ensures the icon name is being type-checked helping ensure no typos
+    * and ensure that icon is customizable through the composite API.
+    *
+    * @private
+    */
     VerticalGalleryLeftButton: React_2.JSX.Element;
     VerticalGalleryRightButton: React_2.JSX.Element;
     ControlButtonVideoEffectsOption: React_2.JSX.Element;
@@ -4176,6 +4198,12 @@ const Notification_2: (props: NotificationProps) => JSX.Element;
 export { Notification_2 as Notification }
 
 // @public
+interface NotificationOptions_2 {
+    hideAllNotifications?: boolean;
+}
+export { NotificationOptions_2 as NotificationOptions }
+
+// @public
 export interface NotificationProps {
     ariaLive?: 'assertive' | 'off' | 'polite';
     autoDismiss?: boolean;
@@ -4256,7 +4284,9 @@ export interface NotificationStackStrings {
     teamsMeetingCallNetworkQualityLow?: NotificationStrings;
     togetherModeEnded?: NotificationStrings;
     togetherModeStarted?: NotificationStrings;
+    transcriptionError?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
+    transcriptionStartedByYou?: NotificationStrings;
     transcriptionStopped?: NotificationStrings;
     transcriptionStoppedStillRecording?: NotificationStrings;
     unableToStartVideoEffect?: NotificationStrings;
@@ -4285,10 +4315,13 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpened' | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomOpenedPromptJoin' | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomChanged' | /* @conditional-compile-remove(breakout-rooms) */ 'assignedBreakoutRoomClosed' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomJoined' | /* @conditional-compile-remove(breakout-rooms) */ 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent' | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted' | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'assignedBreakoutRoomClosed' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent' | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted' | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
+
+// @public
+export type OnFetchChatProfileCallback = (userId: string, defaultProfile?: ChatProfile) => Promise<ChatProfile | undefined>;
 
 // @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;
@@ -4633,10 +4666,10 @@ export type ReadReceiptsBySenderId = {
     };
 };
 
-// @beta
+// @public
 export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface RealTimeTextCallFeatureState {
     isRealTimeTextFeatureActive?: boolean;
     realTimeTexts: {
@@ -4646,7 +4679,7 @@ export interface RealTimeTextCallFeatureState {
     };
 }
 
-// @beta (undocumented)
+// @public (undocumented)
 export interface RealTimeTextInfo {
     isMe?: boolean;
     message: string;
@@ -4657,7 +4690,7 @@ export interface RealTimeTextInfo {
     updatedTimestamp?: Date;
 }
 
-// @beta
+// @public
 export type RealTimeTextInformation = {
     id: number;
     displayName: string;
@@ -4668,10 +4701,10 @@ export type RealTimeTextInformation = {
     isMe?: boolean;
 };
 
-// @beta
+// @public
 export const RealTimeTextModal: (props: RealTimeTextModalProps) => JSX.Element;
 
-// @beta
+// @public
 export interface RealTimeTextModalProps {
     onDismissModal?: () => void;
     onStartRealTimeText?: () => void;
@@ -4679,7 +4712,7 @@ export interface RealTimeTextModalProps {
     strings?: RealTimeTextModalStrings;
 }
 
-// @beta
+// @public
 export interface RealTimeTextModalStrings {
     realTimeTextCancelButtonLabel?: string;
     realTimeTextCloseModalButtonAriaLabel?: string;
@@ -4689,7 +4722,7 @@ export interface RealTimeTextModalStrings {
     realTimeTextModalTitle?: string;
 }
 
-// @beta
+// @public
 export interface RealTimeTextProps {
     displayName: string;
     id: number;
@@ -4701,12 +4734,12 @@ export interface RealTimeTextProps {
     userId?: string;
 }
 
-// @beta
+// @public
 export type RealTimeTextReceivedListener = (event: {
     realTimeText: RealTimeTextInfo_2;
 }) => void;
 
-// @beta
+// @public
 export interface RealTimeTextStrings {
     isTypingText?: string;
 }
@@ -5127,17 +5160,17 @@ export interface StartCaptionsButtonStrings {
     tooltipOnContent: string;
 }
 
-// @beta
+// @public
 export const StartRealTimeTextButton: (props: StartRealTimeTextButtonProps) => JSX.Element;
 
-// @beta
+// @public
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
     isRealTimeTextOn: boolean;
     onStartRealTimeText: () => void;
     strings?: StartRealTimeTextButtonStrings;
 }
 
-// @beta
+// @public
 export interface StartRealTimeTextButtonStrings {
     label: string;
     tooltipOffContent: string;

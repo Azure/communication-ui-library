@@ -13,7 +13,6 @@ import { TeamsCall } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { StartCaptionsOptions } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(breakout-rooms) */
 import type { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import type {
   AudioDeviceInfo,
@@ -32,9 +31,13 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CommunicationIdentifier } from '@azure/communication-common';
 import type { CommunicationUserIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
-import type { AdapterState, Disposable, AdapterError, AdapterErrors } from '../../common/adapters';
-/* @conditional-compile-remove(breakout-rooms) */
-import type { AdapterNotifications } from '../../common/adapters';
+import type {
+  AdapterState,
+  Disposable,
+  AdapterError,
+  AdapterErrors,
+  AdapterNotifications
+} from '../../common/adapters';
 import {
   DeepNoiseSuppressionEffectDependency,
   VideoBackgroundEffectsDependency
@@ -61,7 +64,7 @@ export type CallCompositePage =
   | /* @conditional-compile-remove(unsupported-browser) */ 'unsupportedEnvironment'
   | 'transferring'
   | 'badRequest'
-  | /* @conditional-compile-remove(breakout-rooms) */ 'returningFromBreakoutRoom';
+  | 'returningFromBreakoutRoom';
 
 /**
  * Subset of CallCompositePages that represent an end call state.
@@ -125,7 +128,6 @@ export type CallAdapterClientState = {
    * Latest error encountered for each operation performed via the adapter.
    */
   latestErrors: AdapterErrors;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Latest notifications from call client state.
    */
@@ -399,7 +401,7 @@ export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: st
 /* @conditional-compile-remove(rtt) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'realTimeTextReceived' event.
- * @beta
+ * @public
  */
 export type RealTimeTextReceivedListener = (event: { realTimeText: RealTimeTextInfo }) => void;
 
@@ -808,7 +810,6 @@ export interface CallAdapterCallOperations {
    * Mute All participants
    */
   muteAllRemoteParticipants(): Promise<void>;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Return to origin call of breakout room
    */
@@ -1046,7 +1047,6 @@ export interface CallAdapterSubscribers {
    * Subscribe function for 'mutedByOthers' event.
    */
   on(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Subscribe function for 'breakoutRoomsUpdated' event.
    */
@@ -1141,7 +1141,6 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'mutedByOthers' event.
    */
   off(event: 'mutedByOthers', listener: PropertyChangedEvent): void;
-  /* @conditional-compile-remove(breakout-rooms) */
   /**
    * Unsubscribe function for 'breakoutRoomsUpdated' event.
    */

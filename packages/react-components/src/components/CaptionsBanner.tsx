@@ -68,7 +68,7 @@ export type CaptionsInformation = {
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * information required for each line of real time text
  */
 export type RealTimeTextInformation = {
@@ -395,6 +395,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               >
                 <Text className={titleClassName}>{getTitle()}</Text>
                 <IconButton
+                  data-ui-id="captions-banner-expand-icon"
                   iconProps={{ iconName: expandBannerHeight ? 'MinimizeIcon' : 'ExpandIcon' }}
                   ariaLabel={expandBannerHeight ? strings.minimizeButtonAriaLabel : strings.expandButtonAriaLabel}
                   onClick={() => setExpandBannerHeight(!expandBannerHeight)}

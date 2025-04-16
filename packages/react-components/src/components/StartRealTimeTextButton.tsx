@@ -13,7 +13,7 @@ import { useLocale } from '../localization';
 /* @conditional-compile-remove(rtt) */
 /**
  * Props for the StartRealTimeTextButton component
- * @beta
+ * @public
  */
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
   /**
@@ -34,7 +34,7 @@ export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
 /* @conditional-compile-remove(rtt) */
 /**
  * Strings for the hold button labels
- * @beta
+ * @public
  */
 export interface StartRealTimeTextButtonStrings {
   /**
@@ -56,7 +56,7 @@ export interface StartRealTimeTextButtonStrings {
  * Can be used with {@link ControlBar}
  *
  * @param props - properties for the start RealTimeText button.
- * @beta
+ * @public
  */
 export const StartRealTimeTextButton = (props: StartRealTimeTextButtonProps): JSX.Element => {
   const { onStartRealTimeText, isRealTimeTextOn } = props;
