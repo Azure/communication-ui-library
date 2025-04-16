@@ -423,29 +423,10 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     setPreviousInlineImages(prevInlineImage);
 
-    const colorTransformFunction = (
-      lightColor: string
-      /* baseLValue?: number,
-      colorType?: 'text' | 'background' | 'border',
-      element?: HTMLElement */
-    ): string => {
-      if (!isDarkThemed(theme)) {
-        return lightColor;
-      }
-      // For dark mode, switch black to be white
-      switch (lightColor) {
-        case '--darkColor_rgb_0_0_0_':
-          return theme.palette.neutralPrimary;
-
-        default:
-          return lightColor;
-      }
-    };
-
     const initialModel = createEditorInitialModel(initialContent, contentModel);
     if (editorDiv.current) {
       editor.current = new Editor(editorDiv.current, {
-        generateColorKey: colorTransformFunction,
+        generateColorKey: (color) => color,
         inDarkMode: isDarkThemed(theme),
         // doNotAdjustEditorColor is used to disable default color and background color for Rooster component
         doNotAdjustEditorColor: true,
