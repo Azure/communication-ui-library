@@ -4656,7 +4656,7 @@ export type ReadReceiptsBySenderId = {
     };
 };
 
-// @beta
+// @public
 export const RealTimeText: (props: RealTimeTextProps) => JSX.Element;
 
 // @public (undocumented)
@@ -4691,10 +4691,10 @@ export type RealTimeTextInformation = {
     isMe?: boolean;
 };
 
-// @beta
+// @public
 export const RealTimeTextModal: (props: RealTimeTextModalProps) => JSX.Element;
 
-// @beta
+// @public
 export interface RealTimeTextModalProps {
     onDismissModal?: () => void;
     onStartRealTimeText?: () => void;
@@ -4712,7 +4712,7 @@ export interface RealTimeTextModalStrings {
     realTimeTextModalTitle?: string;
 }
 
-// @beta
+// @public
 export interface RealTimeTextProps {
     displayName: string;
     id: number;
@@ -5150,10 +5150,10 @@ export interface StartCaptionsButtonStrings {
     tooltipOnContent: string;
 }
 
-// @beta
+// @public
 export const StartRealTimeTextButton: (props: StartRealTimeTextButtonProps) => JSX.Element;
 
-// @beta
+// @public
 export interface StartRealTimeTextButtonProps extends ControlBarButtonProps {
     isRealTimeTextOn: boolean;
     onStartRealTimeText: () => void;
