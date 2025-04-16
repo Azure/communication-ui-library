@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Tillsammans-läge har avslutats",
       "dismissButtonAriaLabel": "Stäng"
+    },
+    "transcriptionError": {
+      "title": "Ett fel uppstod med transkriptionen.",
+      "message": "Transkriptionen har stoppats. Försök igen senare",
+      "dismissButtonAriaLabel": "Stäng"
+    },
+    "transcriptionStartedByYou": {
+      "title": "Transkriptionen har startat.",
+      "message": "Startades av dig. Berätta för alla att de transkriberas.",
+      "dismissButtonAriaLabel": "Stäng"
     }
   },
   "videoGallery": {
