@@ -14681,41 +14681,41 @@ packages:
       fsevents: 2.3.3
     dev: false
 
-  /roosterjs-content-model-api@9.18.0:
-    resolution: {integrity: sha512-DAC631JK25OjyeSbfV+RwzHlfJEImHLUOgBRt4WgF1wgUdQ4N12h6J40mX7CFTcbfvDmzFE368ct5OZ6mT/tJQ==}
+  /roosterjs-content-model-api@9.24.0:
+    resolution: {integrity: sha512-fyI8lc+Dgnmchluk4EX1BED+q0VSS9jErVy6EpgfalbWOwJ/PTr5wwvel/WM8YN0YIwkDii6/Wx/228aNrB+3w==}
     dependencies:
-      roosterjs-content-model-dom: 9.18.0
-      roosterjs-content-model-types: 9.18.0
+      roosterjs-content-model-dom: 9.24.0
+      roosterjs-content-model-types: 9.24.0
       tslib: 2.8.1
     dev: false
 
-  /roosterjs-content-model-core@9.18.0:
-    resolution: {integrity: sha512-SPjoqK9RAs5+oUX4BSOvICT1KPUHHRC3LmVsu16sJt7WzWnmWaIy/TOH1P9gxp8iQQo0xEmqwBX8d8Ot5lE9NA==}
+  /roosterjs-content-model-core@9.24.0:
+    resolution: {integrity: sha512-T5dHmuVCRB3VIHrX4KiVnleat4A9hP0OJGNKFjavzrFKAgkbvz5usmkFJM2M9TNxM1UIPECtqwWa+Hcu5D+dmQ==}
     dependencies:
-      roosterjs-content-model-dom: 9.18.0
-      roosterjs-content-model-types: 9.18.0
+      roosterjs-content-model-dom: 9.24.0
+      roosterjs-content-model-types: 9.24.0
       tslib: 2.8.1
     dev: false
 
-  /roosterjs-content-model-dom@9.18.0:
-    resolution: {integrity: sha512-ga1najmektQhZpFxauGbdxI6vOz1ftOBud+yHJTs26aLia/X7kwnjHHt+uncdECYWp+fZqw5WhhbSonLK9H+dA==}
+  /roosterjs-content-model-dom@9.24.0:
+    resolution: {integrity: sha512-/AlInOw2xo6LnA2CT6EYT6IYEVw+EkkRscldNf+Au9J6VyQ+7WnZc/dcWsTTIRMuOqRJ6p0RfcxvgHECRuzI4w==}
     dependencies:
-      roosterjs-content-model-types: 9.18.0
+      roosterjs-content-model-types: 9.24.0
       tslib: 2.8.1
     dev: false
 
-  /roosterjs-content-model-plugins@9.18.0:
-    resolution: {integrity: sha512-Pggi6XU6TVFuAchgyX6uYBKVPs7f0VH32E8+nsQtdd/F0PVTIJungJ7rcWqkz2el4RW1vdkVDxaRANFnJMXZTA==}
+  /roosterjs-content-model-plugins@9.24.1:
+    resolution: {integrity: sha512-u8pCw6B127d1my2ittZ1CE6G+7YsviXgsKcqoSqE2CI6NXIfyYjYhoAdgcHTdlrnMTszxty5qJ2g6ZJw/rmgSg==}
     dependencies:
-      roosterjs-content-model-api: 9.18.0
-      roosterjs-content-model-core: 9.18.0
-      roosterjs-content-model-dom: 9.18.0
-      roosterjs-content-model-types: 9.18.0
+      roosterjs-content-model-api: 9.24.0
+      roosterjs-content-model-core: 9.24.0
+      roosterjs-content-model-dom: 9.24.0
+      roosterjs-content-model-types: 9.24.0
       tslib: 2.8.1
     dev: false
 
-  /roosterjs-content-model-types@9.18.0:
-    resolution: {integrity: sha512-oS8/3YMz/mtbH2db65Rjn0lOfR8xNDq1i3DXs94dQ5vH/643RvWOBzdAbvjr4DXhtqjdXZFz7JrWyHTy7bxFLw==}
+  /roosterjs-content-model-types@9.24.0:
+    resolution: {integrity: sha512-3wbEsARJhDJ4syID4scmELwCCST/buqApj0I1Me0t8zkbuQccn8Abqtu00Rbga15FhARB3NOMjKaEQBFqBaYmg==}
     dev: false
 
   /router@2.1.0:
@@ -18155,11 +18155,11 @@ packages:
       reselect: 4.1.8
       rimraf: 2.7.1
       rollup: 4.32.1
-      roosterjs-content-model-api: 9.18.0
-      roosterjs-content-model-core: 9.18.0
-      roosterjs-content-model-dom: 9.18.0
-      roosterjs-content-model-plugins: 9.18.0
-      roosterjs-content-model-types: 9.18.0
+      roosterjs-content-model-api: 9.24.0
+      roosterjs-content-model-core: 9.24.0
+      roosterjs-content-model-dom: 9.24.0
+      roosterjs-content-model-plugins: 9.24.1
+      roosterjs-content-model-types: 9.24.0
       scheduler: 0.23.2
       source-map-explorer: 2.5.3
       textarea-caret-ts: 4.1.1
@@ -18417,11 +18417,11 @@ packages:
       regenerator-runtime: 0.14.1
       rimraf: 2.7.1
       rollup: 4.32.1
-      roosterjs-content-model-api: 9.18.0
-      roosterjs-content-model-core: 9.18.0
-      roosterjs-content-model-dom: 9.18.0
-      roosterjs-content-model-plugins: 9.18.0
-      roosterjs-content-model-types: 9.18.0
+      roosterjs-content-model-api: 9.24.0
+      roosterjs-content-model-core: 9.24.0
+      roosterjs-content-model-dom: 9.24.0
+      roosterjs-content-model-plugins: 9.24.1
+      roosterjs-content-model-types: 9.24.0
       scheduler: 0.23.2
       source-map-explorer: 2.5.3
       textarea-caret-ts: 4.1.1
