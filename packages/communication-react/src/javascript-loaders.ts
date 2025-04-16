@@ -5,12 +5,14 @@ export {
   loadOutboundCallComposite,
   loadCallComposite,
   loadChatComposite,
-  loadCallWithChatComposite
+  loadCallWithChatComposite,
+  loadCallComponent
 } from '../../acs-ui-javascript-loaders/src';
 
 export type {
   OutboundCallCompositeLoaderProps,
   CallCompositeLoaderProps,
   ChatCompositeLoaderProps,
-  CallWithChatCompositeLoaderProps
+  CallWithChatCompositeLoaderProps,
+  CallComponentLoaderProps
 } from '../../acs-ui-javascript-loaders/src';
