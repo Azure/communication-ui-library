@@ -1247,6 +1247,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.context.setIsReturningFromBreakoutRoom(true);
 
     const mainMeeting = await assignedBreakoutRoom.returnToMainMeeting();
+    // Mute main meeting if the breakout room was muted
+    if (this.call?.isMuted) {
+      mainMeeting.mute();
+    }
     this.originCall = mainMeeting;
     this.processNewCall(mainMeeting);
   }
@@ -1360,7 +1364,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
     /* @conditional-compile-remove(rtt) */
-    this.call?.feature(Features.RealTimeText).on('realTimeTextReceived', this.realTimeTextReceived.bind(this));
+    try {
+      this.call?.feature(Features.RealTimeText).on('realTimeTextReceived', this.realTimeTextReceived.bind(this));
+    } catch (e) {
+      console.log('RealTimeText feature is not supported');
+    }
     const breakoutRoomsFeature = this.call?.feature(Features.BreakoutRooms);
     if (breakoutRoomsFeature) {
       breakoutRoomsFeature.on('breakoutRoomsUpdated', this.breakoutRoomsUpdated.bind(this));
@@ -1380,7 +1388,11 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     this.unsubscribeFromCaptionEvents();
     /* @conditional-compile-remove(rtt) */
-    this.call?.feature(Features.RealTimeText).off('realTimeTextReceived', this.realTimeTextReceived.bind(this));
+    try {
+      this.call?.feature(Features.RealTimeText).off('realTimeTextReceived', this.realTimeTextReceived.bind(this));
+    } catch (e) {
+      console.log('RealTimeText feature is not supported');
+    }
     if (this.callingSoundSubscriber) {
       this.callingSoundSubscriber.unsubscribeAll();
     }
@@ -1518,6 +1530,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
   private breakoutRoomJoined(call: Call | TeamsCall): void {
     if (this.call?.id !== call.id) {
+      // Mute the breakout room call if the main call was muted
+      if (this.call?.isMuted) {
+        call.mute();
+      }
       this.processNewCall(call);
     }
     // Hang up other breakout room calls in case we are joining a new breakout room while already in one

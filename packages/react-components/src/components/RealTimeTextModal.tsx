@@ -21,7 +21,7 @@ import { useLocale } from '../localization';
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * strings for realTimeText modal
  */
 export interface RealTimeTextModalStrings {
@@ -40,7 +40,7 @@ export interface RealTimeTextModalStrings {
 }
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * RealTimeTextModal Component Props.
  */
 export interface RealTimeTextModalProps {
@@ -58,7 +58,7 @@ export interface RealTimeTextModalProps {
 }
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * a component for realTimeText modal
  */
 export const RealTimeTextModal = (props: RealTimeTextModalProps): JSX.Element => {
