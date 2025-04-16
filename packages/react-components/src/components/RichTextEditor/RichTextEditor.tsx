@@ -435,7 +435,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       // For dark mode, switch black to be white
       switch (lightColor) {
         case '--darkColor_rgb_0_0_0_':
-          return '#ffffff';
+          return theme.palette.neutralPrimary;
 
         default:
           return lightColor;
