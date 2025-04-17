@@ -127,7 +127,14 @@ export const captionContainerClassName = mergeStyles({
   marginTop: _pxToRem(6),
   marginBottom: _pxToRem(6),
   textAlign: 'unset', // ensure RTL spoken language captions are appropriately aligned to the right
-  overflowAnchor: 'auto'
+  overflowAnchor: 'auto',
+  overflowWrap: 'break-word',
+  wordBreak: 'break-word', // Additional breaking control for long words
+  maxWidth: '100%', // Ensure it never expands beyond 100% of the container
+  width: '100%',
+  overflow: 'hidden',
+  boxSizing: 'border-box', // Include padding in the width calculation
+  whiteSpace: 'normal' // Ensure text wraps
 });
 
 /** Reset styling set by the `ul` element */
