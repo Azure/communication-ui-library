@@ -2,6 +2,63 @@
   "name": "@internal/check-treeshaking",
   "entries": [
     {
+      "date": "Mon, 07 Apr 2025 16:07:49 GMT",
+      "version": "0.1.0",
+      "tag": "@internal/check-treeshaking_v0.1.0",
+      "comments": {
+        "undefined": [
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/acs-ui-common to v1.26.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/react-components to v1.26.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/chat-stateful-client to v1.26.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/calling-stateful-client to v1.26.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/chat-component-bindings to v1.26.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/calling-component-bindings to v1.26.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/react-composites to v1.26.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/check-treeshaking",
+            "comment": "Bump @internal/acs-ui-javascript-loaders to v1.26.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 24 Mar 2025 20:31:17 GMT",
       "version": "0.1.0",
       "tag": "@internal/check-treeshaking_v0.1.0",
