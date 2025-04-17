@@ -2,28 +2,17 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-import { CallAgent, Call } from '@azure/communication-calling';
-import { StatefulCallClient } from '@internal/calling-stateful-client';
 import { CallClientProvider, CallAgentProvider, CallProvider } from '@internal/calling-component-bindings';
-import { StatefulComponents } from './statefulComponents';
-
-/**
- * Props to set up calling components.
- * @internal
- */
-export type CallComponentsProps = {
-  callClient: StatefulCallClient;
-  callAgent: CallAgent;
-  call: Call;
-};
+import CaptionsBannerComponent from './CaptionsBannerComponent';
+import { CaptionsAndRealTimeTextComponentsProps } from './captionsAndRealTimeTextComponentsLoader';
 
 /**
  * return calling components.
  *
  * @internal
  */
-export const CallComponents = (props: CallComponentsProps): JSX.Element => {
-  const { callClient, callAgent, call } = props;
+export const CaptionsAndRealTimeTextComponents = (props: CaptionsAndRealTimeTextComponentsProps): JSX.Element => {
+  const { callClient, callAgent, call, showCaptionsSettingsModal, showRealTimeTextModal } = props;
 
   return (
     <div>
@@ -31,7 +20,10 @@ export const CallComponents = (props: CallComponentsProps): JSX.Element => {
         <CallClientProvider callClient={callClient}>
           <CallAgentProvider callAgent={callAgent}>
             <CallProvider call={call}>
-              <StatefulComponents />
+              <CaptionsBannerComponent
+                showCaptionsSettingsModal={showCaptionsSettingsModal}
+                showRealTimeTextModal={showRealTimeTextModal}
+              />
             </CallProvider>
           </CallAgentProvider>
         </CallClientProvider>

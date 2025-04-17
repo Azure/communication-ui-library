@@ -6,7 +6,7 @@ export {
   loadCallComposite,
   loadChatComposite,
   loadCallWithChatComposite,
-  loadCallComponent
+  loadCaptionsAndRealTimeTextComponent
 } from '../../acs-ui-javascript-loaders/src';
 
 export type {
@@ -14,5 +14,5 @@ export type {
   CallCompositeLoaderProps,
   ChatCompositeLoaderProps,
   CallWithChatCompositeLoaderProps,
-  CallComponentLoaderProps
+  CaptionsAndRealTimeTextComponentsProps
 } from '../../acs-ui-javascript-loaders/src';

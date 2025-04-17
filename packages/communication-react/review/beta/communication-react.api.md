@@ -660,13 +660,6 @@ export interface CallClientState {
 }
 
 // @public
-export type CallComponentLoaderProps = {
-    callClient: StatefulCallClient;
-    callAgent: CallAgent;
-    call: Call;
-};
-
-// @public
 export const CallComposite: (props: CallCompositeProps) => JSX.Element;
 
 // @public
@@ -1904,6 +1897,17 @@ export interface CaptionLanguageStrings {
     // (undocumented)
     vi: string;
 }
+
+// @public
+export type CaptionsAndRealTimeTextComponentsProps = {
+    callClient: StatefulCallClient;
+    callAgent: CallAgent;
+    call: Call;
+    showCaptionsSettingsModal: boolean;
+    showRealTimeTextModal: boolean;
+    setShowCaptionsSettingsModal: (showCaptionsSettingsModal: boolean) => void;
+    setShowRealTimeTextModal: (showRealTimeTextModal: boolean) => void;
+};
 
 // @public
 export const CaptionsBanner: (props: CaptionsBannerProps) => JSX.Element;
@@ -3779,13 +3783,13 @@ export interface JumpToNewMessageButtonProps {
 export const lightTheme: PartialTheme & CallingTheme;
 
 // @public
-export const loadCallComponent: (loaderArgs: CallComponentLoaderProps, htmlElement: HTMLElement) => Promise<void>;
-
-// @public
 export const loadCallComposite: (loaderArgs: CallCompositeLoaderProps, htmlElement: HTMLElement) => Promise<CallAdapter | undefined>;
 
 // @public
 export const loadCallWithChatComposite: (loaderArgs: CallWithChatCompositeLoaderProps, htmlElement: HTMLElement) => Promise<CallWithChatAdapter | undefined>;
+
+// @public
+export const loadCaptionsAndRealTimeTextComponent: (loaderArgs: CaptionsAndRealTimeTextComponentsProps, htmlElement: HTMLElement) => Promise<void>;
 
 // @public
 export const loadChatComposite: (loaderArgs: ChatCompositeLoaderProps, htmlElement: HTMLElement) => Promise<ChatAdapter | undefined>;
