@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Togethermode è terminato",
       "dismissButtonAriaLabel": "Chiudi"
+    },
+    "transcriptionError": {
+      "title": "Si è verificato un errore con la trascrizione.",
+      "message": "La trascrizione è stata interrotta. Riprova più tardi",
+      "dismissButtonAriaLabel": "Chiudi"
+    },
+    "transcriptionStartedByYou": {
+      "title": "La trascrizione è stata avviata.",
+      "message": "Avviato da te. Informa tutti che la chiamata viene trascritta.",
+      "dismissButtonAriaLabel": "Chiudi"
     }
   },
   "videoGallery": {

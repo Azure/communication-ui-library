@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "[在一起模式] 已結束",
       "dismissButtonAriaLabel": "關閉"
+    },
+    "transcriptionError": {
+      "title": "謄寫發生錯誤。",
+      "message": "已停止謄寫。請稍後再試",
+      "dismissButtonAriaLabel": "關閉"
+    },
+    "transcriptionStartedByYou": {
+      "title": "已開始謄寫。",
+      "message": "由您啟動。讓所有人知道他們正在被謄寫。",
+      "dismissButtonAriaLabel": "關閉"
     }
   },
   "videoGallery": {

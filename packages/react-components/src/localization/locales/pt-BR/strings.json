@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "O modo Togethermode foi encerrado",
       "dismissButtonAriaLabel": "Fechar"
+    },
+    "transcriptionError": {
+      "title": "Algo deu errado com a transcrição.",
+      "message": "A transcrição foi interrompida. Tente novamente mais tarde",
+      "dismissButtonAriaLabel": "Fechar"
+    },
+    "transcriptionStartedByYou": {
+      "title": "A transcrição foi iniciada.",
+      "message": "Iniciado por você. Informe a todos que eles estão sendo transcritos.",
+      "dismissButtonAriaLabel": "Fechar"
     }
   },
   "videoGallery": {

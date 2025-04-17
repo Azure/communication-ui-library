@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Togethermode 已结束",
       "dismissButtonAriaLabel": "关闭"
+    },
+    "transcriptionError": {
+      "title": "听录出现问题。",
+      "message": "听录已停止。请稍后重试",
+      "dismissButtonAriaLabel": "关闭"
+    },
+    "transcriptionStartedByYou": {
+      "title": "听录已开始。",
+      "message": "已由你启动。告知所有人正在听录他们所说的内容。",
+      "dismissButtonAriaLabel": "关闭"
     }
   },
   "videoGallery": {

@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Togethermode sona erdi",
       "dismissButtonAriaLabel": "Kapat"
+    },
+    "transcriptionError": {
+      "title": "Transkripsiyonla ilgili bir sorun oluştu.",
+      "message": "Transkripsiyon durduruldu. Lütfen daha sonra yeniden deneyin",
+      "dismissButtonAriaLabel": "Kapat"
+    },
+    "transcriptionStartedByYou": {
+      "title": "Transkripsiyon başlatıldı.",
+      "message": "Siz başlattınız. Transkripsiyon yapıldığını herkese bildirin.",
+      "dismissButtonAriaLabel": "Kapat"
     }
   },
   "videoGallery": {
