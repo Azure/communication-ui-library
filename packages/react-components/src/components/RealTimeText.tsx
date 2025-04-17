@@ -33,7 +33,7 @@ export interface RealTimeTextStrings {
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * Props for a single line of RealTimeText.
  */
 export interface RealTimeTextProps {
@@ -75,7 +75,7 @@ export interface RealTimeTextProps {
 
 /* @conditional-compile-remove(rtt) */
 /**
- * @beta
+ * @public
  * A component for displaying a single line of RealTimeText
  */
 export const RealTimeText = (props: RealTimeTextProps): JSX.Element => {

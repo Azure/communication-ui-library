@@ -52,6 +52,8 @@ import {
   getLocalUserId,
   getIsTeamsCall
 } from '../../CallComposite/selectors/baseSelectors';
+/* @conditional-compile-remove(rtt) */
+import { CallingRealTimeTextModal } from '../CallingRealTimeTextModal';
 
 /** @private */
 export interface MoreDrawerStrings {
@@ -204,6 +206,16 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const participants = useSelector(getRemoteParticipantsConnectedSelector);
   const allowDtmfDialer = showDtmfDialer(callees, participants, props.dtmfDialerOptions);
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
+  /* @conditional-compile-remove(rtt) */
+  const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
+  /* @conditional-compile-remove(rtt) */
+  const openRealTimeTextModal = useCallback((): void => {
+    setShowRealTimeTextModal(true);
+  }, []);
+  /* @conditional-compile-remove(rtt) */
+  const onDismissRealTimeTextModal = useCallback((): void => {
+    setShowRealTimeTextModal(false);
+  }, []);
 
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
   /* @conditional-compile-remove(together-mode) */
@@ -654,7 +666,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         iconName: 'RealTimeTextIcon',
         styles: { root: { lineHeight: 0 } }
       },
-      onItemClick: props.onStartRealTimeText,
+      onItemClick: openRealTimeTextModal,
       disabled: rttDisabled,
       secondaryComponent: (
         <Stack verticalFill verticalAlign="center">
@@ -665,7 +677,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
               theme,
               realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked
             )}
-            onChange={props.onStartRealTimeText}
+            onChange={openRealTimeTextModal}
           />
         </Stack>
       )
@@ -690,9 +702,17 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   customDrawerButtons['overflow'].forEach((element) => {
     drawerMenuItems.push(element);
   });
-
   return (
     <>
+      {
+        /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
+          <CallingRealTimeTextModal
+            showModal={showRealTimeTextModal}
+            onDismissModal={onDismissRealTimeTextModal}
+            onStartRealTimeText={props.onStartRealTimeText}
+          />
+        )
+      }
       {isSpokenLanguageDrawerOpen && showCaptionsButton && (
         <SpokenLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}

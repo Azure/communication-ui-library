@@ -426,6 +426,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     const initialModel = createEditorInitialModel(initialContent, contentModel);
     if (editorDiv.current) {
       editor.current = new Editor(editorDiv.current, {
+        generateColorKey: (color) => color, // Needed to ensure override of text color in dark mode.
         inDarkMode: isDarkThemed(theme),
         // doNotAdjustEditorColor is used to disable default color and background color for Rooster component
         doNotAdjustEditorColor: true,
