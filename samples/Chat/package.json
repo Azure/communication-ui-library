@@ -42,9 +42,9 @@
     "@internal/chat-component-bindings": "1.27.0-beta.0",
     "@internal/react-components": "1.27.0-beta.0",
     "@internal/react-composites": "1.27.0-beta.0",
-    "@fluentui/react": "^8.122.11",
-    "@fluentui/react-file-type-icons": "8.12.8",
-    "@fluentui/react-icons": "^2.0.274",
+    "@fluentui/react": "^8.122.15",
+    "@fluentui/react-file-type-icons": "8.13.0",
+    "@fluentui/react-icons": "^2.0.297",
     "@types/react-linkify": "^1.0.4",
     "json-stringify-safe": "^5.0.1",
     "mobile-detect": "^1.4.5",
@@ -77,9 +77,9 @@
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "eslint-plugin-prettier": "5.2.3",
+    "eslint-plugin-prettier": "5.2.6",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react": "^7.37.5",
     "eslint": "^8.57.0",
     "html-webpack-plugin": "^5.3.1",
     "husky": "^8.0.3",
@@ -87,8 +87,8 @@
     "jest-fetch-mock": "^3.0.3",
     "jest-junit": "^16.0.0",
     "jest": "29.7.0",
-    "prettier": "3.3.2",
-    "pretty-quick": "^4.0.0",
+    "prettier": "3.5.3",
+    "pretty-quick": "^4.1.1",
     "rimraf": "^2.6.2",
     "style-loader": "^2.0.0",
     "ts-loader": "^8.0.12",
@@ -98,6 +98,6 @@
     "webpack-dev-server": "4.15.2",
     "webpack": "5.95.0",
     "webpack-bundle-analyzer": "^4.5.0",
-    "@babel/cli": "^7.24.8"
+    "@babel/cli": "^7.27.0"
   }
 }
