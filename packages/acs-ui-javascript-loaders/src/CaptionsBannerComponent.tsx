@@ -26,7 +26,7 @@ export const CaptionsBannerComponent = (props: {
   return (
     <Stack className={mergeStyles({ height: '100%' })}>
       {captionsSettingsModalProps &&
-        (captionsSettingsModalProps as CaptionsSettingsModalProps).isCaptionsFeatureActive && (
+        !(captionsBannerProps && (captionsBannerProps as CaptionsBannerProps).isCaptionsOn) && (
           <CaptionsSettingsModal
             {...(captionsSettingsModalProps as CaptionsSettingsModalProps)}
             showModal={showCaptionsSettingsModal}
@@ -36,17 +36,18 @@ export const CaptionsBannerComponent = (props: {
           />
         )}
       {
-        /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
-          <RealTimeTextModal
-            showModal={showRealTimeTextModal}
-            onDismissModal={() => {
-              setShowRealTimeTextModal(false);
-            }}
-            onStartRealTimeText={() => {
-              setIsRealTimeTextStarted(true);
-            }}
-          />
-        )
+        /* @conditional-compile-remove(rtt) */ showRealTimeTextModal &&
+          !(captionsBannerProps && (captionsBannerProps as CaptionsBannerProps).isRealTimeTextOn) && (
+            <RealTimeTextModal
+              showModal={showRealTimeTextModal}
+              onDismissModal={() => {
+                setShowRealTimeTextModal(false);
+              }}
+              onStartRealTimeText={() => {
+                setIsRealTimeTextStarted(true);
+              }}
+            />
+          )
       }
       {captionsBannerProps &&
         ((captionsBannerProps as CaptionsBannerProps)?.isCaptionsOn ||

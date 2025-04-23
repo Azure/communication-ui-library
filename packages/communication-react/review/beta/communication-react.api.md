@@ -1905,8 +1905,6 @@ export type CaptionsAndRealTimeTextComponentsProps = {
     call: Call;
     showCaptionsSettingsModal: boolean;
     showRealTimeTextModal: boolean;
-    setShowCaptionsSettingsModal: (showCaptionsSettingsModal: boolean) => void;
-    setShowRealTimeTextModal: (showRealTimeTextModal: boolean) => void;
 };
 
 // @public
