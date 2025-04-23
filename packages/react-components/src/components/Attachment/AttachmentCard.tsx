@@ -184,7 +184,7 @@ const MappedMenuItems = (
     return <></>;
   }
   return menuActions.length === 1 ? (
-    <TooltipHost content={menuActions[0].name}>
+    <TooltipHost content={menuActions[0].name} closeDelay={500}>
       <ToolbarButton
         aria-label={menuActions[0].name}
         role="button"
@@ -201,7 +201,7 @@ const MappedMenuItems = (
   ) : (
     <Toolbar>
       <Menu>
-        <TooltipHost content={localeStrings.attachmentMoreMenu}>
+        <TooltipHost content={localeStrings.attachmentMoreMenu} closeDelay={500}>
           <MenuTrigger>
             <ToolbarButton
               aria-label={localeStrings.attachmentMoreMenu}
