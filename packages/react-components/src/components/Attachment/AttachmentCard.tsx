@@ -179,12 +179,13 @@ const MappedMenuItems = (
   handleOnClickError?: (errMsg: string) => void
 ): JSX.Element => {
   const localeStrings = useLocaleAttachmentCardStringsTrampoline();
+  const toolTipHostCloseDelayMs = 500;
 
   if (!menuActions[0]) {
     return <></>;
   }
   return menuActions.length === 1 ? (
-    <TooltipHost content={menuActions[0].name} closeDelay={500}>
+    <TooltipHost content={menuActions[0].name} closeDelay={toolTipHostCloseDelayMs}>
       <ToolbarButton
         aria-label={menuActions[0].name}
         role="button"
@@ -201,7 +202,7 @@ const MappedMenuItems = (
   ) : (
     <Toolbar>
       <Menu>
-        <TooltipHost content={localeStrings.attachmentMoreMenu} closeDelay={500}>
+        <TooltipHost content={localeStrings.attachmentMoreMenu} closeDelay={toolTipHostCloseDelayMs}>
           <MenuTrigger>
             <ToolbarButton
               aria-label={localeStrings.attachmentMoreMenu}
