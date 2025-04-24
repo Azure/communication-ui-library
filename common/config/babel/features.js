@@ -21,8 +21,6 @@ module.exports = {
     "in-progress-beta-feature-demo",
     // Feature for remote UFD
     "remote-ufd",
-    // Feature for on fetch profile
-    "on-fetch-profile",
     // Block joining calls if the user is on an unsupported browser
     "unsupported-browser",
   ],
@@ -78,5 +76,7 @@ module.exports = {
     "stabilizedDemo",
      // Feature for RTT
      "rtt",
+     // Feature for on fetch profile
+    "on-fetch-profile"
   ]
 }
