@@ -8,4 +8,4 @@
 //
 // This dummy version is replaced with the actual package
 // version as part of the release branch creation process.
-module.exports = '0.0.0-alpha';
+export default '0.0.0-alpha';
