@@ -42,9 +42,9 @@
     "@internal/chat-component-bindings": "1.27.0-beta.0",
     "@internal/react-components": "1.27.0-beta.0",
     "@internal/react-composites": "1.27.0-beta.0",
-    "@fluentui/react": "^8.122.11",
-    "@fluentui/react-file-type-icons": "8.12.8",
-    "@fluentui/react-icons": "^2.0.274",
+    "@fluentui/react": "^8.122.15",
+    "@fluentui/react-file-type-icons": "8.13.0",
+    "@fluentui/react-icons": "^2.0.297",
     "@types/react-linkify": "^1.0.4",
     "json-stringify-safe": "^5.0.1",
     "mobile-detect": "^1.4.5",
@@ -98,6 +98,6 @@
     "webpack-dev-server": "4.15.2",
     "webpack": "5.95.0",
     "webpack-bundle-analyzer": "^4.5.0",
-    "@babel/cli": "^7.24.8"
+    "@babel/cli": "^7.27.0"
   }
 }
