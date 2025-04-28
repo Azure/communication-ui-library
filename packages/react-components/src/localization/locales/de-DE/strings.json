@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Der Togethermode wurde beendet",
       "dismissButtonAriaLabel": "Schließen"
+    },
+    "transcriptionError": {
+      "title": "Bei der Transkription ist ein Fehler aufgetreten.",
+      "message": "Die Transkription wurde gestoppt. Bitte versuchen Sie es später erneut.",
+      "dismissButtonAriaLabel": "Schließen"
+    },
+    "transcriptionStartedByYou": {
+      "title": "Die Transkription wurde gestartet.",
+      "message": "Von Ihnen gestartet. Teilen Sie allen mit, dass sie transkribiert werden.",
+      "dismissButtonAriaLabel": "Schließen"
     }
   },
   "videoGallery": {

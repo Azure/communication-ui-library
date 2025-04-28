@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "Режим \"Вместе\" завершен",
       "dismissButtonAriaLabel": "Закрыть"
+    },
+    "transcriptionError": {
+      "title": "При транскрибировании произошла ошибка.",
+      "message": "Транскрибирование остановлено. Повторите попытку позже.",
+      "dismissButtonAriaLabel": "Закрыть"
+    },
+    "transcriptionStartedByYou": {
+      "title": "Транскрибирование началось.",
+      "message": "Начато вами. Сообщите всем участникам, что их слова транскрибируются.",
+      "dismissButtonAriaLabel": "Закрыть"
     }
   },
   "videoGallery": {

@@ -21,8 +21,8 @@ module.exports = {
     "in-progress-beta-feature-demo",
     // Feature for remote UFD
     "remote-ufd",
-    // Feature for on fetch profile
-    "on-fetch-profile"
+    // Block joining calls if the user is on an unsupported browser
+    "unsupported-browser",
   ],
   beta: [
     "call-readiness",
@@ -47,8 +47,6 @@ module.exports = {
     "data-loss-prevention",
     // Mention feature
     "mention",
-    // Block joining calls if the user is on an unsupported browser
-    "unsupported-browser",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
     "total-participant-count",
     // conditional-compile for new signaling beta
@@ -78,5 +76,7 @@ module.exports = {
     "stabilizedDemo",
      // Feature for RTT
      "rtt",
+     // Feature for on fetch profile
+    "on-fetch-profile"
   ]
 }

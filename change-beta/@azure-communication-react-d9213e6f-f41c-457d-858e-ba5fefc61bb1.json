@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "Captions",
-  "comment": "Ensure all Captions and RealTimeText messages contains key values",
+  "workstream": "Accessibility",
+  "comment": "Devices dropdown list now narrates a group name when actioned",
   "packageName": "@azure/communication-react",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"

@@ -647,6 +647,16 @@
     "togetherModeEnded": {
       "title": "El modo de colaboración finalizó",
       "dismissButtonAriaLabel": "Cerrar"
+    },
+    "transcriptionError": {
+      "title": "Se produjo un error con la transcripción.",
+      "message": "La transcripción se detuvo. Inténtalo de nuevo más tarde",
+      "dismissButtonAriaLabel": "Cerrar"
+    },
+    "transcriptionStartedByYou": {
+      "title": "La transcripción se inició.",
+      "message": "Iniciado por ti. Informar a todos de que se les está transcribiendo.",
+      "dismissButtonAriaLabel": "Cerrar"
     }
   },
   "videoGallery": {

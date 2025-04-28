@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Video Gallery",
-  "comment": "Video Gallery should still show desktop view with name plate and 16:9 layout at 400% zoom",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
