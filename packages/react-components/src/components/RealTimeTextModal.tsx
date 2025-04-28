@@ -94,7 +94,9 @@ export const RealTimeTextModal = (props: RealTimeTextModalProps): JSX.Element =>
           styles={RealTimeTextModalStyle}
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-            <Text className={titleClassName}>{strings?.realTimeTextModalTitle}</Text>
+            <Text role="heading" className={titleClassName}>
+              {strings?.realTimeTextModalTitle}
+            </Text>
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
               ariaLabel={strings?.realTimeTextCloseModalButtonAriaLabel}
