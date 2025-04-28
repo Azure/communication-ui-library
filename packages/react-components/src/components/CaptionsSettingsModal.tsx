@@ -347,7 +347,7 @@ export const CaptionsSettingsModal = (props: CaptionsSettingsModalProps): JSX.El
           styles={CaptionsSettingsModalStyle}
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-            <Text className={titleClassName} role="heading">
+            <Text className={titleClassName} role="heading" aria-level={1}>
               {strings?.captionsSettingsModalTitle}
             </Text>
             <IconButton
