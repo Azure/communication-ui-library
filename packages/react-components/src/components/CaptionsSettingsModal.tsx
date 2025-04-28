@@ -19,6 +19,7 @@ import {
 import {
   buttonsContainerClassName,
   buttonStyles,
+  defaultButtonStyles,
   dropdownContainerClassName,
   dropdownInfoTextStyle,
   dropdownStyles,
@@ -361,7 +362,7 @@ export const CaptionsSettingsModal = (props: CaptionsSettingsModalProps): JSX.El
             <PrimaryButton styles={buttonStyles(theme)} onClick={onConfirm}>
               <span>{strings?.captionsSettingsConfirmButtonLabel}</span>
             </PrimaryButton>
-            <DefaultButton onClick={onDismiss} styles={buttonStyles(theme)}>
+            <DefaultButton onClick={onDismiss} styles={defaultButtonStyles()}>
               <span>{strings?.captionsSettingsCancelButtonLabel}</span>
             </DefaultButton>
           </Stack>
