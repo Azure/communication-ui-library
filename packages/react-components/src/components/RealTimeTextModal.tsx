@@ -12,6 +12,7 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import {
   buttonsContainerClassName,
   buttonStyles,
+  defaultButtonStyles,
   themedCaptionsSettingsModalStyle,
   titleClassName,
   titleContainerClassName
@@ -114,7 +115,7 @@ export const RealTimeTextModal = (props: RealTimeTextModalProps): JSX.Element =>
             >
               <span>{strings?.realTimeTextConfirmButtonLabel}</span>
             </PrimaryButton>
-            <DefaultButton onClick={onDismiss} styles={buttonStyles(theme)}>
+            <DefaultButton onClick={onDismiss} styles={defaultButtonStyles()}>
               <span>{strings?.realTimeTextCancelButtonLabel}</span>
             </DefaultButton>
           </Stack>
