@@ -6,41 +6,43 @@
 
 ## [1.27.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.27.0-beta.1)
 
-Tue, 29 Apr 2025 17:27:30 GMT 
+Tue, 29 Apr 2025 17:27:30 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.26.0...1.27.0-beta.1)
 
 ### Features
-- Ensure text wrap for long words without spaces ([PR #5789](https://github.com/azure/communication-ui-library/pull/5789) by 96077406+carocao-msft@users.noreply.github.com)
-- Fix listeners subscribed to chat events of AzureCallWithChatAdapter when the thread id is resolved late or is changed when moving to and from breakout rooms ([PR #5764](https://github.com/azure/communication-ui-library/pull/5764) by 79475487+mgamis-msft@users.noreply.github.com)
-- move onfetchProfile to stable ([PR #5796](https://github.com/azure/communication-ui-library/pull/5796) by 97124699+prabhjot-msft@users.noreply.github.com)
+
+- Remove Unsupported Browser blocking dialog in CallComposites ([PR #5797](https://github.com/azure/communication-ui-library/pull/5797) by 97124699+prabhjot-msft@users.noreply.github.com)
 - Add onFetchProfile for CallWithChat Composite ([PR #5729](https://github.com/azure/communication-ui-library/pull/5729) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Stablize Real Time Text and remove Real Time Text from CTE ([PR #5771](https://github.com/azure/communication-ui-library/pull/5771) by 96077406+carocao-msft@users.noreply.github.com)
-- Add RTT modal when starting RTT on mobile ([PR #5790](https://github.com/azure/communication-ui-library/pull/5790) by 96077406+carocao-msft@users.noreply.github.com)
-- Revert back to beta in main ([PR #5742](https://github.com/azure/communication-ui-library/pull/5742) by undefined)
-- Update Calling to the latest stable ([PR #5769](https://github.com/azure/communication-ui-library/pull/5769) by 96077406+carocao-msft@users.noreply.github.com)
-- RTT beta tag change to public ([PR #5782](https://github.com/azure/communication-ui-library/pull/5782) by 96077406+carocao-msft@users.noreply.github.com)
-- Add RTT modal when starting RTT on mobile ([PR #5790](https://github.com/azure/communication-ui-library/pull/5790) by 96077406+carocao-msft@users.noreply.github.com)
+- With captions, ensure text wrap for long words without spaces ([PR #5789](https://github.com/azure/communication-ui-library/pull/5789) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix listeners subscribed to chat events of AzureCallWithChatAdapter when the thread id is resolved late or is changed when moving to and from breakout rooms ([PR #5764](https://github.com/azure/communication-ui-library/pull/5764) by 79475487+mgamis-msft@users.noreply.github.com)
+- Remove Real Time Text from CTE ([PR #5771](https://github.com/azure/communication-ui-library/pull/5771) by 96077406+carocao-msft@users.noreply.github.com)
+- Add RTT modal dialog when starting RTT on mobile ([PR #5790](https://github.com/azure/communication-ui-library/pull/5790) by 96077406+carocao-msft@users.noreply.github.com)
+
 ### Improvements
+
 - Update dependencies ([PR #5793](https://github.com/azure/communication-ui-library/pull/5793) by 3941071+emlynmac@users.noreply.github.com)
-- Update calling-effects-package to 1.1.4 ([PR #5773](https://github.com/azure/communication-ui-library/pull/5773) by dmceachern@microsoft.com)
-- Move Unsupported Browser Version to alpha ([PR #5797](https://github.com/azure/communication-ui-library/pull/5797) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Update `@azure/communication-calling` to `1.34.1` ([PR #5769](https://github.com/azure/communication-ui-library/pull/5769) by 96077406+carocao-msft@users.noreply.github.com)
+- Update `@azure/communication-calling-effects` package to 1.1.4 ([PR #5773](https://github.com/azure/communication-ui-library/pull/5773) by dmceachern@microsoft.com)
 - Update @azure/communication-calling to 1.34.1-beta.2 ([PR #5733](https://github.com/azure/communication-ui-library/pull/5733) by 2684369+JamesBurnside@users.noreply.github.com)
 - Updating dependency as per component governance compliance ([PR #5756](https://github.com/azure/communication-ui-library/pull/5756) by 9044372+JoshuaLai@users.noreply.github.com)
 - updating calling beta to 1.35.1-beta.1 ([PR #5787](https://github.com/azure/communication-ui-library/pull/5787) by alkwa@microsoft.com)
+- Add adapter options for CallWithChat JS bundle ([PR #5739](https://github.com/azure/communication-ui-library/pull/5739) by 97124699+prabhjot-msft@users.noreply.github.com)
+
 ### Bug Fixes
+
 - Fix bug where mobile video gallery shows landscape view when RTT banner is enlarged ([PR #5777](https://github.com/azure/communication-ui-library/pull/5777) by 96077406+carocao-msft@users.noreply.github.com)
-- Fix dark mode rendering ([PR #5788](https://github.com/azure/communication-ui-library/pull/5788) by 3941071+emlynmac@users.noreply.github.com)
+- Fix dark mode rendering with Rich Text Editor ([PR #5788](https://github.com/azure/communication-ui-library/pull/5788) by 3941071+emlynmac@users.noreply.github.com)
 - Fix bug where RTT lists has a direct div child ([PR #5799](https://github.com/azure/communication-ui-library/pull/5799) by 96077406+carocao-msft@users.noreply.github.com)
 - Devices dropdown list now narrates a group name when actioned ([PR #5798](https://github.com/azure/communication-ui-library/pull/5798) by edwardlee@microsoft.com)
 - Fix bug where modal title is not defined as heading ([PR #5800](https://github.com/azure/communication-ui-library/pull/5800) by 96077406+carocao-msft@users.noreply.github.com)
-- Add adapter options for CallWithChat JS bundle ([PR #5739](https://github.com/azure/communication-ui-library/pull/5739) by 97124699+prabhjot-msft@users.noreply.github.com)
 - Fix bug where modal cancel button focus border has low contrast ([PR #5802](https://github.com/azure/communication-ui-library/pull/5802) by 96077406+carocao-msft@users.noreply.github.com)
 - Add delay to tooltip to enable mouseover tooltip ([PR #5795](https://github.com/azure/communication-ui-library/pull/5795) by 77021369+jimchou-dev@users.noreply.github.com)
 - Maintain muted state when joining and leaving breakout rooms ([PR #5765](https://github.com/azure/communication-ui-library/pull/5765) by 79475487+mgamis-msft@users.noreply.github.com)
 - Fix bug where RTT UI is showing up on PSTN calls ([PR #5761](https://github.com/azure/communication-ui-library/pull/5761) by 96077406+carocao-msft@users.noreply.github.com)
-### Storybook Changes
-- Conceptual docs for On fetch Profile ([PR #5785](https://github.com/azure/communication-ui-library/pull/5785) by 97124699+prabhjot-msft@users.noreply.github.com)
 
+### Storybook Changes
+
+- Conceptual docs for On fetch Profile ([PR #5785](https://github.com/azure/communication-ui-library/pull/5785) by 97124699+prabhjot-msft@users.noreply.github.com)
 
 ## [1.26.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.26.0-beta.1)
 
