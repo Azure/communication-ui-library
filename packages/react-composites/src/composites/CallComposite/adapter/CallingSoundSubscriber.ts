@@ -37,7 +37,6 @@ export class CallingSoundSubscriber {
 
   private onCallStateChanged = (): void => {
     this.call.on('stateChanged', () => {
-      console.log('asdf state', this.call.state);
       if (shouldPlayRinging(this.call, this.callees) && this.soundsLoaded?.callRingingSound) {
         this.soundsLoaded.callRingingSound.loop = true;
         this.playSound(this.soundsLoaded.callRingingSound);
