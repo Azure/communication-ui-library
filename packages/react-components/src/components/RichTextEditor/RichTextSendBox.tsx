@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
 import { Icon, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
@@ -315,6 +315,13 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     [contentValueOverflow, strings.textTooLong]
   );
 
+  /* @conditional-compile-remove(file-sharing-acs) */
+  useEffect(() => {
+    if (!hasIncompleteAttachmentUploads(attachments)) {
+      setAttachmentUploadsPendingError(undefined);
+    }
+  }, [attachments]);
+
   const setContent = useCallback((newValue?: string): void => {
     if (newValue === undefined) {
       return;
@@ -435,11 +442,6 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   // ignore attachments error (errored attachment will not be added, shouldn't disable SendButton)
   const hasBlockingErrorMessages = useMemo(() => {
-    /* @conditional-compile-remove(file-sharing-acs) */
-    if (!hasIncompleteAttachmentUploads(attachments)) {
-      setAttachmentUploadsPendingError(undefined);
-    }
-
     return (
       !!systemMessage ||
       !!contentTooLongMessage ||
@@ -454,9 +456,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     attachmentUploadsPendingError,
     systemMessage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImagesWithProgress,
-    /* @conditional-compile-remove(file-sharing-acs) */
-    attachments
+    inlineImagesWithProgress
   ]);
 
   const isSendBoxButtonDisabledValue = useMemo(() => {
