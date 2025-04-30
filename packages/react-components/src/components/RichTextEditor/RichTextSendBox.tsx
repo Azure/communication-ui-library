@@ -435,6 +435,11 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
 
   // ignore attachments error (errored attachment will not be added, shouldn't disable SendButton)
   const hasBlockingErrorMessages = useMemo(() => {
+    /* @conditional-compile-remove(file-sharing-acs) */
+    if (!hasIncompleteAttachmentUploads(attachments)) {
+      setAttachmentUploadsPendingError(undefined);
+    }
+
     return (
       !!systemMessage ||
       !!contentTooLongMessage ||
@@ -449,7 +454,9 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     attachmentUploadsPendingError,
     systemMessage,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    inlineImagesWithProgress
+    inlineImagesWithProgress,
+    /* @conditional-compile-remove(file-sharing-acs) */
+    attachments
   ]);
 
   const isSendBoxButtonDisabledValue = useMemo(() => {
