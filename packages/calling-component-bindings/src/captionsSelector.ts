@@ -9,6 +9,7 @@ import {
   getDisplayName,
   getIdentifier,
   getRemoteParticipants,
+  getRemoteParticipantsEnded,
   getStartCaptionsInProgress,
   getSupportedCaptionLanguages
 } from './baseSelectors';
@@ -26,6 +27,7 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CaptionsInformation, SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
 /* @conditional-compile-remove(rtt) */
 import { RealTimeTextInformation } from '@internal/react-components';
+import { getRemoteParticipantDisplayName } from './utils/callUtils';
 
 /**
  * Selector type for the {@link StartCaptionsButton} component.
@@ -138,6 +140,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     getRealTimeTextStatus,
     getStartCaptionsInProgress,
     getRemoteParticipants,
+    getRemoteParticipantsEnded,
     getDisplayName,
     getIdentifier
   ],
@@ -150,6 +153,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     isRealTimeTextActive,
     startCaptionsInProgress,
     remoteParticipants,
+    remoteParticipantsEnded,
     displayName,
     identifier
   ) => {
@@ -158,11 +162,8 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
       let finalDisplayName;
       if (userId === identifier) {
         finalDisplayName = displayName;
-      } else if (remoteParticipants) {
-        const participant = remoteParticipants[userId];
-        if (participant) {
-          finalDisplayName = participant.displayName;
-        }
+      } else {
+        finalDisplayName = getRemoteParticipantDisplayName(userId, remoteParticipants, remoteParticipantsEnded);
       }
 
       return {
@@ -180,7 +181,14 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
         const userId = getRealTimeTextSpeakerIdentifier(rtt);
         return {
           id: rtt.sequenceId,
-          displayName: getRealTimeTextDisplayName(rtt, identifier, remoteParticipants, displayName, userId),
+          displayName: getRealTimeTextDisplayName(
+            rtt,
+            identifier,
+            remoteParticipants,
+            remoteParticipantsEnded,
+            displayName,
+            userId
+          ),
           message: rtt.message,
           userId,
           isTyping: rtt.resultType === 'Partial',
@@ -195,7 +203,14 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
         const userId = getRealTimeTextSpeakerIdentifier(rtt);
         return {
           id: rtt.sequenceId,
-          displayName: getRealTimeTextDisplayName(rtt, identifier, remoteParticipants, displayName, userId),
+          displayName: getRealTimeTextDisplayName(
+            rtt,
+            identifier,
+            remoteParticipants,
+            remoteParticipantsEnded,
+            displayName,
+            userId
+          ),
           message: rtt.message,
           userId,
           isTyping: rtt.resultType === 'Partial',
@@ -266,17 +281,19 @@ const getRealTimeTextDisplayName = (
         [keys: string]: RemoteParticipantState;
       }
     | undefined,
+  remoteParticipantsEnded:
+    | {
+        [keys: string]: RemoteParticipantState;
+      }
+    | undefined,
   displayName: string | undefined,
   userId: string
 ): string => {
   let finalDisplayName;
   if (userId === identifier) {
     finalDisplayName = displayName;
-  } else if (remoteParticipants) {
-    const participant = remoteParticipants[userId];
-    if (participant) {
-      finalDisplayName = participant.displayName;
-    }
+  } else {
+    finalDisplayName = getRemoteParticipantDisplayName(userId, remoteParticipants, remoteParticipantsEnded);
   }
   return finalDisplayName ?? 'Unnamed Participant';
 };
