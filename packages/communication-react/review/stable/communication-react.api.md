@@ -235,6 +235,7 @@ export type AzureCommunicationChatAdapterArgs = {
     displayName: string;
     credential: CommunicationTokenCredential;
     threadId: string;
+    chatAdapterOptions?: ChatAdapterOptions;
 };
 
 // @public
@@ -1813,6 +1814,11 @@ export interface CaptionsSettingsModalStrings {
 export type ChatAdapter = ChatAdapterThreadManagement & AdapterState<ChatAdapterState> & Disposable_2 & ChatAdapterSubscribers;
 
 // @public
+export type ChatAdapterOptions = {
+    onFetchProfile?: OnFetchChatProfileCallback;
+};
+
+// @public
 export type ChatAdapterState = ChatAdapterUiState & ChatCompositeClientState;
 
 // @public
@@ -2020,6 +2026,11 @@ export type ChatMessageWithStatus = ChatMessage_2 & {
 export type ChatParticipantListSelector = (state: ChatClientState, props: ChatBaseSelectorProps) => {
     myUserId: string;
     participants: ParticipantListParticipant[];
+};
+
+// @public
+export type ChatProfile = {
+    displayName?: string;
 };
 
 // @public
@@ -2537,10 +2548,10 @@ export const createAzureCommunicationCallWithChatAdapter: ({ userId, displayName
 export const createAzureCommunicationCallWithChatAdapterFromClients: ({ callClient, callAgent, callLocator, chatClient, chatThreadClient, callAdapterOptions }: AzureCommunicationCallWithChatAdapterFromClientArgs) => Promise<CallWithChatAdapter>;
 
 // @public
-export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
+export const createAzureCommunicationChatAdapter: ({ endpoint: endpointUrl, userId, displayName, credential, threadId, chatAdapterOptions }: AzureCommunicationChatAdapterArgs) => Promise<ChatAdapter>;
 
 // @public
-export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient): Promise<ChatAdapter>;
+export function createAzureCommunicationChatAdapterFromClient(chatClient: StatefulChatClient, chatThreadClient: ChatThreadClient, chatAdapterOptions?: ChatAdapterOptions): Promise<ChatAdapter>;
 
 // @public
 export type CreateDefaultCallingHandlers = (callClient: StatefulCallClient, callAgent: CallAgent | undefined, deviceManager: StatefulDeviceManager | undefined, call: Call | undefined, options?: CallingHandlersOptions) => CallingHandlers;
@@ -3868,6 +3879,9 @@ export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakou
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
+
+// @public
+export type OnFetchChatProfileCallback = (userId: string, defaultProfile?: ChatProfile) => Promise<ChatProfile | undefined>;
 
 // @public
 export type OnFetchProfileCallback = (userId: string, defaultProfile?: Profile) => Promise<Profile | undefined>;

@@ -89,6 +89,18 @@ export const buttonStyles = (theme: Theme): IButtonStyles => {
 /**
  * @private
  */
+export const defaultButtonStyles = (): IButtonStyles => {
+  return {
+    root: {
+      borderRadius: _pxToRem(2),
+      margin: _pxToRem(8)
+    }
+  };
+};
+
+/**
+ * @private
+ */
 export const dropdownStyles: Partial<IDropdownStyles> = {
   callout: {
     height: _pxToRem(300),

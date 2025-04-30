@@ -50,6 +50,18 @@ const getDropDownList = (list: Array<VideoDeviceInfo | AudioDeviceInfo>): IDropd
   return dropdownList;
 };
 
+// This helper function is used to prepend a header item to the dropdown list.
+// Allows Dropdowns to have a name for the list of options when first being actioned (a11y requirement).
+const prependHeaderDropdownItem = (list: IDropdownOption[], headerTitle: string): IDropdownOption[] => {
+  const headerItem: IDropdownOption = {
+    key: headerTitle,
+    text: headerTitle,
+    itemType: 2,
+    hidden: true
+  };
+  return [headerItem, ...list];
+};
+
 const getOptionIcon = (type: iconType): JSX.Element | undefined => {
   if (type === 'Camera') {
     return <CallCompositeIcon iconName="LocalDeviceSettingsCamera" className={optionIconStyles} />;
@@ -151,7 +163,11 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
       data-ui-id="call-composite-local-camera-settings"
       aria-labelledby={cameraLabelId}
       placeholder={hasCameras ? defaultPlaceHolder : noCameraLabel}
-      options={cameraPermissionGranted ? getDropDownList(props.cameras) : [{ key: 'deniedOrUnknown', text: '' }]}
+      options={
+        cameraPermissionGranted
+          ? prependHeaderDropdownItem(getDropDownList(props.cameras), cameraLabel)
+          : [{ key: 'deniedOrUnknown', text: '' }]
+      }
       styles={dropDownStyles(theme)}
       disabled={!cameraPermissionGranted || !hasCameras}
       errorMessage={
@@ -193,7 +209,11 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
               ? undefined
               : locale.strings.call.microphonePermissionDenied
           }
-          options={micPermissionGranted ? getDropDownList(props.microphones) : [{ key: 'deniedOrUnknown', text: '' }]}
+          options={
+            micPermissionGranted
+              ? prependHeaderDropdownItem(getDropDownList(props.microphones), soundLabel)
+              : [{ key: 'deniedOrUnknown', text: '' }]
+          }
           defaultSelectedKey={
             micPermissionGranted
               ? props.selectedMicrophone
@@ -225,7 +245,7 @@ export const LocalDeviceSettings = (props: LocalDeviceSettingsType): JSX.Element
       placeholder={hasSpeakers ? defaultPlaceHolder : noSpeakersLabel}
       styles={dropDownStyles(theme)}
       disabled={props.speakers.length === 0}
-      options={getDropDownList(props.speakers)}
+      options={prependHeaderDropdownItem(getDropDownList(props.speakers), soundLabel)}
       defaultSelectedKey={props.selectedSpeaker ? props.selectedSpeaker.id : defaultDeviceId(props.speakers)}
       onChange={(
         event: React.FormEvent<HTMLDivElement>,
