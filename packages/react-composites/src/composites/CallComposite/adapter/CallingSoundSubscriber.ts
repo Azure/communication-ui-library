@@ -3,7 +3,6 @@
 
 import { CallCommon } from '@azure/communication-calling';
 import { CallingSounds } from './CallAdapter';
-import { isPhoneNumberIdentifier } from '@azure/communication-common';
 import { CommunicationIdentifier } from '@azure/communication-common';
 
 type CallingSoundsLoaded = {
@@ -124,11 +123,7 @@ export class CallingSoundSubscriber {
  * sound when making an outbound call.
  */
 const shouldPlayRinging = (call: CallCommon, callees?: CommunicationIdentifier[]): boolean => {
-  if (
-    callees &&
-    callees[0] &&
-    (call.state === 'Ringing' || call.state === 'Connecting')
-  ) {
+  if (callees && callees[0] && (call.state === 'Ringing' || call.state === 'Connecting')) {
     return true;
   } else {
     return false;
