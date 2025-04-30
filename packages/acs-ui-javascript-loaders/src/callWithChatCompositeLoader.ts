@@ -15,7 +15,9 @@ import {
   CallWithChatCompositeOptions,
   createAzureCommunicationCallWithChatAdapter,
   CallWithChatComposite,
-  AzureCommunicationCallAdapterOptions
+  AzureCommunicationCallAdapterOptions,
+  BaseCompositeProps,
+  CallWithChatCompositeIcons
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
 
@@ -35,6 +37,8 @@ export type CallWithChatCompositeLoaderProps = {
   locator: CallAndChatLocator;
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
   callWithChatCompositeOptions?: CallWithChatCompositeOptions;
+  baseCompositeProps?: BaseCompositeProps<CallWithChatCompositeIcons>;
+  formFactor?: 'mobile' | 'desktop';
 };
 
 /**
@@ -49,8 +53,17 @@ export const loadCallWithChatComposite = async function (
   htmlElement: HTMLElement
 ): Promise<CallWithChatAdapter | undefined> {
   initializeIcons();
-  const { userId, credential, displayName, endpoint, locator, callAdapterOptions, callWithChatCompositeOptions } =
-    loaderArgs;
+  const {
+    userId,
+    credential,
+    displayName,
+    endpoint,
+    locator,
+    callAdapterOptions,
+    callWithChatCompositeOptions,
+    baseCompositeProps,
+    formFactor
+  } = loaderArgs;
   const adapter = await createAzureCommunicationCallWithChatAdapter({
     userId,
     displayName: displayName ?? 'anonymous',
@@ -65,7 +78,11 @@ export const loadCallWithChatComposite = async function (
   }
 
   createRoot(htmlElement).render(
-    React.createElement(CallWithChatComposite, { options: callWithChatCompositeOptions, adapter }, null)
+    React.createElement(
+      CallWithChatComposite,
+      { ...baseCompositeProps, options: callWithChatCompositeOptions, adapter, formFactor },
+      null
+    )
   );
   return adapter;
 };

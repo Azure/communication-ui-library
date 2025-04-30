@@ -15,7 +15,9 @@ import {
   AzureCommunicationCallAdapterOptions,
   CallAdapter,
   CallAdapterLocator,
-  CallCompositeOptions
+  CallCompositeOptions,
+  BaseCompositeProps,
+  CallCompositeIcons
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
 
@@ -35,6 +37,8 @@ export type CallCompositeLoaderProps = {
   locator: CallAdapterLocator;
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
   callCompositeOptions?: CallCompositeOptions;
+  baseCompositeProps?: BaseCompositeProps<CallCompositeIcons>;
+  formFactor?: 'mobile' | 'desktop';
 };
 
 /**
@@ -49,7 +53,16 @@ export const loadCallComposite = async function (
   htmlElement: HTMLElement
 ): Promise<CallAdapter | undefined> {
   initializeIcons();
-  const { userId, credential, displayName, locator, callAdapterOptions, callCompositeOptions } = loaderArgs;
+  const {
+    userId,
+    credential,
+    displayName,
+    locator,
+    callAdapterOptions,
+    callCompositeOptions,
+    baseCompositeProps,
+    formFactor
+  } = loaderArgs;
   const adapter = await createAzureCommunicationCallAdapter({
     userId,
     displayName: displayName ?? 'anonymous',
@@ -62,6 +75,12 @@ export const loadCallComposite = async function (
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(CallComposite, { options: callCompositeOptions, adapter }, null));
+  createRoot(htmlElement).render(
+    React.createElement(
+      CallComposite,
+      { ...baseCompositeProps, options: callCompositeOptions, adapter, formFactor },
+      null
+    )
+  );
   return adapter;
 };
