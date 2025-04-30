@@ -413,12 +413,15 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
                   : captionsBannerClassName(formFactor, /* @conditional-compile-remove(rtt) */ expandBannerHeight)
               }
               data-ui-id="captions-banner-inner"
+              data-is-focusable={true}
             >
               {
                 /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
-                  <Stack className={rttDisclosureBannerClassName()}>
-                    <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
-                  </Stack>
+                  <li>
+                    <Stack className={rttDisclosureBannerClassName()}>
+                      <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
+                    </Stack>
+                  </li>
                 )
               }
               {captionsTrampoline()}
