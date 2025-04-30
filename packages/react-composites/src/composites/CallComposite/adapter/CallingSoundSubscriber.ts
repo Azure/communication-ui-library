@@ -127,7 +127,6 @@ const shouldPlayRinging = (call: CallCommon, callees?: CommunicationIdentifier[]
   if (
     callees &&
     callees[0] &&
-    isPhoneNumberIdentifier(callees[0]) &&
     (call.state === 'Ringing' || call.state === 'Connecting')
   ) {
     return true;
