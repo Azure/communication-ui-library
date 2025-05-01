@@ -9,9 +9,7 @@ import {
   IncomingCall,
   IncomingCallCommon
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextInfo as ACSRealTimeTextInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextInfo } from './CallClientState';
 /* @conditional-compile-remove(together-mode) */
 import { TogetherModeVideoStream as SdkTogetherModeVideoStream } from '@azure/communication-calling';
@@ -196,7 +194,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
       startCaptionsInProgress: false,
       captionsKind: _isTeamsCall(call) ? 'TeamsCaptions' : 'Captions'
     },
-    /* @conditional-compile-remove(rtt) */
     realTimeTextFeature: {
       realTimeTexts: {},
       isRealTimeTextFeatureActive: false
@@ -279,7 +276,7 @@ export function convertFromSDKToCaptionInfoState(caption: AcsCaptionsInfo): Capt
     ...caption
   };
 }
-/* @conditional-compile-remove(rtt) */
+
 /**
  * @private
  */

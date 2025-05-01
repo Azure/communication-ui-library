@@ -481,17 +481,14 @@ export interface CallCompositeStrings {
    * string to be used to start captions
    */
   startCaptionsButtonOnLabel?: string;
-  /* @conditional-compile-remove(rtt) */
   /**
    * string to be used to open real time text contextual menu
    */
   realTimeTextLabel?: string;
-  /* @conditional-compile-remove(rtt) */
   /**
    * string to be used to start real time text
    */
   startRealTimeTextLabel?: string;
-  /* @conditional-compile-remove(rtt) */
   /**
    * string to be used to when start real time text button is disabled
    */
@@ -564,52 +561,52 @@ export interface CallCompositeStrings {
    * captions banner loading spinner label
    */
   captionsBannerSpinnerText?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Default text for RTT input text box
    */
   realTimeTextInputBoxDefaultText?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Error message for RTT input text box when the size exceeds the limit 2000
    */
   realTimeTextInputErrorMessage?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Text to show in the real time text disclosure banner
    */
   realTimeTextBannerContent?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Title text of the real time text disclosure banner
    */
   realTimeTextBannerTitle?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Label for the link in the real time text disclosure banner
    */
   realTimeTextBannerLinkLabel?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Title for the container when only captions is enabled
    */
   captionsOnlyContainerTitle?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Title for the container when only real time text is enabled
    */
   realTimeTextOnlyContainerTitle?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Title for the container when both captions and real time text is enabled
    */
   captionsAndRealTimeTextContainerTitle?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Expand button aria label
    */
   expandButtonAriaLabel?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Minimize button aria label
    */
@@ -1019,22 +1016,16 @@ export interface CallCompositeStrings {
   forbidOthersVideoMenuLabel: string;
   /** Label for menu item to permit audio media access */
   permitOthersVideoMenuLabel: string;
-  /* @conditional-compile-remove(rtt) */
   /** The title of the RealTimeText modal */
   realTimeTextModalTitle: string;
-  /* @conditional-compile-remove(rtt) */
   /** The text of the RealTimeText modal */
   realTimeTextModalText: string;
-  /* @conditional-compile-remove(rtt) */
   /** The label for the confirm button */
   realTimeTextConfirmButtonLabel: string;
-  /* @conditional-compile-remove(rtt) */
   /** The label for the cancel button */
   realTimeTextCancelButtonLabel: string;
-  /* @conditional-compile-remove(rtt) */
   /** The aria label for the modal */
   realTimeTextModalAriaLabel: string;
-  /* @conditional-compile-remove(rtt) */
   /** The aria label for the close button */
   realTimeTextCloseModalButtonAriaLabel: string;
 }

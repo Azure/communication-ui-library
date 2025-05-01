@@ -1714,7 +1714,7 @@ export interface CallWithChatControlOptions extends CommonCallControlOptions {
 }
 
 // @public
-export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | /* @conditional-compile-remove(rtt) */ 'realTimeTextReceived' | 'capabilitiesChanged' | 'spotlightChanged' | 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
+export type CallWithChatEvent = 'callError' | 'chatError' | 'callEnded' | 'isMutedChanged' | 'callIdChanged' | 'isLocalScreenSharingActiveChanged' | 'displayNameChanged' | 'isSpeakingChanged' | 'callParticipantsJoined' | 'callParticipantsLeft' | 'selectedMicrophoneChanged' | 'selectedSpeakerChanged' | 'isCaptionsActiveChanged' | 'captionsReceived' | 'isCaptionLanguageChanged' | 'isSpokenLanguageChanged' | 'realTimeTextReceived' | 'capabilitiesChanged' | 'spotlightChanged' | 'breakoutRoomsUpdated' | 'messageReceived' | 'messageEdited' | 'messageDeleted' | 'messageSent' | 'messageRead' | 'chatParticipantsAdded' | 'chatParticipantsRemoved' | 'chatInitialized';
 
 // @beta
 export const CameraAndMicrophoneSitePermissions: (props: CameraAndMicrophoneSitePermissionsProps) => JSX.Element;
@@ -3229,13 +3229,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     SplitButtonPrimaryActionCameraOn: React_2.JSX.Element;
     SplitButtonPrimaryActionCameraOff: React_2.JSX.Element;
     SplitButtonPrimaryActionMicUnmuted: React_2.JSX.Element;
-    SplitButtonPrimaryActionMicMuted: React_2.JSX.Element; /**
-    * Icon wrapper to use when including customizable icons inside the CallWithChatComposite.
-    * This wrapper ensures the icon name is being type-checked helping ensure no typos
-    * and ensure that icon is customizable through the composite API.
-    *
-    * @private
-    */
+    SplitButtonPrimaryActionMicMuted: React_2.JSX.Element;
     VerticalGalleryLeftButton: React_2.JSX.Element;
     VerticalGalleryRightButton: React_2.JSX.Element;
     ControlButtonVideoEffectsOption: React_2.JSX.Element;
@@ -3243,7 +3237,13 @@ export const DEFAULT_COMPOSITE_ICONS: {
     CaptionsIcon: React_2.JSX.Element;
     CaptionsOffIcon: React_2.JSX.Element;
     CaptionsSettingsIcon: React_2.JSX.Element;
-    ChangeSpokenLanguageIcon: React_2.JSX.Element;
+    ChangeSpokenLanguageIcon: React_2.JSX.Element; /**
+    * Icons that can be overridden in one of the composites exported by this library.
+    *
+    * See {@link ChatCompositeIcons}, {@link CallCompositeIcons} and {@link CallWithChatCompositeIcons} for more targeted types.
+    *
+    * @public
+    */
     ChangeCaptionLanguageIcon: React_2.JSX.Element;
     ContextMenuCameraIcon: React_2.JSX.Element;
     ContextMenuMicIcon: React_2.JSX.Element;

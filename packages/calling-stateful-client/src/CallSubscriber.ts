@@ -33,7 +33,6 @@ import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
 import { MediaAccessSubscriber } from './MediaAccessSubscriber';
 import { _isTeamsMeeting } from './TypeGuards';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextSubscriber } from './RealTimeTextSubscriber';
 
 /**
@@ -56,7 +55,6 @@ export class CallSubscriber {
   private _pptLiveSubscriber: PPTLiveSubscriber;
   private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
   private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
-  /* @conditional-compile-remove(rtt) */
   private _realTimeTextSubscriber?: RealTimeTextSubscriber;
   private _raiseHandSubscriber?: RaiseHandSubscriber;
   private _reactionSubscriber?: ReactionSubscriber;
@@ -249,7 +247,6 @@ export class CallSubscriber {
     this._optimalVideoCountSubscriber.unsubscribe();
     this._pptLiveSubscriber.unsubscribe();
     this._CaptionsFeatureSubscriber?.unsubscribe();
-    /* @conditional-compile-remove(rtt) */
     if (this._realTimeTextSubscriber) {
       this._realTimeTextSubscriber.unsubscribe();
     }

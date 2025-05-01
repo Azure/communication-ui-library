@@ -3,7 +3,6 @@
 
 import { CallState, DeviceManagerState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
@@ -398,7 +397,6 @@ export type IsCaptionLanguageChangedListener = (event: { activeCaptionLanguage: 
  */
 export type IsSpokenLanguageChangedListener = (event: { activeSpokenLanguage: string }) => void;
 
-/* @conditional-compile-remove(rtt) */
 /**
  * Callback for {@link CallAdapterSubscribers} 'realTimeTextReceived' event.
  * @public
@@ -846,7 +844,7 @@ export interface CallAdapterCallOperations {
    * Permit Teams meeting video.
    */
   permitOthersVideo(): Promise<void>;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Send real time text
    * @param text - real time text content
@@ -1020,7 +1018,6 @@ export interface CallAdapterSubscribers {
    */
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
 
-  /* @conditional-compile-remove(rtt) */
   /**
    * Subscribe function for 'realTimeTextReceived' event.
    */
@@ -1115,7 +1112,7 @@ export interface CallAdapterSubscribers {
    * Unsubscribe function for 'isSpokenLanguageChanged' event.
    */
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Unsubscribe function for 'realTimeTextReceived' event.
    */

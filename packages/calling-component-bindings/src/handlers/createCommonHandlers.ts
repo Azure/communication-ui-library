@@ -101,7 +101,6 @@ export interface CommonCallingHandlers {
   onStopNoiseSuppressionEffect: () => Promise<void>;
   onStartCaptions: (options?: CaptionsOptions) => Promise<void>;
   onStopCaptions: () => Promise<void>;
-  /* @conditional-compile-remove(rtt) */
   onSendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
   onSetSpokenLanguage: (language: string) => Promise<void>;
   onSetCaptionLanguage: (language: string) => Promise<void>;
@@ -731,7 +730,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       const captionsFeature = call?.feature(Features.Captions).captions as TeamsCaptions;
       await captionsFeature.setCaptionLanguage(language);
     };
-    /* @conditional-compile-remove(rtt) */
     const onSendRealTimeText = async (text: string, isFinalized: boolean): Promise<void> => {
       const realTimeTextFeature = call?.feature(Features.RealTimeText);
       await realTimeTextFeature?.sendRealTimeText(text, isFinalized);
@@ -938,7 +936,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onPermitVideo,
       onForbidOthersVideo,
       onPermitOthersVideo,
-      /* @conditional-compile-remove(rtt) */
+
       onSendRealTimeText
     };
   }
