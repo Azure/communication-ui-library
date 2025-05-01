@@ -103,6 +103,20 @@ export const getRemoteParticipants = (
 /**
  * @private
  */
+export const getRemoteParticipantsEnded = (
+  state: CallClientState,
+  props: CallingBaseSelectorProps
+):
+  | {
+      [keys: string]: RemoteParticipantState;
+    }
+  | undefined => {
+  return state.calls[props.callId]?.remoteParticipantsEnded;
+};
+
+/**
+ * @private
+ */
 export const getLocalParticipantRaisedHand = (
   state: CallClientState,
   props: CallingBaseSelectorProps
