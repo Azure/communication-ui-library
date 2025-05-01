@@ -8,11 +8,10 @@ import {
   CallingBaseSelectorProps,
   getDisplayName,
   getIdentifier,
-  getRemoteParticipants,
-  getRemoteParticipantsEnded,
   getStartCaptionsInProgress,
   getSupportedCaptionLanguages
 } from './baseSelectors';
+import { allRemoteParticipantsSelector } from './remoteParticipantsSelector';
 /* @conditional-compile-remove(rtt) */
 import { getRealTimeTextStatus, getRealTimeText } from './baseSelectors';
 import {
@@ -139,8 +138,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     /* @conditional-compile-remove(rtt) */
     getRealTimeTextStatus,
     getStartCaptionsInProgress,
-    getRemoteParticipants,
-    getRemoteParticipantsEnded,
+    allRemoteParticipantsSelector,
     getDisplayName,
     getIdentifier
   ],
@@ -152,8 +150,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
     /* @conditional-compile-remove(rtt) */
     isRealTimeTextActive,
     startCaptionsInProgress,
-    remoteParticipants,
-    remoteParticipantsEnded,
+    allRemoteParticipants,
     displayName,
     identifier
   ) => {
@@ -163,7 +160,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
       if (userId === identifier) {
         finalDisplayName = displayName;
       } else {
-        finalDisplayName = getRemoteParticipantDisplayName(userId, remoteParticipants, remoteParticipantsEnded);
+        finalDisplayName = getRemoteParticipantDisplayName(userId, allRemoteParticipants);
       }
 
       return {
@@ -181,14 +178,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
         const userId = getRealTimeTextSpeakerIdentifier(rtt);
         return {
           id: rtt.sequenceId,
-          displayName: getRealTimeTextDisplayName(
-            rtt,
-            identifier,
-            remoteParticipants,
-            remoteParticipantsEnded,
-            displayName,
-            userId
-          ),
+          displayName: getRealTimeTextDisplayName(rtt, identifier, allRemoteParticipants, displayName, userId),
           message: rtt.message,
           userId,
           isTyping: rtt.resultType === 'Partial',
@@ -203,14 +193,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
         const userId = getRealTimeTextSpeakerIdentifier(rtt);
         return {
           id: rtt.sequenceId,
-          displayName: getRealTimeTextDisplayName(
-            rtt,
-            identifier,
-            remoteParticipants,
-            remoteParticipantsEnded,
-            displayName,
-            userId
-          ),
+          displayName: getRealTimeTextDisplayName(rtt, identifier, allRemoteParticipants, displayName, userId),
           message: rtt.message,
           userId,
           isTyping: rtt.resultType === 'Partial',
@@ -276,12 +259,7 @@ const getRealTimeTextSpeakerIdentifier = (realTimeText: RealTimeTextInfo): strin
 const getRealTimeTextDisplayName = (
   realTimeText: RealTimeTextInfo,
   identifier: string,
-  remoteParticipants:
-    | {
-        [keys: string]: RemoteParticipantState;
-      }
-    | undefined,
-  remoteParticipantsEnded:
+  allRemoteParticipants:
     | {
         [keys: string]: RemoteParticipantState;
       }
@@ -293,7 +271,7 @@ const getRealTimeTextDisplayName = (
   if (userId === identifier) {
     finalDisplayName = displayName;
   } else {
-    finalDisplayName = getRemoteParticipantDisplayName(userId, remoteParticipants, remoteParticipantsEnded);
+    finalDisplayName = getRemoteParticipantDisplayName(userId, allRemoteParticipants);
   }
   return finalDisplayName ?? 'Unnamed Participant';
 };

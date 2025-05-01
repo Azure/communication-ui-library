@@ -115,22 +115,11 @@ export const getRemoteParticipantDisplayName = (
     | {
         [keys: string]: RemoteParticipantState;
       }
-    | undefined,
-  remoteParticipantsEnded:
-    | {
-        [keys: string]: RemoteParticipantState;
-      }
     | undefined
 ): string | undefined => {
   let displayName;
   if (remoteParticipants) {
     const participant = remoteParticipants[participantUserId];
-    if (participant) {
-      displayName = participant.displayName;
-    }
-  }
-  if (remoteParticipantsEnded && displayName === undefined) {
-    const participant = remoteParticipantsEnded[participantUserId];
     if (participant) {
       displayName = participant.displayName;
     }
