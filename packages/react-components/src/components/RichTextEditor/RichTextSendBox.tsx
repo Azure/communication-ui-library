@@ -2,6 +2,8 @@
 // Licensed under the MIT License.
 
 import React, { useCallback, useMemo, useRef, useState } from 'react';
+/* @conditional-compile-remove(file-sharing-acs) */
+import { useEffect } from 'react';
 import { RichTextInputBoxComponent } from './RichTextInputBoxComponent';
 import { Icon, Stack } from '@fluentui/react';
 import { useLocale } from '../../localization';
@@ -314,6 +316,13 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     () => (contentValueOverflow ? strings.textTooLong : undefined),
     [contentValueOverflow, strings.textTooLong]
   );
+
+  /* @conditional-compile-remove(file-sharing-acs) */
+  useEffect(() => {
+    if (!hasIncompleteAttachmentUploads(attachments)) {
+      setAttachmentUploadsPendingError(undefined);
+    }
+  }, [attachments]);
 
   const setContent = useCallback((newValue?: string): void => {
     if (newValue === undefined) {
