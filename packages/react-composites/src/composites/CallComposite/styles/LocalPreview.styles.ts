@@ -73,6 +73,20 @@ export const localPreviewButtonStyle = (isMobile: boolean): IButtonStyles => {
           outline: 'unset !important'
         }
       }
-    }
+    },
+    rootFocused: !isMobile
+      ? {
+          outline: '1px solid',
+          outlineOffset: '-2px'
+        }
+      : {},
+    rootChecked: !isMobile
+      ? {
+          ':focus': {
+            outline: '1px solid',
+            outlineOffset: '-2px'
+          }
+        }
+      : {}
   };
 };
