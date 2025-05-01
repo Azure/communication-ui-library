@@ -46,9 +46,9 @@
     "@internal/calling-stateful-client": "1.27.0-beta.0",
     "@internal/react-components": "1.27.0-beta.0",
     "@internal/react-composites": "1.27.0-beta.0",
-    "@fluentui/react": "^8.122.11",
-    "@fluentui/react-file-type-icons": "8.12.8",
-    "@fluentui/react-icons": "^2.0.274",
+    "@fluentui/react": "^8.122.15",
+    "@fluentui/react-file-type-icons": "8.13.0",
+    "@fluentui/react-icons": "^2.0.297",
     "merge": "^2.1.1",
     "mobile-detect": "^1.4.5",
     "react": "18.3.1",
@@ -105,6 +105,6 @@
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "4.15.2",
     "webpack-bundle-analyzer": "^4.5.0",
-    "@babel/cli": "^7.24.8"
+    "@babel/cli": "^7.27.0"
   }
 }

@@ -30,7 +30,7 @@ import { SitePermissionsStrings } from '../components/DevicePermissions/SitePerm
 import { BrowserPermissionDeniedStrings } from '../components/DevicePermissions/BrowserPermissionDenied';
 /* @conditional-compile-remove(call-readiness) */
 import { BrowserPermissionDeniedIOSStrings } from '../components/DevicePermissions/BrowserPermissionDeniedIOS';
-/* @conditional-compile-remove(call-readiness) */ /* @conditional-compile-remove(unsupported-browser) */
+/* @conditional-compile-remove(unsupported-browser) */
 import { UnsupportedBrowserStrings } from '../components/UnsupportedBrowser';
 import { VideoTileStrings } from '../components/VideoTile';
 import { COMPONENT_LOCALE_EN_US } from './locales';
