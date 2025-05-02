@@ -85,7 +85,6 @@ export type {
   IsSpokenLanguageChangedListener
 } from './adapter';
 
-/* @conditional-compile-remove(rtt) */
 export type { RealTimeTextReceivedListener } from './adapter';
 
 export type { TransferAcceptedListener } from './adapter';

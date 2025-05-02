@@ -7,7 +7,6 @@ import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSele
 import { IDS, captionsFeatureState, realTimeTextFeatureState } from '../../common/constants';
 import { loadCallPage, test } from './fixture';
 
-/* @conditional-compile-remove(rtt) */
 test.describe('Real Time Text tests', async () => {
   test('Show Real Time Text', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();

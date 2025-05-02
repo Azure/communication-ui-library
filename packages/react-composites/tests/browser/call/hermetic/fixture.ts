@@ -114,7 +114,6 @@ export function defaultMockCallAdapterState(
         startCaptionsInProgress: false,
         captionsKind: 'Captions'
       },
-      /* @conditional-compile-remove(rtt) */
       realTimeTextFeature: {
         realTimeTexts: {},
         isRealTimeTextFeatureActive: false
@@ -624,7 +623,6 @@ const defaultEndedCallState: CallState = {
 
     captionsKind: 'Captions'
   },
-  /* @conditional-compile-remove(rtt) */
   realTimeTextFeature: {
     realTimeTexts: {},
     isRealTimeTextFeatureActive: false

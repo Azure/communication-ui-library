@@ -57,5 +57,4 @@ export type { LocalRecordingCallFeatureState } from './CallClientState';
 export type { ConferencePhoneInfo } from './CallClientState';
 export type { BreakoutRoomsState } from './CallClientState';
 export type { MediaAccessState } from './CallClientState';
-/* @conditional-compile-remove(rtt) */
 export type { RealTimeTextInfo, RealTimeTextCallFeatureState } from './CallClientState';
