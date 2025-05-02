@@ -299,7 +299,6 @@ export * from './StartCaptionsButton';
 
 export * from './CaptionsSettingsModal';
 
-/* @conditional-compile-remove(rtt) */
 export * from './RealTimeTextModal';
 
 export * from './MeetingConferencePhoneInfo';
@@ -314,9 +313,8 @@ export * from './NotificationStack';
 export * from './IncomingCallNotification';
 export * from './IncomingCallStack';
 
-/* @conditional-compile-remove(rtt) */
 export * from './RTTDisclosureBanner';
-/* @conditional-compile-remove(rtt) */
+
 export * from './RealTimeText';
-/* @conditional-compile-remove(rtt) */
+
 export * from './StartRealTimeTextButton';

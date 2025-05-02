@@ -76,7 +76,6 @@ import {
 } from '@fluentui/react-icons';
 /* @conditional-compile-remove(together-mode) */
 import { PeopleAudience20Regular } from '@fluentui/react-icons';
-/* @conditional-compile-remove(rtt) */
 import { SlideTextCall20Regular, ArrowMaximize20Regular, ArrowMinimize20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
 import {
@@ -411,10 +410,7 @@ export const DEFAULT_COMPONENT_ICONS = {
   IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />,
   /* @conditional-compile-remove(together-mode) */
   NotificationBarTogetherModeIcon: <PeopleAudience20Regular />,
-  /* @conditional-compile-remove(rtt) */
   RealTimeTextIcon: <SlideTextCall20Regular />,
-  /* @conditional-compile-remove(rtt) */
   ExpandIcon: <ArrowMaximize20Regular />,
-  /* @conditional-compile-remove(rtt) */
   MinimizeIcon: <ArrowMinimize20Regular />
 };

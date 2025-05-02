@@ -3,7 +3,6 @@
 
 import { IContextualMenuItem } from '@fluentui/react';
 import { ControlBarButtonProps } from '@internal/react-components';
-/* @conditional-compile-remove(rtt) */
 import { CaptionsBanner } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { HoldButton } from '@internal/react-components';
@@ -40,13 +39,10 @@ export interface DesktopMoreButtonProps extends ControlBarButtonProps {
   disableButtonsForHoldScreen?: boolean;
   onClickShowDialpad?: () => void;
   isCaptionsSupported?: boolean;
-  /* @conditional-compile-remove(rtt) */
   isRealTimeTextSupported?: boolean;
   callControls?: boolean | CommonCallControlOptions;
   onCaptionsSettingsClick?: () => void;
-  /* @conditional-compile-remove(rtt) */
   onStartRealTimeTextClick?: () => void;
-  /* @conditional-compile-remove(rtt) */
   startRealTimeTextButtonChecked?: boolean;
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
@@ -65,7 +61,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   const localeStrings = useLocale();
   const holdButtonProps = usePropsFor(HoldButton);
   const startCaptionsButtonProps = usePropsFor(StartCaptionsButton);
-  /* @conditional-compile-remove(rtt) */
+
   const realTimeTextProps = usePropsFor(CaptionsBanner);
   const startCaptions = useCallback(async () => {
     await startCaptionsButtonProps.onStartCaptions({
@@ -197,7 +193,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
   }
 
   //RTT
-  /* @conditional-compile-remove(rtt) */
   if (props.isRealTimeTextSupported) {
     const realTimeTextContextualMenuItems: IContextualMenuItem[] = [];
     const rttDisabled =

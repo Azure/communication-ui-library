@@ -49,12 +49,9 @@ import { ReactionButtonStrings } from '../components';
 import { RichTextSendBoxStrings } from '../components/RichTextEditor/RichTextSendBox';
 import { MeetingConferencePhoneInfoModalStrings } from '../components/MeetingConferencePhoneInfo';
 import { IncomingCallNotificationStrings } from '../components/IncomingCallNotification';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextModalStrings } from '../components/RealTimeTextModal';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextStrings } from '../components/RealTimeText';
 import { CaptionLanguageStrings, SpokenLanguageStrings } from '../types';
-/* @conditional-compile-remove(rtt) */
 import { StartRealTimeTextButtonStrings } from '../components/StartRealTimeTextButton';
 
 /**
@@ -189,10 +186,8 @@ export interface ComponentStrings {
   /** Strings for the MeetingConferencePhoneInfoModal */
   meetingConferencePhoneInfo: MeetingConferencePhoneInfoModalStrings;
   IncomingCallNotification: IncomingCallNotificationStrings;
-  /* @conditional-compile-remove(rtt) */
   /** Strings for the RealTimeTextModal */
   realTimeTextModal: RealTimeTextModalStrings;
-  /* @conditional-compile-remove(rtt) */
   /** Strings for RealTimeText */
   realTimeText: RealTimeTextStrings;
   /** Strings for Captions Setting Modal */
@@ -209,7 +204,6 @@ export interface ComponentStrings {
   captionsBanner: CaptionsBannerStrings;
   /** Strings for Start Captions Button */
   startCaptionsButton: StartCaptionsButtonStrings;
-  /* @conditional-compile-remove(rtt) */
   /** Strings for Start RealTimeText Button */
   startRealTimeTextButton: StartRealTimeTextButtonStrings;
 }

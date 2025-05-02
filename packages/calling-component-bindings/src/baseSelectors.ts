@@ -19,7 +19,6 @@ import { TeamsIncomingCallState } from '@internal/calling-stateful-client';
 import { ReactionState } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { CaptionsKind, CapabilitiesChangeInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextInfo } from '@internal/calling-stateful-client';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
@@ -321,13 +320,11 @@ export const getAssignedBreakoutRoom = (
   return state.calls[props.callId]?.breakoutRooms?.assignedBreakoutRoom;
 };
 
-/* @conditional-compile-remove(rtt) */
 /** @private */
 export const getRealTimeTextStatus = (state: CallClientState, props: CallingBaseSelectorProps): boolean | undefined => {
   return state.calls[props.callId]?.realTimeTextFeature.isRealTimeTextFeatureActive;
 };
 
-/* @conditional-compile-remove(rtt) */
 /** @private */
 export const getRealTimeText = (
   state: CallClientState,
