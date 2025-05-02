@@ -10,6 +10,10 @@ import { RichTextEditorStyleProps } from '../RichTextEditor/RichTextEditor';
 export const richTextEditorStyle = (props: { minHeight: string; maxHeight: string }): string => {
   return mergeStyles({
     border: 'none',
+    fontSize: '0.875rem',
+    '::-webkit-input-placeholder': {
+      fontSize: '1rem' // Prevents screen zooming on iOS
+    },
     overflow: 'auto',
     outline: 'none',
     minHeight: props.minHeight,
