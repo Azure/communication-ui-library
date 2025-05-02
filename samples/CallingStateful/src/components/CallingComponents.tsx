@@ -13,7 +13,6 @@ import {
   VideoStreamOptions,
   StartCaptionsButton
 } from '@azure/communication-react';
-/* @conditional-compile-remove(rtt) */
 import { StartRealTimeTextButton, RealTimeTextModal } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { LocalLanguage20Regular } from '@fluentui/react-icons';
@@ -29,9 +28,7 @@ export const CallingComponents = (): JSX.Element => {
   const captionsSettingsModalProps = usePropsFor(CaptionsSettingsModal);
   const captionsBannerProps = usePropsFor(CaptionsBanner);
   const [callEnded, setCallEnded] = useState(false);
-  /* @conditional-compile-remove(rtt) */
   const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
-  /* @conditional-compile-remove(rtt) */
   const [isRealTimeTextStarted, setIsRealTimeTextStarted] = useState(false);
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
   const call = useCall();
@@ -73,25 +70,20 @@ export const CallingComponents = (): JSX.Element => {
               }}
             />
           )}
-          {
-            /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
-              <RealTimeTextModal
-                showModal={showRealTimeTextModal}
-                onDismissModal={() => {
-                  setShowRealTimeTextModal(false);
-                }}
-                onStartRealTimeText={() => {
-                  setIsRealTimeTextStarted(true);
-                }}
-              />
-            )
-          }
-          {(captionsBannerProps?.isCaptionsOn ||
-            /* @conditional-compile-remove(rtt) */ captionsBannerProps.isRealTimeTextOn ||
-            /* @conditional-compile-remove(rtt) */ isRealTimeTextStarted) && (
+          {showRealTimeTextModal && (
+            <RealTimeTextModal
+              showModal={showRealTimeTextModal}
+              onDismissModal={() => {
+                setShowRealTimeTextModal(false);
+              }}
+              onStartRealTimeText={() => {
+                setIsRealTimeTextStarted(true);
+              }}
+            />
+          )}
+          {(captionsBannerProps?.isCaptionsOn || captionsBannerProps.isRealTimeTextOn || isRealTimeTextStarted) && (
             <CaptionsBanner
               {...captionsBannerProps}
-              /* @conditional-compile-remove(rtt) */
               isRealTimeTextOn={captionsBannerProps.isRealTimeTextOn || isRealTimeTextStarted}
             />
           )}
@@ -121,7 +113,7 @@ export const CallingComponents = (): JSX.Element => {
                 />
               )}
               {
-                /* @conditional-compile-remove(rtt) */ <StartRealTimeTextButton
+                <StartRealTimeTextButton
                   disabled={!(call?.state === 'Connected')}
                   isRealTimeTextOn={captionsBannerProps.isRealTimeTextOn || isRealTimeTextStarted}
                   onStartRealTimeText={() => {

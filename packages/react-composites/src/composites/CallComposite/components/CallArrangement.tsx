@@ -521,9 +521,9 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     : latestNotifications;
 
   const reactionResources = useSelector(getReactionResources);
-  /* @conditional-compile-remove(rtt) */
+
   const [openRealTimeText, setOpenRealTimeText] = useState<boolean>(false);
-  /* @conditional-compile-remove(rtt) */
+
   const onStartRealTimeText = useCallback(() => {
     setOpenRealTimeText(true);
   }, []);
@@ -579,7 +579,6 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                       isMobile={props.mobileView}
                       onFetchAvatarPersonaData={props.onFetchAvatarPersonaData}
                       useTeamsCaptions={useTeamsCaptions}
-                      /* @conditional-compile-remove(rtt) */
                       isRealTimeTextOn={openRealTimeText}
                     />
                   )}
@@ -657,11 +656,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onPeopleButtonClicked={togglePeoplePane}
                   onMoreButtonClicked={onMoreButtonClicked}
                   isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
-                  /* @conditional-compile-remove(rtt) */
                   isRealTimeTextSupported={hasJoinedCall && props.isRTTSupportedCall}
-                  /* @conditional-compile-remove(rtt) */
                   onStartRealTimeText={onStartRealTimeText}
-                  /* @conditional-compile-remove(rtt) */
                   startRealTimeTextButtonChecked={openRealTimeText}
                   useTeamsCaptions={useTeamsCaptions}
                   isCaptionsOn={isCaptionsOn}
@@ -692,11 +688,8 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                 onPeopleButtonClicked={onMoreDrawerPeopleClicked}
                 disableButtonsForHoldScreen={isInLocalHold}
                 isCaptionsSupported={(useTeamsCaptions && hasJoinedCall) || hasJoinedCall}
-                /* @conditional-compile-remove(rtt) */
                 isRealTimeTextSupported={hasJoinedCall && props.isRTTSupportedCall}
-                /* @conditional-compile-remove(rtt) */
                 onStartRealTimeText={onStartRealTimeText}
-                /* @conditional-compile-remove(rtt) */
                 startRealTimeTextButtonChecked={openRealTimeText}
                 useTeamsCaptions={useTeamsCaptions}
                 onUserSetGalleryLayout={props.onUserSetGalleryLayoutChange}

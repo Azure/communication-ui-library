@@ -22,7 +22,6 @@ export const CallingCaptionsBanner = (props: {
   captionsOptions?: {
     height: 'full' | 'default';
   };
-  /* @conditional-compile-remove(rtt) */
   isRealTimeTextOn?: boolean;
 }): JSX.Element => {
   const captionsBannerProps = usePropsFor(CaptionsBanner);
@@ -56,25 +55,25 @@ export const CallingCaptionsBanner = (props: {
 
   const captionsBannerStrings: CaptionsBannerStrings = {
     captionsBannerSpinnerText: strings.captionsBannerSpinnerText,
-    /* @conditional-compile-remove(rtt) */
+
     realTimeTextInputBoxDefaultText: strings.realTimeTextInputBoxDefaultText,
-    /* @conditional-compile-remove(rtt) */
+
     realTimeTextInputErrorMessage: strings.realTimeTextInputErrorMessage,
-    /* @conditional-compile-remove(rtt) */
+
     realTimeTextBannerContent: strings.realTimeTextBannerContent,
-    /* @conditional-compile-remove(rtt) */
+
     realTimeTextBannerTitle: strings.realTimeTextBannerTitle,
-    /* @conditional-compile-remove(rtt) */
+
     realTimeTextBannerLinkLabel: strings.realTimeTextBannerLinkLabel,
-    /* @conditional-compile-remove(rtt) */
+
     captionsOnlyContainerTitle: strings.captionsOnlyContainerTitle,
-    /* @conditional-compile-remove(rtt) */
+
     realTimeTextOnlyContainerTitle: strings.realTimeTextOnlyContainerTitle,
-    /* @conditional-compile-remove(rtt) */
+
     captionsAndRealTimeTextContainerTitle: strings.captionsAndRealTimeTextContainerTitle,
-    /* @conditional-compile-remove(rtt) */
+
     expandButtonAriaLabel: strings.expandButtonAriaLabel,
-    /* @conditional-compile-remove(rtt) */
+
     minimizeButtonAriaLabel: strings.minimizeButtonAriaLabel
   };
 
@@ -119,7 +118,6 @@ export const CallingCaptionsBanner = (props: {
                 formFactor={props.isMobile ? 'compact' : 'default'}
                 strings={captionsBannerStrings}
                 {...captionsBannerProps}
-                /* @conditional-compile-remove(rtt) */
                 isRealTimeTextOn={props.isRealTimeTextOn || captionsBannerProps.isRealTimeTextOn}
               />
             </Stack.Item>

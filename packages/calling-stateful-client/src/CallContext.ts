@@ -10,9 +10,7 @@ import {
   ScalingMode,
   VideoDeviceInfo
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextInfo } from './CallClientState';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextInfo as AcsRealTimeTextInfo } from '@azure/communication-calling';
 import {
   BreakoutRoom,
@@ -21,10 +19,8 @@ import {
   MeetingMediaAccess,
   RaisedHand
 } from '@azure/communication-calling';
-
 import { TeamsMeetingAudioConferencingDetails } from '@azure/communication-calling';
 import { convertConferencePhoneInfo } from './Converter';
-/* @conditional-compile-remove(rtt) */
 import { convertFromSDKRealTimeTextToRealTimeTextInfoState } from './Converter';
 import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -1189,7 +1185,7 @@ export class CallContext {
     this._atomicId++;
     return id;
   }
-  /* @conditional-compile-remove(rtt) */
+
   private processNewRealTimeText(
     realTimeTexts: {
       completedMessages?: RealTimeTextInfo[];
@@ -1250,7 +1246,6 @@ export class CallContext {
     }
   }
 
-  /* @conditional-compile-remove(rtt) */
   private findTimeoutRealTimeText(
     inProgressRealTimeTexts: RealTimeTextInfo[] | RealTimeTextInfo | undefined,
     completedRealTimeTexts: RealTimeTextInfo[]
@@ -1347,7 +1342,7 @@ export class CallContext {
       }
     });
   }
-  /* @conditional-compile-remove(rtt) */
+
   public addRealTimeText(callId: string, realTimeText: AcsRealTimeTextInfo): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
@@ -1386,7 +1381,7 @@ export class CallContext {
       }
     });
   }
-  /* @conditional-compile-remove(rtt) */
+
   setIsRealTimeTextActive(callId: string, isRealTimeTextActive: boolean): void {
     this.modifyState((draft: CallClientState) => {
       const call = draft.calls[this._callIdHistory.latestCallId(callId)];
