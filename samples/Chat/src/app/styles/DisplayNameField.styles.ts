@@ -16,19 +16,19 @@ export const inputBoxStyle = mergeStyles({
 });
 
 export const inputBoxTextStyle = mergeStyles({
-  fontSize: '0.875rem',
+  fontSize: '1rem',
   fontWeight: 600,
   lineHeight: '1.5rem',
   '::-webkit-input-placeholder': {
-    fontSize: '0.875rem',
+    fontSize: '1rem',
     fontWeight: 600
   },
   '::-moz-placeholder': {
-    fontSize: '0.875rem',
+    fontSize: '1rem',
     fontWeight: 600
   },
   ':-moz-placeholder': {
-    fontSize: '0.875rem',
+    fontSize: '1rem',
     fontWeight: 600
   }
 });
