@@ -454,17 +454,11 @@ export type {
   NotificationStyles
 } from '../../react-components/src';
 export type { MeetingConferencePhoneInfoModalStrings } from '../../react-components/src';
-/* @conditional-compile-remove(rtt) */
 export type { RealTimeTextModalStrings, RealTimeTextModalProps } from '../../react-components/src';
-/* @conditional-compile-remove(rtt) */
 export { RealTimeTextModal } from '../../react-components/src';
-/* @conditional-compile-remove(rtt) */
 export type { RealTimeTextProps, RealTimeTextStrings } from '../../react-components/src/components/RealTimeText';
-/* @conditional-compile-remove(rtt) */
 export { RealTimeText } from '../../react-components/src/components/RealTimeText';
-/* @conditional-compile-remove(rtt) */
 export { StartRealTimeTextButton } from '../../react-components/src/components/StartRealTimeTextButton';
-/* @conditional-compile-remove(rtt) */
 export type {
   StartRealTimeTextButtonProps,
   StartRealTimeTextButtonStrings
@@ -483,5 +477,4 @@ export type {
   StartCaptionsButtonProps,
   StartCaptionsButtonStrings
 } from '../../react-components/src/components/StartCaptionsButton';
-/* @conditional-compile-remove(rtt) */
 export type { RealTimeTextInformation } from '../../react-components/src/components/CaptionsBanner';

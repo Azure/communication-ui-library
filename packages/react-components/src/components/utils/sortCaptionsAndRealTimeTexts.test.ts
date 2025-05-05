@@ -1,12 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(rtt) */
 import { CaptionsInformation, RealTimeTextInformation } from '../CaptionsBanner';
-/* @conditional-compile-remove(rtt) */
 import { _formatPhoneNumber } from './formatPhoneNumber';
-/* @conditional-compile-remove(rtt) */
 import { sortCaptionsAndRealTimeTexts } from './sortCaptionsAndRealTimeTexts';
-/* @conditional-compile-remove(rtt) */
+
 const mockCaptions: CaptionsInformation[] = [
   {
     id: '1',
@@ -39,7 +36,7 @@ const mockCaptions: CaptionsInformation[] = [
     createdTimeStamp: new Date('2021-09-01T00:00:05Z')
   }
 ];
-/* @conditional-compile-remove(rtt) */
+
 const mockRealTimeTexts: RealTimeTextInformation[] = [
   {
     id: 11,
@@ -63,7 +60,7 @@ const mockRealTimeTexts: RealTimeTextInformation[] = [
     isTyping: false
   }
 ];
-/* @conditional-compile-remove(rtt) */
+
 describe('Sort Captions and Real Time Text List', () => {
   test('if only using captions, captions should be sorted by created timestamp', () => {
     const result = [

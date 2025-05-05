@@ -24,7 +24,7 @@ export const inputBoxStyle = mergeStyles({
   height: '2.25rem',
   lineHeight: '1.5rem',
   '::-webkit-input-placeholder': {
-    fontSize: '0.875rem'
+    fontSize: '1rem' // Prevents screen zooming on iOS
   },
   '::-moz-placeholder': {
     fontSize: '0.875rem'

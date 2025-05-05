@@ -1,12 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(rtt) */
 import React from 'react';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextModal, RealTimeTextModalStrings } from '@internal/react-components';
-/* @conditional-compile-remove(rtt) */
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(rtt) */
 /** @private */
 export const CallingRealTimeTextModal = (props: {
   /** The flag to show the modal */

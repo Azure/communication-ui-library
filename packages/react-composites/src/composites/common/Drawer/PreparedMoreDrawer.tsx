@@ -20,7 +20,6 @@ export interface PreparedMoreDrawerProps {
   callControls?: boolean | CommonCallControlOptions;
   onClickShowDialpad?: () => void;
   isCaptionsSupported?: boolean;
-  /* @conditional-compile-remove(rtt) */
   isRealTimeTextSupported?: boolean;
   disableButtonsForHoldScreen?: boolean;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
@@ -31,9 +30,7 @@ export interface PreparedMoreDrawerProps {
   useTeamsCaptions?: boolean;
   reactionResources?: ReactionResources;
   onClickMeetingPhoneInfo?: () => void;
-  /* @conditional-compile-remove(rtt) */
   onStartRealTimeText?: () => void;
-  /* @conditional-compile-remove(rtt) */
   startRealTimeTextButtonChecked?: boolean;
 }
 

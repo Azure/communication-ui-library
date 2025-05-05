@@ -1,16 +1,11 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(rtt) */
 import React from 'react';
-/* @conditional-compile-remove(rtt) */
 import { Notification } from './Notification';
-/* @conditional-compile-remove(rtt) */
 import { useTheme } from '@fluentui/react';
-/* @conditional-compile-remove(rtt) */
 import { rttContainerStyles, rttIconStyles } from './styles/RTTDisclosureBanner.styles';
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @private
  * strings for rtt modal
@@ -21,7 +16,6 @@ export interface _RTTDisclosureBannerStrings {
   bannerLinkLabel?: string;
 }
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @private
  * Props for RTT Banner
@@ -35,7 +29,6 @@ export interface _RTTDisclosureBannerProps {
   strings?: _RTTDisclosureBannerStrings;
 }
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @private
  * Banner to disclose that RTT is enabled for all participants for the entire duration of the meeting.

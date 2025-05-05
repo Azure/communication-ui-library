@@ -2,17 +2,15 @@
 // Licensed under the MIT License.
 
 import { CallClientState, CaptionsInfo } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextInfo, RemoteParticipantState } from '@internal/calling-stateful-client';
 import {
   CallingBaseSelectorProps,
   getDisplayName,
   getIdentifier,
-  getRemoteParticipants,
   getStartCaptionsInProgress,
   getSupportedCaptionLanguages
 } from './baseSelectors';
-/* @conditional-compile-remove(rtt) */
+import { allRemoteParticipantsSelector } from './remoteParticipantsSelector';
 import { getRealTimeTextStatus, getRealTimeText } from './baseSelectors';
 import {
   getCaptions,
@@ -24,8 +22,8 @@ import {
 import * as reselect from 'reselect';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CaptionsInformation, SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextInformation } from '@internal/react-components';
+import { getRemoteParticipantDisplayName } from './utils/callUtils';
 
 /**
  * Selector type for the {@link StartCaptionsButton} component.
@@ -109,7 +107,6 @@ export type CaptionsBannerSelector = (
   props: CallingBaseSelectorProps
 ) => {
   captions: CaptionsInformation[];
-  /* @conditional-compile-remove(rtt) */
   realTimeTexts: {
     completedMessages?: RealTimeTextInformation[];
     currentInProgress?: RealTimeTextInformation[];
@@ -117,9 +114,7 @@ export type CaptionsBannerSelector = (
   };
   isCaptionsOn: boolean;
   startCaptionsInProgress: boolean;
-  /* @conditional-compile-remove(rtt) */
   isRealTimeTextOn: boolean;
-  /* @conditional-compile-remove(rtt) */
   latestLocalRealTimeText: RealTimeTextInformation;
 };
 
@@ -131,25 +126,21 @@ export type CaptionsBannerSelector = (
 export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSelector(
   [
     getCaptions,
-    /* @conditional-compile-remove(rtt) */
     getRealTimeText,
     getCaptionsStatus,
-    /* @conditional-compile-remove(rtt) */
     getRealTimeTextStatus,
     getStartCaptionsInProgress,
-    getRemoteParticipants,
+    allRemoteParticipantsSelector,
     getDisplayName,
     getIdentifier
   ],
   (
     captions,
-    /* @conditional-compile-remove(rtt) */
     realTimeTexts,
     isCaptionsFeatureActive,
-    /* @conditional-compile-remove(rtt) */
     isRealTimeTextActive,
     startCaptionsInProgress,
-    remoteParticipants,
+    allRemoteParticipants,
     displayName,
     identifier
   ) => {
@@ -158,11 +149,8 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
       let finalDisplayName;
       if (userId === identifier) {
         finalDisplayName = displayName;
-      } else if (remoteParticipants) {
-        const participant = remoteParticipants[userId];
-        if (participant) {
-          finalDisplayName = participant.displayName;
-        }
+      } else {
+        finalDisplayName = getRemoteParticipantDisplayName(userId, allRemoteParticipants);
       }
 
       return {
@@ -173,14 +161,14 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
         createdTimeStamp: c.timestamp
       };
     });
-    /* @conditional-compile-remove(rtt) */
+
     const completedRealTimeTexts = realTimeTexts?.completedMessages
       ?.filter((rtt) => rtt.message !== '')
       .map((rtt) => {
         const userId = getRealTimeTextSpeakerIdentifier(rtt);
         return {
           id: rtt.sequenceId,
-          displayName: getRealTimeTextDisplayName(rtt, identifier, remoteParticipants, displayName, userId),
+          displayName: getRealTimeTextDisplayName(rtt, identifier, allRemoteParticipants, displayName, userId),
           message: rtt.message,
           userId,
           isTyping: rtt.resultType === 'Partial',
@@ -188,14 +176,14 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
           finalizedTimeStamp: rtt.updatedTimestamp
         };
       });
-    /* @conditional-compile-remove(rtt) */
+
     const inProgressRealTimeTexts = realTimeTexts?.currentInProgress
       ?.filter((rtt) => rtt.message !== '')
       .map((rtt) => {
         const userId = getRealTimeTextSpeakerIdentifier(rtt);
         return {
           id: rtt.sequenceId,
-          displayName: getRealTimeTextDisplayName(rtt, identifier, remoteParticipants, displayName, userId),
+          displayName: getRealTimeTextDisplayName(rtt, identifier, allRemoteParticipants, displayName, userId),
           message: rtt.message,
           userId,
           isTyping: rtt.resultType === 'Partial',
@@ -203,7 +191,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
           finalizedTimeStamp: rtt.updatedTimestamp
         };
       });
-    /* @conditional-compile-remove(rtt) */
+
     const myInProgress =
       realTimeTexts?.myInProgress && realTimeTexts.myInProgress.message !== ''
         ? {
@@ -217,10 +205,9 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
           }
         : undefined;
 
-    /* @conditional-compile-remove(rtt) */
     // find the last final local real time text caption if myInProgress is not available
     let latestLocalRealTimeText;
-    /* @conditional-compile-remove(rtt) */
+
     if (!myInProgress) {
       latestLocalRealTimeText =
         realTimeTexts &&
@@ -233,7 +220,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
 
     return {
       captions: captionsInfo ?? [],
-      /* @conditional-compile-remove(rtt) */
+
       realTimeTexts: {
         completedMessages: completedRealTimeTexts as RealTimeTextInformation[],
         currentInProgress: inProgressRealTimeTexts as RealTimeTextInformation[],
@@ -241,9 +228,9 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
       },
       isCaptionsOn: isCaptionsFeatureActive ?? false,
       startCaptionsInProgress: startCaptionsInProgress ?? false,
-      /* @conditional-compile-remove(rtt) */
+
       isRealTimeTextOn: isRealTimeTextActive ?? false,
-      /* @conditional-compile-remove(rtt) */
+
       latestLocalRealTimeText: (myInProgress ?? latestLocalRealTimeText) as RealTimeTextInformation
     };
   }
@@ -252,16 +239,15 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
 const getCaptionsSpeakerIdentifier = (captions: CaptionsInfo): string => {
   return captions.speaker.identifier ? toFlatCommunicationIdentifier(captions.speaker.identifier) : '';
 };
-/* @conditional-compile-remove(rtt) */
+
 const getRealTimeTextSpeakerIdentifier = (realTimeText: RealTimeTextInfo): string => {
   return realTimeText.sender.identifier ? toFlatCommunicationIdentifier(realTimeText.sender.identifier) : '';
 };
 
-/* @conditional-compile-remove(rtt) */
 const getRealTimeTextDisplayName = (
   realTimeText: RealTimeTextInfo,
   identifier: string,
-  remoteParticipants:
+  allRemoteParticipants:
     | {
         [keys: string]: RemoteParticipantState;
       }
@@ -272,11 +258,8 @@ const getRealTimeTextDisplayName = (
   let finalDisplayName;
   if (userId === identifier) {
     finalDisplayName = displayName;
-  } else if (remoteParticipants) {
-    const participant = remoteParticipants[userId];
-    if (participant) {
-      finalDisplayName = participant.displayName;
-    }
+  } else {
+    finalDisplayName = getRemoteParticipantDisplayName(userId, allRemoteParticipants);
   }
   return finalDisplayName ?? 'Unnamed Participant';
 };
