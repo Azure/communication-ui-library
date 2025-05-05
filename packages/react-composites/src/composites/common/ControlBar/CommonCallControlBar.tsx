@@ -336,7 +336,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
 
   const showCaptionsButton = props.isCaptionsSupported && isEnabled(options.captionsButton);
 
-  const showRealTimeTextButton = props.isRealTimeTextSupported;
+  const showRealTimeTextButton = props.isRealTimeTextSupported && isEnabled(options.realTimeTextButton);
 
   const showTeamsMeetingPhoneCallButton = isEnabled(options?.teamsMeetingPhoneCallButton);
 

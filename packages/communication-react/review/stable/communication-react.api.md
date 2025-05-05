@@ -2138,6 +2138,7 @@ export type CommonCallControlOptions = {
     };
     exitSpotlightButton?: boolean;
     captionsButton?: boolean;
+    realTimeTextButton?: boolean;
     galleryControlsButton?: boolean;
     teamsMeetingPhoneCallButton?: boolean;
 };

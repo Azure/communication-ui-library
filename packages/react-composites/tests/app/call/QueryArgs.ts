@@ -36,6 +36,7 @@ export interface QueryArgs {
   displayName: string;
   mockRemoteParticipantCount: number;
   enableVideoEffects?: boolean;
+  realTimeTextButton?: boolean;
 }
 
 export function parseQueryArgs(): QueryArgs {
@@ -78,6 +79,7 @@ export function parseQueryArgs(): QueryArgs {
     logo: params.logo as 'circle' | 'square' | undefined,
     backgroundImage: Boolean(params.backgroundImage),
     playSounds: Boolean(params.playSounds),
-    disableAutoShowDtmfDialer: params.disableAutoShowDtmfDialer === 'true' ? true : false
+    disableAutoShowDtmfDialer: params.disableAutoShowDtmfDialer === 'true' ? true : false,
+    realTimeTextButton: params.realTimeTextButton === 'true' ? true : false
   };
 }
