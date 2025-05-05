@@ -57,7 +57,7 @@ test.describe('Real Time Text tests', async () => {
     await loadCallPage(page, serverUrl, initialState, {
       customCompositeOptions: JSON.stringify({
         callControls: {
-          realTimeTextButton: 'false'
+          realTimeTextButton: false
         }
       })
     });
