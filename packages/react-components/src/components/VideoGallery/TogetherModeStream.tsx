@@ -88,11 +88,9 @@ export const TogetherModeStream = memo(
     ]);
     // Re-render the component if mainVideoStream isReceiving changes
     useEffect(() => {
-      setShowLoadingIndicator(
-        !(togetherModeStreams?.mainVideoStream?.isAvailable && togetherModeStreams?.mainVideoStream?.isReceiving)
-      );
+      setShowLoadingIndicator(!togetherModeStreams?.mainVideoStream?.isReceiving);
       // This effect will trigger a re-render when isReceiving changes
-    }, [togetherModeStreams?.mainVideoStream?.isAvailable, togetherModeStreams?.mainVideoStream?.isReceiving]);
+    }, [togetherModeStreams?.mainVideoStream?.isReceiving]);
     // Update scene size only when container dimensions change
     useMemo(() => {
       if (onSetTogetherModeSceneSize && containerWidth && containerHeight) {
