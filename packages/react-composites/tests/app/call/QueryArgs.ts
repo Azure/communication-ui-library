@@ -80,6 +80,6 @@ export function parseQueryArgs(): QueryArgs {
     backgroundImage: Boolean(params.backgroundImage),
     playSounds: Boolean(params.playSounds),
     disableAutoShowDtmfDialer: params.disableAutoShowDtmfDialer === 'true' ? true : false,
-    realTimeTextButton: params.realTimeTextButton === 'true' ? true : false
+    realTimeTextButton: params.realTimeTextButton === 'false' ? false : true
   };
 }
