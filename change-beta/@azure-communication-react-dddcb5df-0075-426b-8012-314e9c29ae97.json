@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "fix",
-  "workstream": "Accessibility",
-  "comment": "Devices dropdown list now narrates a group name when actioned",
+  "area": "improvement",
+  "workstream": "PSTN",
+  "comment": "Enable ringing tone during connecting and ringing state",
   "packageName": "@azure/communication-react",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"

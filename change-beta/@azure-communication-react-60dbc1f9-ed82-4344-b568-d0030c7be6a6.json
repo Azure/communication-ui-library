@@ -1,8 +1,8 @@
 {
-  "type": "prerelease",
+  "type": "patch",
   "area": "fix",
   "workstream": "RTT",
-  "comment": "Fix bug where RTT UI is showing up on PSTN calls",
+  "comment": "Fix bug where scrollable UL element is not keyboard focusable",
   "packageName": "@azure/communication-react",
   "email": "96077406+carocao-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

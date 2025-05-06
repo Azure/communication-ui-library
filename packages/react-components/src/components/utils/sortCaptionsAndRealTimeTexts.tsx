@@ -1,8 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(rtt) */
 import { CaptionsInformation, RealTimeTextInformation } from '../CaptionsBanner';
-/* @conditional-compile-remove(rtt) */
+
 /**
  * Sorts the captions and real time texts based on their timestamp.
  *

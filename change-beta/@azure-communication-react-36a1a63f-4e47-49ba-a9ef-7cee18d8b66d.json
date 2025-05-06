@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "improvement",
-  "workstream": "Dependency updates",
-  "comment": "Update dependencies",
+  "area": "fix",
+  "workstream": "iOS",
+  "comment": "Prevent screen zooming on message input",
   "packageName": "@azure/communication-react",
   "email": "3941071+emlynmac@users.noreply.github.com",
   "dependentChangeType": "patch"

@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "improvement",
-  "workstream": "Move unsupported browser version to alpha",
-  "comment": "Move Unsupported Browser Version to alpha",
+  "workstream": "Add selector changes for unnamed participants that left call",
+  "comment": "Add changes for stateful client to get display name of participants that left call",
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

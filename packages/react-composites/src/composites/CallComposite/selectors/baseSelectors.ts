@@ -20,7 +20,6 @@ import {
   LocalVideoStreamState,
   RemoteParticipantState
 } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextInfo } from '@internal/calling-stateful-client';
 import { CaptionsInfo } from '@internal/calling-stateful-client';
 import { ConferencePhoneInfo } from '@internal/calling-stateful-client';
@@ -182,7 +181,6 @@ export const getCaptions = (state: CallAdapterState): CaptionsInfo[] | undefined
   return state.call?.captionsFeature.captions;
 };
 
-/* @conditional-compile-remove(rtt) */
 /** @private */
 export const getRealTimeText = (
   state: CallAdapterState
@@ -201,7 +199,6 @@ export const getCaptionsStatus = (state: CallAdapterState): boolean | undefined 
   return state.call?.captionsFeature.isCaptionsFeatureActive;
 };
 
-/* @conditional-compile-remove(rtt) */
 /** @private */
 export const getRealTimeTextStatus = (state: CallAdapterState): boolean | undefined => {
   return state.call?.realTimeTextFeature.isRealTimeTextFeatureActive;

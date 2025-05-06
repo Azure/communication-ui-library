@@ -1,6 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(rtt) */
+
 import { RealTimeTextCallFeatureState } from '@internal/calling-stateful-client';
 
 export const CHAT_TOPIC_NAME = 'Cowabunga';
@@ -339,7 +339,6 @@ export const togetherModeSeatingPosition_w_700_h_500 = {
   }
 };
 
-/* @conditional-compile-remove(rtt) */
 export const realTimeTextFeatureState: RealTimeTextCallFeatureState = {
   realTimeTexts: {
     completedMessages: [

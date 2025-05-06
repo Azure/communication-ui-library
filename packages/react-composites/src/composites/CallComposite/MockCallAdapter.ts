@@ -190,7 +190,7 @@ export class _MockCallAdapter implements CallAdapter {
   stopCaptions(): Promise<void> {
     throw Error('stopCaptions not implemented');
   }
-  /* @conditional-compile-remove(rtt) */
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   sendRealTimeText(text: string, isFinalized: boolean): Promise<void> {
     throw Error('sendRealTimeText not implemented');
@@ -313,7 +313,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
         startCaptionsInProgress: false,
         captionsKind: 'Captions'
       },
-      /* @conditional-compile-remove(rtt) */
       realTimeTextFeature: {
         realTimeTexts: {},
         isRealTimeTextFeatureActive: false

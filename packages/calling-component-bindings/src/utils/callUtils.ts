@@ -103,6 +103,30 @@ export const _updateUserDisplayNames = (participants: RemoteParticipantState[]):
   }
 };
 
+/**
+ * Get the display name of a participant for given userId
+ *
+ * @internal
+ *
+ */
+export const getRemoteParticipantDisplayName = (
+  participantUserId: string,
+  remoteParticipants:
+    | {
+        [keys: string]: RemoteParticipantState;
+      }
+    | undefined
+): string | undefined => {
+  let displayName;
+  if (remoteParticipants) {
+    const participant = remoteParticipants[participantUserId];
+    if (participant) {
+      displayName = participant.displayName;
+    }
+  }
+  return displayName;
+};
+
 const memoizedUpdateDisplayName = memoizeFnAll((participantId: string, participant: RemoteParticipantState) => {
   if (isPhoneNumberIdentifier(participant.identifier)) {
     return {
