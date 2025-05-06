@@ -41,7 +41,6 @@ import { TeamsCaptions } from '@azure/communication-calling';
 import { Captions, CaptionsInfo } from '@azure/communication-calling';
 import { TransferEventArgs } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
-/* @conditional-compile-remove(rtt) */
 import type { RealTimeTextInfo } from '@azure/communication-calling';
 import type { BackgroundBlurConfig, BackgroundReplacementConfig, DeviceAccess } from '@azure/communication-calling';
 import type { CapabilitiesChangeInfo } from '@azure/communication-calling';
@@ -80,7 +79,7 @@ import {
   IsCaptionLanguageChangedListener,
   IsSpokenLanguageChangedListener
 } from './CallAdapter';
-/* @conditional-compile-remove(rtt) */
+
 import { RealTimeTextReceivedListener } from './CallAdapter';
 import {
   VideoBackgroundImage,
@@ -650,7 +649,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.stopCaptions.bind(this);
     this.setSpokenLanguage.bind(this);
     this.setCaptionLanguage.bind(this);
-    /* @conditional-compile-remove(rtt) */
     this.sendRealTimeText.bind(this);
     this.startVideoBackgroundEffect.bind(this);
     this.stopVideoBackgroundEffects.bind(this);
@@ -1174,7 +1172,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   public async setSpokenLanguage(language: string): Promise<void> {
     this.handlers.onSetSpokenLanguage(language);
   }
-  /* @conditional-compile-remove(rtt) */
+
   public async sendRealTimeText(text: string, isFinalized: boolean): Promise<void> {
     this.handlers.onSendRealTimeText(text, isFinalized);
   }
@@ -1283,7 +1281,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(rtt) */
+
   on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
@@ -1363,7 +1361,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.feature(Features.Transfer).on('transferAccepted', this.transferAccepted.bind(this));
     this.call?.feature(Features.Capabilities).on('capabilitiesChanged', this.capabilitiesChanged.bind(this));
     this.call?.feature(Features.Spotlight).on('spotlightChanged', this.spotlightChanged.bind(this));
-    /* @conditional-compile-remove(rtt) */
+
     try {
       this.call?.feature(Features.RealTimeText).on('realTimeTextReceived', this.realTimeTextReceived.bind(this));
     } catch (e) {
@@ -1387,7 +1385,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.call?.off('roleChanged', this.roleChanged.bind(this));
 
     this.unsubscribeFromCaptionEvents();
-    /* @conditional-compile-remove(rtt) */
+
     try {
       this.call?.feature(Features.RealTimeText).off('realTimeTextReceived', this.realTimeTextReceived.bind(this));
     } catch (e) {
@@ -1457,7 +1455,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   private captionsReceived(captionsInfo: CaptionsInfo): void {
     this.emitter.emit('captionsReceived', { captionsInfo });
   }
-  /* @conditional-compile-remove(rtt) */
+
   private realTimeTextReceived(realTimeText: RealTimeTextInfo): void {
     this.emitter.emit('realTimeTextReceived', { realTimeText });
   }
@@ -1584,7 +1582,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(rtt) */
   off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'transferAccepted', listener: TransferAcceptedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;

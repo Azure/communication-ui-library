@@ -59,7 +59,7 @@ describe('Calling sound subscriber tests', () => {
     expect(audioMocks.Audio.play).toHaveBeenCalled();
   });
 
-  test('should not play sound when call is made to PSTN user', () => {
+  test('should play sound when call is made to PSTN user and stop when EarlyMedia', () => {
     const callee: CommunicationIdentifier[] = [{ phoneNumber: '+14045554444' }];
     const call = createMockCall();
     const sounds: CallingSounds = {
@@ -69,7 +69,9 @@ describe('Calling sound subscriber tests', () => {
     const soundSubscriber = new CallingSoundSubscriber(call, callee, sounds);
     expect(soundSubscriber).toBeDefined();
     call.testHelperSetCallState('Ringing');
-    expect(audioMocks.Audio.play).not.toHaveBeenCalled();
+    expect(audioMocks.Audio.play).toHaveBeenCalled();
+    call.testHelperSetCallState('EarlyMedia');
+    expect(audioMocks.Audio.pause).toHaveBeenCalled();
   });
 
   test('should play busy sound when call is rejected', () => {

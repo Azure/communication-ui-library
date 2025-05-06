@@ -3,7 +3,6 @@
 
 import { IStackStyles, ITheme, mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rtt) */
 import { IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
 /**
@@ -22,7 +21,6 @@ export const displayNameClassName = mergeStyles({
   lineHeight: _pxToRem(16)
 });
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @private
  */
@@ -30,7 +28,6 @@ export const bannerTitleContainerClassName = mergeStyles({
   paddingBottom: _pxToRem(10)
 });
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @private
  */
@@ -47,7 +44,7 @@ export const isTypingClassName = (theme: ITheme): string => {
     lineHeight: _pxToRem(16)
   });
 };
-/* @conditional-compile-remove(rtt) */
+
 /**
  * @private
  */
@@ -57,7 +54,6 @@ export const rttContainerClassName = (theme: ITheme, isTyping: boolean): string 
   });
 };
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @private
  */
@@ -68,7 +64,6 @@ export const rttDisclosureBannerClassName = (): string => {
   });
 };
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @private
  */
@@ -82,7 +77,6 @@ export const realTimeTextInputBoxStyles = (theme: ITheme): Partial<ITextFieldSty
   }
 });
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @private
  */

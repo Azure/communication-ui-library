@@ -291,7 +291,9 @@ export const effectsButtonStyles = (theme: Theme, disabled?: boolean): IButtonSt
     rootFocused: disabled
       ? {}
       : {
-          color: theme.palette.themePrimary
+          color: theme.palette.themePrimary,
+          outline: '1px solid',
+          outlineOffset: '-2px'
         }
   };
 };

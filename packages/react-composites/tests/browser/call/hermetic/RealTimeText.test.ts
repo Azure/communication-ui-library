@@ -6,7 +6,6 @@ import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS, captionsFeatureState, realTimeTextFeatureState } from '../../common/constants';
 
-/* @conditional-compile-remove(rtt) */
 test.describe('Real Time Text tests', async () => {
   test('Show Real Time Text', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();

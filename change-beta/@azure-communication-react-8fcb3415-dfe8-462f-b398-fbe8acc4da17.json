@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Fix bug where mobile video gallery shows landscape view when RTT banner is enlarged",
-  "comment": "Fix bug where mobile video gallery shows landscape view when RTT banner is enlarged",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
