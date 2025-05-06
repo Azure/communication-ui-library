@@ -20,7 +20,7 @@ import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
-import { MAXIMUM_LENGTH_OF_MESSAGE, modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
+import { inlineImageIds, MAXIMUM_LENGTH_OF_MESSAGE, modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   hasIncompleteAttachmentUploads,
@@ -148,18 +148,47 @@ export const ChatMessageComponentAsRichTextEditBox = (
     // get plain text content from the editor to check if the message is empty
     // as the content may contain tags even when the content is empty
     const plainTextContent = editTextFieldRef.current?.getPlainContent() ?? contentValue;
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const imageIds = inlineImageIds(contentValue);
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (imageIds.length > 0) {
+      // Check for changes
+      const existingIds = inlineImageIds(message.content);
+      // For mismatching array sizes, something has changed with images. OK to submit.
+      // Note that the case of zero images falls back to the character length check
+      if (existingIds.length !== imageIds.length) {
+        return 'OK';
+      }
+
+      let arraysMatch = true;
+
+      existingIds.forEach((inlineImage) => {
+        const found = imageIds.find((eId) => {
+          return eId.id === inlineImage.id;
+        });
+        if (!found) {
+          arraysMatch = false;
+        }
+      });
+      if (!arraysMatch) {
+        return 'OK';
+      }
+    }
+
     return getMessageState(
       plainTextContent,
       /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []
     );
-  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata, contentValue]);
+  }, [
+    /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata,
+    /* @conditional-compile-remove(file-sharing-acs) */ message.content,
+    contentValue
+  ]);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const imageUploadErrorMessage = useMemo(() => {
     return inlineImagesWithProgress?.filter((image) => image.error).pop()?.error?.message;
   }, [inlineImagesWithProgress]);
-
-  const submitEnabled = messageState === 'OK';
 
   const editContainerStyles = useChatMessageRichTextEditContainerStyles();
   const chatMyMessageStyles = useChatMyMessageStyles();
@@ -212,7 +241,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
   }, [message]);
 
   const onSubmitHandler = useCallback((): void => {
-    if (!submitEnabled) {
+    if (messageState !== 'OK') {
       return;
     }
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -259,7 +288,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
     });
   }, [
-    submitEnabled,
+    messageState,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     inlineImagesWithProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */

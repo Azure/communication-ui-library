@@ -39,12 +39,34 @@ export const isAttachmentUploadCompleted = (
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 /**
+ * Obtain any image nodes from the content DOM passed in
+ * returns a list of image IDs
+ * @internal
+ */
+export const inlineImageIds = (content?: string): { id: string; url: string }[] => {
+  if (!content) {
+    return [];
+  }
+  const document = new DOMParser().parseFromString(content, 'text/html');
+  const imageTags = document.querySelectorAll('img');
+  const ids: { id: string; url: string }[] = [];
+  imageTags.forEach((node) => {
+    const id = node.id;
+    const url = node.src;
+    if (id && url) {
+      ids.push({ id, url });
+    }
+  });
+  return ids;
+};
+
+/* @conditional-compile-remove(rich-text-editor-image-upload) */
+/**
  * Check if the content has inline image.
  * @internal
  */
 export const hasInlineImageContent = (content: string): boolean => {
-  const document = new DOMParser().parseFromString(content, 'text/html');
-  return !!document.querySelector('img');
+  return inlineImageIds(content).length > 0 ? true : false;
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */

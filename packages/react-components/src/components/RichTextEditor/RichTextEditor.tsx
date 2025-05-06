@@ -189,7 +189,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
       },
       getPlainContent() {
         if (editor.current) {
-          return exportContent(editor.current, 'PlainTextFast');
+          return exportContent(editor.current, 'PlainText');
         } else {
           return undefined;
         }
