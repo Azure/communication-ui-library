@@ -66,15 +66,15 @@ module.exports = {
     // Beta feature for joining calls using teams token
     "teams-identity-support-beta",
     // feature for tracking the callParticipantsLocator
-    "call-participants-locator",
-    // Feature for together mode
-    "together-mode"
+    "call-participants-locator"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
      // Feature for on fetch profile
-    "on-fetch-profile"
+    "on-fetch-profile",
+    // Feature for together mode
+    "together-mode"
   ]
 }
