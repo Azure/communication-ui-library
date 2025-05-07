@@ -629,14 +629,14 @@ export interface CallAdapterCallOperations {
    *
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
-   * @beta
+   * @public
    */
   createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
   /**
    * Start Together mode.
    *
-   * @beta
+   * @public
    */
   startTogetherMode(): Promise<void>;
   /* @conditional-compile-remove(together-mode) */
@@ -649,7 +649,7 @@ export interface CallAdapterCallOperations {
    * @param width - Width of the container
    * @param height - Height of the container
    *
-   * @beta
+   * @public
    */
   setTogetherModeSceneSize(width: number, height: number): void;
 
@@ -661,7 +661,7 @@ export interface CallAdapterCallOperations {
    * This method is implemented for composite
    *
    *
-   * @beta
+   * @public
    */
   disposeTogetherModeStreamView(): Promise<void>;
   /**
