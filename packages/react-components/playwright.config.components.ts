@@ -29,9 +29,23 @@ const ctViteConfig = {
     })
   ],
   build: {
-    // Fix warning for telemetryVersion
+    // Fix warning for telemetryVersion and node modules that are not ESM
     commonjsOptions: {
-      include: undefined
+      // Include telemetryVersion.js and node_modules in the commonjs build
+      // to avoid warnings about them not being ESM
+      // This is a workaround for the fact that Vite does not support ESM in commonjs modules
+      // and we need to include telemetryVersion.js in the build
+      include: [/telemetryVersion\.js$/, /node_modules/],
+      // Controls how CommonJS modules are converted to ES modules when imported with default import
+      // Setting to 'true' forces Vite to treat CommonJS module.exports as default exports
+      // This helps with files like telemetryVersion.js that use module.exports = value
+      // When importing: import telemetryVersion from './telemetryVersion'
+      requireReturnsDefault: true,
+      // Enables handling of mixed module formats
+      // When true, allows ES modules to import CommonJS modules and vice versa
+      // Necessary for hybrid codebases transitioning between module systems
+      // Helps resolve "default is not exported" errors when importing CommonJS from ESM
+      transformMixedEsModules: true
     }
   },
   resolve: {
