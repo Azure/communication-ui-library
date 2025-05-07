@@ -66,7 +66,7 @@ export const inlineImageIds = (content?: string): { id: string; url?: string }[]
  * @internal
  */
 export const hasInlineImageContent = (content: string): boolean => {
-  return inlineImageIds(content).length > 0 ? true : false;
+  return inlineImageIds(content).length > 0;
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
