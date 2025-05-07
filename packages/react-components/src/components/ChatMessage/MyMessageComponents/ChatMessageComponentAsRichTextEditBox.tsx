@@ -20,13 +20,14 @@ import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
-import { inlineImageIds, MAXIMUM_LENGTH_OF_MESSAGE, modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
+import { MAXIMUM_LENGTH_OF_MESSAGE, modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   hasIncompleteAttachmentUploads,
   removeBrokenImageContentAndClearImageSizeStyles,
   getContentWithUpdatedInlineImagesInfo,
-  isMessageTooLong
+  isMessageTooLong,
+  inlineImageIds
 } from '../../utils/SendBoxUtils';
 import {
   getMessageState,
