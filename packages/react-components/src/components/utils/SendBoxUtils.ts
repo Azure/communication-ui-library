@@ -43,17 +43,17 @@ export const isAttachmentUploadCompleted = (
  * returns a list of image IDs
  * @internal
  */
-export const inlineImageIds = (content?: string): { id: string; url: string }[] => {
+export const inlineImageIds = (content?: string): { id: string; url?: string }[] => {
   if (!content) {
     return [];
   }
   const document = new DOMParser().parseFromString(content, 'text/html');
   const imageTags = document.querySelectorAll('img');
-  const ids: { id: string; url: string }[] = [];
+  const ids: { id: string; url?: string }[] = [];
   imageTags.forEach((node) => {
     const id = node.id;
     const url = node.src;
-    if (id && url) {
+    if (id) {
       ids.push({ id, url });
     }
   });

@@ -31,6 +31,7 @@ import {
 } from '../../utils/SendBoxUtils';
 import {
   getMessageState,
+  MessageState,
   onRenderCancelIcon,
   onRenderSubmitIcon
 } from '../../utils/ChatMessageComponentAsEditBoxUtils';
@@ -145,46 +146,28 @@ export const ChatMessageComponentAsRichTextEditBox = (
   );
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
-  const messageState = useMemo(() => {
+  const messageState: MessageState = useMemo(() => {
     // get plain text content from the editor to check if the message is empty
     // as the content may contain tags even when the content is empty
     const plainTextContent = editTextFieldRef.current?.getPlainContent() ?? contentValue;
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    const imageIds = inlineImageIds(contentValue);
-    /* @conditional-compile-remove(rich-text-editor-image-upload) */
-    if (imageIds.length > 0) {
-      // Check for changes
-      const existingIds = inlineImageIds(message.content);
-      // For mismatching array sizes, something has changed with images. OK to submit.
-      // Note that the case of zero images falls back to the character length check
-      if (existingIds.length !== imageIds.length) {
-        return 'OK';
-      }
-
-      let arraysMatch = true;
-
-      existingIds.forEach((inlineImage) => {
-        const found = imageIds.find((eId) => {
-          return eId.id === inlineImage.id;
-        });
-        if (!found) {
-          arraysMatch = false;
-        }
-      });
-      if (!arraysMatch) {
-        return 'OK';
-      }
-    }
-
-    return getMessageState(
+    let messageLengthState = getMessageState(
       plainTextContent,
       /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []
     );
-  }, [
-    /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata,
-    /* @conditional-compile-remove(file-sharing-acs) */ message.content,
-    contentValue
-  ]);
+
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const imageIds = inlineImageIds(contentValue);
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (messageLengthState !== 'OK' && imageIds.length > 0) {
+      // Check if too long
+      if (isMessageTooLong(contentValue.length)) {
+        messageLengthState = 'too long';
+      } else {
+        messageLengthState = 'OK';
+      }
+    }
+    return messageLengthState;
+  }, [/* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata, contentValue]);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const imageUploadErrorMessage = useMemo(() => {
