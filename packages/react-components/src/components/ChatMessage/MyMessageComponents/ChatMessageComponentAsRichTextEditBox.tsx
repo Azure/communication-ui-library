@@ -26,10 +26,12 @@ import {
   hasIncompleteAttachmentUploads,
   removeBrokenImageContentAndClearImageSizeStyles,
   getContentWithUpdatedInlineImagesInfo,
-  isMessageTooLong
+  isMessageTooLong,
+  inlineImageIds
 } from '../../utils/SendBoxUtils';
 import {
   getMessageState,
+  MessageState,
   onRenderCancelIcon,
   onRenderSubmitIcon
 } from '../../utils/ChatMessageComponentAsEditBoxUtils';
@@ -144,22 +146,33 @@ export const ChatMessageComponentAsRichTextEditBox = (
   );
   const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
-  const messageState = useMemo(() => {
+  const messageState: MessageState = useMemo(() => {
     // get plain text content from the editor to check if the message is empty
     // as the content may contain tags even when the content is empty
     const plainTextContent = editTextFieldRef.current?.getPlainContent() ?? contentValue;
-    return getMessageState(
+    let messageLengthState = getMessageState(
       plainTextContent,
       /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata ?? []
     );
+
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    const imageIds = inlineImageIds(contentValue);
+    /* @conditional-compile-remove(rich-text-editor-image-upload) */
+    if (messageLengthState !== 'OK' && imageIds.length > 0) {
+      // Check if too long
+      if (isMessageTooLong(contentValue.length)) {
+        messageLengthState = 'too long';
+      } else {
+        messageLengthState = 'OK';
+      }
+    }
+    return messageLengthState;
   }, [/* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata, contentValue]);
 
   /* @conditional-compile-remove(rich-text-editor-image-upload) */
   const imageUploadErrorMessage = useMemo(() => {
     return inlineImagesWithProgress?.filter((image) => image.error).pop()?.error?.message;
   }, [inlineImagesWithProgress]);
-
-  const submitEnabled = messageState === 'OK';
 
   const editContainerStyles = useChatMessageRichTextEditContainerStyles();
   const chatMyMessageStyles = useChatMyMessageStyles();
@@ -212,7 +225,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
   }, [message]);
 
   const onSubmitHandler = useCallback((): void => {
-    if (!submitEnabled) {
+    if (messageState !== 'OK') {
       return;
     }
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -259,7 +272,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       onSubmit(content, /* @conditional-compile-remove(file-sharing-acs) */ attachmentMetadata || []);
     });
   }, [
-    submitEnabled,
+    messageState,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
     inlineImagesWithProgress,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */
