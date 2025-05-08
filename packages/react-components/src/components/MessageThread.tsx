@@ -3,6 +3,7 @@
 
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Icon, IStyle, mergeStyles, PrimaryButton } from '@fluentui/react';
+import { createTabster, getGroupper, getMover } from 'tabster';
 import { Chat } from '@fluentui-contrib/react-chat';
 import { mergeClasses, useArrowNavigationGroup } from '@fluentui/react-components';
 import {
@@ -696,6 +697,9 @@ export type _ChatMessageProps = MessageProps & {
  */
 export const MessageThread = (props: MessageThreadProps): JSX.Element => {
   const theme = useTheme();
+  const tabsterCore = createTabster(window);
+  getGroupper(tabsterCore);
+  getMover(tabsterCore);
 
   const chatBody = useMemo(() => {
     return (
