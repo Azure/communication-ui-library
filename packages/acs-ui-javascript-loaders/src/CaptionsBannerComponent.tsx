@@ -8,33 +8,36 @@ import { CaptionsSettingsModal, CaptionsBanner } from '@internal/react-component
 import { useState } from 'react';
 import { mergeStyles, Stack } from '@fluentui/react';
 import { RealTimeTextModal } from '@internal/react-components';
+import {
+  ControlBar,
+  ControlBarButton,
+  StartCaptionsButton,
+  StartCaptionsButtonProps,
+  StartRealTimeTextButton
+} from '@internal/react-components';
 /**
  * return calling components.
  *
  * @internal
  */
-export const CaptionsBannerComponent = (props: {
-  showCaptionsSettingsModal: boolean;
-  showRealTimeTextModal: boolean;
-}): JSX.Element => {
+export const CaptionsBannerComponent = (): JSX.Element => {
   const captionsSettingsModalProps: CaptionsSettingsModalProps | undefined = useCallingPropsFor(CaptionsSettingsModal);
   const captionsBannerProps: CaptionsBannerProps | undefined = useCallingPropsFor(CaptionsBanner);
+  const startCaptionsButtonProps: StartCaptionsButtonProps | undefined = useCallingPropsFor(StartCaptionsButton);
   const [isRealTimeTextStarted, setIsRealTimeTextStarted] = useState(false);
-
-  const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(props.showCaptionsSettingsModal);
-  const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(props.showRealTimeTextModal);
+  const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
+  const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
   return (
     <Stack className={mergeStyles({ height: '100%' })}>
-      {captionsSettingsModalProps &&
-        !(captionsBannerProps && (captionsBannerProps as CaptionsBannerProps).isCaptionsOn) && (
-          <CaptionsSettingsModal
-            {...(captionsSettingsModalProps as CaptionsSettingsModalProps)}
-            showModal={showCaptionsSettingsModal}
-            onDismissCaptionsSettings={() => {
-              setShowCaptionsSettingsModal(false);
-            }}
-          />
-        )}
+      {captionsSettingsModalProps && (
+        <CaptionsSettingsModal
+          {...(captionsSettingsModalProps as CaptionsSettingsModalProps)}
+          showModal={showCaptionsSettingsModal}
+          onDismissCaptionsSettings={() => {
+            setShowCaptionsSettingsModal(false);
+          }}
+        />
+      )}
       {
         /* @conditional-compile-remove(rtt) */ showRealTimeTextModal &&
           !(captionsBannerProps && (captionsBannerProps as CaptionsBannerProps).isRealTimeTextOn) && (
@@ -62,6 +65,48 @@ export const CaptionsBannerComponent = (props: {
             }
           />
         )}
+
+      <Stack>
+        <ControlBar layout={'floatingBottom'}>
+          {startCaptionsButtonProps && (
+            <StartCaptionsButton
+              {...(startCaptionsButtonProps as StartCaptionsButtonProps)}
+              showLabel
+              text={
+                captionsBannerProps && (captionsBannerProps as CaptionsBannerProps).isCaptionsOn
+                  ? 'Stop Captions'
+                  : 'Start Captions'
+              }
+              onStartCaptions={async () => {
+                if (captionsBannerProps && !(captionsBannerProps as CaptionsBannerProps).isCaptionsOn) {
+                  setShowCaptionsSettingsModal(true);
+                }
+                (startCaptionsButtonProps as StartCaptionsButtonProps).onStartCaptions();
+              }}
+            />
+          )}
+          {startCaptionsButtonProps && captionsSettingsModalProps && (
+            <ControlBarButton
+              showLabel
+              text="Change Caption Settings"
+              disabled={!(captionsBannerProps && (captionsBannerProps as CaptionsBannerProps).isCaptionsOn)}
+              onClick={() => {
+                setShowCaptionsSettingsModal(true);
+              }}
+            />
+          )}
+          {captionsBannerProps && (
+            <StartRealTimeTextButton
+              showLabel
+              text="Start Real Time Text"
+              isRealTimeTextOn={(captionsBannerProps as CaptionsBannerProps).isRealTimeTextOn || isRealTimeTextStarted}
+              onStartRealTimeText={() => {
+                setShowRealTimeTextModal(true);
+              }}
+            />
+          )}
+        </ControlBar>
+      </Stack>
     </Stack>
   );
 };

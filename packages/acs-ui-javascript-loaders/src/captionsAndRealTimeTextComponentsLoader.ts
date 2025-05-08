@@ -22,8 +22,6 @@ export type CaptionsAndRealTimeTextComponentsProps = {
   callClient: StatefulCallClient;
   callAgent: CallAgent;
   call: Call;
-  showCaptionsSettingsModal: boolean;
-  showRealTimeTextModal: boolean;
 };
 
 /**

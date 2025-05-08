@@ -12,7 +12,7 @@ import { CaptionsAndRealTimeTextComponentsProps } from './captionsAndRealTimeTex
  * @internal
  */
 export const CaptionsAndRealTimeTextComponents = (props: CaptionsAndRealTimeTextComponentsProps): JSX.Element => {
-  const { callClient, callAgent, call, showCaptionsSettingsModal, showRealTimeTextModal } = props;
+  const { callClient, callAgent, call } = props;
 
   return (
     <div>
@@ -20,10 +20,7 @@ export const CaptionsAndRealTimeTextComponents = (props: CaptionsAndRealTimeText
         <CallClientProvider callClient={callClient}>
           <CallAgentProvider callAgent={callAgent}>
             <CallProvider call={call}>
-              <CaptionsBannerComponent
-                showCaptionsSettingsModal={showCaptionsSettingsModal}
-                showRealTimeTextModal={showRealTimeTextModal}
-              />
+              <CaptionsBannerComponent />
             </CallProvider>
           </CallAgentProvider>
         </CallClientProvider>
