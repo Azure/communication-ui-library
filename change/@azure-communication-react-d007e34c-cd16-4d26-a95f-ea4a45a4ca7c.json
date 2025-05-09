@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Update RoosterJS version to fix an issue where cursor wasn't visible in Windows high contrast themes",
+  "comment": "Update RoosterJS version to fix an issue where cursor wasn't visible in Windows high contrast themes",
+  "packageName": "@azure/communication-react",
+  "email": "98852890+vhuseinova-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
