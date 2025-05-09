@@ -49,6 +49,22 @@ test.describe('Real Time Text tests', async () => {
     expect(await stableScreenshot(page)).toMatchSnapshot(`realTimeText-button-call.png`);
   });
 
+  test('Real Time Text buttons does not show when composite option specifies to hide real time text', async ({
+    page,
+    serverUrl
+  }) => {
+    const initialState = defaultMockCallAdapterState();
+    await loadCallPage(page, serverUrl, initialState, {
+      customCompositeOptions: JSON.stringify({
+        callControls: {
+          realTimeTextButton: false
+        }
+      })
+    });
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`realTimeText-button-hidden.png`);
+  });
+
   test('Real Time Text Modal renders normally', async ({ page, serverUrl }) => {
     const initialState = defaultMockCallAdapterState();
     await loadCallPage(page, serverUrl, initialState);

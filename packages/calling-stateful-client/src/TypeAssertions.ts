@@ -37,10 +37,13 @@ type InferredCallErrorTargets =
   | 'CallClient.getEnvironmentInfo'
   | 'TeamsCall.addParticipant'
   | 'CallClient.feature'
+  | 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
-  | 'Call.mutedByOthers';
+  | 'Call.mutedByOthers'
+  | 'DeviceManager.stopPreheatDevices'
+  | 'DeviceManager.startPreheatDevices';
 
 type CallObjectMethodNames<TName extends string, T> = {
   [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;

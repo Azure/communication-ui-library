@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@azure/communication-calling':
-    specifier: ^1.34.1
-    version: 1.34.1
+    specifier: ^1.35.1
+    version: 1.35.1
   '@azure/communication-calling-effects':
     specifier: ^1.1.4
     version: 1.1.4
@@ -152,8 +152,8 @@ packages:
       events: 3.3.0
     dev: false
 
-  /@azure/communication-calling@1.34.1:
-    resolution: {integrity: sha512-337Mj57xWVMMyr2NXv7UY1su6HZ5kz/blterxiSSKh5JozMHM5quu2sLQfJuVnoogfGSXsbn8cFk21cpqWuoMA==}
+  /@azure/communication-calling@1.35.1:
+    resolution: {integrity: sha512-b6K+OkifuwkGrUMFngBazHfGL8dRjwYi+UWRe3Q8inBHeWNSLozHXZLgzyDpZN0BVnHeO7Av0L5nQor4taFNFw==}
     dependencies:
       '@azure/communication-common': 2.3.0
       '@azure/logger': 1.1.4
@@ -17495,7 +17495,7 @@ packages:
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-calling-effects': 1.1.4
       '@azure/communication-common': 2.3.1
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
@@ -17542,7 +17542,7 @@ packages:
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-common': 2.3.1
       '@azure/core-auth': 1.9.0
       '@azure/logger': 1.1.4
@@ -17591,7 +17591,7 @@ packages:
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
       '@azure/logger': 1.1.4
@@ -17685,7 +17685,7 @@ packages:
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
       '@azure/logger': 1.1.4
@@ -17779,7 +17779,7 @@ packages:
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-chat': 1.5.4
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
@@ -18101,7 +18101,7 @@ packages:
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-calling-effects': 1.1.4
       '@azure/communication-chat': 1.5.4
       '@azure/communication-common': 2.3.1
@@ -18206,7 +18206,7 @@ packages:
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-chat': 1.5.4
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
@@ -18478,7 +18478,7 @@ packages:
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-calling-effects': 1.1.4
       '@azure/communication-chat': 1.5.4
       '@azure/communication-common': 2.3.1
@@ -18593,11 +18593,11 @@ packages:
     dev: false
 
   file:projects/sample-automation-tests.tgz:
-    resolution: {integrity: sha512-O99pV4dqjlu5d0jDVV+j7ogFZWYLFGWCdfmyNHkZv0lKAVQAp77SMajxHClfKdIpP/4doTtRNfB/LXqcs0n2xQ==, tarball: file:projects/sample-automation-tests.tgz}
+    resolution: {integrity: sha512-abIoRK76Rpa5xO0i9FoWDHjXd1dg6KzANIcd/cy80XEOjdDOE5CICSMXA5zFFnzlYgF3zkqhKozfn5hspLcZTQ==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-chat': 1.5.4
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
@@ -18621,7 +18621,7 @@ packages:
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-chat': 1.5.4
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1
@@ -18761,7 +18761,7 @@ packages:
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.34.1
+      '@azure/communication-calling': 1.35.1
       '@azure/communication-chat': 1.5.4
       '@azure/communication-common': 2.3.1
       '@azure/communication-identity': 1.3.1

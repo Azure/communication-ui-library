@@ -120,6 +120,11 @@ export type CommonCallControlOptions = {
    */
   captionsButton?: boolean;
   /**
+   * Show, Hide or Disable real time text during a call.
+   * @defaultValue true
+   */
+  realTimeTextButton?: boolean;
+  /**
    * Show, Hide or Disable gallery controls button during a call.
    * @defaultValue true
    */
