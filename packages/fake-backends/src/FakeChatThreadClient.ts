@@ -438,14 +438,14 @@ export class FakeChatThreadClient implements IChatThreadClient {
     const identifier = getIdentifierKind(me.id);
 
     if (identifier.kind === 'microsoftTeamsApp') {
-      throw new Error('Unsupported indentifer kind: microsoftBot');
+      throw new Error('Unsupported identifier kind: microsoftBot');
     }
 
     return {
       threadId: thread.id,
       sender: identifier,
       senderDisplayName: me.displayName ?? '',
-      // Verify/FIXME: Do we need to multicast event with each individual recepient's ID?
+      // Verify/FIXME: Do we need to multicast event with each individual recipient's ID?
       recipient: identifier
     };
   }
