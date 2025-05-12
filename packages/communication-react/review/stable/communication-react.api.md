@@ -3954,6 +3954,7 @@ export type OutboundCallCompositeLoaderProps = {
     displayName: string;
     targetCallees: string[] | StartCallIdentifier[];
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    baseCompositeProps?: BaseCompositeProps<CallCompositeIcons>;
     callCompositeOptions?: CallCompositeOptions;
 };
 
