@@ -10,8 +10,10 @@ parseReactVersion(reactVersion);
 import { createRoot } from 'react-dom/client';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
+  BaseCompositeProps,
   ChatAdapter,
   ChatComposite,
+  ChatCompositeIcons,
   ChatCompositeOptions,
   createAzureCommunicationChatAdapter
 } from '@internal/react-composites';
@@ -29,6 +31,7 @@ export type ChatCompositeLoaderProps = {
   endpoint: string;
   threadId: string;
   chatCompositeOptions?: ChatCompositeOptions;
+  baseCompositeProps?: BaseCompositeProps<ChatCompositeIcons>;
 };
 
 /**
@@ -43,7 +46,7 @@ export const loadChatComposite = async function (
   htmlElement: HTMLElement
 ): Promise<ChatAdapter | undefined> {
   initializeIcons();
-  const { userId, credential, endpoint, threadId, displayName, chatCompositeOptions } = loaderArgs;
+  const { userId, credential, endpoint, threadId, displayName, chatCompositeOptions, baseCompositeProps } = loaderArgs;
   const adapter = await createAzureCommunicationChatAdapter({
     endpoint,
     userId,
@@ -56,6 +59,8 @@ export const loadChatComposite = async function (
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(ChatComposite, { options: chatCompositeOptions, adapter }, null));
+  createRoot(htmlElement).render(
+    React.createElement(ChatComposite, { ...baseCompositeProps, options: chatCompositeOptions, adapter }, null)
+  );
   return adapter;
 };

@@ -608,6 +608,8 @@ export type CallCompositeLoaderProps = {
     locator: CallAdapterLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
     callCompositeOptions?: CallCompositeOptions;
+    baseCompositeProps?: BaseCompositeProps<CallCompositeIcons>;
+    formFactor?: 'mobile' | 'desktop';
 };
 
 // @public
@@ -1432,6 +1434,8 @@ export type CallWithChatCompositeLoaderProps = {
     locator: CallAndChatLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
     callWithChatCompositeOptions?: CallWithChatCompositeOptions;
+    baseCompositeProps?: BaseCompositeProps<CallWithChatCompositeIcons>;
+    formFactor?: 'mobile' | 'desktop';
 };
 
 // @public
@@ -1943,6 +1947,7 @@ export type ChatCompositeLoaderProps = {
     endpoint: string;
     threadId: string;
     chatCompositeOptions?: ChatCompositeOptions;
+    baseCompositeProps?: BaseCompositeProps<ChatCompositeIcons>;
 };
 
 // @public
@@ -3949,6 +3954,7 @@ export type OutboundCallCompositeLoaderProps = {
     displayName: string;
     targetCallees: string[] | StartCallIdentifier[];
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    baseCompositeProps?: BaseCompositeProps<CallCompositeIcons>;
     callCompositeOptions?: CallCompositeOptions;
 };
 

@@ -16,7 +16,9 @@ import {
   CallCompositeOptions,
   StartCallIdentifier,
   AzureCommunicationCallAdapterOptions,
-  CallAdapter
+  CallAdapter,
+  BaseCompositeProps,
+  CallCompositeIcons
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
 
@@ -35,6 +37,7 @@ export type OutboundCallCompositeLoaderProps = {
   displayName: string;
   targetCallees: string[] | StartCallIdentifier[];
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+  baseCompositeProps?: BaseCompositeProps<CallCompositeIcons>;
   callCompositeOptions?: CallCompositeOptions;
 };
 
