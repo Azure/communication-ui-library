@@ -243,7 +243,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   const showCaptionsButton =
     props.isCaptionsSupported && drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions.captionsButton);
 
-  const showRealTimeTextButton = props.isRealTimeTextSupported;
+  const showRealTimeTextButton =
+    props.isRealTimeTextSupported &&
+    drawerSelectionOptions !== false &&
+    isEnabled(drawerSelectionOptions.realTimeTextButton);
 
   if (props.reactionResources !== undefined) {
     drawerMenuItems.push({

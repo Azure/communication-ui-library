@@ -30,12 +30,12 @@
     "@internal/acs-ui-javascript-loaders": "1.27.0-beta.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.26.10",
+    "@babel/core": "^7.27.1",
     "@babel/plugin-transform-export-namespace-from": "^7.22.11",
     "babel-loader": "8.1.0",
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "5.2.3",
+    "eslint-plugin-prettier": "5.4.0",
     "eslint-plugin-header": "^3.1.0",
     "eslint-plugin-import": "^2.31.0",
     "prettier": "3.3.2",
