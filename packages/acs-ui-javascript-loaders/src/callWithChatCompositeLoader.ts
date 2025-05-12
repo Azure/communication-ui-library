@@ -30,13 +30,40 @@ import { initializeIcons } from '@fluentui/react';
  * @public
  */
 export interface CallWithChatCompositeLoaderProps extends Partial<BaseCompositeProps<CallWithChatCompositeIcons>> {
+  /**
+   * UserId for the local user.
+   */
   userId: CommunicationUserIdentifier;
+  /**
+   * CommunicationTokenCredential for the local user.
+   */
   credential: CommunicationTokenCredential;
+  /**
+   * Display name for the local user.
+   */
   displayName: string;
+  /**
+   * Azure communication service endpoint. This used for the token and joining the chat thread.
+   */
   endpoint: string;
+  /**
+   * Locator for the call and the chat thread.
+   * This is used to join the call and the chat thread.
+   */
   locator: CallAndChatLocator;
+  /**
+   * Options for the {@link AzureCommunicationCallAdapterOptions}
+   * This is used to configure the call adapter.
+   */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+  /**
+   * Options for the {@link CallWithChatComposite} {@link CallWithChatCompositeOptions}
+   * This is used to configure the call composite.
+   */
   callWithChatCompositeOptions?: CallWithChatCompositeOptions;
+  /**
+   * Device form factor for the composite.
+   */
   formFactor?: 'mobile' | 'desktop';
 }
 

@@ -25,11 +25,30 @@ import { initializeIcons } from '@fluentui/react';
  * @public
  */
 export interface ChatCompositeLoaderProps extends Partial<BaseCompositeProps<ChatCompositeIcons>> {
+  /**
+   * UserId for the local user.
+   */
   userId: CommunicationUserIdentifier;
+  /**
+   * CommunicationTokenCredential for the local user.
+   */
   credential: CommunicationTokenCredential;
+  /**
+   * Display name for the local user.
+   */
   displayName?: string;
+  /**
+   * Communication service endpoint. This is used for the token and joining the chat thread.
+   */
   endpoint: string;
+  /**
+   * Communication threadId for the chat thread.
+   */
   threadId: string;
+  /**
+   * Options for the {@link AzureCommunicationChatAdapter}
+   * This is used to configure the chat adapter.
+   */
   chatCompositeOptions?: ChatCompositeOptions;
 }
 
