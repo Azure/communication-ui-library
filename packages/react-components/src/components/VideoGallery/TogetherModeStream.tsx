@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 /* @conditional-compile-remove(together-mode) */
-import React, { useEffect, useMemo, memo } from 'react';
+import React, { useEffect, useMemo, memo, useState } from 'react';
 /* @conditional-compile-remove(together-mode) */
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(together-mode) */
@@ -60,6 +60,8 @@ export const TogetherModeStream = memo(
       containerHeight
     } = props;
 
+    const [showLoadingIndicator, setShowLoadingIndicator] = useState(false);
+
     useEffect(() => {
       return () => {
         // TODO: Isolate disposing behaviors for screenShare and videoStream
@@ -84,7 +86,11 @@ export const TogetherModeStream = memo(
       togetherModeStreams?.mainVideoStream?.isAvailable,
       onCreateTogetherModeStreamView
     ]);
-
+    // Re-render the component if mainVideoStream isReceiving changes
+    useEffect(() => {
+      setShowLoadingIndicator(!togetherModeStreams?.mainVideoStream?.isReceiving);
+      // This effect will trigger a re-render when isReceiving changes
+    }, [togetherModeStreams?.mainVideoStream?.isReceiving]);
     // Update scene size only when container dimensions change
     useMemo(() => {
       if (onSetTogetherModeSceneSize && containerWidth && containerHeight) {
@@ -93,7 +99,6 @@ export const TogetherModeStream = memo(
     }, [onSetTogetherModeSceneSize, containerWidth, containerHeight]);
 
     const stream = props.togetherModeStreams?.mainVideoStream;
-    const showLoadingIndicator = !(stream && stream.isAvailable && stream.isReceiving);
 
     return containerWidth && containerHeight ? (
       <Stack

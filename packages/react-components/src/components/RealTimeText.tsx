@@ -1,12 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(rtt) */
 import { IPersona, Persona, Stack, PersonaSize, Text, useTheme } from '@fluentui/react';
-/* @conditional-compile-remove(rtt) */
 import React from 'react';
-/* @conditional-compile-remove(rtt) */
 import { OnRenderAvatarCallback } from '../types';
-/* @conditional-compile-remove(rtt) */
 import {
   captionClassName,
   captionsContentContainerClassName,
@@ -16,10 +12,8 @@ import {
   isTypingClassName,
   rttContainerClassName
 } from './styles/Captions.style';
-/* @conditional-compile-remove(rtt) */
 import { useLocale } from '../localization';
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @public
  * strings for rtt
@@ -31,7 +25,6 @@ export interface RealTimeTextStrings {
   isTypingText?: string;
 }
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @public
  * Props for a single line of RealTimeText.
@@ -73,7 +66,6 @@ export interface RealTimeTextProps {
   strings?: RealTimeTextStrings;
 }
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @public
  * A component for displaying a single line of RealTimeText

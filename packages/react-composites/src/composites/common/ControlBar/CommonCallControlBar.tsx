@@ -52,7 +52,6 @@ import { getAssignedBreakoutRoom, getBreakoutRoomSettings } from '../../CallComp
 import { callStatusSelector } from '../../CallComposite/selectors/callStatusSelector';
 import { MeetingConferencePhoneInfoModal } from '@internal/react-components';
 import { Timer } from './Timer';
-/* @conditional-compile-remove(rtt) */
 import { CallingRealTimeTextModal } from '../CallingRealTimeTextModal';
 
 /**
@@ -86,9 +85,7 @@ export interface CommonCallControlBarProps {
   onToggleTeamsMeetingConferenceModal?: () => void;
   teamsMeetingConferenceModalPresent?: boolean;
   sidePaneDismissButtonRef?: RefObject<IButton>;
-  /* @conditional-compile-remove(rtt) */
   onStartRealTimeText?: () => void;
-  /* @conditional-compile-remove(rtt) */
   startRealTimeTextButtonChecked?: boolean;
 }
 
@@ -135,7 +132,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
   const options = inferCommonCallControlOptions(props.mobileView, props.callControls);
 
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
-  /* @conditional-compile-remove(rtt) */
+
   const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
 
   // If the hangup capability is not present, we default to true
@@ -182,11 +179,11 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
   const openCaptionsSettingsModal = useCallback((): void => {
     setShowCaptionsSettingsModal(true);
   }, []);
-  /* @conditional-compile-remove(rtt) */
+
   const openRealTimeTextModal = useCallback((): void => {
     setShowRealTimeTextModal(true);
   }, []);
-  /* @conditional-compile-remove(rtt) */
+
   const onDismissRealTimeTextModal = useCallback((): void => {
     setShowRealTimeTextModal(false);
   }, []);
@@ -338,8 +335,8 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
   const showExitSpotlightButton = options?.exitSpotlightButton !== false;
 
   const showCaptionsButton = props.isCaptionsSupported && isEnabled(options.captionsButton);
-  /* @conditional-compile-remove(rtt) */
-  const showRealTimeTextButton = props.isRealTimeTextSupported;
+
+  const showRealTimeTextButton = props.isRealTimeTextSupported && isEnabled(options.realTimeTextButton);
 
   const showTeamsMeetingPhoneCallButton = isEnabled(options?.teamsMeetingPhoneCallButton);
 
@@ -349,7 +346,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
       isEnabled(options?.holdButton) ||
       showCaptionsButton ||
       props.onUserSetGalleryLayout ||
-      /* @conditional-compile-remove(rtt) */ showRealTimeTextButton);
+      showRealTimeTextButton);
 
   const role = props.callAdapter.getState().call?.role;
   const hideRaiseHandButtonInRoomsCall =
@@ -366,15 +363,13 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
             changeCaptionLanguage={props.isCaptionsOn && props.useTeamsCaptions}
           />
         )}
-        {
-          /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
-            <CallingRealTimeTextModal
-              showModal={showRealTimeTextModal}
-              onDismissModal={onDismissRealTimeTextModal}
-              onStartRealTimeText={props.onStartRealTimeText}
-            />
-          )
-        }
+        {showRealTimeTextModal && (
+          <CallingRealTimeTextModal
+            showModal={showRealTimeTextModal}
+            onDismissModal={onDismissRealTimeTextModal}
+            onStartRealTimeText={props.onStartRealTimeText}
+          />
+        )}
         {props.teamsMeetingConferenceModalPresent && (
           <MeetingConferencePhoneInfoModal
             conferencePhoneInfoList={props.callAdapter.getState().call?.meetingConference?.conferencePhones ?? []}
@@ -521,12 +516,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
                         onClickShowDialpad={props.onClickShowDialpad}
                         callControls={props.callControls}
                         isCaptionsSupported={showCaptionsButton}
-                        /* @conditional-compile-remove(rtt) */
                         isRealTimeTextSupported={showRealTimeTextButton}
                         onCaptionsSettingsClick={openCaptionsSettingsModal}
-                        /* @conditional-compile-remove(rtt) */
                         onStartRealTimeTextClick={openRealTimeTextModal}
-                        /* @conditional-compile-remove(rtt) */
                         startRealTimeTextButtonChecked={props.startRealTimeTextButtonChecked}
                         onUserSetOverflowGalleryPositionChange={props.onUserSetOverflowGalleryPositionChange}
                         onUserSetGalleryLayout={props.onUserSetGalleryLayout}

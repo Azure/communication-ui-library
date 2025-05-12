@@ -20,7 +20,9 @@ module.exports = {
     // Demo feature. Used in live-documentation of conditional compilation. Do not use in production code.
     "in-progress-beta-feature-demo",
     // Feature for remote UFD
-    "remote-ufd" 
+    "remote-ufd",
+    // Block joining calls if the user is on an unsupported browser
+    "unsupported-browser",
   ],
   beta: [
     "call-readiness",
@@ -45,8 +47,6 @@ module.exports = {
     "data-loss-prevention",
     // Mention feature
     "mention",
-    // Block joining calls if the user is on an unsupported browser
-    "unsupported-browser",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
     "total-participant-count",
     // conditional-compile for new signaling beta
@@ -66,17 +66,15 @@ module.exports = {
     // Beta feature for joining calls using teams token
     "teams-identity-support-beta",
     // feature for tracking the callParticipantsLocator
-    "call-participants-locator",
-    // Feature for together mode
-    "together-mode"
+    "call-participants-locator"
   ],
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
     "stabilizedDemo",
-     // Feature for RTT
-     "rtt",
      // Feature for on fetch profile
-    "on-fetch-profile"
+    "on-fetch-profile",
+    // Feature for together mode
+    "together-mode"
   ]
 }

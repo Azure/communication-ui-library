@@ -1,25 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(rtt) */
 import React, { useCallback } from 'react';
-/* @conditional-compile-remove(rtt) */
 import { useMemo } from 'react';
-/* @conditional-compile-remove(rtt) */
 import { IModalStyles, Modal, Stack, useTheme, Text, IconButton, DefaultButton, PrimaryButton } from '@fluentui/react';
-/* @conditional-compile-remove(rtt) */
 import { _preventDismissOnEvent } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(rtt) */
 import {
   buttonsContainerClassName,
   buttonStyles,
+  defaultButtonStyles,
   themedCaptionsSettingsModalStyle,
   titleClassName,
   titleContainerClassName
 } from './styles/CaptionsSettingsModal.styles';
-/* @conditional-compile-remove(rtt) */
 import { useLocale } from '../localization';
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @public
  * strings for realTimeText modal
@@ -38,7 +32,7 @@ export interface RealTimeTextModalStrings {
   /** The aria label for the close button */
   realTimeTextCloseModalButtonAriaLabel?: string;
 }
-/* @conditional-compile-remove(rtt) */
+
 /**
  * @public
  * RealTimeTextModal Component Props.
@@ -56,7 +50,7 @@ export interface RealTimeTextModalProps {
    */
   onStartRealTimeText?: () => void;
 }
-/* @conditional-compile-remove(rtt) */
+
 /**
  * @public
  * a component for realTimeText modal
@@ -94,7 +88,9 @@ export const RealTimeTextModal = (props: RealTimeTextModalProps): JSX.Element =>
           styles={RealTimeTextModalStyle}
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-            <Text className={titleClassName}>{strings?.realTimeTextModalTitle}</Text>
+            <Text role="heading" className={titleClassName} aria-level={1}>
+              {strings?.realTimeTextModalTitle}
+            </Text>
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
               ariaLabel={strings?.realTimeTextCloseModalButtonAriaLabel}
@@ -112,7 +108,7 @@ export const RealTimeTextModal = (props: RealTimeTextModalProps): JSX.Element =>
             >
               <span>{strings?.realTimeTextConfirmButtonLabel}</span>
             </PrimaryButton>
-            <DefaultButton onClick={onDismiss} styles={buttonStyles(theme)}>
+            <DefaultButton onClick={onDismiss} styles={defaultButtonStyles()}>
               <span>{strings?.realTimeTextCancelButtonLabel}</span>
             </DefaultButton>
           </Stack>

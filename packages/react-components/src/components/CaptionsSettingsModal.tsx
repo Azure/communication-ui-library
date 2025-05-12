@@ -19,6 +19,7 @@ import {
 import {
   buttonsContainerClassName,
   buttonStyles,
+  defaultButtonStyles,
   dropdownContainerClassName,
   dropdownInfoTextStyle,
   dropdownStyles,
@@ -347,7 +348,9 @@ export const CaptionsSettingsModal = (props: CaptionsSettingsModalProps): JSX.El
           styles={CaptionsSettingsModalStyle}
         >
           <Stack horizontal horizontalAlign="space-between" verticalAlign="center" className={titleContainerClassName}>
-            <Text className={titleClassName}>{strings?.captionsSettingsModalTitle}</Text>
+            <Text className={titleClassName} role="heading" aria-level={1}>
+              {strings?.captionsSettingsModalTitle}
+            </Text>
             <IconButton
               iconProps={{ iconName: 'Cancel' }}
               ariaLabel={strings?.captionsSettingsCloseModalButtonAriaLabel}
@@ -361,7 +364,7 @@ export const CaptionsSettingsModal = (props: CaptionsSettingsModalProps): JSX.El
             <PrimaryButton styles={buttonStyles(theme)} onClick={onConfirm}>
               <span>{strings?.captionsSettingsConfirmButtonLabel}</span>
             </PrimaryButton>
-            <DefaultButton onClick={onDismiss} styles={buttonStyles(theme)}>
+            <DefaultButton onClick={onDismiss} styles={defaultButtonStyles()}>
               <span>{strings?.captionsSettingsCancelButtonLabel}</span>
             </DefaultButton>
           </Stack>

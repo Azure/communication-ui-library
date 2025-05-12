@@ -301,11 +301,13 @@ export interface CallAdapterCallOperations {
     // (undocumented)
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
+    createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     // @deprecated
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    disposeTogetherModeStreamView(): Promise<void>;
     forbidAudio(userIds: string[]): Promise<void>;
     forbidOthersAudio(): Promise<void>;
     forbidOthersVideo(): Promise<void>;
@@ -330,11 +332,13 @@ export interface CallAdapterCallOperations {
     sendRealTimeText: (text: string, isFinalized: boolean) => Promise<void>;
     setCaptionLanguage(language: string): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
+    setTogetherModeSceneSize(width: number, height: number): void;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
     startNoiseSuppressionEffect(): Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
+    startTogetherMode(): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -593,6 +597,7 @@ export type CallCompositeIcons = {
     JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
     PeoplePaneMoreButton?: JSX.Element;
     StopAllSpotlightMenuButton?: JSX.Element;
+    TogetherModeLayout?: JSX.Element;
 };
 
 // @public
@@ -952,7 +957,15 @@ export type CallErrors = {
 };
 
 // @public
-export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
+export type CallErrorTarget = 'Call.addParticipant' | 'Call.dispose' | 'Call.feature' | 'Call.hangUp' | 'Call.hold' | 'Call.mute' | 'Call.muteIncomingAudio' | 'Call.off' | 'Call.on' | 'Call.removeParticipant' | 'Call.resume' | 'Call.sendDtmf' | 'Call.startAudio' | 'Call.startScreenSharing' | 'Call.startVideo' | 'Call.stopScreenSharing' | 'Call.stopAudio' | 'Call.stopVideo' | 'Call.unmute' | 'Call.unmuteIncomingAudio' | 'CallAgent.dispose' | 'CallAgent.feature' | 'CallAgent.join' | 'CallAgent.off' | 'CallAgent.on' | 'CallAgent.startCall' | 'CallClient.createCallAgent' | 'CallClient.createTeamsCallAgent' | 'CallClient.feature' | 'CallClient.getDeviceManager' | 'CallClient.getEnvironmentInfo' | 'DeviceManager.askDevicePermission' | 'DeviceManager.getCameras' | 'DeviceManager.getMicrophones' | 'DeviceManager.getSpeakers' | 'DeviceManager.off' | 'DeviceManager.on' | 'DeviceManager.selectMicrophone' | 'DeviceManager.selectSpeaker' | 'DeviceManager.startPreheatDevices' | 'DeviceManager.stopPreheatDevices' | 'IncomingCall.accept' | 'IncomingCall.reject' | 'TeamsCall.addParticipant' | 'VideoEffectsFeature.startEffects' | 'CallAgent.handlePushNotification' | 'Call.mutedByOthers' | 'Call.muteAllRemoteParticipants' | 'Call.setConstraints';
+
+// @public
+export type CallFeatureStreamName = 'togetherMode';
+
+// @public
+export interface CallFeatureStreamState extends RemoteVideoStreamState {
+    feature?: CallFeatureStreamName;
+}
 
 // @public
 export type CallIdChangedListener = (event: {
@@ -1083,6 +1096,7 @@ export interface CallState {
     spotlight?: SpotlightCallFeatureState;
     startTime: Date;
     state: CallState_2;
+    togetherMode: TogetherModeCallFeatureState;
     transcription: TranscriptionCallFeature;
     transfer: TransferFeature;
 }
@@ -1106,11 +1120,13 @@ export interface CallWithChatAdapterManagement {
     addParticipant(participant: CommunicationUserIdentifier): Promise<void>;
     askDevicePermission(constrain: PermissionConstraints): Promise<DeviceAccess>;
     createStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void | CreateVideoStreamViewResult>;
+    createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
     deleteMessage(messageId: string): Promise<void>;
     disposeLocalVideoStreamView(): Promise<void>;
     disposeRemoteVideoStreamView(remoteUserId: string): Promise<void>;
     disposeScreenShareStreamView(remoteUserId: string): Promise<void>;
     disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
+    disposeTogetherModeStreamView(): Promise<void>;
     // (undocumented)
     downloadResourceToCache(resourceDetails: ResourceDetails): Promise<void>;
     fetchInitialData(): Promise<void>;
@@ -1153,6 +1169,7 @@ export interface CallWithChatAdapterManagement {
     setMicrophone(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpeaker(sourceInfo: AudioDeviceInfo): Promise<void>;
     setSpokenLanguage(language: string): Promise<void>;
+    setTogetherModeSceneSize(width: number, height: number): void;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
     startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
@@ -1160,6 +1177,7 @@ export interface CallWithChatAdapterManagement {
     startNoiseSuppressionEffect(): Promise<void>;
     startScreenShare(): Promise<void>;
     startSpotlight(userIds?: string[]): Promise<void>;
+    startTogetherMode(): Promise<void>;
     startVideoBackgroundEffect(videoBackgroundEffect: VideoBackgroundEffect): Promise<void>;
     stopAllSpotlight(): Promise<void>;
     stopCamera(): Promise<void>;
@@ -2143,6 +2161,7 @@ export type CommonCallControlOptions = {
     };
     exitSpotlightButton?: boolean;
     captionsButton?: boolean;
+    realTimeTextButton?: boolean;
     galleryControlsButton?: boolean;
     teamsMeetingPhoneCallButton?: boolean;
 };
@@ -2161,6 +2180,7 @@ export interface CommonCallingHandlers {
     onCreateLocalStreamView: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     // (undocumented)
     onCreateRemoteStreamView: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onCreateTogetherModeStreamView: (options?: TogetherModeStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     // (undocumented)
     onDisposeLocalScreenShareStreamView: () => Promise<void>;
     // (undocumented)
@@ -2171,6 +2191,7 @@ export interface CommonCallingHandlers {
     onDisposeRemoteStreamView: (userId: string) => Promise<void>;
     // (undocumented)
     onDisposeRemoteVideoStreamView: (userId: string) => Promise<void>;
+    onDisposeTogetherModeStreamView: () => Promise<void>;
     onForbidAudio?: (userIds: string[]) => Promise<void>;
     onForbidOthersAudio?: () => Promise<void>;
     onForbidOthersVideo?: () => Promise<void>;
@@ -2215,6 +2236,7 @@ export interface CommonCallingHandlers {
     onSetCaptionLanguage: (language: string) => Promise<void>;
     // (undocumented)
     onSetSpokenLanguage: (language: string) => Promise<void>;
+    onSetTogetherModeSceneSize: (width: number, height: number) => void;
     // (undocumented)
     onStartCall: (participants: CommunicationIdentifier[], options?: StartCallOptions) => void;
     // (undocumented)
@@ -2227,6 +2249,7 @@ export interface CommonCallingHandlers {
     onStartScreenShare: () => Promise<void>;
     // (undocumented)
     onStartSpotlight: (userIds?: string[]) => Promise<void>;
+    onStartTogetherMode: () => Promise<void>;
     // (undocumented)
     onStopAllSpotlight: () => Promise<void>;
     // (undocumented)
@@ -2771,6 +2794,7 @@ export const DEFAULT_COMPONENT_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
+    NotificationBarTogetherModeIcon: React_2.JSX.Element;
     RealTimeTextIcon: React_2.JSX.Element;
     ExpandIcon: React_2.JSX.Element;
     MinimizeIcon: React_2.JSX.Element;
@@ -2870,6 +2894,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element | undefined;
     PeoplePaneMoreButton?: JSX.Element | undefined;
     StopAllSpotlightMenuButton?: JSX.Element | undefined;
+    TogetherModeLayout?: JSX.Element | undefined;
     ChevronLeft?: JSX.Element | undefined;
     ControlBarChatButtonActive?: JSX.Element | undefined;
     ControlBarChatButtonInactive?: JSX.Element | undefined;
@@ -2935,6 +2960,7 @@ export const DEFAULT_COMPOSITE_ICONS: {
     IncomingCallNotificationRejectIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptIcon: React_2.JSX.Element;
     IncomingCallNotificationAcceptWithVideoIcon: React_2.JSX.Element;
+    NotificationBarTogetherModeIcon: React_2.JSX.Element;
     RealTimeTextIcon: React_2.JSX.Element;
     ExpandIcon: React_2.JSX.Element;
     MinimizeIcon: React_2.JSX.Element;
@@ -3849,6 +3875,8 @@ export interface NotificationStackStrings {
     stopScreenShareGeneric?: NotificationStrings;
     stopVideoGeneric?: NotificationStrings;
     teamsMeetingCallNetworkQualityLow?: NotificationStrings;
+    togetherModeEnded?: NotificationStrings;
+    togetherModeStarted?: NotificationStrings;
     transcriptionError?: NotificationStrings;
     transcriptionStarted?: NotificationStrings;
     transcriptionStartedByYou?: NotificationStrings;
@@ -3880,7 +3908,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'assignedBreakoutRoomClosed' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'assignedBreakoutRoomClosed' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent' | 'togetherModeStarted' | 'togetherModeEnded';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
@@ -4610,8 +4638,8 @@ export interface StartRealTimeTextButtonStrings {
 export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
-    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
-    disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState): void;
+    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState | CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
+    disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState | CallFeatureStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
@@ -4798,6 +4826,39 @@ export interface TeamsIncomingCallState {
 export const toFlatCommunicationIdentifier: (identifier: CommunicationIdentifier) => string;
 
 // @public
+export interface TogetherModeCallFeatureState {
+    isActive: boolean;
+    seatingPositions: TogetherModeParticipantSeatingState;
+    streams: TogetherModeStreamsState;
+}
+
+// @public
+export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
+
+// @public
+export interface TogetherModeSeatingPositionState {
+    height: number;
+    left: number;
+    top: number;
+    width: number;
+}
+
+// @public
+export interface TogetherModeStreamOptions extends VideoStreamOptions {
+    viewKind?: 'main' | 'panoramic';
+}
+
+// @public
+export interface TogetherModeStreamsState {
+    mainVideoStream?: CallFeatureStreamState;
+}
+
+// @public
+export interface TogetherModeStreamViewResult {
+    mainVideoView?: CreateVideoStreamViewResult;
+}
+
+// @public
 export type TopicChangedListener = (event: {
     topic: string;
 }) => void;
@@ -4959,7 +5020,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | 'togetherMode' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {
@@ -4984,6 +5045,7 @@ export type VideoGalleryParticipant = {
 // @public
 export interface VideoGalleryProps {
     dominantSpeakers?: string[];
+    isTogetherModeActive?: boolean;
     layout?: VideoGalleryLayout;
     localParticipant: VideoGalleryLocalParticipant;
     localScreenShareView?: LocalScreenShareView;
@@ -4994,12 +5056,14 @@ export interface VideoGalleryProps {
     maxRemoteVideoStreams?: number;
     onCreateLocalStreamView?: (options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
     onCreateRemoteStreamView?: (userId: string, options?: VideoStreamOptions) => Promise<void | CreateVideoStreamViewResult>;
+    onCreateTogetherModeStreamView?: (options?: TogetherModeStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
     onDisposeLocalScreenShareStreamView?: () => Promise<void>;
     onDisposeLocalStreamView?: () => void;
     onDisposeRemoteScreenShareStreamView?: (userId: string) => Promise<void>;
     // @deprecated (undocumented)
     onDisposeRemoteStreamView?: (userId: string) => Promise<void>;
     onDisposeRemoteVideoStreamView?: (userId: string) => Promise<void>;
+    onDisposeTogetherModeStreamView?: () => Promise<void>;
     onForbidAudio?: (userIds: string[]) => Promise<void>;
     onForbidVideo?: (userIds: string[]) => Promise<void>;
     onMuteParticipant?: (userId: string) => Promise<void>;
@@ -5009,8 +5073,10 @@ export interface VideoGalleryProps {
     onRenderAvatar?: OnRenderAvatarCallback;
     onRenderLocalVideoTile?: (localParticipant: VideoGalleryLocalParticipant) => JSX.Element;
     onRenderRemoteVideoTile?: (remoteParticipant: VideoGalleryRemoteParticipant) => JSX.Element;
+    onSetTogetherModeSceneSize?: (width: number, height: number) => void;
     onStartLocalSpotlight?: () => Promise<void>;
     onStartRemoteSpotlight?: (userIds: string[]) => Promise<void>;
+    onStartTogetherMode?: () => Promise<void>;
     onStopLocalSpotlight?: () => Promise<void>;
     onStopRemoteSpotlight?: (userIds: string[]) => Promise<void>;
     onUnpinParticipant?: (userId: string) => void;
@@ -5023,8 +5089,11 @@ export interface VideoGalleryProps {
     showCameraSwitcherInLocalPreview?: boolean;
     showMuteIndicator?: boolean;
     spotlightedParticipants?: string[];
+    startTogetherModeEnabled?: boolean;
     strings?: Partial<VideoGalleryStrings>;
     styles?: VideoGalleryStyles;
+    togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
+    togetherModeStreams?: VideoGalleryTogetherModeStreams;
     videoTilesOptions?: VideoTilesOptions;
 }
 
@@ -5047,6 +5116,10 @@ export type VideoGallerySelector = (state: CallClientState, props: CallingBaseSe
     optimalVideoCount?: number;
     spotlightedParticipants?: string[];
     maxParticipantsToSpotlight?: number;
+    isTogetherModeActive?: boolean;
+    startTogetherModeEnabled?: boolean;
+    togetherModeStreams?: VideoGalleryTogetherModeStreams;
+    togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 };
 
 // @public
@@ -5098,6 +5171,22 @@ export interface VideoGalleryStyles extends BaseCustomStyles {
     horizontalGallery?: HorizontalGalleryStyles;
     localVideo?: IStyle;
     verticalGallery?: VerticalGalleryStyles;
+}
+
+// @public
+export type VideoGalleryTogetherModeParticipantPosition = Record<string, VideoGalleryTogetherModeSeatingInfo>;
+
+// @public
+export interface VideoGalleryTogetherModeSeatingInfo {
+    height: number;
+    left: number;
+    top: number;
+    width: number;
+}
+
+// @public
+export interface VideoGalleryTogetherModeStreams {
+    mainVideoStream?: VideoGalleryStream;
 }
 
 // @public

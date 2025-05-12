@@ -6,7 +6,6 @@ import { expect } from '@playwright/test';
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
 import { IDS, captionsFeatureState, realTimeTextFeatureState } from '../../common/constants';
 
-/* @conditional-compile-remove(rtt) */
 test.describe('Real Time Text tests', async () => {
   test('Show Real Time Text', async ({ page, serverUrl }, testInfo) => {
     const initialState = defaultMockCallAdapterState();
@@ -47,6 +46,18 @@ test.describe('Real Time Text tests', async () => {
       await page.locator('span:has-text("Real-time text")').scrollIntoViewIfNeeded();
     }
     expect(await stableScreenshot(page)).toMatchSnapshot(`realTimeText-button-call.png`);
+  });
+
+  test('Real Time Text buttons does not show when composite option specifies to hide real time text', async ({
+    page,
+    serverUrl
+  }) => {
+    const initialState = defaultMockCallAdapterState();
+    await page.goto(
+      buildUrlWithMockAdapter(serverUrl, initialState, { newControlBarExperience: 'true', realTimeTextButton: 'false' })
+    );
+    await pageClick(page, dataUiId('common-call-composite-more-button'));
+    expect(await stableScreenshot(page)).toMatchSnapshot(`realTimeText-button-hidden.png`);
   });
 
   test('Real Time Text Modal renders normally', async ({ page, serverUrl }) => {

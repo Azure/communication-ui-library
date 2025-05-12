@@ -30,7 +30,6 @@ import type {
   DiagnosticQuality,
   DiagnosticFlag
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(rtt) */
 import { ParticipantInfo, RealTimeTextResultType } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
 import { CallInfo } from '@azure/communication-calling';
@@ -99,7 +98,6 @@ export interface CaptionsInfo {
   spokenText?: string;
 }
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @public
  */
@@ -173,7 +171,6 @@ export interface CaptionsCallFeatureState {
   captionsKind: CaptionsKind;
 }
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @public
  */
@@ -721,7 +718,6 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#CaptionsCallFeature}.
    */
   captionsFeature: CaptionsCallFeatureState;
-  /* @conditional-compile-remove(rtt) */
   /**
    * Proxy of {@link @azure/communication-calling#RealTimeTextCallFeature}.
    */
@@ -1205,11 +1201,13 @@ export type CallErrorTarget =
   | 'DeviceManager.on'
   | 'DeviceManager.selectMicrophone'
   | 'DeviceManager.selectSpeaker'
+  | 'DeviceManager.startPreheatDevices'
+  | 'DeviceManager.stopPreheatDevices'
   | 'IncomingCall.accept'
   | 'IncomingCall.reject'
   | 'TeamsCall.addParticipant'
   | 'VideoEffectsFeature.startEffects'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.handlePushNotification'
+  | 'CallAgent.handlePushNotification'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'

@@ -81,6 +81,16 @@ export function BaseApp(props: { queryArgs: QueryArgs; callAdapter?: CallAdapter
     };
   }
 
+  if (queryArgs.realTimeTextButton !== undefined) {
+    options = {
+      ...options,
+      callControls: {
+        ...(options?.callControls instanceof Object ? options?.callControls : {}),
+        realTimeTextButton: queryArgs.realTimeTextButton
+      }
+    };
+  }
+
   if (queryArgs.localVideoTilePosition) {
     options = {
       ...options,

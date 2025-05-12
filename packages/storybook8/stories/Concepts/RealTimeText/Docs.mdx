@@ -1,13 +1,11 @@
-import { Meta } from '@storybook/addon-docs';
-import { SingleLineBetaBanner } from '../../BetaBanners/SingleLineBetaBanner';
+import { Meta, Source } from '@storybook/addon-docs';
+import { exampleDisableRTT } from './snippets/RealTimeText.snippet.tsx';
 
 <Meta title="Concepts/Real-Time Text" />
 
 # Real-Time Text
 
 ## Overview
-
-<SingleLineBetaBanner />
 
 Real-Time Text (RTT) is a feature that allows text to be sent and received instantly during voice and video calls. As you type, the text appears immediately, letter by letter, making the conversation feel more natural and dynamic, just like talking.
 
@@ -67,6 +65,12 @@ List of components exported for Real-Time Text:
 
 To read more details about the underlying infrastructure, click here:  
 [Real Time Text (RTT) Overview - An Azure Communication Services concept document | Microsoft Learn](https://learn.microsoft.com/en-us/azure/communication-services/concepts/voice-video-calling/real-time-text)
+
+## Disable Real Time Text
+
+The UI Library enables users to hide real time text UI when they do not wish to use the real time text service.
+
+<Source code={exampleDisableRTT} />
 
 ## FAQ
 

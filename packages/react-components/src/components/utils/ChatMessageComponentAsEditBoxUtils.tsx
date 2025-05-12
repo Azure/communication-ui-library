@@ -23,7 +23,10 @@ export const onRenderSubmitIcon = (className: string): JSX.Element => {
   return <Icon iconName={'EditBoxSubmit'} className={className} />;
 };
 
-type MessageState = 'OK' | 'too short' | 'too long';
+/**
+ * Enumeration for whether a message can be sent
+ */
+export type MessageState = 'OK' | 'too short' | 'too long';
 
 function isMessageEmpty(
   messageText: string,

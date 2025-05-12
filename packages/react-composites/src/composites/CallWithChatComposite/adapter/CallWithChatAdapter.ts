@@ -14,7 +14,6 @@ import {
   ParticipantsLeftListener,
   CallEndedListener
 } from '../../CallComposite';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeTextReceivedListener } from '../../CallComposite/adapter/CallAdapter';
 import {
   MessageDeletedListener,
@@ -237,7 +236,7 @@ export interface CallWithChatAdapterManagement {
    *
    * @param options - Options to control how video streams are rendered {@link @azure/communication-calling#VideoStreamOptions }
    *
-   * @beta
+   * @public
    */
   createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
   /* @conditional-compile-remove(together-mode) */
@@ -248,7 +247,7 @@ export interface CallWithChatAdapterManagement {
    * This method is implemented for composite
    *
    *
-   * @beta
+   * @public
    */
   startTogetherMode(): Promise<void>;
   /* @conditional-compile-remove(together-mode) */
@@ -261,7 +260,7 @@ export interface CallWithChatAdapterManagement {
    * @param width - Width of the container
    * @param height - Height of the container
    *
-   * @beta
+   * @public
    */
   setTogetherModeSceneSize(width: number, height: number): void;
 
@@ -272,7 +271,7 @@ export interface CallWithChatAdapterManagement {
    * @remarks
    * This method is implemented for composite
    *
-   * @beta
+   * @public
    */
   disposeTogetherModeStreamView(): Promise<void>;
   /**
@@ -574,7 +573,6 @@ export interface CallWithChatAdapterManagement {
   forbidOthersVideo: () => Promise<void>;
   /** permits video for Teams meeting attendees except the local user. */
   permitOthersVideo: () => Promise<void>;
-  /* @conditional-compile-remove(rtt) */
   /**
    * Send real time text
    * @param text - real time text content
@@ -604,7 +602,6 @@ export interface CallWithChatAdapterSubscriptions {
   on(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   on(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   on(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(rtt) */
   on(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   on(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   on(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -624,7 +621,6 @@ export interface CallWithChatAdapterSubscriptions {
   off(event: 'isCaptionsActiveChanged', listener: IsCaptionsActiveChangedListener): void;
   off(event: 'isCaptionLanguageChanged', listener: IsCaptionLanguageChangedListener): void;
   off(event: 'isSpokenLanguageChanged', listener: IsSpokenLanguageChangedListener): void;
-  /* @conditional-compile-remove(rtt) */
   off(event: 'realTimeTextReceived', listener: RealTimeTextReceivedListener): void;
   off(event: 'capabilitiesChanged', listener: CapabilitiesChangedListener): void;
   off(event: 'spotlightChanged', listener: SpotlightChangedListener): void;
@@ -694,7 +690,7 @@ export type CallWithChatEvent =
   | 'captionsReceived'
   | 'isCaptionLanguageChanged'
   | 'isSpokenLanguageChanged'
-  | /* @conditional-compile-remove(rtt) */ 'realTimeTextReceived'
+  | 'realTimeTextReceived'
   | 'capabilitiesChanged'
   | 'spotlightChanged'
   | 'breakoutRoomsUpdated'

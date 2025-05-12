@@ -13,13 +13,11 @@ import {
   CaptionLanguageStrings,
   CaptionsSettingsModal
 } from '@internal/react-components';
-/* @conditional-compile-remove(rtt) */
 import { CaptionsBanner } from '@internal/react-components';
 import { _ReactionDrawerMenuItem } from '@internal/react-components';
 import { ReactionResources } from '@internal/react-components';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { StartCaptionsButton } from '@internal/react-components';
-
 import { HoldButton } from '@internal/react-components';
 import { RaiseHandButton, RaiseHandButtonProps } from '@internal/react-components';
 import { AudioDeviceInfo } from '@azure/communication-calling';
@@ -52,7 +50,6 @@ import {
   getLocalUserId,
   getIsTeamsCall
 } from '../../CallComposite/selectors/baseSelectors';
-/* @conditional-compile-remove(rtt) */
 import { CallingRealTimeTextModal } from '../CallingRealTimeTextModal';
 
 /** @private */
@@ -160,7 +157,6 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   callControls?: boolean | CommonCallControlOptions;
   onClickShowDialpad?: () => void;
   isCaptionsSupported?: boolean;
-  /* @conditional-compile-remove(rtt) */
   isRealTimeTextSupported?: boolean;
   strings: MoreDrawerStrings;
   disableButtonsForHoldScreen?: boolean;
@@ -173,9 +169,7 @@ export interface MoreDrawerProps extends MoreDrawerDevicesMenuProps {
   onPermitOthersAudio?: () => void;
   onForbidOthersVideo?: () => void;
   onPermitOthersVideo?: () => void;
-  /* @conditional-compile-remove(rtt) */
   onStartRealTimeText?: () => void;
-  /* @conditional-compile-remove(rtt) */
   startRealTimeTextButtonChecked?: boolean;
 }
 
@@ -199,20 +193,20 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const localeStrings = useLocale();
   const holdButtonProps = usePropsFor(HoldButton);
-  /* @conditional-compile-remove(rtt) */
+
   const realTimeTextProps = usePropsFor(CaptionsBanner);
 
   const callees = useSelector(getTargetCallees);
   const participants = useSelector(getRemoteParticipantsConnectedSelector);
   const allowDtmfDialer = showDtmfDialer(callees, participants, props.dtmfDialerOptions);
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
-  /* @conditional-compile-remove(rtt) */
+
   const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
-  /* @conditional-compile-remove(rtt) */
+
   const openRealTimeTextModal = useCallback((): void => {
     setShowRealTimeTextModal(true);
   }, []);
-  /* @conditional-compile-remove(rtt) */
+
   const onDismissRealTimeTextModal = useCallback((): void => {
     setShowRealTimeTextModal(false);
   }, []);
@@ -248,8 +242,11 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
 
   const showCaptionsButton =
     props.isCaptionsSupported && drawerSelectionOptions !== false && isEnabled(drawerSelectionOptions.captionsButton);
-  /* @conditional-compile-remove(rtt) */
-  const showRealTimeTextButton = props.isRealTimeTextSupported;
+
+  const showRealTimeTextButton =
+    props.isRealTimeTextSupported &&
+    drawerSelectionOptions !== false &&
+    isEnabled(drawerSelectionOptions.realTimeTextButton);
 
   if (props.reactionResources !== undefined) {
     drawerMenuItems.push({
@@ -638,11 +635,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     }
   }
 
-  /* @conditional-compile-remove(rtt) */
   const rttDisabled =
     props.disableButtonsForHoldScreen || realTimeTextProps.isRealTimeTextOn || props.startRealTimeTextButtonChecked;
   // rtt
-  /* @conditional-compile-remove(rtt) */
+
   if (showRealTimeTextButton) {
     const realTimeTextDrawerItems: DrawerMenuItemProps[] = [];
 
@@ -704,15 +700,13 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   });
   return (
     <>
-      {
-        /* @conditional-compile-remove(rtt) */ showRealTimeTextModal && (
-          <CallingRealTimeTextModal
-            showModal={showRealTimeTextModal}
-            onDismissModal={onDismissRealTimeTextModal}
-            onStartRealTimeText={props.onStartRealTimeText}
-          />
-        )
-      }
+      {showRealTimeTextModal && (
+        <CallingRealTimeTextModal
+          showModal={showRealTimeTextModal}
+          onDismissModal={onDismissRealTimeTextModal}
+          onStartRealTimeText={props.onStartRealTimeText}
+        />
+      )}
       {isSpokenLanguageDrawerOpen && showCaptionsButton && (
         <SpokenLanguageSettingsDrawer
           onLightDismiss={props.onLightDismiss}

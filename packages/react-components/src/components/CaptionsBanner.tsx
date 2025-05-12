@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 import { Stack, FocusZone, Spinner, useTheme } from '@fluentui/react';
-/* @conditional-compile-remove(rtt) */
 import { TextField } from '@fluentui/react';
 import React, { useEffect, useRef, useState, useCallback } from 'react';
-/* @conditional-compile-remove(rtt) */
 import { useMemo } from 'react';
 import { _Caption } from './Caption';
 import {
@@ -15,25 +13,18 @@ import {
   loadingBannerFullHeightStyles,
   loadingBannerStyles
 } from './styles/Captions.style';
-/* @conditional-compile-remove(rtt) */
 import { rttDisclosureBannerClassName } from './styles/Captions.style';
 import { OnRenderAvatarCallback } from '../types';
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(rtt) */
 import { RealTimeText } from './RealTimeText';
-/* @conditional-compile-remove(rtt) */
 import { _RTTDisclosureBanner } from './RTTDisclosureBanner';
-/* @conditional-compile-remove(rtt) */
 import { sortCaptionsAndRealTimeTexts } from './utils/sortCaptionsAndRealTimeTexts';
-/* @conditional-compile-remove(rtt) */
 import {
   expandIconClassName,
   bannerTitleContainerClassName,
   realTimeTextInputBoxStyles
 } from './styles/Captions.style';
-/* @conditional-compile-remove(rtt) */
 import { titleClassName } from './styles/CaptionsSettingsModal.styles';
-/* @conditional-compile-remove(rtt) */
 import { Text, IconButton } from '@fluentui/react';
 
 /**
@@ -57,7 +48,6 @@ export type CaptionsInformation = {
    * id of the speaker
    */
   userId?: string;
-  /* @conditional-compile-remove(rtt) */
   /**
    * timestamp when the caption was created
    * Please note that this value is essential for determining the order of captions and real time text messages
@@ -66,7 +56,6 @@ export type CaptionsInformation = {
   createdTimeStamp?: Date;
 };
 
-/* @conditional-compile-remove(rtt) */
 /**
  * @public
  * information required for each line of real time text
@@ -111,52 +100,48 @@ export interface CaptionsBannerStrings {
    * Spinner text for captions banner
    */
   captionsBannerSpinnerText?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Default text for RTT input text box
    */
   realTimeTextInputBoxDefaultText?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Error message for RTT input text box when the size exceeds the limit 2000
    */
   realTimeTextInputErrorMessage?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Real time text disclosure banner title
    */
   realTimeTextBannerTitle?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Real time text disclosure banner content
    */
   realTimeTextBannerContent?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Real time text disclosure banner link label
    */
   realTimeTextBannerLinkLabel?: string;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Title for the container when only captions is enabled
    */
   captionsOnlyContainerTitle?: string;
-  /* @conditional-compile-remove(rtt) */
   /**
    * Title for the container when only real time text is enabled
    */
   realTimeTextOnlyContainerTitle?: string;
-  /* @conditional-compile-remove(rtt) */
   /**
    * Title for the container when both captions and real time text is enabled
    */
   captionsAndRealTimeTextContainerTitle?: string;
-  /* @conditional-compile-remove(rtt) */
   /**
    * Expand button aria label
    */
   expandButtonAriaLabel?: string;
-  /* @conditional-compile-remove(rtt) */
   /**
    * Minimize button aria label
    */
@@ -172,7 +157,6 @@ export interface CaptionsBannerProps {
    * Array of captions to be displayed
    */
   captions: CaptionsInformation[];
-  /* @conditional-compile-remove(rtt) */
   /**
    * Array of finalized and partial real time text messages
    */
@@ -185,7 +169,7 @@ export interface CaptionsBannerProps {
    * Flag to indicate if captions are on
    */
   isCaptionsOn?: boolean;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Flag to indicate if real time text is on
    */
@@ -216,12 +200,12 @@ export interface CaptionsBannerProps {
   captionsOptions?: {
     height: 'full' | 'default';
   };
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Optional callback to send real time text.
    */
   onSendRealTimeText?: (text: string, isFinalized: boolean) => Promise<void>;
-  /* @conditional-compile-remove(rtt) */
+
   /**
    * Latest local real time text
    */
@@ -237,18 +221,14 @@ const SCROLL_OFFSET_ALLOWANCE = 20;
 export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   const {
     captions,
-    /* @conditional-compile-remove(rtt) */
     realTimeTexts,
     isCaptionsOn,
     startCaptionsInProgress,
     onRenderAvatar,
     formFactor = 'default',
     captionsOptions,
-    /* @conditional-compile-remove(rtt) */
     isRealTimeTextOn,
-    /* @conditional-compile-remove(rtt) */
     onSendRealTimeText,
-    /* @conditional-compile-remove(rtt) */
     latestLocalRealTimeText
   } = props;
   const localeStrings = useLocale().strings.captionsBanner;
@@ -256,9 +236,9 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   const captionsScrollDivRef = useRef<HTMLUListElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const theme = useTheme();
-  /* @conditional-compile-remove(rtt) */
+
   const [expandBannerHeight, setExpandBannerHeight] = useState<boolean>(false);
-  /* @conditional-compile-remove(rtt) */
+
   const getTitle = (): string => {
     if (isCaptionsOn && isRealTimeTextOn) {
       return strings.captionsAndRealTimeTextContainerTitle ?? '';
@@ -269,14 +249,13 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     }
     return '';
   };
-  /* @conditional-compile-remove(rtt) */
+
   // merge realtimetexts and captions into one array based on timestamp
   // Combine captions and realTimeTexts into one list
   const combinedList: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
     return sortCaptionsAndRealTimeTexts(captions, realTimeTexts?.completedMessages ?? []);
   }, [captions, realTimeTexts?.completedMessages]);
 
-  /* @conditional-compile-remove(rtt) */
   const mergedCaptions: (CaptionsInformation | RealTimeTextInformation)[] = useMemo(() => {
     return [...combinedList, ...(realTimeTexts?.currentInProgress ?? []), realTimeTexts?.myInProgress].slice(-50) as (
       | CaptionsInformation
@@ -308,17 +287,17 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     return () => {
       captionsScrollDiv?.removeEventListener('scroll', handleScrollToTheBottom);
     };
-  }, [handleScrollToTheBottom, isCaptionsOn, /* @conditional-compile-remove(rtt) */ isRealTimeTextOn]);
+  }, [handleScrollToTheBottom, isCaptionsOn, isRealTimeTextOn]);
 
   useEffect(() => {
     // only auto scroll to bottom is already is at bottom of scroll before new caption comes in
     if (isAtBottomOfScroll) {
       scrollToBottom();
     }
-  }, [captions, /* @conditional-compile-remove(rtt) */ realTimeTexts, isAtBottomOfScroll]);
-  /* @conditional-compile-remove(rtt) */
+  }, [captions, realTimeTexts, isAtBottomOfScroll]);
+
   const [textFieldValue, setTextFieldValue] = useState<string>('');
-  /* @conditional-compile-remove(rtt) */
+
   useEffect(() => {
     // if the latest real time text sent by myself is final, clear the text field
     if (latestLocalRealTimeText && !latestLocalRealTimeText.isTyping) {
@@ -326,7 +305,6 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     }
   }, [latestLocalRealTimeText]);
 
-  /* @conditional-compile-remove(rtt) */
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -337,15 +315,13 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     }
   };
 
-  /* @conditional-compile-remove(rtt) */
   const realTimeTextDisclosureBannerStrings = {
     bannerTitle: strings.realTimeTextBannerTitle ?? '',
     bannerContent: strings.realTimeTextBannerContent ?? '',
     bannerLinkLabel: strings.realTimeTextBannerLinkLabel ?? ''
   };
 
-  const captionsTrampoline = (): JSX.Element => {
-    /* @conditional-compile-remove(rtt) */
+  const captionsAndRealTimeText = (): JSX.Element => {
     return (
       <>
         {mergedCaptions
@@ -367,80 +343,65 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
           })}
       </>
     );
-
-    return (
-      <>
-        {captions.map((caption) => {
-          return (
-            <li key={caption.id} className={captionContainerClassName} data-is-focusable={true}>
-              <_Caption {...(caption as CaptionsInformation)} onRenderAvatar={onRenderAvatar} />
-            </li>
-          );
-        })}
-      </>
-    );
   };
 
   return (
     <>
-      {(startCaptionsInProgress || isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
+      {(startCaptionsInProgress || isCaptionsOn || isRealTimeTextOn) && (
         <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
-          {
-            /* @conditional-compile-remove(rtt) */ (isCaptionsOn || isRealTimeTextOn) && formFactor === 'compact' && (
-              <Stack
-                horizontal
-                horizontalAlign="space-between"
-                verticalAlign="center"
-                className={bannerTitleContainerClassName}
-              >
-                <Text className={titleClassName}>{getTitle()}</Text>
-                <IconButton
-                  data-ui-id="captions-banner-expand-icon"
-                  iconProps={{ iconName: expandBannerHeight ? 'MinimizeIcon' : 'ExpandIcon' }}
-                  ariaLabel={expandBannerHeight ? strings.minimizeButtonAriaLabel : strings.expandButtonAriaLabel}
-                  onClick={() => setExpandBannerHeight(!expandBannerHeight)}
-                  styles={expandIconClassName(theme)}
-                />
-              </Stack>
-            )
-          }
-          {(isCaptionsOn || /* @conditional-compile-remove(rtt) */ isRealTimeTextOn) && (
+          {(isCaptionsOn || isRealTimeTextOn) && formFactor === 'compact' && (
+            <Stack
+              horizontal
+              horizontalAlign="space-between"
+              verticalAlign="center"
+              className={bannerTitleContainerClassName}
+            >
+              <Text className={titleClassName}>{getTitle()}</Text>
+              <IconButton
+                data-ui-id="captions-banner-expand-icon"
+                iconProps={{ iconName: expandBannerHeight ? 'MinimizeIcon' : 'ExpandIcon' }}
+                ariaLabel={expandBannerHeight ? strings.minimizeButtonAriaLabel : strings.expandButtonAriaLabel}
+                onClick={() => setExpandBannerHeight(!expandBannerHeight)}
+                styles={expandIconClassName(theme)}
+              />
+            </Stack>
+          )}
+          {(isCaptionsOn || isRealTimeTextOn) && (
             <ul
               ref={captionsScrollDivRef}
               className={
                 captionsOptions?.height === 'full'
                   ? captionsBannerFullHeightClassName(theme)
-                  : captionsBannerClassName(formFactor, /* @conditional-compile-remove(rtt) */ expandBannerHeight)
+                  : captionsBannerClassName(formFactor, expandBannerHeight)
               }
               data-ui-id="captions-banner-inner"
+              data-is-focusable={true}
             >
-              {
-                /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && (
+              {isRealTimeTextOn && (
+                <li>
                   <Stack className={rttDisclosureBannerClassName()}>
                     <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
                   </Stack>
-                )
-              }
-              {captionsTrampoline()}
+                </li>
+              )}
+              {captionsAndRealTimeText()}
             </ul>
           )}
-          {
-            /* @conditional-compile-remove(rtt) */ isRealTimeTextOn && onSendRealTimeText && (
-              <TextField
-                styles={realTimeTextInputBoxStyles(theme)}
-                placeholder={strings.realTimeTextInputBoxDefaultText}
-                value={textFieldValue}
-                onKeyDown={handleKeyDown}
-                onChange={(_, newValue) => {
-                  setTextFieldValue(newValue || '');
-                  onSendRealTimeText(newValue || '', false);
-                }}
-                maxLength={2000}
-                errorMessage={textFieldValue.length >= 2000 ? strings.realTimeTextInputErrorMessage : undefined}
-              />
-            )
-          }
-          {!isCaptionsOn && /* @conditional-compile-remove(rtt) */ !isRealTimeTextOn && (
+          {isRealTimeTextOn && onSendRealTimeText && (
+            <TextField
+              styles={realTimeTextInputBoxStyles(theme)}
+              placeholder={strings.realTimeTextInputBoxDefaultText}
+              value={textFieldValue}
+              onKeyDown={handleKeyDown}
+              onChange={(_, newValue) => {
+                setTextFieldValue(newValue || '');
+                onSendRealTimeText(newValue || '', false);
+              }}
+              maxLength={2000}
+              errorMessage={textFieldValue.length >= 2000 ? strings.realTimeTextInputErrorMessage : undefined}
+            />
+          )}
+          {!isCaptionsOn && !isRealTimeTextOn && (
             <Stack
               verticalAlign="center"
               styles={
