@@ -25,9 +25,9 @@
      */
     // "some-library": "1.2.3"
     "@azure/communication-calling": "1.35.1-beta.1",
-    "@azure/communication-common": "2.3.0",
-    "@azure/communication-chat": "1.6.0-beta.3",
-    "@azure/communication-signaling": "1.0.0-beta.27",
+    "@azure/communication-common": "2.3.2-beta.1",
+    "@azure/communication-chat": "1.6.0-beta.6",
+    "@azure/communication-signaling": "1.0.0-beta.32",
     "@azure/communication-calling-effects": "1.1.4"
   },
 
@@ -57,9 +57,9 @@
    */
   "allowedAlternativeVersions": {
     "@azure/communication-calling": ["1.35.1-beta.1"],
-    "@azure/communication-common": ["2.3.0"],
-    "@azure/communication-chat": ["1.6.0-beta.3"],
-    "@azure/communication-signaling": ["1.0.0-beta.27"],
+    "@azure/communication-common": ["2.3.2-beta.1"],
+    "@azure/communication-chat": ["1.6.0-beta.6"],
+    "@azure/communication-signaling": ["1.0.0-beta.32"],
     "@azure/communication-calling-effects": ["1.1.4"],
     "typescript": [
       // All projects should use this version by default
