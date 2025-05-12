@@ -24,15 +24,14 @@ import { initializeIcons } from '@fluentui/react';
  * options for the {@link ChatComposite} {@link ChatCompositeOptions}.
  * @public
  */
-export type ChatCompositeLoaderProps = {
+export interface ChatCompositeLoaderProps extends Partial<BaseCompositeProps<ChatCompositeIcons>> {
   userId: CommunicationUserIdentifier;
   credential: CommunicationTokenCredential;
   displayName?: string;
   endpoint: string;
   threadId: string;
   chatCompositeOptions?: ChatCompositeOptions;
-  baseCompositeProps?: BaseCompositeProps<ChatCompositeIcons>;
-};
+}
 
 /**
  * Loader function for the ChatComposite that you can use in your application. This
@@ -46,7 +45,20 @@ export const loadChatComposite = async function (
   htmlElement: HTMLElement
 ): Promise<ChatAdapter | undefined> {
   initializeIcons();
-  const { userId, credential, endpoint, threadId, displayName, chatCompositeOptions, baseCompositeProps } = loaderArgs;
+  const {
+    userId,
+    credential,
+    endpoint,
+    threadId,
+    displayName,
+    chatCompositeOptions,
+    fluentTheme,
+    locale,
+    icons,
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    rtl
+  } = loaderArgs;
   const adapter = await createAzureCommunicationChatAdapter({
     endpoint,
     userId,
@@ -60,7 +72,20 @@ export const loadChatComposite = async function (
   }
 
   createRoot(htmlElement).render(
-    React.createElement(ChatComposite, { ...baseCompositeProps, options: chatCompositeOptions, adapter }, null)
+    React.createElement(
+      ChatComposite,
+      {
+        options: chatCompositeOptions,
+        adapter,
+        fluentTheme,
+        icons,
+        locale,
+        onFetchAvatarPersonaData,
+        onFetchParticipantMenuItems,
+        rtl
+      },
+      null
+    )
   );
   return adapter;
 };
