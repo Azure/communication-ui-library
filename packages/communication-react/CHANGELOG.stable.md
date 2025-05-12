@@ -1,8 +1,45 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 07 Apr 2025 16:07:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 12 May 2025 20:47:06 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.27.0](https://github.com/azure/communication-ui-library/tree/1.27.0)
+
+Mon, 12 May 2025 20:47:06 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.27.0-beta.1...1.27.0)
+
+### Features
+- move onfetchProfile to stable ([PR #5796](https://github.com/azure/communication-ui-library/pull/5796) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Add onFetchProfile for CallWithChat Composite ([PR #5729](https://github.com/azure/communication-ui-library/pull/5729) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix listeners subscribed to chat events of AzureCallWithChatAdapter when the thread id is resolved late or is changed when moving to and from breakout rooms ([PR #5764](https://github.com/azure/communication-ui-library/pull/5764) by 79475487+mgamis-msft@users.noreply.github.com)
+- Ensure text wrap for long words without spaces ([PR #5789](https://github.com/azure/communication-ui-library/pull/5789) by 96077406+carocao-msft@users.noreply.github.com)
+### Improvements
+- Add selector for all remote participants including active and inactive users ([PR #5818](https://github.com/azure/communication-ui-library/pull/5818) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Update calling-effects-package to 1.1.4 ([PR #5773](https://github.com/azure/communication-ui-library/pull/5773) by dmceachern@microsoft.com)
+- Move Unsupported Browser Version to alpha ([PR #5797](https://github.com/azure/communication-ui-library/pull/5797) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Add changes for stateful client to get display name of participants that left call ([PR #5812](https://github.com/azure/communication-ui-library/pull/5812) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Update dependencies ([PR #5793](https://github.com/azure/communication-ui-library/pull/5793) by 3941071+emlynmac@users.noreply.github.com)
+- Enable ringing tone during connecting and ringing state ([PR #5808](https://github.com/azure/communication-ui-library/pull/5808) by edwardlee@microsoft.com)
+### Bug Fixes
+- Prevent screen zooming on message input ([PR #5817](https://github.com/azure/communication-ui-library/pull/5817) by 3941071+emlynmac@users.noreply.github.com)
+- Add focus outline to buttons that maintain focus after being actioned ([PR #5815](https://github.com/azure/communication-ui-library/pull/5815) by edwardlee@microsoft.com)
+- Fix bug where modal cancel button focus border has low contrast ([PR #5802](https://github.com/azure/communication-ui-library/pull/5802) by 96077406+carocao-msft@users.noreply.github.com)
+- Add delay to tooltip to enable mouseover tooltip ([PR #5795](https://github.com/azure/communication-ui-library/pull/5795) by 77021369+jimchou-dev@users.noreply.github.com)
+- Maintain muted state when joining and leaving breakout rooms ([PR #5765](https://github.com/azure/communication-ui-library/pull/5765) by 79475487+mgamis-msft@users.noreply.github.com)
+- Fix bug where scrollable UL element is not keyboard focusable ([PR #5806](https://github.com/azure/communication-ui-library/pull/5806) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix RichTextSendbox send button is disabled after file uploading is completed ([PR #5810](https://github.com/azure/communication-ui-library/pull/5810) by 107075081+Leah-Xia-Microsoft@users.noreply.github.com)
+- Fix bug where mobile video gallery shows landscape view when RTT banner is enlarged ([PR #5777](https://github.com/azure/communication-ui-library/pull/5777) by 96077406+carocao-msft@users.noreply.github.com)
+- Add inlineImage change checking for the edit box ([PR #5827](https://github.com/azure/communication-ui-library/pull/5827) by 3941071+emlynmac@users.noreply.github.com)
+- Fix dark mode rendering ([PR #5788](https://github.com/azure/communication-ui-library/pull/5788) by 3941071+emlynmac@users.noreply.github.com)
+- Fix bug where RTT lists has a direct div child ([PR #5799](https://github.com/azure/communication-ui-library/pull/5799) by 96077406+carocao-msft@users.noreply.github.com)
+- Update RoosterJS version to fix an issue where cursor wasn't visible in Windows high contrast themes ([PR #5833](https://github.com/azure/communication-ui-library/pull/5833) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Devices dropdown list now narrates a group name when actioned ([PR #5798](https://github.com/azure/communication-ui-library/pull/5798) by edwardlee@microsoft.com)
+- Fix bug where modal title is not defined as heading ([PR #5800](https://github.com/azure/communication-ui-library/pull/5800) by 96077406+carocao-msft@users.noreply.github.com)
+### Storybook Changes
+- Remove RTT beta banner ([PR #5814](https://github.com/azure/communication-ui-library/pull/5814) by 96077406+carocao-msft@users.noreply.github.com)
+- Conceptual docs for On fetch Profile ([PR #5785](https://github.com/azure/communication-ui-library/pull/5785) by 97124699+prabhjot-msft@users.noreply.github.com)
+
 
 ## [1.26.0](https://github.com/azure/communication-ui-library/tree/1.26.0)
 
