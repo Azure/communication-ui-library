@@ -602,19 +602,12 @@ export type CallCompositeIcons = {
 
 // @public
 export interface CallCompositeLoaderProps extends Partial<BaseCompositeProps<CallCompositeIcons>> {
-    // (undocumented)
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-    // (undocumented)
     callCompositeOptions?: CallCompositeOptions;
-    // (undocumented)
     credential: CommunicationTokenCredential;
-    // (undocumented)
     displayName: string;
-    // (undocumented)
     formFactor?: 'mobile' | 'desktop';
-    // (undocumented)
     locator: CallAdapterLocator;
-    // (undocumented)
     userId: CommunicationUserIdentifier;
 }
 
@@ -1433,21 +1426,13 @@ export type CallWithChatCompositeIcons = {
 
 // @public
 export interface CallWithChatCompositeLoaderProps extends Partial<BaseCompositeProps<CallWithChatCompositeIcons>> {
-    // (undocumented)
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-    // (undocumented)
     callWithChatCompositeOptions?: CallWithChatCompositeOptions;
-    // (undocumented)
     credential: CommunicationTokenCredential;
-    // (undocumented)
     displayName: string;
-    // (undocumented)
     endpoint: string;
-    // (undocumented)
     formFactor?: 'mobile' | 'desktop';
-    // (undocumented)
     locator: CallAndChatLocator;
-    // (undocumented)
     userId: CommunicationUserIdentifier;
 }
 
@@ -1954,17 +1939,11 @@ export type ChatCompositeIcons = {
 
 // @public
 export interface ChatCompositeLoaderProps extends Partial<BaseCompositeProps<ChatCompositeIcons>> {
-    // (undocumented)
     chatCompositeOptions?: ChatCompositeOptions;
-    // (undocumented)
     credential: CommunicationTokenCredential;
-    // (undocumented)
     displayName?: string;
-    // (undocumented)
     endpoint: string;
-    // (undocumented)
     threadId: string;
-    // (undocumented)
     userId: CommunicationUserIdentifier;
 }
 
@@ -3967,19 +3946,12 @@ export interface OptionsDevice {
 
 // @public
 export interface OutboundCallCompositeLoaderProps extends Partial<BaseCompositeProps<CallCompositeIcons>> {
-    // (undocumented)
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-    // (undocumented)
     callCompositeOptions?: CallCompositeOptions;
-    // (undocumented)
     credential: CommunicationTokenCredential;
-    // (undocumented)
     displayName: string;
-    // (undocumented)
     formFactor?: 'mobile' | 'desktop';
-    // (undocumented)
     targetCallees: string[] | StartCallIdentifier[];
-    // (undocumented)
     userId: CommunicationUserIdentifier;
 }
 
