@@ -23,7 +23,7 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 
 - Remove Unsupported Browser blocking dialog in CallComposites ([PR #5797](https://github.com/azure/communication-ui-library/pull/5797) by 97124699+prabhjot-msft@users.noreply.github.com)
 - With captions, Ensure text wrap for long words without spaces ([PR #5789](https://github.com/azure/communication-ui-library/pull/5789) by 96077406+carocao-msft@users.noreply.github.com)
-
+- New option to hide Real Time Text button on the control bar for call and callwithchat composite  ([PR #5823](https://github.com/Azure/communication-ui-library/pull/5823) by 96077406+carocao-msft@users.noreply.github.com)
 
 ### Improvements
 - Add selector for all remote participants including active and inactive users ([PR #5818](https://github.com/azure/communication-ui-library/pull/5818) by 97124699+prabhjot-msft@users.noreply.github.com)
