@@ -7,21 +7,31 @@
 ## [1.27.0](https://github.com/azure/communication-ui-library/tree/1.27.0)
 
 Mon, 12 May 2025 20:47:06 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.27.0-beta.1...1.27.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.26.0...1.27.0)
 
 ### Features
-- move onfetchProfile to stable ([PR #5796](https://github.com/azure/communication-ui-library/pull/5796) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Add onFetchProfile for CallWithChat Composite ([PR #5729](https://github.com/azure/communication-ui-library/pull/5729) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Fix listeners subscribed to chat events of AzureCallWithChatAdapter when the thread id is resolved late or is changed when moving to and from breakout rooms ([PR #5764](https://github.com/azure/communication-ui-library/pull/5764) by 79475487+mgamis-msft@users.noreply.github.com)
-- Ensure text wrap for long words without spaces ([PR #5789](https://github.com/azure/communication-ui-library/pull/5789) by 96077406+carocao-msft@users.noreply.github.com)
+
+#### onFetchProfile
+We are excited to announce that the Azure Communication Services Web UI Library now supports onFetchProfile. This feature allows developers to dynamically update the display names of remote participants based on their UserId, helping protect identities, maintain consistency, and customize user experiences. Developers can use this functionality today through our composites ( CallComposite, CallWithChatComposite).
+  - Protect sensitive participant information.  
+  - Ensure consistent naming conventions across calls and chats. 
+  - Customize participant display names for specific scenarios or events. 
+
+#### TogetherMode
+
+We are excited to announce that the Azure Communication Services Web UI Library now supports Together Mode in Teams interop scenarios. Together Mode is a feature that creates a virtual shared space for meeting participants. By using AI segmentation technology, it places participants in a common background, such as a conference room or auditorium, making it look like everyone is sitting together. This mode is designed to make meetings feel more engaging and reduce virtual meeting fatigue. It can help improve participants' sense of connection and collaboration by mimicking the experience of being in the same physical location. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). Participants receive together Mode in Teams Interop Meetings, change views to and from Together mode and view reactions and raised hands in the Together mode view.
+
+- Remove Unsupported Browser blocking dialog in CallComposites ([PR #5797](https://github.com/azure/communication-ui-library/pull/5797) by 97124699+prabhjot-msft@users.noreply.github.com)
+- With captions, Ensure text wrap for long words without spaces ([PR #5789](https://github.com/azure/communication-ui-library/pull/5789) by 96077406+carocao-msft@users.noreply.github.com)
+- New option to hide Real Time Text button on the control bar for call and callwithchat composite  ([PR #5823](https://github.com/Azure/communication-ui-library/pull/5823) by 96077406+carocao-msft@users.noreply.github.com)
+
 ### Improvements
 - Add selector for all remote participants including active and inactive users ([PR #5818](https://github.com/azure/communication-ui-library/pull/5818) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Update calling-effects-package to 1.1.4 ([PR #5773](https://github.com/azure/communication-ui-library/pull/5773) by dmceachern@microsoft.com)
-- Move Unsupported Browser Version to alpha ([PR #5797](https://github.com/azure/communication-ui-library/pull/5797) by 97124699+prabhjot-msft@users.noreply.github.com)
 - Add changes for stateful client to get display name of participants that left call ([PR #5812](https://github.com/azure/communication-ui-library/pull/5812) by 97124699+prabhjot-msft@users.noreply.github.com)
-- Update dependencies ([PR #5793](https://github.com/azure/communication-ui-library/pull/5793) by 3941071+emlynmac@users.noreply.github.com)
 - Enable ringing tone during connecting and ringing state ([PR #5808](https://github.com/azure/communication-ui-library/pull/5808) by edwardlee@microsoft.com)
+
 ### Bug Fixes
+- Fix listeners subscribed to chat events of AzureCallWithChatAdapter when the thread id is resolved late or is changed when moving to and from breakout rooms ([PR #5764](https://github.com/azure/communication-ui-library/pull/5764) by 79475487+mgamis-msft@users.noreply.github.com)
 - Prevent screen zooming on message input ([PR #5817](https://github.com/azure/communication-ui-library/pull/5817) by 3941071+emlynmac@users.noreply.github.com)
 - Add focus outline to buttons that maintain focus after being actioned ([PR #5815](https://github.com/azure/communication-ui-library/pull/5815) by edwardlee@microsoft.com)
 - Fix bug where modal cancel button focus border has low contrast ([PR #5802](https://github.com/azure/communication-ui-library/pull/5802) by 96077406+carocao-msft@users.noreply.github.com)
@@ -36,9 +46,6 @@ Mon, 12 May 2025 20:47:06 GMT
 - Update RoosterJS version to fix an issue where cursor wasn't visible in Windows high contrast themes ([PR #5833](https://github.com/azure/communication-ui-library/pull/5833) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Devices dropdown list now narrates a group name when actioned ([PR #5798](https://github.com/azure/communication-ui-library/pull/5798) by edwardlee@microsoft.com)
 - Fix bug where modal title is not defined as heading ([PR #5800](https://github.com/azure/communication-ui-library/pull/5800) by 96077406+carocao-msft@users.noreply.github.com)
-### Storybook Changes
-- Remove RTT beta banner ([PR #5814](https://github.com/azure/communication-ui-library/pull/5814) by 96077406+carocao-msft@users.noreply.github.com)
-- Conceptual docs for On fetch Profile ([PR #5785](https://github.com/azure/communication-ui-library/pull/5785) by 97124699+prabhjot-msft@users.noreply.github.com)
 
 
 ## [1.26.0](https://github.com/azure/communication-ui-library/tree/1.26.0)
@@ -65,10 +72,6 @@ Tue, 18 Mar 2025 17:01:36 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.25.0-beta.1...1.25.0)
 
 ### Features
-
-#### TogetherMode
-
-We are excited to announce that the Azure Communication Services Web UI Library now supports Together Mode in Teams interop scenarios. Together Mode is a feature that creates a virtual shared space for meeting participants. By using AI segmentation technology, it places participants in a common background, such as a conference room or auditorium, making it look like everyone is sitting together. This mode is designed to make meetings feel more engaging and reduce virtual meeting fatigue. It can help improve participants' sense of connection and collaboration by mimicking the experience of being in the same physical location. Developers can use this functionality today through our composites (e.g CallComposite, CallWithChatComposite) as well as through components (e.g VideoGallery). Participants receive together Mode in Teams Interop Meetings, change views to and from Together mode and view reactions and raised hands in the Together mode view.
 
 ### Improvements
 
