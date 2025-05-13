@@ -30,7 +30,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-common": "^2.3.1",
+    "@azure/communication-common": "^2.3.2-beta.1",
     "@azure/core-paging": "^1.5.0",
     "@azure/logger": "^1.0.4",
     "@internal/acs-ui-common": "1.27.0-beta.1",
@@ -40,10 +40,10 @@
     "nanoid": "3.3.8"
   },
   "peerDependencies": {
-    "@azure/communication-chat": "1.6.0-beta.3 || >=1.5.4"
+    "@azure/communication-chat": "1.6.0-beta.7 || >=1.5.4"
   },
   "devDependencies": {
-    "@azure/communication-signaling": "1.0.0-beta.27 || 1.0.0-beta.29",
+    "@azure/communication-signaling": "1.0.0-beta.33 || 1.0.0-beta.29",
     "@babel/cli": "^7.27.2",
     "@babel/core": "^7.27.1",
     "@types/jest": "^29.5.14",
