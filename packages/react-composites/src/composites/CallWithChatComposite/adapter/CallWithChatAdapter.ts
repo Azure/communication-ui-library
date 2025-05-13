@@ -54,6 +54,8 @@ import {
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { PhoneNumberIdentifier } from '@azure/communication-common';
+/* @conditional-compile-remove(calling-beta-sdk) */ 
+import { TeamsExtensionUserIdentifier } from '@azure/communication-common';
 import { UnknownIdentifier, MicrosoftTeamsAppIdentifier } from '@azure/communication-common';
 import { CommunicationUserIdentifier } from '@azure/communication-common';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
@@ -168,6 +170,7 @@ export interface CallWithChatAdapterManagement {
       | PhoneNumberIdentifier
       | CommunicationUserIdentifier
       | MicrosoftTeamsUserIdentifier
+      | /* @conditional-compile-remove(calling-beta-sdk) */ TeamsExtensionUserIdentifier
       | UnknownIdentifier
     )[],
     options?: StartCallOptions

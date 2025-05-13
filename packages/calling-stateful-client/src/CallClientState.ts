@@ -1164,7 +1164,6 @@ export class CallError extends Error {
 export type CallErrorTarget =
   | 'Call.addParticipant'
   | 'Call.dispose'
-  | 'CallClient.dispose'
   | 'Call.feature'
   | 'Call.hangUp'
   | 'Call.hold'
@@ -1191,6 +1190,7 @@ export type CallErrorTarget =
   | 'CallAgent.startCall'
   | 'CallClient.createCallAgent'
   | 'CallClient.createTeamsCallAgent'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.dispose'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
   | 'CallClient.getEnvironmentInfo'
