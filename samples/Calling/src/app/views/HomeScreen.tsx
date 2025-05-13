@@ -88,6 +88,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const roomRoleOptions: IChoiceGroupOption[] = [
     { key: 'Consumer', text: 'Consumer' },
     { key: 'Presenter', text: 'Presenter' },
+    { key: 'Collaborator', text: 'Collaborator' },
     { key: 'Attendee', text: 'Attendee' }
   ];
 
