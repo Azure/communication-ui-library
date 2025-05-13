@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "storybook",
+  "workstream": "Remove Beta Banner for PSTN and 1:N",
+  "comment": "Remove Beta Banner for PSTN and 1:N",
+  "packageName": "@azure/communication-react",
+  "email": "96077406+carocao-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
