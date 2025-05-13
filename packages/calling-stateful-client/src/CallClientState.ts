@@ -1193,6 +1193,7 @@ export type CallErrorTarget =
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
   | 'CallClient.getEnvironmentInfo'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.dispose'
   | 'DeviceManager.askDevicePermission'
   | 'DeviceManager.getCameras'
   | 'DeviceManager.getMicrophones'
