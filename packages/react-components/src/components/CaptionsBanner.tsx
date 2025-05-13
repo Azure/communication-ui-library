@@ -233,7 +233,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   } = props;
   const localeStrings = useLocale().strings.captionsBanner;
   const strings = { ...localeStrings, ...props.strings };
-  const captionsScrollDivRef = useRef<HTMLUListElement>(null);
+  const captionsScrollDivRef = useRef<HTMLDivElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const theme = useTheme();
 
@@ -329,17 +329,20 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
           .map((caption) => {
             if ('message' in caption) {
               return (
-                <li key={`RealTimeText - ${caption.id}`} className={captionContainerClassName} data-is-focusable={true}>
+                <div
+                  key={`RealTimeText - ${caption.id}`}
+                  className={captionContainerClassName}
+                  data-is-focusable={true}
+                >
                   <RealTimeText {...(caption as RealTimeTextInformation)} />
-                </li>
+                </div>
               );
             }
             return (
-              <li key={`Captions - ${caption.id}`} className={captionContainerClassName} data-is-focusable={true}>
+              <div key={`Captions - ${caption.id}`} className={captionContainerClassName} data-is-focusable={true}>
                 <_Caption {...(caption as CaptionsInformation)} onRenderAvatar={onRenderAvatar} />
-              </li>
+              </div>
             );
-            return <></>;
           })}
       </>
     );
@@ -367,7 +370,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
             </Stack>
           )}
           {(isCaptionsOn || isRealTimeTextOn) && (
-            <ul
+            <div
               ref={captionsScrollDivRef}
               className={
                 captionsOptions?.height === 'full'
@@ -378,14 +381,12 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               data-is-focusable={true}
             >
               {isRealTimeTextOn && (
-                <li>
-                  <Stack className={rttDisclosureBannerClassName()}>
-                    <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
-                  </Stack>
-                </li>
+                <Stack className={rttDisclosureBannerClassName()}>
+                  <_RTTDisclosureBanner strings={realTimeTextDisclosureBannerStrings} />
+                </Stack>
               )}
               {captionsAndRealTimeText()}
-            </ul>
+            </div>
           )}
           {isRealTimeTextOn && onSendRealTimeText && (
             <TextField
