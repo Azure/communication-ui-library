@@ -19270,7 +19270,6 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-pP+6hgad/QDJE+qlBFv5T2t3t0qlj63XIyBgSVv5m76PCo8N3dE+lL7DI2iGYDtKTFNnG36OpwRXPjO8Q17oyA==, tarball: file:projects/server.tgz}
     resolution: {integrity: sha512-NUMkVphDSu0fnZpEJLzWgMZRIqMDEP8hh/l7lrgbNIN7AIYEEzZ/RDMeJSIfg/VZX5q96/SKcidkuD/m1ZHgYQ==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
