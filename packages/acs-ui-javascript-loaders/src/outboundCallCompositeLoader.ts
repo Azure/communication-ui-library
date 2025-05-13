@@ -31,15 +31,40 @@ import { initializeIcons } from '@fluentui/react';
  *
  * @public
  */
-export type OutboundCallCompositeLoaderProps = {
+export interface OutboundCallCompositeLoaderProps extends Partial<BaseCompositeProps<CallCompositeIcons>> {
+  /**
+   * UserId for the local user.
+   */
   userId: CommunicationUserIdentifier;
+  /**
+   * CommunicationTokenCredential for the local user.
+   */
   credential: CommunicationTokenCredential;
+  /**
+   * Display name for the local user.
+   */
   displayName: string;
+  /**
+   * Participants that will be called.
+   * This can be a list of either {@link CommunicationUserIdentifier} or string identifiers.
+   */
   targetCallees: string[] | StartCallIdentifier[];
+  /**
+   * Options for the {@link AzureCommunicationCallAdapter}
+   * This is used to configure the call adapter.
+   */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-  baseCompositeProps?: BaseCompositeProps<CallCompositeIcons>;
+  /**
+   * Options for the {@link CallComposite} {@link CallCompositeOptions}
+   * This is used to configure the call composite.
+   */
   callCompositeOptions?: CallCompositeOptions;
-};
+  /**
+   * Device form factor for the composite.
+   * This is used to configure the call composite.
+   */
+  formFactor?: 'mobile' | 'desktop';
+}
 
 /**
  * Loader function for the OutboundCallComposite that you can use in your application. This
