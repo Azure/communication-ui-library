@@ -1164,6 +1164,7 @@ export class CallError extends Error {
 export type CallErrorTarget =
   | 'Call.addParticipant'
   | 'Call.dispose'
+  | 'CallClient.dispose'
   | 'Call.feature'
   | 'Call.hangUp'
   | 'Call.hold'
