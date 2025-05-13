@@ -15,7 +15,9 @@ import {
   AzureCommunicationCallAdapterOptions,
   CallAdapter,
   CallAdapterLocator,
-  CallCompositeOptions
+  CallCompositeOptions,
+  BaseCompositeProps,
+  CallCompositeIcons
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
 
@@ -28,14 +30,38 @@ import { initializeIcons } from '@fluentui/react';
  *
  * @public
  */
-export type CallCompositeLoaderProps = {
+export interface CallCompositeLoaderProps extends Partial<BaseCompositeProps<CallCompositeIcons>> {
+  /**
+   * UserId for the local user.
+   */
   userId: CommunicationUserIdentifier;
+  /**
+   * CommunicationTokenCredential for the local user.
+   */
   credential: CommunicationTokenCredential;
+  /**
+   * Display name for the local user.
+   */
   displayName: string;
+  /**
+   * locator for the call
+   */
   locator: CallAdapterLocator;
+  /**
+   * Options for the {@link AzureCommunicationCallAdapter}
+   * This is used to configure the call adapter.
+   */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+  /**
+   * Options for the {@link CallComposite} {@link CallCompositeOptions}
+   * This is used to configure the call composite.
+   */
   callCompositeOptions?: CallCompositeOptions;
-};
+  /**
+   * Device form factor for the composite.
+   */
+  formFactor?: 'mobile' | 'desktop';
+}
 
 /**
  * Loader function for the CallComposite that you can use in your application. This
@@ -49,7 +75,21 @@ export const loadCallComposite = async function (
   htmlElement: HTMLElement
 ): Promise<CallAdapter | undefined> {
   initializeIcons();
-  const { userId, credential, displayName, locator, callAdapterOptions, callCompositeOptions } = loaderArgs;
+  const {
+    userId,
+    credential,
+    displayName,
+    locator,
+    callAdapterOptions,
+    callCompositeOptions,
+    formFactor,
+    fluentTheme,
+    icons,
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    rtl,
+    locale
+  } = loaderArgs;
   const adapter = await createAzureCommunicationCallAdapter({
     userId,
     displayName: displayName ?? 'anonymous',
@@ -62,6 +102,22 @@ export const loadCallComposite = async function (
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(CallComposite, { options: callCompositeOptions, adapter }, null));
+  createRoot(htmlElement).render(
+    React.createElement(
+      CallComposite,
+      {
+        options: callCompositeOptions,
+        adapter,
+        formFactor,
+        fluentTheme,
+        icons,
+        locale,
+        onFetchAvatarPersonaData,
+        onFetchParticipantMenuItems,
+        rtl
+      },
+      null
+    )
+  );
   return adapter;
 };
