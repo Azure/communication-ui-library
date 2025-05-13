@@ -10,8 +10,10 @@ parseReactVersion(reactVersion);
 import { createRoot } from 'react-dom/client';
 import { CommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 import {
+  BaseCompositeProps,
   ChatAdapter,
   ChatComposite,
+  ChatCompositeIcons,
   ChatCompositeOptions,
   createAzureCommunicationChatAdapter
 } from '@internal/react-composites';
