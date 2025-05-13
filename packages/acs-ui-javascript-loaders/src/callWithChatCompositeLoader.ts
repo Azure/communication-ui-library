@@ -29,17 +29,43 @@ import { initializeIcons } from '@fluentui/react';
  * - callCompositeOptions: Options for the {@link CallWithChatComposite} {@link CallWithChatCompositeOptions}
  * @public
  */
-export type CallWithChatCompositeLoaderProps = {
+export interface CallWithChatCompositeLoaderProps extends Partial<BaseCompositeProps<CallWithChatCompositeIcons>> {
+  /**
+   * UserId for the local user.
+   */
   userId: CommunicationUserIdentifier;
+  /**
+   * CommunicationTokenCredential for the local user.
+   */
   credential: CommunicationTokenCredential;
+  /**
+   * Display name for the local user.
+   */
   displayName: string;
+  /**
+   * Azure communication service endpoint. This used for the token and joining the chat thread.
+   */
   endpoint: string;
+  /**
+   * Locator for the call and the chat thread.
+   * This is used to join the call and the chat thread.
+   */
   locator: CallAndChatLocator;
+  /**
+   * Options for the {@link AzureCommunicationCallAdapterOptions}
+   * This is used to configure the call adapter.
+   */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+  /**
+   * Options for the {@link CallWithChatComposite} {@link CallWithChatCompositeOptions}
+   * This is used to configure the call composite.
+   */
   callWithChatCompositeOptions?: CallWithChatCompositeOptions;
-  baseCompositeProps?: BaseCompositeProps<CallWithChatCompositeIcons>;
+  /**
+   * Device form factor for the composite.
+   */
   formFactor?: 'mobile' | 'desktop';
-};
+}
 
 /**
  * Props for the CallWithChatComposite that you can use in your application. This
@@ -61,8 +87,13 @@ export const loadCallWithChatComposite = async function (
     locator,
     callAdapterOptions,
     callWithChatCompositeOptions,
-    baseCompositeProps,
-    formFactor
+    formFactor,
+    fluentTheme,
+    locale,
+    icons,
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    rtl
   } = loaderArgs;
   const adapter = await createAzureCommunicationCallWithChatAdapter({
     userId,
@@ -80,7 +111,17 @@ export const loadCallWithChatComposite = async function (
   createRoot(htmlElement).render(
     React.createElement(
       CallWithChatComposite,
-      { ...baseCompositeProps, options: callWithChatCompositeOptions, adapter, formFactor },
+      {
+        options: callWithChatCompositeOptions,
+        adapter,
+        formFactor,
+        fluentTheme,
+        icons,
+        locale,
+        onFetchAvatarPersonaData,
+        onFetchParticipantMenuItems,
+        rtl
+      },
       null
     )
   );

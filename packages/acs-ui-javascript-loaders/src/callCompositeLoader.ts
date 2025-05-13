@@ -30,16 +30,38 @@ import { initializeIcons } from '@fluentui/react';
  *
  * @public
  */
-export type CallCompositeLoaderProps = {
+export interface CallCompositeLoaderProps extends Partial<BaseCompositeProps<CallCompositeIcons>> {
+  /**
+   * UserId for the local user.
+   */
   userId: CommunicationUserIdentifier;
+  /**
+   * CommunicationTokenCredential for the local user.
+   */
   credential: CommunicationTokenCredential;
+  /**
+   * Display name for the local user.
+   */
   displayName: string;
+  /**
+   * locator for the call
+   */
   locator: CallAdapterLocator;
+  /**
+   * Options for the {@link AzureCommunicationCallAdapter}
+   * This is used to configure the call adapter.
+   */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+  /**
+   * Options for the {@link CallComposite} {@link CallCompositeOptions}
+   * This is used to configure the call composite.
+   */
   callCompositeOptions?: CallCompositeOptions;
-  baseCompositeProps?: BaseCompositeProps<CallCompositeIcons>;
+  /**
+   * Device form factor for the composite.
+   */
   formFactor?: 'mobile' | 'desktop';
-};
+}
 
 /**
  * Loader function for the CallComposite that you can use in your application. This
@@ -60,8 +82,13 @@ export const loadCallComposite = async function (
     locator,
     callAdapterOptions,
     callCompositeOptions,
-    baseCompositeProps,
-    formFactor
+    formFactor,
+    fluentTheme,
+    icons,
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    rtl,
+    locale
   } = loaderArgs;
   const adapter = await createAzureCommunicationCallAdapter({
     userId,
@@ -78,7 +105,17 @@ export const loadCallComposite = async function (
   createRoot(htmlElement).render(
     React.createElement(
       CallComposite,
-      { ...baseCompositeProps, options: callCompositeOptions, adapter, formFactor },
+      {
+        options: callCompositeOptions,
+        adapter,
+        formFactor,
+        fluentTheme,
+        icons,
+        locale,
+        onFetchAvatarPersonaData,
+        onFetchParticipantMenuItems,
+        rtl
+      },
       null
     )
   );
