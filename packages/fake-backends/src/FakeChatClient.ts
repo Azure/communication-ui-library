@@ -90,6 +90,7 @@ export class FakeChatClient implements IChatClient {
         },
         participants: participants.map((p) => chatToSignalingParticipant(p)),
         createdBy: chatToSignalingParticipant(this.checkedGetMe(thread)),
+        /* @conditional-compile-remove(signaling-beta) */
         retentionPolicy: { kind: 'none' }
       });
 
@@ -133,6 +134,7 @@ export class FakeChatClient implements IChatClient {
         ...baseChatThreadEvent(thread),
         deletedOn: now,
         deletedBy: chatToSignalingParticipant(this.checkedGetMe(thread)),
+        /* @conditional-compile-remove(signaling-beta) */
         reason: ''
       });
 
