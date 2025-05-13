@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "feature",
+  "workstream": "New Beta Features",
+  "comment": "Update to communication-common-2.3.2-beta.1",
+  "packageName": "@azure/communication-react",
+  "email": "3941071+emlynmac@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
