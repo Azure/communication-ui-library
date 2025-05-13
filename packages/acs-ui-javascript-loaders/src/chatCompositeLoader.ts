@@ -22,14 +22,33 @@ import { initializeIcons } from '@fluentui/react';
  * options for the {@link ChatComposite} {@link ChatCompositeOptions}.
  * @public
  */
-export type ChatCompositeLoaderProps = {
+export interface ChatCompositeLoaderProps extends Partial<BaseCompositeProps<ChatCompositeIcons>> {
+  /**
+   * UserId for the local user.
+   */
   userId: CommunicationUserIdentifier;
+  /**
+   * CommunicationTokenCredential for the local user.
+   */
   credential: CommunicationTokenCredential;
+  /**
+   * Display name for the local user.
+   */
   displayName?: string;
+  /**
+   * Communication service endpoint. This is used for the token and joining the chat thread.
+   */
   endpoint: string;
+  /**
+   * Communication threadId for the chat thread.
+   */
   threadId: string;
+  /**
+   * Options for the {@link AzureCommunicationChatAdapter}
+   * This is used to configure the chat adapter.
+   */
   chatCompositeOptions?: ChatCompositeOptions;
-};
+}
 
 /**
  * Loader function for the ChatComposite that you can use in your application. This
@@ -43,7 +62,20 @@ export const loadChatComposite = async function (
   htmlElement: HTMLElement
 ): Promise<ChatAdapter | undefined> {
   initializeIcons();
-  const { userId, credential, endpoint, threadId, displayName, chatCompositeOptions } = loaderArgs;
+  const {
+    userId,
+    credential,
+    endpoint,
+    threadId,
+    displayName,
+    chatCompositeOptions,
+    fluentTheme,
+    locale,
+    icons,
+    onFetchAvatarPersonaData,
+    onFetchParticipantMenuItems,
+    rtl
+  } = loaderArgs;
   const adapter = await createAzureCommunicationChatAdapter({
     endpoint,
     userId,
@@ -56,6 +88,21 @@ export const loadChatComposite = async function (
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(React.createElement(ChatComposite, { options: chatCompositeOptions, adapter }, null));
+  createRoot(htmlElement).render(
+    React.createElement(
+      ChatComposite,
+      {
+        options: chatCompositeOptions,
+        adapter,
+        fluentTheme,
+        icons,
+        locale,
+        onFetchAvatarPersonaData,
+        onFetchParticipantMenuItems,
+        rtl
+      },
+      null
+    )
+  );
   return adapter;
 };

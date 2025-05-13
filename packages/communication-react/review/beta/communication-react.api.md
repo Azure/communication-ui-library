@@ -746,14 +746,19 @@ export type CallCompositeIcons = {
 };
 
 // @public
-export type CallCompositeLoaderProps = {
-    userId: CommunicationUserIdentifier;
-    credential: CommunicationTokenCredential;
-    displayName: string;
-    locator: CallAdapterLocator;
+export interface CallCompositeLoaderProps extends Partial<BaseCompositeProps<CallCompositeIcons>> {
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
     callCompositeOptions?: CallCompositeOptions;
+<<<<<<< HEAD
 };
+=======
+    credential: CommunicationTokenCredential;
+    displayName: string;
+    formFactor?: 'mobile' | 'desktop';
+    locator: CallAdapterLocator;
+    userId: CommunicationUserIdentifier;
+}
+>>>>>>> e5db55537 ([Bugfix] update to use interface (#5836))
 
 // @public
 export type CallCompositeOptions = {
@@ -1590,15 +1595,23 @@ export type CallWithChatCompositeIcons = {
 };
 
 // @public
-export type CallWithChatCompositeLoaderProps = {
-    userId: CommunicationUserIdentifier;
+export interface CallWithChatCompositeLoaderProps extends Partial<BaseCompositeProps<CallWithChatCompositeIcons>> {
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    callWithChatCompositeOptions?: CallWithChatCompositeOptions;
     credential: CommunicationTokenCredential;
     displayName: string;
     endpoint: string;
+<<<<<<< HEAD
     locator: CallAndChatLocator;
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
     callWithChatCompositeOptions?: CallWithChatCompositeOptions;
 };
+=======
+    formFactor?: 'mobile' | 'desktop';
+    locator: CallAndChatLocator;
+    userId: CommunicationUserIdentifier;
+}
+>>>>>>> e5db55537 ([Bugfix] update to use interface (#5836))
 
 // @public
 export type CallWithChatCompositeOptions = {
@@ -2140,14 +2153,19 @@ export type ChatCompositeIcons = {
 };
 
 // @public
-export type ChatCompositeLoaderProps = {
-    userId: CommunicationUserIdentifier;
+export interface ChatCompositeLoaderProps extends Partial<BaseCompositeProps<ChatCompositeIcons>> {
+    chatCompositeOptions?: ChatCompositeOptions;
     credential: CommunicationTokenCredential;
     displayName?: string;
     endpoint: string;
     threadId: string;
+<<<<<<< HEAD
     chatCompositeOptions?: ChatCompositeOptions;
 };
+=======
+    userId: CommunicationUserIdentifier;
+}
+>>>>>>> e5db55537 ([Bugfix] update to use interface (#5836))
 
 // @public
 export type ChatCompositeOptions = {
@@ -4332,14 +4350,21 @@ export interface OptionsDevice {
 }
 
 // @public
-export type OutboundCallCompositeLoaderProps = {
-    userId: CommunicationUserIdentifier;
+export interface OutboundCallCompositeLoaderProps extends Partial<BaseCompositeProps<CallCompositeIcons>> {
+    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
+    callCompositeOptions?: CallCompositeOptions;
     credential: CommunicationTokenCredential;
     displayName: string;
+    formFactor?: 'mobile' | 'desktop';
     targetCallees: string[] | StartCallIdentifier[];
+<<<<<<< HEAD
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
     callCompositeOptions?: CallCompositeOptions;
 };
+=======
+    userId: CommunicationUserIdentifier;
+}
+>>>>>>> e5db55537 ([Bugfix] update to use interface (#5836))
 
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
