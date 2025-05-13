@@ -749,16 +749,12 @@ export type CallCompositeIcons = {
 export interface CallCompositeLoaderProps extends Partial<BaseCompositeProps<CallCompositeIcons>> {
     callAdapterOptions?: AzureCommunicationCallAdapterOptions;
     callCompositeOptions?: CallCompositeOptions;
-<<<<<<< HEAD
-};
-=======
     credential: CommunicationTokenCredential;
     displayName: string;
     formFactor?: 'mobile' | 'desktop';
     locator: CallAdapterLocator;
     userId: CommunicationUserIdentifier;
 }
->>>>>>> e5db55537 ([Bugfix] update to use interface (#5836))
 
 // @public
 export type CallCompositeOptions = {
@@ -1601,17 +1597,10 @@ export interface CallWithChatCompositeLoaderProps extends Partial<BaseCompositeP
     credential: CommunicationTokenCredential;
     displayName: string;
     endpoint: string;
-<<<<<<< HEAD
-    locator: CallAndChatLocator;
-    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-    callWithChatCompositeOptions?: CallWithChatCompositeOptions;
-};
-=======
     formFactor?: 'mobile' | 'desktop';
     locator: CallAndChatLocator;
     userId: CommunicationUserIdentifier;
 }
->>>>>>> e5db55537 ([Bugfix] update to use interface (#5836))
 
 // @public
 export type CallWithChatCompositeOptions = {
@@ -2159,13 +2148,8 @@ export interface ChatCompositeLoaderProps extends Partial<BaseCompositeProps<Cha
     displayName?: string;
     endpoint: string;
     threadId: string;
-<<<<<<< HEAD
-    chatCompositeOptions?: ChatCompositeOptions;
-};
-=======
     userId: CommunicationUserIdentifier;
 }
->>>>>>> e5db55537 ([Bugfix] update to use interface (#5836))
 
 // @public
 export type ChatCompositeOptions = {
@@ -4357,14 +4341,8 @@ export interface OutboundCallCompositeLoaderProps extends Partial<BaseCompositeP
     displayName: string;
     formFactor?: 'mobile' | 'desktop';
     targetCallees: string[] | StartCallIdentifier[];
-<<<<<<< HEAD
-    callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-    callCompositeOptions?: CallCompositeOptions;
-};
-=======
     userId: CommunicationUserIdentifier;
 }
->>>>>>> e5db55537 ([Bugfix] update to use interface (#5836))
 
 // @public
 export type OverflowGalleryPosition = 'horizontalBottom' | 'verticalRight' | 'horizontalTop';
