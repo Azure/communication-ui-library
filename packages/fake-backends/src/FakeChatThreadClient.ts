@@ -84,7 +84,9 @@ export class FakeChatThreadClient implements IChatThreadClient {
           metadata: {}
         },
         updatedOn: new Date(Date.now()),
-        updatedBy: chatToSignalingParticipant(this.checkedGetMe())
+        updatedBy: chatToSignalingParticipant(this.checkedGetMe()),
+        // /* @conditional-compile-remove(chat-beta-sdk) */
+        retentionPolicy: { kind: 'none' }
       }
     );
     return Promise.resolve();
@@ -353,7 +355,9 @@ export class FakeChatThreadClient implements IChatThreadClient {
             metadata: {}
           },
           updatedOn: new Date(Date.now()),
-          updatedBy: chatToSignalingParticipant(this.checkedGetMe())
+          updatedBy: chatToSignalingParticipant(this.checkedGetMe()),
+          // /* @conditional-compile-remove(chat-beta-sdk) */
+          retentionPolicy: { kind: 'none' }
         }
       );
     }
