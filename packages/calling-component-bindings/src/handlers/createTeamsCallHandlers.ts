@@ -14,7 +14,7 @@ import {
   isMicrosoftTeamsAppIdentifier
 } from '@azure/communication-common';
 /* @conditional-compile-remove(teams-identity-support-beta) */
-import { isPhoneNumberIdentifier } from '@azure/communication-common';
+import { isPhoneNumberIdentifier, isTeamsExtensionUserIdentifier } from '@azure/communication-common';
 import { Common, _toCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulCallClient, StatefulDeviceManager } from '@internal/calling-stateful-client';
 import { DeclarativeTeamsCallAgent } from '@internal/calling-stateful-client';
@@ -91,6 +91,10 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
           throw new Error('Adding Microsoft Teams app identifier is not supported!');
         }
 
+        if (isTeamsExtensionUserIdentifier(participant)) {
+          throw new Error('Adding Microsoft Teams extension identifier is not supported!');
+        }
+
         if (isPhoneNumberIdentifier(participant)) {
           call?.addParticipant(participant, threadId ? { threadId } : undefined);
         }
@@ -105,6 +109,10 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
 
         if (isMicrosoftTeamsAppIdentifier(participant)) {
           throw new Error('Removing Microsoft Teams app identifier is not supported!');
+        }
+
+        if (isTeamsExtensionUserIdentifier(participant)) {
+          throw new Error('Removing Microsoft Teams extension identifier is not supported!');
         }
 
         await call?.removeParticipant(participant);
