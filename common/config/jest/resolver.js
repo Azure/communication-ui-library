@@ -28,6 +28,7 @@ module.exports = (path, options) => {
                 pkg.name === '@azure/core-tracing' ||
                 pkg.name === '@azure/core-auth' ||
                 pkg.name === '@azure/core-client' ||
+                pkg.name === '@azure-rest/core-client' ||
                 pkg.name === '@typespec/ts-http-runtime' ||
                 pkg.name === 'nanoid'
             ) {
