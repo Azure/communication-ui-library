@@ -22,6 +22,7 @@ module.exports = (path, options) => {
                 pkg.name === 'uuid' ||
                 pkg.name === '@azure/core-util' ||
                 pkg.name === '@azure/abort-controller' ||
+                pkg.name === '@azure/communication-common' ||
                 pkg.name === '@azure/core-rest-pipeline' ||
                 pkg.name === '@azure/logger' ||
                 pkg.name === '@azure/core-tracing' ||
