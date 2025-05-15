@@ -16,8 +16,8 @@ import {
   CallAdapter,
   CallAdapterLocator,
   CallCompositeOptions,
-  CallCompositeIcons,
-  BaseCompositeProps
+  BaseCompositeProps,
+  CallCompositeIcons
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
 

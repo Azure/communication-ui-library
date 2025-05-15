@@ -89,7 +89,9 @@ export class FakeChatClient implements IChatClient {
           metadata: {}
         },
         participants: participants.map((p) => chatToSignalingParticipant(p)),
-        createdBy: chatToSignalingParticipant(this.checkedGetMe(thread))
+        createdBy: chatToSignalingParticipant(this.checkedGetMe(thread)),
+        /* @conditional-compile-remove(signaling-beta) */
+        retentionPolicy: { kind: 'none' }
       });
 
     return Promise.resolve({
@@ -131,7 +133,9 @@ export class FakeChatClient implements IChatClient {
       .chatThreadDeleted(getThreadEventTargets(thread, this.userId), {
         ...baseChatThreadEvent(thread),
         deletedOn: now,
-        deletedBy: chatToSignalingParticipant(this.checkedGetMe(thread))
+        deletedBy: chatToSignalingParticipant(this.checkedGetMe(thread)),
+        /* @conditional-compile-remove(signaling-beta) */
+        reason: ''
       });
 
     return Promise.resolve();

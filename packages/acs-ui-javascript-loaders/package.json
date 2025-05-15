@@ -31,9 +31,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@azure/communication-common": "^2.3.1",
-    "@internal/acs-ui-common": "1.28.0-beta.0",
-    "@internal/react-composites": "1.28.0-beta.0",
+    "@azure/communication-common": "^2.3.2-beta.1 || ^2.3.1",
+    "@internal/acs-ui-common": "1.27.0-beta.1",
+    "@internal/react-composites": "1.27.0-beta.1",
     "@fluentui/react": "^8.122.17",
     "@azure/logger": "^1.0.4"
   },
@@ -66,7 +66,7 @@
     "react": "18.3.1",
     "rimraf": "^2.6.2",
     "rollup": "^4.40.2",
-    "ts-jest": "^29.3.2",
+    "ts-jest": "^29.3.3",
     "typescript": "5.4.5"
   }
 }

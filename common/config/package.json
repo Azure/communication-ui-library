@@ -21,7 +21,7 @@
     "@playwright/test": "~1.52.0",
     "@rollup/plugin-commonjs": "~25.0.7",
     "@rollup/plugin-json": "^6.0.1",
-    "@types/node": "^22.10.6",
+    "@types/node": "^22.15.18",
     "beachball": "^2.44.0",
     "rollup": "^4.40.2",
     "rollup-plugin-sourcemaps": "~0.6.3",

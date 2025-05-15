@@ -146,7 +146,9 @@ describe('declarative chatClient subscribe to event properly after startRealtime
         // /* @conditional-compile-remove(chat-beta-sdk) */
         metadata: {}
       },
-      participants: mockParticipants
+      participants: mockParticipants,
+      // /* @conditional-compile-remove(chat-beta-sdk) */
+      retentionPolicy: { kind: 'none' }
     };
 
     await client.triggerEvent('chatThreadCreated', event);
@@ -184,7 +186,9 @@ describe('declarative chatClient subscribe to event properly after startRealtime
         // /* @conditional-compile-remove(chat-beta-sdk) */
         metadata: {}
       },
-      deletedOn: new Date('01-01-2020')
+      deletedOn: new Date('01-01-2020'),
+      // /* @conditional-compile-remove(chat-beta-sdk) */
+      reason: ''
     };
     await client.triggerEvent('chatThreadDeleted', deletedEvent);
     expect(Object.keys(client.getState().threads).length).toBe(0);

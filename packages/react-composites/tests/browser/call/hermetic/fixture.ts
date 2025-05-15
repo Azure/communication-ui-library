@@ -439,6 +439,10 @@ const consumerCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
   forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  realTimeText: {
+    isPresent: false,
+    reason: 'CapabilityNotApplicableForTheCallType'
   }
 });
 
@@ -488,6 +492,10 @@ const attendeeCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
   forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  realTimeText: {
+    isPresent: true,
+    reason: 'Capable'
   }
 });
 
@@ -537,6 +545,10 @@ const presenterCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
   forbidOthersVideo: {
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  realTimeText: {
+    isPresent: true,
+    reason: 'Capable'
   }
 });
 
@@ -586,6 +598,10 @@ const presenterCapabilitiesInTeamsCall = (): ParticipantCapabilities => ({
   forbidOthersVideo: {
     isPresent: true,
     reason: 'CapabilityNotApplicableForTheCallType'
+  },
+  realTimeText: {
+    isPresent: true,
+    reason: 'Capable'
   }
 });
 
