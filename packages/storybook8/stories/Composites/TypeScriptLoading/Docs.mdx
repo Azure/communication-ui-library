@@ -76,7 +76,7 @@ dependency.
 The following snippet is an example of how you might import the `CallComposite` in your [Angular](https://angular.dev/) application.
 
 ```ts
-import { Component } from '@angular/core';
+import { Component, OnDestory } from '@angular/core';
 import { CallCompositeOptions } from '@azure/communication-react';
 import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
 
@@ -86,12 +86,12 @@ import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '
   templateUrl: './calling.component.html',
   styleUrls: ['./calling.component.css']
 })
-export class CallingComponent {
+export class CallingComponent implements OnDestroy {
   userId = '<ACS User Id>';
   token = '<ACS Token>';
   displayName = 'User';
   groupId = '<GUID for call>';
-  adapter: any;
+  adapter: CallAdapter | undefined = undefined;
 
   /**
    * This is how you would load in the CallComposite with lazy loading. This
@@ -128,7 +128,8 @@ export class CallingComponent {
               locator: {
                 groupId: this.groupId
               },
-              callCompositeOptions: compositeOptions
+              callCompositeOptions: compositeOptions,
+              formFactor: 'desktop'
             },
             compositeContainer
           )
