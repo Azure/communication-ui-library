@@ -290,6 +290,17 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
         return Reflect.get(target, prop);
     }
   }
+
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  public set<P extends keyof CallClient>(target: CallClient, prop: P): any {
+    switch (prop) {
+      case 'dispose': {
+        return this._context.withAsyncErrorTeedToState(async () => {
+          await target.dispose();
+        }, 'CallClient.dispose');
+      }
+    }
+  }
 }
 
 /**
