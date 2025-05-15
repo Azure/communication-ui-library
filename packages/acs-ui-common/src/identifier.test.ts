@@ -28,6 +28,7 @@ test('phone number conversion from E.164 format', () => {
   const parsed = fromFlatCommunicationIdentifier('+15555555555');
   expect(isPhoneNumberIdentifier(parsed)).toBeTruthy;
   expect(parsed).toEqual({
+    /* @conditional-compile-remove(calling-beta-sdk) */
     isAnonymous: false,
     kind: 'phoneNumber',
     phoneNumber: '+15555555555'
@@ -38,6 +39,7 @@ test('Phone number conversions', () => {
   const parsed = fromFlatCommunicationIdentifier('4:OPAQUE');
   expect(isPhoneNumberIdentifier(parsed)).toBeTruthy();
   expect(parsed).toEqual({
+    /* @conditional-compile-remove(calling-beta-sdk) */
     isAnonymous: false,
     kind: 'phoneNumber',
     phoneNumber: 'OPAQUE'
