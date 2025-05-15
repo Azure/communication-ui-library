@@ -46,7 +46,6 @@ We are excited to announce that the Azure Communication Services Web UI Library 
 - Update RoosterJS version to fix an issue where cursor wasn't visible in Windows high contrast themes ([PR #5833](https://github.com/azure/communication-ui-library/pull/5833) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Devices dropdown list now narrates a group name when actioned ([PR #5798](https://github.com/azure/communication-ui-library/pull/5798) by edwardlee@microsoft.com)
 - Fix bug where modal title is not defined as heading ([PR #5800](https://github.com/azure/communication-ui-library/pull/5800) by 96077406+carocao-msft@users.noreply.github.com)
-- Fix issue where BaseComposite props are not usable with JSLoader functions package ([PR #5836](https://github.com/Azure/communication-ui-library/pull/5836) by dmceachern@microsoft.com)
 
 
 ## [1.26.0](https://github.com/azure/communication-ui-library/tree/1.26.0)

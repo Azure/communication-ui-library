@@ -16,9 +16,7 @@ import {
   CallCompositeOptions,
   StartCallIdentifier,
   AzureCommunicationCallAdapterOptions,
-  CallAdapter,
-  BaseCompositeProps,
-  CallCompositeIcons
+  CallAdapter
 } from '@internal/react-composites';
 import { initializeIcons } from '@fluentui/react';
 
@@ -31,40 +29,14 @@ import { initializeIcons } from '@fluentui/react';
  *
  * @public
  */
-export interface OutboundCallCompositeLoaderProps extends Partial<BaseCompositeProps<CallCompositeIcons>> {
-  /**
-   * UserId for the local user.
-   */
+export type OutboundCallCompositeLoaderProps = {
   userId: CommunicationUserIdentifier;
-  /**
-   * CommunicationTokenCredential for the local user.
-   */
   credential: CommunicationTokenCredential;
-  /**
-   * Display name for the local user.
-   */
   displayName: string;
-  /**
-   * Participants that will be called.
-   * This can be a list of either {@link CommunicationUserIdentifier} or string identifiers.
-   */
   targetCallees: string[] | StartCallIdentifier[];
-  /**
-   * Options for the {@link AzureCommunicationCallAdapter}
-   * This is used to configure the call adapter.
-   */
   callAdapterOptions?: AzureCommunicationCallAdapterOptions;
-  /**
-   * Options for the {@link CallComposite} {@link CallCompositeOptions}
-   * This is used to configure the call composite.
-   */
   callCompositeOptions?: CallCompositeOptions;
-  /**
-   * Device form factor for the composite.
-   * This is used to configure the call composite.
-   */
-  formFactor?: 'mobile' | 'desktop';
-}
+};
 
 /**
  * Loader function for the OutboundCallComposite that you can use in your application. This
@@ -78,21 +50,7 @@ export const loadOutboundCallComposite = async function (
   htmlElement: HTMLElement
 ): Promise<CallAdapter | undefined> {
   initializeIcons();
-  const {
-    userId,
-    credential,
-    displayName,
-    targetCallees,
-    callAdapterOptions,
-    callCompositeOptions,
-    fluentTheme,
-    formFactor,
-    icons,
-    locale,
-    onFetchAvatarPersonaData,
-    onFetchParticipantMenuItems,
-    rtl
-  } = loaderArgs;
+  const { userId, credential, displayName, targetCallees, callAdapterOptions, callCompositeOptions } = loaderArgs;
   const formattedTargetCallees =
     typeof targetCallees[0] === 'string'
       ? (targetCallees as string[]).map((callee: string) => {
@@ -112,22 +70,6 @@ export const loadOutboundCallComposite = async function (
     throw new Error('Failed to find the root element');
   }
 
-  createRoot(htmlElement).render(
-    React.createElement(
-      CallComposite,
-      {
-        options: callCompositeOptions,
-        adapter,
-        fluentTheme,
-        formFactor,
-        icons,
-        locale,
-        onFetchAvatarPersonaData,
-        onFetchParticipantMenuItems,
-        rtl
-      },
-      null
-    )
-  );
+  createRoot(htmlElement).render(React.createElement(CallComposite, { options: callCompositeOptions, adapter }, null));
   return adapter;
 };
