@@ -1028,7 +1028,8 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           | CommunicationUserIdentifier
           | MicrosoftTeamsUserIdentifier
           | UnknownIdentifier
-        )[],
+        )[]
+      | /* @conditional-compile-remove(calling-beta-sdk) */ CommunicationIdentifier[],
     options?: StartCallOptions
   ): CallTypeOf<AgentType> | undefined {
     if (_isInCall(this.getState().call?.state ?? 'None')) {
