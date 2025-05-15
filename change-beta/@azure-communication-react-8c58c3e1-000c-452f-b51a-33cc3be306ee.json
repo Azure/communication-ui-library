@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "fix",
+  "workstream": "Calling SDK",
+  "comment": "Add call client disposal method to the stateful client",
+  "packageName": "@azure/communication-react",
+  "email": "dmceachern@microsoft.com",
+  "dependentChangeType": "patch"
+}
