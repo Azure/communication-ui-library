@@ -1,6 +1,6 @@
 {
   "name": "@internal/storybook8",
-  "version": "1.28.0-beta.0",
+  "version": "1.27.0-beta.1",
   "description": "Azure Communication Services UI Library Storybook",
   "scripts": {
     "build": "cross-env NODE_ENV=production node ./scripts/build.mjs",
@@ -32,7 +32,7 @@
     "@fluentui/react-icons": "^2.0.298",
     "@fluentui/react": "^8.122.17",
     "@fluentui/theme-samples": "8.7.123",
-    "@internal/fake-backends": "1.28.0-beta.0",
+    "@internal/fake-backends": "1.27.0-beta.1",
     "@griffel/react": "^1.5.30",
     "@microsoft/applicationinsights-react-js": "^3.0.5",
     "@microsoft/applicationinsights-web": "^2.6.2",
