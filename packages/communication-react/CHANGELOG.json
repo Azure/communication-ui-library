@@ -2,6 +2,225 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 12 May 2025 20:47:06 GMT",
+      "version": "1.27.0",
+      "tag": "@azure/communication-react_v1.27.0",
+      "comments": {
+        "minor": [
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c586460cb086eefc82c103548b81238769ebb7e8",
+            "area": "storybook",
+            "workstream": "RTT",
+            "comment": "Remove RTT beta banner"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "db87253e434176591959a100b2676918596574e2",
+            "area": "feature",
+            "workstream": "OnFetchProfile",
+            "comment": "move onfetchProfile to stable"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "62d7971eabb08f378d56432a64afe985c2599063",
+            "area": "feature",
+            "workstream": "Add onFetchProfile in CallWithChat Composite",
+            "comment": "Add onFetchProfile for CallWithChat Composite"
+          }
+        ],
+        "patch": [
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "89b073739d3e3576fe808976323afb01b065154a",
+            "area": "improvement",
+            "workstream": "Add selector for getting all remote participants",
+            "comment": "Add selector for all remote participants including active and inactive users"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "47b8caba2d401f3591c12f6b1bf8331b80632e40",
+            "area": "fix",
+            "workstream": "iOS",
+            "comment": "Prevent screen zooming on message input"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "d8dba4896e9572d9a26ed4f80c15c1c5e48c09b4",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Add focus outline to buttons that maintain focus after being actioned"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e5df453c6640ebca1add0ef6a5c758169e405c7c",
+            "area": "fix",
+            "workstream": "RTT",
+            "comment": "Fix bug where modal cancel button focus border has low contrast"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f156e0b8801bbf7c6e11a89fcf6a452f22d0d60f",
+            "area": "fix",
+            "workstream": "a11y",
+            "comment": "Add delay to tooltip to enable mouseover tooltip"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f4c15039e814e1e62294bcca26ce38713ebe23e0",
+            "area": "fix",
+            "workstream": "Breakout rooms",
+            "comment": "Maintain muted state when joining and leaving breakout rooms"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "49c50ea08413c0b372abd32af018239bb3f9a139",
+            "area": "fix",
+            "workstream": "RTT",
+            "comment": "Fix bug where scrollable UL element is not keyboard focusable"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3fc6a0a511b583c1e87e43238cb1fc51b774e59c",
+            "area": "improvement",
+            "workstream": "Update calling effects package",
+            "comment": "Update calling-effects-package to 1.1.4"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fdd3d87ff2d21ffb5ccd4f17ddb90db1c1852321",
+            "area": "improvement",
+            "workstream": "Move unsupported browser version to alpha",
+            "comment": "Move Unsupported Browser Version to alpha"
+          },
+          {
+            "author": "79475487+mgamis-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "62376788f341a878782079536640a1dc0172b6c5",
+            "area": "feature",
+            "workstream": "Breakout rooms",
+            "comment": "Fix listeners subscribed to chat events of AzureCallWithChatAdapter when the thread id is resolved late or is changed when moving to and from breakout rooms"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c5c77d673b30156a4b20e5ab45bb30ab194aedbf",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix RichTextSendbox send button is disabled after file uploading is completed"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2447364524b3a33a8973fcc9cec42a852b6d9d46",
+            "area": "storybook",
+            "workstream": "On Fetch Profile",
+            "comment": "Conceptual docs for On fetch Profile"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "38e58a892792d5b851c134a43ab39cc8413cf349",
+            "area": "fix",
+            "workstream": "Fix bug where mobile video gallery shows landscape view when RTT banner is enlarged",
+            "comment": "Fix bug where mobile video gallery shows landscape view when RTT banner is enlarged"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3ca4e3b3a465cb9a4236b3c1ec51a0f170e36f98",
+            "area": "fix",
+            "workstream": "Rich Text Editor",
+            "comment": "Add inlineImage change checking for the edit box"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "34aff46bcc602fe49c1af0121c6fd449af74b7d0",
+            "area": "fix",
+            "workstream": "Rich Text Editor",
+            "comment": "Fix dark mode rendering"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c7633dadba5e78d1bc8e1b2fc34c969a6a924f95",
+            "area": "improvement",
+            "workstream": "Add selector changes for unnamed participants that left call",
+            "comment": "Add changes for stateful client to get display name of participants that left call"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2dda81ee9df2df8a987c116fd399d31f8290d547",
+            "area": "fix",
+            "workstream": "RTT",
+            "comment": "Fix bug where RTT lists has a direct div child"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a45218014249e56f99b05662966fe264c0026720",
+            "area": "improvement",
+            "workstream": "Dependency updates",
+            "comment": "Update dependencies"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "42e60e0c9ca5525e2462227d08af323d259c06fd",
+            "area": "fix",
+            "workstream": "Dependencies",
+            "comment": "Update RoosterJS version to fix an issue where cursor wasn't visible in Windows high contrast themes"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9921b12efc1a846d2c0969d917f0134a8d5b04fe",
+            "area": "feature",
+            "workstream": "RTT",
+            "comment": "Ensure text wrap for long words without spaces"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "7a92d555ba916edef5557c6483d1d2bca21e9773",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Devices dropdown list now narrates a group name when actioned"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "4ae8894d0b035def994c603d8af0d6d0002150bf",
+            "area": "improvement",
+            "workstream": "PSTN",
+            "comment": "Enable ringing tone during connecting and ringing state"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "7edfd0e25587020a393eb324fe8e0a1896dc3a04",
+            "area": "fix",
+            "workstream": "RTT",
+            "comment": "Fix bug where modal title is not defined as heading"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 29 Apr 2025 17:27:30 GMT",
       "version": "1.27.0-beta.1",
       "tag": "@azure/communication-react_v1.27.0-beta.1",
