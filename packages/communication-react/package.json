@@ -111,11 +111,7 @@
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell"
   },
   "devDependencies": {
-<<<<<<< HEAD
     "@azure/communication-calling": "1.36.1-beta.1 || ^1.35.1",
-=======
-    "@azure/communication-calling": "1.35.1-beta.1 || ^1.35.1",
->>>>>>> parent of a67567f8a (Merge remote-tracking branch 'origin/release/1.27.0' into prerelease-stable-remove-beta-suffix/1.27.0)
     "@azure/communication-calling-effects": "^1.1.4",
     "@azure/core-auth": "^1.7.2",
     "@babel/cli": "^7.27.2",
