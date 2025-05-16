@@ -19,7 +19,7 @@
     "test:ci-coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage\"",
     "test:coverage": "rushx _by-flavor \"rushx _test:by-flavor --coverage --coverageReporters=lcov\"",
     "snapshot:update": "rushx test -- --update-snapshot",
-    "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
+    "preprocess": "cpy \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",

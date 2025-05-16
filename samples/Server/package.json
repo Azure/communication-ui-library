@@ -8,7 +8,7 @@
     "build:stable": "echo skip",
     "clean": "rimraf dist",
     "migrate:appsettings": "node -e \"require('fs').copyFile('appsettings.json.sample', 'sample-dist/appsettings.json', function(e) { if (e) console.log(e); })\"",
-    "port:sample": "cpy './dist/**' sample-dist/dist && cpy './bin/**' sample-dist/bin && cpy './src/**' sample-dist/src && rushx migrate:appsettings",
+    "port:sample": "cpy './dist/**' sample-dist/dist && cpy './bin/**' sample-dist/bin && cpy \"./src/**\" sample-dist/src && rushx migrate:appsettings",
     "start": "ts-node ./bin/www",
     "start:dev": "ts-node-dev ./bin/www",
     "start:debug": "node --inspect=9229 -r ts-node/register ./bin/www",

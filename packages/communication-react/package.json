@@ -77,9 +77,9 @@
     }
   },
   "scripts": {
-    "copy-original": "cpy '../*/src/**' ./preprocess-dist && renamer --find src --replace preprocessed ./preprocess-dist/**/*",
+    "copy-original": "cpy \"../*/src/**\" ./preprocess-dist && renamer --find src --replace preprocessed ./preprocess-dist/**/*",
     "preprocess": "babel ../*/src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
-    "copy-preprocess": "cpy '../*/preprocessed/**' ./preprocess-dist && renamer --find preprocessed --replace src ./preprocess-dist/**/*",
+    "copy-preprocess": "cpy \"../*/preprocessed/**\" ./preprocess-dist && renamer --find preprocessed --replace src ./preprocess-dist/**/*",
     "build:test": "tspc",
     "build": "rushx check-deps && rushx _by-flavor \"rushx _build:by-flavor\"",
     "build:cjs": "rollup -c --silent",

@@ -33,7 +33,7 @@
     "test:e2e:chat:update": "node ./scripts/runBrowserTests.mjs -u -c chat",
     "test:e2e:callwithchat:update": "node ./scripts/runBrowserTests.mjs -u -c callWithChat",
     "snapshot:update": "rushx test -- --update-snapshot",
-    "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
+    "preprocess": "cpy \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative && rimraf ../preprocessed",
     "prettier": "prettier --no-error-on-unmatched-pattern --write --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "prettier:check": "prettier --no-error-on-unmatched-pattern --check --config ../../.prettierrc --ignore-path=../../.prettierignore \"**/*.js\" \"**/*.jsx\" \"**/*.ts\" \"**/*.tsx\"",
     "lint": "eslint --max-warnings 0 \"*/**/*.{ts,tsx}\"",
