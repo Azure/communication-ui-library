@@ -13,7 +13,7 @@
     "update:snapshot": "playwright test tests --update-snapshots",
     "lint": "echo skip",
     "lint:fix": "echo skip",
-    "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
+    "preprocess": "cpy \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
     "preprocess:stable-flavor": "rushx _stable-flavor \"rushx preprocess && rushx lint:fix && rushx prettier\"",
     "prettier": "",
     "prettier:check": "",
