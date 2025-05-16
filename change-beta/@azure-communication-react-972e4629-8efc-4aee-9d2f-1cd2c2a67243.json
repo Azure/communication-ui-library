@@ -1,8 +1,8 @@
 {
   "type": "patch",
-  "area": "improvement",
-  "workstream": "Update calling effects package",
-  "comment": "Update calling-effects-package to 1.1.4",
+  "area": "fix",
+  "workstream": "Build project",
+  "comment": "Update build scripts to use paths compatible with all OS's",
   "packageName": "@azure/communication-react",
   "email": "dmceachern@microsoft.com",
   "dependentChangeType": "patch"

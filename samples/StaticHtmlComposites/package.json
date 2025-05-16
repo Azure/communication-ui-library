@@ -13,7 +13,7 @@
     "update:snapshot": "playwright test tests --update-snapshots",
     "lint": "echo skip",
     "lint:fix": "echo skip",
-    "preprocess": "cpy './src/**' ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
+    "preprocess": "cpy \"./src/**\" ./preprocessed && babel ./src --out-dir ../preprocessed --extensions \".ts,.tsx\" --keep-file-extension --config-file ./.babelrc.js --relative",
     "preprocess:stable-flavor": "rushx _stable-flavor \"rushx preprocess && rushx lint:fix && rushx prettier\"",
     "prettier": "",
     "prettier:check": "",
@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-react": "1.27.0-beta.1",
+    "@azure/communication-react": "1.28.0-beta.0",
     "@azure/communication-common": "^2.3.2-beta.1 || ^2.3.1",
     "@azure/communication-calling": "1.36.1-beta.1 || ^1.35.1",
     "@azure/communication-chat": "1.6.0-beta.7 || ^1.5.4",
