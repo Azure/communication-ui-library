@@ -698,7 +698,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   customDrawerButtons['overflow'].forEach((element) => {
     const customButtonProps = { ...element };
     // Default Auto dismiss drawer on click unless specified
-    if (customButtonProps.dismissDrawer || customButtonProps.dismissDrawer == null) {
+    if (customButtonProps.dismissDrawer !== false) {
       element = {
         ...customButtonProps,
         onItemClick: () => {
