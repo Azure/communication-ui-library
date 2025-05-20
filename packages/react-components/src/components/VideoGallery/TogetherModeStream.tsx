@@ -1,11 +1,10 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(together-mode) */
 import React, { useEffect, useMemo, memo, useState } from 'react';
-/* @conditional-compile-remove(together-mode) */
+
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(together-mode) */
+
 import {
   ReactionResources,
   VideoGalleryTogetherModeParticipantPosition,
@@ -16,15 +15,15 @@ import {
   VideoStreamOptions,
   TogetherModeStreamOptions
 } from '../../types';
-/* @conditional-compile-remove(together-mode) */
+
 import { StreamMedia } from '../StreamMedia';
-/* @conditional-compile-remove(together-mode) */
+
 import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
-/* @conditional-compile-remove(together-mode) */
+
 import { Stack } from '@fluentui/react';
-/* @conditional-compile-remove(together-mode) */
+
 import { togetherModeStreamRootStyle } from '../styles/TogetherMode.styles';
-/* @conditional-compile-remove(together-mode) */
+
 /**
  * A memoized version of local screen share component. React.memo is used for a performance
  * boost by memoizing the same rendered component to avoid rerendering this when the parent component rerenders.

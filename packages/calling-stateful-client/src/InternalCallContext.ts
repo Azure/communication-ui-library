@@ -45,7 +45,6 @@ export type LocalRenderInfo = RenderInfo<LocalVideoStream>;
  */
 export type RemoteRenderInfo = RenderInfo<RemoteVideoStream>;
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Internally used to keep track of the status, renderer, and awaiting promise, associated with a CallFeatureVideoStream.
  */
@@ -61,7 +60,6 @@ export class InternalCallContext {
   // <CallId, <MediaStreamType, LocalRenderInfo>>.
   private _localRenderInfos = new Map<string, Map<MediaStreamType, LocalRenderInfo>>();
 
-  /* @conditional-compile-remove(together-mode) */
   // <CallId, <featureName, <MediaStreamType, CallFeatureRenderInfo>>>.
   private _callFeatureRenderInfos = new Map<string, Map<string, Map<MediaStreamType, CallFeatureRenderInfo>>>();
 
@@ -87,9 +85,9 @@ export class InternalCallContext {
       this._localRenderInfos.delete(oldCallId);
       this._localRenderInfos.set(newCallId, localRenderInfos);
     }
-    /* @conditional-compile-remove(together-mode) */
+
     const callFeatureRenderInfos = this._callFeatureRenderInfos.get(oldCallId);
-    /* @conditional-compile-remove(together-mode) */
+
     if (callFeatureRenderInfos) {
       this._callFeatureRenderInfos.delete(oldCallId);
       this._callFeatureRenderInfos.set(newCallId, callFeatureRenderInfos);
@@ -238,18 +236,16 @@ export class InternalCallContext {
   public clearCallRelatedState(): void {
     this._remoteRenderInfos.clear();
     this._localRenderInfos.clear();
-    /* @conditional-compile-remove(together-mode) */
+
     this._callFeatureRenderInfos.clear();
   }
 
-  /* @conditional-compile-remove(together-mode) */
   public getCallFeatureRenderInfosForCall(
     callId: string
   ): Map<string, Map<MediaStreamType, CallFeatureRenderInfo>> | undefined {
     return this._callFeatureRenderInfos.get(this._callIdHistory.latestCallId(callId));
   }
 
-  /* @conditional-compile-remove(together-mode) */
   public getCallFeatureRenderInfo(
     callId: string,
     featureNameKey: string,
@@ -265,7 +261,6 @@ export class InternalCallContext {
     return callFeatureRenderInfosForCall;
   }
 
-  /* @conditional-compile-remove(together-mode) */
   public setCallFeatureRenderInfo(
     callId: string,
     featureNameKey: string,
@@ -288,7 +283,6 @@ export class InternalCallContext {
     featureRenderInfos.set(streamKey, { stream, status, renderer });
   }
 
-  /* @conditional-compile-remove(together-mode) */
   public deleteCallFeatureRenderInfo(callId: string, featureName: string, streamKey: MediaStreamType): void {
     const callFeatureRenderInfoForCall = this._callFeatureRenderInfos.get(this._callIdHistory.latestCallId(callId));
     if (!callFeatureRenderInfoForCall || !callFeatureRenderInfoForCall.get(featureName)) {

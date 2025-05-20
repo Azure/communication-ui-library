@@ -1,28 +1,25 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(together-mode) */
+
 import { _pxToRem } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(together-mode) */
+
 import { VideoGalleryTogetherModeSeatingInfo } from '../../types/TogetherModeTypes';
-/* @conditional-compile-remove(together-mode) */
+
 import { IStackStyles } from '@fluentui/react';
-/* @conditional-compile-remove(together-mode) */
+
 import { CSSProperties } from 'react';
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Multiplier to convert rem units to pixels.
  */
 export const REM_TO_PX_MULTIPLIER = 16;
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * The travel height for reactions in Together Mode.
  * The reaction move overlay uses pixel units, so the seat position height, defined in rem, needs to be converted to pixels
  */
 export const REACTION_TRAVEL_HEIGHT = 0.35 * REM_TO_PX_MULTIPLIER;
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Defines the maximum travel height for reactions in Together Mode.
  * Ensures the reaction animation does not exceed the center point from the top.
@@ -30,13 +27,11 @@ export const REACTION_TRAVEL_HEIGHT = 0.35 * REM_TO_PX_MULTIPLIER;
  */
 export const REACTION_MAX_TRAVEL_HEIGHT = 0.5 * REM_TO_PX_MULTIPLIER;
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * The maximum width for displaying the participant's display name.
  */
 export const MAX_DISPLAY_NAME_WIDTH = 150;
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Interface for defining the coordinates of a seat in Together Mode.
  */
@@ -47,7 +42,6 @@ export interface TogetherModeParticipantSeatPosition {
   top: string;
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Interface for defining the style of a seat position in Together Mode.
  */
@@ -55,7 +49,6 @@ export interface TogetherModeSeatStyle {
   seatPosition: TogetherModeParticipantSeatPosition;
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Sets the seating position for a participant in Together Mode.
  *
@@ -73,7 +66,6 @@ export function setParticipantSeatingPosition(
   };
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Return a style bucket based on the number of active sprites.
  * For example, the first three reactions should appear at maximum
@@ -88,7 +80,6 @@ export function setTogetherModeSeatPositionStyle(
   };
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * The style for the Together Mode meeting overlay.
  */
@@ -100,7 +91,6 @@ export const togetherModeMeetingOverlayStyle: CSSProperties = {
   left: '0'
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Generates the overlay style for a participant in Together Mode.
  *
@@ -114,13 +104,11 @@ export function getTogetherModeParticipantOverlayStyle(seatingPositionStyle: Tog
   };
 }
 
-/* @conditional-compile-remove(together-mode) */
 // Function to map a value from one range to another
 const mapRange = (value: number, inMin: number, inMax: number, outMin: number, outMax: number): number => {
   return outMin + ((value - inMin) * (outMax - outMin)) / (inMax - inMin);
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Calculate the reaction emoji scaled size based on width and height of the participant seat width and height.
  * This is needed when the browser is resized and the participant seat width and height changes.
@@ -146,7 +134,6 @@ export const calculateScaledSize = (width: number, height: number): number => {
   return mapRange(size, minSize, maxSize, minScaledSize, maxScaledSize);
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */
@@ -163,7 +150,6 @@ export const togetherModeStreamRootStyle: IStackStyles = {
   }
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */
@@ -174,7 +160,6 @@ export const togetherModeIconStyle = (): CSSProperties => {
   };
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * The style for the container holding the display name, raiseHand, spotlight and mute icons.
  * @private
@@ -196,7 +181,6 @@ export const togetherModeParticipantStatusContainer = (
   };
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */
@@ -231,7 +215,6 @@ export const togetherModeParticipantDisplayName = (
   };
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */
@@ -250,7 +233,6 @@ export const togetherModeParticipantEmojiSpriteStyle = (
   };
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * The style for the transition of the participant status container in Together Mode.
  * @private

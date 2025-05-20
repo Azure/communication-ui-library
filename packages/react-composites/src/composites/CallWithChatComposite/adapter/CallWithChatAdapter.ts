@@ -41,7 +41,7 @@ import { AddPhoneNumberOptions } from '@azure/communication-calling';
 import { BreakoutRoomsUpdatedListener } from '@azure/communication-calling';
 import { DtmfTone } from '@azure/communication-calling';
 import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react-components';
-/* @conditional-compile-remove(together-mode) */
+
 import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 import { SendMessageOptions } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -230,7 +230,7 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   disposeStreamView(remoteUserId?: string, options?: VideoStreamOptions): Promise<void>;
-  /* @conditional-compile-remove(together-mode) */
+
   /**
    * Create the html view for a togethermode stream.
    *
@@ -242,7 +242,7 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   createTogetherModeStreamView(options?: TogetherModeStreamOptions): Promise<void | TogetherModeStreamViewResult>;
-  /* @conditional-compile-remove(together-mode) */
+
   /**
    * Start together mode.
    *
@@ -253,7 +253,7 @@ export interface CallWithChatAdapterManagement {
    * @public
    */
   startTogetherMode(): Promise<void>;
-  /* @conditional-compile-remove(together-mode) */
+
   /**
    * Recalculate the seating positions for together mode.
    *
@@ -267,7 +267,6 @@ export interface CallWithChatAdapterManagement {
    */
   setTogetherModeSceneSize(width: number, height: number): void;
 
-  /* @conditional-compile-remove(together-mode) */
   /**
    * Dispose the html view for a togethermode stream.
    *

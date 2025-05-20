@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(together-mode) */
 import React, { useMemo, useState, memo, useEffect } from 'react';
-/* @conditional-compile-remove(together-mode) */
+
 import {
   Reaction,
   ReactionResources,
@@ -11,19 +10,19 @@ import {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant
 } from '../types';
-/* @conditional-compile-remove(together-mode) */
+
 import { moveAnimationStyles, spriteAnimationStyles } from './styles/ReactionOverlay.style';
-/* @conditional-compile-remove(together-mode) */
+
 import { REACTION_NUMBER_OF_ANIMATION_FRAMES } from './VideoGallery/utils/reactionUtils';
-/* @conditional-compile-remove(together-mode) */
+
 import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
-/* @conditional-compile-remove(together-mode) */
+
 import { getEmojiResource } from './VideoGallery/utils/videoGalleryLayoutUtils';
-/* @conditional-compile-remove(together-mode) */
+
 import { useLocale } from '../localization';
-/* @conditional-compile-remove(together-mode) */
+
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
-/* @conditional-compile-remove(together-mode) */
+
 import {
   calculateScaledSize,
   getTogetherModeParticipantOverlayStyle,
@@ -37,14 +36,13 @@ import {
   togetherModeParticipantStatusContainer,
   TogetherModeSeatStyle
 } from './styles/TogetherMode.styles';
-/* @conditional-compile-remove(together-mode) */
+
 import { CallingTheme, useTheme } from '../theming';
-/* @conditional-compile-remove(together-mode) */
+
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
-/* @conditional-compile-remove(together-mode) */
+
 import { _pxToRem } from '@internal/acs-ui-common';
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Signaling action overlay component props
  * @internal
@@ -61,7 +59,6 @@ type TogetherModeParticipantStatus = {
   showDisplayName: boolean;
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * TogetherModeOverlay component renders an empty JSX element.
  *

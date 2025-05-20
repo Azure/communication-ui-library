@@ -303,7 +303,6 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
       });
     }
 
-    /* @conditional-compile-remove(together-mode) */
     if (latestNotifications['togetherModeStarted']) {
       activeNotifications.push({
         type: 'togetherModeStarted',
@@ -311,7 +310,7 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         autoDismiss: true
       });
     }
-    /* @conditional-compile-remove(together-mode) */
+
     if (latestNotifications['togetherModeEnded']) {
       activeNotifications.push({
         type: 'togetherModeEnded',

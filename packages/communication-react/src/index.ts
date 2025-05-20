@@ -316,7 +316,6 @@ export type {
   LocalScreenShareView
 } from '../../react-components/src';
 
-/* @conditional-compile-remove(together-mode) */
 export type {
   TogetherModeStreamViewResult,
   VideoGalleryTogetherModeStreams,

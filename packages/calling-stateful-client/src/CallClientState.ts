@@ -329,14 +329,12 @@ export interface RaiseHandCallFeatureState {
   localParticipantRaisedHand?: RaisedHandState;
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Represents the name of the call feature stream
  * @public
  */
 export type CallFeatureStreamName = 'togetherMode';
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * State only version of {@link @azure/communication-calling#CallFeatureStream}.
  * Represents call feature stream state.
@@ -349,7 +347,6 @@ export interface CallFeatureStreamState extends RemoteVideoStreamState {
   feature?: CallFeatureStreamName;
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * State only version of {@link @azure/communication-calling#TogetherModeSeatingMap}.
  * @public
@@ -375,7 +372,6 @@ export interface TogetherModeSeatingPositionState {
   height: number;
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Represents the seating positions of participants in Together Mode.
  *
@@ -383,7 +379,6 @@ export interface TogetherModeSeatingPositionState {
  */
 export type TogetherModeParticipantSeatingState = Record<string, TogetherModeSeatingPositionState>;
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * Represents the streams in Together Mode.
  *
@@ -396,7 +391,6 @@ export interface TogetherModeStreamsState {
   mainVideoStream?: CallFeatureStreamState;
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * State only version of {@link @azure/communication-calling#TogetherModeCallFeature}. {@link StatefulCallClient}.
  * Represents the state of the Together Mode feature.
@@ -745,7 +739,7 @@ export interface CallState {
    * Proxy of {@link @azure/communication-calling#RaiseHandCallFeature}.
    */
   raiseHand: RaiseHandCallFeatureState;
-  /* @conditional-compile-remove(together-mode) */
+
   /**
    * Proxy of {@link @azure/communication-calling#TogetherModeCallFeature}.
    */
@@ -1244,8 +1238,8 @@ export type NotificationTarget =
   | 'capabilityTurnVideoOnAbsent'
   | 'capabilityUnmuteMicPresent'
   | 'capabilityUnmuteMicAbsent'
-  | /* @conditional-compile-remove(together-mode) */ 'togetherModeStarted'
-  | /* @conditional-compile-remove(together-mode) */ 'togetherModeEnded';
+  | 'togetherModeStarted'
+  | 'togetherModeEnded';
 
 /**
  * State only proxy for {@link @azure/communication-calling#DiagnosticsCallFeature}.

@@ -4,7 +4,7 @@
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { VideoGalleryRemoteParticipant, VideoGalleryLocalParticipant } from '@internal/react-components';
-/* @conditional-compile-remove(together-mode) */
+
 import {
   VideoGalleryTogetherModeStreams,
   VideoGalleryTogetherModeParticipantPosition
@@ -21,7 +21,7 @@ import {
   getRole,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
-/* @conditional-compile-remove(together-mode) */
+
 import { getTogetherModeCallFeature } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { getOptimalVideoCount } from './baseSelectors';
@@ -32,8 +32,8 @@ import {
   _dominantSpeakersWithFlatId,
   convertRemoteParticipantToVideoGalleryRemoteParticipant,
   memoizeLocalParticipant,
-  /* @conditional-compile-remove(together-mode) */ memoizeTogetherModeStreams,
-  /* @conditional-compile-remove(together-mode) */ memoizeTogetherModeSeatingPositions
+  memoizeTogetherModeStreams,
+  memoizeTogetherModeSeatingPositions
 } from './utils/videoGalleryUtils';
 import { memoizeSpotlightedParticipantIds } from './utils/videoGalleryUtils';
 import { getLocalParticipantRaisedHand } from './baseSelectors';
@@ -58,13 +58,13 @@ export type VideoGallerySelector = (
   optimalVideoCount?: number;
   spotlightedParticipants?: string[];
   maxParticipantsToSpotlight?: number;
-  /* @conditional-compile-remove(together-mode) */
+
   isTogetherModeActive?: boolean;
-  /* @conditional-compile-remove(together-mode) */
+
   startTogetherModeEnabled?: boolean;
-  /* @conditional-compile-remove(together-mode) */
+
   togetherModeStreams?: VideoGalleryTogetherModeStreams;
-  /* @conditional-compile-remove(together-mode) */
+
   togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 };
 
@@ -89,7 +89,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getLocalParticipantReactionState,
     getSpotlightCallFeature,
     getCapabilities,
-    /* @conditional-compile-remove(together-mode) */
+
     getTogetherModeCallFeature
   ],
   (
@@ -108,7 +108,7 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     localParticipantReaction,
     spotlightCallFeature,
     capabilities,
-    /* @conditional-compile-remove(together-mode) */
+
     togetherModeCallFeature
   ) => {
     const screenShareRemoteParticipant =
@@ -163,13 +163,13 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       maxRemoteVideoStreams: optimalVideoCount,
       spotlightedParticipants: spotlightedParticipantIds,
       maxParticipantsToSpotlight: spotlightCallFeature?.maxParticipantsToSpotlight,
-      /* @conditional-compile-remove(together-mode) */
+
       togetherModeStreams: memoizeTogetherModeStreams(togetherModeCallFeature?.streams),
-      /* @conditional-compile-remove(together-mode) */
+
       togetherModeSeatingCoordinates: memoizeTogetherModeSeatingPositions(togetherModeCallFeature?.seatingPositions),
-      /* @conditional-compile-remove(together-mode) */
+
       isTogetherModeActive: togetherModeCallFeature?.isActive,
-      /* @conditional-compile-remove(together-mode) */
+
       startTogetherModeEnabled: capabilities?.startTogetherMode.isPresent
     };
   }

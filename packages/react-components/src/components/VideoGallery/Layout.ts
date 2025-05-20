@@ -53,7 +53,7 @@ export interface LayoutProps {
    * List of spotlighted participant userIds
    */
   spotlightedParticipantUserIds?: string[];
-  /* @conditional-compile-remove(together-mode) */
+
   /**
    * Props for a layout component
    *

@@ -45,7 +45,7 @@ import { Features } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { _ComponentCallingHandlers } from './createHandlers';
-/* @conditional-compile-remove(together-mode) */
+
 import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 /**
  * Object containing all the handlers required for calling components.
@@ -110,23 +110,22 @@ export interface CommonCallingHandlers {
   onStopAllSpotlight: () => Promise<void>;
   onMuteParticipant: (userId: string) => Promise<void>;
   onMuteAllRemoteParticipants: () => Promise<void>;
-  /* @conditional-compile-remove(together-mode) */
+
   /**
    * Call back to create a view for together mode
    */
   onCreateTogetherModeStreamView: (options?: TogetherModeStreamOptions) => Promise<void | TogetherModeStreamViewResult>;
 
-  /* @conditional-compile-remove(together-mode) */
   /**
    * Call back to create a view for together mode
    */
   onStartTogetherMode: () => Promise<void>;
-  /* @conditional-compile-remove(together-mode) */
+
   /**
    * Call set together mode scene size
    */
   onSetTogetherModeSceneSize: (width: number, height: number) => void;
-  /* @conditional-compile-remove(together-mode) */
+
   /**
    * Call back to dispose together mode views
    */
@@ -783,7 +782,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
           await call?.feature(Features.Spotlight).stopSpotlight(participants);
         }
       : undefined;
-    /* @conditional-compile-remove(together-mode) */
+
     const onCreateTogetherModeStreamView = async (
       options = { scalingMode: 'Fit', isMirrored: false, viewKind: 'main' } as TogetherModeStreamOptions
     ): Promise<void | TogetherModeStreamViewResult> => {
@@ -808,7 +807,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       return togetherModeCreateViewResult;
     };
 
-    /* @conditional-compile-remove(together-mode) */
     const onDisposeTogetherModeStreamView = async (): Promise<void> => {
       if (!call) {
         return;
@@ -827,7 +825,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         callClient.disposeView(call.id, undefined, togetherModeStreams.mainVideoStream);
       }
     };
-    /* @conditional-compile-remove(together-mode) */
+
     const onSetTogetherModeSceneSize = (width: number, height: number): void => {
       const togetherModeFeature = call?.feature(Features.TogetherMode);
       if (togetherModeFeature) {
@@ -920,13 +918,13 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onMuteAllRemoteParticipants,
       onAcceptCall: notImplemented,
       onRejectCall: notImplemented,
-      /* @conditional-compile-remove(together-mode) */
+
       onCreateTogetherModeStreamView,
-      /* @conditional-compile-remove(together-mode) */
+
       onStartTogetherMode: notImplemented,
-      /* @conditional-compile-remove(together-mode) */
+
       onSetTogetherModeSceneSize,
-      /* @conditional-compile-remove(together-mode) */
+
       onDisposeTogetherModeStreamView,
       onForbidAudio,
       onPermitAudio,

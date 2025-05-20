@@ -64,7 +64,6 @@ export type {
   ViewScalingMode
 } from './types';
 
-/* @conditional-compile-remove(together-mode) */
 export type {
   TogetherModeStreamViewResult,
   VideoGalleryTogetherModeParticipantPosition,

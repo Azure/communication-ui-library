@@ -23,7 +23,7 @@ import { RealTimeTextInfo } from '@internal/calling-stateful-client';
 import { RaisedHandState } from '@internal/calling-stateful-client';
 import { SupportedCaptionLanguage, SupportedSpokenLanguage } from '@internal/react-components';
 import { ConferencePhoneInfo, CallNotifications } from '@internal/calling-stateful-client';
-/* @conditional-compile-remove(together-mode) */
+
 import { TogetherModeCallFeatureState } from '@internal/calling-stateful-client';
 /**
  * Common props used to reference calling declarative client state.
@@ -339,7 +339,6 @@ export const getRealTimeText = (
   return state.calls[props.callId]?.realTimeTextFeature.realTimeTexts;
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */

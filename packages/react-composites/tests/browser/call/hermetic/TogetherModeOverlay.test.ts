@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(together-mode) */
 import {
   addTogetherModeStream,
   addVideoStream,
@@ -10,22 +9,21 @@ import {
   defaultMockRemoteParticipant,
   test
 } from './fixture';
-/* @conditional-compile-remove(together-mode) */
+
 import { expect } from '@playwright/test';
-/* @conditional-compile-remove(together-mode) */
+
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
-/* @conditional-compile-remove(together-mode) */
+
 import {
   IDS,
   togetherModeSeatingPosition_w_1912_h_600,
   togetherModeSeatingPosition_w_700_h_500
 } from '../../common/constants';
-/* @conditional-compile-remove(together-mode) */
+
 import { CallKind } from '@azure/communication-calling';
-/* @conditional-compile-remove(together-mode) */
+
 import type { MockRemoteParticipantState } from '../../../common';
 
-/* @conditional-compile-remove(together-mode) */
 test.describe('Confirm Start Together layout view option ', async () => {
   test('Confirm together mode is not shown in ACS Call', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -109,7 +107,6 @@ test.describe('Confirm Start Together layout view option ', async () => {
   });
 });
 
-/* @conditional-compile-remove(together-mode) */
 test.describe('Confirm Together Mode Stream signaling events', async () => {
   test('Confirm raiseHand icon and display Name in together mode layout', async ({ page, serverUrl }, testInfo) => {
     test.skip(isTestProfileMobile(testInfo));
@@ -338,7 +335,6 @@ test.describe('Confirm Together Mode Stream signaling events', async () => {
   });
 });
 
-/* @conditional-compile-remove(together-mode) */
 const createRandomRemoteParticipantList = (participantCount: number): MockRemoteParticipantState[] => {
   const participants = [];
   for (let i = 1; i <= participantCount; i++) {
@@ -350,7 +346,6 @@ const createRandomRemoteParticipantList = (participantCount: number): MockRemote
   return participants;
 };
 
-/* @conditional-compile-remove(together-mode) */
 const assignRandomSignalingEvents = (participant: MockRemoteParticipantState, orderNumber: number): void => {
   if (orderNumber % 2 === 0) {
     participant.raisedHand = { raisedHandOrderPosition: orderNumber };
