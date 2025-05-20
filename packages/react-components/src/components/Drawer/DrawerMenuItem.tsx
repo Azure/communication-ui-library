@@ -62,6 +62,10 @@ export interface _DrawerMenuItemProps {
    * Aria label for the menu item
    */
   ariaLabel?: string;
+  /**
+   * Dismiss the drawer menu when the button is clicked
+   */ 
+  dismissDrawer?: boolean;
 }
 
 /**
