@@ -26,7 +26,6 @@ import { CapabilitiesChangeInfo, ParticipantCapabilities } from '@azure/communic
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
 import { CaptionsKind, CaptionsInfo as AcsCaptionsInfo } from '@azure/communication-calling';
 import { EnvironmentInfo } from '@azure/communication-calling';
-
 import { TogetherModeVideoStream, TogetherModeSeatingMap } from '@azure/communication-calling';
 import { AzureLogger, createClientLogger, getLogLevel } from '@azure/logger';
 import { EventEmitter } from 'events';
@@ -68,7 +67,6 @@ import { SpotlightedParticipant } from '@azure/communication-calling';
 import { LocalRecordingInfo } from '@azure/communication-calling';
 /* @conditional-compile-remove(local-recording-notification) */
 import { RecordingInfo } from '@azure/communication-calling';
-
 import { CallFeatureStreamState, TogetherModeSeatingPositionState } from './CallClientState';
 
 enableMapSet();

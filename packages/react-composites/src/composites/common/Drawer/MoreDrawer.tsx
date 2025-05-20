@@ -43,7 +43,6 @@ import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { SpokenLanguageSettingsDrawer } from './SpokenLanguageSettingsDrawer';
 import { DtmfDialPadOptions } from '../../CallComposite';
 import { getRemoteParticipantsConnectedSelector } from '../../CallComposite/selectors/mediaGallerySelector';
-
 import {
   getCapabilites,
   getIsTogetherModeActive,
@@ -212,15 +211,10 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
   }, []);
 
   const raiseHandButtonProps = usePropsFor(RaiseHandButton) as RaiseHandButtonProps;
-
   const participantCapability = useSelector(getCapabilites);
-
   const participantId = useSelector(getLocalUserId);
-
   const isTogetherModeActive = useSelector(getIsTogetherModeActive);
-
   const isTeamsCall = useSelector(getIsTeamsCall);
-
   const isTeamsMeeting = getIsTeamsMeeting(callAdapter.getState());
   const onSpeakerItemClick = useCallback(
     (
@@ -409,7 +403,6 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     },
     secondaryIconProps: props.userSetGalleryLayout === 'default' ? { iconName: 'Accept' } : undefined
   };
-
   const togetherModeOption = {
     itemKey: 'togetherModeSelectionKey',
     text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,

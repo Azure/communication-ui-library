@@ -28,7 +28,6 @@ import { PersonAdd20Regular, Call20Regular } from '@fluentui/react-icons';
 import { Dialpad20Regular } from '@fluentui/react-icons';
 import { DEFAULT_COMPONENT_ICONS } from '@internal/react-components';
 import React from 'react';
-
 import { PeopleAudience20Regular } from '@fluentui/react-icons';
 // eslint-disable-next-line no-restricted-imports
 import { FontIcon, IIconProps, Spinner, SpinnerSize } from '@fluentui/react';
@@ -111,7 +110,6 @@ export const COMPOSITE_ONLY_ICONS: CompositeIcons = {
   JoinByPhoneWaitToBeAdmittedIcon: <Clock20Filled />,
   PeoplePaneMoreButton: <MoreHorizontal20Filled />,
   StopAllSpotlightMenuButton: <VideoPersonStarOff20Filled />,
-
   TogetherModeLayout: <PeopleAudience20Regular />
 };
 
@@ -251,7 +249,6 @@ export type CallCompositeIcons = {
   JoinByPhoneWaitToBeAdmittedIcon?: JSX.Element;
   PeoplePaneMoreButton?: JSX.Element;
   StopAllSpotlightMenuButton?: JSX.Element;
-
   TogetherModeLayout?: JSX.Element;
 };
 

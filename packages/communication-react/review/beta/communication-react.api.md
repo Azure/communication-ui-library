@@ -3231,7 +3231,13 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonVideoEffectsOption: React_2.JSX.Element;
     ConfigurationScreenVideoEffectsButton: React_2.JSX.Element;
     CaptionsIcon: React_2.JSX.Element;
-    CaptionsOffIcon: React_2.JSX.Element;
+    CaptionsOffIcon: React_2.JSX.Element; /**
+    * Icons that can be overridden in one of the composites exported by this library.
+    *
+    * See {@link ChatCompositeIcons}, {@link CallCompositeIcons} and {@link CallWithChatCompositeIcons} for more targeted types.
+    *
+    * @public
+    */
     CaptionsSettingsIcon: React_2.JSX.Element;
     ChangeSpokenLanguageIcon: React_2.JSX.Element;
     ChangeCaptionLanguageIcon: React_2.JSX.Element;
@@ -4295,7 +4301,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'assignedBreakoutRoomClosed' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent' |  'togetherModeStarted' |  'togetherModeEnded';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'assignedBreakoutRoomClosed' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent' | 'togetherModeStarted' | 'togetherModeEnded';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
@@ -5164,8 +5170,8 @@ export type StartTeamsCallIdentifier = MicrosoftTeamsUserIdentifier | PhoneNumbe
 export interface StatefulCallClient extends CallClient {
     createCallAgent(...args: Parameters<CallClient['createCallAgent']>): Promise<DeclarativeCallAgent>;
     createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
-    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState |  CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
-    disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState |  CallFeatureStreamState): void;
+    createView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState | CallFeatureStreamState, options?: CreateViewOptions): Promise<CreateViewResult | undefined>;
+    disposeView(callId: string | undefined, participantId: CommunicationIdentifier | undefined, stream: LocalVideoStreamState | RemoteVideoStreamState | CallFeatureStreamState): void;
     getState(): CallClientState;
     offStateChange(handler: (state: CallClientState) => void): void;
     onStateChange(handler: (state: CallClientState) => void): void;
@@ -5608,7 +5614,7 @@ export interface VideoBackgroundReplacementEffect extends BackgroundReplacementC
 export const VideoGallery: (props: VideoGalleryProps) => JSX.Element;
 
 // @public (undocumented)
-export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' |  'togetherMode' | 'focusedContent';
+export type VideoGalleryLayout = 'default' | 'floatingLocalVideo' | 'speaker' | /* @conditional-compile-remove(large-gallery) */ 'largeGallery' | 'togetherMode' | 'focusedContent';
 
 // @public
 export interface VideoGalleryLocalParticipant extends VideoGalleryParticipant {

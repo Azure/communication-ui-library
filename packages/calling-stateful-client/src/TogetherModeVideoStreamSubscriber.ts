@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 import { TogetherModeVideoStream } from '@azure/communication-calling';
-
 import { CallContext } from './CallContext';
-
 import { CallIdRef } from './CallIdRef';
 
 /**

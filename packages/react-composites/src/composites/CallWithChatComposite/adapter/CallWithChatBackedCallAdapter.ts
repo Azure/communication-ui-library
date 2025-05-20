@@ -142,9 +142,7 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
     options?: TogetherModeStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> =>
     await this.callWithChatAdapter.createTogetherModeStreamView(options);
-
   public startTogetherMode = async (): Promise<void> => await this.callWithChatAdapter.startTogetherMode();
-
   public setTogetherModeSceneSize = (width: number, height: number): void =>
     this.callWithChatAdapter.setTogetherModeSceneSize(width, height);
   public disposeStreamView = async (remoteUserId?: string, options?: VideoStreamOptions): Promise<void> =>
@@ -158,7 +156,6 @@ export class CallWithChatBackedCallAdapter implements CallAdapter {
   public disposeLocalVideoStreamView(): Promise<void> {
     return this.callWithChatAdapter.disposeLocalVideoStreamView();
   }
-
   public disposeTogetherModeStreamView = async (): Promise<void> =>
     await this.callWithChatAdapter.disposeTogetherModeStreamView();
   public holdCall = async (): Promise<void> => {

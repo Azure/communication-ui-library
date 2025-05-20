@@ -2,11 +2,8 @@
 // Licensed under the MIT License.
 
 import { _pxToRem } from '@internal/acs-ui-common';
-
 import { VideoGalleryTogetherModeSeatingInfo } from '../../types/TogetherModeTypes';
-
 import { IStackStyles } from '@fluentui/react';
-
 import { CSSProperties } from 'react';
 
 /**

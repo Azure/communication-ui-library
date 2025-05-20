@@ -236,7 +236,6 @@ export class InternalCallContext {
   public clearCallRelatedState(): void {
     this._remoteRenderInfos.clear();
     this._localRenderInfos.clear();
-
     this._callFeatureRenderInfos.clear();
   }
 

@@ -53,7 +53,6 @@ export interface LayoutProps {
    * List of spotlighted participant userIds
    */
   spotlightedParticipantUserIds?: string[];
-
   /**
    * Props for a layout component
    *

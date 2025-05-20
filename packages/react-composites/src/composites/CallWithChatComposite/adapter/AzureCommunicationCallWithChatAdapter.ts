@@ -566,21 +566,21 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async disposeLocalVideoStreamView(): Promise<void> {
     await this.callAdapter.disposeLocalVideoStreamView();
   }
-
+  /** Create a together mode stream view */
   public async createTogetherModeStreamView(
     options?: TogetherModeStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> {
     return await this.callAdapter.createTogetherModeStreamView(options);
   }
-
+  /** Start together mode for all participants */
   public async startTogetherMode(): Promise<void> {
     return await this.callAdapter.startTogetherMode();
   }
-
+  /** Set together mode scene size */
   public setTogetherModeSceneSize(width: number, height: number): void {
     return this.callAdapter.setTogetherModeSceneSize(width, height);
   }
-
+  /** Dispose together mode video stream */
   public async disposeTogetherModeStreamView(): Promise<void> {
     await this.callAdapter.disposeTogetherModeStreamView();
   }

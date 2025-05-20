@@ -7,17 +7,11 @@ import {
   TogetherModeSeatingMap,
   TogetherModeVideoStream
 } from '@azure/communication-calling';
-
 import { CallContext } from './CallContext';
-
 import { CallIdRef } from './CallIdRef';
-
 import { InternalCallContext } from './InternalCallContext';
-
 import { convertSdkCallFeatureStreamToDeclarativeCallFeatureStream } from './Converter';
-
 import { TogetherModeVideoStreamSubscriber } from './TogetherModeVideoStreamSubscriber';
-
 import { CallFeatureStreamName } from './CallClientState';
 
 /**

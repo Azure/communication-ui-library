@@ -45,7 +45,6 @@ import { Features } from '@azure/communication-calling';
 import { TeamsCaptions } from '@azure/communication-calling';
 import { Reaction } from '@azure/communication-calling';
 import { _ComponentCallingHandlers } from './createHandlers';
-
 import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 /**
  * Object containing all the handlers required for calling components.
@@ -110,7 +109,6 @@ export interface CommonCallingHandlers {
   onStopAllSpotlight: () => Promise<void>;
   onMuteParticipant: (userId: string) => Promise<void>;
   onMuteAllRemoteParticipants: () => Promise<void>;
-
   /**
    * Call back to create a view for together mode
    */
@@ -782,7 +780,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
           await call?.feature(Features.Spotlight).stopSpotlight(participants);
         }
       : undefined;
-
     const onCreateTogetherModeStreamView = async (
       options = { scalingMode: 'Fit', isMirrored: false, viewKind: 'main' } as TogetherModeStreamOptions
     ): Promise<void | TogetherModeStreamViewResult> => {
@@ -806,7 +803,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       }
       return togetherModeCreateViewResult;
     };
-
     const onDisposeTogetherModeStreamView = async (): Promise<void> => {
       if (!call) {
         return;
@@ -825,7 +821,6 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         callClient.disposeView(call.id, undefined, togetherModeStreams.mainVideoStream);
       }
     };
-
     const onSetTogetherModeSceneSize = (width: number, height: number): void => {
       const togetherModeFeature = call?.feature(Features.TogetherMode);
       if (togetherModeFeature) {
@@ -918,13 +913,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       onMuteAllRemoteParticipants,
       onAcceptCall: notImplemented,
       onRejectCall: notImplemented,
-
       onCreateTogetherModeStreamView,
-
       onStartTogetherMode: notImplemented,
-
       onSetTogetherModeSceneSize,
-
       onDisposeTogetherModeStreamView,
       onForbidAudio,
       onPermitAudio,

@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-
 import { _formatString } from '@internal/acs-ui-common';
-
 import { Stack } from '@fluentui/react';
 
 /**

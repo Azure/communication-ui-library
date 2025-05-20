@@ -21,7 +21,6 @@ import {
   getRole,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
-
 import { getTogetherModeCallFeature } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
 import { getOptimalVideoCount } from './baseSelectors';
@@ -58,13 +57,9 @@ export type VideoGallerySelector = (
   optimalVideoCount?: number;
   spotlightedParticipants?: string[];
   maxParticipantsToSpotlight?: number;
-
   isTogetherModeActive?: boolean;
-
   startTogetherModeEnabled?: boolean;
-
   togetherModeStreams?: VideoGalleryTogetherModeStreams;
-
   togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
 };
 
@@ -89,7 +84,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getLocalParticipantReactionState,
     getSpotlightCallFeature,
     getCapabilities,
-
     getTogetherModeCallFeature
   ],
   (
@@ -108,7 +102,6 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     localParticipantReaction,
     spotlightCallFeature,
     capabilities,
-
     togetherModeCallFeature
   ) => {
     const screenShareRemoteParticipant =
@@ -163,13 +156,9 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       maxRemoteVideoStreams: optimalVideoCount,
       spotlightedParticipants: spotlightedParticipantIds,
       maxParticipantsToSpotlight: spotlightCallFeature?.maxParticipantsToSpotlight,
-
       togetherModeStreams: memoizeTogetherModeStreams(togetherModeCallFeature?.streams),
-
       togetherModeSeatingCoordinates: memoizeTogetherModeSeatingPositions(togetherModeCallFeature?.seatingPositions),
-
       isTogetherModeActive: togetherModeCallFeature?.isActive,
-
       startTogetherModeEnabled: capabilities?.startTogetherMode.isPresent
     };
   }

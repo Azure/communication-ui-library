@@ -9,19 +9,14 @@ import {
   defaultMockRemoteParticipant,
   test
 } from './fixture';
-
 import { expect } from '@playwright/test';
-
 import { dataUiId, isTestProfileMobile, pageClick, stableScreenshot, waitForSelector } from '../../common/utils';
-
 import {
   IDS,
   togetherModeSeatingPosition_w_1912_h_600,
   togetherModeSeatingPosition_w_700_h_500
 } from '../../common/constants';
-
 import { CallKind } from '@azure/communication-calling';
-
 import type { MockRemoteParticipantState } from '../../../common';
 
 test.describe('Confirm Start Together layout view option ', async () => {

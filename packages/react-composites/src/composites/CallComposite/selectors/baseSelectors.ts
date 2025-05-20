@@ -40,7 +40,6 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 
 import { CaptionsKind } from '@azure/communication-calling';
 import { ReactionResources, MediaAccess } from '@internal/react-components';
-
 import { CommunicationIdentifierKind } from '@azure/communication-common';
 
 /**

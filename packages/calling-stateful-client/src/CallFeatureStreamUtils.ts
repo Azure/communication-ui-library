@@ -2,22 +2,16 @@
 // Licensed under the MIT License.
 
 import { CreateViewOptions, VideoStreamRenderer } from '@azure/communication-calling';
-
 import { CallContext } from './CallContext';
-
 import {
   CallFeatureStreamName,
   CallFeatureStreamState,
   CreateViewResult,
   VideoStreamRendererViewState
 } from './index-public';
-
 import { InternalCallContext } from './InternalCallContext';
-
 import { _logStreamEvent } from './StreamUtilsLogging';
-
 import { EventNames } from './Logger';
-
 import { convertFromSDKToDeclarativeVideoStreamRendererView } from './Converter';
 
 /**

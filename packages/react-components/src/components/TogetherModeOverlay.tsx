@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import React, { useMemo, useState, memo, useEffect } from 'react';
-
 import {
   Reaction,
   ReactionResources,
@@ -10,19 +9,12 @@ import {
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant
 } from '../types';
-
 import { moveAnimationStyles, spriteAnimationStyles } from './styles/ReactionOverlay.style';
-
 import { REACTION_NUMBER_OF_ANIMATION_FRAMES } from './VideoGallery/utils/reactionUtils';
-
 import { Icon, mergeStyles, Stack, Text } from '@fluentui/react';
-
 import { getEmojiResource } from './VideoGallery/utils/videoGalleryLayoutUtils';
-
 import { useLocale } from '../localization';
-
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
-
 import {
   calculateScaledSize,
   getTogetherModeParticipantOverlayStyle,
@@ -36,11 +28,8 @@ import {
   togetherModeParticipantStatusContainer,
   TogetherModeSeatStyle
 } from './styles/TogetherMode.styles';
-
 import { CallingTheme, useTheme } from '../theming';
-
 import { RaisedHandIcon } from './assets/RaisedHandIcon';
-
 import { _pxToRem } from '@internal/acs-ui-common';
 
 /**

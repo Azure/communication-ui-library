@@ -483,7 +483,6 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
     const handleCallEnded = (): void => {
       closeSidePane();
-
       resetUserGalleryLayout();
     };
     adapter.on('callEnded', handleCallEnded);

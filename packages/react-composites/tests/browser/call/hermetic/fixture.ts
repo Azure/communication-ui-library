@@ -480,7 +480,6 @@ const attendeeCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   forbidOthersAudio: {
@@ -533,7 +532,6 @@ const presenterCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: true,
     reason: 'Capable'
   },
-
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   forbidOthersAudio: {
@@ -586,7 +584,6 @@ const presenterCapabilitiesInTeamsCall = (): ParticipantCapabilities => ({
     isPresent: true,
     reason: 'Capable'
   },
-
   startTogetherMode: { isPresent: true, reason: 'Capable' },
   joinBreakoutRooms: { isPresent: true, reason: 'Capable' },
   forbidOthersAudio: {

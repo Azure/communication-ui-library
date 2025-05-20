@@ -29,7 +29,6 @@ import { SpotlightSubscriber } from './SpotlightSubscriber';
 import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
-
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
 import { MediaAccessSubscriber } from './MediaAccessSubscriber';
 import { _isTeamsMeeting } from './TypeGuards';

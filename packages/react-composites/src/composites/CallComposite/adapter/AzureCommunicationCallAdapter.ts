@@ -625,13 +625,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.removeParticipant.bind(this);
     this.createStreamView.bind(this);
     this.disposeStreamView.bind(this);
-
     this.createTogetherModeStreamView.bind(this);
-
     this.startTogetherMode.bind(this);
-
     this.setTogetherModeSceneSize.bind(this);
-
     this.disposeTogetherModeStreamView.bind(this);
     this.disposeScreenShareStreamView.bind(this);
     this.disposeRemoteVideoStreamView.bind(this);

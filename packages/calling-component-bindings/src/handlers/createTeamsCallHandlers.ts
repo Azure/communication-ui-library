@@ -2,7 +2,6 @@
 // Licensed under the MIT License.
 
 import { StartCallOptions } from '@azure/communication-calling';
-
 import { Features } from '@azure/communication-calling';
 import { IncomingCallCommon } from '@azure/communication-calling';
 /* @conditional-compile-remove(teams-identity-support-beta) */
@@ -138,7 +137,6 @@ export const createDefaultTeamsCallingHandlers = memoizeOne(
           await incomingCall.reject();
         }
       },
-
       onStartTogetherMode: async (): Promise<void> => {
         if (!call) {
           return;

@@ -24,7 +24,6 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
-
 import {
   getIsTogetherModeActive,
   getCapabilites,
@@ -81,13 +80,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   const isTeamsMeeting = useSelector(getIsTeamsMeeting);
   const teamsMeetingCoordinates = useSelector(getTeamsMeetingCoordinates);
-
   const isTogetherModeActive = useSelector(getIsTogetherModeActive);
-
   const participantCapability = useSelector(getCapabilites);
-
   const participantId = useSelector(getLocalUserId);
-
   const isTeamsCall = useSelector(getIsTeamsCall);
 
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);

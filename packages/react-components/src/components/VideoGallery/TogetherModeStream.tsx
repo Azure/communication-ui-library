@@ -2,9 +2,7 @@
 // Licensed under the MIT License.
 
 import React, { useEffect, useMemo, memo, useState } from 'react';
-
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
-
 import {
   ReactionResources,
   VideoGalleryTogetherModeParticipantPosition,
@@ -15,15 +13,10 @@ import {
   VideoStreamOptions,
   TogetherModeStreamOptions
 } from '../../types';
-
 import { StreamMedia } from '../StreamMedia';
-
 import { MeetingReactionOverlay } from '../MeetingReactionOverlay';
-
 import { Stack } from '@fluentui/react';
-
 import { togetherModeStreamRootStyle } from '../styles/TogetherMode.styles';
-
 /**
  * A memoized version of local screen share component. React.memo is used for a performance
  * boost by memoizing the same rendered component to avoid rerendering this when the parent component rerenders.

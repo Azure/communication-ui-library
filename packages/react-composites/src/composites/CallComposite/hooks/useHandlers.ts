@@ -269,19 +269,15 @@ const createCompositeHandlers = memoizeOne(
             await adapter.permitOthersVideo();
           }
         : undefined,
-
       onCreateTogetherModeStreamView: async (options) => {
         return await adapter.createTogetherModeStreamView(options);
       },
-
       onStartTogetherMode: async () => {
         return await adapter.startTogetherMode();
       },
-
       onSetTogetherModeSceneSize: (width: number, height: number) => {
         return adapter.setTogetherModeSceneSize(width, height);
       },
-
       onDisposeTogetherModeStreamView: async () => {
         return await adapter.disposeTogetherModeStreamView();
       },

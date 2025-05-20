@@ -11,7 +11,6 @@ import {
 } from '@azure/communication-calling';
 import { RealTimeTextInfo as ACSRealTimeTextInfo } from '@azure/communication-calling';
 import { RealTimeTextInfo } from './CallClientState';
-
 import { TogetherModeVideoStream as SdkTogetherModeVideoStream } from '@azure/communication-calling';
 import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsCaptionsInfo } from '@azure/communication-calling';
@@ -30,7 +29,6 @@ import {
   VideoStreamRendererViewState as DeclarativeVideoStreamRendererView,
   CallInfoState
 } from './CallClientState';
-
 import { CallFeatureStreamState as DeclarativeCallFeatureVideoStream, CallFeatureStreamName } from './CallClientState';
 import { CaptionsInfo } from './CallClientState';
 import { TeamsIncomingCallState as DeclarativeTeamsIncomingCall } from './CallClientState';
@@ -175,7 +173,6 @@ export function convertSdkCallToDeclarativeCall(call: CallCommon): CallState {
     localRecording: { isLocalRecordingActive: false },
     pptLive: { isActive: false },
     raiseHand: { raisedHands: [] },
-
     togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
     localParticipantReaction: undefined,
     transcription: { isTranscriptionActive: false },

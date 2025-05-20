@@ -26,7 +26,6 @@ import { callingStatefulLogger } from './Logger';
 import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
-
 import { createView as createCallFeatureView, disposeView as disposeCallFeatureView } from './CallFeatureStreamUtils';
 
 /**

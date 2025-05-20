@@ -360,9 +360,7 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   capabilityTurnVideoOnAbsent: 'ControlButtonCameraProhibited',
   capabilityUnmuteMicPresent: 'ControlButtonMicOff',
   capabilityUnmuteMicAbsent: 'ControlButtonMicProhibited',
-
   togetherModeStarted: 'NotificationBarTogetherModeIcon',
-
   togetherModeEnded: 'NotificationBarTogetherModeIcon',
   transcriptionError: 'NotificationBarTranscriptionError',
   transcriptionStartedByYou: 'NotificationBarTranscriptionStartedByYou'

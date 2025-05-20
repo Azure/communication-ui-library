@@ -13,9 +13,7 @@ import { VideoGalleryTogetherModeParticipantPosition } from '../types';
 import React, { useLayoutEffect, useRef, useState } from 'react';
 import { ParticipantVideoTileOverlay } from './VideoGallery/ParticipantVideoTileOverlay';
 import { RemoteContentShareReactionOverlay } from './VideoGallery/RemoteContentShareReactionOverlay';
-
 import { TogetherModeOverlay } from './TogetherModeOverlay';
-
 import { togetherModeMeetingOverlayStyle } from './styles/TogetherMode.styles';
 
 /**

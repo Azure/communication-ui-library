@@ -2,20 +2,15 @@
 // Licensed under the MIT License.
 
 import React from 'react';
-
 import { _ModalClone } from '.';
-
 import {
   ReactionResources,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
   VideoGalleryTogetherModeParticipantPosition
 } from '../types';
-
 import { v1 as createGUID } from 'uuid';
-
 import { render } from '@testing-library/react';
-
 import { TogetherModeOverlay } from './TogetherModeOverlay';
 
 jest.mock('@internal/acs-ui-common', () => {

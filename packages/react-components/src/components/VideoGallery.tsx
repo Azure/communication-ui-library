@@ -16,7 +16,6 @@ import {
   VideoStreamOptions,
   CreateVideoStreamViewResult
 } from '../types';
-
 import {
   VideoGalleryTogetherModeParticipantPosition,
   VideoGalleryTogetherModeStreams,
@@ -44,11 +43,9 @@ import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
-
 import { TogetherModeLayout } from './VideoGallery/TogetherModeLayout';
 import { LayoutProps } from './VideoGallery/Layout';
 import { ReactionResources } from '../types/ReactionTypes';
-
 import { TogetherModeStream } from './VideoGallery/TogetherModeStream';
 
 /**
@@ -330,44 +327,36 @@ export interface VideoGalleryProps {
    * This callback is to mute a remote participant
    */
   onMuteParticipant?: (userId: string) => Promise<void>;
-
   /**
    * Indicates if the local participant can start together mode
    */
   startTogetherModeEnabled?: boolean;
-
   /**
    * Indicates if together mode is active
    */
   isTogetherModeActive?: boolean;
-
   /**
    * Callback to create a together mode stream view
    */
   onCreateTogetherModeStreamView?: (
     options?: TogetherModeStreamOptions
   ) => Promise<void | TogetherModeStreamViewResult>;
-
   /**
    * This callback is to start together mode
    */
   onStartTogetherMode?: () => Promise<void>;
-
   /**
    * This callback is to set the scene size for together mode
    */
   onSetTogetherModeSceneSize?: (width: number, height: number) => void;
-
   /**
    * Together mode video streams
    */
   togetherModeStreams?: VideoGalleryTogetherModeStreams;
-
   /**
    * Seating position of participants in together mode
    */
   togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
-
   /**
    * Callback to dispose a together mode stream view
    */
@@ -477,21 +466,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     reactionResources,
     videoTilesOptions,
     onMuteParticipant,
-
     startTogetherModeEnabled,
-
     isTogetherModeActive,
-
     onCreateTogetherModeStreamView,
-
     onStartTogetherMode,
-
     onSetTogetherModeSceneSize,
-
     togetherModeStreams,
-
     togetherModeSeatingCoordinates,
-
     onDisposeTogetherModeStreamView,
     onForbidAudio,
     onPermitAudio,
@@ -919,7 +900,6 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (layout === 'largeGallery') {
       return <LargeGalleryLayout {...layoutProps} />;
     }
-
     // Teams users can switch to Together mode layout only if they have the capability,
     // while ACS users can do so only if Together mode is enabled.
     if (togetherModeStreamComponent && layout === 'togetherMode') {
