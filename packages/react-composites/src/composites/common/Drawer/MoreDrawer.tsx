@@ -696,10 +696,16 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     drawerMenuItems.push(element);
   });
   customDrawerButtons['overflow'].forEach((element) => {
-    let customButtonProps = {...element};
+    const customButtonProps = { ...element };
     // Default Auto dismiss drawer on click unless specified
     if (customButtonProps.dismissDrawer || customButtonProps.dismissDrawer == null) {
-      element = {...customButtonProps, onItemClick: () => {customButtonProps.onItemClick?.(); onLightDismiss()} }
+      element = {
+        ...customButtonProps,
+        onItemClick: () => {
+          customButtonProps.onItemClick?.();
+          onLightDismiss();
+        }
+      };
     }
     drawerMenuItems.push(element);
   });

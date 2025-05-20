@@ -85,9 +85,9 @@ export interface CustomCallControlButtonProps {
   strings?: CustomCallControlButtonStrings;
   /**
    * Dismiss the drawer menu when the button is clicked
-   * 
+   *
    * @defaultValue true
-   */ 
+   */
   dismissDrawer?: boolean;
 }
 
