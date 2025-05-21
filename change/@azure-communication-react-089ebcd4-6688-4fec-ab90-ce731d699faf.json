@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "Accessibility",
-  "comment": "Add focus outline to buttons that maintain focus after being actioned",
+  "workstream": "Dropdown",
+  "comment": "Revert accessibility dropdown group annoucement",
   "packageName": "@azure/communication-react",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"
