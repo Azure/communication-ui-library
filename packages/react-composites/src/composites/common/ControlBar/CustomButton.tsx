@@ -83,6 +83,12 @@ export interface CustomCallControlButtonProps {
    * Optional strings to override in component
    */
   strings?: CustomCallControlButtonStrings;
+  /**
+   * Dismiss the drawer menu when the button is clicked
+   *
+   * @defaultValue true
+   */
+  dismissDrawer?: boolean;
 }
 
 /**
