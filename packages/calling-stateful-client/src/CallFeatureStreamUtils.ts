@@ -1,26 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
-/* @conditional-compile-remove(together-mode) */
+
 import { CreateViewOptions, VideoStreamRenderer } from '@azure/communication-calling';
-/* @conditional-compile-remove(together-mode) */
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(together-mode) */
 import {
   CallFeatureStreamName,
   CallFeatureStreamState,
   CreateViewResult,
   VideoStreamRendererViewState
 } from './index-public';
-/* @conditional-compile-remove(together-mode) */
 import { InternalCallContext } from './InternalCallContext';
-/* @conditional-compile-remove(together-mode) */
 import { _logStreamEvent } from './StreamUtilsLogging';
-/* @conditional-compile-remove(together-mode) */
 import { EventNames } from './Logger';
-/* @conditional-compile-remove(together-mode) */
 import { convertFromSDKToDeclarativeVideoStreamRendererView } from './Converter';
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  *
@@ -42,7 +35,6 @@ export function createView(
   }
 }
 
-/* @conditional-compile-remove(together-mode) */
 // This function is used to create a view for a stream that is part of a call feature.
 async function createCallFeatureViewVideo(
   context: CallContext,
@@ -180,7 +172,6 @@ async function createCallFeatureViewVideo(
   };
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */
@@ -199,7 +190,6 @@ export function disposeView(
   }
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */
@@ -278,7 +268,6 @@ function disposeCallFeatureViewVideo(
   }
 }
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */
@@ -294,7 +283,6 @@ const setCallFeatureVideoRendererView = (
   }
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */
@@ -305,7 +293,6 @@ const getStreamFeatureName = (stream: CallFeatureStreamState): CallFeatureStream
   throw new Error('Feature name not found');
 };
 
-/* @conditional-compile-remove(together-mode) */
 /**
  * @private
  */

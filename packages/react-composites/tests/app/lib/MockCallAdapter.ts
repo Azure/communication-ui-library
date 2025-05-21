@@ -115,20 +115,16 @@ export class MockCallAdapter implements CallAdapter {
   disposeStreamView(): Promise<void> {
     throw Error('disposeStreamView not implemented');
   }
-  /* @conditional-compile-remove(together-mode) */
   createTogetherModeStreamView(): Promise<void> {
     throw Error('createTogetherModeStreamView not implemented');
   }
-  /* @conditional-compile-remove(together-mode) */
   startTogetherMode(): Promise<void> {
     throw Error('startTogetherMode not implemented');
   }
-  /* @conditional-compile-remove(together-mode) */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setTogetherModeSceneSize(width: number, height: number): void {
     return;
   }
-  /* @conditional-compile-remove(together-mode) */
   disposeTogetherModeStreamView(): Promise<void> {
     throw Error('disposeFeatureStreamView not implemented');
   }

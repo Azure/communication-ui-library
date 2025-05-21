@@ -97,7 +97,6 @@ export function defaultMockCallAdapterState(
       remoteParticipants,
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
-      /* @conditional-compile-remove(together-mode) */
       togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
       pptLive: { isActive: false },
       role: role ?? 'Unknown',
@@ -429,7 +428,6 @@ const consumerCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   forbidOthersAudio: {
@@ -482,7 +480,6 @@ const attendeeCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: false,
     reason: 'CapabilityNotApplicableForTheCallType'
   },
-  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   forbidOthersAudio: {
@@ -535,7 +532,6 @@ const presenterCapabilitiesInRoomsCall = (): ParticipantCapabilities => ({
     isPresent: true,
     reason: 'Capable'
   },
-  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   joinBreakoutRooms: { isPresent: false, reason: 'CapabilityNotApplicableForTheCallType' },
   forbidOthersAudio: {
@@ -588,7 +584,6 @@ const presenterCapabilitiesInTeamsCall = (): ParticipantCapabilities => ({
     isPresent: true,
     reason: 'Capable'
   },
-  /* @conditional-compile-remove(together-mode) */
   startTogetherMode: { isPresent: true, reason: 'Capable' },
   joinBreakoutRooms: { isPresent: true, reason: 'Capable' },
   forbidOthersAudio: {
@@ -625,7 +620,7 @@ const defaultEndedCallState: CallState = {
   remoteParticipants: {},
   remoteParticipantsEnded: {},
   raiseHand: { raisedHands: [] },
-  /* @conditional-compile-remove(together-mode) */
+
   togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
   pptLive: { isActive: false },
   captionsFeature: {

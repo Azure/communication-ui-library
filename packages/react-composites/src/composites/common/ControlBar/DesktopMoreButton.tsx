@@ -24,7 +24,6 @@ import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 import { showDtmfDialer } from '../../CallComposite/utils/MediaGalleryUtils';
 import { useSelector } from '../../CallComposite/hooks/useSelector';
 import { getTargetCallees } from '../../CallComposite/selectors/baseSelectors';
-/* @conditional-compile-remove(together-mode) */
 import {
   getIsTogetherModeActive,
   getCapabilites,
@@ -81,13 +80,9 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
 
   const isTeamsMeeting = useSelector(getIsTeamsMeeting);
   const teamsMeetingCoordinates = useSelector(getTeamsMeetingCoordinates);
-  /* @conditional-compile-remove(together-mode) */
   const isTogetherModeActive = useSelector(getIsTogetherModeActive);
-  /* @conditional-compile-remove(together-mode) */
   const participantCapability = useSelector(getCapabilites);
-  /* @conditional-compile-remove(together-mode) */
   const participantId = useSelector(getLocalUserId);
-  /* @conditional-compile-remove(together-mode) */
   const isTeamsCall = useSelector(getIsTeamsCall);
 
   const [dtmfDialerChecked, setDtmfDialerChecked] = useState<boolean>(props.dtmfDialerPresent ?? false);
@@ -404,7 +399,6 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       }
     };
 
-    /* @conditional-compile-remove(together-mode) */
     const togetherModeOption = {
       key: 'togetherModeSelectionKey',
       text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,
@@ -457,7 +451,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     galleryOptions.subMenuProps?.items?.push(galleryOption);
     /* @conditional-compile-remove(overflow-top-composite) */
     galleryOptions.subMenuProps?.items?.push(overflowGalleryOption);
-    /* @conditional-compile-remove(together-mode) */
+
     if (isTeamsCall || isTeamsMeeting) {
       galleryOptions.subMenuProps?.items?.push(togetherModeOption);
     }

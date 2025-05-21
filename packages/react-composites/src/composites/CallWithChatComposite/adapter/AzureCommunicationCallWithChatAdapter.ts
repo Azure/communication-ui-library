@@ -24,7 +24,7 @@ import { CreateVideoStreamViewResult, VideoStreamOptions } from '@internal/react
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(together-mode) */
+
 import { TogetherModeStreamViewResult, TogetherModeStreamOptions } from '@internal/react-components';
 import {
   ParticipantsJoinedListener,
@@ -566,21 +566,21 @@ export class AzureCommunicationCallWithChatAdapter implements CallWithChatAdapte
   public async disposeLocalVideoStreamView(): Promise<void> {
     await this.callAdapter.disposeLocalVideoStreamView();
   }
-  /* @conditional-compile-remove(together-mode) */
+  /** Create a together mode stream view */
   public async createTogetherModeStreamView(
     options?: TogetherModeStreamOptions
   ): Promise<void | TogetherModeStreamViewResult> {
     return await this.callAdapter.createTogetherModeStreamView(options);
   }
-  /* @conditional-compile-remove(together-mode) */
+  /** Start together mode for all participants */
   public async startTogetherMode(): Promise<void> {
     return await this.callAdapter.startTogetherMode();
   }
-  /* @conditional-compile-remove(together-mode) */
+  /** Set together mode scene size */
   public setTogetherModeSceneSize(width: number, height: number): void {
     return this.callAdapter.setTogetherModeSceneSize(width, height);
   }
-  /* @conditional-compile-remove(together-mode) */
+  /** Dispose together mode video stream */
   public async disposeTogetherModeStreamView(): Promise<void> {
     await this.callAdapter.disposeTogetherModeStreamView();
   }

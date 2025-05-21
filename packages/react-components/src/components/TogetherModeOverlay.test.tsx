@@ -1,25 +1,18 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(together-mode) */
 import React from 'react';
-/* @conditional-compile-remove(together-mode) */
 import { _ModalClone } from '.';
-/* @conditional-compile-remove(together-mode) */
 import {
   ReactionResources,
   VideoGalleryLocalParticipant,
   VideoGalleryRemoteParticipant,
   VideoGalleryTogetherModeParticipantPosition
 } from '../types';
-/* @conditional-compile-remove(together-mode) */
 import { v1 as createGUID } from 'uuid';
-/* @conditional-compile-remove(together-mode) */
 import { render } from '@testing-library/react';
-/* @conditional-compile-remove(together-mode) */
 import { TogetherModeOverlay } from './TogetherModeOverlay';
 
-/* @conditional-compile-remove(together-mode) */
 jest.mock('@internal/acs-ui-common', () => {
   return {
     __esModule: true,
@@ -33,7 +26,6 @@ describe('Dummy Test', () => {
   });
 });
 
-/* @conditional-compile-remove(together-mode) */
 describe('together mode overlay tests', () => {
   test('Dummy test to ensure test suite is not empty', () => {
     expect(true).toBe(true);
@@ -329,16 +321,13 @@ describe('together mode overlay tests', () => {
   });
 });
 
-/* @conditional-compile-remove(together-mode) */
 const getTogetherModeSignalContainer = (root: Element | null): Element[] => {
   return Array.from(root?.querySelectorAll('[data-ui-id^="together-mode-participant"]') ?? []);
 };
 
-/* @conditional-compile-remove(together-mode) */
 const getTogetherModeReactions = (root: Element | null): Element[] =>
   Array.from(root?.querySelectorAll('[data-ui-id^="together-mode-participant-reaction"]') ?? []);
 
-/* @conditional-compile-remove(together-mode) */
 const getParticipantDisplayName = (root: Element | null): string[] => {
   const participantSignalingStatus = getTogetherModeSignalContainer(root);
   const renderedDisplayNames: string[] = [];
@@ -355,7 +344,6 @@ const getParticipantDisplayName = (root: Element | null): string[] => {
   return renderedDisplayNames;
 };
 
-/* @conditional-compile-remove(together-mode) */
 const createLocalParticipant = (attrs?: Partial<VideoGalleryLocalParticipant>): VideoGalleryLocalParticipant => {
   return {
     userId: attrs?.userId ?? 'localParticipant',
@@ -373,14 +361,12 @@ const createLocalParticipant = (attrs?: Partial<VideoGalleryLocalParticipant>): 
   };
 };
 
-/* @conditional-compile-remove(together-mode) */
 const createVideoDivElement = (): HTMLDivElement => {
   const divElement = document.createElement('div');
   divElement.innerHTML = '<video></video>';
   return divElement;
 };
 
-/* @conditional-compile-remove(together-mode) */
 const createRemoteParticipant = (attrs?: Partial<VideoGalleryRemoteParticipant>): VideoGalleryRemoteParticipant => {
   return {
     userId: attrs?.userId ?? `remoteParticipant-${createGUID()}`,

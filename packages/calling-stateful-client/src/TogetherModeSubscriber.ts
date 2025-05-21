@@ -1,26 +1,19 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* @conditional-compile-remove(together-mode) */
 import {
   RemoteVideoStream,
   TogetherModeCallFeature,
   TogetherModeSeatingMap,
   TogetherModeVideoStream
 } from '@azure/communication-calling';
-/* @conditional-compile-remove(together-mode) */
 import { CallContext } from './CallContext';
-/* @conditional-compile-remove(together-mode) */
 import { CallIdRef } from './CallIdRef';
-/* @conditional-compile-remove(together-mode) */
 import { InternalCallContext } from './InternalCallContext';
-/* @conditional-compile-remove(together-mode) */
 import { convertSdkCallFeatureStreamToDeclarativeCallFeatureStream } from './Converter';
-/* @conditional-compile-remove(together-mode) */
 import { TogetherModeVideoStreamSubscriber } from './TogetherModeVideoStreamSubscriber';
-/* @conditional-compile-remove(together-mode) */
 import { CallFeatureStreamName } from './CallClientState';
-/* @conditional-compile-remove(together-mode) */
+
 /**
  * TogetherModeSubscriber is responsible for subscribing to together mode events and updating the call context accordingly.
  */
