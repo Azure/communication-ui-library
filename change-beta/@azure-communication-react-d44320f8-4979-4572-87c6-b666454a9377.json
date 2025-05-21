@@ -1,8 +1,8 @@
 {
-  "type": "patch",
+  "type": "prerelease",
   "area": "improvement",
-  "workstream": "PSTN",
-  "comment": "Enable ringing tone during connecting and ringing state",
+  "workstream": "CustomButtonInjection",
+  "comment": "Add custom button injection autohide in drawermenus",
   "packageName": "@azure/communication-react",
   "email": "edwardlee@microsoft.com",
   "dependentChangeType": "patch"

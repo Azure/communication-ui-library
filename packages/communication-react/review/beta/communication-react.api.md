@@ -2901,6 +2901,7 @@ export type CustomCallControlButtonPlacement = 'primary' | 'overflow' | 'seconda
 // @public
 export interface CustomCallControlButtonProps {
     disabled?: boolean;
+    dismissDrawer?: boolean;
     iconName?: string;
     id?: string;
     onItemClick?: () => void;
