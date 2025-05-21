@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "Accessibility",
-  "comment": "Add focus outline to buttons that maintain focus after being actioned",
-  "packageName": "@azure/communication-react",
-  "email": "edwardlee@microsoft.com",
-  "dependentChangeType": "patch"
-}
