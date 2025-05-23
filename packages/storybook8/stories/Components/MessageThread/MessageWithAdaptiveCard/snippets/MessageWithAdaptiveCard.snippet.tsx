@@ -18,10 +18,6 @@ export const MessageThreadWithAdaptiveCardExample: () => JSX.Element = () => {
       const hostConfig = {
         fontFamily: 'Times New Roman'
       };
-
-      if (messageProps.message.messageType !== 'custom') {
-        return defaultOnRender ? defaultOnRender(messageProps) : <></>;
-      }
       
       // parse the adaptive card from the message content
       const adaptiveCard = JSON.parse(messageProps.message.content);
