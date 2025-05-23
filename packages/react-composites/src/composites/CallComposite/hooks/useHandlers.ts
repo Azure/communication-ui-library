@@ -269,19 +269,15 @@ const createCompositeHandlers = memoizeOne(
             await adapter.permitOthersVideo();
           }
         : undefined,
-      /* @conditional-compile-remove(together-mode) */
       onCreateTogetherModeStreamView: async (options) => {
         return await adapter.createTogetherModeStreamView(options);
       },
-      /* @conditional-compile-remove(together-mode) */
       onStartTogetherMode: async () => {
         return await adapter.startTogetherMode();
       },
-      /* @conditional-compile-remove(together-mode) */
       onSetTogetherModeSceneSize: (width: number, height: number) => {
         return adapter.setTogetherModeSceneSize(width, height);
       },
-      /* @conditional-compile-remove(together-mode) */
       onDisposeTogetherModeStreamView: async () => {
         return await adapter.disposeTogetherModeStreamView();
       },

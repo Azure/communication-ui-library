@@ -16,7 +16,6 @@ import {
   VideoStreamOptions,
   CreateVideoStreamViewResult
 } from '../types';
-/* @conditional-compile-remove(together-mode) */
 import {
   VideoGalleryTogetherModeParticipantPosition,
   VideoGalleryTogetherModeStreams,
@@ -31,10 +30,7 @@ import { LocalScreenShare } from './VideoGallery/LocalScreenShare';
 import { RemoteScreenShare } from './VideoGallery/RemoteScreenShare';
 import { LocalVideoCameraCycleButtonProps } from './LocalVideoCameraButton';
 import { _ICoordinates, _ModalClone } from './ModalClone/ModalClone';
-import {
-  _formatString,
-  /* @conditional-compile-remove(together-mode) */ _isIdentityMicrosoftTeamsUser
-} from '@internal/acs-ui-common';
+import { _formatString, _isIdentityMicrosoftTeamsUser } from '@internal/acs-ui-common';
 import { _LocalVideoTile } from './LocalVideoTile';
 import { DefaultLayout } from './VideoGallery/DefaultLayout';
 import { FloatingLocalVideoLayout } from './VideoGallery/FloatingLocalVideoLayout';
@@ -47,12 +43,9 @@ import { SpeakerVideoLayout } from './VideoGallery/SpeakerVideoLayout';
 import { FocusedContentLayout } from './VideoGallery/FocusContentLayout';
 /* @conditional-compile-remove(large-gallery) */
 import { LargeGalleryLayout } from './VideoGallery/LargeGalleryLayout';
-
-/* @conditional-compile-remove(together-mode) */
 import { TogetherModeLayout } from './VideoGallery/TogetherModeLayout';
 import { LayoutProps } from './VideoGallery/Layout';
 import { ReactionResources } from '../types/ReactionTypes';
-/* @conditional-compile-remove(together-mode) */
 import { TogetherModeStream } from './VideoGallery/TogetherModeStream';
 
 /**
@@ -162,7 +155,7 @@ export type VideoGalleryLayout =
   | 'floatingLocalVideo'
   | 'speaker'
   | /* @conditional-compile-remove(large-gallery) */ 'largeGallery'
-  | /* @conditional-compile-remove(together-mode) */ 'togetherMode'
+  | 'togetherMode'
   | 'focusedContent';
 
 /**
@@ -334,44 +327,36 @@ export interface VideoGalleryProps {
    * This callback is to mute a remote participant
    */
   onMuteParticipant?: (userId: string) => Promise<void>;
-  /* @conditional-compile-remove(together-mode) */
   /**
    * Indicates if the local participant can start together mode
    */
   startTogetherModeEnabled?: boolean;
-  /* @conditional-compile-remove(together-mode) */
   /**
    * Indicates if together mode is active
    */
   isTogetherModeActive?: boolean;
-  /* @conditional-compile-remove(together-mode) */
   /**
    * Callback to create a together mode stream view
    */
   onCreateTogetherModeStreamView?: (
     options?: TogetherModeStreamOptions
   ) => Promise<void | TogetherModeStreamViewResult>;
-  /* @conditional-compile-remove(together-mode) */
   /**
    * This callback is to start together mode
    */
   onStartTogetherMode?: () => Promise<void>;
-  /* @conditional-compile-remove(together-mode) */
   /**
    * This callback is to set the scene size for together mode
    */
   onSetTogetherModeSceneSize?: (width: number, height: number) => void;
-  /* @conditional-compile-remove(together-mode) */
   /**
    * Together mode video streams
    */
   togetherModeStreams?: VideoGalleryTogetherModeStreams;
-  /* @conditional-compile-remove(together-mode) */
   /**
    * Seating position of participants in together mode
    */
   togetherModeSeatingCoordinates?: VideoGalleryTogetherModeParticipantPosition;
-  /* @conditional-compile-remove(together-mode) */
   /**
    * Callback to dispose a together mode stream view
    */
@@ -481,21 +466,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     reactionResources,
     videoTilesOptions,
     onMuteParticipant,
-    /* @conditional-compile-remove(together-mode) */
     startTogetherModeEnabled,
-    /* @conditional-compile-remove(together-mode) */
     isTogetherModeActive,
-    /* @conditional-compile-remove(together-mode) */
     onCreateTogetherModeStreamView,
-    /* @conditional-compile-remove(together-mode) */
     onStartTogetherMode,
-    /* @conditional-compile-remove(together-mode) */
     onSetTogetherModeSceneSize,
-    /* @conditional-compile-remove(together-mode) */
     togetherModeStreams,
-    /* @conditional-compile-remove(together-mode) */
     togetherModeSeatingCoordinates,
-    /* @conditional-compile-remove(together-mode) */
     onDisposeTogetherModeStreamView,
     onForbidAudio,
     onPermitAudio,
@@ -825,13 +802,11 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       ? localScreenShareStreamComponent
       : undefined;
 
-  /* @conditional-compile-remove(together-mode) */
   // Current implementation of capabilities is only based on user role.
   // This logic checks for the user role and if the user is a Teams user.
   const canSwitchToTogetherModeLayout =
     isTogetherModeActive || (_isIdentityMicrosoftTeamsUser(localParticipant.userId) && startTogetherModeEnabled);
 
-  /* @conditional-compile-remove(together-mode) */
   const togetherModeStreamComponent = useMemo(
     () =>
       // Avoids unnecessary rendering of TogetherModeStream component when it is not needed
@@ -925,19 +900,13 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
     if (layout === 'largeGallery') {
       return <LargeGalleryLayout {...layoutProps} />;
     }
-    /* @conditional-compile-remove(together-mode) */
     // Teams users can switch to Together mode layout only if they have the capability,
     // while ACS users can do so only if Together mode is enabled.
     if (togetherModeStreamComponent && layout === 'togetherMode') {
       return <TogetherModeLayout togetherModeStreamComponent={togetherModeStreamComponent} />;
     }
     return <DefaultLayout {...layoutProps} />;
-  }, [
-    layout,
-    layoutProps,
-    screenShareParticipant,
-    /* @conditional-compile-remove(together-mode) */ togetherModeStreamComponent
-  ]);
+  }, [layout, layoutProps, screenShareParticipant, togetherModeStreamComponent]);
 
   return (
     <div

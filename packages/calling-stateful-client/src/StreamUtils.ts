@@ -578,9 +578,9 @@ export function disposeAllViewsFromCall(
       }
     }
   }
-  /* @conditional-compile-remove(together-mode) */
+
   const callFeatureStreams = internalContext.getCallFeatureRenderInfosForCall(callId);
-  /* @conditional-compile-remove(together-mode) */
+
   if (callFeatureStreams) {
     for (const featureStreams of callFeatureStreams.values()) {
       for (const streamAndRenderer of featureStreams.values()) {
