@@ -29,7 +29,6 @@ import { SpotlightSubscriber } from './SpotlightSubscriber';
 import { BreakoutRoomsSubscriber } from './BreakoutRoomsSubscriber';
 /* @conditional-compile-remove(local-recording-notification) */
 import { LocalRecordingSubscriber } from './LocalRecordingSubscriber';
-/* @conditional-compile-remove(together-mode) */
 import { TogetherModeSubscriber } from './TogetherModeSubscriber';
 import { MediaAccessSubscriber } from './MediaAccessSubscriber';
 import { _isTeamsMeeting } from './TypeGuards';
@@ -64,7 +63,7 @@ export class CallSubscriber {
   private _capabilitiesSubscriber: CapabilitiesSubscriber;
   private _spotlightSubscriber: SpotlightSubscriber;
   private _breakoutRoomsSubscriber: BreakoutRoomsSubscriber;
-  /* @conditional-compile-remove(together-mode) */
+
   private _togetherModeSubscriber: TogetherModeSubscriber;
   private _mediaAccessSubscriber: MediaAccessSubscriber;
 
@@ -128,7 +127,7 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.BreakoutRooms)
     );
-    /* @conditional-compile-remove(together-mode) */
+
     this._togetherModeSubscriber = new TogetherModeSubscriber(
       this._callIdRef,
       this._context,
@@ -256,7 +255,7 @@ export class CallSubscriber {
     this._reactionSubscriber?.unsubscribe();
     this._spotlightSubscriber.unsubscribe();
     this._breakoutRoomsSubscriber.unsubscribe();
-    /* @conditional-compile-remove(together-mode) */
+
     this._togetherModeSubscriber.unsubscribe();
     this._mediaAccessSubscriber.unsubscribe();
   };

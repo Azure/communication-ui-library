@@ -73,8 +73,6 @@ module.exports = {
     // Do not use in production code.
     "stabilizedDemo",
      // Feature for on fetch profile
-    "on-fetch-profile",
-    // Feature for together mode
-    "together-mode"
+    "on-fetch-profile"
   ]
 }

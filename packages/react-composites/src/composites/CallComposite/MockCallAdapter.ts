@@ -110,15 +110,12 @@ export class _MockCallAdapter implements CallAdapter {
   createStreamView(): Promise<void> {
     throw Error('createStreamView not implemented');
   }
-  /* @conditional-compile-remove(together-mode) */
   createTogetherModeStreamView(): Promise<void> {
     throw Error('createTogetherModeStreamView not implemented');
   }
-  /* @conditional-compile-remove(together-mode) */
   startTogetherMode(): Promise<void> {
     throw Error('startTogetherMode not implemented');
   }
-  /* @conditional-compile-remove(together-mode) */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   setTogetherModeSceneSize(width: number, height: number): void {
     return;
@@ -135,7 +132,6 @@ export class _MockCallAdapter implements CallAdapter {
   disposeRemoteVideoStreamView(): Promise<void> {
     return Promise.resolve();
   }
-  /* @conditional-compile-remove(together-mode) */
   disposeTogetherModeStreamView(): Promise<void> {
     return Promise.resolve();
   }
@@ -298,7 +294,6 @@ const createDefaultCallAdapterState = (role?: ParticipantRole): CallAdapterState
       remoteParticipants: {},
       remoteParticipantsEnded: {},
       raiseHand: { raisedHands: [] },
-      /* @conditional-compile-remove(together-mode) */
       togetherMode: { isActive: false, streams: {}, seatingPositions: {} },
       pptLive: { isActive: false },
       localParticipantReaction: undefined,

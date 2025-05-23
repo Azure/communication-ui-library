@@ -10,7 +10,7 @@ import {
   Features
 } from '@azure/communication-calling';
 import { CallClientState, LocalVideoStreamState, RemoteVideoStreamState } from './CallClientState';
-/* @conditional-compile-remove(together-mode) */
+
 import { CallFeatureStreamState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { callAgentDeclaratify, DeclarativeCallAgent } from './CallAgentDeclarative';
@@ -26,7 +26,6 @@ import { callingStatefulLogger } from './Logger';
 import { DeclarativeTeamsCallAgent, teamsCallAgentDeclaratify } from './TeamsCallAgentDeclarative';
 import { MicrosoftTeamsUserIdentifier } from '@azure/communication-common';
 import { videoStreamRendererViewDeclaratify } from './VideoStreamRendererViewDeclarative';
-/* @conditional-compile-remove(together-mode) */
 import { createView as createCallFeatureView, disposeView as disposeCallFeatureView } from './CallFeatureStreamUtils';
 
 /**
@@ -117,10 +116,7 @@ export interface StatefulCallClient extends CallClient {
   createView(
     callId: string | undefined,
     participantId: CommunicationIdentifier | undefined,
-    stream:
-      | LocalVideoStreamState
-      | RemoteVideoStreamState
-      | /* @conditional-compile-remove(together-mode) */ CallFeatureStreamState,
+    stream: LocalVideoStreamState | RemoteVideoStreamState | CallFeatureStreamState,
     options?: CreateViewOptions
   ): Promise<CreateViewResult | undefined>;
   /**
@@ -150,10 +146,7 @@ export interface StatefulCallClient extends CallClient {
   disposeView(
     callId: string | undefined,
     participantId: CommunicationIdentifier | undefined,
-    stream:
-      | LocalVideoStreamState
-      | RemoteVideoStreamState
-      | /* @conditional-compile-remove(together-mode) */ CallFeatureStreamState
+    stream: LocalVideoStreamState | RemoteVideoStreamState | CallFeatureStreamState
   ): void;
   /**
    * The CallAgent is used to handle calls.
@@ -401,13 +394,9 @@ export const createStatefulCallClientWithDeps = (
     value: async (
       callId: string | undefined,
       participantId: CommunicationIdentifier | undefined,
-      stream:
-        | LocalVideoStreamState
-        | RemoteVideoStreamState
-        | /* @conditional-compile-remove(together-mode) */ CallFeatureStreamState,
+      stream: LocalVideoStreamState | RemoteVideoStreamState | CallFeatureStreamState,
       options?: CreateViewOptions
     ): Promise<CreateViewResult | undefined> => {
-      /* @conditional-compile-remove(together-mode) */
       if ('feature' in stream) {
         return await createCallFeatureView(context, internalContext, callId, stream, options);
       }
@@ -426,12 +415,8 @@ export const createStatefulCallClientWithDeps = (
     value: (
       callId: string | undefined,
       participantId: CommunicationIdentifier | undefined,
-      stream:
-        | LocalVideoStreamState
-        | RemoteVideoStreamState
-        | /* @conditional-compile-remove(together-mode) */ CallFeatureStreamState
+      stream: LocalVideoStreamState | RemoteVideoStreamState | CallFeatureStreamState
     ): void => {
-      /* @conditional-compile-remove(together-mode) */
       if ('feature' in stream) {
         disposeCallFeatureView(context, internalContext, callId, stream);
       }

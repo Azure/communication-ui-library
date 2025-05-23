@@ -74,7 +74,6 @@ import {
   Warning16Regular,
   WifiWarning20Filled
 } from '@fluentui/react-icons';
-/* @conditional-compile-remove(together-mode) */
 import { PeopleAudience20Regular } from '@fluentui/react-icons';
 import { SlideTextCall20Regular, ArrowMaximize20Regular, ArrowMinimize20Regular } from '@fluentui/react-icons';
 /* @conditional-compile-remove(rich-text-editor) */
@@ -408,7 +407,6 @@ export const DEFAULT_COMPONENT_ICONS = {
   IncomingCallNotificationRejectIcon: <CallEnd20Filled />,
   IncomingCallNotificationAcceptIcon: <Call20Filled />,
   IncomingCallNotificationAcceptWithVideoIcon: <Video20Filled />,
-  /* @conditional-compile-remove(together-mode) */
   NotificationBarTogetherModeIcon: <PeopleAudience20Regular />,
   RealTimeTextIcon: <SlideTextCall20Regular />,
   ExpandIcon: <ArrowMaximize20Regular />,
