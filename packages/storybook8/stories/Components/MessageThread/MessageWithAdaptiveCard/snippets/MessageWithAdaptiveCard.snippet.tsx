@@ -26,11 +26,11 @@ export const MessageThreadWithAdaptiveCardExample: () => JSX.Element = () => {
           <AdaptiveCard
             payload={adaptiveCard}
             hostConfig={hostConfig}
-            onExecuteAction={(action: Action) => console.log('onExecuteAction ' + action)}
+            onExecuteAction={(action: Action) => console.log('onExecuteAction', action)}
             onActionOpenUrl={(action: Action) => {
-              console.log("onActionOpenUrl" + action)
+              console.log("onActionOpenUrl", action)
             }}
-            onActionShowCard={(action: Action) => console.log('onActionShowCard' + action)}
+            onActionShowCard={(action: Action) => console.log('onActionShowCard', action)}
             onError={(error: any) => console.log('onError', error)}
             style={adaptiveCardMessageStyles}
           />
