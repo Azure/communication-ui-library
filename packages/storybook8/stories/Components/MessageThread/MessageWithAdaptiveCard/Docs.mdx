@@ -1,0 +1,18 @@
+import { Canvas, Meta } from '@storybook/blocks';
+import * as CustomizedAdaptiveCardMessageStories from './index.stories';
+
+import MessageThreadWithAdaptiveCardExample from '!!raw-loader!./snippets/MessageWithAdaptiveCard.snippet.tsx';
+
+<Meta of={CustomizedAdaptiveCardMessageStories} />
+
+## Messages with Customized Adaptive Card
+
+The example below shows how to render an `adaptive card` message with `onRenderMessage` in `MessageThread`
+
+## Example
+
+<Canvas
+  of={CustomizedAdaptiveCardMessageStories.CustomAdaptiveCardMessageDocsOnly}
+  source={{ code: MessageThreadWithAdaptiveCardExample }}
+  layout="padded"
+/>
