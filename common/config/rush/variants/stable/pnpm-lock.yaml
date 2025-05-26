@@ -17318,7 +17318,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-DNVU9HQjjkZOpSjS8Yklec9AOGsEE4VdPur7GnZ1Lf8q3YqjufmATi8dYVQTZYhcAGTdYfolMUVtfkKfiZM2YQ==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-S5QPmGj7EimOVLMrHcSpF6JGyWz07P0knnJhy2ICfo7QjywBR1Tco+2Mw84NfibtXt7YwebExevSUMwTzep6/A==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -17369,7 +17369,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-3bzV9LFKtvZGPI4dC8nkcHChU5px3eeTBUvb9A11eXBoWqi1UmY3tUKHyOFRHaNCtmPeWmHReieVvaxUB6MCXQ==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-vjdDUH+R1ShloiwUI9cEKftkmK8zst5kfuxJcpAO7iIfs2gN9uqvnegJTz632Ak/VN9sy2P7d/H0iEiT/ODVKA==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -17378,6 +17378,8 @@ packages:
       '@azure/communication-common': 2.3.1
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
       '@typescript-eslint/eslint-plugin': 8.32.1(@typescript-eslint/parser@8.32.1)(eslint@9.27.0)(typescript@5.4.5)
@@ -17392,6 +17394,7 @@ packages:
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
+      globals: 16.2.0
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
       memoize-one: 5.2.1
