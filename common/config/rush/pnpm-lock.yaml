@@ -2007,6 +2007,18 @@ packages:
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
     dev: false
 
+  /@eslint/compat@1.2.9(eslint@9.27.0):
+    resolution: {integrity: sha512-gCdSY54n7k+driCadyMNv8JSPzYLeDVM/ikZRtvtROBpRdFSkS8W9A82MqsaY7lZuwL0wiapgD0NT1xT0hyJsA==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      eslint: ^9.10.0
+    peerDependenciesMeta:
+      eslint:
+        optional: true
+    dependencies:
+      eslint: 9.27.0
+    dev: false
+
   /@eslint/config-array@0.20.0:
     resolution: {integrity: sha512-fxlS1kkIjx8+vy2SjuCB94q3htSNrufYTXubwiBFeaQHbH6Ipi43gFJq2zCMt6PHhImH3Xmr0NksKDvchWlpQQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -9171,6 +9183,15 @@ packages:
       eslint: 9.27.0
     dev: false
 
+  /eslint-plugin-headers@1.3.1(eslint@9.27.0):
+    resolution: {integrity: sha512-sTpxwKw9fYOjyyPLQ3+sAs1KWfUWupPpBWURDn2x9nIGvlAIeocjaie3BOk3+1QOuQlvv5OdrIA+rvy7xhclPw==}
+    engines: {node: ^16.0.0 || >= 18.0.0}
+    peerDependencies:
+      eslint: '>=7'
+    dependencies:
+      eslint: 9.27.0
+    dev: false
+
   /eslint-plugin-import@2.31.0(eslint@9.27.0):
     resolution: {integrity: sha512-ixmkI62Rbc2/w8Vfxyh1jQRTdRTF52VxwRVHl/ykPAmqG+Nb7/kNn+byLP0LxPgI7zWA16Jt82SybJInmMia3A==}
     engines: {node: '>=4'}
@@ -10221,6 +10242,11 @@ packages:
 
   /globals@14.0.0:
     resolution: {integrity: sha512-oahGvuMGQlPw/ivIYBjVSrWAfWLBeku5tpPE2fOPLi+WHffIWbuh2tCjhyQhTBPMf5E9jDEH4FOmTYgYwbKwtQ==}
+    engines: {node: '>=18'}
+    dev: false
+
+  /globals@16.2.0:
+    resolution: {integrity: sha512-O+7l9tPdHCU320IigZZPj5zmRCFG9xHmx9cU8FqU2Rp+JN714seHV+2S9+JslCpY4gJwU2vOGox0wzgae/MCEg==}
     engines: {node: '>=18'}
     dev: false
 
@@ -17270,7 +17296,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-A1pfr8yqOeBEU5FMNXf7UD6Y3/qVbPyE8RrFletWiCWjIAG2x5Nu+Z0Nqs6bsce+SNNEnqcmoDLAwENZTLb23w==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-tvSdUZJyZem2lQbPyk82i+estz72DwkYaMoreKcwyyJ3yz/kndLjYByrs6oE9z4O5AT89QhDM9JR+Oosbh872Q==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -17278,6 +17304,8 @@ packages:
       '@azure/logger': 1.2.0
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
       '@typescript-eslint/eslint-plugin': 8.32.1(@typescript-eslint/parser@8.32.1)(eslint@9.27.0)(typescript@5.4.5)
@@ -17289,9 +17317,11 @@ packages:
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
+      globals: 16.2.0
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
       prettier: 3.5.3
@@ -17315,7 +17345,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-hLbyGVu87qicG42E2d/3AGczIwDmYCLUVuTP86ruCf9pJiYR7wYb8sqoCbwQgflmn9MBWpFTnEDVhAAQlPkI2g==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-S5QPmGj7EimOVLMrHcSpF6JGyWz07P0knnJhy2ICfo7QjywBR1Tco+2Mw84NfibtXt7YwebExevSUMwTzep6/A==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -17323,6 +17353,8 @@ packages:
       '@azure/logger': 1.2.0
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@fluentui/react': 8.122.17(@types/react-dom@18.3.7)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
@@ -17339,6 +17371,7 @@ packages:
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
+      globals: 16.2.0
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
       prettier: 3.5.3
@@ -17363,7 +17396,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-3bzV9LFKtvZGPI4dC8nkcHChU5px3eeTBUvb9A11eXBoWqi1UmY3tUKHyOFRHaNCtmPeWmHReieVvaxUB6MCXQ==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-vjdDUH+R1ShloiwUI9cEKftkmK8zst5kfuxJcpAO7iIfs2gN9uqvnegJTz632Ak/VN9sy2P7d/H0iEiT/ODVKA==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -17372,6 +17405,8 @@ packages:
       '@azure/communication-common': 2.3.2-beta.1
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
       '@typescript-eslint/eslint-plugin': 8.32.1(@typescript-eslint/parser@8.32.1)(eslint@9.27.0)(typescript@5.4.5)
@@ -17386,6 +17421,7 @@ packages:
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
+      globals: 16.2.0
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
       memoize-one: 5.2.1
@@ -17411,7 +17447,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-/YZ0ToizlrM5xgguqvor/c5rGUv3zfWD3Pphq+lG3LBlUCq2wyOO3vsf4ajLAgAfUSLYf7cB4D+wM0RkLMtHsw==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-aOvSBN/pkKOvANg0O9G8UZueIO99nPkLd5TxCU6R8JUEYFRTFIvb2dpXpQLI78/TYQiuyPrMU//cltk79EBpUQ==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -17421,6 +17457,8 @@ packages:
       '@azure/logger': 1.2.0
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@types/events': 3.0.3
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
@@ -17433,10 +17471,12 @@ packages:
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
       events: 3.3.0
+      globals: 16.2.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
@@ -17743,7 +17783,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-X/AapPXDKylli8vIrh2j22+Sf0w+NRrCOCwC4AMius6of8NVQGUpyBt4+VDuYzF0b+Y7dn1YC2JTa+gmM2LY3A==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-ju1eC1HsFoLLltZoNih3vJIsL+jAPWwLK0qEsKjEWSk3qw7FskFjCqk1HF/5a+s9+lOOdQM2yMmrETj1z52+5g==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -17752,6 +17792,8 @@ packages:
       '@azure/core-paging': 1.6.2
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@testing-library/react': 16.3.0(@testing-library/dom@10.4.0)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
@@ -17763,9 +17805,11 @@ packages:
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
+      globals: 16.2.0
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
       memoize-one: 5.2.1
@@ -17790,7 +17834,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-edDVGGxVsa6c5YUB1JJWee4PFktpUbCjpCtqmg2lVyvUlCweczckW3qR193q4eBonih4m/XiUXv92n7lZEjxNw==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-P7BhvhUf1NopCl/Jq0ww2V6A0lCb3UEm8CScysdvAw8ZXOdSY1+jtSHDrgVLXqvqMtQV95JXbA4WoEG5mCOQnA==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -17801,6 +17845,8 @@ packages:
       '@azure/logger': 1.2.0
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@types/events': 3.0.3
       '@types/jest': 29.5.14
       '@types/node': 22.15.18
@@ -17814,10 +17860,12 @@ packages:
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
       events: 3.3.0
+      globals: 16.2.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
@@ -17979,7 +18027,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-+xfV/u1n76LedVl2Y36oefyfP3KETMW/G7ips3L5eu4rJmV9Yzn6cweEXc/3Jn2AiV8s98m02JUt27mcnK80Dg==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-V2QRzTKZnjhgRyVxWy5IvYmhUEcRT9svlfK1ge0qrG+AqQfFhpjbk6mfHtgmEdvOpgUEgsJOdCfAybNj3iMokw==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -17992,6 +18040,9 @@ packages:
       '@azure/logger': 1.2.0
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
+      '@eslint/compat': 1.2.9(eslint@9.27.0)
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@fluentui-contrib/react-chat': 0.1.11(@fluentui/react-components@9.62.0)(@fluentui/react-icons@2.0.300)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react': 8.122.17(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-components': 9.62.0(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.26.0)
@@ -18026,12 +18077,14 @@ packages:
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
       eslint-plugin-react: 7.37.5(eslint@9.27.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@9.27.0)
       events: 3.3.0
+      globals: 16.2.0
       html-react-parser: 5.2.5(@types/react@18.3.12)(react@18.3.1)
       if-env: 1.0.4
       immer: 10.1.1
@@ -18186,7 +18239,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-L/fb3a4vSSL+oWX/mDhWPpU2WYaK/vQR2I9mOVCUDc+P5dMc5V3BgTAjBBuVEMZY3xmccHfdD0pMq7s168RzHA==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-q30lecyznsnp937VSGTE6dpCWyrf7F2gYcjfoa1TuRPTNl7ASuwVPKOTmcYNhm+ExBsWZWY65VHhR7JUrSd0pA==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -18198,6 +18251,8 @@ packages:
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
       '@babel/preset-env': 7.23.9(@babel/core@7.27.1)
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@types/events': 3.0.3
       '@types/jest': 29.5.14
       '@types/node': 22.15.18
@@ -18212,10 +18267,12 @@ packages:
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
       events: 3.3.0
+      globals: 16.2.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
@@ -18242,7 +18299,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-3vCZ/cU/MofEKIAw0OzBceyf2FemVN0u3RjATECbM0TyAnwHGEV4QsCQenUyQ7URKcunrnNwRn/kIAdL2aEz2w==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-CU9Ka5ThQ3iWDCKqaP9K6itljch/TmDEC9plOKiKXSW9SBbHRzQ9EX/pqvVkxXE+wnkI3lMFecgL8MYN4hMDrQ==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -18250,6 +18307,9 @@ packages:
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
       '@babel/preset-env': 7.23.9(@babel/core@7.27.1)
+      '@eslint/compat': 1.2.9(eslint@9.27.0)
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@fluentui-contrib/react-chat': 0.1.11(@fluentui/react-components@9.62.0)(@fluentui/react-icons@2.0.300)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react': 8.122.17(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-components': 9.62.0(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.26.0)
@@ -18289,12 +18349,14 @@ packages:
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
       eslint-plugin-react: 7.37.5(eslint@9.27.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@9.27.0)
+      globals: 16.2.0
       html-react-parser: 5.2.5(@types/react@18.3.12)(react@18.3.1)
       husky: 8.0.3
       if-env: 1.0.4
@@ -18575,7 +18637,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-C/hiMveDDzSxSJrq+jOfL9TyA4mv1RZXq1L0fIImjp9l3v15H9fsQDzXyliZhBNvQSAvn8CgO2OcwdE3vBdCsA==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-h/IXNy2q340lB/DoBpZSIqweOooVoDVVhZv5FuiFGVbO7f4rEZNWMzWhPGz/DwHaWAp8n0Eq2sejCOBuOR4mQQ==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -18584,6 +18646,8 @@ packages:
       '@azure/communication-identity': 1.3.1
       '@azure/communication-rooms': 1.2.0
       '@azure/storage-blob': 12.27.0
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@types/copy-webpack-plugin': 6.4.3
       '@types/cors': 2.8.18
       '@types/express': 4.17.21
@@ -18604,9 +18668,11 @@ packages:
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-flowtype: 8.0.3(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
       express: 5.1.0
+      globals: 16.2.0
       http-errors: 1.8.1
       husky: 8.0.3
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
