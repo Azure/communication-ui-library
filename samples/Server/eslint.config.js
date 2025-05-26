@@ -19,7 +19,7 @@ module.exports = defineConfig([
   {
     languageOptions: {
       globals: {
-        // ...globals.browser,
+        ...globals.browser,
         ...globals.node
       },
 
@@ -57,7 +57,10 @@ module.exports = defineConfig([
       eqeqeq: 'warn',
       '@typescript-eslint/no-non-null-assertion': 'error',
 
-      'license-header/header': ['error', ['Copyright (c) Microsoft Corporation.', 'Licensed under the MIT License.']],
+      'license-header/header': [
+        'error',
+        ['// Copyright (c) Microsoft Corporation.', '// Licensed under the MIT License.']
+      ],
 
       'react/display-name': 'off',
       '@typescript-eslint/no-explicit-any': 'error',
