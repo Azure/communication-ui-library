@@ -71,6 +71,7 @@
     "typescript": "5.4.5",
     "webpack": "5.95.0",
     "webpack-cli": "^5.1.4",
-    "webpack-node-externals": "^3.0.0"
+    "webpack-node-externals": "^3.0.0",
+    "eslint-plugin-license-header": "~0.8.0"
   }
 }
