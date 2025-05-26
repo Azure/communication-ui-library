@@ -17270,7 +17270,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-common.tgz:
-    resolution: {integrity: sha512-A1pfr8yqOeBEU5FMNXf7UD6Y3/qVbPyE8RrFletWiCWjIAG2x5Nu+Z0Nqs6bsce+SNNEnqcmoDLAwENZTLb23w==, tarball: file:projects/acs-ui-common.tgz}
+    resolution: {integrity: sha512-Krn0N5Rb6bECqdg/OMcUSOv0Db1RUxpgDM1U9cvX/2MvSLGjM+Z+sprJaOAIPSERmxuEqPM8MMkshhF8f4AtRg==, tarball: file:projects/acs-ui-common.tgz}
     name: '@rush-temp/acs-ui-common'
     version: 0.0.0
     dependencies:
@@ -17288,7 +17288,7 @@ packages:
       env-cmd: 10.1.0
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
-      eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
@@ -18571,7 +18571,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-o6q9wtBfktqDiBD0FIGxR7gShyvnDbwusMdrh7l1FK7M/ednr8oqZTHnzqxX0/0Di1+QNGKAPwFXvF65xd7FlA==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-h/IXNy2q340lB/DoBpZSIqweOooVoDVVhZv5FuiFGVbO7f4rEZNWMzWhPGz/DwHaWAp8n0Eq2sejCOBuOR4mQQ==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -18580,6 +18580,7 @@ packages:
       '@azure/communication-identity': 1.3.1
       '@azure/communication-rooms': 1.2.0
       '@azure/storage-blob': 12.27.0
+      '@eslint/eslintrc': 3.3.1
       '@eslint/js': 9.27.0
       '@types/copy-webpack-plugin': 6.4.3
       '@types/cors': 2.8.18

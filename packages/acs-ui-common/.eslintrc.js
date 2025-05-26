@@ -9,7 +9,7 @@ module.exports = {
   },
   extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended', 'plugin:prettier/recommended'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint', 'header', 'jsdoc'],
+  plugins: ['@typescript-eslint', 'headers', 'jsdoc'],
   parserOptions: {
     ecmaFeatures: {
       jsx: true
@@ -28,7 +28,14 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'error',
     eqeqeq: 'warn',
     '@typescript-eslint/no-non-null-assertion': 'error',
-    'header/header': ['error', 'line', ' Copyright (c) Microsoft Corporation.\n Licensed under the MIT License.'],
+    'headers/header-format': [
+      'error',
+      {
+        source: 'string',
+        style: 'line',
+        content: 'Copyright (c) Microsoft Corporation.\nLicensed under the MIT License.'
+      }
+    ],
     '@typescript-eslint/no-unused-vars': ['warn', { varsIgnorePattern: '^_' }],
     'no-restricted-imports': [
       'error',

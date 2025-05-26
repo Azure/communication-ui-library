@@ -1,10 +1,11 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+//
 const { defineConfig, globalIgnores } = require('eslint/config');
 
 const globals = require('globals');
 const tsParser = require('@typescript-eslint/parser');
 const typescriptEslint = require('@typescript-eslint/eslint-plugin');
-// const header = require('eslint-plugin-header');
-// const licenseHeader = require('eslint-plugin-license-header');
 const headers = require('eslint-plugin-headers');
 const js = require('@eslint/js');
 
@@ -63,7 +64,7 @@ module.exports = defineConfig([
         {
           source: 'string',
           style: 'line',
-          content: 'Copyright (c) Microsoft Corporation.\nLicensed under the MIT License.\n'
+          content: 'Copyright (c) Microsoft Corporation.\nLicensed under the MIT License.'
         }
       ],
 
