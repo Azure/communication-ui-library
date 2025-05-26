@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "storybook",
-  "workstream": "RTT",
-  "comment": "Remove RTT beta banner",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

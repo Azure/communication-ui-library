@@ -1,8 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "feature",
-  "workstream": "together-mode",
-  "comment": "Promote together mode to GA",
-  "packageName": "@azure/communication-react",
-  "dependentChangeType": "patch"
-}

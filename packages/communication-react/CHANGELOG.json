@@ -2,6 +2,178 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 26 May 2025 21:03:25 GMT",
+      "version": "1.28.0-beta.1",
+      "tag": "@azure/communication-react_v1.28.0-beta.1",
+      "comments": {
+        "minor": [
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c586460cb086eefc82c103548b81238769ebb7e8",
+            "area": "storybook",
+            "workstream": "RTT",
+            "comment": "Remove RTT beta banner"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "da3d8f18e2dd13514d54caafb462645b5855588c",
+            "area": "storybook",
+            "workstream": "Remove Beta Banner for PSTN and 1:N",
+            "comment": "Remove Beta Banner for PSTN and 1:N"
+          }
+        ],
+        "patch": [
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "89b073739d3e3576fe808976323afb01b065154a",
+            "area": "improvement",
+            "workstream": "Add selector for getting all remote participants",
+            "comment": "Add selector for all remote participants including active and inactive users"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0c9f780efbceb0c956c2e2f0349f2394544ba8c4",
+            "area": "improvement",
+            "workstream": "Governance",
+            "comment": "Upgrade supertest for formidable Component Governance"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "47b8caba2d401f3591c12f6b1bf8331b80632e40",
+            "area": "fix",
+            "workstream": "iOS",
+            "comment": "Prevent screen zooming on message input"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "49c50ea08413c0b372abd32af018239bb3f9a139",
+            "area": "fix",
+            "workstream": "RTT",
+            "comment": "Fix bug where scrollable UL element is not keyboard focusable"
+          },
+          {
+            "author": "107075081+Leah-Xia-Microsoft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c5c77d673b30156a4b20e5ab45bb30ab194aedbf",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix RichTextSendbox send button is disabled after file uploading is completed"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3ca4e3b3a465cb9a4236b3c1ec51a0f170e36f98",
+            "area": "fix",
+            "workstream": "Rich Text Editor",
+            "comment": "Add inlineImage change checking for the edit box"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3fbb37d1326bc591ec43b58260c9b31135a81121",
+            "area": "fix",
+            "workstream": "Build project",
+            "comment": "Update build scripts to use paths compatible with all OS's"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c7633dadba5e78d1bc8e1b2fc34c969a6a924f95",
+            "area": "improvement",
+            "workstream": "Add selector changes for unnamed participants that left call",
+            "comment": "Add changes for stateful client to get display name of participants that left call"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "42e60e0c9ca5525e2462227d08af323d259c06fd",
+            "area": "fix",
+            "workstream": "Dependencies",
+            "comment": "Update RoosterJS version to fix an issue where cursor wasn't visible in Windows high contrast themes"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "c9071d16fbeec1ac4e29f2dee69ae0be5a0bb4c3",
+            "area": "improvement",
+            "workstream": "Update Dependencies",
+            "comment": "Update communication-calling to 1.36.1-beta-1"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "ed6546db86c974a13aba0a963b7c821ce8a1fb89",
+            "area": "fix",
+            "workstream": "Merge prerelease branch to main for 1.27.0",
+            "comment": "Merge prerelease branch to main for 1.27.0"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8813137b762bcc6bc84c98acab901df5cb03d315",
+            "area": "feature",
+            "workstream": "Captions RTT",
+            "comment": "Fix bug where numbers are shown on non-interactive elements"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ee5ee93e742cd1af3ee7ac0856ab58fbbfe928b6",
+            "area": "fix",
+            "workstream": "Calling SDK",
+            "comment": "Add call client disposal method to the stateful client"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "515ca099aadf57db29c37817989a6c9bd7731333",
+            "area": "feature",
+            "workstream": "Option to hide Real Time Text",
+            "comment": "Option to hide Real Time Text"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8813137b762bcc6bc84c98acab901df5cb03d315",
+            "area": "feature",
+            "workstream": "Captions RTT",
+            "comment": "Fix bug where numbers are shown on non-interactive elements"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "dc31993be4728f64d23751dc3ae408b46739891f",
+            "area": "improvement",
+            "workstream": "JSloaders",
+            "comment": "Add base composite props to the loader functions"
+          },
+          {
+            "package": "@azure/communication-react",
+            "commit": "54583f8f382d63c63d3f56eace76348094bcebec",
+            "area": "feature",
+            "workstream": "together-mode",
+            "comment": "Promote together mode to GA"
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "debdb33a8c84a10dfd9324801e31580bdb2f93ba",
+            "area": "improvement",
+            "workstream": "CustomButtonInjection",
+            "comment": "Add custom button injection autohide in drawermenus"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 12 May 2025 20:47:06 GMT",
       "version": "1.27.0",
       "tag": "@azure/communication-react_v1.27.0",
