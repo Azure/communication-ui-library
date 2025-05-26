@@ -1977,6 +1977,18 @@ packages:
     engines: {node: ^12.0.0 || ^14.0.0 || >=16.0.0}
     dev: false
 
+  /@eslint/compat@1.2.9(eslint@9.27.0):
+    resolution: {integrity: sha512-gCdSY54n7k+driCadyMNv8JSPzYLeDVM/ikZRtvtROBpRdFSkS8W9A82MqsaY7lZuwL0wiapgD0NT1xT0hyJsA==}
+    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+    peerDependencies:
+      eslint: ^9.10.0
+    peerDependenciesMeta:
+      eslint:
+        optional: true
+    dependencies:
+      eslint: 9.27.0
+    dev: false
+
   /@eslint/config-array@0.20.0:
     resolution: {integrity: sha512-fxlS1kkIjx8+vy2SjuCB94q3htSNrufYTXubwiBFeaQHbH6Ipi43gFJq2zCMt6PHhImH3Xmr0NksKDvchWlpQQ==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
@@ -18000,7 +18012,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-+xfV/u1n76LedVl2Y36oefyfP3KETMW/G7ips3L5eu4rJmV9Yzn6cweEXc/3Jn2AiV8s98m02JUt27mcnK80Dg==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-V2QRzTKZnjhgRyVxWy5IvYmhUEcRT9svlfK1ge0qrG+AqQfFhpjbk6mfHtgmEdvOpgUEgsJOdCfAybNj3iMokw==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -18013,6 +18025,9 @@ packages:
       '@azure/logger': 1.2.0
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
+      '@eslint/compat': 1.2.9(eslint@9.27.0)
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@fluentui-contrib/react-chat': 0.1.11(@fluentui/react-components@9.62.0)(@fluentui/react-icons@2.0.300)(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react': 8.122.17(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-components': 9.62.0(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)(scheduler@0.26.0)
@@ -18047,12 +18062,14 @@ packages:
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
       eslint-plugin-react: 7.37.5(eslint@9.27.0)
       eslint-plugin-react-hooks: 4.6.2(eslint@9.27.0)
       events: 3.3.0
+      globals: 16.2.0
       html-react-parser: 5.2.5(@types/react@18.3.12)(react@18.3.1)
       if-env: 1.0.4
       immer: 10.1.1
