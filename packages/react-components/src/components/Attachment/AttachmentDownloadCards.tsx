@@ -84,7 +84,7 @@ export const _AttachmentDownloadCards = (props: _AttachmentDownloadCardsProps): 
         } else {
           return defaultMenuActions;
         }
-      } catch (error) {
+      } catch {
         return defaultMenuActions;
       }
     },

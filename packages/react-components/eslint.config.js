@@ -63,6 +63,7 @@ module.exports = defineConfig([
       ],
 
       eqeqeq: 'warn',
+      '@typescript-eslint/no-unused-expressions': 'off', // TURN THIS ON IN SUBSEQUENT PR
       '@typescript-eslint/no-non-null-assertion': 'error',
 
       'headers/header-format': [

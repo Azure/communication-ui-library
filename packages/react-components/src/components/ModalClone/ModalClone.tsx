@@ -861,7 +861,7 @@ class DraggableZone extends React.Component<IDraggableZoneProps, IDraggableZoneS
       return false;
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-types
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type
     const matchesSelectorFn: Function =
       element.matches || element.webkitMatchesSelector || (element as any).msMatchesSelector; /* for IE */
 
