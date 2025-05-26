@@ -17420,7 +17420,7 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-/YZ0ToizlrM5xgguqvor/c5rGUv3zfWD3Pphq+lG3LBlUCq2wyOO3vsf4ajLAgAfUSLYf7cB4D+wM0RkLMtHsw==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-aOvSBN/pkKOvANg0O9G8UZueIO99nPkLd5TxCU6R8JUEYFRTFIvb2dpXpQLI78/TYQiuyPrMU//cltk79EBpUQ==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -17430,6 +17430,8 @@ packages:
       '@azure/logger': 1.2.0
       '@babel/cli': 7.27.2(@babel/core@7.27.1)
       '@babel/core': 7.27.1
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@types/events': 3.0.3
       '@types/jest': 29.5.14
       '@types/react': 18.3.12
@@ -17442,10 +17444,12 @@ packages:
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsdoc: 50.6.17(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
       events: 3.3.0
+      globals: 16.2.0
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
