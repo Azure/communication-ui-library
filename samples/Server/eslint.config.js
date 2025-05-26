@@ -3,8 +3,9 @@ const { defineConfig, globalIgnores } = require('eslint/config');
 const globals = require('globals');
 const tsParser = require('@typescript-eslint/parser');
 const typescriptEslint = require('@typescript-eslint/eslint-plugin');
-const header = require('eslint-plugin-header');
-const licenseHeader = require('eslint-plugin-license-header');
+// const header = require('eslint-plugin-header');
+// const licenseHeader = require('eslint-plugin-license-header');
+const headers = require('eslint-plugin-headers');
 const js = require('@eslint/js');
 
 const { FlatCompat } = require('@eslint/eslintrc');
@@ -42,7 +43,7 @@ module.exports = defineConfig([
 
     plugins: {
       '@typescript-eslint': typescriptEslint,
-      'license-header': licenseHeader
+      headers
     },
 
     rules: {
@@ -57,9 +58,13 @@ module.exports = defineConfig([
       eqeqeq: 'warn',
       '@typescript-eslint/no-non-null-assertion': 'error',
 
-      'license-header/header': [
+      'headers/header-format': [
         'error',
-        ['// Copyright (c) Microsoft Corporation.', '// Licensed under the MIT License.']
+        {
+          source: 'string',
+          style: 'line',
+          content: 'Copyright (c) Microsoft Corporation.\nLicensed under the MIT License.\n'
+        }
       ],
 
       'react/display-name': 'off',
