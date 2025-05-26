@@ -1,10 +1,8 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* eslint-disable react/prop-types */
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import * as React from 'react';
@@ -289,7 +287,6 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
     }, [internalState, setModalMenuClose]);
 
     const handleDrag = React.useCallback(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (ev: React.MouseEvent<HTMLElement> & React.TouchEvent<HTMLElement>, dragData: any): void => {
         setCoordinates((prevValue) => ({
           x: getClampedAxis('x', prevValue.x + dragData.delta.x),

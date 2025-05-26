@@ -83,7 +83,6 @@ module.exports = defineConfig([
           varsIgnorePattern: '^_'
         }
       ],
-
       'no-restricted-imports': [
         'error',
         {
