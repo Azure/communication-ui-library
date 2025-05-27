@@ -120,6 +120,7 @@ jobs:
           name: communication-react.${{ matrix.flavor }}.api.json
           path: |
             packages/communication-react/temp/communication-react.api.json
+          overwrite: true
 
   jest-test-coverage:
     needs: [get_matrix, build_packages]
