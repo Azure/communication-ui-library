@@ -802,10 +802,13 @@ jobs:
           name: ${{ matrix.app }}-report
       - name: Calculate size change
         id: bundles
+        # Note: When calculating bundle size there are multiple bundles
+        # (due to lazy loading effects/rich-text editor etc.) so we sum
+        # the parsedSize of all bundles to get the total size.
         run: |
-          base_size=$(jq -r ".[0].parsedSize" base/report.json)
+          base_size=$(jq -r "[.[].parsedSize] | add" base/report.json)
           echo "base_size=${base_size}" >> $GITHUB_OUTPUT
-          current_size=$(jq -r ".[0].parsedSize" current/report.json)
+          current_size=$(jq -r "[.[].parsedSize] | add" current/report.json)
           echo "current_size=${current_size}" >> $GITHUB_OUTPUT
           change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
           echo "change=${change}" >> $GITHUB_OUTPUT
