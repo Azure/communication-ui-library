@@ -804,7 +804,7 @@ jobs:
           name: ${{ matrix.app }}-report
       - name: Calculate size change
         id: bundles
-        run: node ./common/scripts/compare-bundles.mjs base/report.json current/report.json >> $GITHUB_OUTPUT
+        run: node ./common/scripts/compare-bundles.mjs base/report.json current/report.json
       - name: Find Comment
         uses: peter-evans/find-comment@v3
         id: fc
@@ -834,8 +834,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `### 📦 ${{ matrix.app }} bundle size
-              ${{ steps.bundles.outputs.bundle_diff_output }}`
+              body: `### 📦 ${{ matrix.app }} bundle size\n${{ steps.bundles.outputs.bundle_diff_comment }}`
             });
       - name: Check whether the bundle size is increased significantly
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}

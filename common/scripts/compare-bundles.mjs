@@ -71,4 +71,5 @@ const currentSizes = extractSizes(currentReport);
 const bundleNames = getAllBundleNames(baseSizes, currentSizes);
 const markdown = formatTable(baseSizes, currentSizes, bundleNames);
 
+// Output to GitHub Actions environment variable
 appendFileSync(process.env.GITHUB_OUTPUT, `bundle_diff_comment<<EOF\n${markdown}\nEOF\n`);
