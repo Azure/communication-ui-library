@@ -116,7 +116,7 @@ jobs:
       - name: Upload communication-react api files
         uses: actions/upload-artifact@v4
         with:
-          name: communication-react.${{ matrix.flavor }}.api.json
+          name: communication-react-test.${{ matrix.flavor }}.api.json
           path: |
             packages/communication-react/temp/communication-react.api.json
 
