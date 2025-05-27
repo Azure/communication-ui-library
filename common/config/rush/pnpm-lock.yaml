@@ -18241,7 +18241,6 @@ packages:
 
   file:projects/config.tgz:
     resolution: {integrity: sha512-JZEJt0Gf/UtyINOyGicWK57DWGwf4nylcGFQaiJ9+3MdIekpVREHddtpQQ0UKJMzt89t9fiQ7fX02mJUFvCoHg==, tarball: file:projects/config.tgz}
-    resolution: {integrity: sha512-JZEJt0Gf/UtyINOyGicWK57DWGwf4nylcGFQaiJ9+3MdIekpVREHddtpQQ0UKJMzt89t9fiQ7fX02mJUFvCoHg==, tarball: file:projects/config.tgz}
     name: '@rush-temp/config'
     version: 0.0.0
     dependencies:
@@ -18584,7 +18583,6 @@ packages:
 
   file:projects/sample-automation-tests.tgz:
     resolution: {integrity: sha512-nyEQ+qSwrOUaPyAoaG7MTNlAwAqtNKrR6ig+eDjjbywdRGxaXKGGMWrNHPplqfCVQ5lCmnrzfRkYNNbx1uHgtg==, tarball: file:projects/sample-automation-tests.tgz}
-    resolution: {integrity: sha512-nyEQ+qSwrOUaPyAoaG7MTNlAwAqtNKrR6ig+eDjjbywdRGxaXKGGMWrNHPplqfCVQ5lCmnrzfRkYNNbx1uHgtg==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
@@ -18608,7 +18606,6 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-0d+VLU0aMQSdJXPMQyVNUNewMnX33yp49ab7KlUdsBXrN6sKbsDFpcKdV0kbPc0w1f0FOnFaEYqwSm6qEPVADQ==, tarball: file:projects/sample-static-html-composites.tgz}
     resolution: {integrity: sha512-0d+VLU0aMQSdJXPMQyVNUNewMnX33yp49ab7KlUdsBXrN6sKbsDFpcKdV0kbPc0w1f0FOnFaEYqwSm6qEPVADQ==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
@@ -18656,7 +18653,6 @@ packages:
     dev: false
 
   file:projects/scripts.tgz:
-    resolution: {integrity: sha512-Gz39L0FpcaiWmu0vIdx+ag3rElBIi12ECc4QgxWTV4SzlBOCZzDJKWddFdkqhNnqxrUWz7LuHOtSOgRW3tblJg==, tarball: file:projects/scripts.tgz}
     resolution: {integrity: sha512-Gz39L0FpcaiWmu0vIdx+ag3rElBIi12ECc4QgxWTV4SzlBOCZzDJKWddFdkqhNnqxrUWz7LuHOtSOgRW3tblJg==, tarball: file:projects/scripts.tgz}
     name: '@rush-temp/scripts'
     version: 0.0.0
