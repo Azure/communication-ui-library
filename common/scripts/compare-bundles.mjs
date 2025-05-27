@@ -61,13 +61,6 @@ function formatTable(baseSizes, currentSizes, bundleNames) {
   return output;
 }
 
-function escapeForGitHub(output) {
-  return output
-    .replace(/%/g, '%25')
-    .replace(/\n/g, '%0A')
-    .replace(/\r/g, '%0D');
-}
-
 // Run
 const baseReport = loadReport(basePath);
 const currentReport = loadReport(currentPath);
@@ -77,6 +70,5 @@ const currentSizes = extractSizes(currentReport);
 
 const bundleNames = getAllBundleNames(baseSizes, currentSizes);
 const markdown = formatTable(baseSizes, currentSizes, bundleNames);
-const escaped = escapeForGitHub(markdown);
 
-console.log(`bundle_diff_output=${escaped}`);
+console.log(`bundle_diff_output=${markdown}`);
