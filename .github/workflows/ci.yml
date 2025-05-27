@@ -113,7 +113,6 @@ jobs:
       - name: Ensure all package versions are consistent
         run: rush ensure-consistent-versions
       # Upload azure-communication api.md files for easy access
-      # Comment for diff
       - name: Upload communication-react api files
         uses: actions/upload-artifact@v4
         with:
