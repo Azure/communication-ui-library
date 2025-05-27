@@ -52,11 +52,24 @@ function formatTable(baseSizes, currentSizes, bundleNames) {
     const change = current > base
       ? '⚠️ increased'
       : current < base
-      ? '✅ decreased'
-      : '✅ unchanged';
+      ? '⬇️ decreased'
+      : '➖ unchanged';
 
     output += `| ${name} | ${base} | ${current} | ${change} | ${delta} |\n`;
   }
+
+  // Add total
+  const totalBase = Object.values(baseSizes).reduce((sum, size) => sum + size, 0);
+  const totalCurrent = Object.values(currentSizes).reduce((sum, size) => sum + size, 0);
+  const totalDelta = totalCurrent - totalBase;
+  const readableDelta =
+    Math.abs(totalDelta) > 1024
+      ? `${(totalDelta / 1024).toFixed(1)} KB`
+      : `${totalDelta} B`;
+  
+  const summaryEmoji = totalDelta > 0 ? '⬆⚠️' : totalDelta < 0 ? '⬇️' : '➖';
+  const summaryText = `**Total change:** ${totalDelta >= 0 ? '+' : ''}${readableDelta} ${summaryEmoji}`;
+  output += `\n${summaryText}\n`;
 
   return output;
 }
