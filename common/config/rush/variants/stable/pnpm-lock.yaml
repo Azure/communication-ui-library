@@ -18018,15 +18018,20 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-DSvhwH5NYWAY+40cnoEa4fjgnGf/rmqteCGAI1SdlL0blwT6VtpzQd2jokcfMuEa+3aCgRM85phAPgqaXcpw3A==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-L/o1WO3lab7S+40WDwM9rCzCOkcEkNOJejEjDMWhUZCncr5fpkiCfoABInx6fZQ7IwbAng2VyYnAzM5o4V67Dg==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
+      '@eslint/compat': 1.2.9(eslint@9.27.0)
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       eslint: 9.27.0
       eslint-config-prettier: 10.1.5(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
+      globals: 16.2.0
       prettier: 3.5.3
       rimraf: 2.7.1
       typescript: 4.8.4
