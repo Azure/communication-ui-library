@@ -41,7 +41,7 @@ function getAllBundleNames(baseSizes, currentSizes) {
 }
 
 function formatTable(baseSizes, currentSizes, bundleNames) {
-  let output = `| Bundle | Base Size (bytes) | Current Size (bytes) | Change | Δ Size |\n`;
+  let output = `| Bundle | Base Size (bytes) | Current Size (bytes) | Change | Delta (bytes) |\n`;
   output += `|--------|-------------------|------------------------|--------|--------|\n`;
 
   for (const name of bundleNames) {
@@ -71,4 +71,4 @@ const currentSizes = extractSizes(currentReport);
 const bundleNames = getAllBundleNames(baseSizes, currentSizes);
 const markdown = formatTable(baseSizes, currentSizes, bundleNames);
 
-console.log(`bundle_diff_output=${markdown}`);
+fs.appendFileSync(process.env.GITHUB_OUTPUT, `bundle_diff_comment<<EOF\n${markdown}\nEOF\n`);
