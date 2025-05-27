@@ -342,11 +342,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
 
   const showDesktopMoreButton =
     isEnabled(options?.moreButton) &&
-    (false ||
-      isEnabled(options?.holdButton) ||
-      showCaptionsButton ||
-      props.onUserSetGalleryLayout ||
-      showRealTimeTextButton);
+    (isEnabled(options?.holdButton) || showCaptionsButton || props.onUserSetGalleryLayout || showRealTimeTextButton);
 
   const role = props.callAdapter.getState().call?.role;
   const hideRaiseHandButtonInRoomsCall =

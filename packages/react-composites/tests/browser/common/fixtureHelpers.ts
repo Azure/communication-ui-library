@@ -15,7 +15,7 @@ import { buildUrl } from './utils';
  * Creates a page to be tested for each participant in a browser page.
  * To be used in a playwright fixture's 'pages'.
  */
-// eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+
 export const usePagePerParticipant = async (
   {
     serverUrl,
@@ -60,7 +60,7 @@ const shouldIgnoreConsoleError = (error: ConsoleMessage): boolean => {
  * Creates a page to be tested for each participant in a browser page.
  * To be used in a playwright fixture's 'pages'.
  */
-// eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+
 export const usePagePerParticipantWithCallPermissions = async (
   { browser, serverUrl, users }: PlaywrightWorkerArgs & WorkerFixture<CallUserType>,
   use: (pages: Page[]) => Promise<void>
@@ -127,7 +127,7 @@ export const createChatThreadAndUsers = async (displayNames: string[]): Promise<
  */
 export const createChatUsers =
   (testParticipants: string[]) =>
-  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types
   async ({}, use: (r: ChatUserType[]) => Promise<void>) => {
     const users = await createChatThreadAndUsers(testParticipants);
     await use(users);
@@ -148,7 +148,7 @@ const createCallingUserAndToken = async (): Promise<CallUserType> => {
  */
 export const createCallUsers =
   (testParticipants: string[]) =>
-  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types
   async ({}, use: (users: Array<CallUserType>) => Promise<void>) => {
     const groupId = v1();
     const users: Array<CallUserType> = [];
@@ -217,7 +217,7 @@ export const createCallWithChatObjectsAndUsers = async (
  */
 export const createCallWithChatUsers =
   (testParticipants: string[]) =>
-  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+  // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types
   async ({}, use: (r: CallWithChatUserType[]) => Promise<void>) => {
     const users = await createCallWithChatObjectsAndUsers(testParticipants);
     await use(users);

@@ -12,9 +12,9 @@ import { useHandlers } from './useHandlers';
 type Selector = (state: any, props: any) => any;
 
 /**
+ * Private implementation of the hook
  * @private
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
 ): GetCallingSelector<Component> extends Selector
