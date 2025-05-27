@@ -58,19 +58,6 @@ function formatTable(baseSizes, currentSizes, bundleNames) {
     output += `| ${name} | ${base} | ${current} | ${change} | ${delta} |\n`;
   }
 
-  // Add total
-  const totalBase = Object.values(baseSizes).reduce((sum, size) => sum + size, 0);
-  const totalCurrent = Object.values(currentSizes).reduce((sum, size) => sum + size, 0);
-  const totalDelta = totalCurrent - totalBase;
-  const readableDelta =
-    Math.abs(totalDelta) > 1024
-      ? `${(totalDelta / 1024).toFixed(1)} KB`
-      : `${totalDelta} B`;
-  
-  const summaryEmoji = totalDelta > 0 ? '⚠️' : totalDelta < 0 ? '⬇️' : '➖';
-  const summaryText = `**Total change:** ${totalDelta >= 0 ? '+' : ''}${readableDelta} ${summaryEmoji}`;
-  output += `\n${summaryText}\n`;
-
   return output;
 }
 
@@ -82,7 +69,21 @@ const baseSizes = extractSizes(baseReport);
 const currentSizes = extractSizes(currentReport);
 
 const bundleNames = getAllBundleNames(baseSizes, currentSizes);
-const markdown = formatTable(baseSizes, currentSizes, bundleNames);
+let markdown = formatTable(baseSizes, currentSizes, bundleNames);
+
+// Add total
+const totalBase = Object.values(baseSizes).reduce((sum, size) => sum + size, 0);
+const totalCurrent = Object.values(currentSizes).reduce((sum, size) => sum + size, 0);
+const totalDelta = totalCurrent - totalBase;
+const readableDelta =
+  Math.abs(totalDelta) > 1024
+    ? `${(totalDelta / 1024).toFixed(1)} KB`
+    : `${totalDelta} B`;
+
+const summaryEmoji = totalDelta > 0 ? '⚠️' : totalDelta < 0 ? '⬇️' : '➖';
+const summaryText = `**Total change:** ${totalDelta >= 0 ? '+' : ''}${readableDelta} ${summaryEmoji}`;
+markdown += `\n${summaryText}\n`;
 
 // Output to GitHub Actions environment variable
 appendFileSync(process.env.GITHUB_OUTPUT, `bundle_diff_comment<<EOF\n${markdown}\nEOF\n`);
+appendFileSync(process.env.GITHUB_OUTPUT, `diff<<totalDelta`);
