@@ -33,7 +33,7 @@ const logLineCharacterLimit = 1000;
 const logLengthMaxSize = 1000000;
 
 const storeLog = (logType: string, log: string | undefined): void => {
-  log && logs.push(`${logType} ${new Date().toISOString()} ${log}`.slice(0, logLineCharacterLimit));
+  logs.push(`${logType} ${new Date().toISOString()} ${log}`.slice(0, logLineCharacterLimit));
 };
 
 type ConsoleLogFuncType = 'log' | 'warn' | 'error' | 'info' | 'debug';
@@ -123,7 +123,7 @@ const checkExistingPermissionState = async (): Promise<boolean> => {
   try {
     const result = await (DeviceOrientationEvent as unknown as DeviceMotionEventiOS)?.requestPermission?.();
     return result === 'granted';
-  } catch (e) {
+  } catch {
     return false;
   }
 };

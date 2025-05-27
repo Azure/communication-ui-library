@@ -17595,7 +17595,7 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-c+2io0Ij6NDK76awrFF+iZFNk4JVI8RACio1vPSW6VJmudghVzJND4UcGL5Sdu/za3qa/yTGKRHaCeasDdfh5w==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-tzMS3ya4ZmdI1SsITIDNinZX1xkRud2kdpOkQpbqySE8GqRI0W2yZAFDKXN50xNW1gIU5beEMYvIrBHlCJWDrg==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
@@ -17609,6 +17609,9 @@ packages:
       '@babel/eslint-parser': 7.27.1(@babel/core@7.27.1)(eslint@9.27.0)
       '@babel/preset-env': 7.23.9(@babel/core@7.27.1)
       '@babel/preset-react': 7.27.1(@babel/core@7.27.1)
+      '@eslint/compat': 1.2.9(eslint@9.27.0)
+      '@eslint/eslintrc': 3.3.1
+      '@eslint/js': 9.27.0
       '@fluentui/react': 8.122.17(@types/react-dom@18.3.1)(@types/react@18.3.12)(react-dom@18.3.1)(react@18.3.1)
       '@fluentui/react-hooks': 8.8.18(@types/react@18.3.12)(react@18.3.1)
       '@fluentui/react-icons': 2.0.300(react@18.3.1)
@@ -17632,12 +17635,14 @@ packages:
       eslint-config-react-app: 6.0.0(@typescript-eslint/eslint-plugin@8.32.1)(@typescript-eslint/parser@8.32.1)(eslint-plugin-flowtype@8.0.3)(eslint-plugin-import@2.31.0)(eslint-plugin-jsx-a11y@6.10.2)(eslint-plugin-react-hooks@5.2.0)(eslint-plugin-react@7.37.5)(eslint@9.27.0)
       eslint-plugin-flowtype: 8.0.3(eslint@9.27.0)
       eslint-plugin-header: 3.1.1(eslint@9.27.0)
+      eslint-plugin-headers: 1.3.1(eslint@9.27.0)
       eslint-plugin-import: 2.31.0(eslint@9.27.0)
       eslint-plugin-jsx-a11y: 6.10.2(eslint@9.27.0)
       eslint-plugin-prettier: 5.4.0(eslint-config-prettier@10.1.5)(eslint@9.27.0)(prettier@3.5.3)
       eslint-plugin-react: 7.37.5(eslint@9.27.0)
       eslint-plugin-react-hooks: 5.2.0(eslint@9.27.0)
       follow-redirects: 1.15.6
+      globals: 16.2.0
       html-webpack-plugin: 5.6.3(webpack@5.95.0)
       husky: 8.0.3
       if-env: 1.0.4

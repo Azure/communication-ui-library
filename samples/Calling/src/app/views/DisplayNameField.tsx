@@ -49,7 +49,7 @@ export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
     if (setEmptyWarning && !newValue) {
       setEmptyWarning(true);
     } else {
-      setEmptyWarning && setEmptyWarning(false);
+      setEmptyWarning?.(false);
     }
   };
 
