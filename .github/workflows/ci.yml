@@ -835,7 +835,7 @@ jobs:
               repo: context.repo.repo,
               issue_number: context.issue.number,
               body: `### 📦 ${{ matrix.app }} bundle size
-              ${{ steps.bundles.outputs.bundle_diff_output }}
+              ${{ steps.bundles.outputs.bundle_diff_output }}`
             });
       - name: Check whether the bundle size is increased significantly
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
