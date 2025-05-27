@@ -1,4 +1,4 @@
-import { readFileSync } from 'fs';
+import { appendFileSync, readFileSync } from 'fs';
 
 if (process.argv.length < 4) {
   console.error('Usage: node compare-bundles.js <baseReportPath> <currentReportPath>');
@@ -71,4 +71,4 @@ const currentSizes = extractSizes(currentReport);
 const bundleNames = getAllBundleNames(baseSizes, currentSizes);
 const markdown = formatTable(baseSizes, currentSizes, bundleNames);
 
-fs.appendFileSync(process.env.GITHUB_OUTPUT, `bundle_diff_comment<<EOF\n${markdown}\nEOF\n`);
+appendFileSync(process.env.GITHUB_OUTPUT, `bundle_diff_comment<<EOF\n${markdown}\nEOF\n`);
