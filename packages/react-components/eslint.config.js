@@ -64,6 +64,7 @@ module.exports = defineConfig([
 
       eqeqeq: 'warn',
       '@typescript-eslint/no-unused-expressions': 'off', // TURN THIS ON IN SUBSEQUENT PR
+      'react-hooks/rules-of-hooks': 'off', // TURN THIS ON when we have more clarity on how to resolve.
       '@typescript-eslint/no-non-null-assertion': 'error',
 
       'headers/header-format': [

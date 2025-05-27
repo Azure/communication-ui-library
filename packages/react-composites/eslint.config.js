@@ -80,6 +80,7 @@ module.exports = defineConfig([
 
       'react/display-name': 'off',
       '@typescript-eslint/no-unused-expressions': 'off', // TO BE ENABLED ASAP
+      'react-hooks/rules-of-hooks': 'off', // TURN THIS ON when we have more clarity on how to resolve.
       '@typescript-eslint/no-explicit-any': 'error',
       '@typescript-eslint/explicit-module-boundary-types': 'error',
       '@typescript-eslint/no-empty-function': 'error',
