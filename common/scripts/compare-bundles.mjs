@@ -86,4 +86,4 @@ markdown += `\n${summaryText}\n`;
 
 // Output to GitHub Actions environment variable
 appendFileSync(process.env.GITHUB_OUTPUT, `bundle_diff_comment<<EOF\n${markdown}\nEOF\n`);
-appendFileSync(process.env.GITHUB_OUTPUT, `diff<<totalDelta`);
+appendFileSync(process.env.GITHUB_OUTPUT, `diff<<${totalDelta}`);
