@@ -12931,9 +12931,9 @@ packages:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
     dev: false
 
-  /multer@1.4.5-lts.1:
-    resolution: {integrity: sha512-ywPWvcDMeH+z9gQq5qYHCCy+ethsk4goepZ45GLD63fOu0YcNecQxi64nDs3qluZB+murG3/D4dJ7+dGctcCQQ==}
-    engines: {node: '>= 6.0.0'}
+  /multer@2.0.0:
+    resolution: {integrity: sha512-bS8rPZurbAuHGAnApbM9d4h1wSoYqrOqkE+6a64KLMK9yWU7gJXBDDVklKQ3TPi9DRb85cRs6yXaC0+cjxRtRg==}
+    engines: {node: '>= 10.16.0'}
     dependencies:
       append-field: 1.0.0
       busboy: 1.6.0
@@ -18503,7 +18503,7 @@ packages:
     dev: false
 
   file:projects/server.tgz:
-    resolution: {integrity: sha512-TLym5YMKoXHpJkDrGNRrar+a3AQuH2GR/Wu9GV4Kf5tal9oeQ/Xvo3CuKaEkIotysxDwsi07aG0GwqRJFdT7sQ==, tarball: file:projects/server.tgz}
+    resolution: {integrity: sha512-yoIzXUwjsBw+24jBfUKceaMsUXIPPkzc7H0DNOYcQtvNAW5keJG7fqM6xTasQiqtybsgLSXOxcO9r2QbuqMzfw==, tarball: file:projects/server.tgz}
     name: '@rush-temp/server'
     version: 0.0.0
     dependencies:
@@ -18540,7 +18540,7 @@ packages:
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
       jest-junit: 16.0.0
       morgan: 1.10.0
-      multer: 1.4.5-lts.1
+      multer: 2.0.0
       node-fetch: 2.6.7
       prettier: 3.3.2
       pretty-quick: 4.1.1(prettier@3.3.2)
