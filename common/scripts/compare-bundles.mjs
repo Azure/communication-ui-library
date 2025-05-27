@@ -67,7 +67,7 @@ function formatTable(baseSizes, currentSizes, bundleNames) {
       ? `${(totalDelta / 1024).toFixed(1)} KB`
       : `${totalDelta} B`;
   
-  const summaryEmoji = totalDelta > 0 ? '⬆⚠️' : totalDelta < 0 ? '⬇️' : '➖';
+  const summaryEmoji = totalDelta > 0 ? '⚠️' : totalDelta < 0 ? '⬇️' : '➖';
   const summaryText = `**Total change:** ${totalDelta >= 0 ? '+' : ''}${readableDelta} ${summaryEmoji}`;
   output += `\n${summaryText}\n`;
 
