@@ -90,5 +90,5 @@ module.exports = defineConfig([
       '@typescript-eslint/no-var-requires': 'off'
     }
   },
-  globalIgnores(['**/docs/', '**/public/', '**/dist/', '**/node_modules/'])
+  globalIgnores(['**/docs/', '**/public/', '**/dist/', '**/node_modules/', '*.config.js'])
 ]);
