@@ -222,10 +222,11 @@ describe('createHandlers', () => {
     await handlers.onSendMessage('test message');
     expect(mockChatThreadClient.sendMessage).toHaveBeenCalledWith(
       {
-        content: 'test message',
-        senderDisplayName: displayName
+        content: 'test message'
       },
-      undefined
+      {
+        senderDisplayName: displayName
+      }
     );
   });
 
