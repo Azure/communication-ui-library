@@ -5,8 +5,9 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
+import { SendMessageRequest } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing-acs) */
-import { ChatAttachment, SendMessageRequest } from '@azure/communication-chat';
+import { ChatAttachment } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import { UploadChatImageResult } from '@internal/acs-ui-common';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
