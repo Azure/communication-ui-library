@@ -188,7 +188,7 @@ jobs:
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: '## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
+          body-includes: '### @azure/communication-react jest test coverage for ***${{ matrix.flavor }}'
       - name: Create or update comment
         if: ${{ github.event_name == 'pull_request' && !startsWith(github.event.pull_request.base.ref, 'release/') }}
         uses: peter-evans/create-or-update-comment@v4
@@ -196,7 +196,7 @@ jobs:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
           body: |
-            ## @azure/communication-react jest test coverage for ***${{ matrix.flavor }}***.
+            ### @azure/communication-react jest test coverage for ***${{ matrix.flavor }}***.
 
             |   | Lines | Statements | Functions | Branches |
             | --- | :-------: | :-------: | :-------: | :-------: |
@@ -794,6 +794,8 @@ jobs:
           - app: CallWithChat
             gist: https://gist.github.com/alkwa-msft/c43393ae31b5b08215f3f49ed327d912
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
       # checkout base bundle stats
       - name: Get bundle stats of main from gist
         run: curl -o base/report.json "${{ matrix.gist }}/raw/${{ matrix.app }}-report.json" --create-dirs -L
@@ -803,23 +805,14 @@ jobs:
           name: ${{ matrix.app }}-report
       - name: Calculate size change
         id: bundles
-        run: |
-          base_size=$(jq -r ".[0].parsedSize" base/report.json)
-          echo "base_size=${base_size}" >> $GITHUB_OUTPUT
-          current_size=$(jq -r ".[0].parsedSize" current/report.json)
-          echo "current_size=${current_size}" >> $GITHUB_OUTPUT
-          change=$([ $current_size -gt $base_size ] && echo "increased❗" || ([ $current_size = $base_size ] && echo "not changed" || echo "decreased✅"))
-          echo "change=${change}" >> $GITHUB_OUTPUT
-          echo "diff=$(($current_size - $base_size))" >> $GITHUB_OUTPUT
+        run: node ./common/scripts/compare-bundles.mjs base/report.json current/report.json
       - name: Find Comment
         uses: peter-evans/find-comment@v3
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
           comment-author: 'github-actions[bot]'
-          body-includes: '## ${{ matrix.app }} bundle size is'
-      - name: Checkout repository
-        uses: actions/checkout@v4
+          body-includes: '### 📦 ${{ matrix.app }} bundle size'
       - name: Delete existing comment
         uses: actions/github-script@v7
         with:
@@ -842,10 +835,7 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: context.issue.number,
-              body: `## ${{ matrix.app }} bundle size is ***${{ steps.bundles.outputs.change }}***.
-              - Current size: ${{ steps.bundles.outputs.current_size }}
-              - Base size: ${{ steps.bundles.outputs.base_size }}
-              - Diff size: ${{ steps.bundles.outputs.diff }}`
+              body: `### 📦 ${{ matrix.app }} bundle size\n${{ steps.bundles.outputs.bundle_diff_comment }}`
             });
       - name: Check whether the bundle size is increased significantly
         if: ${{ github.event_name == 'pull_request' && !contains( github.event.pull_request.labels.*.name, 'significant bundle size change') }}
