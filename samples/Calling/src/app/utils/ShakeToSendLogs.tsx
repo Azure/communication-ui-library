@@ -33,7 +33,9 @@ const logLineCharacterLimit = 1000;
 const logLengthMaxSize = 1000000;
 
 const storeLog = (logType: string, log: string | undefined): void => {
-  logs.push(`${logType} ${new Date().toISOString()} ${log}`.slice(0, logLineCharacterLimit));
+  if (log) {
+    logs.push(`${logType} ${new Date().toISOString()} ${log}`.slice(0, logLineCharacterLimit));
+  }
 };
 
 type ConsoleLogFuncType = 'log' | 'warn' | 'error' | 'info' | 'debug';
