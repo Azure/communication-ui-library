@@ -23,6 +23,7 @@ if (
       'No appsettings.json found. Please provide an appsettings.json file by copying appsettings.json.sample and removing the .sample extension'
     );
   } else {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     appSettings = require(appSettingsPath);
   }
 }

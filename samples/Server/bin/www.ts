@@ -4,7 +4,7 @@
 import app from '../src/app';
 import http from 'http';
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const debug = require('debug')('calling-sample-server:server');
 
 /**

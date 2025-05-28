@@ -115,13 +115,13 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
   }
   on(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
   on(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
   off(event: 'isRecordingActiveChanged', listener: PropertyChangedEvent): void;
   off(event: 'recordingsUpdated', listener: CollectionUpdatedEvent<RecordingInfo>): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
   off(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
@@ -168,13 +168,13 @@ export class MockRaiseHandCallFeatureImpl implements RaiseHandCallFeature {
   public emitter = new EventEmitter();
   on(event: 'raisedHandEvent', listener: RaisedHandListener): void;
   on(event: 'loweredHandEvent', listener: RaisedHandListener): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
   off(event: 'raisedHandEvent', listener: RaisedHandListener): void;
   off(event: 'loweredHandEvent', listener: RaisedHandListener): void;
-  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+
   off(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
@@ -336,7 +336,6 @@ export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeat
 /**
  * @private
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function addMockEmitter(object: any): any {
   object.emitter = new EventEmitter();
   object.on = (event: any, listener: any): void => {

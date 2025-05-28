@@ -125,7 +125,7 @@ const SendBoxAttachFileIconTrampoline = (): JSX.Element => {
  */
 export const AttachmentUploadButtonWrapper = (
   // To make conditional compilation not throw errors.
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   props: Pick<AttachmentUploadButtonProps, 'supportedMediaTypes' | 'disableMultipleUploads' | 'onChange'>
 ): JSX.Element => {
   return (
@@ -141,7 +141,6 @@ export const AttachmentUploadButtonWrapper = (
 /* @conditional-compile-remove(file-sharing-acs) */
 const uploadAttachmentButtonStringTrampoline = (): string => {
   /* @conditional-compile-remove(file-sharing-acs) */
-  //eslint-disable-next-line react-hooks/rules-of-hooks
   return useLocale().strings.chat.uploadAttachment;
   return '';
 };

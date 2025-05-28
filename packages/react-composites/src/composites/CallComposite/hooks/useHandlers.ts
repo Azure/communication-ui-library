@@ -33,9 +33,9 @@ import { getCapabilites } from '../selectors/baseSelectors';
 type AdapterCommonCallingHandlers = Omit<CommonCallingHandlers, 'onAcceptCall' | 'onRejectCall'>;
 
 /**
+ * Private implementation of the hook
  * @private
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
 export const useHandlers = <PropsT>(
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _component: (props: PropsT) => ReactElement | null
@@ -91,9 +91,11 @@ const createCompositeHandlers = memoizeOne(
         await adapter.lowerHand();
       },
       onToggleRaiseHand: async () => {
-        adapter.getState().call?.raiseHand.localParticipantRaisedHand
-          ? await adapter.lowerHand()
-          : await adapter.raiseHand();
+        if (adapter.getState().call?.raiseHand.localParticipantRaisedHand) {
+          await adapter.lowerHand();
+        } else {
+          await adapter.raiseHand();
+        }
       },
       onReactionClick: async (reaction: Reaction) => {
         await adapter.onReactionClick(reaction);

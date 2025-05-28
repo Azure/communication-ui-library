@@ -155,7 +155,6 @@ type MockAccessToken = {
 };
 
 const fakeToken: CommunicationTokenCredential = {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
   getToken: (): Promise<MockAccessToken> => {
     return new Promise<MockAccessToken>((resolve) => {
       resolve({ token: 'anyToken', expiresOnTimestamp: Date.now() });

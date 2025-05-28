@@ -1359,7 +1359,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     try {
       this.call?.feature(Features.RealTimeText).on('realTimeTextReceived', this.realTimeTextReceived.bind(this));
-    } catch (e) {
+    } catch {
       console.log('RealTimeText feature is not supported');
     }
     const breakoutRoomsFeature = this.call?.feature(Features.BreakoutRooms);
@@ -1383,7 +1383,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     try {
       this.call?.feature(Features.RealTimeText).off('realTimeTextReceived', this.realTimeTextReceived.bind(this));
-    } catch (e) {
+    } catch {
       console.log('RealTimeText feature is not supported');
     }
     if (this.callingSoundSubscriber) {

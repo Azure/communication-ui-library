@@ -16,7 +16,7 @@ import {
 } from '../../../src';
 import { IDS } from '../../browser/common/constants';
 import { isMobile } from '../lib/utils';
-// eslint-disable-next-line no-restricted-imports
+
 import { IContextualMenuItem, mergeStyles } from '@fluentui/react';
 import { QueryArgs } from './QueryArgs';
 import { MoreHorizontal20Regular } from '@fluentui/react-icons';

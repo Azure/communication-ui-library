@@ -635,7 +635,7 @@ export const existsOnPage = async (page: Page, selector: string): Promise<boolea
   try {
     await page.waitForSelector(selector, { timeout: perStepLocalTimeout() });
     return true;
-  } catch (e) {
+  } catch {
     return false;
   }
 };

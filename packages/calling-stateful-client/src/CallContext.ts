@@ -1251,7 +1251,9 @@ export class CallContext {
           // move the in progress real time text to completed
           completedRealTimeTexts.push(realTimeText);
           // remove the in progress real time text from in progress
-          inProgressRealTimeTexts && (inProgressRealTimeTexts as RealTimeTextInfo[]).splice(index, 1);
+          if (inProgressRealTimeTexts) {
+            (inProgressRealTimeTexts as RealTimeTextInfo[]).splice(index, 1);
+          }
         }
       });
     } else {

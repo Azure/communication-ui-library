@@ -353,7 +353,6 @@ describe('declarative call agent', () => {
 
     let receivedEvent: any | undefined = undefined;
     const callsUpdatedListener = (event: { added: Call[]; removed: Call[] }): void => {
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       receivedEvent = event;
     };
     declarativeCallAgent.on('callsUpdated', callsUpdatedListener);

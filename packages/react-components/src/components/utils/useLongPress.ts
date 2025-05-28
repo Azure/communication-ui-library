@@ -68,7 +68,7 @@ export default function useLongPress(props: {
       return;
     }
     setAction(true);
-    timerRef.current && clearTimeout(timerRef.current);
+    clearTimeout(timerRef.current);
   }, [touchEventsOnly]);
 
   const handleOnMouseDown = useCallback(() => {
@@ -82,7 +82,7 @@ export default function useLongPress(props: {
     if (touchEventsOnly) {
       return;
     }
-    timerRef.current && clearTimeout(timerRef.current);
+    clearTimeout(timerRef.current);
   }, [touchEventsOnly]);
 
   const handleOnTouchStart = useCallback(() => {
@@ -93,11 +93,11 @@ export default function useLongPress(props: {
     if (!isLongPress && onClick) {
       onClick();
     }
-    timerRef.current && clearTimeout(timerRef.current);
+    clearTimeout(timerRef.current);
   }, [onClick, isLongPress]);
 
   const handleOnTouchMove = useCallback(() => {
-    timerRef.current && clearTimeout(timerRef.current);
+    clearTimeout(timerRef.current);
   }, []);
 
   return useMemo(
