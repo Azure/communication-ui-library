@@ -9,6 +9,7 @@ const typescriptEslint = require('@typescript-eslint/eslint-plugin');
 const headers = require('eslint-plugin-headers');
 const jsdoc = require('eslint-plugin-jsdoc');
 const js = require('@eslint/js');
+const esLintConfigPrettier = require('eslint-config-prettier/flat');
 
 const { FlatCompat } = require('@eslint/eslintrc');
 
@@ -41,7 +42,6 @@ module.exports = defineConfig([
       compat.extends(
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:prettier/recommended',
         'plugin:react/recommended',
         'plugin:react-hooks/recommended'
       )
@@ -164,5 +164,6 @@ module.exports = defineConfig([
     '**/node_modules/',
     '**/scripts/',
     '**/preprocessed/'
-  ])
+  ]),
+  esLintConfigPrettier
 ]);

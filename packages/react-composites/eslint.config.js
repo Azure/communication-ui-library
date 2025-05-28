@@ -10,6 +10,7 @@ const headers = require('eslint-plugin-headers');
 const jsdoc = require('eslint-plugin-jsdoc');
 const internalCustomRules = require('@internal/eslint-plugin-custom-rules');
 const js = require('@eslint/js');
+const esLintConfigPrettier = require('eslint-config-prettier/flat');
 
 const { FlatCompat } = require('@eslint/eslintrc');
 
@@ -42,7 +43,6 @@ module.exports = defineConfig([
       compat.extends(
         'eslint:recommended',
         'plugin:@typescript-eslint/recommended',
-        'plugin:prettier/recommended',
         'plugin:react/recommended',
         'plugin:react-hooks/recommended'
       )
@@ -181,5 +181,6 @@ module.exports = defineConfig([
       '@internal/custom-rules/no-getstate': 'off'
     }
   },
-  globalIgnores(['**/docs/', '**/public/', '**/dist/', '**/node_modules/', '**/scripts/', '**/preprocessed/'])
+  globalIgnores(['**/docs/', '**/public/', '**/dist/', '**/node_modules/', '**/scripts/', '**/preprocessed/']),
+  esLintConfigPrettier
 ]);
