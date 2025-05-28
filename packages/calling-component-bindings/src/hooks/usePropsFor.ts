@@ -153,7 +153,6 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
  *
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component
 ): GetSelector<Component> => {

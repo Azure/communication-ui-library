@@ -47,7 +47,6 @@ export const DEFAULT_FAKE_CHAT_ADAPTER_ARGS = {
   remoteParticipants: TEST_PARTICIPANTS.slice(1)
 };
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const usePage = async (
   { serverUrl, browser }: { serverUrl: string; browser: Browser },
   use: (page: Page) => Promise<void>

@@ -153,8 +153,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 options={callOptions}
                 required={true}
                 onChange={(_, option) => {
-                  option && setChosenCallOption(option as ICallChoiceGroupOption);
-
+                  if (option) {
+                    setChosenCallOption(option as ICallChoiceGroupOption);
+                  }
                   setTeamsIdFormatError(false);
                 }}
               />
@@ -167,7 +168,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 required
                 placeholder={'Enter a Teams meeting link'}
                 onChange={(_, newValue) => {
-                  newValue ? setCallLocator({ meetingLink: newValue }) : setCallLocator(undefined);
+                  setCallLocator(newValue ? { meetingLink: newValue } : undefined);
                 }}
               />
             )}
@@ -185,7 +186,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 placeholder={'Enter a meeting id'}
                 onChange={(_, newValue) => {
                   setMeetingId(newValue);
-                  newValue ? setCallLocator({ meetingId: newValue, passcode: passcode }) : setCallLocator(undefined);
+                  setCallLocator(newValue ? { meetingId: newValue, passcode: passcode } : undefined);
                 }}
               />
             )}
@@ -198,7 +199,7 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
                 onChange={(_, newValue) => {
                   // meeting id is required, but passcode is not
                   setPasscode(newValue);
-                  meetingId ? setCallLocator({ meetingId: meetingId, passcode: newValue }) : setCallLocator(undefined);
+                  setCallLocator(meetingId ? { meetingId: meetingId, passcode: newValue } : undefined);
                 }}
               />
             )}
@@ -361,7 +362,9 @@ export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
             text={buttonText}
             onClick={() => {
               if (displayName || teamsIdentityChosen) {
-                displayName && saveDisplayNameToLocalStorage(displayName);
+                if (displayName) {
+                  saveDisplayNameToLocalStorage(displayName);
+                }
                 const acsParticipantsToCall = parseParticipants(outboundParticipants);
                 const teamsParticipantsToCall = parseParticipants(outboundTeamsUsers);
                 const dialpadParticipantToCall = parseParticipants(dialPadParticipant);

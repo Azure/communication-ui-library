@@ -5,7 +5,7 @@ import React from 'react';
 import { ParticipantList } from './ParticipantList';
 import { render } from '@testing-library/react';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type, @typescript-eslint/no-empty-function
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 const dummyOnRemoveParticipantCallback = () => {};
 
 describe('ParticipantList tests for different roles', () => {

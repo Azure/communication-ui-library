@@ -16,15 +16,16 @@ module.exports = {
     schema: []
   },
   create: function (context) {
+    const sourceCode = context.sourceCode ?? context.getSourceCode();
     const isReactComponent = (node) => {
       // Check if the function is a React functional component
       return (
         node.type === 'FunctionDeclaration' ||
         node.type === 'ArrowFunctionExpression' ||
         (node.type === 'FunctionExpression' &&
-          context
-            .getScope()
-            .variables.some((variable) => variable.defs.some((def) => def.node === node && def.name === 'default')))
+          (sourceCode.getScope ? sourceCode.getScope(node) : context.getScope(node)).variables.some((variable) =>
+            variable.defs.some((def) => def.node === node && def.name === 'default')
+          ))
       );
     };
 
@@ -36,8 +37,7 @@ module.exports = {
     return {
       CallExpression: function (node) {
         // Check if the node is in a React component or hook context
-        const parent = context
-          .getAncestors()
+        const parent = (sourceCode.getAncestors ? sourceCode.getAncestors(node) : context.getAncestors(node))
           .reverse()
           .find((ancestor) => {
             return isReactComponent(ancestor) || isHook(ancestor);

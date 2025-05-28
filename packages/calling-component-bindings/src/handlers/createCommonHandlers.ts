@@ -221,7 +221,9 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
       if (!videoDeviceInfo) {
         const cameras = await deviceManager?.getCameras();
         videoDeviceInfo = cameras && cameras.length > 0 ? cameras[0] : undefined;
-        videoDeviceInfo && deviceManager?.selectCamera(videoDeviceInfo);
+        if (videoDeviceInfo) {
+          deviceManager?.selectCamera(videoDeviceInfo);
+        }
       }
       if (!callId || !videoDeviceInfo) {
         return;
@@ -268,11 +270,12 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
         const stream = call.localVideoStreams.find((stream) => stream.mediaStreamType === 'Video');
         const unparentedViews = callClient.getState().deviceManager.unparentedViews;
         if (stream || unparentedViews.length > 0) {
-          unparentedViews &&
-            (await unparentedViews.forEach(
-              (view) => view.mediaStreamType === 'Video' && callClient.disposeView(undefined, undefined, view)
-            ));
-          stream && (await onStopLocalVideo(stream));
+          unparentedViews.forEach(
+            (view) => view.mediaStreamType === 'Video' && callClient.disposeView(undefined, undefined, view)
+          );
+          if (stream) {
+            await onStopLocalVideo(stream);
+          }
         } else {
           await onStartLocalVideo();
         }

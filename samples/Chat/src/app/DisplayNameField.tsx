@@ -51,7 +51,7 @@ const DisplayNameFieldComponent = (props: DisplayNameFieldProps): JSX.Element =>
       placeholder={TEXTFIELD_PLACEHOLDER}
       onKeyDown={(ev) => {
         if (ev.which === ENTER_KEY) {
-          validateName && validateName();
+          validateName?.();
         }
       }}
       styles={TextFieldStyleProps}

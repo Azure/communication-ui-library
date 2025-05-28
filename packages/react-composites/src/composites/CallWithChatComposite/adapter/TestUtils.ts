@@ -59,7 +59,7 @@ export class MockCallClient {
     return;
   }
   createView(
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     callId: string,
     // eslint-disable-next-line @typescript-eslint/no-unused-vars , @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
     participantId: any,

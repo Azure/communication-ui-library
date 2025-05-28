@@ -150,7 +150,9 @@ describe('ChatComposite - text only mode', () => {
         richTextEditor: richTextEditor,
         attachmentOptions: {
           uploadOptions: {
-            handleAttachmentSelection: () => {}
+            handleAttachmentSelection: () => {
+              /* No attachment handling */
+            }
           }
         }
       }

@@ -162,7 +162,7 @@ export default (props: ConfigurationScreenProps): JSX.Element => {
           if (!threadId) {
             throw new Error(ERROR_TEXT_THREAD_NOT_RECORDED);
           }
-        } catch (error) {
+        } catch {
           setConfigurationScreenState(CONFIGURATIONSCREEN_SHOWING_INVALID_THREAD);
           return;
         }

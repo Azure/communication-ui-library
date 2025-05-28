@@ -128,22 +128,24 @@ async function createViewVideo(
 
   const renderer = new VideoStreamRenderer(renderInfo.stream);
 
-  streamEventType === 'createViewRemote' && participantKey
-    ? internalContext.setRemoteRenderInfo(
-        callId,
-        participantKey,
-        remoteStreamId,
-        renderInfo.stream as RemoteVideoStream,
-        'Rendering',
-        undefined
-      )
-    : internalContext.setLocalRenderInfo(
-        callId,
-        localStreamKey,
-        renderInfo.stream as LocalVideoStream,
-        'Rendering',
-        renderer
-      );
+  if (streamEventType === 'createViewRemote' && participantKey) {
+    internalContext.setRemoteRenderInfo(
+      callId,
+      participantKey,
+      remoteStreamId,
+      renderInfo.stream as RemoteVideoStream,
+      'Rendering',
+      undefined
+    );
+  } else {
+    internalContext.setLocalRenderInfo(
+      callId,
+      localStreamKey,
+      renderInfo.stream as LocalVideoStream,
+      'Rendering',
+      renderer
+    );
+  }
 
   let view;
   try {
@@ -184,16 +186,17 @@ async function createViewVideo(
     // and clean up the state.
     _logStreamEvent(EventNames.RENDER_INFO_NOT_FOUND, streamLogInfo);
     renderer.dispose();
-    streamEventType === 'createViewRemote' && participantKey
-      ? context.setRemoteVideoStreamRendererView(callId, participantKey, remoteStreamId, undefined)
-      : context.setLocalVideoStreamRendererView(callId, localStreamKey, undefined);
+    if (streamEventType === 'createViewRemote' && participantKey) {
+      context.setRemoteVideoStreamRendererView(callId, participantKey, remoteStreamId, undefined);
+    } else {
+      context.setLocalVideoStreamRendererView(callId, localStreamKey, undefined);
+    }
     return;
   }
 
   if (refreshedRenderInfo.status === 'Stopping') {
     // Stop render was called on this stream after we had started rendering. We will dispose this view and do not
     // put the view into the state.
-    streamEventType === 'createViewRemote';
     _logStreamEvent(EventNames.CREATED_STREAM_STOPPING, streamLogInfo);
     renderer.dispose();
     if (streamEventType === 'createViewRemote' && participantKey) {
@@ -400,22 +403,24 @@ function disposeViewVideo(
   // rendering and clean up the state once the view has finished being created.
   if (renderInfo.status === 'Rendering') {
     _logStreamEvent(EventNames.STREAM_STOPPING, streamLogInfo);
-    streamEventType === 'disposeViewRemote' && participantKey
-      ? internalContext.setRemoteRenderInfo(
-          callId,
-          participantKey,
-          remoteStreamId,
-          renderInfo.stream as RemoteVideoStream,
-          'Stopping',
-          undefined
-        )
-      : internalContext.setLocalRenderInfo(
-          callId,
-          localStreamKey,
-          renderInfo.stream as LocalVideoStream,
-          'Stopping',
-          renderInfo.renderer
-        );
+    if (streamEventType === 'disposeViewRemote' && participantKey) {
+      internalContext.setRemoteRenderInfo(
+        callId,
+        participantKey,
+        remoteStreamId,
+        renderInfo.stream as RemoteVideoStream,
+        'Stopping',
+        undefined
+      );
+    } else {
+      internalContext.setLocalRenderInfo(
+        callId,
+        localStreamKey,
+        renderInfo.stream as LocalVideoStream,
+        'Stopping',
+        renderInfo.renderer
+      );
+    }
     return;
   }
 

@@ -194,7 +194,7 @@ describe('declarative chatThreadClient basic api functions', () => {
     const chatMessage = context.getState().threads[threadId]?.chatMessages[messageTemplate.id];
 
     expect(chatMessage).toBeDefined();
-    chatMessage && expect(chatMessage.content?.message).toBe(content);
+    expect(chatMessage?.content?.message).toBe(content);
   });
 
   test('should be able to proxy updateThread', async () => {
@@ -207,7 +207,7 @@ describe('declarative chatThreadClient basic api functions', () => {
     const properties = context.getState().threads[threadId]?.properties;
 
     expect(properties).toBeDefined();
-    properties && expect(properties.topic).toBe(topic);
+    expect(properties?.topic).toBe(topic);
   });
 
   test('should be able to delete message with local messageId', async () => {

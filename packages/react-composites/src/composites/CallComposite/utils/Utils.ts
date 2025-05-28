@@ -393,7 +393,6 @@ export const disableCallControls = (
     ({} as Partial<CallControlOptions>);
   if (newOptions === true || newOptions === undefined) {
     newOptions = disabledControls.reduce((acc, key) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       // @ts-expect-error TODO: fix noImplicitAny error here
       // Not solveable at this time due to typescript limitations. The typing is too complex for typescript to
       // understand. Will need to revisit when either typescript or the calling component bindings are updated.
@@ -402,10 +401,8 @@ export const disableCallControls = (
     }, {} as Partial<CallControlOptions>);
   } else {
     disabledControls.forEach((key) => {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       // @ts-expect-error refer to above comment
       if (newOptions[key] !== false) {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         // @ts-expect-error refer to above comment
         newOptions[key] = { disabled: true };
       }
