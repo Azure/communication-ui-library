@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "improvement",
+  "workstream": "README",
+  "comment": "Updating README to include telemetry disclosure",
+  "packageName": "@azure/communication-react",
+  "email": "9044372+JoshuaLai@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
