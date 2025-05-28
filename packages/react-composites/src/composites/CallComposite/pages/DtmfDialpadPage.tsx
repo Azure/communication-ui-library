@@ -87,7 +87,7 @@ const DtmfDialerContentTimer = (): JSX.Element => {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setTime(new Date(Date.now()).getTime() - startTime?.getTime());
+      setTime(new Date(Date.now()).getTime() - (startTime?.getTime() ?? 0));
     }, 10);
     return () => {
       clearInterval(interval);
