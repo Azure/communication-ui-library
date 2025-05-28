@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/no-wrapper-object-types */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
 // This file test all the most potential breaking changes
@@ -9,7 +9,6 @@
 // Some breaking change definitions might be different in our sdk
 import { CheckBreakingChanges, ExcludeList } from './CompareChanges';
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 export type BreakingChangeTest = CheckBreakingChanges<
   Omit<typeof import('./snapshots/communication-react'), ExcludeList>,
   typeof import('../dist/communication-react')

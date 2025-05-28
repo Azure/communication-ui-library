@@ -221,7 +221,6 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
       for await (const _page of this.chatThreadClient.listParticipants().byPage({
         // Fetch 100 participants per page by default.
         maxPageSize: 100
-        // eslint-disable-next-line curly
       }));
     });
   }

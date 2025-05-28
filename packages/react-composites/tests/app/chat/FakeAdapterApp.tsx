@@ -14,7 +14,7 @@ import {
   _useFakeChatAdapters,
   _MockAttachmentUpload
 } from '../../../src';
-// eslint-disable-next-line no-restricted-imports
+
 import { IDS } from '../../browser/common/constants';
 import {
   customOnFetchAvatarPersonaData,
@@ -86,7 +86,9 @@ export const FakeAdapterApp = (): JSX.Element => {
               attachmentOptions: fakeChatAdapterArgs.fileSharingEnabled
                 ? {
                     uploadOptions: {
-                      handleAttachmentSelection: () => {}
+                      handleAttachmentSelection: () => {
+                        /* Add your implementation here */
+                      }
                     }
                   }
                 : undefined

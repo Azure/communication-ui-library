@@ -7,7 +7,7 @@ import { fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { _IdentifierProvider, defaultAttachmentMenuAction, MessageProps } from '@internal/react-components';
 import React, { useMemo } from 'react';
 import { ChatComposite, COMPOSITE_LOCALE_FR_FR, useAzureCommunicationChatAdapter } from '../../../src';
-// eslint-disable-next-line no-restricted-imports
+
 import { IDS } from '../../browser/common/constants';
 import { verifyParamExists } from '../lib/utils';
 import { AttachmentMenuAction } from '@internal/react-components';
@@ -120,7 +120,9 @@ export const LiveTestApp = (): JSX.Element => {
                       actionsForAttachment: actionsForAttachment
                     },
                     uploadOptions: {
-                      handleAttachmentSelection: () => {}
+                      handleAttachmentSelection: () => {
+                        /* Add your implementation here */
+                      }
                     }
                   }
                 : undefined

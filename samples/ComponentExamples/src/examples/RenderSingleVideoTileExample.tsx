@@ -56,7 +56,7 @@ export const RenderVideoTileExample = (): JSX.Element => {
 
     const stream = new LocalVideoStream(videoDeviceInfo);
 
-    call && (await call.startVideo(stream));
+    await call?.startVideo(stream);
   }, [call, callClient]);
 
   const localStreamState = useSelector(localStreamSelector, { callId: call?.id ?? '' });
@@ -66,7 +66,9 @@ export const RenderVideoTileExample = (): JSX.Element => {
   useEffect(() => {
     // Start rendering video into a html element contained in localStreamState.
     // This will trigger an update of localStreamState when element gets created
-    localStreamState && callClient.createView(call?.id, undefined /*undefined for local video*/, localStreamState);
+    if (localStreamState) {
+      callClient.createView(call?.id, undefined /*undefined for local video*/, localStreamState);
+    }
   });
 
   // localStreamState.view.target is the stream <video /> element to render in your component

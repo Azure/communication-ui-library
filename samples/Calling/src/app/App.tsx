@@ -158,9 +158,12 @@ const App = (): JSX.Element => {
               );
             }
             setIsTeamsCall(!!callDetails.teamsToken);
-            callDetails.teamsToken && setToken(callDetails.teamsToken);
-            callDetails.teamsId &&
+            if (callDetails.teamsToken) {
+              setToken(callDetails.teamsToken);
+            }
+            if (callDetails.teamsId) {
               setUserId(fromFlatCommunicationIdentifier(callDetails.teamsId) as MicrosoftTeamsUserIdentifier);
+            }
             setPage('call');
           }}
         />

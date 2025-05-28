@@ -1,9 +1,6 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/adjacent-overload-signatures */
-
 import {
   CallIdChangedListener,
   DisplayNameChangedListener,
