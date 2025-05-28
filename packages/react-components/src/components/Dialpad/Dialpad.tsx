@@ -357,7 +357,6 @@ const DialpadContainer = (props: {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const setText = (input: string): void => {
     // remove non-valid characters from input: letters,special characters excluding +, *,#
     const plainInput = sanitizeInput(input);

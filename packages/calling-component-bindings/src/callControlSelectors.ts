@@ -139,7 +139,7 @@ export const raiseHandButtonSelector: RaiseHandButtonSelector = reselect.createS
   (raisedHand, callState) => {
     return {
       checked: raisedHand ? true : false,
-      disabled: callState === 'InLobby' ? true : callState === 'Connecting' ?? false
+      disabled: callState === 'InLobby' ? true : callState === 'Connecting'
     };
   }
 );

@@ -78,9 +78,9 @@ export const defaultClientArgs: StatefulChatClientArgs = {
   userId: { communicationUserId: 'userId1' },
   endpoint: '',
   credential: {
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars, jsdoc/require-jsdoc, @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-empty-function, @typescript-eslint/no-explicit-any
     getToken(): any {},
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function, jsdoc/require-jsdoc
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-empty-function
     dispose(): any {}
   }
 };

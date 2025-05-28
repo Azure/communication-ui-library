@@ -75,7 +75,7 @@ export const ContosoCallContainer1toNInbound = (props: ContainerProps): JSX.Elem
       createCallAgent();
     }
     return () => {
-      callAgent && callAgent.dispose();
+      callAgent?.dispose();
     };
   }, [callAgent, statefulCallClient, token]);
 

@@ -15,15 +15,15 @@ setIconOptions({
 const mockProps: DevicesButtonProps = {
   cameras: [{ id: 'camera1', name: 'testCamera' }],
   selectedCamera: { id: 'camera1', name: 'testCamera' },
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
   onSelectCamera: async () => {},
   microphones: [{ id: 'microphone1', name: 'testMicrophone' }],
   selectedMicrophone: { id: 'microphone1', name: 'testMicrophone' },
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
   onSelectMicrophone: async () => {},
   speakers: [{ id: 'speaker1', name: 'testMicrophone' }],
   selectedSpeaker: { id: 'microphone1', name: 'testMicrophone' },
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
+
   onSelectSpeaker: async () => {}
 };
 

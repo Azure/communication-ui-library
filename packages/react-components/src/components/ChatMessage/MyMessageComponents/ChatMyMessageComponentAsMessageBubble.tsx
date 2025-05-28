@@ -202,6 +202,7 @@ const MessageBubble = (props: ChatMyMessageComponentAsMessageBubbleProps): JSX.E
   }, [message, messageStatus, strings.editedTag, strings.failToSendTag, theme]);
 
   const isBlockedMessage =
+    // eslint-disable-next-line no-constant-binary-expression
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
   const chatMyMessageStyles = useChatMyMessageStyles();
   const chatMessageCommonStyles = useChatMessageCommonStyles();

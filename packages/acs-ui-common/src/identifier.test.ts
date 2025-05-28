@@ -26,7 +26,7 @@ test('Communication user conversions', () => {
 
 test('phone number conversion from E.164 format', () => {
   const parsed = fromFlatCommunicationIdentifier('+15555555555');
-  expect(isPhoneNumberIdentifier(parsed)).toBeTruthy;
+  expect(isPhoneNumberIdentifier(parsed)).toBeTruthy();
   expect(parsed).toEqual({
     /* @conditional-compile-remove(calling-beta-sdk) */
     isAnonymous: false,

@@ -26,7 +26,7 @@ export const CallWithChatExperienceWithErrorChecks = (props: CallWithChatExample
   const credential = useMemo(() => {
     try {
       return new AzureCommunicationTokenCredential(props.token);
-    } catch (e) {
+    } catch {
       return undefined;
     }
   }, [props.token]);

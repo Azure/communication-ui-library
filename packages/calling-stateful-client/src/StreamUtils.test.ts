@@ -35,7 +35,7 @@ jest.mock('@azure/communication-calling', () => {
         createView: (options?: CreateViewOptions) => {
           return Promise.resolve<VideoStreamRendererView>({} as VideoStreamRendererView);
         },
-        // eslint-disable-next-line @typescript-eslint/no-empty-function
+
         dispose: () => {}
       };
     }),

@@ -6,14 +6,12 @@ import { ChatClientProvider, useChatClient } from './ChatClientProvider';
 import { createStatefulChatClient } from '@internal/chat-stateful-client';
 import { AzureCommunicationTokenCredential } from '@azure/communication-common';
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 jest.mock('@azure/communication-common', () => {
   return {
     AzureCommunicationTokenCredential: jest.fn()
   };
 });
 
-// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 jest.mock('@internal/chat-stateful-client', () => {
   return {
     createStatefulChatClient: jest.fn().mockResolvedValue('mockStatefulChatClient')

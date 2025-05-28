@@ -20,7 +20,7 @@ import { CallAgentContext, CallClientContext, CallContext, useDeviceManager } fr
  *
  * @public
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/explicit-function-return-type
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const useHandlers = <PropsT>(component: (props: PropsT) => ReactElement | null) => {
   const callClient: StatefulCallClient = (useContext(CallClientContext) as any)?.callClient;
   const deviceManager = useDeviceManager();

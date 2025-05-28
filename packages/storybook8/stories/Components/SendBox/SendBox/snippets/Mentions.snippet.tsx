@@ -75,7 +75,7 @@ export const MentionsExample: () => JSX.Element = () => {
 
   useEffect(() => {
     return () => {
-      timeoutRef.current && clearTimeout(timeoutRef.current);
+      clearTimeout(timeoutRef.current);
     };
   }, []);
 

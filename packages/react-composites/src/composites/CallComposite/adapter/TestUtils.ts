@@ -86,7 +86,7 @@ export function createMockCall(mockCallId = 'defaultCallID'): MockCall {
 /**
  * @private
  */
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types, @typescript-eslint/no-explicit-any
+// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export function addMockEmitter(object: any): any {
   object.emitter = new EventEmitter();
   object.on = (event: any, listener: any): void => {
@@ -111,7 +111,6 @@ export function addMockEmitter(object: any): any {
  * reused on repeated calls.
  */
 export function createMockApiFeatures(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   cache: Map<CallFeatureFactory<any>, CallFeature>
 ): <FeatureT extends CallFeature>(cls: CallFeatureFactory<FeatureT>) => FeatureT {
   return <FeatureT extends CallFeature>(cls: CallFeatureFactory<FeatureT>): FeatureT => {
@@ -126,7 +125,7 @@ export function createMockApiFeatures(
       name: 'Default',
       isRecordingActive: false,
       isTranscriptionActive: false,
-      /* eslint-enable @typescript-eslint/no-unused-vars */
+
       media: {
         getLatest(): LatestMediaDiagnostics {
           return {};

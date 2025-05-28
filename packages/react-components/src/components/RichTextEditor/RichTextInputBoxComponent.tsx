@@ -26,6 +26,7 @@ import type { ContentModelDocument } from 'roosterjs-content-model-types';
 /**
  * @private
  */
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export interface RichTextInputBoxComponentStylesProps extends BaseCustomStyles {}
 
 /**
@@ -147,7 +148,7 @@ export const RichTextInputBoxComponent = (props: RichTextInputBoxComponentProps)
       const isRichTextEditorToolbarShown = showRichTextEditorFormatting === true;
       if (ev.key === 'Enter' && ev.shiftKey === false && !isRichTextEditorToolbarShown) {
         ev.preventDefault();
-        onEnterKeyDown && onEnterKeyDown();
+        onEnterKeyDown?.();
       } else {
         onTyping?.();
       }

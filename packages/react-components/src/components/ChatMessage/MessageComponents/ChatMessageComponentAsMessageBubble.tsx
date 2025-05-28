@@ -130,6 +130,7 @@ const MessageBubble = (props: ChatMessageComponentAsMessageBubbleProps): JSX.Ele
   ]);
 
   const isBlockedMessage =
+    // eslint-disable-next-line no-constant-binary-expression
     false || /* @conditional-compile-remove(data-loss-prevention) */ message.messageType === 'blocked';
   const chatMessageCommonStyles = useChatMessageCommonStyles();
   /* @conditional-compile-remove(file-sharing-acs) */
