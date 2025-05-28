@@ -133,6 +133,7 @@
     "ts-node": "^10.9.2",
     "type-fest": "^4.40.0",
     "typescript": "5.4.5",
-    "webpack": "5.95.0"
+    "webpack": "5.95.0",
+    "jiti": "~2.4.2"
   }
 }
