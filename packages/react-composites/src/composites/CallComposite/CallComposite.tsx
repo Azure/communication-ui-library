@@ -528,8 +528,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
   useEffect(() => {
     if (complianceNotification) {
       for (let i = activeNotifications.length - 1; i >= 0; i--) {
-        const notification = activeNotifications[i] as ActiveNotification;
+        const notification = activeNotifications[i];
         if (
+          notification &&
           [
             'recordingStarted',
             'transcriptionStarted',

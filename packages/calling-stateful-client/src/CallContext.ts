@@ -1245,15 +1245,15 @@ export class CallContext {
     if (inProgressRealTimeTexts && Array.isArray(inProgressRealTimeTexts)) {
       // find the in progress real time text that has not been updated for 5 seconds
       for (let i = inProgressRealTimeTexts.length - 1; i >= 0; i--) {
-        const realTimeText = inProgressRealTimeTexts[i] as RealTimeTextInfo;
-        if (realTimeText.updatedTimestamp && Date.now() - realTimeText.updatedTimestamp.getTime() > 5000) {
+        const realTimeText = inProgressRealTimeTexts[i];
+        if (realTimeText?.updatedTimestamp && Date.now() - realTimeText?.updatedTimestamp.getTime() > 5000) {
           // turn the in progress real time text to final
           realTimeText.resultType = 'Final';
           // move the in progress real time text to completed
           completedRealTimeTexts.push(realTimeText);
           // remove the in progress real time text from in progress
           if (inProgressRealTimeTexts) {
-            (inProgressRealTimeTexts as RealTimeTextInfo[]).splice(i, 1);
+            inProgressRealTimeTexts.splice(i, 1);
           }
         }
       }
