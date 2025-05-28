@@ -1,3 +1,4 @@
+import { globalIgnores } from 'eslint/config';
 import {
   baseConfig,
   baseGlobalIgnores,
@@ -15,5 +16,6 @@ export default globalConfig([
       'jsdoc/require-jsdoc': 'off'
     }
   },
-  baseGlobalIgnores
+  baseGlobalIgnores,
+  globalIgnores(['**/preprocess-dist/'])
 ]);
