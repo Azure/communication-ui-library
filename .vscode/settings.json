@@ -3,6 +3,5 @@
   "before-after-diff-checker.compileCommand": "rushx _by-flavor \"rushx preprocess\" && (npx eslint $PROCESSED_FILE --fix || true)",
   "before-after-diff-checker.srcPath": "src",
   "before-after-diff-checker.enableOnSave": false,
-  "typescript.tsdk": "common/config/node_modules/typescript/lib",
-  "idf.pythonInstallPath": "/opt/homebrew/bin/python3"
+  "typescript.tsdk": "common/config/node_modules/typescript/lib"
 }
