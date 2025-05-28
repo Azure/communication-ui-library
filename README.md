@@ -41,6 +41,53 @@ This React library provides UI components, simplifying the development of modern
 
 Explore [Storybook](https://azure.github.io/communication-ui-library) to try out the UI Library today!
 
+## Data Collection
+
+The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described below. You can learn more about data collection and use in the help documentation and Microsoft’s [privacy statement](https://go.microsoft.com/fwlink/?LinkID=824704). For more information on the data collected by the Azure SDK, please visit the [Telemetry Guidelines](https://azure.github.io/azure-sdk/general_azurecore.html#telemetry-policy) page.
+
+### Telemetry Configuration
+
+Telemetry collection is on by default when using the `useAzureCommunication...Adapter` hooks or the `createAzureCommunication...Adapter`
+
+To opt out it is recommended developers create a custom custom adapter, or use components directly. This will disable telemetry for all methods going to ACS.
+
+Example of how to create a custom `ChatAdapter`.
+
+```typescript
+import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
+import { ChatAdapter, ChatComposite } from '@azure/communication-react';
+import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
+
+class CustomChatAdapter implements ChatAdapter {
+  private client: ChatClient;
+  private threadClient: ChatThreadClient;
+  
+  constructor(chatClient: ChatClient, chatThreadClient: ChatThreadClient) {
+      this.client = chatClient;
+      this.threadClient = chatThreadClient;
+  }
+
+  fetchInitialData(): Promise<void> {
+    ...
+  }
+
+  ...
+}
+
+const endpointUrl = '<Azure Communication Services Resource Endpoint>';
+const token = '<Azure Communication Services Access Token>';
+const threadId = '<Chat Thread Id>';
+const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
+const chatThreadClient = chatClient.getChatThreadClient(threadId);
+
+const chatAdapter = new CustomChatAdapter(chatClient, chatThreadClient);
+
+return (
+  <ChatComposite adapter={chatAdapter} />
+)
+
+```
+
 ## Contributing to the Packages or Samples
 
 Join us in contributing to this open source library. Get started by checking out our [contributing guide](./docs/contributing-guide/1.%20getting-set-up.md).
