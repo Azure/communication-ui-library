@@ -1,3 +1,6 @@
+// Copyright (c) Microsoft Corporation.
+// Licensed under the MIT License.
+
 const commonConfig = require('../../common/config/babel/.babelrc.js');
 
 module.exports = {
