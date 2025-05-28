@@ -1244,7 +1244,8 @@ export class CallContext {
     // if inProgressRealTimeTexts is an array
     if (inProgressRealTimeTexts && Array.isArray(inProgressRealTimeTexts)) {
       // find the in progress real time text that has not been updated for 5 seconds
-      inProgressRealTimeTexts.forEach((realTimeText, index) => {
+      for (let i = inProgressRealTimeTexts.length - 1; i >= 0; i--) {
+        const realTimeText = inProgressRealTimeTexts[i] as RealTimeTextInfo;
         if (realTimeText.updatedTimestamp && Date.now() - realTimeText.updatedTimestamp.getTime() > 5000) {
           // turn the in progress real time text to final
           realTimeText.resultType = 'Final';
@@ -1252,10 +1253,10 @@ export class CallContext {
           completedRealTimeTexts.push(realTimeText);
           // remove the in progress real time text from in progress
           if (inProgressRealTimeTexts) {
-            (inProgressRealTimeTexts as RealTimeTextInfo[]).splice(index, 1);
+            (inProgressRealTimeTexts as RealTimeTextInfo[]).splice(i, 1);
           }
         }
-      });
+      }
     } else {
       // if inProgressRealTimeTexts is a single object
       if (

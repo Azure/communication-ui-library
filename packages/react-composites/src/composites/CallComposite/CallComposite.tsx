@@ -527,7 +527,8 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
 
   useEffect(() => {
     if (complianceNotification) {
-      activeNotifications.forEach((notification, index) => {
+      for (let i = activeNotifications.length - 1; i >= 0; i--) {
+        const notification = activeNotifications[i] as ActiveNotification;
         if (
           [
             'recordingStarted',
@@ -540,9 +541,9 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
             'transcriptionStoppedStillRecording'
           ].includes(notification.type)
         ) {
-          activeNotifications.splice(index, 1);
+          activeNotifications.splice(i, 1);
         }
-      });
+      }
       activeNotifications.push(complianceNotification);
     }
     setTrackedNotifications((prev) => updateTrackedNotificationsWithActiveNotifications(prev, activeNotifications));
