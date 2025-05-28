@@ -1,13 +1,30 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Tue, 29 Apr 2025 17:27:30 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 26 May 2025 21:03:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.28.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.28.0-beta.1)
+
+Mon, 26 May 2025 21:03:25 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.27.0-beta.1...1.28.0-beta.1)
+
+### Improvements
+- Upgrade supertest for formidable Component Governance ([PR #5834](https://github.com/azure/communication-ui-library/pull/5834) by 77021369+jimchou-dev@users.noreply.github.com)
+- Update communication-calling to 1.36.1-beta-1 ([PR #5845](https://github.com/azure/communication-ui-library/pull/5845) by edwardlee@microsoft.com)
+- Add base composite props to the loader functions ([PR #5811](https://github.com/azure/communication-ui-library/pull/5811) by dmceachern@microsoft.com)
+- Add custom button injection autohide in drawermenus ([PR #5855](https://github.com/azure/communication-ui-library/pull/5855) by edwardlee@microsoft.com)
+- Hide show numbers on non-interactive RTT elements ([PR #5839](https://github.com/azure/communication-ui-library/pull/5839) by 96077406+carocao-msft@users.noreply.github.com)
+
+### Bug Fixes
+- Update build scripts to use paths compatible with all OS's ([PR #5852](https://github.com/azure/communication-ui-library/pull/5852) by dmceachern@microsoft.com)
+- Add call client disposal method to the stateful client ([PR #5849](https://github.com/azure/communication-ui-library/pull/5849) by dmceachern@microsoft.com)
+
 
 ## [1.27.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.27.0-beta.1)
 
 Tue, 29 Apr 2025 17:27:30 GMT
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.26.0...1.27.0-beta.1)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.26.0-beta.1...1.27.0-beta.1)
 
 ### Features
 
