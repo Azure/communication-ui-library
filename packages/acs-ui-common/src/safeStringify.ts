@@ -11,7 +11,7 @@
 export const _safeJSONStringify = (
   value: unknown,
   replacer: ((this: unknown, key: string, value: unknown) => unknown) | undefined = createSafeReplacer(),
-  space?: string | number | undefined
+  space?: string | number
 ): string | undefined => {
   try {
     return JSON.stringify(value, replacer, space);
