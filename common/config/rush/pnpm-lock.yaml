@@ -4721,13 +4721,13 @@ packages:
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
     dev: false
 
-  /@playwright/experimental-ct-core@1.52.0(@types/node@22.15.18):
+  /@playwright/experimental-ct-core@1.52.0(@types/node@22.15.18)(jiti@2.4.2):
     resolution: {integrity: sha512-DiDEammXxt8OIFDfoNitoOZyHFJAu6aYi0abmHl0IZgOQHxccP6UX50aTEnSTTUWCfwUWB0Vd8TKJ6w122WJEw==}
     engines: {node: '>=18'}
     dependencies:
       playwright: 1.52.0
       playwright-core: 1.52.0
-      vite: 6.3.5(@types/node@22.15.18)
+      vite: 6.3.5(@types/node@22.15.18)(jiti@2.4.2)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -4742,12 +4742,12 @@ packages:
       - yaml
     dev: false
 
-  /@playwright/experimental-ct-react@1.52.0(@types/node@22.15.18):
+  /@playwright/experimental-ct-react@1.52.0(@types/node@22.15.18)(jiti@2.4.2):
     resolution: {integrity: sha512-r9gREinfeCAgnMp2Kpr6MnXSnKE06HlM0qWkortrtOHhD1xdGAT+mBBBP0YvPN2f169wGNIRuSOxp05MFZ+XaQ==}
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
-      '@playwright/experimental-ct-core': 1.52.0(@types/node@22.15.18)
+      '@playwright/experimental-ct-core': 1.52.0(@types/node@22.15.18)(jiti@2.4.2)
       '@vitejs/plugin-react': 4.3.4
     transitivePeerDependencies:
       - '@types/node'
@@ -16762,7 +16762,7 @@ packages:
       vfile-message: 4.0.2
     dev: false
 
-  /vite@6.3.5(@types/node@22.15.18):
+  /vite@6.3.5(@types/node@22.15.18)(jiti@2.4.2):
     resolution: {integrity: sha512-cZn6NDFE7wdTpINgs++ZJ4N49W2vRp8LCKrn3Ob1kYNtOo21vfDoaV5GzBfLU4MovSAB8uNRm4jgzVQZ+mBzPQ==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
@@ -16805,6 +16805,7 @@ packages:
       '@types/node': 22.15.18
       esbuild: 0.25.4
       fdir: 6.4.4(picomatch@4.0.2)
+      jiti: 2.4.2
       picomatch: 4.0.2
       postcss: 8.5.3
       rollup: 4.40.2
@@ -17556,7 +17557,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-S5QPmGj7EimOVLMrHcSpF6JGyWz07P0knnJhy2ICfo7QjywBR1Tco+2Mw84NfibtXt7YwebExevSUMwTzep6/A==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-BHPLnz0Nf4k3C7+Of5O58w7MJvGkzd4x7pW+BQkrg7loegwZYeJLZJkOFhUZVpbIDibPaTIWd8if7SuTXomqog==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -17585,6 +17586,7 @@ packages:
       globals: 16.2.0
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
+      jiti: 2.4.2
       prettier: 3.5.3
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
@@ -17600,7 +17602,6 @@ packages:
       - babel-jest
       - babel-plugin-macros
       - esbuild
-      - jiti
       - node-notifier
       - supports-color
       - ts-node
@@ -17911,7 +17912,7 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-MCkVs/t8BoJxTf3oo6bERHYKsy/4Q3s9YezwOzyo0rQGXfkuyr0WQ2VErpaC7qguuU63ypTvfwetQdqJgmOIFA==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-mO5vfUxG/VL0Wt8gZr0y8IrQBgrZZnPpl1TFIXUdt28AjmwXTdCYa0dGEP/uapy61CshFb4G9rku5i3PjYga7Q==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
@@ -17965,6 +17966,7 @@ packages:
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
       jest-junit: 16.0.0
+      jiti: 2.4.2
       merge: 2.1.1
       mobile-detect: 1.4.5
       prettier: 3.5.3
@@ -18000,7 +18002,6 @@ packages:
       - eslint-plugin-jest
       - eslint-plugin-testing-library
       - file-loader
-      - jiti
       - node-notifier
       - supports-color
       - ts-node
@@ -18009,7 +18010,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-ju1eC1HsFoLLltZoNih3vJIsL+jAPWwLK0qEsKjEWSk3qw7FskFjCqk1HF/5a+s9+lOOdQM2yMmrETj1z52+5g==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-ORWJAmj8Q418reqk6U8jGTqmSac3wY8tbOED9DAaKqLRMYaA7r1/M9vIqTttiHg/TnmagJdOPqCEncOVGFNV+Q==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -18038,6 +18039,7 @@ packages:
       globals: 16.2.0
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
+      jiti: 2.4.2
       memoize-one: 5.2.1
       prettier: 3.5.3
       react: 18.3.1
@@ -18052,7 +18054,6 @@ packages:
       - '@types/node'
       - '@types/react-dom'
       - babel-plugin-macros
-      - jiti
       - node-notifier
       - react-dom
       - supports-color
@@ -18268,7 +18269,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-ccMwhI+ZbpfRIH6JaPWHTOZn4nr2DFdzhpfqAl+ENQ1oPXUdKso6FQG2R/CdLUXdNMdcqnMVdL2B3QN1Mc6xaQ==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-B9+C4+mMnGYuZ6H3FK9Kr16OjkpjCZLcaInLMxMY7Cjn5KhVYrGNa6ndrR5ToF5GJIrcnyrCYqpU/Rl9Tr//lQ==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -18330,6 +18331,7 @@ packages:
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
+      jiti: 2.4.2
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
       nanoid: 3.3.8
@@ -18373,7 +18375,6 @@ packages:
       - babel-jest
       - babel-plugin-macros
       - esbuild
-      - jiti
       - node-notifier
       - supports-color
     dev: false
@@ -18544,7 +18545,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-3sE23nMcoMh47NW8hcZk8nt4m0wsBYHLTlg9T4+MJShg7ghgirphTlSKkZj3iQ41TVrHNKEmMt1iWp5Rp8vu0g==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-1BMZtK86CAJxCA2hVnHC+obUPxp7R6iq29WqxUi+rQRCt5guyokx+W8HqOmpjVWAMV2NHEdSTwGU0nbGU/PiLA==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -18563,7 +18564,7 @@ packages:
       '@fluentui/react-icons': 2.0.300(react@18.3.1)
       '@fluentui/react-window-provider': 2.2.30(@types/react@18.3.12)(react@18.3.1)
       '@griffel/react': 1.5.30(react@18.3.1)
-      '@playwright/experimental-ct-react': 1.52.0(@types/node@22.15.18)
+      '@playwright/experimental-ct-react': 1.52.0(@types/node@22.15.18)(jiti@2.4.2)
       '@rollup/plugin-json': 6.1.0(rollup@4.40.2)
       '@testing-library/dom': 10.4.0
       '@testing-library/jest-dom': 6.6.3
@@ -18609,6 +18610,7 @@ packages:
       jest-environment-jsdom: 29.7.0
       jest-fetch-mock: 3.0.3
       jest-junit: 16.0.0
+      jiti: 2.4.2
       json-stringify-safe: 5.0.1
       nan: 2.22.2
       node-forge: 1.3.1
@@ -18649,7 +18651,6 @@ packages:
       - canvas
       - encoding
       - esbuild
-      - jiti
       - less
       - lightningcss
       - node-notifier

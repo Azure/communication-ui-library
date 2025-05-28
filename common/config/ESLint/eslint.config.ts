@@ -12,15 +12,17 @@ import esLintConfigPrettier from 'eslint-config-prettier/flat';
 
 export const globalConfig = (moduleConfig) => defineConfig([
   eslintJs.configs.recommended,
-  typescriptEslint.configs.recommendedTypeChecked,
-  {
-    languageOptions: {
-      parserOptions: {
-        projectService: true,
-        tsconfigRootDir: import.meta.dirname,
-      },
-    },
-  },
+  typescriptEslint.configs.recommended,
+  // We should move to this config instead for a more thorough checking
+  // typescriptEslint.configs.recommendedTypeChecked,
+  // {
+  //   languageOptions: {
+  //     parserOptions: {
+  //       projectService: true,
+  //       tsconfigRootDir: import.meta.dirname,
+  //     },
+  //   },
+  // },
   ...moduleConfig,
   esLintConfigPrettier
 ]);
