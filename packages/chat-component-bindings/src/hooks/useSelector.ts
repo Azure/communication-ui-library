@@ -63,5 +63,5 @@ export const useSelector = <
       chatClient.offStateChange(onStateChange);
     };
   }, [chatClient, selector, selectorProps, threadConfigProps]);
-  return selector ? props : undefined;
+  return (selector ? props : undefined) as ParamT extends SelectorT ? ReturnType<SelectorT> : undefined;
 };
