@@ -49,7 +49,12 @@ The software may collect information about you and your use of the software and 
 
 Telemetry collection is on by default when using the `useAzureCommunication...Adapter` hooks or the `createAzureCommunication...Adapter`
 
-To opt out it is recommended developers create a custom custom adapter, or use components directly. This will disable telemetry for all methods going to ACS.
+To opt out it is recommended developers:
+
+- Use components directly. Learn how to [use components](https://azure.github.io/communication-ui-library/?path=/docs/components-get-started--docs)
+- Create a custom custom adapter.
+
+This will disable telemetry for all methods going to ACS.
 
 Example of how to create a custom `ChatAdapter`.
 
