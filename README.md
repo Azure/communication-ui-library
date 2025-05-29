@@ -52,46 +52,9 @@ Telemetry collection is on by default when using the `useAzureCommunication...Ad
 To opt out it is recommended developers:
 
 - Use components directly. Learn how to [use components](https://azure.github.io/communication-ui-library/?path=/docs/components-get-started--docs)
-- Create a custom custom adapter.
+- Create a custom custom adapter. Learn how to [create one here](https://azure.github.io/communication-ui-library/?path=/docs/composites-adapters--docs#createazurecommunicationchatadapterfromclient)
 
 This will disable telemetry for all methods going to ACS.
-
-Example of how to create a custom `ChatAdapter`.
-
-```typescript
-import { AzureCommunicationTokenCredential, CommunicationUserIdentifier } from '@azure/communication-common';
-import { ChatAdapter, ChatComposite } from '@azure/communication-react';
-import { ChatClient, ChatThreadClient } from '@azure/communication-chat';
-
-class CustomChatAdapter implements ChatAdapter {
-  private client: ChatClient;
-  private threadClient: ChatThreadClient;
-  
-  constructor(chatClient: ChatClient, chatThreadClient: ChatThreadClient) {
-      this.client = chatClient;
-      this.threadClient = chatThreadClient;
-  }
-
-  fetchInitialData(): Promise<void> {
-    ...
-  }
-
-  ...
-}
-
-const endpointUrl = '<Azure Communication Services Resource Endpoint>';
-const token = '<Azure Communication Services Access Token>';
-const threadId = '<Chat Thread Id>';
-const chatClient = new ChatClient(endpointUrl, new AzureCommunicationTokenCredential(token));
-const chatThreadClient = chatClient.getChatThreadClient(threadId);
-
-const chatAdapter = new CustomChatAdapter(chatClient, chatThreadClient);
-
-return (
-  <ChatComposite adapter={chatAdapter} />
-)
-
-```
 
 ## Contributing to the Packages or Samples
 
