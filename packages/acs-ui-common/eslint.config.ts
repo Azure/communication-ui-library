@@ -5,6 +5,4 @@ import {
   testFilesBaseConfig
 } from '../../common/config/ESLint/eslint.config';
 
-const config = [baseConfig, testFilesBaseConfig, baseGlobalIgnores];
-
-export default globalConfig(config);
+export default globalConfig([baseConfig, testFilesBaseConfig, baseGlobalIgnores]);
