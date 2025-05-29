@@ -103,18 +103,24 @@ While we provide a set of default props(which includes data and handler function
 In some situations, you may want to override default behavior and place your own API call (like call another service, or call another API in our stateful SDK). Here is an example of how to change the message before using the stateful client to send it.
 
 ```tsx
+const threadId = '<Thread id from chat service>';
 const sendBoxProps = usePropsFor(SendBox);
-// This hook will get stateful client you created
-const chatThreadClient = useThreadClient();
+// Instantiate the statefulChatClient
+const statefulChatClient = createStatefulChatClient(...); // create a stateful chat client
+// Get the chat thread client
+const chatThreadClient = statefulChatClient.getChatThreadClient(threadId);
 
 const onSendMessage = useCallback(
   (message: string) => {
-    const sendMessageRequest = {
-      `✉: ${content}`,
-      senderDisplayName: chatClient.getState().displayName
+    const sendMessageRequest: = {
+      // Updated message content
+      content:  `✉: ${message}`
+    };
+    const sendMessageOptions = {
+      senderDisplayName: statefulChatClient.getState().displayName
     };
     // directly call into stateful client
-    await chatThreadClient.sendMessage(sendMessageRequest);
+    await chatThreadClient.sendMessage(sendMessageRequest, sendMessageOptions);
   },
   [chatThreadClient]
 );
@@ -142,8 +148,8 @@ By calling `useSelector`/`usePropsFor`, you can get the right combination of def
 ```tsx
 const customSelector = createSelector(....); // create your own selector
 const messageThreadProps = useSelector(customSelector);
-// This hook will get stateful client you created
-const chatThreadClient = useThreadClient();
+// Get the chat thread client
+const chatThreadClient = useChatThreadClient();
 
 // Create your own handlers
 const onMessageSeen = useCallback((message: string) => {
