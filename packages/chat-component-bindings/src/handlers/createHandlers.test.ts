@@ -222,10 +222,11 @@ describe('createHandlers', () => {
     await handlers.onSendMessage('test message');
     expect(mockChatThreadClient.sendMessage).toHaveBeenCalledWith(
       {
-        content: 'test message',
-        senderDisplayName: displayName
+        content: 'test message'
       },
-      undefined
+      {
+        senderDisplayName: displayName
+      }
     );
   });
 
@@ -240,8 +241,7 @@ describe('createHandlers', () => {
     await handlers.onSendMessage('test message', options);
     expect(mockChatThreadClient.sendMessage).toHaveBeenCalledWith(
       {
-        content: 'test message',
-        senderDisplayName: displayName
+        content: 'test message'
       },
       {
         metadata: {
@@ -249,7 +249,8 @@ describe('createHandlers', () => {
           fileSharingMetadata: JSON.stringify(options.attachments)
         },
         attachments: undefined,
-        type: undefined
+        type: undefined,
+        senderDisplayName: displayName
       }
     );
   });
@@ -262,8 +263,7 @@ describe('createHandlers', () => {
     await handlers.onSendMessage(content);
     expect(mockChatThreadClient.sendMessage).toHaveBeenCalledWith(
       {
-        content,
-        senderDisplayName: displayName
+        content
       },
       {
         attachments: [
@@ -275,7 +275,8 @@ describe('createHandlers', () => {
         metadata: {
           fileSharingMetadata: undefined
         },
-        type: undefined
+        type: undefined,
+        senderDisplayName: displayName
       }
     );
   });
@@ -293,8 +294,7 @@ describe('createHandlers', () => {
     await handlers.onSendMessage(content, options);
     expect(mockChatThreadClient.sendMessage).toHaveBeenCalledWith(
       {
-        content,
-        senderDisplayName: displayName
+        content
       },
       {
         metadata: {
@@ -302,7 +302,8 @@ describe('createHandlers', () => {
           fileSharingMetadata: JSON.stringify(options.attachments)
         },
         attachments: [{ id: 'image1', attachmentType: 'image' }],
-        type: undefined
+        type: undefined,
+        senderDisplayName: displayName
       }
     );
   });
