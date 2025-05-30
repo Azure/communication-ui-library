@@ -5,6 +5,7 @@ import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { ReactElement } from 'react';
 import { Common, fromFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { StatefulChatClient } from '@internal/chat-stateful-client';
+import { SendMessageRequest } from '@azure/communication-chat';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ChatAttachment } from '@azure/communication-chat';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -68,9 +69,8 @@ export const createDefaultChatHandlers = memoizeOne(
         content: string,
         options?: SendMessageOptions | /* @conditional-compile-remove(file-sharing-acs) */ MessageOptions
       ) {
-        const sendMessageRequest = {
-          content,
-          senderDisplayName: chatClient.getState().displayName
+        const sendMessageRequest: SendMessageRequest = {
+          content
         };
 
         /* @conditional-compile-remove(rich-text-editor-image-upload) */
@@ -100,13 +100,17 @@ export const createDefaultChatHandlers = memoizeOne(
             },
             /* @conditional-compile-remove(rich-text-editor-image-upload) */
             attachments: imageAttachments,
-            type: options?.type
+            type: options?.type,
+            senderDisplayName: chatClient.getState().displayName
           };
           await chatThreadClient.sendMessage(sendMessageRequest, chatSDKOptions);
           return;
         }
 
-        await chatThreadClient.sendMessage(sendMessageRequest, options as SendMessageOptions);
+        await chatThreadClient.sendMessage(sendMessageRequest, {
+          ...(options as SendMessageOptions),
+          senderDisplayName: chatClient.getState().displayName
+        });
       },
       /* @conditional-compile-remove(rich-text-editor-image-upload) */
       onUploadImage: async function (image: Blob, imageFilename: string): Promise<UploadChatImageResult> {
