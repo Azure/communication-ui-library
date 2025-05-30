@@ -43,18 +43,7 @@ Explore [Storybook](https://azure.github.io/communication-ui-library) to try out
 
 ## Data Collection
 
-The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. You may turn off the telemetry as described below. You can learn more about data collection and use in the help documentation and Microsoft’s [privacy statement](https://go.microsoft.com/fwlink/?LinkID=824704). For more information on the data collected by the Azure SDK, please visit the [Telemetry Policy](https://learn.microsoft.com/azure/communication-services/concepts/privacy) page.
-
-### Telemetry Configuration
-
-Telemetry collection is on by default when using the `useAzureCommunication...Adapter` hooks or the `createAzureCommunication...Adapter`
-
-To opt out it is recommended developers:
-
-- Use components directly. Learn how to [use components](https://azure.github.io/communication-ui-library/?path=/docs/components-get-started--docs)
-- Create a custom custom adapter. Learn how to [create one here](https://azure.github.io/communication-ui-library/?path=/docs/composites-adapters--docs#createazurecommunicationchatadapterfromclient)
-
-This will disable telemetry for all methods going to ACS.
+The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. @azure/communication-react library collects information about users and their use of the software that cannot be opted out of. Do not use @azure/communication-react if you wish to avoid telemetry. You can learn more about data collection and use in the help documentation and Microsoft’s [privacy statement](https://go.microsoft.com/fwlink/?LinkID=824704). For more information on the data collected by the Azure SDK, please visit the [Telemetry Policy](https://learn.microsoft.com/azure/communication-services/concepts/privacy) page.
 
 ## Contributing to the Packages or Samples
 
