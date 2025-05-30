@@ -41,6 +41,10 @@ This React library provides UI components, simplifying the development of modern
 
 Explore [Storybook](https://azure.github.io/communication-ui-library) to try out the UI Library today!
 
+## Data Collection
+
+The software may collect information about you and your use of the software and send it to Microsoft. Microsoft may use this information to provide services and improve our products and services. @azure/communication-react library collects information about users and their use of the software that cannot be opted out of. Do not use @azure/communication-react if you wish to avoid telemetry. You can learn more about data collection and use in the help documentation and Microsoft’s [privacy statement](https://go.microsoft.com/fwlink/?LinkID=824704). For more information on the data collected by the Azure SDK, please visit the [Telemetry Policy](https://learn.microsoft.com/azure/communication-services/concepts/privacy) page.
+
 ## Contributing to the Packages or Samples
 
 Join us in contributing to this open source library. Get started by checking out our [contributing guide](./docs/contributing-guide/1.%20getting-set-up.md).
