@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "Updating beta version of calling sdk to 1.36.3-beta.1",
+  "comment": "bumping calling beta to 1.36.3-beta.1",
+  "packageName": "@azure/communication-react",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}
