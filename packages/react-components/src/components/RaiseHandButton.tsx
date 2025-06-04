@@ -82,14 +82,26 @@ export const RaiseHandButton = (props: RaiseHandButtonProps): JSX.Element => {
 
 const raiseHandButtonStyles = (theme: Theme): IButtonStyles => ({
   rootChecked: {
-    background: theme.palette.themePrimary,
-    color: DefaultPalette.white,
-    ':focus::after': { outlineColor: `${DefaultPalette.white}` }
+    background: theme.semanticColors.primaryButtonBackground,
+    color: theme.semanticColors.primaryButtonText,
+    ':focus::after': { outlineColor: `${DefaultPalette.white} !important` }, // added !important to avoid override by FluentUI button styles
+    '@media (forced-colors: active)': {
+      border: '1px solid',
+      borderColor: theme.palette.black
+    }
   },
   rootCheckedHovered: {
-    background: theme.palette.themePrimary,
-    color: DefaultPalette.white,
-    ':focus::after': { outlineColor: `${DefaultPalette.white}` }
+    background: theme.semanticColors.primaryButtonBackgroundHovered,
+    color: theme.semanticColors.primaryButtonTextHovered,
+    ':focus::after': { outlineColor: `${DefaultPalette.white} !important` }, // added !important to avoid override by FluentUI button styles
+    '@media (forced-colors: active)': {
+      border: '1px solid',
+      borderColor: theme.palette.black
+    }
   },
-  labelChecked: { color: DefaultPalette.white }
+  rootCheckedPressed: {
+    background: theme.semanticColors.primaryButtonBackgroundPressed,
+    color: theme.semanticColors.primaryButtonTextPressed
+  },
+  labelChecked: { color: theme.semanticColors.primaryButtonText }
 });
