@@ -22,7 +22,6 @@ export function LiveApp(props: { queryArgs: QueryArgs }): JSX.Element {
     })();
 
     return () => callAdapter && callAdapter.dispose();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [queryArgs]);
 
   return <BaseApp queryArgs={queryArgs} callAdapter={callAdapter} />;
