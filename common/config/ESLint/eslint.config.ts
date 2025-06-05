@@ -135,4 +135,4 @@ export const testFilesBaseConfig = {
   }
 }
 
-export const baseGlobalIgnores = globalIgnores(['**/docs/', '**/public/', '**/dist/', '**/node_modules/', '**/scripts/', '**/preprocessed/'])
+export const baseGlobalIgnores = globalIgnores(['**/docs/', '**/public/', '**/dist/', '**/node_modules/', '**/scripts/', '**/preprocessed/', '**/eslint.config.ts'])

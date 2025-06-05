@@ -11,7 +11,6 @@ export default globalConfig([
   testFilesBaseConfig,
   {
     rules: {
-      'headers/header-format': 'off',
       'jsdoc/require-jsdoc': 'off'
     }
   },
