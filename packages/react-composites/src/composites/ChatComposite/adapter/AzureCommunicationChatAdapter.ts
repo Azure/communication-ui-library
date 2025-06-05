@@ -41,18 +41,16 @@ import { _isValidIdentifier } from '@internal/acs-ui-common';
 import { TEAMS_LIMITATION_LEARN_MORE, UNSUPPORTED_CHAT_THREAD_TYPE } from '../../common/constants';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { MessageOptions } from '@internal/acs-ui-common';
-/* @conditional-compile-remove(on-fetch-profile) */
+
 import { createProfileStateModifier } from './OnFetchProfileCallback';
-/* @conditional-compile-remove(on-fetch-profile) */
+
 import type { OnFetchChatProfileCallback } from './OnFetchProfileCallback';
 
-/* @conditional-compile-remove(on-fetch-profile) */
 /**
  * @private
  */
 export type AdapterStateModifier = (state: ChatAdapterState) => ChatAdapterState;
 
-/* @conditional-compile-remove(on-fetch-profile) */
 /**
  * Options for configuring the ChatAdapter.
  *
@@ -72,13 +70,13 @@ export class ChatContext {
   private emitter: EventEmitter = new EventEmitter();
   private state: ChatAdapterState;
   private threadId: string;
-  /* @conditional-compile-remove(on-fetch-profile) */
+
   private displayNameModifier: AdapterStateModifier | undefined;
 
   constructor(
     clientState: ChatClientState,
     threadId: string,
-    /* @conditional-compile-remove(on-fetch-profile) */
+
     chatAdapterOptions?: ChatAdapterOptions
   ) {
     const thread = clientState.threads[threadId];
@@ -92,7 +90,7 @@ export class ChatContext {
       thread,
       latestErrors: clientState.latestErrors
     };
-    /* @conditional-compile-remove(on-fetch-profile) */
+
     this.displayNameModifier = chatAdapterOptions?.onFetchProfile
       ? createProfileStateModifier(chatAdapterOptions.onFetchProfile, () => {
           this.setState(this.getState());
@@ -110,7 +108,7 @@ export class ChatContext {
 
   public setState(state: ChatAdapterState): void {
     this.state = state;
-    /* @conditional-compile-remove(on-fetch-profile) */
+
     this.state = this.displayNameModifier ? this.displayNameModifier(state) : state;
     this.emitter.emit('stateChanged', this.state);
   }
@@ -156,7 +154,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
   constructor(
     chatClient: StatefulChatClient,
     chatThreadClient: ChatThreadClient,
-    /* @conditional-compile-remove(on-fetch-profile) */
+
     chatAdapterOptions?: ChatAdapterOptions
   ) {
     this.bindAllPublicMethods();
@@ -165,7 +163,7 @@ export class AzureCommunicationChatAdapter implements ChatAdapter {
     this.context = new ChatContext(
       chatClient.getState(),
       chatThreadClient.threadId,
-      /* @conditional-compile-remove(on-fetch-profile) */
+
       chatAdapterOptions
     );
 
@@ -521,7 +519,7 @@ export type AzureCommunicationChatAdapterArgs = {
   displayName: string;
   credential: CommunicationTokenCredential;
   threadId: string;
-  /* @conditional-compile-remove(on-fetch-profile) */
+
   chatAdapterOptions?: ChatAdapterOptions;
 };
 
@@ -538,7 +536,7 @@ export const createAzureCommunicationChatAdapter = async ({
   displayName,
   credential,
   threadId,
-  /* @conditional-compile-remove(on-fetch-profile) */
+
   chatAdapterOptions
 }: AzureCommunicationChatAdapterArgs): Promise<ChatAdapter> => {
   return _createAzureCommunicationChatAdapterInner(
@@ -548,7 +546,7 @@ export const createAzureCommunicationChatAdapter = async ({
     credential,
     threadId,
     'Chat' as _TelemetryImplementationHint,
-    /* @conditional-compile-remove(on-fetch-profile) */
+
     chatAdapterOptions
   );
 };
@@ -565,7 +563,7 @@ export const _createAzureCommunicationChatAdapterInner = async function (
   credential: CommunicationTokenCredential,
   threadId: string,
   telemetryImplementationHint: _TelemetryImplementationHint = 'Chat',
-  /* @conditional-compile-remove(on-fetch-profile) */
+
   chatAdapterOptions?: ChatAdapterOptions
 ): Promise<ChatAdapter> {
   if (!_isValidIdentifier(userId)) {
@@ -588,7 +586,7 @@ export const _createAzureCommunicationChatAdapterInner = async function (
   const adapter = await createAzureCommunicationChatAdapterFromClient(
     chatClient,
     chatThreadClient,
-    /* @conditional-compile-remove(on-fetch-profile) */
+
     chatAdapterOptions
   );
 
@@ -607,7 +605,7 @@ export const _createLazyAzureCommunicationChatAdapterInner = async function (
   credential: CommunicationTokenCredential,
   threadId: Promise<string>,
   telemetryImplementationHint: _TelemetryImplementationHint = 'Chat',
-  /* @conditional-compile-remove(on-fetch-profile) */
+
   chatAdapterOptions?: ChatAdapterOptions
 ): Promise<ChatAdapter> {
   if (!_isValidIdentifier(userId)) {
@@ -637,7 +635,7 @@ export const _createLazyAzureCommunicationChatAdapterInner = async function (
     const adapter = await createAzureCommunicationChatAdapterFromClient(
       chatClient,
       chatThreadClient,
-      /* @conditional-compile-remove(on-fetch-profile) */
+
       chatAdapterOptions
     );
 
@@ -770,13 +768,13 @@ export const useAzureCommunicationChatAdapter = (
 export async function createAzureCommunicationChatAdapterFromClient(
   chatClient: StatefulChatClient,
   chatThreadClient: ChatThreadClient,
-  /* @conditional-compile-remove(on-fetch-profile) */
+
   chatAdapterOptions?: ChatAdapterOptions
 ): Promise<ChatAdapter> {
   return new AzureCommunicationChatAdapter(
     chatClient,
     chatThreadClient,
-    /* @conditional-compile-remove(on-fetch-profile) */
+
     chatAdapterOptions
   );
 }
