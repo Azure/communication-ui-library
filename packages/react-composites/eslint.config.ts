@@ -11,8 +11,8 @@ export default globalConfig([
   {
     rules: {
       '@typescript-eslint/no-explicit-any': 'off',
-      'jsdoc/require-jsdoc': 'off',
-      '@typescript-eslint/no-unused-expressions': 'off' // TURN THIS ON IN SUBSEQUENT PR
+      '@typescript-eslint/no-unused-expressions': 'off',
+      'jsdoc/require-jsdoc': 'off'
     }
   },
   {

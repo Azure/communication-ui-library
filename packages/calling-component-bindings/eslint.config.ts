@@ -10,14 +10,14 @@ export default globalConfig([
   testFilesBaseConfig,
   {
     rules: {
-      'jsdoc/require-jsdoc': 'off',
       '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': [
         'warn',
         {
           argsIgnorePattern: '^_'
         }
-      ]
+      ],
+      'jsdoc/require-jsdoc': 'off'
     }
   },
   baseGlobalIgnores

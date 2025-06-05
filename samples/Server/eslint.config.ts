@@ -22,6 +22,5 @@ export default globalConfig([
       'no-restricted-imports': 'off'
     }
   },
-  baseGlobalIgnores,
-  globalIgnores(['.babel*', 'webpack*'])
+  baseGlobalIgnores
 ]);

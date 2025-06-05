@@ -16,12 +16,6 @@ export default globalConfig([
     }
   },
   {
-    files: ['**/.babelrc.js', '**/webpack.config.js'], // candidate for higher migration
-    rules: {
-      '@typescript-eslint/no-require-imports': 'off'
-    }
-  },
-  {
     linterOptions: {
       reportUnusedDisableDirectives: false
     }

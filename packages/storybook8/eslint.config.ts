@@ -10,10 +10,10 @@ export default globalConfig([
   testFilesBaseConfig,
   {
     rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/explicit-function-return-type': 'off',
-      'headers/header-format': 'off',
+      '@typescript-eslint/no-explicit-any': 'off',
       '@typescript-eslint/no-unused-vars': 'off',
+      'headers/header-format': 'off',
       'jsdoc/require-jsdoc': 'off',
       'no-useless-escape': 'off',
       'no-restricted-imports': 'off'

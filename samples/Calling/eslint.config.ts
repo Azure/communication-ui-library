@@ -13,7 +13,6 @@ export default globalConfig([
     rules: {
       'headers/header-format': 'off',
       'jsdoc/require-jsdoc': 'off'
-      // "@typescript-eslint/no-require-imports": "off"
     }
   },
   {
