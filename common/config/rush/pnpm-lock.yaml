@@ -17608,7 +17608,7 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-MI9L0b4tqGXXaCiEm5uHho0ujGvLc3H0EI0N/rBo4VBzNqOAY2aqchl25XjtCBCy98Z9jr2YWUfLf99maGzOrA==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-lebBn5wCXjtLrk+ScbsdyCt83dH5khW09DqUguSGXz0GO3PQLU0IMQ16TvqabIjCpCtMDLBKSSOwZliEYgruFg==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
@@ -17636,6 +17636,7 @@ packages:
       globals: 16.2.0
       if-env: 1.0.4
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
+      jiti: 2.4.2
       memoize-one: 5.2.1
       prettier: 3.5.3
       react: 18.3.1
@@ -17652,14 +17653,13 @@ packages:
       - babel-jest
       - babel-plugin-macros
       - esbuild
-      - jiti
       - node-notifier
       - supports-color
       - ts-node
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-8laLSFxOiI+4rNnleLkueAUe7p5a1VKSXv83JLn/br1ihOgLPrnMFvObkxDLwkMSSHQPKkoUFoJkUP//4DqcCA==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-eibhWE/Rqq7Q7qBBj3Ui7RDz5FmVIejhjcsJQT2BXluV4yfXjVYiY0TZuiBjgj7tPdYVskmfvW7Gj+UPZSDrwQ==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
@@ -17692,6 +17692,7 @@ packages:
       if-env: 1.0.4
       immer: 10.1.1
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
+      jiti: 2.4.2
       prettier: 3.5.3
       rimraf: 2.7.1
       rollup: 4.40.2
@@ -17705,7 +17706,6 @@ packages:
       - babel-jest
       - babel-plugin-macros
       - esbuild
-      - jiti
       - node-notifier
       - supports-color
       - ts-node
@@ -18669,7 +18669,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-d7CiWLLX6zlNdOwbRUhpeqhNg1WF9++Sx0848y0aBAtN8QPStOIIoSkbTJ/6iiWu6tMqNFQJNXPaz09fmJXccg==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-37Dh6yb6yrnqXfGJI/Mxa+hzrUtTASFU81ETH+8WsQ4sJ0fW60fC8rQTaa1IjvhmalKEn19v9KVGdgv7uCghJg==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -18743,6 +18743,7 @@ packages:
       jest: 29.7.0(@types/node@22.15.18)(ts-node@10.9.2)
       jest-fetch-mock: 3.0.3
       jest-junit: 16.0.0
+      jiti: 2.4.2
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
       nan: 2.22.2
@@ -18785,7 +18786,6 @@ packages:
       - debug
       - encoding
       - esbuild
-      - jiti
       - node-notifier
       - supports-color
       - uglify-js
