@@ -17,11 +17,6 @@ export default globalConfig([
       'jsdoc/require-jsdoc': 'off'
     }
   },
-  {
-    linterOptions: {
-      reportUnusedDisableDirectives: false
-    }
-  },
   baseGlobalIgnores,
   globalIgnores(['.babel*', 'webpack*'])
 ]);
