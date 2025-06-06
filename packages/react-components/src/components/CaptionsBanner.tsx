@@ -335,7 +335,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
         setAnnouncedCaption((prev) => [...prev, ...captionsToAnnounce.map((caption) => caption.id)]);
       }
     }
-  }, [captions, realTimeTexts?.completedMessages]);
+  }, [captions, realTimeTexts?.completedMessages, announcedRTT, announcedCaption]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     if (event.key === 'Enter') {
