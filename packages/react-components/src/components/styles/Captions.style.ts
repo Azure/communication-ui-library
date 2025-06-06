@@ -117,6 +117,20 @@ export const captionsContainerClassName = mergeStyles({
 /**
  * @private
  */
+export const hiddenAnnouncementClassName = mergeStyles({
+  position: 'absolute',
+  width: '1px',
+  height: '1px',
+  padding: 0,
+  overflow: 'hidden',
+  clip: 'rect(0, 0, 0, 0)',
+  whiteSpace: 'nowrap',
+  border: 0
+});
+
+/**
+ * @private
+ */
 export const captionContainerClassName = mergeStyles({
   marginTop: _pxToRem(6),
   marginBottom: _pxToRem(6),
