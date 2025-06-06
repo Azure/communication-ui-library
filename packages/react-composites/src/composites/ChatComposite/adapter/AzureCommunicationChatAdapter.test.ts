@@ -179,7 +179,6 @@ describe('Error is reflected in state and events', () => {
   });
 });
 
-/* @conditional-compile-remove(on-fetch-profile) */
 describe('Adapter is created with chatAdapterOptions', () => {
   it('should create adapter with onFetchProfile option', async () => {
     const token = {

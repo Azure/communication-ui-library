@@ -49,7 +49,7 @@ import {
   MessageDeletedListener
 } from '../../ChatComposite';
 import { ResourceDetails } from '../../ChatComposite';
-/* @conditional-compile-remove(on-fetch-profile) */
+
 import type { ChatAdapterOptions } from '../../ChatComposite';
 import { CallWithChatAdapter, CallWithChatEvent, ChatInitializedListener } from './CallWithChatAdapter';
 import {
@@ -1292,7 +1292,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
   });
 
   const chatThreadAdapter = _createChatThreadAdapterInner(locator, callAdapter);
-  /* @conditional-compile-remove(on-fetch-profile) */
+
   const chatAdapterOptions: ChatAdapterOptions = {
     onFetchProfile: callAdapterOptions?.onFetchProfile
   };
@@ -1305,7 +1305,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
       credential,
       chatThreadAdapter.getChatThreadPromise(),
       'CallWithChat' as _TelemetryImplementationHint,
-      /* @conditional-compile-remove(on-fetch-profile) */
+
       chatAdapterOptions
     );
     callWithChatAdapter.setChatAdapterPromise(chatAdapterPromise);
@@ -1317,7 +1317,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
         credential,
         threadId,
         'CallWithChat' as _TelemetryImplementationHint,
-        /* @conditional-compile-remove(on-fetch-profile) */
+
         chatAdapterOptions
       )
     );
@@ -1330,7 +1330,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
       credential,
       chatThreadAdapter.getChatThread(),
       'CallWithChat' as _TelemetryImplementationHint,
-      /* @conditional-compile-remove(on-fetch-profile) */
+
       chatAdapterOptions
     );
 
@@ -1343,7 +1343,7 @@ export const createAzureCommunicationCallWithChatAdapter = async ({
         credential,
         threadId,
         'CallWithChat' as _TelemetryImplementationHint,
-        /* @conditional-compile-remove(on-fetch-profile) */
+
         chatAdapterOptions
       )
     );
