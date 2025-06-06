@@ -1973,6 +1973,7 @@ export type CaptionsInformation = {
     captionText: string;
     userId?: string;
     createdTimeStamp?: Date;
+    isFinalized?: boolean;
 };
 
 // @public
