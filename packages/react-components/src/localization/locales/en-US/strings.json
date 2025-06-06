@@ -330,6 +330,7 @@
     "messageContentAriaText": "{status} {author} said {message}",
     "messageContentMineAriaText": "{status} You said {message}",
     "editBoxTextLimit": "Your message is over the limit of {limitNumber} characters",
+    "editBoxEmptyText": "Please type a message to continue",
     "editBoxPlaceholderText": "Edit your message",
     "newMessagesIndicator": "New messages",
     "noDisplayNameSub": "No name",

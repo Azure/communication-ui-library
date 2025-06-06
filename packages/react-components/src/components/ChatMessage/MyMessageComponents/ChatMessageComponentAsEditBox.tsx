@@ -89,10 +89,12 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     setTextValue(newValue ?? '');
   };
 
-  const textTooLongMessage =
+  const textValidationErrorMessage =
     messageState === 'too long'
       ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
-      : undefined;
+      : messageState === 'too short'
+        ? strings.editBoxEmptyText
+        : undefined;
 
   const iconClassName = useCallback(
     (isHover: boolean) => {
@@ -170,7 +172,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           }}
           supportNewline={false}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-          errorMessage={textTooLongMessage}
+          errorMessage={textValidationErrorMessage}
           styles={editBoxStyles}
           /* @conditional-compile-remove(mention) */
           mentionLookupOptions={mentionLookupOptions}

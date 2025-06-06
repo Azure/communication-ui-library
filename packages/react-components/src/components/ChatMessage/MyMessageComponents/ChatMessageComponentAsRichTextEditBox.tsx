@@ -186,11 +186,13 @@ export const ChatMessageComponentAsRichTextEditBox = (
     editTextFieldRef.current?.focus();
   }, []);
 
-  const textTooLongMessage = useMemo(() => {
+  const textValidationErrorMessage = useMemo(() => {
     return messageState === 'too long' ||
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
       ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
-      : undefined;
+      : messageState === 'too short'
+        ? strings.editBoxEmptyText
+        : undefined;
   }, [
     messageState,
     strings.editBoxTextLimit,
@@ -377,7 +379,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return (
       <Stack className={mergeStyles(editBoxWidthStyles)}>
         <RichTextSendBoxErrors
-          textTooLongMessage={textTooLongMessage}
+          textValidationErrorMessage={textValidationErrorMessage}
           systemMessage={message.failureReason}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentUploadsPendingError={
             attachmentUploadsPendingError

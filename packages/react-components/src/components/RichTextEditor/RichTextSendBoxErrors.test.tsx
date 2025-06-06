@@ -40,7 +40,7 @@ describe('RichTextSendBoxErrors should be shown correctly', () => {
 
   test('MessageBar should show text too long message', async () => {
     const text = 'Test textTooLongMessage message';
-    render(<RichTextSendBoxErrors textTooLongMessage={text} />);
+    render(<RichTextSendBoxErrors textValidationErrorMessage={text} />);
     const sendBoxErrorComponent = await screen.findByText(text);
 
     expect(sendBoxErrorComponent).not.toBeNull();
@@ -49,7 +49,7 @@ describe('RichTextSendBoxErrors should be shown correctly', () => {
   test('MessageBar should hide textTooLongMessage after 10 sec and show system error', async () => {
     const systemMessage = 'Test system message';
     const textTooLongMessage = 'Test textTooLongMessage message';
-    render(<RichTextSendBoxErrors systemMessage={systemMessage} textTooLongMessage={textTooLongMessage} />);
+    render(<RichTextSendBoxErrors systemMessage={systemMessage} textValidationErrorMessage={textTooLongMessage} />);
     const textTooLongMessageComponent = await screen.findByText(textTooLongMessage);
     const systemMessageComponent = screen.queryByText(systemMessage);
     expect(systemMessageComponent).toBeNull();
