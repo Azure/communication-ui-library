@@ -2,6 +2,105 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Mon, 09 Jun 2025 16:27:48 GMT",
+      "version": "1.28.0",
+      "tag": "@azure/communication-react_v1.28.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ac4114eeea3a7ec185ba0055ced26ac460c8d94f",
+            "area": "improvement",
+            "workstream": "Updating beta version of calling sdk to 1.36.3-beta.1",
+            "comment": "bumping calling beta to 1.36.3-beta.1"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0c9f780efbceb0c956c2e2f0349f2394544ba8c4",
+            "area": "improvement",
+            "workstream": "Governance",
+            "comment": "Upgrade supertest for formidable Component Governance"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b0ebdda80c878f55005496ad51ed3d4f1fa151be",
+            "area": "improvement",
+            "workstream": "Update dependency",
+            "comment": "Update Multer for security patch"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "cac794ac1ce6af8e5c1e2030faa49d4264f1954e",
+            "area": "improvement",
+            "workstream": "Updating eslint configs for Calling packlets",
+            "comment": "updated eslint configs for further eslint9 migration"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "3fbb37d1326bc591ec43b58260c9b31135a81121",
+            "area": "fix",
+            "workstream": "Build project",
+            "comment": "Update build scripts to use paths compatible with all OS's"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5d2fd85937077ad1041eed7cf5549c20a8b27c82",
+            "area": "fix",
+            "workstream": "Dark text for raise hand button in dark theme",
+            "comment": "Dark text for raise hand button in dark theme"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "95f7927e1de55603231c81f6bf0c5d89900eaf00",
+            "area": "fix",
+            "workstream": "Fixed in code where using splice inside foreach",
+            "comment": "Fixed in code where using splice inside foreach"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f1e8653d1a32aa7e756a8738de568214483c4d56",
+            "area": "fix",
+            "workstream": "Remove condition compile for onFetchProfile",
+            "comment": "Remove conditional-compile for on-fetch-profile"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d582de132fb18a15c14c9cb938253603d0caca68",
+            "area": "feature",
+            "workstream": "RTT and Captions",
+            "comment": "Auto announce completed RTT and caption messages "
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "690809a339f511656d7c29a319264bc83ce27dd3",
+            "area": "feature",
+            "workstream": "Dependency Updates",
+            "comment": "Update to ESLint 9"
+          }
+        ],
+        "minor": [
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "da3d8f18e2dd13514d54caafb462645b5855588c",
+            "area": "storybook",
+            "workstream": "Remove Beta Banner for PSTN and 1:N",
+            "comment": "Remove Beta Banner for PSTN and 1:N"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 26 May 2025 21:03:25 GMT",
       "version": "1.28.0-beta.1",
       "tag": "@azure/communication-react_v1.28.0-beta.1",
