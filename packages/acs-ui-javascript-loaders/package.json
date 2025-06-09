@@ -31,7 +31,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@azure/communication-common": "^2.3.2-beta.1 || ^2.3.1",
+    "@azure/communication-common": "^2.3.1",
     "@internal/acs-ui-common": "1.28.0",
     "@internal/react-composites": "1.28.0",
     "@fluentui/react": "^8.122.17",
