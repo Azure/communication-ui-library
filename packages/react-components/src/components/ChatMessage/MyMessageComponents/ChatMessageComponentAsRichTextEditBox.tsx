@@ -196,6 +196,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
   }, [
     messageState,
     strings.editBoxTextLimit,
+    strings.editBoxEmptyText,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
   ]);
 
