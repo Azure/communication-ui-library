@@ -14,7 +14,8 @@ Mon, 09 Jun 2025 16:27:48 GMT
 - Update to ESLint 9 ([PR #5866](https://github.com/azure/communication-ui-library/pull/5866) by 3941071+emlynmac@users.noreply.github.com)
 - Upgrade supertest for formidable Component Governance ([PR #5834](https://github.com/azure/communication-ui-library/pull/5834) by 77021369+jimchou-dev@users.noreply.github.com)
 - Update Multer for security patch ([PR #5863](https://github.com/azure/communication-ui-library/pull/5863) by 96077406+carocao-msft@users.noreply.github.com)
-- updated eslint configs for further eslint9 migration ([PR #5879](https://github.com/azure/communication-ui-library/pull/5879) by alkwa@microsoft.com)
+- Updated eslint configs for further eslint9 migration ([PR #5879](https://github.com/azure/communication-ui-library/pull/5879) by alkwa@microsoft.com)
+- Updated Custom button injection controls to allow the auto dismissal of a menu when a button is actioned ([PR#5855](https://github.com/Azure/communication-ui-library/pull/5855/files) by edwardlee@microsoft.com)
 
 ### Bug Fixes
 - Update build scripts to use paths compatible with all OS's ([PR #5852](https://github.com/azure/communication-ui-library/pull/5852) by dmceachern@microsoft.com)
