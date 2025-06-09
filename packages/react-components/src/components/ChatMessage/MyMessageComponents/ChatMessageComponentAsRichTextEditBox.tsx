@@ -20,7 +20,7 @@ import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
-import { MAXIMUM_LENGTH_OF_MESSAGE, modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
+import { modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   hasIncompleteAttachmentUploads,
@@ -33,7 +33,8 @@ import {
   getMessageState,
   MessageState,
   onRenderCancelIcon,
-  onRenderSubmitIcon
+  onRenderSubmitIcon,
+  getTextValidationErrorMessage
 } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 /* @conditional-compile-remove(file-sharing-acs) */
 import {
@@ -187,12 +188,12 @@ export const ChatMessageComponentAsRichTextEditBox = (
   }, []);
 
   const textValidationErrorMessage = useMemo(() => {
-    return messageState === 'too long' ||
+    return getTextValidationErrorMessage(
+      messageState,
+      strings.editBoxTextLimit,
+      strings.editBoxEmptyText,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
-      ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
-      : messageState === 'too short'
-        ? strings.editBoxEmptyText
-        : undefined;
+    )
   }, [
     messageState,
     strings.editBoxTextLimit,
