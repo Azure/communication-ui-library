@@ -427,6 +427,7 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
   return option.disabled;
 };
 
+/* @conditional-compile-remove(call-readiness) */
 const isAndroidWebView = (environmentInfo?: EnvironmentInfo): boolean => {
   const ua = navigator.userAgent || '';
   return (
