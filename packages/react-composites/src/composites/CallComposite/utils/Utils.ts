@@ -427,15 +427,30 @@ export const isDisabled = (option: boolean | { disabled: boolean } | undefined):
   return option.disabled;
 };
 
+const isAndroidWebView = (environmentInfo?: EnvironmentInfo): boolean => {
+  const ua = navigator.userAgent || '';
+  return (
+    environmentInfo?.environment?.browser?.toLowerCase() === 'chrome webview' ||
+    (/Android/.test(ua) && /Version\/[\d.]+/.test(ua) && /wv/.test(ua))
+  );
+};
+
 /* @conditional-compile-remove(call-readiness) */
 /**
  * @returns Permissions state for the camera.
  */
-const queryCameraPermissionFromPermissionsAPI = async (): Promise<PermissionState | 'unsupported'> => {
+const queryCameraPermissionFromPermissionsAPI = async (
+  environmentInfo?: EnvironmentInfo
+): Promise<PermissionState | 'unsupported'> => {
+  // Android WebView does not support permissions API, nor does it throw an error when trying to access it,
+  // in actuality the API always returns 'prompt' which is not correct.
+  if (isAndroidWebView(environmentInfo)) {
+    return 'unsupported';
+  }
+
   try {
     return (await navigator.permissions.query({ name: 'camera' as PermissionName })).state;
   } catch (e) {
-    console.info('permissions API is not supported by browser', e);
     return 'unsupported';
   }
 };
@@ -444,11 +459,18 @@ const queryCameraPermissionFromPermissionsAPI = async (): Promise<PermissionStat
 /**
  * @returns Permissions state for the microphone.
  */
-const queryMicrophonePermissionFromPermissionsAPI = async (): Promise<PermissionState | 'unsupported'> => {
+const queryMicrophonePermissionFromPermissionsAPI = async (
+  environmentInfo?: EnvironmentInfo
+): Promise<PermissionState | 'unsupported'> => {
+  // Android WebView does not support permissions API, nor does it throw an error when trying to access it,
+  // in actuality the API always returns 'prompt' which is not correct.
+  if (isAndroidWebView(environmentInfo)) {
+    return 'unsupported';
+  }
+
   try {
     return (await navigator.permissions.query({ name: 'microphone' as PermissionName })).state;
   } catch (e) {
-    console.info('permissions API is not supported by browser', e);
     return 'unsupported';
   }
 };
@@ -462,15 +484,24 @@ const queryMicrophonePermissionFromPermissionsAPI = async (): Promise<Permission
  * @private
  */
 export const getDevicePermissionState = async (
+  environmentInfo: undefined | EnvironmentInfo,
   setVideoState: (state: PermissionState | 'unsupported') => void,
-  setAudioState: (state: PermissionState | 'unsupported') => void
+  setAudioState: (state: PermissionState | 'unsupported') => void,
+  previousVideoState: PermissionState | 'unsupported' | undefined,
+  previousAudioState: PermissionState | 'unsupported' | undefined
 ): Promise<void> => {
   const [cameraResult, microphoneResult] = await Promise.all([
-    queryCameraPermissionFromPermissionsAPI(),
-    queryMicrophonePermissionFromPermissionsAPI()
+    queryCameraPermissionFromPermissionsAPI(environmentInfo),
+    queryMicrophonePermissionFromPermissionsAPI(environmentInfo)
   ]);
-  setVideoState(cameraResult);
-  setAudioState(microphoneResult);
+
+  if (cameraResult !== previousVideoState) {
+    setVideoState(cameraResult);
+  }
+
+  if (microphoneResult !== previousAudioState) {
+    setAudioState(microphoneResult);
+  }
 };
 /* @conditional-compile-remove(unsupported-browser) */
 const isUnsupportedEnvironment = (
