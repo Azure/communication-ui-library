@@ -450,6 +450,7 @@ const queryCameraPermissionFromPermissionsAPI = async (
 
   try {
     return (await navigator.permissions.query({ name: 'camera' as PermissionName })).state;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     return 'unsupported';
   }
@@ -470,6 +471,7 @@ const queryMicrophonePermissionFromPermissionsAPI = async (
 
   try {
     return (await navigator.permissions.query({ name: 'microphone' as PermissionName })).state;
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
   } catch (e) {
     return 'unsupported';
   }
