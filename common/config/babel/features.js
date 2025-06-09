@@ -71,8 +71,6 @@ module.exports = {
   stable: [
     // Demo feature. Used in live-documentation of conditional compilation.
     // Do not use in production code.
-    "stabilizedDemo",
-     // Feature for on fetch profile
-    "on-fetch-profile"
+    "stabilizedDemo"
   ]
 }

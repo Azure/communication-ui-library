@@ -158,7 +158,8 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
         displayName: finalDisplayName ?? 'Unnamed Participant',
         captionText: c.captionText,
         userId,
-        createdTimeStamp: c.timestamp
+        createdTimeStamp: c.timestamp,
+        isFinalized: c.resultType === 'Final'
       };
     });
 
@@ -220,7 +221,6 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
 
     return {
       captions: captionsInfo ?? [],
-
       realTimeTexts: {
         completedMessages: completedRealTimeTexts as RealTimeTextInformation[],
         currentInProgress: inProgressRealTimeTexts as RealTimeTextInformation[],
@@ -228,9 +228,7 @@ export const captionsBannerSelector: CaptionsBannerSelector = reselect.createSel
       },
       isCaptionsOn: isCaptionsFeatureActive ?? false,
       startCaptionsInProgress: startCaptionsInProgress ?? false,
-
       isRealTimeTextOn: isRealTimeTextActive ?? false,
-
       latestLocalRealTimeText: (myInProgress ?? latestLocalRealTimeText) as RealTimeTextInformation
     };
   }
