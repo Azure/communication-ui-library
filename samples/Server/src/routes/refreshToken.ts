@@ -19,7 +19,7 @@ const router = express.Router();
  *
  */
 
-router.post('/:id', async function (req, res, next) {
+router.post('/:id', async function (req, res) {
   if (!req.params['id']) {
     res.sendStatus(404);
   }

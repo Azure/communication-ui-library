@@ -22,7 +22,7 @@ const upload = multer();
  * @returns SAS URL for accessing blob. This URL is valid for 90 days.
  *
  */
-router.post('/log', async function (req, res, next) {
+router.post('/log', async function (req, res) {
   const logs: string = req.body.logs;
   if (!logs) {
     res.status(400).send('logs not found in request');
@@ -83,7 +83,7 @@ router.post('/log', async function (req, res, next) {
  * @returns SAS URL for accessing blob. This URL is valid for 1 hour.
  *
  */
-router.post('/file/:filename/:containername', upload.single('file'), async function (req, res, next) {
+router.post('/file/:filename/:containername', upload.single('file'), async function (req, res) {
   const SAS_EXPIRY = 1 * 60 * 60; // 1 hour
 
   const fileData = req.file;
@@ -122,7 +122,7 @@ router.post('/file/:filename/:containername', upload.single('file'), async funct
     const blobContainerClient = blobServiceClient.getContainerClient(containerName);
     const client = blobContainerClient.getBlockBlobClient(fileName);
 
-    const response = await client.upload(fileContentBuffer, size);
+    await client.upload(fileContentBuffer, size);
     const expiresOn = new Date();
     expiresOn.setSeconds(expiresOn.getSeconds() + SAS_EXPIRY);
     const url = await client.generateSasUrl({
