@@ -15,7 +15,7 @@ const router = express.Router();
  *
  */
 
-router.get('/', async function (req, res, next) {
+router.get('/', async function (req, res) {
   res.send(getEndpoint());
 });
 
