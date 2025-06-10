@@ -20,6 +20,6 @@
     "lint:quiet": "echo skip"
   },
   "devDependencies": {
-    "eslint": "^9.27.0"
+    "eslint": "^9.28.0"
   }
 }
