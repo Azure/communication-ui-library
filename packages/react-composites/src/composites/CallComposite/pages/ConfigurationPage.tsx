@@ -1,8 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { useCallback, useMemo, useRef } from 'react';
-import { useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
+/* @conditional-compile-remove(call-readiness) */
+import { useEffect } from 'react';
 import { useAdaptedSelector } from '../hooks/useAdaptedSelector';
 import { useHandlers } from '../hooks/useHandlers';
 import { LocalDeviceSettings } from '../components/LocalDeviceSettings';
@@ -136,13 +137,14 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const options = useAdaptedSelector(getCallingSelector(DevicesButton));
   const localDeviceSettingsHandlers = useHandlers(LocalDeviceSettings);
   const { video: cameraPermissionGranted, audio: microphonePermissionGranted } = useSelector(devicePermissionSelector);
+  const environmentInfo = useSelector(getEnvironmentInfo);
   /* @conditional-compile-remove(call-readiness) */
   // use permission API to get video and audio permission state
   const [videoState, setVideoState] = useState<PermissionState | 'unsupported' | undefined>(undefined);
   /* @conditional-compile-remove(call-readiness) */
   const [audioState, setAudioState] = useState<PermissionState | 'unsupported' | undefined>(undefined);
   /* @conditional-compile-remove(call-readiness) */
-  getDevicePermissionState(setVideoState, setAudioState);
+  getDevicePermissionState(environmentInfo, setVideoState, setAudioState, videoState, audioState);
 
   const configContainerRef = useRef<HTMLDivElement>(null);
 
@@ -155,7 +157,6 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const stackConfig = !!configWidth && configWidth < 450;
   const errorBarProps = usePropsFor(ErrorBar);
   const microphones = useSelector(getMicrophones);
-  const environmentInfo = useSelector(getEnvironmentInfo);
 
   let disableStartCallButton =
     (!microphonePermissionGranted || microphones?.length === 0) &&
@@ -253,29 +254,33 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   const permissionsState: {
     camera: PermissionState;
     microphone: PermissionState;
-  } = {
-    // fall back to using cameraPermissionGranted and microphonePermissionGranted if permission API is not supported
-    camera:
-      videoState && videoState !== 'unsupported'
-        ? cameraPermissionGranted !== false
-          ? videoState
-          : 'denied'
-        : cameraPermissionGranted !== false
-          ? cameraPermissionGranted
-            ? 'granted'
-            : 'prompt'
-          : 'denied',
-    microphone:
-      audioState && audioState !== 'unsupported'
-        ? microphonePermissionGranted !== false
-          ? audioState
-          : 'denied'
-        : microphonePermissionGranted !== false
-          ? microphonePermissionGranted
-            ? 'granted'
-            : 'prompt'
-          : 'denied'
-  };
+  } = useMemo(
+    () => ({
+      // fall back to using cameraPermissionGranted and microphonePermissionGranted if permission API is not supported
+      camera:
+        videoState && videoState !== 'unsupported'
+          ? cameraPermissionGranted !== false
+            ? videoState
+            : 'denied'
+          : cameraPermissionGranted !== false
+            ? cameraPermissionGranted
+              ? 'granted'
+              : 'prompt'
+            : 'denied',
+      microphone:
+        audioState && audioState !== 'unsupported'
+          ? microphonePermissionGranted !== false
+            ? audioState
+            : 'denied'
+          : microphonePermissionGranted !== false
+            ? microphonePermissionGranted
+              ? 'granted'
+              : 'prompt'
+            : 'denied'
+    }),
+    [videoState, audioState, cameraPermissionGranted, microphonePermissionGranted]
+  );
+
   /* @conditional-compile-remove(call-readiness) */
   const networkErrors = errorBarProps.activeErrorMessages.filter((message) => message.type === 'callNetworkQualityLow');
 
@@ -287,9 +292,11 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   const [minimumFallbackTimerElapsed, setMinimumFallbackTimerElapsed] = useState(false);
   /* @conditional-compile-remove(call-readiness) */
-  setTimeout(() => {
-    setMinimumFallbackTimerElapsed(true);
-  }, 2000);
+  useEffect(() => {
+    setTimeout(() => {
+      setMinimumFallbackTimerElapsed(true);
+    }, 2000);
+  }, []);
   /* @conditional-compile-remove(call-readiness) */
   const forceShowingCheckPermissions = !minimumFallbackTimerElapsed;
 
