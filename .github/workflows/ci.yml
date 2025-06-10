@@ -549,6 +549,8 @@ jobs:
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rushx build
         working-directory: packages/storybook8
+        env:
+          TELEMETRY_INSTRUMENTATION_KEY: ${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }}
       - name: Tests
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rushx test
