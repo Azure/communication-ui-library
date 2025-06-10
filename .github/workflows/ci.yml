@@ -546,12 +546,6 @@ jobs:
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release'}}
         run: rush install --max-install-attempts 3
 
-      - name: Copy .env values
-        # storybook requires the env vars to be in a .env file for access in the manager.ts
-        run: |
-          echo TELEMETRY_INSTRUMENTATION_KEY=${{ secrets.TELEMETRY_INSTRUMENTATION_KEY }} > .env
-        working-directory: ./packages/storybook8
-
       - name: Build
         if: ${{ matrix.flavor == 'beta' || matrix.flavor == 'beta-release' }}
         run: rushx build
