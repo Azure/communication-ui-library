@@ -15,11 +15,29 @@ let identityClient: CommunicationIdentityClient | undefined = undefined;
 const getIdentityClient = (): CommunicationIdentityClient =>
   identityClient ?? (identityClient = new CommunicationIdentityClient(getResourceConnectionString()));
 
-// replicate here to allow for mocks in tests
+/**
+ *
+ * @returns The CommunicationUserIdentifier for the admin user.
+ */
 export const getAdminUser = (): CommunicationUserIdentifier => {
   return { communicationUserId: getAdminUserId() };
 };
+
+/**
+ * Retrieves a CommunicationAccessToken for the admin user with the specified scopes.
+ *
+ * @param scopes - The scopes for which the token is requested.
+ * @param user - The CommunicationUserIdentifier for which the token is requested.
+ * @returns A promise that resolves to a CommunicationAccessToken.
+ */
 export const getToken = (user: CommunicationUserIdentifier, scopes: TokenScope[]): Promise<CommunicationAccessToken> =>
   getIdentityClient().getToken(user, scopes);
+
+/**
+ * Creates a new CommunicationUserIdentifier and a CommunicationUserToken for the admin user with the specified scopes.
+ *
+ * @param scopes - The scopes for which the token is requested.
+ * @returns A promise that resolves to a CommunicationUserToken.
+ */
 export const createUserAndToken = (scopes: TokenScope[]): Promise<CommunicationUserToken> =>
   getIdentityClient().createUserAndToken(scopes);
