@@ -1,5 +1,6 @@
 import { ApplicationInsights } from '@microsoft/applicationinsights-web';
 
+declare let __TELEMETRY_INSTRUMENTATION_KEY__: string; // Injected by webpack
 /**
  * Check if we have the necessary cookie consent to allow the app insights library to make use of cookies
  */
@@ -39,7 +40,7 @@ const createCookieChangedCallback = (applicationInsightsInstance: ApplicationIns
  * @returns the created instance of the application insights library
  */
 const startTelemetry = (cookieConsent: boolean): ApplicationInsights | undefined => {
-  const instrumentationKey = process.env.TELEMETRY_INSTRUMENTATION_KEY;
+  const instrumentationKey = __TELEMETRY_INSTRUMENTATION_KEY__;
   if (!instrumentationKey) {
     console.warn('No telemetry instrumentationKey provided. Telemetry collection is disabled.');
     return;
