@@ -39,57 +39,8 @@ Access Tokens can be generated using this [Azure Portal quickstart](https://docs
 
 ## Setting Up
 
-UI Library requires a React environment to be setup. Follow the [setup page](./?path=/docs/setup--docs) to get started
-with your new app.
-
-If you are creating a new application run the following command to make a new app setup with the core dependencies needed for the UI library.
-You will still need to install the `uuid` package like below.
-
-```bash
-
-npx create-react-app your-ui-lib-application --template communication-react
-
-cd your-ui-lib-application
-
-```
-
-### Install the Package
-
-Use the `npm install` command to install the Azure Communication Services UI Library for JavaScript.
-
-```bash
-
-npm install @azure/communication-react
-
-```
-
-`@azure/communication-react` specifies core Azure Communication Services as `peerDependencies` so that
-you can most consistently use the API from the core libraries in your application. You need to install those libraries as well:
-
-```bash
-
-npm install @azure/communication-calling
-npm install @azure/communication-chat
-
-```
-
-Also install the `uuid` package to generate a random group ID for the 'Set Up Adapters' section below.
-
-```bash
-
-npm install uuid
-
-```
-
-### Run Create React App
-
-Let's test the Create React App installation by running:
-
-```bash
-
-npm run start
-
-```
+UI Library requires a React environment to be setup. Follow the [setup page](./?path=/docs/setup--docs) to create a new React app and download required dependencies,
+or download our quickstart to get started with Composites [ui-library-quickstart-composites](https://github.com/Azure-Samples/communication-services-javascript-quickstarts/tree/main/ui-library-quickstart-composites).
 
 ## Object Model
 
