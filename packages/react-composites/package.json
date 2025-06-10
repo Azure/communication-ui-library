@@ -154,7 +154,7 @@
     "type-fest": "^4.40.0",
     "typescript": "5.4.5",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "4.15.2",
+    "webpack-dev-server": "5.2.2",
     "webpack": "5.95.0",
     "yargs": "^17.7.2",
     "@eslint/compat": "~1.2.9",
