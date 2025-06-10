@@ -191,13 +191,13 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return getTextValidationErrorMessage(
       messageState,
       strings.editBoxTextLimit,
-      strings.editBoxEmptyText,
+      strings.editBoxEmptyWarningText,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
     )
   }, [
     messageState,
     strings.editBoxTextLimit,
-    strings.editBoxEmptyText,
+    strings.editBoxEmptyWarningText,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
   ]);
 

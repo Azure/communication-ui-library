@@ -3665,7 +3665,7 @@ export interface MessageThreadStrings {
     actionMenuMoreOptions?: string;
     attachmentCardGroupMessage: string;
     editBoxCancelButton: string;
-    editBoxEmptyText: string;
+    editBoxEmptyWarningText: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
     editBoxTextLimit: string;

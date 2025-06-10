@@ -207,7 +207,7 @@ export interface MessageThreadStrings {
   /** String for warning on text limit exceeded in EditBox */
   editBoxTextLimit: string;
   /** String for warning on empty content in EditBox */
-  editBoxEmptyText: string;
+  editBoxEmptyWarningText: string;
   /** String for placeholder text in EditBox when there is no user input*/
   editBoxPlaceholderText: string;
   /** String for new messages indicator*/
