@@ -179,8 +179,11 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
           navigator.permissions.query({ name: 'microphone' as PermissionName })
         ]);
 
-        hasCameraPermission = cameraPermissions.state === 'granted';
-        hasMicPermission = micPermissions.state === 'granted';
+        // Use logical OR to combine the SDK state with the Permissions API state.
+        // This way we can get a more accurate picture of the device permission state.
+        // If the SDK state is 'granted', we don't need to check the Permissions API state.
+        hasCameraPermission ||= cameraPermissions.state === 'granted';
+        hasMicPermission ||= micPermissions.state === 'granted';
       } catch (e) {
         console.info('Permissions API is not supported by browser', e);
       }
