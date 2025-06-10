@@ -5,7 +5,6 @@ import { StorybookConfig } from '@storybook/react-webpack5';
 import path from 'path';
 import TsconfigPathsPlugin from 'tsconfig-paths-webpack-plugin';
 import remarkGfm from 'remark-gfm';
-import { DefinePlugin } from 'webpack';
 
 const DEVELOPMENT_BUILD = process.env.NODE_ENV === 'development';
 console.log(`Creating storybook with internal-only stories: ${DEVELOPMENT_BUILD}`);
@@ -70,16 +69,6 @@ const storybookConfig: StorybookConfig = {
         extensions: config.resolve.extensions
       })
     ];
-
-    if (!config.plugins) {
-      config.plugins = [];
-    }
-
-    config.plugins.push(
-      new DefinePlugin({
-        '__TELEMETRY_INSTRUMENTATION_KEY__': JSON.stringify(process.env.TELEMETRY_INSTRUMENTATION_KEY),
-      })
-    );
 
     console.log(`Resolving packages to source files: ${DEVELOPMENT_BUILD}`);
     // Resolve local packages directly to the source files instead of module linking via node_modules.
