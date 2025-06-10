@@ -8,6 +8,8 @@ import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { isMessageTooLong } from './SendBoxUtils';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { ChatMessage } from '../../types';
+import { _formatString } from '@internal/acs-ui-common';
+import { MAXIMUM_LENGTH_OF_MESSAGE } from '../utils/SendBoxUtils';
 
 /**
  * @private
@@ -50,6 +52,19 @@ export function getMessageState(
     : isMessageTooLong(messageText.length)
       ? 'too long'
       : 'OK';
+}
+
+/**
+ * @private
+ */
+export const getTextValidationErrorMessage = (
+  messageState: string, tooLongString: string, tooShortString: string, imageOverflow: boolean = false
+): string | undefined => {
+  return messageState === 'too long' || imageOverflow
+    ? _formatString(tooLongString, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
+    : messageState === 'too short'
+      ? tooShortString
+      : undefined;
 }
 
 /* @conditional-compile-remove(file-sharing-acs) */

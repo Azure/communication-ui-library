@@ -20,7 +20,7 @@ import { _AttachmentUploadCards } from '../../Attachment/AttachmentUploadCards';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { AttachmentMetadata } from '@internal/acs-ui-common';
 import { useChatMessageRichTextEditContainerStyles } from '../../styles/ChatMessageComponent.styles';
-import { MAXIMUM_LENGTH_OF_MESSAGE, modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
+import { modifyInlineImagesInContentString } from '../../utils/SendBoxUtils';
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 import {
   hasIncompleteAttachmentUploads,
@@ -33,7 +33,8 @@ import {
   getMessageState,
   MessageState,
   onRenderCancelIcon,
-  onRenderSubmitIcon
+  onRenderSubmitIcon,
+  getTextValidationErrorMessage
 } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 /* @conditional-compile-remove(file-sharing-acs) */
 import {
@@ -186,14 +187,17 @@ export const ChatMessageComponentAsRichTextEditBox = (
     editTextFieldRef.current?.focus();
   }, []);
 
-  const textTooLongMessage = useMemo(() => {
-    return messageState === 'too long' ||
+  const textValidationErrorMessage = useMemo(() => {
+    return getTextValidationErrorMessage(
+      messageState,
+      strings.editBoxTextLimit,
+      strings.editBoxEmptyWarningText,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
-      ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
-      : undefined;
+    )
   }, [
     messageState,
     strings.editBoxTextLimit,
+    strings.editBoxEmptyWarningText,
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
   ]);
 
@@ -377,7 +381,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
     return (
       <Stack className={mergeStyles(editBoxWidthStyles)}>
         <RichTextSendBoxErrors
-          textTooLongMessage={textTooLongMessage}
+          textValidationErrorMessage={textValidationErrorMessage}
           systemMessage={message.failureReason}
           /* @conditional-compile-remove(rich-text-editor-image-upload) */ attachmentUploadsPendingError={
             attachmentUploadsPendingError

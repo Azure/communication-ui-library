@@ -4042,6 +4042,7 @@ export interface MessageThreadStrings {
     blockedWarningText: string;
     downloadAttachment: string;
     editBoxCancelButton: string;
+    editBoxEmptyWarningText: string;
     editBoxPlaceholderText: string;
     editBoxSubmitButton: string;
     editBoxTextLimit: string;

@@ -13,7 +13,7 @@ export interface RichTextSendBoxErrorsProps {
   /* @conditional-compile-remove(file-sharing-acs) */
   attachmentProgressError?: SendBoxErrorBarError;
   systemMessage?: string;
-  textTooLongMessage?: string;
+  textValidationErrorMessage?: string;
 }
 
 /**
@@ -26,7 +26,7 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
     /* @conditional-compile-remove(file-sharing-acs) */
     attachmentUploadsPendingError,
     systemMessage,
-    textTooLongMessage
+    textValidationErrorMessage
   } = props;
   const [sendBoxError, setSendBoxError] = useState<SendBoxErrorBarError | undefined>(undefined);
 
@@ -37,19 +37,19 @@ export const RichTextSendBoxErrors = (props: RichTextSendBoxErrorsProps): JSX.El
   }, [systemMessage]);
 
   useEffect(() => {
-    if (textTooLongMessage && !isMessageEmpty(textTooLongMessage)) {
-      setSendBoxError({ message: textTooLongMessage, timestamp: Date.now() });
+    if (textValidationErrorMessage && !isMessageEmpty(textValidationErrorMessage)) {
+      setSendBoxError({ message: textValidationErrorMessage, timestamp: Date.now() });
     }
-  }, [textTooLongMessage]);
+  }, [textValidationErrorMessage]);
 
   useEffect(() => {
     if (
-      (textTooLongMessage === undefined || isMessageEmpty(textTooLongMessage)) &&
+      (textValidationErrorMessage === undefined || isMessageEmpty(textValidationErrorMessage)) &&
       (systemMessage === undefined || isMessageEmpty(systemMessage))
     ) {
       setSendBoxError(undefined);
     }
-  }, [systemMessage, textTooLongMessage]);
+  }, [systemMessage, textValidationErrorMessage]);
 
   useEffect(() => {
     setSendBoxError((prev) => {
