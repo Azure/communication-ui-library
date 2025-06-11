@@ -53,4 +53,5 @@ The client-side application is a React based user interface. Alongside this fron
 - [Azure Communication Chat SDK](https://docs.microsoft.com/en-us/azure/communication-services/concepts/chat/sdk-features) - to learn more about the chat features needed for the CallWithChatComposite.
 - [FluentUI](https://developer.microsoft.com/fluentui#/) - Microsoft powered UI library
 - [React](https://reactjs.org/) - Library for building user interfaces
-- [Create-React-App](https://create-react-app.dev/) - Boilerplate React code to help with a majority of React style single page applications.
+- [Create a react app from scratch](https://react.dev/learn/build-a-react-app-from-scratch) - Create a react application from scratch
+- [Create your first project with Vite](https://vite.dev/guide/#scaffolding-your-first-vite-project) - Create a react application with Vite. Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects.

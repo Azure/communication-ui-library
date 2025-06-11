@@ -12,8 +12,8 @@ Read more about Azure Communication Services - UI Library [here](https://aka.ms/
 
 ## Installing
 
-`@azure/communication-react` is a React library. It requires a reasonable React environment.
-The environment is already setup if you use [Create React App](https://create-react-app.dev/) or a similar tool to initialize your application.
+`@azure/communication-react` is a React library. It requires a reasonable React environment and support up to React 18.
+We recommend using Vite [Create a react app from scratch](https://react.dev/learn/build-a-react-app-from-scratch) and [Create your first project with Vite](https://vite.dev/guide/#scaffolding-your-first-vite-project) or a similar tool to initialize your application.
 
 ```bash
 npm i @azure/communication-react
