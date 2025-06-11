@@ -76,4 +76,5 @@ To make a PSTN call you need to provide an alternate caller ID in the `Alternate
 - [Azure Communication Calling SDK](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/calling-sdk-features) - To learn more about the calling web sdk
 - [FluentUI](https://developer.microsoft.com/fluentui#/) - Microsoft powered UI library
 - [React](https://reactjs.org/) - Library for building user interfaces
-- [Create-React-App](https://create-react-app.dev/) - Boilerplate React code to help with a majority of React style single page applications.
+- [Create a react app from scratch](https://react.dev/learn/build-a-react-app-from-scratch) - Create a react application from scratch
+- [Create your first project with Vite](https://vite.dev/guide/#scaffolding-your-first-vite-project) - Create a react application with Vite. Vite is a build tool that aims to provide a faster and leaner development experience for modern web projects.

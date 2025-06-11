@@ -47,12 +47,12 @@ npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
 
 The root cause is that one of @azure/communication-react NPM package's dependencies
 specifies an older version of React as a peer dependency than the one installed by default by
-[create-react-app](https://create-react-app.dev/).
+[vite](https://vite.dev/guide/#scaffolding-your-first-vite-project).
 Since v7, npm automatically install peer dependencies for packages. This fails because of the existence of the
-more recent version of React installed by create-react-app.
+more recent version of React installed by vite.
 
 **Solution**: We recommend using the `--legacy-peer-deps` flag when adding the @azure/communication-react dependency, as suggested
-by `npm add`.
+by `npm add`. The UI library supports up to React 18.
 
 ```
 PS C:\tmp\acs\my-react-app> npm add --legacy-peer-deps @azure/communication-react
