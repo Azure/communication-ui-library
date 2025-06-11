@@ -22,7 +22,7 @@ const router = express.Router();
  *
  */
 
-router.post('/:userId', async function (req, res, next) {
+router.post('/:userId', async function (req, res) {
   const userConfig = req.body;
   userIdToUserConfigMap.set(req.params['userId'], {
     emoji: userConfig['Emoji'],
@@ -33,7 +33,7 @@ router.post('/:userId', async function (req, res, next) {
   res.sendStatus(200);
 });
 
-router.get('/:userId', async function (req, res, next) {
+router.get('/:userId', async function (req, res) {
   const userConfig = userIdToUserConfigMap.get(req.params['userId']);
 
   res.send(userConfig);

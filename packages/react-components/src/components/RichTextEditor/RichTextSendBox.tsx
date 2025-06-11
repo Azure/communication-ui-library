@@ -517,7 +517,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
           }
         : undefined,
       systemMessage: systemMessage,
-      textTooLongMessage: contentTooLongMessage
+      textValidationErrorMessage: contentTooLongMessage
     };
   }, [
     /* @conditional-compile-remove(file-sharing-acs) */
