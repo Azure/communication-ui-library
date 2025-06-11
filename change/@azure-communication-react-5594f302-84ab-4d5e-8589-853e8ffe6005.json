@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "ESLint changes",
+  "comment": "ESLint fixes for package/react-composites",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}

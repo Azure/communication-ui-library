@@ -1434,9 +1434,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     removed.forEach((participant) => {
       const subscriber = this.participantSubscribers.get(toFlatCommunicationIdentifier(participant.identifier));
-      if (subscriber) {
-        subscriber.unsubscribeAll();
-      }
+      subscriber?.unsubscribeAll();
       this.participantSubscribers.delete(toFlatCommunicationIdentifier(participant.identifier));
     });
   }
