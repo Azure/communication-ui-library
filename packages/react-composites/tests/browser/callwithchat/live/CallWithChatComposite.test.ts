@@ -75,6 +75,12 @@ test.describe('CallWithChat Composite CallWithChat Page Tests', () => {
   });
 });
 
+/**
+ *
+ * Loads the CallWithChat Composite test app on the given pages with unique users.
+ * This function creates unique call and chat objects for each user, navigates to the
+ * specified server URL, and waits for the CallWithChat Composite to load.
+ */
 export const callWithChatTestSetup = async ({
   pages,
   users,

@@ -37,7 +37,9 @@ const CallWithChatAdapterManagementRequiredTypeAssertion = (
   value: Required<CallWithChatAdapterManagement>
 ): Required<CallWithChatAdapterManagementInternal> => value;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 CallWithChatAdapterManagementTypeAssertion;
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 CallWithChatAdapterManagementRequiredTypeAssertion;
 
 /// CallWithChatControlOptions
@@ -55,7 +57,9 @@ const CallWithChatControlOptionsRequiredTypeAssertion = (
   value: Required<CallWithChatControlOptions>
 ): Required<CallWithChatControlOptionsInternal> => value;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 CallWithChatControlOptionsTypeAssertion;
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 CallWithChatControlOptionsRequiredTypeAssertion;
 
 /// CallWithChatAdapterUiState
@@ -70,7 +74,9 @@ const CallWithChatAdapterUiStateRequiredTypeAssertion = (
   value: Required<CallWithChatAdapterUiState>
 ): Required<CallWithChatAdapterUiStateInternal> => value;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 CallWithChatAdapterUiStateTypeAssertion;
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 CallWithChatAdapterUiStateRequiredTypeAssertion;
 
 /// CallWithChatClientState
@@ -100,5 +106,7 @@ const CallWithChatClientStateRequiredTypeAssertion = (
   value: Required<CallWithChatClientState>
 ): Required<CallWithChatClientStateInternal> => value;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 CallWithChatClientStateTypeAssertion;
+// eslint-disable-next-line @typescript-eslint/no-unused-expressions
 CallWithChatClientStateRequiredTypeAssertion;

@@ -48,6 +48,10 @@ export interface CommonQueryArgs {
  */
 export type QueryArgs = Partial<LiveQueryArgs> & Partial<HermeticQueryArgs> & Partial<CommonQueryArgs>;
 
+/**
+ * Parses the query arguments from the URL and returns them as a `QueryArgs` object.
+ * @returns {QueryArgs} The parsed query arguments.
+ */
 export function parseQueryArgs(): QueryArgs {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());

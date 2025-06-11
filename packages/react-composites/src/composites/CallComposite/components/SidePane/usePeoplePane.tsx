@@ -113,7 +113,7 @@ export const usePeoplePane = (props: {
   );
 
   const onMuteAllPromptConfirm = useCallback(() => {
-    onMuteAllRemoteParticipants && onMuteAllRemoteParticipants();
+    onMuteAllRemoteParticipants?.();
     setShowMuteAllPrompt(false);
   }, [onMuteAllRemoteParticipants, setShowMuteAllPrompt]);
 
@@ -123,22 +123,22 @@ export const usePeoplePane = (props: {
   const [showPermitOthersVideoPrompt, setShowPermitOthersVideoPrompt] = useState(false);
 
   const onForbidAllAttendeesPromptConfirm = useCallback(() => {
-    onForbidOthersAudio && onForbidOthersAudio();
+    onForbidOthersAudio?.();
     setShowForbidOthersAudioPrompt(false);
   }, [onForbidOthersAudio, setShowForbidOthersAudioPrompt]);
 
   const onPermitAllAttendeesPromptConfirm = useCallback(() => {
-    onPermitOthersAudio && onPermitOthersAudio();
+    onPermitOthersAudio?.();
     setShowPermitOthersAudioPrompt(false);
   }, [onPermitOthersAudio, setShowPermitOthersAudioPrompt]);
 
   const onForbidOthersVideoPromptConfirm = useCallback(() => {
-    onForbidOthersVideo && onForbidOthersVideo();
+    onForbidOthersVideo?.();
     setShowForbidOthersVideoPrompt(false);
   }, [onForbidOthersVideo, setShowForbidOthersVideoPrompt]);
 
   const onPermitOthersVideoPromptConfirm = useCallback(() => {
-    onPermitOthersVideo && onPermitOthersVideo();
+    onPermitOthersVideo?.();
     setShowPermitOthersVideoPrompt(false);
   }, [onPermitOthersVideo, setShowPermitOthersVideoPrompt]);
 
@@ -183,8 +183,7 @@ export const usePeoplePane = (props: {
     const isMeetingAudioPermitted = meetingMediaAccess ? meetingMediaAccess.isAudioPermitted : true;
     const isMeetingVideoPermitted = meetingMediaAccess ? meetingMediaAccess.isVideoPermitted : true;
     if (onForbidOthersAudio && remoteParticipants) {
-      hasAttendee &&
-        isMeetingAudioPermitted &&
+      if (hasAttendee && isMeetingAudioPermitted) {
         menuItems.push({
           ['data-ui-id']: 'people-pane-forbid-all-attendees-audio',
           key: 'forbidOthersAudio',
@@ -199,11 +198,11 @@ export const usePeoplePane = (props: {
           ariaLabel: localeStrings.forbidOthersAudioMenuLabel,
           disabled: !hasAttendee
         });
+      }
     }
 
     if (onPermitOthersAudio && remoteParticipants) {
-      hasAttendee &&
-        !isMeetingAudioPermitted &&
+      if (hasAttendee && !isMeetingAudioPermitted) {
         menuItems.push({
           ['data-ui-id']: 'people-pane-permit-all-attendees-audio',
           key: 'permitOthersAudio',
@@ -218,11 +217,11 @@ export const usePeoplePane = (props: {
           ariaLabel: localeStrings.permitOthersAudioMenuLabel,
           disabled: !hasAttendee
         });
+      }
     }
 
     if (onForbidOthersVideo && remoteParticipants) {
-      hasAttendee &&
-        isMeetingVideoPermitted &&
+      if (hasAttendee && isMeetingVideoPermitted) {
         menuItems.push({
           ['data-ui-id']: 'people-pane-forbid-all-attendees-video',
           key: 'forbidOthersVideo',
@@ -237,11 +236,11 @@ export const usePeoplePane = (props: {
           ariaLabel: localeStrings.forbidOthersVideoMenuLabel,
           disabled: !hasAttendee
         });
+      }
     }
 
     if (onPermitOthersVideo && remoteParticipants) {
-      hasAttendee &&
-        !isMeetingVideoPermitted &&
+      if (hasAttendee && !isMeetingVideoPermitted) {
         menuItems.push({
           ['data-ui-id']: 'people-pane-permit-all-attendees-video',
           key: 'permitOthersVideo',
@@ -256,6 +255,7 @@ export const usePeoplePane = (props: {
           ariaLabel: localeStrings.permitOthersVideoMenuLabel,
           disabled: !hasAttendee
         });
+      }
     }
 
     if (onStopAllSpotlight && spotlightedParticipantUserIds && spotlightedParticipantUserIds.length > 0) {

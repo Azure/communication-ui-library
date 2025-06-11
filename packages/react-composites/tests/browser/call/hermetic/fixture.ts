@@ -43,6 +43,10 @@ export const buildUrlWithMockAdapter = (
   })}`;
 };
 
+/**
+ * A test fixture for hermetic browser tests.
+ * This fixture runs the test app with a mock {@link CallAdapter}, avoiding
+ */
 export interface TestFixture {
   serverUrl: string;
   page: Page;

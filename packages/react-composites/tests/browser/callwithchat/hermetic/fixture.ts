@@ -44,6 +44,9 @@ export const buildUrlForApp = (
   })}`;
 };
 
+/**
+ * A test fixture for the hermetic CallWithChatComposite tests.
+ */
 export interface TestFixture {
   serverUrl: string;
   page: Page;

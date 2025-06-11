@@ -9,6 +9,11 @@ import path from 'path';
 let server: Server;
 const app = express();
 
+/**
+ *
+ * @param props - Properties for the test server, including the app directory and server URL.
+ * @returns - A Playwright fixture that starts a test server and provides the server URL.
+ */
 export const createTestServer =
   (props: { appDir: string; serverUrl: string }) =>
   // eslint-disable-next-line no-empty-pattern, @typescript-eslint/explicit-module-boundary-types

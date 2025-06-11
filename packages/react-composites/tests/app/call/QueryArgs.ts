@@ -6,6 +6,9 @@ import { CallCompositeOptions } from '../../../src';
 import { MockCallAdapterState } from '../../common';
 import { jsonDateDeserializer } from '../lib/utils';
 
+/**
+ * Query arguments for the Call Composite.
+ */
 export interface QueryArgs {
   // Defined only for hermetic tests.
   mockCallAdapterState?: MockCallAdapterState;
@@ -39,6 +42,11 @@ export interface QueryArgs {
   realTimeTextButton?: boolean;
 }
 
+/**
+ * Parses the query arguments from the URL and returns them as a `QueryArgs` object.
+ * If a query argument is not present, it will be set to its default value.
+ * @returns {QueryArgs} The parsed query arguments.
+ */
 export function parseQueryArgs(): QueryArgs {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const params = Object.fromEntries(urlSearchParams.entries());
