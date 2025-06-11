@@ -71,14 +71,18 @@ export class CallWithChatBackedChatAdapter implements ChatAdapter {
 
   public onStateChange = (handler: (state: ChatAdapterState) => void): void => {
     const convertedHandler = (state: CallWithChatAdapterState): void => {
-      !!state.chat && handler(chatAdapterStateFromCallWithChatAdapterState(state));
+      if (state.chat) {
+        handler(chatAdapterStateFromCallWithChatAdapterState(state));
+      }
     };
     this.callWithChatAdapter.onStateChange(convertedHandler);
     this.eventStore.set(handler, convertedHandler);
   };
   public offStateChange = (handler: (state: ChatAdapterState) => void): void => {
     const convertedHandler = this.eventStore.get(handler);
-    convertedHandler && this.callWithChatAdapter.offStateChange(convertedHandler);
+    if (convertedHandler) {
+      this.callWithChatAdapter.offStateChange(convertedHandler);
+    }
   };
   public getState = (): ChatAdapterState =>
     chatAdapterStateFromCallWithChatAdapterState(this.callWithChatAdapter.getState());

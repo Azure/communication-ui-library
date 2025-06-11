@@ -51,11 +51,13 @@ export const CaptionsBannerMoreButton = (props: CaptionsBannerMoreButtonProps): 
       ? localeStrings.strings.call.startCaptionsButtonTooltipOnContent
       : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
     onClick: () => {
-      startCaptionsButtonProps.checked
-        ? stopCaptions()
-        : startCaptionsButtonProps.currentSpokenLanguage !== ''
-          ? startCaptions()
-          : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
+      if (startCaptionsButtonProps.checked) {
+        stopCaptions();
+      } else if (startCaptionsButtonProps.currentSpokenLanguage !== '') {
+        startCaptions();
+      } else if (props.onCaptionsSettingsClick) {
+        props.onCaptionsSettingsClick();
+      }
     },
     iconProps: {
       iconName: startCaptionsButtonProps.checked ? 'CaptionsOffIcon' : 'CaptionsIcon',

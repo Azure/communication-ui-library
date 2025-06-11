@@ -153,11 +153,15 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
         ? localeStrings.strings.call.startCaptionsButtonTooltipOnContent
         : localeStrings.strings.call.startCaptionsButtonTooltipOffContent,
       onClick: () => {
-        startCaptionsButtonProps.checked
-          ? startCaptionsButtonProps.onStopCaptions()
-          : startCaptionsButtonProps.currentSpokenLanguage !== ''
-            ? startCaptions()
-            : props.onCaptionsSettingsClick && props.onCaptionsSettingsClick();
+        if (startCaptionsButtonProps.checked) {
+          startCaptionsButtonProps.onStopCaptions();
+        } else {
+          if (startCaptionsButtonProps.currentSpokenLanguage !== '') {
+            startCaptions();
+          } else if (props.onCaptionsSettingsClick) {
+            props.onCaptionsSettingsClick();
+          }
+        }
       },
       iconProps: {
         iconName: startCaptionsButtonProps.checked ? 'CaptionsOffIcon' : 'CaptionsIcon',
@@ -243,7 +247,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       ? localeStrings.strings.call.dtmfDialerMoreButtonLabelOn
       : localeStrings.strings.call.dtmfDialerMoreButtonLabelOff,
     onClick: () => {
-      props.onSetDialpadPage && props.onSetDialpadPage();
+      props.onSetDialpadPage?.();
       setDtmfDialerChecked(!dtmfDialerChecked);
     },
     iconProps: {
@@ -267,7 +271,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
     },
     text: localeStrings.strings.call.phoneCallMoreButtonLabel,
     onClick: () => {
-      props.onMeetingPhoneInfoClick && props.onMeetingPhoneInfoClick();
+      props.onMeetingPhoneInfoClick?.();
     },
     iconProps: {
       iconName: 'PhoneNumberButton',
@@ -307,7 +311,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             },
             isChecked: props.userSetGalleryLayout === 'floatingLocalVideo',
             onClick: () => {
-              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
+              props.onUserSetGalleryLayout?.('floatingLocalVideo');
               setFocusedContentOn(false);
             },
             iconProps: {
@@ -324,7 +328,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             },
             isChecked: props.userSetGalleryLayout === 'speaker',
             onClick: () => {
-              props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('speaker');
+              props.onUserSetGalleryLayout?.('speaker');
               setFocusedContentOn(false);
             },
             iconProps: {
@@ -343,10 +347,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
             onClick: () => {
               if (focusedContentOn === false) {
                 setPreviousLayout(props.userSetGalleryLayout ?? 'floatingLocalVideo');
-                props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+                props.onUserSetGalleryLayout?.('focusedContent');
                 setFocusedContentOn(true);
               } else {
-                props.onUserSetGalleryLayout && props.onUserSetGalleryLayout(previousLayout);
+                props.onUserSetGalleryLayout?.(previousLayout);
                 setFocusedContentOn(false);
               }
             },
@@ -372,7 +376,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       },
       isChecked: props.userSetGalleryLayout === 'default',
       onClick: () => {
-        props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+        props.onUserSetGalleryLayout?.('default');
         setFocusedContentOn(false);
       },
       iconProps: {
@@ -390,7 +394,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       },
       isChecked: props.userSetGalleryLayout === 'largeGallery',
       onClick: () => {
-        props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('largeGallery');
+        props.onUserSetGalleryLayout?.('largeGallery');
         setFocusedContentOn(false);
       },
       iconProps: {
@@ -408,7 +412,7 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       },
       isChecked: props.userSetGalleryLayout === 'togetherMode',
       onClick: () => {
-        props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
+        props.onUserSetGalleryLayout?.('togetherMode');
         setFocusedContentOn(false);
       },
       disabled: !(
@@ -437,10 +441,10 @@ export const DesktopMoreButton = (props: DesktopMoreButtonProps): JSX.Element =>
       isChecked: galleryPositionTop,
       onClick: () => {
         if (galleryPositionTop === false) {
-          props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('horizontalTop');
+          props.onUserSetOverflowGalleryPositionChange?.('horizontalTop');
           setGalleryPositionTop(true);
         } else {
-          props.onUserSetOverflowGalleryPositionChange && props.onUserSetOverflowGalleryPositionChange('Responsive');
+          props.onUserSetOverflowGalleryPositionChange?.('Responsive');
           setGalleryPositionTop(false);
         }
       }

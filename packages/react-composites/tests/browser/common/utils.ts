@@ -9,6 +9,10 @@ import { v1 as generateGUID } from 'uuid';
 // This timeout must be less than the global timeout
 const PER_STEP_TIMEOUT_MS = 5000;
 
+/**
+ *
+ * @returns the per-step timeout in milliseconds.
+ */
 export function perStepLocalTimeout(): number {
   if (process.env.LOCAL_DEBUG) {
     // Disable per-step timeouts for local debugging
@@ -25,7 +29,9 @@ export function perStepLocalTimeout(): number {
  */
 export const dataUiId = (id: string): string => `[data-ui-id="${id}"]`;
 
-/** Selector string to get element by data-testid property */
+/**
+ * Selector string to get element by data-testid property
+ */
 export const dataTestId = (id: string): string => `[data-testid="${id}"]`;
 
 /**
@@ -377,6 +383,11 @@ export const waitForParticipants = async (page: Page, numParticipants: number): 
   );
 };
 
+/**
+ * Encode query parameters into a query string.
+ * @param qArgs - Query arguments to encode.
+ * @returns Encoded query string.
+ */
 export const encodeQueryData = (qArgs?: { [key: string]: string }): string => {
   const qs: Array<string> = [];
   for (const [key, value] of Object.entries(qArgs || {})) {
@@ -413,17 +424,27 @@ export const isTestProfileMobile = (testInfo: TestInfo): boolean => !isTestProfi
  *  Helper function to detect whether a test is for a mobile broswer or not.
  *  TestInfo comes from the playwright config which gives different information about what platform the
  *  test is being run on.
- * */
+ */
 export const isTestProfileDesktop = (testInfo: TestInfo): boolean => {
   const testName = testInfo.project.name.toLowerCase();
   return testName.includes('desktop') ? true : false;
 };
 
+/**
+ *
+ * Helper function to detect whether a test is for a landscape mobile browser or not.
+ * @param testInfo - The test info object from Playwright which contains information about the test being run.
+ * @returns - true if the test is for a landscape mobile browser, false otherwise.
+ */
 export const isTestProfileLandscapeMobile = (testInfo: TestInfo): boolean => {
   const testName = testInfo.project.name.toLowerCase();
   return testName.includes('landscape') ? true : false;
 };
 
+/**
+ * Options for stubbing out the chat message thread.
+ * This is used to make the UI snapshots more stable by removing
+ */
 export interface StubOptions {
   /** Stub out all timestamps in the chat message thread. */
   stubMessageTimestamps?: boolean;

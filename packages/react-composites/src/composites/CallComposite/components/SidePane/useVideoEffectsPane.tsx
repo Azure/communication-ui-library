@@ -65,8 +65,9 @@ export const useVideoEffectsPane = (
         activeVideoEffectError={latestVideoEffectError}
         activeVideoEffectChange={() => {
           // Clear any existing video effects error when the user clicks on a new video effect
-
-          latestVideoEffectError && onDismissError?.(latestVideoEffectError);
+          if (latestVideoEffectError) {
+            onDismissError?.(latestVideoEffectError);
+          }
         }}
         updateFocusHandle={updateFocusHandle}
         backgroundImages={backgroundImages}

@@ -3,6 +3,9 @@
 
 import { Page } from '@playwright/test';
 
+/**
+ * Types for users in the Call and Chat composites.
+ */
 export type ChatUserType = {
   userId: string;
   endpointUrl: string;
@@ -12,6 +15,10 @@ export type ChatUserType = {
   token: string;
 };
 
+/**
+ * Type for users in the Call composite.
+ * This type is used for testing purposes and includes a groupId for grouping users.
+ */
 export type CallUserType = {
   userId: string;
   displayName?: string;
@@ -19,6 +26,10 @@ export type CallUserType = {
   token: string;
 };
 
+/**
+ * Type for users in the Call with Chat composite.
+ * This type includes properties for the userId, endpointUrl, displayName, threadId, topic, groupId, and token.
+ */
 export type CallWithChatUserType = {
   userId: string;
   endpointUrl: string;
@@ -29,6 +40,10 @@ export type CallWithChatUserType = {
   token: string;
 };
 
+/**
+ * Interface for the worker fixture used in tests.
+ * It includes the server URL, an array of users, and an array of pages.
+ */
 export interface WorkerFixture<IdentityType> {
   serverUrl: string;
   users: IdentityType[];

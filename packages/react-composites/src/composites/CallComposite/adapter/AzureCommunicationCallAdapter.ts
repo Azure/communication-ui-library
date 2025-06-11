@@ -1434,7 +1434,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
 
     removed.forEach((participant) => {
       const subscriber = this.participantSubscribers.get(toFlatCommunicationIdentifier(participant.identifier));
-      subscriber && subscriber.unsubscribeAll();
+      if (subscriber) {
+        subscriber.unsubscribeAll();
+      }
       this.participantSubscribers.delete(toFlatCommunicationIdentifier(participant.identifier));
     });
   }
@@ -1549,7 +1551,9 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   private callIdChanged(): void {
-    this.call?.id && this.emitter.emit('callIdChanged', { callId: this.call.id });
+    if (this.call?.id) {
+      this.emitter.emit('callIdChanged', { callId: this.call.id });
+    }
   }
 
   private resetDiagnosticsForwarder(newCall?: CallCommon): void {

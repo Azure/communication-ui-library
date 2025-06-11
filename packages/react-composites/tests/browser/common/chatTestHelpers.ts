@@ -38,6 +38,14 @@ export const chatTestSetup = async ({
   await chatTestSetupWithPerUserArgs({ pages, usersWithArgs, serverUrl });
 };
 
+/**
+ * Load chat users for UI tests with per-user query arguments.
+ * This should be run before each chat test.
+ *
+ * @param pages - The pages to load the chat composite on.
+ * @param usersWithArgs - An array of objects containing the user and optional query arguments.
+ * @param serverUrl - The server URL to load the chat composite from.
+ */
 export const chatTestSetupWithPerUserArgs = async ({
   pages,
   usersWithArgs,
@@ -63,17 +71,35 @@ export const chatTestSetupWithPerUserArgs = async ({
   await Promise.all(pageLoadPromises);
 };
 
+/**
+ *
+ * Sends a message in the chat composite.
+ * @param page - The page to send the message on.
+ * @param message - The message to send.
+ * @returns A promise that resolves when the message is sent.
+ */
 export const sendMessage = async (page: Page, message: string): Promise<void> => {
   await page.bringToFront();
   await page.type(dataUiId(IDS.sendboxTextField), message);
   await page.keyboard.press('Enter');
 };
 
+/**
+ * Waits for a message to be sent successfully.
+ * @param page - The page to wait for the message on.
+ * @returns A promise that resolves when the message is sent.
+ */
 export const waitForSendMessageFailure = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await waitForSelector(page, '[data-ui-status="failed"]');
 };
 
+/**
+ * Waits for a message to be delivered successfully.
+ * @param page - The page to wait for the message on.
+ * @param options - Optional options to specify the state of the message.
+ * @returns A promise that resolves when the message is delivered.
+ */
 export const waitForMessageDelivered = async (
   page: Page,
   options?: { state?: 'visible' | 'attached' }
@@ -82,11 +108,22 @@ export const waitForMessageDelivered = async (
   await waitForSelector(page, '[data-ui-status="delivered"]', options);
 };
 
+/**
+ * Waits for a message to be seen successfully.
+ * @param page - The page to wait for the message on.
+ * @returns A promise that resolves when the message is seen.
+ */
 export const waitForMessageSeen = async (page: Page): Promise<void> => {
   await page.bringToFront();
   await waitForSelector(page, '[data-ui-status="seen"]');
 };
 
+/**
+ * Waits for a message with specific content to appear in the chat.
+ * @param page - The page to wait for the message on.
+ * @param messageContent - The content of the message to wait for.
+ * @returns A promise that resolves when the message with the specified content is found.
+ */
 export const waitForMessageWithContent = async (page: Page, messageContent: string): Promise<void> => {
   await page.bringToFront();
   await waitForSelector(page, `.ui-chat__message__content :text("${messageContent}")`);

@@ -15,7 +15,6 @@ import { buildUrl } from './utils';
  * Creates a page to be tested for each participant in a browser page.
  * To be used in a playwright fixture's 'pages'.
  */
-
 export const usePagePerParticipant = async (
   {
     serverUrl,
@@ -60,7 +59,6 @@ const shouldIgnoreConsoleError = (error: ConsoleMessage): boolean => {
  * Creates a page to be tested for each participant in a browser page.
  * To be used in a playwright fixture's 'pages'.
  */
-
 export const usePagePerParticipantWithCallPermissions = async (
   { browser, serverUrl, users }: PlaywrightWorkerArgs & WorkerFixture<CallUserType>,
   use: (pages: Page[]) => Promise<void>
@@ -75,6 +73,11 @@ export const usePagePerParticipantWithCallPermissions = async (
   await use(pages);
 };
 
+/**
+ * Creates a chat thread and users with the given display names.
+ * Returns an array of ChatUserType objects.
+ * @param displayNames - Array of display names for the users.
+ */
 export const createChatThreadAndUsers = async (displayNames: string[]): Promise<Array<ChatUserType>> => {
   const endpoint = CONNECTION_STRING.replace('endpoint=', '').split(';')[0];
   if (!endpoint) {
@@ -161,6 +164,11 @@ export const createCallUsers =
     await use(users);
   };
 
+/**
+ * Creates a set of call-with-chat test users with chat threads.
+ * To be used in a playwright fixture 'users'.
+ * @param displayNames - Array of display names for the users.
+ */
 export const createCallWithChatObjectsAndUsers = async (
   displayNames: string[]
 ): Promise<Array<CallWithChatUserType>> => {

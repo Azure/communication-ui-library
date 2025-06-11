@@ -364,7 +364,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         itemKey: 'dynamicSelectionKey',
         text: localeStrings.strings.call.moreButtonGalleryFloatingLocalLayoutLabel,
         onItemClick: () => {
-          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('floatingLocalVideo');
+          props.onUserSetGalleryLayout?.('floatingLocalVideo');
           onLightDismiss();
         },
         iconProps: {
@@ -377,7 +377,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
         itemKey: 'focusedContentSelectionKey',
         text: localeStrings.strings.call.moreButtonGalleryFocusedContentLayoutLabel,
         onItemClick: () => {
-          props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('focusedContent');
+          props.onUserSetGalleryLayout?.('focusedContent');
           onLightDismiss();
         },
         iconProps: {
@@ -394,7 +394,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     itemKey: 'defaultSelectionKey',
     text: localeStrings.strings.call.moreButtonGalleryDefaultLayoutLabel,
     onItemClick: () => {
-      props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('default');
+      props.onUserSetGalleryLayout?.('default');
       onLightDismiss();
     },
     iconProps: {
@@ -407,7 +407,7 @@ export const MoreDrawer = (props: MoreDrawerProps): JSX.Element => {
     itemKey: 'togetherModeSelectionKey',
     text: localeStrings.strings.call.moreButtonTogetherModeLayoutLabel,
     onItemClick: () => {
-      props.onUserSetGalleryLayout && props.onUserSetGalleryLayout('togetherMode');
+      props.onUserSetGalleryLayout?.('togetherMode');
       onLightDismiss();
     },
     iconProps: {

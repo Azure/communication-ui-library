@@ -458,7 +458,11 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
 
   const hasJoinedCall = !!(currentPage && hasJoinedCallFn(currentPage, currentCallState ?? 'None'));
   const toggleChat = useCallback(() => {
-    isChatOpen || !hasJoinedCall ? closeChat() : openChat();
+    if (isChatOpen || !hasJoinedCall) {
+      closeChat();
+    } else {
+      openChat();
+    }
   }, [closeChat, hasJoinedCall, isChatOpen, openChat]);
 
   const callWithChatStrings = useCallWithChatCompositeStrings();
