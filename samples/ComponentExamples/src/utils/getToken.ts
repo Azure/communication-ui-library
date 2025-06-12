@@ -1,6 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/**
+ * Represents a user token with its expiration time, identity, and the token string.
+ */
 export type UserToken = {
   expiresOn: number;
   identity: string;

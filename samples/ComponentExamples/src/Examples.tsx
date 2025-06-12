@@ -29,6 +29,12 @@ import { StyledControlBarExample } from './examples/StyledControlBarExample';
 initializeIcons();
 registerIcons({ icons: { ...DEFAULT_COMPOSITE_ICONS } });
 
+/**
+ * This component sets up the chat and call clients, initializes them with a user,
+ * and renders examples of using the components.
+ *
+ * @returns {JSX.Element} A component that renders chat and call examples.
+ */
 export const Examples = (): JSX.Element => {
   const [chatClient, setChatClient] = useState<StatefulChatClient>();
   const [chatThreadClient, setChatThreadClient] = useState<ChatThreadClient>();
