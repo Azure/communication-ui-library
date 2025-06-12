@@ -10,12 +10,25 @@ import {
   ChatThreadProperties
 } from '@azure/communication-chat';
 
+/**
+ * Utility type to create a public interface of a class or object type.
+ */
 export type PublicInterface<T> = { [K in keyof T]: T[K] };
 
+/**
+ * Interface for the ChatClient, which is a public interface of the Azure Communication Chat Client.
+ */
 export type IChatClient = PublicInterface<ChatClient>;
 
+/**
+ * Interface for the ChatThreadClient, which is a public interface of the Azure Communication Chat Thread Client.
+ */
 export type IChatThreadClient = PublicInterface<ChatThreadClient>;
 
+/**
+ * Interface for the ChatThread, which defines the structure of a chat thread
+ * including its properties, participants, messages, and read receipts.
+ */
 export interface Thread extends ChatThreadProperties {
   version: number;
   participants: ChatParticipant[];
@@ -23,6 +36,9 @@ export interface Thread extends ChatThreadProperties {
   readReceipts: ChatMessageReadReceipt[];
 }
 
+/**
+ * Interface for NetworkEventModel, which defines the structure for network event configurations.
+ */
 export interface NetworkEventModel {
   /**
    * Whether events should be delivered asynchronously.
