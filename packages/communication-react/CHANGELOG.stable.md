@@ -1,8 +1,30 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 12 May 2025 20:47:06 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 09 Jun 2025 16:27:48 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.28.0](https://github.com/azure/communication-ui-library/tree/1.28.0)
+
+Mon, 09 Jun 2025 16:27:48 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.27.0...1.28.0)
+
+### Improvements
+- Auto announce completed RTT and caption messages when using narration tools ([PR #5882](https://github.com/azure/communication-ui-library/pull/5882) by 96077406+carocao-msft@users.noreply.github.com)
+- Update to ESLint 9 ([PR #5866](https://github.com/azure/communication-ui-library/pull/5866) by 3941071+emlynmac@users.noreply.github.com)
+- Upgrade supertest for formidable Component Governance ([PR #5834](https://github.com/azure/communication-ui-library/pull/5834) by 77021369+jimchou-dev@users.noreply.github.com)
+- Update Multer for security patch ([PR #5863](https://github.com/azure/communication-ui-library/pull/5863) by 96077406+carocao-msft@users.noreply.github.com)
+- Updated eslint configs for further eslint9 migration ([PR #5879](https://github.com/azure/communication-ui-library/pull/5879) by alkwa@microsoft.com)
+- Updated Custom button injection controls to allow the auto dismissal of a menu when a button is actioned ([PR#5855](https://github.com/Azure/communication-ui-library/pull/5855/files) by edwardlee@microsoft.com)
+
+### Bug Fixes
+- Update build scripts to use paths compatible with all OS's ([PR #5852](https://github.com/azure/communication-ui-library/pull/5852) by dmceachern@microsoft.com)
+- Dark text for raise hand button in dark theme ([PR #5877](https://github.com/azure/communication-ui-library/pull/5877) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fixed in code where using splice inside foreach ([PR #5869](https://github.com/azure/communication-ui-library/pull/5869) by 96077406+carocao-msft@users.noreply.github.com)
+
+### Storybook Changes
+- Remove Beta Banner for PSTN and 1:N ([PR #5840](https://github.com/azure/communication-ui-library/pull/5840) by 96077406+carocao-msft@users.noreply.github.com)
+
 
 ## [1.27.0](https://github.com/azure/communication-ui-library/tree/1.27.0)
 
