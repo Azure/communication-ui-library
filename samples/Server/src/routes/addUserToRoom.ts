@@ -22,7 +22,7 @@ interface AddUserToRoomParam {
  * @param role: role of user as string
  */
 
-router.post('/', async function (req, res, next) {
+router.post('/', async function (req, res) {
   // create RoomsClient
   const roomsClient: RoomsClient = new RoomsClient(getResourceConnectionString());
 

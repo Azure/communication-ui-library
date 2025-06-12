@@ -15,7 +15,7 @@ const TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
  *
  * @returns The new roomId as string
  */
-router.post('/', async function (req, res, next) {
+router.post('/', async function (req, res) {
   const roomsClient: RoomsClient = new RoomsClient(getResourceConnectionString());
 
   const validFrom = new Date();

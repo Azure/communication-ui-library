@@ -9,13 +9,6 @@ export default globalConfig([
   baseConfig,
   testFilesBaseConfig,
   {
-    rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unused-expressions': 'off',
-      'jsdoc/require-jsdoc': 'off'
-    }
-  },
-  {
     linterOptions: {
       reportUnusedDisableDirectives: false
     }

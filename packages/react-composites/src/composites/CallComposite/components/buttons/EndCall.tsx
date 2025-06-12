@@ -67,7 +67,7 @@ export const EndCall = (props: {
 
   const onHangUpConfirm = useCallback(
     (hangUpForEveryone?: boolean) => {
-      onHangUp && onHangUp(hangUpForEveryone);
+      onHangUp?.(hangUpForEveryone);
       toggleConfirm();
     },
     [onHangUp, toggleConfirm]

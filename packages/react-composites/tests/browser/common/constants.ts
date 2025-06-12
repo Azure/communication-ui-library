@@ -3,12 +3,24 @@
 
 import { RealTimeTextCallFeatureState } from '@internal/calling-stateful-client';
 
+/**
+ * Constants for chat topic name.
+ */
 export const CHAT_TOPIC_NAME = 'Cowabunga';
 
+/**
+ * Test participants for chat composite.
+ */
 export const TEST_PARTICIPANTS_CHAT = ['Dorian Gutmann', 'Poppy Bjørgen', 'Dave Pokahl'];
 
+/**
+ * Test participants for call composite.
+ */
 export const TEST_PARTICIPANTS = ['Dorian Gutmann', 'Poppy Bjørgen'];
 
+/**
+ * IDS for various elements in the chat and call composites.
+ */
 export const IDS = {
   sendboxTextField: 'sendbox-textfield',
   participantButtonPeopleMenuItem: 'participant-button-people-menu-item',
@@ -50,6 +62,9 @@ export const IDS = {
   togetherModeStream: 'together-mode-layout'
 };
 
+/**
+ * Language strings for spoken languages and caption languages
+ */
 export const spokenLanguageStrings = [
   'ar-ae',
   'ar-sa',
@@ -93,6 +108,10 @@ export const spokenLanguageStrings = [
   'sk-sk',
   'zh-tw'
 ];
+
+/**
+ * Language strings for caption languages
+ */
 export const captionLanguageStrings = [
   'ar',
   'da',
@@ -127,6 +146,10 @@ export const captionLanguageStrings = [
   'ro',
   'sk'
 ];
+
+/**
+ * Mock state for captions feature
+ */
 export const captionsFeatureState = {
   captions: [
     {
@@ -170,6 +193,9 @@ export const captionsFeatureState = {
   captionsKind: 'Captions' as const
 };
 
+/**
+ * Mock state for Arabic captions feature
+ */
 export const captionsFeatureStateArabic = {
   captions: [
     {
@@ -213,6 +239,9 @@ export const captionsFeatureStateArabic = {
   captionsKind: 'Captions' as const
 };
 
+/**
+ * Mock state for seating positions in Together Mode with a specific size
+ */
 export const togetherModeSeatingPosition_w_1912_h_600 = {
   '8:orgid:Participant-1-id': {
     top: 121.50823529411764,
@@ -276,6 +305,9 @@ export const togetherModeSeatingPosition_w_1912_h_600 = {
   }
 };
 
+/**
+ * Mock state for seating positions in Together Mode with a specific size
+ */
 export const togetherModeSeatingPosition_w_700_h_500 = {
   '8:orgid:Participant-1-id': {
     top: 48.92235294117647,
@@ -339,6 +371,9 @@ export const togetherModeSeatingPosition_w_700_h_500 = {
   }
 };
 
+/**
+ * Mock state for real-time text feature in a call
+ */
 export const realTimeTextFeatureState: RealTimeTextCallFeatureState = {
   realTimeTexts: {
     completedMessages: [

@@ -305,7 +305,9 @@ const deleteInlineImageFromServer = (imageId: string, adapter: ChatAdapter): voi
 /* @conditional-compile-remove(rich-text-editor-image-upload) */
 // This function is used to delete the inline image that existed before editing starts
 const deleteExistingInlineImageForEditBox = (imageId: string, messageId: string, adapter: ChatAdapter): void => {
-  messageId !== SEND_BOX_UPLOADS_KEY_VALUE && deleteInlineImageFromServer(imageId, adapter);
+  if (messageId !== SEND_BOX_UPLOADS_KEY_VALUE) {
+    deleteInlineImageFromServer(imageId, adapter);
+  }
 };
 
 /* @conditional-compile-remove(rich-text-editor-image-upload) */

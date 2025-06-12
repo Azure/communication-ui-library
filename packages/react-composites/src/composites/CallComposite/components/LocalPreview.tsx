@@ -54,7 +54,11 @@ export const LocalPreview = (props: LocalPreviewProps): JSX.Element => {
   const adapter = useAdapter();
 
   const onToggleMic = useCallback(async () => {
-    isLocalMicrophoneEnabled ? adapter.mute() : adapter.unmute();
+    if (isLocalMicrophoneEnabled) {
+      adapter.mute();
+    } else {
+      adapter.unmute();
+    }
   }, [adapter, isLocalMicrophoneEnabled]);
 
   const hasNoSpeakers = !devicesButtonProps.speakers.length;

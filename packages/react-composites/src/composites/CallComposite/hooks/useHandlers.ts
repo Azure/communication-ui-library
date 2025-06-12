@@ -120,7 +120,11 @@ const createCompositeHandlers = memoizeOne(
         await adapter.stopScreenShare();
       },
       onToggleCamera: async (options) => {
-        isCameraOn(adapter.getState()) ? await adapter.stopCamera() : await adapter.startCamera(options);
+        if (isCameraOn(adapter.getState())) {
+          await adapter.stopCamera();
+        } else {
+          await adapter.startCamera(options);
+        }
       },
       onToggleMicrophone: async () => {
         return adapter.getState().call?.isMuted ? await adapter.unmute() : await adapter.mute();

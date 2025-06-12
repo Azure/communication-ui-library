@@ -1165,11 +1165,15 @@ export class TeamsMeetingLinkProvider implements ChatThreadProvider {
       const chatThreadPromise = new Promise<string>((resolve) => {
         this.callAdapterPromise.then((callAdapter) => {
           // Ensure function is idempotent by removing any existing subscription.
-          this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
+          if (this.callAdapterSubscription) {
+            callAdapter.offStateChange(this.callAdapterSubscription);
+          }
 
           this.callAdapterSubscription = (state: CallAdapterState): void => {
             if (state.call?.state === 'Connected' && state.call.info?.threadId) {
-              this.callAdapterSubscription && callAdapter.offStateChange(this.callAdapterSubscription);
+              if (this.callAdapterSubscription) {
+                callAdapter.offStateChange(this.callAdapterSubscription);
+              }
               this.callAdapterSubscription = undefined;
 
               resolve(state.call.info?.threadId);

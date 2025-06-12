@@ -4,7 +4,6 @@
 import { concatStyleSets, ITextField, mergeStyles, Stack } from '@fluentui/react';
 import { ChatMyMessage } from '@fluentui-contrib/react-chat';
 import { mergeClasses } from '@fluentui/react-components';
-import { _formatString } from '@internal/acs-ui-common';
 import { useTheme } from '../../../theming/FluentThemeProvider';
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 /* @conditional-compile-remove(file-sharing-acs) */
@@ -37,7 +36,8 @@ import {
 import {
   getMessageState,
   onRenderCancelIcon,
-  onRenderSubmitIcon
+  onRenderSubmitIcon,
+  getTextValidationErrorMessage
 } from '../../utils/ChatMessageComponentAsEditBoxUtils';
 /* @conditional-compile-remove(file-sharing-acs) */
 import { getMessageWithAttachmentMetadata } from '../../utils/ChatMessageComponentAsEditBoxUtils';
@@ -89,10 +89,16 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     setTextValue(newValue ?? '');
   };
 
-  const textTooLongMessage =
-    messageState === 'too long'
-      ? _formatString(strings.editBoxTextLimit, { limitNumber: `${MAXIMUM_LENGTH_OF_MESSAGE}` })
-      : undefined;
+  const textValidationErrorMessage = useMemo(() => {
+      return getTextValidationErrorMessage(
+        messageState,
+        strings.editBoxTextLimit,
+        strings.editBoxEmptyWarningText)
+    }, [
+      messageState,
+      strings.editBoxTextLimit,
+      strings.editBoxEmptyWarningText,
+    ]);
 
   const iconClassName = useCallback(
     (isHover: boolean) => {
@@ -170,7 +176,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
           }}
           supportNewline={false}
           maxLength={MAXIMUM_LENGTH_OF_MESSAGE}
-          errorMessage={textTooLongMessage}
+          errorMessage={textValidationErrorMessage}
           styles={editBoxStyles}
           /* @conditional-compile-remove(mention) */
           mentionLookupOptions={mentionLookupOptions}

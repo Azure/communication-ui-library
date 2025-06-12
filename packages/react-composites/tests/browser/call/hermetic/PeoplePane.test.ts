@@ -143,7 +143,6 @@ test.describe('Participant list side pane tests', () => {
       localRaisedHand: true,
       remoteRaisedHand: true
     });
-    participantListState.call?.remoteParticipants;
 
     await page.goto(buildUrlWithMockAdapter(serverUrl, participantListState));
     await pageClick(page, dataUiId('call-composite-participants-button'));

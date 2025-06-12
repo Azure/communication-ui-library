@@ -102,7 +102,7 @@ export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.
           e.currentTarget.value = '';
         }}
         onChange={(e) => {
-          onChange && onChange(e.currentTarget.files);
+          onChange?.(e.currentTarget.files);
         }}
       />
     </>

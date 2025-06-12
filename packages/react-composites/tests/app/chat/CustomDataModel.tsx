@@ -51,9 +51,8 @@ const getMessageContentInUppercase = (messageProps: MessageProps): string => {
           return 'CUSTOM MESSAGE';
       }
     default:
-      'CUSTOM MESSAGE';
+      return 'CUSTOM MESSAGE';
   }
-  throw new Error('unreachable code');
 };
 
 /**
