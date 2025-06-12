@@ -8,6 +8,9 @@ import { produce } from 'immer';
 import { ThreadEventEmitter } from './ThreadEventEmitter';
 import { NetworkEventModel, Thread } from './types';
 
+/**
+ * Model is a class that manages threads and their associated events.
+ */
 export class Model {
   private threadMap: Record<string, { thread: Thread; eventEmitter: ThreadEventEmitter }> = {};
   private networkEventModel: NetworkEventModel;
@@ -61,6 +64,10 @@ export class Model {
   }
 }
 
+/**
+ * Bumps the version of a ChatMessage by 1.
+ * @param message The ChatMessage to bump the version of.
+ */
 export const bumpMessageVersion = (message: ChatMessage): void => {
   message.version = `${parseInt(message.version) + 1}`;
 };

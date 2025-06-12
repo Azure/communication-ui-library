@@ -18,6 +18,10 @@ import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
 import { EventEmitter } from 'events';
 import { NetworkEventModel, Thread } from './types';
 
+/**
+ * ThreadEventEmitter is a utility class that manages event listeners for chat events
+ * and emits events to the appropriate listeners based on the CommunicationIdentifier.
+ */
 export class ThreadEventEmitter {
   private emitters: { [key: string]: EventEmitter } = {};
   private eventQueue: EventPayload[] = [];
@@ -111,6 +115,13 @@ interface EventPayload {
   payload: any;
 }
 
+/**
+ * Returns the list of CommunicationIdentifiers that should receive thread events,
+ * excluding the local user.
+ * @param thread The thread to get targets from.
+ * @param localUserId The CommunicationIdentifier of the local user.
+ * @returns An array of CommunicationIdentifiers that should receive thread events.
+ */
 export const getThreadEventTargets = (
   thread: Thread,
   localUserId: CommunicationIdentifier

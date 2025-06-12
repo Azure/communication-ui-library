@@ -58,6 +58,13 @@ export const failingPagedAsyncIterator = <T>(error: Error): PagedAsyncIterableIt
   };
 };
 
+/**
+ *
+ * Converts a ChatParticipant to a SignalingChatParticipant.
+ * @param p ChatParticipant to convert
+ * @returns SignalingChatParticipant
+ * @throws Error if the identifier kind is 'microsoftTeamsApp'
+ */
 export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatParticipant => {
   const identifier = getIdentifierKind(p.id);
 
@@ -74,6 +81,11 @@ export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatPar
   };
 };
 
+/**
+ * Returns the timestamp of the latest message in the chat messages array.
+ * @param messages Array of ChatMessage objects
+ * @returns Date of the latest message or undefined if there are no messages
+ */
 export const latestMessageTimestamp = (messages: ChatMessage[]): Date | undefined => {
   return messages[messages.length - 1]?.createdOn;
 };
