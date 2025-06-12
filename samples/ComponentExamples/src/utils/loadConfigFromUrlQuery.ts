@@ -3,6 +3,10 @@
 
 import { IdentityType } from './utils';
 
+/**
+ * Loads configuration from the URL query parameters.
+ * @returns {IdentityType} An object containing the user identity and chat thread information.
+ */
 export const loadConfigFromUrlQuery = (): IdentityType => {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const { displayName, token, endpointUrl, threadId, userId } = Object.fromEntries(urlSearchParams.entries());

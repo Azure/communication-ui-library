@@ -32,6 +32,11 @@ const CustomChatThread = ({ messages }: { messages: Message[] }): JSX.Element =>
 const topicSelector = (state: ChatClientState, props: { threadId: string }): string | undefined =>
   state.threads[props.threadId]?.properties?.topic;
 
+/**
+ *
+ * UseSelectorExample is a React component that demonstrates how to use the useSelector hook
+ * @returns A React component that uses the useSelector hook to access chat thread properties and messages.
+ */
 export const UseSelectorExample = (): JSX.Element => {
   const chatThreadClient = useChatThreadClient();
   const threadId = chatThreadClient.threadId;

@@ -13,6 +13,12 @@ import {
 } from '@azure/communication-react';
 import React from 'react';
 
+/**
+ * This example demonstrates how to customize the styles of the Call ControlBar buttons.
+ * The buttons are styled with a yellow background color.
+ *
+ * @returns {JSX.Element} A styled ControlBar with custom button styles.
+ */
 export const StyledControlBarExample = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
   const microphoneButtonProps = usePropsFor(MicrophoneButton);

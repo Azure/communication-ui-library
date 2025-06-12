@@ -6,6 +6,9 @@ import { getToken } from './getToken';
 import { fetchEndpointUrl } from './getEndpointUrl';
 import { loadConfigFromUrlQuery } from './loadConfigFromUrlQuery';
 
+/**
+ * IdentityType represents the user identity and chat thread information.
+ */
 export type IdentityType = {
   userId: string;
   token: string;
@@ -16,6 +19,12 @@ export type IdentityType = {
 
 const TOPIC_NAME = 'My Chat Topic';
 
+/**
+ *
+ * Creates a chat thread and adds a user to it.
+ * @param displayName The display name of the user to be added to the chat thread.
+ * @returns promise that resolves to an IdentityType object containing user and thread information.
+ */
 export const createChatThreadAndUsers = async (displayName: string): Promise<IdentityType> => {
   // If there is a config object from Url Query, directly return the config
   const configFromQuery = loadConfigFromUrlQuery();
@@ -46,6 +55,12 @@ export const createChatThreadAndUsers = async (displayName: string): Promise<Ide
   };
 };
 
+/**
+ * Verifies that a parameter exists in the provided parameters object.
+ * Throws an error if the parameter is not found.
+ * @param params The parameters object to check.
+ * @param paramName The name of the parameter to verify.
+ */
 export const verifyParamExists = <T>(params: { [key: string]: T }, paramName: string): void => {
   if (!params[paramName]) {
     throw `${paramName} was not included in the query parameters of the URL.`;
