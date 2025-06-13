@@ -36,8 +36,12 @@ const callStatusSelector = (state: CallClientState, { callId }: { callId: string
   return state.calls[callId]?.state ?? 'None';
 };
 
-// It is recommended that use usePropsFor(VideoGallery) + VideoGallery to render videos all together
-// This example shows how to render one video stream in VideoTile
+/**
+ * This example shows how to render one video stream in VideoTile
+ * and how to start local video stream using CameraButton.
+ *
+ * @returns {JSX.Element} A component that renders a video tile and a camera button.
+ */
 export const RenderVideoTileExample = (): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);
 

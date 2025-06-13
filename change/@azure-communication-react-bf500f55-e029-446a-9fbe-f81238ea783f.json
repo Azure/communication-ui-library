@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "feature",
-  "workstream": "RTT and Captions",
-  "comment": "Auto announce completed RTT and caption messages ",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}

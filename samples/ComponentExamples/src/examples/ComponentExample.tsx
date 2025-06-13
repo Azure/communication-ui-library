@@ -10,6 +10,12 @@ const messageContainerStyle = {
   border: 'solid 2px'
 };
 
+/**
+ * This example shows how to connect components to the StatefulClient using usePropsFor.
+ * It renders a SendBox for sending messages and a MessageThread for displaying messages.
+ *
+ * @returns {JSX.Element} A component that renders SendBox and MessageThread connected to StatefulClient.
+ */
 export const ComponentExample = (): JSX.Element => {
   // usePropsFor will get all the props (including handlers) to run the component
   // Check component list supports usePropsFor() here: https://azure.github.io/communication-ui-library/iframe.html?id=statefulclient-reacthooks-usepropsfor--page&viewMode=story#usepropsfor-chat-app-example

@@ -5,13 +5,4 @@ import {
   testFilesBaseConfig
 } from '../../common/config/ESLint/eslint.config';
 
-export default globalConfig([
-  baseConfig,
-  testFilesBaseConfig,
-  {
-    rules: {
-      'jsdoc/require-jsdoc': 'off'
-    }
-  },
-  baseGlobalIgnores
-]);
+export default globalConfig([baseConfig, testFilesBaseConfig, baseGlobalIgnores]);

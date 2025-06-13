@@ -28,6 +28,9 @@ import { CommunicationIdentifier } from '@azure/communication-common';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
 import { RestError } from '@azure/core-rest-pipeline';
 
+/**
+ * Constant representing an invalid thread ID.
+ */
 export const INVALID_THREAD_ID = 'INVALID_THREAD';
 
 /**
