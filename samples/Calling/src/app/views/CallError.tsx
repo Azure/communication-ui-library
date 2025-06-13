@@ -15,14 +15,20 @@ import {
   videoCameraIconStyle,
   bottomStackFooterStyle
 } from '../styles/EndCall.styles';
-
+/**
+ * Interface for the CallError component props.
+ */
 export interface CallErrorProps {
   title: string;
   reason: string;
   rejoinHandler(): void;
   homeHandler(): void;
 }
-
+/**
+ * CallError component displays an error message when encountering a call error.
+ * @param props - The properties for the CallError component.
+ * @returns A JSX element that renders the CallError component.
+ */
 export const CallError = (props: CallErrorProps): JSX.Element => {
   const goHomePage = 'Go to Homepage';
   const rejoinCall = 'Retry Call';

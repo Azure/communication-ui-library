@@ -4,7 +4,10 @@
 import { Link } from '@fluentui/react';
 import React from 'react';
 import { NoticePage } from './NoticePage';
-
+/**
+ * UnsupportedBrowserPage component renders a notice page indicating that the browser is unsupported.
+ * @returns A JSX element that renders a notice page indicating that the browser is unsupported.
+ */
 export const UnsupportedBrowserPage = (): JSX.Element => {
   window.document.title = 'Unsupported browser';
   return (

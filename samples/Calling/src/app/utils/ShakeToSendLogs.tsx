@@ -200,7 +200,10 @@ const PromptForShakePermission = (props: { onPermissionGranted: () => void }): J
     </Dialog>
   );
 };
-
+/**
+ * ShakeToSendLogs component prompts the user to send logs when they shake their device.
+ * @returns JSX.Element
+ */
 export const ShakeToSendLogs = (): JSX.Element => {
   const disableShakeLogs = !useIsMobile();
   const [hasPermission, setHasPermission] = React.useState(!NEEDS_SHAKE_PERMISSION);
