@@ -18,6 +18,10 @@ import { Stack } from '@fluentui/react';
 import { LocalLanguage20Regular } from '@fluentui/react-icons';
 import React, { useCallback, useState } from 'react';
 
+/**
+ * CallingComponents component that renders the video gallery and control bar for a calling experience.
+ * @returns JSX.Element - The rendered CallingComponents component.
+ */
 export const CallingComponents = (): JSX.Element => {
   const videoGalleryProps = usePropsFor(VideoGallery);
   const cameraProps = usePropsFor(CameraButton);
