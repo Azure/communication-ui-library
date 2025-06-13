@@ -10,7 +10,6 @@ import {
   captionsBannerClassName,
   captionsBannerFullHeightClassName,
   captionsContainerClassName,
-  hiddenAnnouncementClassName,
   loadingBannerFullHeightStyles,
   loadingBannerStyles
 } from './styles/Captions.style';
@@ -27,7 +26,7 @@ import {
 } from './styles/Captions.style';
 import { titleClassName } from './styles/CaptionsSettingsModal.styles';
 import { Text, IconButton } from '@fluentui/react';
-
+import { _CaptionsAndRTTAnnouncer } from './CaptionsAndRTTAnnouncer';
 /**
  * @public
  * information required for each line of caption
@@ -243,10 +242,6 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   const theme = useTheme();
 
   const [expandBannerHeight, setExpandBannerHeight] = useState<boolean>(false);
-  const [announcedRTT, setAnnouncedRTT] = useState<number[]>([]);
-  const [announcedCaption, setAnnouncedCaption] = useState<string[]>([]);
-  const [captionAnnouncementText, setCaptionAnnouncementText] = useState<CaptionsInformation[]>([]);
-  const [rttAnnouncementText, setRTTAnnouncementText] = useState<RealTimeTextInformation[]>([]);
 
   const getTitle = (): string => {
     if (isCaptionsOn && isRealTimeTextOn) {
@@ -314,29 +309,6 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     }
   }, [latestLocalRealTimeText]);
 
-  useEffect(() => {
-    if (realTimeTexts?.completedMessages) {
-      //filter out the messages that have already been announced
-      const rTTMessagesToAnnounce = realTimeTexts.completedMessages.filter(
-        (message) => !announcedRTT.includes(message.id)
-      );
-      if (rTTMessagesToAnnounce.length > 0) {
-        setRTTAnnouncementText(rTTMessagesToAnnounce);
-        setAnnouncedRTT((prev) => [...prev, ...rTTMessagesToAnnounce.map((message) => message.id)]);
-      }
-    }
-    if (captions.length > 0) {
-      // filter out the captions that have already been announced
-      const captionsToAnnounce = captions.filter(
-        (caption) => !announcedCaption.includes(caption.id) && caption.isFinalized
-      );
-      if (captionsToAnnounce.length > 0) {
-        setCaptionAnnouncementText(captionsToAnnounce);
-        setAnnouncedCaption((prev) => [...prev, ...captionsToAnnounce.map((caption) => caption.id)]);
-      }
-    }
-  }, [captions, realTimeTexts?.completedMessages, announcedRTT, announcedCaption]);
-
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>): void => {
     if (event.key === 'Enter') {
       event.preventDefault();
@@ -384,26 +356,12 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
     <>
       {(startCaptionsInProgress || isCaptionsOn || isRealTimeTextOn) && (
         <FocusZone shouldFocusOnMount className={captionsContainerClassName} data-ui-id="captions-banner">
-          {/* ARIA live region */}
-          {(rttAnnouncementText.length > 0 || captionAnnouncementText?.length > 0) && (
-            <div aria-live="assertive" role="alert" aria-atomic="true" className={hiddenAnnouncementClassName}>
-              <span>
-                {rttAnnouncementText.map((text) => (
-                  <span>
-                    {strings.realTimeTextBannerTitle} {text.displayName}: {text.message}
-                  </span>
-                ))}
-              </span>
-              <span>
-                {captionAnnouncementText.map((text) => (
-                  <span>
-                    {strings.captionsOnlyContainerTitle} {text.displayName}: {text.captionText}
-                  </span>
-                ))}
-              </span>
-            </div>
-          )}
-
+          <_CaptionsAndRTTAnnouncer
+            captions={captions}
+            realTimeTexts={realTimeTexts}
+            realTimeTextTitle={strings.realTimeTextBannerTitle ?? ''}
+            captionsTitle={strings.captionsOnlyContainerTitle ?? ''}
+          />
           {(isCaptionsOn || isRealTimeTextOn) && formFactor === 'compact' && (
             <Stack
               horizontal
