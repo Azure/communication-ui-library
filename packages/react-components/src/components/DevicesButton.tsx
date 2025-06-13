@@ -97,6 +97,13 @@ export interface DevicesButtonStrings {
    */
   microphoneMenuTooltip: string;
   /**
+   * Default label for the microphone button in the device selection menu.
+   *
+   * @remarks
+   * This is only used when the default microphone has no label already set.
+   */
+  defaultMicrophoneLabelFallback?: string;
+  /**
    * Tooltip of speaker menu
    */
   speakerMenuTooltip: string;
@@ -186,13 +193,13 @@ export interface DeviceMenuStrings {
   /**
    * Title for Audio Device section in the contextual menu
    *
-   * @remark Used in place of microphoneMenuTitle when speakers can be enumerated
+   * @remarks Used in place of microphoneMenuTitle when speakers can be enumerated
    */
   audioDeviceMenuTitle?: string;
   /**
    * Title for Microphone section in the contextual menu
    *
-   * @remark Used when speakers can be enumerated
+   * @remarks Used when speakers can be enumerated
    */
   microphoneMenuTitle?: string;
   /**
@@ -206,19 +213,26 @@ export interface DeviceMenuStrings {
   /**
    * Tooltip label for Audio Device section in the contextual menu
    *
-   * @remark Used in place of microphoneMenuTooltip when speakers can be enumerated
+   * @remarks Used in place of microphoneMenuTooltip when speakers can be enumerated
    */
   audioDeviceMenuTooltip?: string;
   /**
    * Tooltip label for Microphone section in the contextual menu
    *
-   * @remark Used when speakers can be enumerated
+   * @remarks Used when speakers can be enumerated
    */
   microphoneMenuTooltip?: string;
   /**
    * Tooltip label for Speaker section in the contextual menu
    */
   speakerMenuTooltip?: string;
+  /**
+   * Default label for the microphone button in the device selection menu.
+   *
+   * @remarks
+   * This is only used when the default microphone has no label already set.
+   */
+  defaultMicrophoneLabelFallback?: string;
 }
 
 /**
@@ -323,6 +337,13 @@ export const generateDefaultDeviceMenuProps = (
     const key = speakersAvailable ? 'sectionMicrophone' : 'sectionAudioDevice';
     const title = speakersAvailable ? strings.microphoneMenuTooltip : strings.audioDeviceMenuTooltip;
 
+    const defaultMicrophoneLabelFallback = strings.defaultMicrophoneLabelFallback ?? 'Default';
+
+    // If the default microphone has no name, use the default fallback label. This occurs on Android WebViews.
+    const selectedMicIsDefault = selectedMicrophone.id === microphones[0]?.id;
+    const selectedMicrophoneName =
+      selectedMicIsDefault && !selectedMicrophone.name ? defaultMicrophoneLabelFallback : selectedMicrophone.name;
+
     defaultMenuProps.items.push({
       key: 'microphones',
       itemType: ContextualMenuItemType.Section,
@@ -336,27 +357,40 @@ export const generateDefaultDeviceMenuProps = (
               calloutProps: {
                 preventDismissOnEvent
               },
-              items: microphones.map((microphone) => ({
-                key: microphone.id,
-                text: microphone.name,
-                title: microphone.name,
-                itemProps: {
-                  styles: menuItemStyles
-                },
-                iconProps: {
-                  iconName: 'ContextMenuMicIcon',
-                  styles: { root: { lineHeight: 0 } }
-                },
-                canCheck: true,
-                isChecked: microphone.id === selectedMicrophone?.id,
-                onClick: () => {
-                  if (microphone.id !== selectedMicrophone?.id) {
-                    onSelectMicrophone(microphone);
-                  }
+              items: microphones.map((microphone, i) => {
+                const microphoneIsDefault = i === 0;
+                // If the default microphone has no name, use the default fallback label. This occurs on Android WebViews.
+                const micLabel =
+                  microphoneIsDefault && !microphone.name ? defaultMicrophoneLabelFallback : microphone.name;
+                if (microphoneIsDefault) {
+                  console.log(
+                    'Default microphone is set to:',
+                    micLabel,
+                    'This may be due to the default microphone having no name set.'
+                  );
                 }
-              }))
+                return {
+                  key: microphone.id,
+                  text: micLabel,
+                  title: micLabel,
+                  itemProps: {
+                    styles: menuItemStyles
+                  },
+                  iconProps: {
+                    iconName: 'ContextMenuMicIcon',
+                    styles: { root: { lineHeight: 0 } }
+                  },
+                  canCheck: true,
+                  isChecked: microphone.id === selectedMicrophone?.id,
+                  onClick: () => {
+                    if (microphone.id !== selectedMicrophone?.id) {
+                      onSelectMicrophone(microphone);
+                    }
+                  }
+                };
+              })
             },
-            text: selectedMicrophone.name
+            text: selectedMicrophoneName
           }
         ]
       }
