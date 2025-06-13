@@ -12,6 +12,7 @@ import { CommonCallControlOptions } from '../types/CommonCallControlOptions';
 import { VideoGalleryLayout } from '@internal/react-components';
 import { ReactionResources } from '@internal/react-components';
 import { DtmfDialPadOptions } from '../../CallComposite';
+import { useLocale } from '../../localization';
 
 /** @private */
 export interface PreparedMoreDrawerProps {
@@ -50,8 +51,37 @@ export const PreparedMoreDrawer = (props: PreparedMoreDrawerProps): JSX.Element 
     }),
     [strings]
   );
-  const deviceProps = useSelector(moreDrawerSelector);
+  const { microphones, selectedMicrophone, ...deviceProps } = useSelector(moreDrawerSelector);
   const callHandlers = useHandlers(MoreDrawer);
 
-  return <MoreDrawer {...props} {...deviceProps} {...callHandlers} strings={moreDrawerStrings} />;
+  const defaultMicrophoneLabelFallback =
+    useLocale().component.strings.devicesButton.defaultMicrophoneLabelFallback ?? 'Default';
+  const adjustedMicrophones = useMemo(() => {
+    return microphones?.map((microphone, i) => ({
+      id: microphone.id,
+      name: i === 0 && !microphone.name ? defaultMicrophoneLabelFallback : microphone.name
+    }));
+  }, [defaultMicrophoneLabelFallback, microphones]);
+
+  const adjustedSelectedMicrophone = useMemo(() => {
+    if (!selectedMicrophone) {
+      return undefined;
+    }
+    const selectedMicIsDefault = selectedMicrophone.id === microphones?.[0]?.id;
+    return {
+      id: selectedMicrophone.id,
+      name: selectedMicIsDefault && !selectedMicrophone.name ? defaultMicrophoneLabelFallback : selectedMicrophone.name
+    };
+  }, [defaultMicrophoneLabelFallback, selectedMicrophone]);
+
+  return (
+    <MoreDrawer
+      {...props}
+      {...deviceProps}
+      {...callHandlers}
+      strings={moreDrawerStrings}
+      microphones={adjustedMicrophones}
+      selectedMicrophone={adjustedSelectedMicrophone}
+    />
+  );
 };
