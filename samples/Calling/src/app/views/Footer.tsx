@@ -21,7 +21,10 @@ const copyJoinLink = (): void => {
   inputElement.select();
   document.execCommand('copy');
 };
-
+/**
+ * Footer component displays a footer with an invitation message and a button to copy the join link.
+ * @returns A JSX element that renders the Footer component.
+ */
 export const Footer = (): JSX.Element => {
   return (
     <Stack styles={paneFooterStyles} tokens={paneFooterTokens}>
