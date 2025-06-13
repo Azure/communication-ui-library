@@ -1,8 +1,14 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+/**
+ * Utility functions for managing local storage.
+ */
 export const localStorageAvailable = typeof Storage !== 'undefined';
 
+/**
+ * Enum for local storage keys.
+ */
 export enum LocalStorageKeys {
   DisplayName = 'DisplayName',
   Theme = 'AzureCommunicationUI_Theme'

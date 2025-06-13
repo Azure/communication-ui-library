@@ -38,7 +38,9 @@ import { Dialpad } from '@azure/communication-react';
 import { Backspace20Regular } from '@fluentui/react-icons';
 import { useIsMobile } from '../utils/useIsMobile';
 import { CallAdapterLocator } from '@azure/communication-react';
-
+/**
+ * CallOption defines the different call options available in the home screen.
+ */
 export type CallOption =
   | 'ACSCall'
   | 'TeamsMeeting'
@@ -48,7 +50,9 @@ export type CallOption =
   | '1:N'
   | 'PSTN'
   | 'TeamsAdhoc';
-
+/**
+ * HomeScreenProps defines the properties for the HomeScreen component.
+ */
 export interface HomeScreenProps {
   startCallHandler(callDetails: {
     displayName: string;
@@ -65,7 +69,12 @@ export interface HomeScreenProps {
 }
 
 type ICallChoiceGroupOption = IChoiceGroupOption & { key: CallOption };
-
+/**
+ * HomeScreen component is the main entry point for the application.
+ * It allows users to start or join a call with various options.
+ * @param props - The properties for the HomeScreen component.
+ * @returns A JSX element that renders the HomeScreen component.
+ */
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const imageProps = { src: heroSVG.toString() };
   const headerTitle = props.joiningExistingCall ? 'Join Call' : 'Start or join a call!';

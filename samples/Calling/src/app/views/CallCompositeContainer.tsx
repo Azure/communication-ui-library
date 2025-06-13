@@ -9,9 +9,15 @@ import { useSwitchableFluentTheme } from '../theming/SwitchableFluentThemeProvid
 import { useIsMobile } from '../utils/useIsMobile';
 import { isIOS } from '../utils/utils';
 import { CallScreenProps } from './CallScreen';
-
+/**
+ * CallCompositeContainerProps defines the props for the CallCompositeContainer component.
+ */
 export type CallCompositeContainerProps = CallScreenProps & { adapter?: CommonCallAdapter };
-
+/**
+ * CallCompositeContainer is a React component that renders the CallComposite with the provided adapter.
+ * @param props - The properties for the CallCompositeContainer component, including the adapter.
+ * @returns A JSX element that renders the CallComposite.
+ */
 export const CallCompositeContainer = (props: CallCompositeContainerProps): JSX.Element => {
   const { adapter } = props;
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();

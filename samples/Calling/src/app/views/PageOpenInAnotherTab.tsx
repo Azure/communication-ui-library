@@ -4,7 +4,10 @@
 import { Link } from '@fluentui/react';
 import React from 'react';
 import { NoticePage } from './NoticePage';
-
+/**
+ * PageOpenInAnotherTab component renders a notice page indicating that the app is already open in another tab.
+ * @returns A JSX element that renders a notice page indicating that the app is already open in another tab.
+ */
 export const PageOpenInAnotherTab = (): JSX.Element => {
   window.document.title = 'App already open in another tab';
   return (

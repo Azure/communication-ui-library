@@ -37,7 +37,10 @@ export const getGroupIdFromUrl = (): GroupLocator | undefined => {
   const gid = urlParams.get('groupId');
   return gid ? { groupId: gid } : undefined;
 };
-
+/**
+ * Create a new group id.
+ * @return groupId in the format of a GUID
+ */
 export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
 
 /**
@@ -108,7 +111,9 @@ export const getRoomIdFromUrl = (): RoomCallLocator | undefined => {
   const roomId = urlParams.get('roomId');
   return roomId ? { roomId } : undefined;
 };
-
+/**
+ * Get outbound participants.
+ */
 export const getOutboundParticipants = (outboundParticipants?: string[]): StartCallIdentifier[] | undefined => {
   if (outboundParticipants && outboundParticipants.length > 0) {
     const participants: StartCallIdentifier[] = outboundParticipants.map((participantId) => {
@@ -120,33 +125,52 @@ export const getOutboundParticipants = (outboundParticipants?: string[]): StartC
   return undefined;
 };
 
-/*
- * TODO:
- *  Remove this method once the SDK improves error handling for unsupported browser.
+/**
+ * Check if the device is an iPhone and not using Safari.
+ * Remove this method once the SDK improves error handling for unsupported browser.
+ * @returns true if the device is an iPhone and not using Safari, false otherwise.
  */
 export const isOnIphoneAndNotSafari = (): boolean => {
   const userAgent = navigator.userAgent;
-
   // Chrome uses 'CriOS' in user agent string and Firefox uses 'FxiOS' in user agent string.
   return userAgent.includes('iPhone') && (userAgent.includes('FxiOS') || userAgent.includes('CriOS'));
 };
-
+/**
+ * Check if the device is in landscape mode.
+ * @returns true if the device is in landscape mode, false otherwise.
+ */
 export const isLandscape = (): boolean => window.innerWidth < window.innerHeight;
-
+/**
+ * Navigate to the home page by removing query parameters from the current URL.
+ */
 export const navigateToHomePage = (): void => {
   window.location.href = window.location.href.split('?')[0] ?? window.location.href;
 };
-
+/**
+ * Get the web app title from the document title.
+ */
 export const WEB_APP_TITLE = document.title;
 
 declare let __BUILDTIME__: string; // Injected by webpack
+/**
+ * Build time of the application.
+ */
 export const buildTime = __BUILDTIME__;
 
 declare let __CALLINGVERSION__: string; // Injected by webpack
+/**
+ * Version of the Calling SDK.
+ */
 export const callingSDKVersion = __CALLINGVERSION__;
 
 declare let __COMMUNICATIONREACTVERSION__: string; //Injected by webpack
+/**
+ * Version of the Communication React SDK.
+ */
 export const communicationReactSDKVersion = __COMMUNICATIONREACTVERSION__;
 
 declare let __COMMITID__: string; //Injected by webpack
+/**
+ * Commit ID of the application.
+ */
 export const commitID = __COMMITID__;

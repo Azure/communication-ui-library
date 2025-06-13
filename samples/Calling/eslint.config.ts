@@ -12,11 +12,6 @@ import { globalIgnores } from 'eslint/config';
 export default globalConfig([
   baseConfig,
   testFilesBaseConfig,
-  {
-    rules: {
-      'jsdoc/require-jsdoc': 'off'
-    }
-  },
   baseGlobalIgnores,
   globalIgnores(['.babel*', 'webpack*'])
 ]);

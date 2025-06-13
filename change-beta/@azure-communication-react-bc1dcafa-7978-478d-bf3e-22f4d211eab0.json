@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "Eslint",
+  "comment": "Fix Eslint errors for calling sample",
+  "packageName": "@azure/communication-react",
+  "email": "96077406+carocao-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
