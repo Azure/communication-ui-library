@@ -29,7 +29,10 @@ import { CallManager } from './components/CallManager';
 
 initializeIcons();
 registerIcons({ icons: DEFAULT_COMPONENT_ICONS });
-
+/**
+ * The main App component that initializes the call client and manages the call state.
+ * @returns  {JSX.Element} The rendered App component.
+ */
 function App(): JSX.Element {
   const imageProps = { src: heroSVG.toString() };
   const [userIdentifier, setUserIdentifier] = useState<CommunicationUserIdentifier>();

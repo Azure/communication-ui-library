@@ -16,14 +16,20 @@ import { IncomingCallStack, usePropsFor } from '@azure/communication-react';
 import { PrimaryButton, Stack, TextField, Image } from '@fluentui/react';
 import React, { useState } from 'react';
 import { imgStyle } from '../styles/HomeScreen.styles';
-
+/**
+ * HomeScreenProps interface defines the properties for the HomeScreen component.
+ */
 export interface HomeScreenProps {
   callAgent: CallAgent;
   headerImageProps?: {
     src?: string;
   };
 }
-
+/**
+ * HomeScreen component that allows users to start a call by entering user IDs or phone numbers.
+ * @param props - The properties for the HomeScreen component.
+ * @returns {JSX.Element} The rendered HomeScreen component.
+ */
 export const HomeScreen = (props: HomeScreenProps): JSX.Element => {
   const { callAgent, headerImageProps } = props;
   const [targetParticipants, setTargetParticipants] = useState<CommunicationIdentifier[]>();
