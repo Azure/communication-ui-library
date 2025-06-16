@@ -3,4 +3,4 @@
 
 // GENERATED FILE. DO NOT EDIT MANUALLY.
 
-module.exports = '1.28.0-beta.1';
+module.exports = '1.28.0-beta.2';
