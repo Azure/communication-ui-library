@@ -22,7 +22,11 @@ const TEXTFIELD_EXCEEDS_MAX_CHARS = `Name cannot exceed ${DISPLAY_NAME_MAX_CHARS
 const hasValidLength = (name: string): boolean => {
   return name.length <= DISPLAY_NAME_MAX_CHARS;
 };
-
+/**
+ * DisplayNameField component allows users to input their display name.
+ * @param props - The properties for the DisplayNameField component.
+ * @returns A JSX element that renders the DisplayNameField component.
+ */
 export const DisplayNameField = (props: DisplayNameFieldProps): JSX.Element => {
   const { setName, setEmptyWarning, isEmpty, defaultName } = props;
   const [isInvalidLength, setIsInvalidLength] = useState<boolean>(!hasValidLength(defaultName ?? ''));

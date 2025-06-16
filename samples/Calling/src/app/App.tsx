@@ -41,6 +41,10 @@ initializeIcons();
 
 type AppPages = 'home' | 'call';
 
+/**
+ * The main app component that renders the home screen or call screen based on the current page.
+ * It fetches user credentials from the server and manages the state of the application.
+ */
 const App = (): JSX.Element => {
   const [page, setPage] = useState<AppPages>('home');
   // User credentials to join a call with - these are retrieved from the server

@@ -14,7 +14,9 @@ import {
 import { DeclarativeCallAgent, DeclarativeTeamsCallAgent } from '@azure/communication-react';
 import { Stack, Image, Text, TextField, PrimaryButton } from '@fluentui/react';
 import { imgStyle } from '../styles/HomeScreen.styles';
-
+/**
+ * LoginProps interface defines the properties for the LoginScreen component.
+ */
 export interface LoginProps {
   onSetUserIdentifier: (user: CommunicationUserIdentifier) => void;
   onSetStatefulClient: (client: StatefulCallClient) => void;
@@ -25,7 +27,11 @@ export interface LoginProps {
     src?: string;
   };
 }
-
+/**
+ * LoginScreen component that allows users to log in with either Azure Communication Services (ACS) or Microsoft Teams identity.
+ * @param props - The properties for the LoginScreen component.
+ * @returns {JSX.Element} The rendered LoginScreen component.
+ */
 export const LoginScreen = (props: LoginProps): JSX.Element => {
   const {
     onSetCallAgent,

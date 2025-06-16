@@ -62,7 +62,10 @@ export const fetchCallQueueId = async (): Promise<string> => {
   }
   throw new Error('Invalid callQueueId Response');
 };
-
+/**
+ * Get Auto Attendant Id.
+ * @returns Id of auto attendant as a string
+ */
 export const fetchAutoAttendantId = async (): Promise<string> => {
   const getRequestOptions = {
     method: 'GET'
@@ -91,7 +94,10 @@ export const getGroupIdFromUrl = (): GroupLocator | undefined => {
   const gid = urlParams.get('groupId');
   return gid ? { groupId: gid } : undefined;
 };
-
+/**
+ * Generate a new groupId.
+ * @returns A GroupLocator object with a newly generated groupId.
+ */
 export const createGroupId = (): GroupLocator => ({ groupId: generateGUID() });
 
 /**
@@ -103,9 +109,8 @@ export const getTeamsLinkFromUrl = (): TeamsMeetingLinkLocator | undefined => {
   return teamsLink ? { meetingLink: teamsLink } : undefined;
 };
 
-/*
- * TODO:
- *  Remove this method once the SDK improves error handling for unsupported browser.
+/**
+ * Remove this method once the SDK improves error handling for unsupported browser.
  */
 export const isOnIphoneAndNotSafari = (): boolean => {
   const userAgent = navigator.userAgent;
@@ -113,14 +118,21 @@ export const isOnIphoneAndNotSafari = (): boolean => {
   // Chrome uses 'CriOS' in user agent string and Firefox uses 'FxiOS' in user agent string.
   return userAgent.includes('iPhone') && (userAgent.includes('FxiOS') || userAgent.includes('CriOS'));
 };
-
+/**
+ * Check if the device is in landscape mode.
+ * @returns boolean indicating if the device is in landscape mode.
+ */
 export const isLandscape = (): boolean => window.innerWidth < window.innerHeight;
-
+/**
+ * Navigate to the home page by removing any query parameters from the current URL.
+ */
 export const navigateToHomePage = (): void => {
   const urlToNavigate = window.location.href.split('?')[0];
   if (urlToNavigate) {
     window.location.href = urlToNavigate;
   }
 };
-
+/**
+ * The title of the web application.
+ */
 export const WEB_APP_TITLE = document.title;

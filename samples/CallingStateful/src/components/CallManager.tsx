@@ -4,7 +4,9 @@
 import { Call, TeamsCall } from '@azure/communication-calling';
 import { IStackStyles, PrimaryButton, Stack, Text, Theme, useTheme } from '@fluentui/react';
 import React, { useEffect, useState } from 'react';
-
+/**
+ * CallManager component displays the list of calls and allows users to manage them.
+ */
 export interface CallManagerProps {
   onSetResume: (call: Call | TeamsCall) => void;
   calls: Call[] | TeamsCall[];
@@ -12,7 +14,11 @@ export interface CallManagerProps {
   onSetHold: (call: Call | TeamsCall) => void;
   onEndCall: (call: Call | TeamsCall) => void;
 }
-
+/**
+ * CallManager component that displays the active call and other calls in progress.
+ * @param props - The properties for the CallManager component.
+ * @returns {JSX.Element} The rendered CallManager component.
+ */
 export const CallManager = (props: CallManagerProps): JSX.Element => {
   const { onSetResume, calls, onSetHold, activeCall } = props;
   const theme = useTheme();
