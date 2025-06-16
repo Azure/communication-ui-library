@@ -101,6 +101,7 @@ class ProxyTeamsCallAgent extends ProxyCallAgentCommon implements ProxyHandler<D
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof CallAgentCommon>(target: TeamsCallAgent, prop: P): any {
     return super.getCommon(target, prop);
   }

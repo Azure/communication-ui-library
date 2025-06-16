@@ -17,6 +17,7 @@ export type DeclarativeTeamsCall = TeamsCall & {
 };
 
 class ProxyTeamsCall extends ProxyCallCommon implements ProxyHandler<TeamsCall> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof TeamsCall>(target: TeamsCall, prop: P): any {
     switch (prop) {
       /* @conditional-compile-remove(teams-identity-support-beta) */
@@ -28,8 +29,10 @@ class ProxyTeamsCall extends ProxyCallCommon implements ProxyHandler<TeamsCall> 
         }, 'TeamsCall.addParticipant');
       }
       default:
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return super.get(target, prop as any);
     }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return super.get(target, prop as any);
   }
 }

@@ -168,12 +168,15 @@ export abstract class ProxyCallAgentCommon {
   protected abstract agentSubscribe(agent: CallAgentCommon, args: unknown[]): void;
   protected abstract agentUnsubscribe(agent: CallAgentCommon, args: unknown[]): void;
 
-  // We can't directly override get function because it is proxied,
-  // Add a getCommon function and call it in child class
+  /*
+   * We can't directly override get function because it is proxied,
+   * Add a getCommon function and call it in child class
+   */
   protected getCommon<AgentType extends CallAgent | TeamsCallAgent, P extends keyof CallAgent>(
     target: AgentType,
     prop: P | 'incomingCalls'
   ): any {
+    // eslint-disable-line @typescript-eslint/no-explicit-any
     switch (prop) {
       case 'startCall': {
         return this._context.withErrorTeedToState((...args: Parameters<AgentType['startCall']>): CallCommon => {

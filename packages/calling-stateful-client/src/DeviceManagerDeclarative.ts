@@ -196,6 +196,7 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     this.setDeviceManager();
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof DeviceManager>(target: DeviceManager, prop: P): any {
     switch (prop) {
       case 'getCameras': {

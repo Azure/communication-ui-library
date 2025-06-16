@@ -20,6 +20,7 @@ export class ProxyVideoStreamRendererView implements ProxyHandler<VideoStreamRen
     this._streamId = _streamId;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof VideoStreamRendererView>(target: VideoStreamRendererView, prop: P): any {
     switch (prop) {
       case 'updateScalingMode': {
