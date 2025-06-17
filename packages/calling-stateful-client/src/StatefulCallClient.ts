@@ -427,13 +427,6 @@ export const createStatefulCallClientWithDeps = (
       disposeView(context, internalContext, callId, participantIdKind, stream);
     }
   });
-  Object.defineProperty(callClient, 'dispose', {
-    configurable: false,
-    value: async () => {
-      // Dispose of the call agent if it exists.
-      await callClient.dispose();
-    }
-  });
 
   const newStatefulCallClient = new Proxy(
     callClient,
