@@ -3015,6 +3015,7 @@ export type DevicesButtonSelector = (state: CallClientState, props: CallingBaseS
 export interface DevicesButtonStrings {
     cameraMenuTitle: string;
     cameraMenuTooltip: string;
+    defaultMicrophoneLabelFallback?: string;
     label: string;
     microphoneMenuTitle: string;
     microphoneMenuTooltip: string;
