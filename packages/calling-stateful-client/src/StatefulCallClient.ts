@@ -173,6 +173,14 @@ export interface StatefulCallClient extends CallClient {
    * @public
    */
   createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
+
+  /**
+   * disposes the CallClient and all its resources.
+   * - This will also dispose the CallAgent and DeviceManager if they were created.
+   * @public
+   * @returns A promise that resolves when the CallClient is disposed.
+   */
+  dispose(): Promise<void>;
 }
 
 /**
@@ -279,19 +287,13 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
           return Reflect.get(target, prop);
         }, 'CallClient.feature');
       }
-      default:
-        return Reflect.get(target, prop);
-    }
-  }
-
-  /* @conditional-compile-remove(calling-beta-sdk) */
-  public set<P extends keyof CallClient>(target: CallClient, prop: P): any {
-    switch (prop) {
       case 'dispose': {
         return this._context.withAsyncErrorTeedToState(async () => {
           await target.dispose();
         }, 'CallClient.dispose');
       }
+      default:
+        return Reflect.get(target, prop);
     }
   }
 }
@@ -422,6 +424,13 @@ export const createStatefulCallClientWithDeps = (
       }
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
       disposeView(context, internalContext, callId, participantIdKind, stream);
+    }
+  });
+  Object.defineProperty(callClient, 'dispose', {
+    configurable: false,
+    value: async () => {
+      // Dispose of the call agent if it exists.
+      await callClient.dispose();
     }
   });
 
