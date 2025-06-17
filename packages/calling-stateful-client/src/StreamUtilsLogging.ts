@@ -16,7 +16,7 @@ function _logDisposeStreamEvent(
   eventName: EventNames,
   streamLogInfo: {
     callId?: string;
-    participantKey?: any;
+    participantKey?: string;
     streamId?: number | string;
     streamType?: MediaStreamType;
     streamEventType?: string;
@@ -96,7 +96,7 @@ function _logCreateStreamEvent(
   eventName: string,
   streamLogInfo: {
     callId?: string;
-    participantKey?: any;
+    participantKey?: string;
     streamId?: number | string;
     streamType?: MediaStreamType;
     streamEventType?: string;
@@ -212,7 +212,7 @@ export function _logStreamEvent(
   eventName: EventNames,
   streamLogInfo: {
     callId?: string;
-    participantKey?: any;
+    participantKey?: string;
     streamId?: number | string;
     streamType?: MediaStreamType;
     streamEventType?: string;

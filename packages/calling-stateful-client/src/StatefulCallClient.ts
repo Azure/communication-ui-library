@@ -212,6 +212,7 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     this._internalContext = internalContext;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'createCallAgent': {
