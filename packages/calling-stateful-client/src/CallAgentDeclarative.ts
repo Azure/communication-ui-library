@@ -97,6 +97,7 @@ class ProxyCallAgent extends ProxyCallAgentCommon implements ProxyHandler<Declar
     throw Error('Unreachable code, DeclarativeCallAgent.agentUnsubscribe must be called with an ACS callAgent.');
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof CallAgent>(target: CallAgent, prop: P): any {
     return super.getCommon(target, prop);
   }

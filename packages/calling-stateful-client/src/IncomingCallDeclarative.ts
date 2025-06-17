@@ -14,6 +14,7 @@ export class ProxyIncomingCall implements ProxyHandler<IncomingCall> {
     this._context = context;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof IncomingCall>(target: IncomingCall, prop: P): any {
     switch (prop) {
       case 'accept': {
