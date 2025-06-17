@@ -29,6 +29,7 @@ export class ReactionSubscriber {
     this._reaction.off('reaction', this.onReactionEvent);
   };
 
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
   private onReactionEvent = (event: any): void => {
     this._context.setReceivedReactionFromParticipant(this._callIdRef.callId, event.identifier, event.reactionMessage);
   };

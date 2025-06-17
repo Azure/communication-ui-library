@@ -18,6 +18,7 @@ export interface DeclarativeCall extends Call {
 }
 
 class ProxyCall extends ProxyCallCommon implements ProxyHandler<Call> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof Call>(target: Call, prop: P): any {
     switch (prop) {
       case 'addParticipant': {
@@ -28,6 +29,7 @@ class ProxyCall extends ProxyCallCommon implements ProxyHandler<Call> {
         }, 'Call.addParticipant');
       }
       default:
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return super.get(target, prop as any);
     }
   }
