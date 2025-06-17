@@ -3,6 +3,14 @@
 <!-- This log was last generated on Mon, 26 May 2025 21:03:25 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+## [1.28.0-beta.2](https://github.com/azure/communication-ui-library/tree/1.28.0-beta.2)
+
+Tues, 17 June 2025 17:03:25 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.28.0-beta.1...1.28.0-beta.2)
+
+### Bug Fixes
+- Add announcer for completed captions and real time text messages([PR #5882](https://github.com/Azure/communication-ui-library/pull/5882) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix for permissions API on Android WebView ([PR #5908](https://github.com/Azure/communication-ui-library/pull/5908) by jaburnsi@microsoft.com)
 
 ## [1.28.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.28.0-beta.1)
 
