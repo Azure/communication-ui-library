@@ -173,6 +173,12 @@ export interface StatefulCallClient extends CallClient {
    * @public
    */
   createTeamsCallAgent(...args: Parameters<CallClient['createTeamsCallAgent']>): Promise<DeclarativeTeamsCallAgent>;
+
+  /**
+   * Disposes the CallClient and all its resources.
+   * @public
+   */
+  dispose(): Promise<void>;
 }
 
 /**
@@ -284,7 +290,6 @@ class ProxyCallClient implements ProxyHandler<CallClient> {
     }
   }
 
-  /* @conditional-compile-remove(calling-beta-sdk) */
   public set<P extends keyof CallClient>(target: CallClient, prop: P): any {
     switch (prop) {
       case 'dispose': {
@@ -422,6 +427,12 @@ export const createStatefulCallClientWithDeps = (
       }
       const participantIdKind = participantId ? getIdentifierKind(participantId) : undefined;
       disposeView(context, internalContext, callId, participantIdKind, stream);
+    }
+  });
+  Object.defineProperty(callClient, 'dispose', {
+    configurable: false,
+    value: async () => {
+      await callClient.dispose();
     }
   });
 

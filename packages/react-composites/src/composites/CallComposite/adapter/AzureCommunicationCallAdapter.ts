@@ -667,7 +667,6 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
     this.resetDiagnosticsForwarder();
     this.callClient.offStateChange(this.onClientStateChange);
     this.callAgent.dispose();
-    /* @conditional-compile-remove(calling-beta-sdk) */
     this.callClient.dispose();
   }
 
