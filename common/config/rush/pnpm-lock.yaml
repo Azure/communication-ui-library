@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   '@azure/communication-calling':
-    specifier: 1.36.3-beta.1
-    version: 1.36.3-beta.1
+    specifier: 1.37.1-beta.1
+    version: 1.37.1-beta.1
   '@azure/communication-calling-effects':
     specifier: 1.1.4
     version: 1.1.4
@@ -168,8 +168,8 @@ packages:
       - supports-color
     dev: false
 
-  /@azure/communication-calling@1.36.3-beta.1:
-    resolution: {integrity: sha512-F+0MmqCpekrap5rM+chHZmagtEIJ5rpEin8MovHIuxnu8Z6ZNB/Th5+qlj7TwJGqghaC0+Sg0Klhxz65al2Wig==}
+  /@azure/communication-calling@1.37.1-beta.1:
+    resolution: {integrity: sha512-M9UdieOnNRny7WzXr76FB3eIvTjObLez4Q0cQHa2ek44YWIpdFDwLRCfQyhGhq8YVh0RyuTNYRlsjA/lOhCfyw==}
     dependencies:
       '@azure/communication-common': 2.3.2-beta.1
       '@azure/logger': 1.2.0
@@ -17947,7 +17947,7 @@ packages:
     dev: false
 
   file:projects/acs-ui-javascript-loaders.tgz:
-    resolution: {integrity: sha512-rHY68wCwkkFAwLIVkbAuDBku3OviAKu17LoyW9q491/43k+SwbRtwO9AqvT2F64DFw8TZ89tZlDWKgzNNlMb6w==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
+    resolution: {integrity: sha512-yNqXmgtgViH7v0V3Wu6pwOLKoGrDcmjMVd2YL5EpkAuHEcxOjJbvKOUsKyq081X82YglvjJreNOpW5tgYYx+Fw==, tarball: file:projects/acs-ui-javascript-loaders.tgz}
     name: '@rush-temp/acs-ui-javascript-loaders'
     version: 0.0.0
     dependencies:
@@ -17998,11 +17998,11 @@ packages:
     dev: false
 
   file:projects/calling-component-bindings.tgz:
-    resolution: {integrity: sha512-eYxWlGORUmcw+ej6jDmdwGUAjtOmDTZFzeEk6niO4GTdNwWQse0Ltdiksd6zqngymdfw16i61ZiXBu3KNbA0GA==, tarball: file:projects/calling-component-bindings.tgz}
+    resolution: {integrity: sha512-gqowpoRMkZanPQJwCXsojrOEY4lFs8Ni5IkAetxOkGDMoaNB1pMsefnnnBoc1THVsO7OqsVx+NqoO1l4Fr8r2Q==, tarball: file:projects/calling-component-bindings.tgz}
     name: '@rush-temp/calling-component-bindings'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-calling-effects': 1.1.4
       '@azure/communication-common': 2.3.2-beta.1
       '@babel/cli': 7.27.2(@babel/core@7.27.4)
@@ -18049,11 +18049,11 @@ packages:
     dev: false
 
   file:projects/calling-stateful-client.tgz:
-    resolution: {integrity: sha512-1eT9OqDeop+cquaUWNauHJKIay7me9fVyqN84t/ZH0oNn+vKbosHefksVhRyri2M+885P9XnVbY9T/M15PU9kg==, tarball: file:projects/calling-stateful-client.tgz}
+    resolution: {integrity: sha512-n3uzoYXdZPS6CIeBcmZzQvLG/wnqsjeQ12jU2ZyoA0DULJlpcDYLxsZ198JAQoKQOr/FEsf+9PbkngHZ599/xQ==, tarball: file:projects/calling-stateful-client.tgz}
     name: '@rush-temp/calling-stateful-client'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-common': 2.3.2-beta.1
       '@azure/core-auth': 1.9.0
       '@azure/logger': 1.2.0
@@ -18102,12 +18102,12 @@ packages:
     dev: false
 
   file:projects/calling-stateful-samples.tgz:
-    resolution: {integrity: sha512-C3ZkXP9kKC5a3KvJP4POkIOfmIgG7imBOUBa8VemPl8EAXRRyE/PQ+ys4eWeL4/FTeUctFUIE4J4h5D/lGTgYw==, tarball: file:projects/calling-stateful-samples.tgz}
+    resolution: {integrity: sha512-phZWP/3vdFd5bl6ROdMWifiuvOf4zIFAi9m82juJ+ET0LkTxhWU5IOCcz0NyawoBawxx2Uof4vUdjE8hTJO/QQ==, tarball: file:projects/calling-stateful-samples.tgz}
     name: '@rush-temp/calling-stateful-samples'
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-common': 2.3.2-beta.1
       '@azure/communication-identity': 1.3.1
       '@azure/logger': 1.2.0
@@ -18202,12 +18202,12 @@ packages:
     dev: false
 
   file:projects/calling.tgz:
-    resolution: {integrity: sha512-e0S1Evu2rhos7VF3vHu2Y+FdS3RU3beffFff9icdOwTiaoH318XT3Oj+8NRajIrX5EaGadxSOA6vnN0Zsn3APg==, tarball: file:projects/calling.tgz}
+    resolution: {integrity: sha512-8SajAHv2h2/redYci9REGqbcSoXIXZatiqhnkh8sOlmjmSdMqnoNDGKldiApqEmPUosjxn80V62fOqt8v+hyZg==, tarball: file:projects/calling.tgz}
     name: '@rush-temp/calling'
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-common': 2.3.2-beta.1
       '@azure/communication-identity': 1.3.1
       '@azure/logger': 1.2.0
@@ -18302,12 +18302,12 @@ packages:
     dev: false
 
   file:projects/callwithchat.tgz:
-    resolution: {integrity: sha512-TSWHAcC3QVKw9XBKp0oN7fcmCANztjIm7izOp4JJ4Qsm6qSKjRN9nEMt/dCichA/6evS537KJ2e4CsEqJNQieQ==, tarball: file:projects/callwithchat.tgz}
+    resolution: {integrity: sha512-x+utYHb+/wADgmm+O520X1YDMLKb7NZ3lQeLARJu0QrF/cCIg4wctAO7ueImMcuApocS95SK0NgdeimjU/MRYg==, tarball: file:projects/callwithchat.tgz}
     name: '@rush-temp/callwithchat'
     version: 0.0.0
     dependencies:
       '@azure/abort-controller': 1.1.0
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-chat': 1.6.0-beta.7
       '@azure/communication-common': 2.3.2-beta.1
       '@azure/communication-identity': 1.3.1
@@ -18400,7 +18400,7 @@ packages:
     dev: false
 
   file:projects/chat-component-bindings.tgz:
-    resolution: {integrity: sha512-izhKMgPH12iYparW0mlL7JGvC9dYU3WxgWEG244reTSYNPT5rJQQ4OPct4iJvJqq42pMPGJYmsC5gmTS2t4xSg==, tarball: file:projects/chat-component-bindings.tgz}
+    resolution: {integrity: sha512-a1SKFqG2bn62ucKkQJ5VjzpTp9EO3Pml5zu8z/utlSEaW9gaGLWqHRcJrKnBp4lJOjm2B3kkFiOKpxw6irsrFg==, tarball: file:projects/chat-component-bindings.tgz}
     name: '@rush-temp/chat-component-bindings'
     version: 0.0.0
     dependencies:
@@ -18451,7 +18451,7 @@ packages:
     dev: false
 
   file:projects/chat-stateful-client.tgz:
-    resolution: {integrity: sha512-LFux+XvDFGplw/REVbpim2wRPBvOr19C2lkD1afv8pY1Y2/CvQHjlYmzH272KdQPDeSF9qK+LMqUGcK+B6/cYA==, tarball: file:projects/chat-stateful-client.tgz}
+    resolution: {integrity: sha512-E4nEMsKxIX33eYDqX4XFvOILCZeonS7YCeRbvrGsJS4pd2t5eO0B/lVxGzpgUCzOfSU58ezU3wvuvAGcx94e9A==, tarball: file:projects/chat-stateful-client.tgz}
     name: '@rush-temp/chat-stateful-client'
     version: 0.0.0
     dependencies:
@@ -18506,7 +18506,7 @@ packages:
     dev: false
 
   file:projects/chat.tgz:
-    resolution: {integrity: sha512-c4OKzyvx0+DKko5N61xyZ7/L9F4dFxzSKvfygPJKTOTTenJAdZlUz5nXHqKwqyn4S3xo31R6OWXASnnWyUYQOQ==, tarball: file:projects/chat.tgz}
+    resolution: {integrity: sha512-WX0eXukVf65DQIE1atGyBI3k0IoMd2KHef2wtbHNjJixnjcqqqANlwtG3LFT5fc/yaEYD9TItqcoGDpopZkskA==, tarball: file:projects/chat.tgz}
     name: '@rush-temp/chat'
     version: 0.0.0
     dependencies:
@@ -18601,7 +18601,7 @@ packages:
     dev: false
 
   file:projects/check-treeshaking.tgz:
-    resolution: {integrity: sha512-pUNk+ZOj5TdNUYaPxlQ/JpwSFkueg7JkTi4oNi+P6v0tBoJoACUC9qjSu2OM4VjHStPUPCWsz3dXdBRvAZId7Q==, tarball: file:projects/check-treeshaking.tgz}
+    resolution: {integrity: sha512-k347eTV1q9sjPGuqrS6CWGlZWM55W5DyTg/q9ZaTS2Dt/uOVDtWDIIVTDpyM7fCoUhOLn9kyc+EVGR01Oafr1A==, tarball: file:projects/check-treeshaking.tgz}
     name: '@rush-temp/check-treeshaking'
     version: 0.0.0
     dependencies:
@@ -18635,7 +18635,7 @@ packages:
     dev: false
 
   file:projects/check-typescript-regression.tgz:
-    resolution: {integrity: sha512-6u0KQGTaiKWYw75RDKC/bijNirP5dqCKho72AzKLvlo2K95CHB6iVNtL4p73mvRP6ivy2pOaSzS2zH9H4x4oVw==, tarball: file:projects/check-typescript-regression.tgz}
+    resolution: {integrity: sha512-ZhqC1Vr/6LAJaSVMRU7GIS+KS2zytQeBPISME1v6csB/Pj5dm8bcJL+SSPI8COcsGsfqQ8eP0Lb23q8iGdXGUg==, tarball: file:projects/check-typescript-regression.tgz}
     name: '@rush-temp/check-typescript-regression'
     version: 0.0.0
     dependencies:
@@ -18659,11 +18659,11 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-LFdkroWPYJjyjEQLqxtDrgsGpsHoxticONhaOr4jjwVo2dJPsT760RxMQiBxYAPp1VPO0dMntAFjSYyYcU1AnA==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-4GhvMbXIEe0szsIKcpIxOWuz6V0rzMcn950Ju1W9BpFhHfn9cw2tUCpWBTVKz0PnfpuIewCjU0zDZ4Q3L0OPIQ==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-calling-effects': 1.1.4
       '@azure/communication-chat': 1.6.0-beta.7
       '@azure/communication-common': 2.3.2-beta.1
@@ -18770,11 +18770,11 @@ packages:
     dev: false
 
   file:projects/component-examples.tgz:
-    resolution: {integrity: sha512-B21ySzk7pI4he9S7YQ7kpFHME4Y7tkD5eQ6Fu9W3/Jl66XNNCPxZ3vd0AY1xoDjbuvs4UKdnTbBqnTfENqegUQ==, tarball: file:projects/component-examples.tgz}
+    resolution: {integrity: sha512-eT6GzyD4dEWnIi4EcLJ0579yxwlyY3dhEqtp/trnicybBqgMHTSQkqiwYQN7DbyjTc6+KhkoNKMGD4WdB1gy+g==, tarball: file:projects/component-examples.tgz}
     name: '@rush-temp/component-examples'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-chat': 1.6.0-beta.7
       '@azure/communication-common': 2.3.2-beta.1
       '@azure/communication-identity': 1.3.1
@@ -18875,7 +18875,7 @@ packages:
     dev: false
 
   file:projects/fake-backends.tgz:
-    resolution: {integrity: sha512-ge4f5WecMB2Pfm2ePT75cXcQy+3eWCLhRcH6gMxY3tUhl4gCApTRJgkq/O01oXeBkGAkMgBzG0xxniObjTI9bQ==, tarball: file:projects/fake-backends.tgz}
+    resolution: {integrity: sha512-3B7qPQS4MfcRjNoVO4tMb5k+uDuN6gATBudoVGKVWqqMffXcgRDjRhLHC8451ozuSM5gV0T0QyDqWTOsLJjBFQ==, tarball: file:projects/fake-backends.tgz}
     name: '@rush-temp/fake-backends'
     version: 0.0.0
     dependencies:
@@ -18935,7 +18935,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-jr9J/+sgJJbVs0huIPBnKIiqGKeWDhFsBUm+gdxhlUCnu2k97UBTYNbjVqAqfKopvdYezM5P0npEtR2axRVcFw==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-4ZCzFqPGYu1FC126i4Bb5JGOoCncdk53+20II5fJd93ZrcAMMEbRFhD+/UjWYx9iGuW8vZw3eXVcxK81BLWb/g==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -19059,11 +19059,11 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-boeOrIXGwG4VZZ6cAKCFEqis1qZaSWCxhOISWrwu+JwZ+9Oi7o3dqqMQKumjtJWt9tbEs1ProyEy9xDLJjrGmQ==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-DEiVXqCo1AOWgr5MZNno8pLWYmDtHvORfaKxsFn1/t+7242MrpM1OSVeBB5E19Xo2AzQzMwZvTz4Ql0gSuD1ug==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-calling-effects': 1.1.4
       '@azure/communication-chat': 1.6.0-beta.7
       '@azure/communication-common': 2.3.2-beta.1
@@ -19184,11 +19184,11 @@ packages:
     dev: false
 
   file:projects/sample-automation-tests.tgz:
-    resolution: {integrity: sha512-FOifWmZFLGPPp46SuzjCnEJWssGA79Bj/vNfXKali0aqAPrOAYw1V5fVnVu/FbOnX6yCHYehwdaNR0SXFbmmbw==, tarball: file:projects/sample-automation-tests.tgz}
+    resolution: {integrity: sha512-MP8TeA73176BUzncafOSX1Ie7pDhKaWKNpv2jTBRRepELYFI+dOpqGqjGoXQL+DCPkw1AjwnBU/YoSiGpKfLUg==, tarball: file:projects/sample-automation-tests.tgz}
     name: '@rush-temp/sample-automation-tests'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-chat': 1.6.0-beta.7
       '@azure/communication-common': 2.3.2-beta.1
       '@azure/communication-identity': 1.3.1
@@ -19208,11 +19208,11 @@ packages:
     dev: false
 
   file:projects/sample-static-html-composites.tgz:
-    resolution: {integrity: sha512-rbPcufagjWz/sdv0Hpqn1tsTVIWNm9H731VGNKm6g5S9F11WqJp5hpIYilLUTG56JKRS4ZF1cGp8rakwhgBjuA==, tarball: file:projects/sample-static-html-composites.tgz}
+    resolution: {integrity: sha512-+U9xQ8VNZkuimmPnEOGfj1e3wI9Eio6QwOFr5yA4tu9aj8lso6VHPnycjF2Jzi877+gEkJuOluYMpi6lod00Ug==, tarball: file:projects/sample-static-html-composites.tgz}
     name: '@rush-temp/sample-static-html-composites'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-chat': 1.6.0-beta.7
       '@azure/communication-common': 2.3.2-beta.1
       '@azure/communication-identity': 1.3.1
@@ -19354,11 +19354,11 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-d8YilZENbh3iXD3Bj9MIFnDKTwSdhachZZLhJY3H1lkJVc6cmJYjTK84/ra0Eneo+RkZ0rqwTVR0ghVUgOaAEQ==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-4Uk259qwtDzURHdZcunucrRvRiXHZEP+Ny+mZL7NFddex/v/xUvGDaRsQx3/zwtN4nRxxaZHcF6Ie2QgWga4CQ==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
-      '@azure/communication-calling': 1.36.3-beta.1
+      '@azure/communication-calling': 1.37.1-beta.1
       '@azure/communication-chat': 1.6.0-beta.7
       '@azure/communication-common': 2.3.2-beta.1
       '@azure/communication-identity': 1.3.1
