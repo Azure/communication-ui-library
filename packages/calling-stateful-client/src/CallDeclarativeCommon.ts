@@ -29,6 +29,7 @@ export abstract class ProxyCallCommon implements ProxyHandler<CallCommon> {
     return this._context;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof CallCommon>(target: CallCommon, prop: P): any {
     switch (prop) {
       case 'mute': {
@@ -143,6 +144,7 @@ class ProxyTeamsCaptions implements ProxyHandler<TeamsCaptions> {
     this._call = call;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof TeamsCaptions>(target: TeamsCaptions, prop: P): any {
     switch (prop) {
       case 'startCaptions':
@@ -202,6 +204,7 @@ class ProxyCaptions implements ProxyHandler<Captions> {
     this._call = call;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof Captions>(target: Captions, prop: P): any {
     switch (prop) {
       case 'startCaptions':
@@ -250,6 +253,7 @@ class ProxySpotlightCallFeature implements ProxyHandler<SpotlightCallFeature> {
     this._context = context;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof SpotlightCallFeature>(target: SpotlightCallFeature, prop: P): any {
     switch (prop) {
       case 'startSpotlight':
@@ -287,6 +291,7 @@ class ProxyTransferCallFeature implements ProxyHandler<TransferCallFeature> {
     this._call = call;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof TransferCallFeature>(target: TransferCallFeature, prop: P): any {
     switch (prop) {
       case 'on':

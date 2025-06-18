@@ -49,4 +49,5 @@ type CallObjectMethodNames<TName extends string, T> = {
   [K in keyof T & string]: `${TName}.${CallMethodName<T, K>}`;
 }[keyof T & string];
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type CallMethodName<T, K extends keyof T & string> = T[K] extends (...args: any[]) => void ? K : never;
