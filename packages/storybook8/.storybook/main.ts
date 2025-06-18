@@ -93,7 +93,7 @@ const storybookConfig: StorybookConfig = {
       test: /\.(tsx?|jsx?)$/,
       loader: 'ts-loader',
       options: {
-        transpileOnly: DEVELOPMENT_BUILD ? true : false,
+        transpileOnly: true,
         compilerOptions: {
           // Create a unique output format to avoid collisions
           module: 'esnext',
