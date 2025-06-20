@@ -171,6 +171,7 @@ export const createTeamsCallingHandlersForComponent = <Props>(
   callAgent: undefined | TeamsCallAgent,
   deviceManager: StatefulDeviceManager | undefined,
   call: undefined | TeamsCall,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _Component: (props: Props) => ReactElement | null
 ): Common<TeamsCallingHandlers, Props> => {
   return createDefaultTeamsCallingHandlers(callClient, callAgent, deviceManager, call);
@@ -184,6 +185,7 @@ const teamsSingleParticipantTrampoline = (
   if (participants.length !== 1) {
     throw new Error('Only one participant is supported in Teams call!');
   } else {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     return callAgent.startCall(participants[0] as any, options);
   }
 };

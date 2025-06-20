@@ -15,6 +15,7 @@ import { useState, useEffect, useRef, useMemo, useContext } from 'react';
  * @public
  */
 export const useSelector = <
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   SelectorT extends (state: CallClientState, props: any) => any,
   ParamT extends SelectorT | undefined
 >(

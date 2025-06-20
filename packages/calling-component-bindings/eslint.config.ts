@@ -5,20 +5,4 @@ import {
   testFilesBaseConfig
 } from '../../common/config/ESLint/eslint.config';
 
-export default globalConfig([
-  baseConfig,
-  testFilesBaseConfig,
-  {
-    rules: {
-      '@typescript-eslint/no-explicit-any': 'off',
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        {
-          argsIgnorePattern: '^_'
-        }
-      ],
-      'jsdoc/require-jsdoc': 'off'
-    }
-  },
-  baseGlobalIgnores
-]);
+export default globalConfig([baseConfig, testFilesBaseConfig, baseGlobalIgnores]);
