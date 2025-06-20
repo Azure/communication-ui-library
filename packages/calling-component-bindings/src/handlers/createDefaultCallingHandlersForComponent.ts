@@ -36,6 +36,7 @@ export const createDefaultCallingHandlersForComponent = <Props>(
   callAgent: CallAgentCommon | undefined,
   deviceManager: StatefulDeviceManager | undefined,
   call: CallCommon | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   _Component: (props: Props) => ReactElement | null
 ): Common<CommonCallingHandlers, Props> => {
   if (!callAgent && !call && !deviceManager) {

@@ -28,6 +28,7 @@ const validLocalVideoStreamMock: LocalVideoStreamState = {
   view: {
     scalingMode: 'Stretch',
     isMirrored: false,
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     target: null as any
   }
 };

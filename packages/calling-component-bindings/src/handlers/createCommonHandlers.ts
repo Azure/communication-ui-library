@@ -629,7 +629,7 @@ export const createDefaultCommonCallingHandlers = memoizeOne(
     };
 
     const onSendDtmfTone = async (dtmfTone: DtmfTone): Promise<void> => await call?.sendDtmf(dtmfTone);
-
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     const notImplemented = (): any => {
       throw new Error('Not implemented, cannot call a method from an abstract object');
     };
