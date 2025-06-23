@@ -35,6 +35,7 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   spotlightedParticipants?: SpotlightedParticipant[]
 ): CallParticipantListParticipant[] => {
   const conversionCallback = (
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     memoizeFn: (...args: any[]) => CallParticipantListParticipant
   ): CallParticipantListParticipant[] => {
     return (
