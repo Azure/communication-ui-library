@@ -56,7 +56,7 @@ As noted above, the challenges in creating a hotfix are unique to each attempt. 
     ```bash
     git checkout -b release/<new-version>
     # The new version will be a patch on top of the version you checked out
-    # Ex: 1.2.3 becomes 1.2.4 or 1.2.3-beta.1 becomes 1.2.4-beta.1
+    # Ex: 1.2.3 becomes 1.2.4 or 1.2.3-beta.1 becomes 1.2.3-beta.2
     ```
 
 1. Setup the release branch
@@ -82,6 +82,7 @@ As noted above, the challenges in creating a hotfix are unique to each attempt. 
       ```
 
       After this all `package.json` files should have the correct version. You can do a findAll for the old version and make sure it does not exist.
+      You might run into an error in this step "package.json is missing from the preprocessed files", delete preprocessed files and rebuild to resolve the issue.
 
    1. Update the telemetry version to match the new version
 
@@ -101,7 +102,7 @@ As noted above, the challenges in creating a hotfix are unique to each attempt. 
       If you are hotfixing a beta release, run the following command:
 
       ```bash
-      node ./common/scripts/force-build-flavor.mjs beta-stable
+      node ./common/scripts/force-build-flavor.mjs beta-release
       rush update
       ```
 
@@ -121,6 +122,8 @@ As noted above, the challenges in creating a hotfix are unique to each attempt. 
     ```
 
 1. Make and test your changes as normal, commit your changes and put up a PR into the release branch you made. *Include the change to the changelog in this PR as well.*
+
+1. If your changes includes string changes, make sure strings are translated and pulled into the release branch.
 
 1. The release branch created above was identical in all respects to a usual release branch. Thus, [the NPM release workflow](./creating-a-release.md#step-3-publish-to-npm) should work as expected.
 
