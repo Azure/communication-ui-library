@@ -4956,6 +4956,7 @@ export interface SendBoxStrings {
     textTooLong: string;
     uploadCompleted: string;
     uploading: string;
+    uploadProgress: string;
 }
 
 // @public

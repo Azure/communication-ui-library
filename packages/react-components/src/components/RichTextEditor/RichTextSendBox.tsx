@@ -541,6 +541,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
             strings={{
               removeAttachment: strings.removeAttachment,
               uploading: strings.uploading,
+              uploadProgress: strings.uploadProgress,
               uploadCompleted: strings.uploadCompleted,
               attachmentMoreMenu: strings.attachmentMoreMenu
             }}
