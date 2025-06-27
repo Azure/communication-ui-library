@@ -17,6 +17,7 @@ export const useLocaleAttachmentCardStringsTrampoline = (): _AttachmentUploadCar
     removeAttachment: '',
     uploadCompleted: '',
     uploading: '',
+    uploadProgress: '',
     attachmentMoreMenu: ''
   };
 };

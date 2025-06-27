@@ -92,6 +92,11 @@ export interface SendBoxStrings {
   uploading: string;
   /* @conditional-compile-remove(file-sharing-acs) */
   /**
+   * Aria label to notify user attachment upload progress.
+   */
+  uploadProgress: string;
+  /* @conditional-compile-remove(file-sharing-acs) */
+  /**
    * Aria label to notify user attachment is uploaded.
    */
   uploadCompleted: string;
@@ -360,6 +365,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
             strings={{
               removeAttachment: props.strings?.removeAttachment ?? localeStrings.removeAttachment,
               uploading: props.strings?.uploading ?? localeStrings.uploading,
+              uploadProgress: props.strings?.uploadProgress ?? localeStrings.uploadProgress,
               uploadCompleted: props.strings?.uploadCompleted ?? localeStrings.uploadCompleted,
               attachmentMoreMenu: props.strings?.attachmentMoreMenu ?? localeStrings.attachmentMoreMenu
             }}
@@ -375,6 +381,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
     customV9Styles.clearBackground,
     localeStrings.removeAttachment,
     localeStrings.uploading,
+    localeStrings.uploadProgress,
     localeStrings.uploadCompleted,
     localeStrings.attachmentMoreMenu,
     disabled

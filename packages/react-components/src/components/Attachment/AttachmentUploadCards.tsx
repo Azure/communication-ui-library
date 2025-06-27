@@ -18,6 +18,8 @@ export interface _AttachmentUploadCardsStrings {
   removeAttachment: string;
   /** Aria label to notify user attachment uploading starts. */
   uploading: string;
+  /** Aria label to notify user attachment upload progress. */
+  uploadProgress: string
   /** Aria label to notify user attachment is uploaded. */
   uploadCompleted: string;
   /** Aria label to notify user more attachment action menu. */

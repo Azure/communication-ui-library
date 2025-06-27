@@ -19,7 +19,7 @@ import {
 } from '@fluentui/react-components';
 import { getFileTypeIconProps } from '@fluentui/react-file-type-icons';
 import React from 'react';
-import { _pxToRem } from '@internal/acs-ui-common';
+import { _pxToRem, _formatString } from '@internal/acs-ui-common';
 import { Announcer } from '../Announcer';
 import { useEffect, useState, useMemo } from 'react';
 import { _AttachmentUploadCardsStrings } from './AttachmentUploadCards';
@@ -164,6 +164,9 @@ export const _AttachmentCard = (props: _AttachmentCardProps): JSX.Element => {
             thickness="medium"
             value={Math.max(progress ?? 0, ATTACHMENT_CARD_MIN_PROGRESS)}
             shape="rounded"
+            aria-label={progress
+              ? _formatString(localeStrings.uploadProgress, { progress: `${Math.round(progress * 100)}` })
+              : undefined}
           />
         </CardFooter>
       ) : (
