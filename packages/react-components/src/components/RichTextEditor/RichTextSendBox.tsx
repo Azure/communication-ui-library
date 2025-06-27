@@ -557,6 +557,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
     onCancelAttachmentUpload,
     strings.removeAttachment,
     strings.uploading,
+    strings.uploadProgress,
     strings.uploadCompleted,
     strings.attachmentMoreMenu,
     disabled
