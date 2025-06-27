@@ -14,6 +14,7 @@ export class ProxyTeamsIncomingCall implements ProxyHandler<TeamsIncomingCall> {
     this._context = context;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   public get<P extends keyof TeamsIncomingCall>(target: TeamsIncomingCall, prop: P): any {
     switch (prop) {
       case 'accept': {

@@ -1183,7 +1183,7 @@ export type CallErrorTarget =
   | 'CallAgent.startCall'
   | 'CallClient.createCallAgent'
   | 'CallClient.createTeamsCallAgent'
-  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallClient.dispose'
+  | 'CallClient.dispose'
   | 'CallClient.feature'
   | 'CallClient.getDeviceManager'
   | 'CallClient.getEnvironmentInfo'

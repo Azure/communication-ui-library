@@ -90,11 +90,22 @@ const storybookConfig: StorybookConfig = {
 
     // Custom rule for ts files
     const tsRule = {
-        test: /\.(tsx?|jsx?)$/,
-        loader: 'ts-loader',
-        options: {
-            transpileOnly: true,
-        },
+      test: /\.(tsx?|jsx?)$/,
+      loader: 'ts-loader',
+      options: {
+        transpileOnly: true,
+        compilerOptions: {
+          // Create a unique output format to avoid collisions
+          module: 'esnext',
+          moduleResolution: 'node',
+          // Generate unique source maps
+          sourceMap: true,
+          inlineSources: true,
+          // Ensure unique output
+          declaration: true
+        }
+      },
+      exclude: /node_modules/,
     };
 
     const txtRule = {

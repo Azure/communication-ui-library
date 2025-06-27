@@ -12,28 +12,28 @@ import { CallingHandlers } from './createHandlers';
 function TestCallClientComponent(props: CallingHandlers): ReactElement | null {
   return null;
 }
-
 class MockCallClient {
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
   getState(): any {
     throw new Error('Method not implemented.');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-explicit-any
   onStateChange(handler: (state: any) => void): void {
     throw new Error('Method not implemented.');
   }
   createView(
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     callId: string,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     participantId: any,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     stream: any,
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
     options?: any
   ): Promise<CreateViewResult | undefined> {
     throw new Error('Method not implemented.');
   }
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unused-vars
   disposeView(callId: string, participantId: any, stream: any): void {
     throw new Error('Method not implemented.');
   }

@@ -158,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Mute mic",
     "microphonePrimaryActionSplitButtonTitle": "Use microphone",
     "microphoneAriaDescription": "Audio options",
+    "defaultMicrophoneLabelFallback": "Default",
     "deepNoiseSuppressionTitle": "Noise suppression",
     "deepNoiseSuppressionOnAnnouncement": "Deep noise suppression has been turned on",
     "deepNoiseSuppressionOffAnnouncement": "Deep noise suppression has been turned off"
@@ -171,6 +172,7 @@
     "audioDeviceMenuTooltip": "Choose audio device",
     "microphoneMenuTitle": "Microphone",
     "microphoneMenuTooltip": "Choose microphone",
+    "defaultMicrophoneLabelFallback": "Default",
     "speakerMenuTitle": "Speaker",
     "speakerMenuTooltip": "Choose speaker"
   },

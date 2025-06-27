@@ -75,8 +75,10 @@ import {
  *
  * @public
  */
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   component: Component
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
 ): GetSelector<Component> extends (props: any) => any
   ? ReturnType<GetSelector<Component>> &
       Common<CommonCallingHandlers & _ComponentCallingHandlers, Parameters<Component>[0]>
@@ -85,8 +87,10 @@ export const usePropsFor = <Component extends (props: any) => JSX.Element>(
   const props = useSelector(selector);
   const handlers = useHandlers<Parameters<Component>[0]>(component);
   if (props !== undefined) {
+    //eslint-disable-next-line @typescript-eslint/no-explicit-any
     return { ...props, ...handlers } as any;
   }
+  //eslint-disable-next-line @typescript-eslint/no-explicit-any
   return undefined as any;
 };
 
@@ -106,6 +110,7 @@ const emptySelector: EmptySelector = (): Record<string, never> => ({});
  *
  * @public
  */
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type GetSelector<Component extends (props: any) => JSX.Element | undefined> =
   AreEqual<Component, typeof VideoGallery> extends true
     ? VideoGallerySelector
@@ -153,12 +158,13 @@ export type GetSelector<Component extends (props: any) => JSX.Element | undefine
  *
  * @public
  */
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const getSelector = <Component extends (props: any) => JSX.Element | undefined>(
   component: Component
 ): GetSelector<Component> => {
   return findSelector(component);
 };
-
+//eslint-disable-next-line @typescript-eslint/no-explicit-any
 const findSelector = (component: (props: any) => JSX.Element | undefined): any => {
   // Dialpad only has handlers currently and doesn't require any props from the stateful layer so return the emptySelector
   if (component === Dialpad) {
