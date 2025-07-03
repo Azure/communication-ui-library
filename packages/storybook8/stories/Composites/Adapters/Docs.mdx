@@ -71,6 +71,16 @@ import { CallComposite, ChatComposite} from '@azure/communication-react';
 The adapters provide developers access to state, actions and events related to the underlying chat and calling SDKs.
 Below are some examples that might be helpful, but additional methods are available.
 
+#### Call Adapter Examples
+
+<Source code={CallAdapterStateChangesText} />
+
+#### Chat Adapter Examples
+
+<Source code={ChatAdapterStateChangesText} />
+
+The ChatAdapter and the ChatComposite are purpose-built to support single chat thread. Only events, such as 'messagesReceived', from the thread that initialized the ChatAdapter, will be triggered. To accommodate multiple threads usage, you can leverage the foundational service assistant, the Chat [StatefulClient](./?path=/docs/stateful-client-overview--docs), in conjunction with [usePropsFor](./?path=/docs/stateful-client-react-hooks-usepropsfor--docs) to render the Chat UI Component for an enhanced chatting experience. Alternatively, you can manage multiple adapters corresponding to different threads, and display the Chat UI Composite based on the threads the user wishes to access.
+
 ### Cleaning up
 
 When the adapter is no longer needed, it is important to call `dispose()` on the adapter to clean up resources used by the adapter. You would
@@ -96,16 +106,6 @@ const MyComponent = (): JSX.Element => {
   return <ChatComposite adapter={chatAdapter} />;
 };
 ```
-
-#### Call Adapter Examples
-
-<Source code={CallAdapterStateChangesText} />
-
-#### Chat Adapter Examples
-
-<Source code={ChatAdapterStateChangesText} />
-
-The ChatAdapter and the ChatComposite are purpose-built to support single chat thread. Only events, such as 'messagesReceived', from the thread that initialized the ChatAdapter, will be triggered. To accommodate multiple threads usage, you can leverage the foundational service assistant, the Chat [StatefulClient](./?path=/docs/stateful-client-overview--docs), in conjunction with [usePropsFor](./?path=/docs/stateful-client-react-hooks-usepropsfor--docs) to render the Chat UI Component for an enhanced chatting experience. Alternatively, you can manage multiple adapters corresponding to different threads, and display the Chat UI Composite based on the threads the user wishes to access.
 
 ## Interfaces
 
