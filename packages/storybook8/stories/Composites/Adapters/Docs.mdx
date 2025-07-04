@@ -90,9 +90,14 @@ typically do this in a `useEffect` hook when the component using the adapter is 
 
 ```typescript
 import { useEffect, useRef } from 'react';
-import { createAzureCommunicationCallAdapter, createAzureCommunicationChatAdapter } from '@azure/communication-react';
+import {
+  createAzureCommunicationCallAdapter,
+  createAzureCommunicationChatAdapter,
+  AzureCommunicationCallAdapterArgs,
+  AzureCommunicationChatAdapterArgs
+} from '@azure/communication-react';
 
-const MyComponent = (props: {callAdapterProps, chatAdapterProps}): JSX.Element => {
+const MyComponent = (props: {callAdapterProps: AzureCommunicationCallAdapterArgs, chatAdapterProps: AzureCommunicationChatAdapterArgs}): JSX.Element => {
   const callAdapterRef = useRef<CallAdapter>(null);
   const chatAdapterRef = useRef<ChatAdapter>(null);
 
