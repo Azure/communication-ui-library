@@ -852,7 +852,7 @@ jobs:
     runs-on: ${{ vars.RUNS_ON }}
     name: Upload bundle size report to gist - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/alkwa/save-bundlesizereport-to-artifacts'
     strategy:
       matrix:
         include:
