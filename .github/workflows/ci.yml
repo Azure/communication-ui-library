@@ -864,7 +864,7 @@ jobs:
           - app: CallWithChat
             gist_id: c43393ae31b5b08215f3f49ed327d912
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.app }}-report
       - name: Save bundle size report to GitHub artifacts
