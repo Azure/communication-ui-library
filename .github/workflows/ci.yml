@@ -867,6 +867,13 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.app }}-report
+      - name: Save bundle size report to GitHub artifacts
+        if: github.ref == 'refs/heads/alkwa/save-bundlesizereport-to-artifacts'
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundlesize-report-${{ matrix.app }}
+          path: bundle-size-report.json
+          retention-days: 30
       - name: Upload bundle report to gist
         uses: exuanbo/actions-deploy-gist@v1
         with:
