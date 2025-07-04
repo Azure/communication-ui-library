@@ -111,7 +111,7 @@ const MyComponent = (props: {callAdapterProps: AzureCommunicationCallAdapterArgs
 
   useEffect(() => {
     return () => {
-      // Callling these in the return function of useEffect ensures they are called when the component is unmounted.
+      // Calling these in the return function of useEffect ensures they are called when the component is unmounted.
       callAdapter.current?.dispose();
       chatAdapter.current?.dispose();
     };
