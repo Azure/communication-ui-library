@@ -89,23 +89,35 @@ typically do this in a `useEffect` hook when the component using the adapter is 
 **Note:** This is not something you need to do when using the hooks `useAzureCommunicationCallAdapter` or `useAzureCommunicationChatAdapter`, as they handle this automatically.
 
 ```typescript
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { createAzureCommunicationCallAdapter, createAzureCommunicationChatAdapter } from '@azure/communication-react';
 
-const MyComponent = (): JSX.Element => {
-  const callAdapter = createAzureCommunicationCallAdapter();
-  const chatAdapter = createAzureCommunicationChatAdapter();
+const MyComponent = (props: {callAdapterProps, chatAdapterProps}): JSX.Element => {
+  const callAdapterRef = useRef<CallAdapter>(null);
+  const chatAdapterRef = useRef<ChatAdapter>(null);
+
+  useEffect(() => {
+    (async () => {
+      callAdapterRef.current = (await createAzureCommunicationCallAdapter(...props.callAdapterProps));
+      chatAdapterRef.current = (await createAzureCommunicationChatAdapter(...props.chatAdapterProps));
+    }).();
+  }, [props.callAdapterProps, props.chatAdapterProps]);
+
 
   useEffect(() => {
     return () => {
       // Callling these in the return function of useEffect ensures they are called when the component is unmounted.
-      callAdapter?.dispose();
-      chatAdapter?.dispose();
+      callAdapter.current?.dispose();
+      chatAdapter.current?.dispose();
     };
-  }, [callAdapter]);
+  }, []);
 
-  return <CallComposite adapter={callAdapter} />;
-  return <ChatComposite adapter={chatAdapter} />;
+  return (
+    <>
+      <CallComposite adapter={callAdapter} />
+      <ChatComposite adapter={chatAdapter} />
+    </>
+  );
 };
 ```
 
