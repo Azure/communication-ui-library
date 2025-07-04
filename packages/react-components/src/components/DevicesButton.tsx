@@ -362,13 +362,6 @@ export const generateDefaultDeviceMenuProps = (
                 // If the default microphone has no name, use the default fallback label. This occurs on Android WebViews.
                 const micLabel =
                   microphoneIsDefault && !microphone.name ? defaultMicrophoneLabelFallback : microphone.name;
-                if (microphoneIsDefault) {
-                  console.log(
-                    'Default microphone is set to:',
-                    micLabel,
-                    'This may be due to the default microphone having no name set.'
-                  );
-                }
                 return {
                   key: microphone.id,
                   text: micLabel,
