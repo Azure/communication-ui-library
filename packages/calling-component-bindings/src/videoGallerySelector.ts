@@ -18,6 +18,7 @@ import {
   getIsMuted,
   getIsScreenSharingOn,
   getLocalVideoStreams,
+  getRealTimeText,
   getRole,
   getScreenShareRemoteParticipant
 } from './baseSelectors';
@@ -84,7 +85,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     getLocalParticipantReactionState,
     getSpotlightCallFeature,
     getCapabilities,
-    getTogetherModeCallFeature
+    getTogetherModeCallFeature,
+    getRealTimeText
   ],
   (
     screenShareRemoteParticipantId,
@@ -102,7 +104,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     localParticipantReaction,
     spotlightCallFeature,
     capabilities,
-    togetherModeCallFeature
+    togetherModeCallFeature,
+    realTimeText
   ) => {
     const screenShareRemoteParticipant =
       screenShareRemoteParticipantId && remoteParticipants
@@ -116,12 +119,15 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
     const noRemoteParticipants: RemoteParticipantState[] = [];
     const localParticipantReactionState = memoizedConvertToVideoTileReaction(localParticipantReaction);
     const spotlightedParticipantIds = memoizeSpotlightedParticipantIds(spotlightCallFeature?.spotlightedParticipants);
+    const inProgressRealTimeTextParticipantsIds = realTimeText?.currentInProgress
+      ? realTimeText.currentInProgress.map((info) => toFlatCommunicationIdentifier(info.sender.identifier))
+      : undefined;
     return {
       screenShareParticipant: screenShareRemoteParticipant
         ? convertRemoteParticipantToVideoGalleryRemoteParticipant(
             toFlatCommunicationIdentifier(screenShareRemoteParticipant.identifier),
             screenShareRemoteParticipant.isMuted,
-            checkIsSpeaking(screenShareRemoteParticipant),
+            checkIsSpeaking(screenShareRemoteParticipant, inProgressRealTimeTextParticipantsIds),
             screenShareRemoteParticipant.videoStreams,
             screenShareRemoteParticipant.state,
             screenShareRemoteParticipant.displayName,
@@ -150,7 +156,8 @@ export const videoGallerySelector: VideoGallerySelector = createSelector(
       remoteParticipants: _videoGalleryRemoteParticipantsMemo(
         _updateUserDisplayNames(remoteParticipants ? Object.values(remoteParticipants) : noRemoteParticipants),
         isHideAttendeeNamesEnabled,
-        role
+        role,
+        inProgressRealTimeTextParticipantsIds
       ),
       dominantSpeakers: dominantSpeakerIds,
       maxRemoteVideoStreams: optimalVideoCount,
