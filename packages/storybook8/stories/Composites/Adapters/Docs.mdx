@@ -81,6 +81,51 @@ Below are some examples that might be helpful, but additional methods are availa
 
 The ChatAdapter and the ChatComposite are purpose-built to support single chat thread. Only events, such as 'messagesReceived', from the thread that initialized the ChatAdapter, will be triggered. To accommodate multiple threads usage, you can leverage the foundational service assistant, the Chat [StatefulClient](./?path=/docs/stateful-client-overview--docs), in conjunction with [usePropsFor](./?path=/docs/stateful-client-react-hooks-usepropsfor--docs) to render the Chat UI Component for an enhanced chatting experience. Alternatively, you can manage multiple adapters corresponding to different threads, and display the Chat UI Composite based on the threads the user wishes to access.
 
+### Cleaning up
+
+When the adapter is no longer needed, it is important to call `dispose()` on the adapter to clean up resources used by the adapter. You would
+typically do this in a `useEffect` hook when the component using the adapter is unmounted.
+
+**Note:** You do not something you need to do this using the hooks `useAzureCommunicationCallAdapter` or `useAzureCommunicationChatAdapter`, as they handle this automatically.
+
+```typescript
+import { useEffect, useRef } from 'react';
+import {
+  createAzureCommunicationCallAdapter,
+  createAzureCommunicationChatAdapter,
+  AzureCommunicationCallAdapterArgs,
+  AzureCommunicationChatAdapterArgs
+} from '@azure/communication-react';
+
+const MyComponent = (props: {callAdapterProps: AzureCommunicationCallAdapterArgs, chatAdapterProps: AzureCommunicationChatAdapterArgs}): JSX.Element => {
+  const callAdapterRef = useRef<CallAdapter>(null);
+  const chatAdapterRef = useRef<ChatAdapter>(null);
+
+  useEffect(() => {
+    (async () => {
+      callAdapterRef.current = (await createAzureCommunicationCallAdapter(...props.callAdapterProps));
+      chatAdapterRef.current = (await createAzureCommunicationChatAdapter(...props.chatAdapterProps));
+    }).();
+  }, [props.callAdapterProps, props.chatAdapterProps]);
+
+
+  useEffect(() => {
+    return () => {
+      // Calling these in the return function of useEffect ensures they are called when the component is unmounted.
+      callAdapter.current?.dispose();
+      chatAdapter.current?.dispose();
+    };
+  }, []);
+
+  return (
+    <>
+      <CallComposite adapter={callAdapter} />
+      <ChatComposite adapter={chatAdapter} />
+    </>
+  );
+};
+```
+
 ## Interfaces
 
 ### CallAdapter
