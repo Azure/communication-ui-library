@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "improvement",
+  "workstream": "leveraging github artifacts for ci artifacts",
+  "comment": "attempting to save bundle-size to github artifacts for other checks",
+  "packageName": "@azure/communication-react",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}
