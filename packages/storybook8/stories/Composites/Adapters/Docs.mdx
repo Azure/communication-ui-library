@@ -86,7 +86,7 @@ The ChatAdapter and the ChatComposite are purpose-built to support single chat t
 When the adapter is no longer needed, it is important to call `dispose()` on the adapter to clean up resources used by the adapter. You would
 typically do this in a `useEffect` hook when the component using the adapter is unmounted.
 
-**Note:** This is not something you need to do when using the hooks `useAzureCommunicationCallAdapter` or `useAzureCommunicationChatAdapter`, as they handle this automatically.
+**Note:** You do not something you need to do this using the hooks `useAzureCommunicationCallAdapter` or `useAzureCommunicationChatAdapter`, as they handle this automatically.
 
 ```typescript
 import { useEffect, useRef } from 'react';
