@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CallClientState, RemoteParticipantState } from '@internal/calling-stateful-client';
+import { CallClientState, RealTimeTextInfo, RemoteParticipantState } from '@internal/calling-stateful-client';
 import { createSelector } from 'reselect';
 import {
   getIdentifier,
@@ -9,7 +9,8 @@ import {
   getIsScreenSharingOn,
   getIsMuted,
   CallingBaseSelectorProps,
-  getCapabilities
+  getCapabilities,
+  getRealTimeText
 } from './baseSelectors';
 import { getRole } from './baseSelectors';
 import { isHideAttendeeNamesEnabled } from './baseSelectors';
@@ -32,12 +33,16 @@ const convertRemoteParticipantsToParticipantListParticipants = (
   localUserCanRemoveOthers: boolean,
   isHideAttendeeNamesEnabled?: boolean,
   localUserRole?: ParticipantRole,
-  spotlightedParticipants?: SpotlightedParticipant[]
+  spotlightedParticipants?: SpotlightedParticipant[],
+  realTimeTextInProgress?: RealTimeTextInfo[]
 ): CallParticipantListParticipant[] => {
   const conversionCallback = (
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     memoizeFn: (...args: any[]) => CallParticipantListParticipant
   ): CallParticipantListParticipant[] => {
+    const realTimeTextInProgressParticipantIds: string[] | undefined = realTimeTextInProgress?.map((info) =>
+      toFlatCommunicationIdentifier(info.sender.identifier)
+    );
     return (
       remoteParticipants
         // Filter out MicrosoftBot participants
@@ -81,7 +86,9 @@ const convertRemoteParticipantsToParticipantListParticipants = (
             state,
             participant.isMuted,
             isScreenSharing,
-            participant.isSpeaking,
+            participant.isSpeaking ||
+              (realTimeTextInProgressParticipantIds &&
+                realTimeTextInProgressParticipantIds.includes(toFlatCommunicationIdentifier(participant.identifier))),
             participant.raisedHand,
             localUserCanRemoveOthers,
             remoteParticipantReaction,
@@ -138,7 +145,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     isHideAttendeeNamesEnabled,
     getLocalParticipantReactionState,
     getSpotlightCallFeature,
-    getCapabilities
+    getCapabilities,
+    getRealTimeText
   ],
   (
     userId,
@@ -152,7 +160,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
     isHideAttendeeNamesEnabled,
     localParticipantReactionState,
     spotlightCallFeature,
-    capabilities
+    capabilities,
+    realTimeText
   ): {
     participants: CallParticipantListParticipant[];
     myUserId: string;
@@ -165,7 +174,8 @@ export const participantListSelector: ParticipantListSelector = createSelector(
           localUserCanRemoveOthers,
           isHideAttendeeNamesEnabled,
           role,
-          spotlightCallFeature?.spotlightedParticipants
+          spotlightCallFeature?.spotlightedParticipants,
+          realTimeText?.currentInProgress
         )
       : [];
     participants.push({
