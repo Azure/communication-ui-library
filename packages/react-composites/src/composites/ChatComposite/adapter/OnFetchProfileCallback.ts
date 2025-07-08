@@ -44,6 +44,7 @@ export const createProfileStateModifier = (
 
   return (state: ChatAdapterState) => {
     const originalParticipants = state.thread?.participants;
+    const originalChatMessages = state.thread?.chatMessages;
 
     (async () => {
       let shouldNotifyUpdates = false;
@@ -60,6 +61,21 @@ export const createProfileStateModifier = (
           cachedDisplayName[key] = profile?.displayName;
           shouldNotifyUpdates = true;
         }
+      }
+
+      for (const [key, name] of Object.entries(cachedDisplayName)) {
+        if (key.includes('8:orgid:') && name.includes('undefined')) {
+          for (const [, message] of Object.entries(originalChatMessages)) {
+            if (!name.includes('undefined')) break;
+            if (message?.sender?.kind === 'microsoftTeamsUser' && message?.sender?.rawId === key) {
+              const profile = await onFetchProfile(key, { displayName: message.senderDisplayName });
+              if (profile?.displayName && cachedDisplayName[key] !== profile?.displayName) {
+                cachedDisplayName[key] = profile?.displayName;
+                shouldNotifyUpdates = true;
+              }
+            }
+          }
+        } else continue;
       }
       // notify update only when there is a change, which most likely will trigger modifier and setState again
       if (shouldNotifyUpdates) {
