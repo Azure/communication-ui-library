@@ -1,8 +1,33 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 09 Jun 2025 16:27:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 08 Jul 2025 16:10:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.29.0](https://github.com/azure/communication-ui-library/tree/1.29.0)
+
+Tue, 08 Jul 2025 16:10:20 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.28.0...1.29.0)
+
+### Improvements
+- Refactor captions component, put the announcer to one single private component ([PR #5901](https://github.com/azure/communication-ui-library/pull/5901) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix eslint errors for calling component binding ([PR #5912](https://github.com/azure/communication-ui-library/pull/5912) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix eslint errors for calling stateful sample ([PR #5899](https://github.com/azure/communication-ui-library/pull/5899) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix Eslint errors for calling sample ([PR #5898](https://github.com/azure/communication-ui-library/pull/5898) by 96077406+carocao-msft@users.noreply.github.com)
+### Bug Fixes
+- ESLint9 fix for packages/calling-stateful-client ([PR #5905](https://github.com/azure/communication-ui-library/pull/5905) by 97124699+prabhjot-msft@users.noreply.github.com)
+- ESLint9 fix samples/ComponentExamples ([PR #5896](https://github.com/azure/communication-ui-library/pull/5896) by 97124699+prabhjot-msft@users.noreply.github.com)
+- ESLint fixes for package/react-composites ([PR #5893](https://github.com/azure/communication-ui-library/pull/5893) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Improve device permission checks on Android WebViews ([PR #5888](https://github.com/azure/communication-ui-library/pull/5888) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix issue on Android WebView where there is no default audio device ([PR #5900](https://github.com/azure/communication-ui-library/pull/5900) by 2684369+JamesBurnside@users.noreply.github.com)
+- [KTLO][ESLint9]Remove rules for samples/Serverfor ([PR #5887](https://github.com/azure/communication-ui-library/pull/5887) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Add error message for empty content for edit box ([PR #5886](https://github.com/azure/communication-ui-library/pull/5886) by 77021369+jimchou-dev@users.noreply.github.com)
+- Add aria label for upload progress ([PR #5916](https://github.com/azure/communication-ui-library/pull/5916) by 77021369+jimchou-dev@users.noreply.github.com)
+- Update brace-expansion to 1.1.12 ([PR #5914](https://github.com/azure/communication-ui-library/pull/5914) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix ESLint9 rules for fake-backend ([PR #5895](https://github.com/azure/communication-ui-library/pull/5895) by 97124699+prabhjot-msft@users.noreply.github.com)
+### Storybook Changes
+- Update storybook pages to include Vite instead of CRA ([PR #5890](https://github.com/azure/communication-ui-library/pull/5890) by 96077406+carocao-msft@users.noreply.github.com)
+
 
 ## [1.28.0](https://github.com/azure/communication-ui-library/tree/1.28.0)
 

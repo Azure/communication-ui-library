@@ -2,6 +2,137 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 08 Jul 2025 16:10:20 GMT",
+      "version": "1.29.0",
+      "tag": "@azure/communication-react_v1.29.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fcfe6710354d3700bb98a2c35e3eae901958b1c3",
+            "area": "improvement",
+            "workstream": "RTTCaptions",
+            "comment": "Refactor captions component, put the announcer to one single private component"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9fdf5a40c1335214a9ed730a1628d9f091a6acea",
+            "area": "improvement",
+            "workstream": "Eslint",
+            "comment": "Fix eslint errors for calling component binding"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "56eec6f5606165209bab8d5add6ebff1e306a2ac",
+            "area": "fix",
+            "workstream": "ESLint9 fix",
+            "comment": "ESLint9 fix for packages/calling-stateful-client"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d68ca84bee67a0cee33a741ca47b844872008ce0",
+            "area": "improvement",
+            "workstream": "Eslint",
+            "comment": "Fix eslint errors for calling stateful sample"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9d706eebb91233b8489ce99d240db95ca66608a8",
+            "area": "fix",
+            "workstream": "ESLint9 Fix",
+            "comment": "ESLint9 fix samples/ComponentExamples"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "48869f548287819ea9d1ce8f1407c1b45fe04cd3",
+            "area": "fix",
+            "workstream": "ESLint changes",
+            "comment": "ESLint fixes for package/react-composites"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "348879b4ce05b96a206a15d084aa3a9b06d38a2b",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Improve device permission checks on Android WebViews"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1a74fe659a4ca7fc240e1f3cc1c9ef6c9fc5b408",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix issue on Android WebView where there is no default audio device"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f44ab758224312976a66310501bcadc118508110",
+            "area": "fix",
+            "workstream": "",
+            "comment": "[KTLO][ESLint9]Remove rules for samples/Serverfor"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a1bf6476b9a9063bdbe52c1a89e314c641bb58a6",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Add error message for empty content for edit box"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2b322d67d32192e0b20ef32f5fedbe827456cb75",
+            "area": "fix",
+            "workstream": "a11y",
+            "comment": "Add aria label for upload progress"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "62022b58832be9febf1eed899b6cbc906921bcc2",
+            "area": "improvement",
+            "workstream": "Eslint",
+            "comment": "Fix Eslint errors for calling sample"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f472160c81faa525f4adc581ea68509634bb3877",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Update brace-expansion to 1.1.12"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "451774753efa96ff498bf20b52a9b74788b3c1f7",
+            "area": "fix",
+            "workstream": "ESLint9 Fix",
+            "comment": "Fix ESLint9 rules for fake-backend"
+          }
+        ],
+        "minor": [
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "528556ef5f9e5ecf6a9dfdef61863ed59714cb92",
+            "area": "storybook",
+            "workstream": "Update storybook pages to include Vite instead of CRA",
+            "comment": "Update storybook pages to include Vite instead of CRA"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 09 Jun 2025 16:27:48 GMT",
       "version": "1.28.0",
       "tag": "@azure/communication-react_v1.28.0",
