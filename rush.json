@@ -21,6 +21,11 @@
   ],
   "projects": [
     {
+      "packageName": "@internal/repo-root",
+      "projectFolder": ".",
+      "reviewCategory": "tools"
+    },
+    {
       "packageName": "@internal/acs-ui-common",
       "projectFolder": "packages/acs-ui-common",
       "reviewCategory": "internal"

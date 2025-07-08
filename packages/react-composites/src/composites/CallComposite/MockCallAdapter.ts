@@ -16,11 +16,6 @@ import { EventEmitter } from 'events';
 import type { CallAdapter, CallAdapterState } from './adapter';
 import { CallSurvey, CallSurveyResponse } from '@azure/communication-calling';
 
-/**
- * Temporary copy of the packages/react-composites/tests/browser/call/app/mocks/MockCallAdapter.ts
- * @internal
- */
-// TODO: Remove this simplified copy of the MockCallAdapter when the original MockCallAdapter is moved to fake-backends package and can be imported
 export class _MockCallAdapter implements CallAdapter {
   constructor(testState: {
     askDevicePermission?: (constrain: PermissionConstraints) => Promise<DeviceAccess>;
@@ -41,6 +36,7 @@ export class _MockCallAdapter implements CallAdapter {
 
   setState(state: CallAdapterState): void {
     this.state = state;
+
     this.emitter.emit('stateChanged', state);
   }
 

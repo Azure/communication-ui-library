@@ -3,5 +3,11 @@
   "before-after-diff-checker.compileCommand": "rushx _by-flavor \"rushx preprocess\" && (npx eslint $PROCESSED_FILE --fix || true)",
   "before-after-diff-checker.srcPath": "src",
   "before-after-diff-checker.enableOnSave": false,
+  "eslint.options": {
+    "flags": ["unstable_ts_config"]
+  },
+  "eslint.runtime": "node",
+  "eslint.useFlatConfig": true,
+  "eslint.workingDirectories": [{ "mode": "auto" }],
   "typescript.tsdk": "common/config/node_modules/typescript/lib"
 }

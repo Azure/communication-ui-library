@@ -118,9 +118,7 @@ export const LocalAndRemotePIP = (props: LocalAndRemotePIPProps): JSX.Element =>
         <_RemoteVideoTile
           {...remoteVideoTileProps}
           strings={locale.component.strings.videoGallery}
-          onLongTouch={() => {
-            /* Add to disable scaling */
-          }}
+          onLongTouch={() => {}}
         />
       ) : (
         <_LocalVideoTile {...localVideoTileProps} />
