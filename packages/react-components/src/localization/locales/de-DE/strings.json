@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "Datei wird hochgeladen, bitte warten.",
     "removeAttachment": "Datei entfernen",
     "uploading": "Hochladen",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "Upload abgeschlossen",
     "attachmentMoreMenu": "Mehr Optionen"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "Bild wird hochgeladen, bitte warten.",
     "removeAttachment": "Datei entfernen",
     "uploading": "Wird hochgeladen",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "Upload abgeschlossen",
     "richTextBoldTooltip": "Fett",
     "richTextItalicTooltip": "Kursiv",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Mikrofon stummschalten",
     "microphonePrimaryActionSplitButtonTitle": "Mikrofon verwenden",
     "microphoneAriaDescription": "Audiooptionen",
+    "defaultMicrophoneLabelFallback": "Standard",
     "deepNoiseSuppressionTitle": "Rauschunterdrückung",
     "deepNoiseSuppressionOnAnnouncement": "Die Unterdrückung tiefer Geräusche wurde aktiviert.",
     "deepNoiseSuppressionOffAnnouncement": "Die Unterdrückung tiefer Geräusche wurde deaktiviert."
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Audiogerät auswählen",
     "microphoneMenuTitle": "Mikrofon",
     "microphoneMenuTooltip": "Mikrofon auswählen",
+    "defaultMicrophoneLabelFallback": "Standard",
     "speakerMenuTitle": "Lautsprecher",
     "speakerMenuTooltip": "Lautsprecher auswählen"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} hat {message} gesagt",
     "messageContentMineAriaText": "{status} Sie haben {message} gesagt",
     "editBoxTextLimit": "Ihre Nachricht überschreitet das Limit von {limitNumber} Zeichen.",
+    "editBoxEmptyWarningText": "Geben Sie eine Nachricht ein, um fortzufahren",
     "editBoxPlaceholderText": "Bearbeiten Sie Ihre Nachricht",
     "newMessagesIndicator": "Neue Nachrichten",
     "noDisplayNameSub": "Kein Name",

@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "يتم الآن تحميل الملف، الرجاء الانتظار.",
     "removeAttachment": "إزالة الملف",
     "uploading": "جارٍ التحميل",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "اكتمل التحميل",
     "attachmentMoreMenu": "خيارات إضافية"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "يتم الآن تحميل الصورة، الرجاء الانتظار.",
     "removeAttachment": "إزالة الملف",
     "uploading": "يتم الآن التحميل",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "اكتمل التحميل",
     "richTextBoldTooltip": "غامق",
     "richTextItalicTooltip": "مائل",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "كتم الميكروفون",
     "microphonePrimaryActionSplitButtonTitle": "استخدام الميكروفون",
     "microphoneAriaDescription": "خيارات الصوت",
+    "defaultMicrophoneLabelFallback": "افتراضي",
     "deepNoiseSuppressionTitle": "منع الضوضاء",
     "deepNoiseSuppressionOnAnnouncement": "تم تشغيل منع الضوضاء العميقة",
     "deepNoiseSuppressionOffAnnouncement": "تم إيقاف تشغيل منع الضوضاء العميقة"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "إلغاء كتم صوت الجهاز",
     "microphoneMenuTitle": "الميكروفون",
     "microphoneMenuTooltip": "اختيار الميكروفون",
+    "defaultMicrophoneLabelFallback": "افتراضي",
     "speakerMenuTitle": "مكبر الصوت",
     "speakerMenuTooltip": "اختيار مكبر صوت"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} قال {message}",
     "messageContentMineAriaText": "{status} أنت قولت {message}",
     "editBoxTextLimit": "تجاوزت رسالتك الحد الأقصى لعدد الأحرف {limitNumber}",
+    "editBoxEmptyWarningText": "الرجاء كتابة رسالة للمتابعة",
     "editBoxPlaceholderText": "تحرير رسالتك",
     "newMessagesIndicator": "رسائل جديدة",
     "noDisplayNameSub": "لا يوجد اسم",

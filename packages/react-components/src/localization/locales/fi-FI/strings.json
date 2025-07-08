@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "Ladataan palvelimeen... Odota hetki.",
     "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan palvelimeen",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "Ladattu palvelimeen",
     "attachmentMoreMenu": "Lisää asetuksia"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "Kuvaa ladataan palvelimeen, odota.",
     "removeAttachment": "Poista tiedosto",
     "uploading": "Ladataan",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "Lataus valmis",
     "richTextBoldTooltip": "Lihavointi",
     "richTextItalicTooltip": "Kursivointi",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Mykistä mikrofoni",
     "microphonePrimaryActionSplitButtonTitle": "Käytä mikrofonia",
     "microphoneAriaDescription": "Ääniasetukset",
+    "defaultMicrophoneLabelFallback": "Oletus",
     "deepNoiseSuppressionTitle": "Melunvaimennus",
     "deepNoiseSuppressionOnAnnouncement": "Syvä melunvaimennus on otettu käyttöön",
     "deepNoiseSuppressionOffAnnouncement": "Syvä melunvaimennus on poistettu käytöstä"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Valitse äänilaite",
     "microphoneMenuTitle": "Mikrofoni",
     "microphoneMenuTooltip": "Valitse mikrofoni",
+    "defaultMicrophoneLabelFallback": "Oletus",
     "speakerMenuTitle": "Kaiutin",
     "speakerMenuTooltip": "Valitse kaiutin"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} sanoi {message}",
     "messageContentMineAriaText": "{status} Sanoit {message}",
     "editBoxTextLimit": "Viesti ylittää {limitNumber} merkin rajan",
+    "editBoxEmptyWarningText": "Jatka kirjoittamalla viesti",
     "editBoxPlaceholderText": "Muokkaa viestiäsi",
     "newMessagesIndicator": "Uudet viestit",
     "noDisplayNameSub": "Ei nimeä",

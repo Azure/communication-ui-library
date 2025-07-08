@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "Filen laddas upp. Vänta.",
     "removeAttachment": "Ta bort fil",
     "uploading": "Laddar upp",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "Uppladdningen har slutförts",
     "attachmentMoreMenu": "Fler alternativ"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "Bilden laddas upp. Vänta.",
     "removeAttachment": "Ta bort filen",
     "uploading": "Laddar upp",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "Uppladdningen har slutförts",
     "richTextBoldTooltip": "Fet",
     "richTextItalicTooltip": "Kursiv",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Inaktivera mikrofonen",
     "microphonePrimaryActionSplitButtonTitle": "Använd mikrofon",
     "microphoneAriaDescription": "Ljudalternativ",
+    "defaultMicrophoneLabelFallback": "Standardinställning",
     "deepNoiseSuppressionTitle": "Ljuddämpning",
     "deepNoiseSuppressionOnAnnouncement": "Djup brusreducering har aktiverats",
     "deepNoiseSuppressionOffAnnouncement": "Djup brusreducering har inaktiverats"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Välj ljudenhet",
     "microphoneMenuTitle": "Mikrofon",
     "microphoneMenuTooltip": "Välj mikrofon",
+    "defaultMicrophoneLabelFallback": "Standardinställning",
     "speakerMenuTitle": "Högtalare",
     "speakerMenuTooltip": "Välj högtalare"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} sa {message}",
     "messageContentMineAriaText": "{status} Du sa {message}",
     "editBoxTextLimit": "Meddelandet överskrider gränsen på {limitNumber} tecken",
+    "editBoxEmptyWarningText": "Skriv ett meddelande för att fortsätta",
     "editBoxPlaceholderText": "Redigera meddelandet",
     "newMessagesIndicator": "Nya meddelanden",
     "noDisplayNameSub": "Inget namn",

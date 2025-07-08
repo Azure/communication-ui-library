@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "ファイルをアップロードしています。お待ちください。",
     "removeAttachment": "ファイルの削除",
     "uploading": "アップロード中",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "アップロードが完了しました",
     "attachmentMoreMenu": "その他のオプション"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "画像をアップロードしています。お待ちください。",
     "removeAttachment": "ファイルを削除します",
     "uploading": "アップロード中",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "アップロード完了",
     "richTextBoldTooltip": "太字",
     "richTextItalicTooltip": "斜体",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "マイクをミュートする",
     "microphonePrimaryActionSplitButtonTitle": "マイクを使用する",
     "microphoneAriaDescription": "オーディオのオプション",
+    "defaultMicrophoneLabelFallback": "既定値",
     "deepNoiseSuppressionTitle": "ノイズ抑制",
     "deepNoiseSuppressionOnAnnouncement": "ディープ ノイズ抑制がオンになっています",
     "deepNoiseSuppressionOffAnnouncement": "ディープ ノイズ抑制がオフになっています"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "オーディオ デバイスを選択する",
     "microphoneMenuTitle": "マイク",
     "microphoneMenuTooltip": "マイクを選択する",
+    "defaultMicrophoneLabelFallback": "既定値",
     "speakerMenuTitle": "スピーカー",
     "speakerMenuTooltip": "スピーカーを選択する"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} さんが {message} と言いました",
     "messageContentMineAriaText": "{status} あなたが {message} と言いました",
     "editBoxTextLimit": "メッセージが{limitNumber}文字の制限を超えています",
+    "editBoxEmptyWarningText": "続けるには、メッセージを入力してください",
     "editBoxPlaceholderText": "メッセージを編集する",
     "newMessagesIndicator": "新しいメッセージ",
     "noDisplayNameSub": "名前がありません",

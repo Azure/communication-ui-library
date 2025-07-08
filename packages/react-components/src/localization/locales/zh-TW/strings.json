@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "正在上傳檔案，請稍候。",
     "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "上傳完成",
     "attachmentMoreMenu": "其他選項"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "正在上傳影像，請稍候。",
     "removeAttachment": "移除檔案",
     "uploading": "正在上傳",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "上傳完成",
     "richTextBoldTooltip": "粗體",
     "richTextItalicTooltip": "斜體",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "將麥克風靜音",
     "microphonePrimaryActionSplitButtonTitle": "使用麥克風",
     "microphoneAriaDescription": "音訊選項",
+    "defaultMicrophoneLabelFallback": "預設",
     "deepNoiseSuppressionTitle": "噪音抑制",
     "deepNoiseSuppressionOnAnnouncement": "深噪音抑制已開啟",
     "deepNoiseSuppressionOffAnnouncement": "深噪音抑制已關閉"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "選擇音訊裝置",
     "microphoneMenuTitle": "麥克風",
     "microphoneMenuTooltip": "選擇麥克風",
+    "defaultMicrophoneLabelFallback": "預設",
     "speakerMenuTitle": "演講者",
     "speakerMenuTooltip": "選擇喇叭"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} 說 {message}",
     "messageContentMineAriaText": "{status} 您說 {message}",
     "editBoxTextLimit": "您的訊息超過 {limitNumber} 個字元的限制",
+    "editBoxEmptyWarningText": "請輸入訊息以繼續",
     "editBoxPlaceholderText": "編輯您的訊息",
     "newMessagesIndicator": "新訊息",
     "noDisplayNameSub": "沒有名稱",

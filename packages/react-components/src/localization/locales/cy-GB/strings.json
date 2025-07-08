@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "Wrthi'n llwytho'r ffeil i fyny, arhoswch funud.",
     "removeAttachment": "Tynnu’r ffeil",
     "uploading": "Wrthi'n llwytho i fyny",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "Wedi gorffen llwytho i fyny",
     "attachmentMoreMenu": "Mwy o Ddewisiadau"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "Wrthi'n lanlwytho'r ddelwedd, arhoswch funud.",
     "removeAttachment": "Tynnu'r ffeil",
     "uploading": "Wrthi'n lanlwytho",
+    "uploadProgress": "Upload progress {progress}%",
     "uploadCompleted": "Wedi gorffen lanlwytho",
     "richTextBoldTooltip": "Trwm",
     "richTextItalicTooltip": "Italig",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Tewi'r meic",
     "microphonePrimaryActionSplitButtonTitle": "Defnyddio'r meicroffon",
     "microphoneAriaDescription": "Dewisiadau sain",
+    "defaultMicrophoneLabelFallback": "Diofyn",
     "deepNoiseSuppressionTitle": "Atal sŵn",
     "deepNoiseSuppressionOnAnnouncement": "Mae atal sŵn dwfn wedi'i roi ar waith",
     "deepNoiseSuppressionOffAnnouncement": "Mae atal sŵn dwfn wedi'i ddiffodd"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Dewis dyfais sain",
     "microphoneMenuTitle": "Meicroffon",
     "microphoneMenuTooltip": "Dewis meicroffon",
+    "defaultMicrophoneLabelFallback": "Diofyn",
     "speakerMenuTitle": "Siaradwr",
     "speakerMenuTooltip": "Dewis seinydd"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} Dywedodd {author} {message}",
     "messageContentMineAriaText": "{status} Dywedoch chi {message}",
     "editBoxTextLimit": "Mae eich neges dros y terfyn o {limitNumber} nodau",
+    "editBoxEmptyWarningText": "Teipiwch neges i fwrw ymlaen",
     "editBoxPlaceholderText": "Golygu eich neges",
     "newMessagesIndicator": "Negeseuon newydd",
     "noDisplayNameSub": "Dim enw",
