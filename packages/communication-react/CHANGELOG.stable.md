@@ -19,6 +19,7 @@ Tue, 08 Jul 2025 16:10:20 GMT
 - Add error message for empty content for edit box ([PR #5886](https://github.com/azure/communication-ui-library/pull/5886) by 77021369+jimchou-dev@users.noreply.github.com)
 - Add aria label for upload progress ([PR #5916](https://github.com/azure/communication-ui-library/pull/5916) by 77021369+jimchou-dev@users.noreply.github.com)
 - Update brace-expansion to 1.1.12 ([PR #5914](https://github.com/azure/communication-ui-library/pull/5914) by 2684369+JamesBurnside@users.noreply.github.com)
+- Update local participant's display name in together mode to be `You` ([PR #5927](https://github.com/azure/communication-ui-library/pull/5927) by 2684369+JamesBurnside@users.noreply.github.com)
 ### Storybook Changes
 - Update storybook pages to include Vite instead of CRA ([PR #5890](https://github.com/azure/communication-ui-library/pull/5890) by 96077406+carocao-msft@users.noreply.github.com)
 
