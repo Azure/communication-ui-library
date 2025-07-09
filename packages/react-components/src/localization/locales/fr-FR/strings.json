@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "Chargement du fichier en cours, veuillez patienter.",
     "removeAttachment": "Supprimer le fichier",
     "uploading": "Chargement",
+    "uploadProgress": "Progression du chargement {progress} %",
     "uploadCompleted": "Téléchargement terminé",
     "attachmentMoreMenu": "Plus d’options"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "Chargement de l’image en cours, veuillez patienter.",
     "removeAttachment": "Supprimer un fichier",
     "uploading": "Téléchargement",
+    "uploadProgress": "Progression du chargement {progress} %",
     "uploadCompleted": "Chargement terminé",
     "richTextBoldTooltip": "Gras",
     "richTextItalicTooltip": "Italique",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Désactiver le micro",
     "microphonePrimaryActionSplitButtonTitle": "Utiliser le microphone",
     "microphoneAriaDescription": "Options audio",
+    "defaultMicrophoneLabelFallback": "Par défaut",
     "deepNoiseSuppressionTitle": "Suppression du bruit",
     "deepNoiseSuppressionOnAnnouncement": "La suppression du bruit profond a été activée",
     "deepNoiseSuppressionOffAnnouncement": "La suppression du bruit profond a été désactivée"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Choisissez un périphérique audio",
     "microphoneMenuTitle": "Microphone",
     "microphoneMenuTooltip": "Choisissez le micro",
+    "defaultMicrophoneLabelFallback": "Par défaut",
     "speakerMenuTitle": "Haut-parleur",
     "speakerMenuTooltip": "Choisissez le haut-parleur"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} a dit {message}.",
     "messageContentMineAriaText": "{status} Vous avez dit {message}.",
     "editBoxTextLimit": "Votre message dépasse la limite de {limitNumber} caractères",
+    "editBoxEmptyWarningText": "Tapez un message pour continuer",
     "editBoxPlaceholderText": "Modifier votre message",
     "newMessagesIndicator": "Nouveaux messages",
     "noDisplayNameSub": "Sans nom",

@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "Soubor se nahrává, počkejte prosím.",
     "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
+    "uploadProgress": "Průběh nahrávání: {progress} %",
     "uploadCompleted": "Nahrávání se dokončilo",
     "attachmentMoreMenu": "Další možnosti"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "Obrázek se nahrává, počkejte prosím.",
     "removeAttachment": "Odebrat soubor",
     "uploading": "Nahrávání",
+    "uploadProgress": "Průběh nahrávání: {progress} %",
     "uploadCompleted": "Nahrávání se dokončilo",
     "richTextBoldTooltip": "Tučné",
     "richTextItalicTooltip": "Kurzíva",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Ztlumit mikrofon",
     "microphonePrimaryActionSplitButtonTitle": "Použít mikrofon",
     "microphoneAriaDescription": "Možnosti zvuku",
+    "defaultMicrophoneLabelFallback": "Výchozí",
     "deepNoiseSuppressionTitle": "Potlačení šumu",
     "deepNoiseSuppressionOnAnnouncement": "Potlačení hlubokého šumu je zapnuté",
     "deepNoiseSuppressionOffAnnouncement": "Potlačení hlubokého šumu je vypnuté"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Zvolit zvukové zařízení",
     "microphoneMenuTitle": "Mikrofon",
     "microphoneMenuTooltip": "Zvolit mikrofon",
+    "defaultMicrophoneLabelFallback": "Výchozí",
     "speakerMenuTitle": "Reproduktor",
     "speakerMenuTooltip": "Zvolit reproduktor"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} řekl(a) {message}",
     "messageContentMineAriaText": "{status} Řekli jste {message}.",
     "editBoxTextLimit": "Vaše zpráva překročila limit {limitNumber} znaků.",
+    "editBoxEmptyWarningText": "Napište prosím zprávu, aby bylo možné pokračovat",
     "editBoxPlaceholderText": "Upravit zprávu",
     "newMessagesIndicator": "Nové zprávy",
     "noDisplayNameSub": "Bez jména",
