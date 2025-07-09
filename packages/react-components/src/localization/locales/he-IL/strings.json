@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "הקובץ בהעלאה, נא המתן.",
     "removeAttachment": "הסרת קובץ",
     "uploading": "מעלה",
+    "uploadProgress": "התקדמות ההעלאה {progress}%",
     "uploadCompleted": "ההעלאה הושלמה",
     "attachmentMoreMenu": "אפשרויות נוספות"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "התמונה בהעלאה, נא המתן.",
     "removeAttachment": "הסר קובץ",
     "uploading": "מעלה",
+    "uploadProgress": "התקדמות ההעלאה {progress}%",
     "uploadCompleted": "ההעלאה הושלמה",
     "richTextBoldTooltip": "מודגש",
     "richTextItalicTooltip": "נטוי",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "השתק את המיקרופון",
     "microphonePrimaryActionSplitButtonTitle": "השתמש במיקרופון",
     "microphoneAriaDescription": "אפשרויות שמע",
+    "defaultMicrophoneLabelFallback": "ברירת מחדל",
     "deepNoiseSuppressionTitle": "העלמת רעש",
     "deepNoiseSuppressionOnAnnouncement": "דיכוי רעשים עמוקים הופעל",
     "deepNoiseSuppressionOffAnnouncement": "דיכוי רעשים עמוקים בוטל"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "בחר התקן שמע",
     "microphoneMenuTitle": "מיקרופון",
     "microphoneMenuTooltip": "בחר מיקרופון",
+    "defaultMicrophoneLabelFallback": "ברירת מחדל",
     "speakerMenuTitle": "רמקול",
     "speakerMenuTooltip": "בחר רמקול"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} אמר {message}",
     "messageContentMineAriaText": "{status} אמרת {message}",
     "editBoxTextLimit": "ההודעה שלך נמצאת מעבר למגבלה של {limitNumber} תווים",
+    "editBoxEmptyWarningText": "הקלד הודעה כדי להמשיך",
     "editBoxPlaceholderText": "ערוך את ההודעה שלך",
     "newMessagesIndicator": "הודעות חדשות",
     "noDisplayNameSub": "ללא שם",

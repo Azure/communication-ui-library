@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "È in corso il caricamento del file, attendere.",
     "removeAttachment": "Rimuovi file",
     "uploading": "Caricamento in corso",
+    "uploadProgress": "Percentuale di caricamento {progress}%",
     "uploadCompleted": "Caricamento completato",
     "attachmentMoreMenu": "Altre opzioni"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "È in corso il caricamento dell'immagine, attendere.",
     "removeAttachment": "Rimuovi file",
     "uploading": "Caricamento",
+    "uploadProgress": "Percentuale di caricamento {progress}%",
     "uploadCompleted": "Caricamento completato",
     "richTextBoldTooltip": "Grassetto",
     "richTextItalicTooltip": "Corsivo",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Disattiva microfono",
     "microphonePrimaryActionSplitButtonTitle": "Usa il microfono",
     "microphoneAriaDescription": "Opzioni audio",
+    "defaultMicrophoneLabelFallback": "Impostazione predefinita",
     "deepNoiseSuppressionTitle": "Eliminazione del rumore",
     "deepNoiseSuppressionOnAnnouncement": "L'eliminazione del rumore profondo è stata attivata",
     "deepNoiseSuppressionOffAnnouncement": "L'eliminazione del rumore profondo è stata disattivata"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Scegli dispositivo audio",
     "microphoneMenuTitle": "Microfono",
     "microphoneMenuTooltip": "Scegli microfono",
+    "defaultMicrophoneLabelFallback": "Impostazione predefinita",
     "speakerMenuTitle": "Altoparlante",
     "speakerMenuTooltip": "Scegli altoparlante"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} ha detto {message}",
     "messageContentMineAriaText": "{status} Hai detto {message}",
     "editBoxTextLimit": "Il messaggio ha superato il limite di caratteri {limitNumber}",
+    "editBoxEmptyWarningText": "Digita un messaggio per continuare",
     "editBoxPlaceholderText": "Modifica il messaggio",
     "newMessagesIndicator": "Nuovi messaggi",
     "noDisplayNameSub": "Nessun nome",
