@@ -85,8 +85,14 @@ export const TogetherModeOverlay = memo(
 
       const updatedSignals: { [key: string]: TogetherModeParticipantStatus } = {};
       for (const p of participantsWithVideoAvailable) {
-        const { userId, reaction, raisedHand, spotlight, isMuted, displayName } = p;
+        const { userId, reaction, raisedHand, spotlight, isMuted } = p;
         const seatingPosition = togetherModeSeatPositions[userId];
+        const isLocalParticipant = p.userId === localParticipant.userId;
+        const displayName = p.displayName
+          ? p.displayName
+          : isLocalParticipant
+            ? locale.strings.videoGallery.localVideoLabel
+            : locale.strings.videoGallery.displayNamePlaceholder;
         if (seatingPosition) {
           updatedSignals[userId] = {
             id: userId,
@@ -126,6 +132,7 @@ export const TogetherModeOverlay = memo(
       togetherModeParticipantStatus,
       togetherModeSeatPositions,
       reactionResources,
+      locale.strings.videoGallery.localVideoLabel,
       locale.strings.videoGallery.displayNamePlaceholder,
       hoveredParticipantID
     ]);
