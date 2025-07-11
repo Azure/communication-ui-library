@@ -2,6 +2,27 @@
   "name": "@internal/storybook8",
   "entries": [
     {
+      "date": "Tue, 08 Jul 2025 16:10:20 GMT",
+      "version": "1.29.0",
+      "tag": "@internal/storybook8_v1.29.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/storybook8",
+            "comment": "Bump @azure/communication-react to v1.29.0",
+            "commit": "not available"
+          },
+          {
+            "author": "beachball",
+            "package": "@internal/storybook8",
+            "comment": "Bump @internal/fake-backends to v1.29.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Mon, 09 Jun 2025 16:27:48 GMT",
       "version": "1.28.0",
       "tag": "@internal/storybook8_v1.28.0",

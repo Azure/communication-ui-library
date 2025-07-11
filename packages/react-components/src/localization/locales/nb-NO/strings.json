@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "Filen lastes opp. Vent litt.",
     "removeAttachment": "Fjern fil",
     "uploading": "Laster opp",
+    "uploadProgress": "Opplastingsfremdrift {progress} %",
     "uploadCompleted": "Opplasting fullført",
     "attachmentMoreMenu": "Flere alternativer"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "Bildet lastes opp. Vent litt.",
     "removeAttachment": "Fjern fil",
     "uploading": "Laster opp",
+    "uploadProgress": "Opplastingsfremdrift {progress} %",
     "uploadCompleted": "Opplasting fullført",
     "richTextBoldTooltip": "Fet",
     "richTextItalicTooltip": "Kursiv",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Demp mikrofon",
     "microphonePrimaryActionSplitButtonTitle": "Bruk mikrofon",
     "microphoneAriaDescription": "Lydalternativer",
+    "defaultMicrophoneLabelFallback": "Standard",
     "deepNoiseSuppressionTitle": "Støydemping",
     "deepNoiseSuppressionOnAnnouncement": "Dyp støydemping er aktivert",
     "deepNoiseSuppressionOffAnnouncement": "Dyp støydemping er deaktivert"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Velg lydenhet",
     "microphoneMenuTitle": "Mikrofon",
     "microphoneMenuTooltip": "Velg mikrofon",
+    "defaultMicrophoneLabelFallback": "Standard",
     "speakerMenuTitle": "Høyttaler",
     "speakerMenuTooltip": "Velg høyttaler"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} sa {message}",
     "messageContentMineAriaText": "{status} Du sa {message}",
     "editBoxTextLimit": "Meldingen er over grensen på {limitNumber} tegn",
+    "editBoxEmptyWarningText": "Skriv en melding for å fortsette",
     "editBoxPlaceholderText": "Rediger meldingen",
     "newMessagesIndicator": "Nye meldinger",
     "noDisplayNameSub": "Uten navn",

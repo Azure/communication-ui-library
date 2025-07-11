@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "Выполняется отправка файла. Подождите.",
     "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
+    "uploadProgress": "Ход отправки: {progress} %",
     "uploadCompleted": "Отправка завершена",
     "attachmentMoreMenu": "Дополнительные параметры"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "Выполняется отправка изображения. Подождите.",
     "removeAttachment": "Удалить файл",
     "uploading": "Отправка",
+    "uploadProgress": "Ход отправки: {progress} %",
     "uploadCompleted": "Отправка завершена",
     "richTextBoldTooltip": "Полужирный",
     "richTextItalicTooltip": "Курсив",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Отключить микрофон",
     "microphonePrimaryActionSplitButtonTitle": "Использовать микрофон",
     "microphoneAriaDescription": "Параметры звука",
+    "defaultMicrophoneLabelFallback": "По умолчанию",
     "deepNoiseSuppressionTitle": "Подавление шума",
     "deepNoiseSuppressionOnAnnouncement": "Глубокое подавление шума включено",
     "deepNoiseSuppressionOffAnnouncement": "Глубокое подавление шума отключено"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Выбрать звуковое устройство",
     "microphoneMenuTitle": "Микрофон",
     "microphoneMenuTooltip": "Выбрать микрофон",
+    "defaultMicrophoneLabelFallback": "По умолчанию",
     "speakerMenuTitle": "Динамик",
     "speakerMenuTooltip": "Выбрать динамик"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} говорит: {message}",
     "messageContentMineAriaText": "{status} Вы сказали: {message}",
     "editBoxTextLimit": "Превышено предельное число символов в {limitNumber} сообщении",
+    "editBoxEmptyWarningText": "Введите сообщение, чтобы продолжить",
     "editBoxPlaceholderText": "Отредактируйте сообщение",
     "newMessagesIndicator": "Новые сообщения",
     "noDisplayNameSub": "Без имени",

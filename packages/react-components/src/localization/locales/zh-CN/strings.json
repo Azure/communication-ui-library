@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "正在上传文件，请稍候。",
     "removeAttachment": "删除文件",
     "uploading": "正在上传",
+    "uploadProgress": "上传进度 {progress}%",
     "uploadCompleted": "已完成上传",
     "attachmentMoreMenu": "更多选项"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "正在上传图像，请稍候。",
     "removeAttachment": "删除文件",
     "uploading": "正在上传",
+    "uploadProgress": "上传进度 {progress}%",
     "uploadCompleted": "已完成上传",
     "richTextBoldTooltip": "粗体",
     "richTextItalicTooltip": "斜体",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "将麦克风静音",
     "microphonePrimaryActionSplitButtonTitle": "使用麦克风",
     "microphoneAriaDescription": "音频选项",
+    "defaultMicrophoneLabelFallback": "默认",
     "deepNoiseSuppressionTitle": "噪音抑制",
     "deepNoiseSuppressionOnAnnouncement": "深层噪音抑制已打开",
     "deepNoiseSuppressionOffAnnouncement": "深层噪音抑制已关闭"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "选择音频设备",
     "microphoneMenuTitle": "麦克风",
     "microphoneMenuTooltip": "选择“麦克风”",
+    "defaultMicrophoneLabelFallback": "默认",
     "speakerMenuTitle": "免提",
     "speakerMenuTooltip": "选择“扬声器”"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status}{author} 说 {message}",
     "messageContentMineAriaText": "{status}你说了 {message}",
     "editBoxTextLimit": "你的消息超过了{limitNumber}个字符的限制",
+    "editBoxEmptyWarningText": "请键入消息以继续",
     "editBoxPlaceholderText": "编辑消息",
     "newMessagesIndicator": "新消息",
     "noDisplayNameSub": "无名称",

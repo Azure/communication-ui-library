@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "Trwa przekazywanie pliku. Czekaj.",
     "removeAttachment": "Usuń plik",
     "uploading": "Przekazywanie",
+    "uploadProgress": "Postęp przekazywania {progress}%",
     "uploadCompleted": "Zakończono przekazywanie",
     "attachmentMoreMenu": "Więcej opcji"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "Trwa przekazywanie obrazu. Czekaj.",
     "removeAttachment": "Usuwanie pliku",
     "uploading": "Przekazywanie",
+    "uploadProgress": "Postęp przekazywania {progress}%",
     "uploadCompleted": "Zakończono przekazywanie",
     "richTextBoldTooltip": "Pogrubienie",
     "richTextItalicTooltip": "Kursywa",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Wycisz mikrofon",
     "microphonePrimaryActionSplitButtonTitle": "Użyj mikrofonu",
     "microphoneAriaDescription": "Opcje dźwięku",
+    "defaultMicrophoneLabelFallback": "Domyślne",
     "deepNoiseSuppressionTitle": "Tłumienie szumu",
     "deepNoiseSuppressionOnAnnouncement": "Głębokie tłumienie szumów zostało włączone",
     "deepNoiseSuppressionOffAnnouncement": "Głębokie tłumienie szumów zostało wyłączone"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Wybierz urządzenie audio",
     "microphoneMenuTitle": "Mikrofon",
     "microphoneMenuTooltip": "Wybierz mikrofon",
+    "defaultMicrophoneLabelFallback": "Domyślne",
     "speakerMenuTitle": "Głośnik",
     "speakerMenuTooltip": "Wybierz głośnik"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} Użytkownik {author} powiedział: {message}",
     "messageContentMineAriaText": "{status} Twoja wypowiedź: {message}",
     "editBoxTextLimit": "Twoja wiadomość przekracza limit {limitNumber} znaków",
+    "editBoxEmptyWarningText": "Wpisz wiadomość, aby kontynuować",
     "editBoxPlaceholderText": "Edytuj wiadomość",
     "newMessagesIndicator": "Nowe wiadomości",
     "noDisplayNameSub": "Bez nazwy",
