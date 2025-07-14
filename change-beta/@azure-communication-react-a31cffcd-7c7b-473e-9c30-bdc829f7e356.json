@@ -1,0 +1,9 @@
+{
+  "type": "prerelease",
+  "area": "improvement",
+  "workstream": "sourcemaps in internally deployed samples",
+  "comment": "making sure we build our apps in development so we can get sourcemaps",
+  "packageName": "@azure/communication-react",
+  "email": "alkwa@microsoft.com",
+  "dependentChangeType": "patch"
+}
