@@ -55,4 +55,4 @@ We look forward to building an amazing open source library with you!
 
 - [Repository Documentation](./docs/README.md)
 - [Conceptual Documentation](https://aka.ms/acsstorybook)
-- [Quick-start Documentation](https://azure.github.io/communication-ui-library/?path=/story/quickstarts-composites--page)
+- [Quick-start Documentation](https://azure.github.io/communication-ui-library/?path=/docs/composites-get-started--docs)
