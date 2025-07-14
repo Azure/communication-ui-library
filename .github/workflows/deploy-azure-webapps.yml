@@ -24,7 +24,7 @@ jobs:
     permissions:
       # Needed for Azure login
       id-token: write
-    environment: production
+    environment: development
     steps:
       - uses: actions/checkout@v4
 
