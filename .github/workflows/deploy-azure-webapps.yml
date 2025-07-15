@@ -24,7 +24,7 @@ jobs:
     permissions:
       # Needed for Azure login
       id-token: write
-    environment: development
+    environment: production
     steps:
       - uses: actions/checkout@v4
 
@@ -56,6 +56,8 @@ jobs:
 
       - name: Build Projects
         run: rush build
+        env:
+          NODE_ENV: development
 
       - name: Log in with Azure
         uses: azure/login@v2
