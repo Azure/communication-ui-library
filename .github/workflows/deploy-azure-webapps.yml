@@ -57,7 +57,7 @@ jobs:
       - name: Build Projects
         run: rush build
         env:
-          NODE_ENV: development
+          NODE_ENV: production
 
       - name: Log in with Azure
         uses: azure/login@v2

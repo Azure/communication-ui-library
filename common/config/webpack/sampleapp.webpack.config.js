@@ -18,7 +18,7 @@ const webpackConfig = (sampleAppDir, env, babelConfig) => {
       minimizer: []
     },
     mode: env.production ? 'production' : 'development',
-    ...(env.production || !env.development ? {} : { devtool: 'eval-source-map' }),
+    ...(env.production || !env.development ? { devtool: 'source-map'} : { devtool: 'eval-source-map' }),
     resolve:  {
       extensions: ['.ts', '.tsx', '.js'],
       alias: env.production ? {
