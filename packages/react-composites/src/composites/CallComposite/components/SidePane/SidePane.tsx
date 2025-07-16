@@ -110,7 +110,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
     <Stack
       aria-label={props.ariaLabel}
       data-is-focusable={!!props.ariaLabel}
-      role={props.ariaLabel ? 'navigation' : undefined}
+      role={props.ariaLabel ? 'dialog' : undefined}
       tabIndex={props.ariaLabel ? 0 : undefined}
       verticalFill
       grow
