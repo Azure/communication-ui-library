@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "O arquivo está sendo carregado, aguarde.",
     "removeAttachment": "Remover arquivo",
     "uploading": "Carregando",
+    "uploadProgress": "Progresso do carregamento {progress}%",
     "uploadCompleted": "Carregamento concluído",
     "attachmentMoreMenu": "Mais Opções"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "A imagem está sendo carregada, aguarde.",
     "removeAttachment": "Remover arquivo",
     "uploading": "Carregando",
+    "uploadProgress": "Progresso do carregamento {progress}%",
     "uploadCompleted": "Carregamento concluído",
     "richTextBoldTooltip": "Negrito",
     "richTextItalicTooltip": "Itálico",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Ativar mudo do microfone",
     "microphonePrimaryActionSplitButtonTitle": "Usar o microfone",
     "microphoneAriaDescription": "Opções de áudio",
+    "defaultMicrophoneLabelFallback": "Padrão",
     "deepNoiseSuppressionTitle": "Supressão de ruído",
     "deepNoiseSuppressionOnAnnouncement": "A supressão de ruído profundo foi ativada",
     "deepNoiseSuppressionOffAnnouncement": "A supressão de ruído profundo foi desativada"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Escolher dispositivo de áudio",
     "microphoneMenuTitle": "Microfone",
     "microphoneMenuTooltip": "Escolher microfone",
+    "defaultMicrophoneLabelFallback": "Padrão",
     "speakerMenuTitle": "Alto-falante",
     "speakerMenuTooltip": "Escolher alto-falante"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} disse {message}",
     "messageContentMineAriaText": "{status} Você disse {message}",
     "editBoxTextLimit": "Sua mensagem está acima do limite de {limitNumber} caracteres",
+    "editBoxEmptyWarningText": "Digite uma mensagem para continuar",
     "editBoxPlaceholderText": "Edite sua mensagem",
     "newMessagesIndicator": "Novas mensagens",
     "noDisplayNameSub": "Sem nome",

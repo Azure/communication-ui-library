@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "파일을 업로드하는 중입니다. 잠시만 기다려 주세요.",
     "removeAttachment": "파일 제거",
     "uploading": "업로드 중",
+    "uploadProgress": "업로드 진행률 {progress}%",
     "uploadCompleted": "업로드 완료",
     "attachmentMoreMenu": "옵션 더 보기"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "이미지를 업로드하는 중입니다. 잠시만 기다려 주세요.",
     "removeAttachment": "파일 제거",
     "uploading": "업로드 중",
+    "uploadProgress": "업로드 진행률 {progress}%",
     "uploadCompleted": "업로드 완료",
     "richTextBoldTooltip": "굵게",
     "richTextItalicTooltip": "기울임꼴",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "마이크 음소거",
     "microphonePrimaryActionSplitButtonTitle": "마이크 사용",
     "microphoneAriaDescription": "오디오 옵션",
+    "defaultMicrophoneLabelFallback": "기본값",
     "deepNoiseSuppressionTitle": "노이즈 억제",
     "deepNoiseSuppressionOnAnnouncement": "심층 노이즈 억제가 켜졌습니다.",
     "deepNoiseSuppressionOffAnnouncement": "심층 노이즈 억제가 꺼졌습니다."
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "오디오 장치 선택",
     "microphoneMenuTitle": "마이크",
     "microphoneMenuTooltip": "마이크 선택",
+    "defaultMicrophoneLabelFallback": "기본값",
     "speakerMenuTitle": "발언자",
     "speakerMenuTooltip": "스피커 선택"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} 님의 메시지: {message}",
     "messageContentMineAriaText": "{status} 내 메시지: {message}",
     "editBoxTextLimit": "메시지가 {limitNumber} 문자 제한을 초과했습니다.",
+    "editBoxEmptyWarningText": "계속하려면 메시지를 입력하세요.",
     "editBoxPlaceholderText": "메시지 편집",
     "newMessagesIndicator": "새 메시지",
     "noDisplayNameSub": "이름 없음",

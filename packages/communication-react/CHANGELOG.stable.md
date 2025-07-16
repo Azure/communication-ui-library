@@ -1,8 +1,26 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 09 Jun 2025 16:27:48 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 08 Jul 2025 16:10:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.29.0](https://github.com/azure/communication-ui-library/tree/1.29.0)
+
+Tue, 08 Jul 2025 16:10:20 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.28.0...1.29.0)
+
+### Improvements
+- Refactor captions component, put the announcer to one single private component ([PR #5901](https://github.com/azure/communication-ui-library/pull/5901) by 96077406+carocao-msft@users.noreply.github.com)
+- Migration to ESLint9 ([PR #5887](https://github.com/azure/communication-ui-library/pull/5887), [PR #5893](https://github.com/azure/communication-ui-library/pull/5893), [PR #5895](https://github.com/azure/communication-ui-library/pull/5895), [PR #5896](https://github.com/azure/communication-ui-library/pull/5896), [PR #5898](https://github.com/azure/communication-ui-library/pull/5898), [PR #5899](https://github.com/azure/communication-ui-library/pull/5899), [PR #5905](https://github.com/azure/communication-ui-library/pull/5905), [PR #5912](https://github.com/azure/communication-ui-library/pull/5912))
+
+### Bug Fixes
+- Improve device permission checks on Android WebViews ([PR #5888](https://github.com/azure/communication-ui-library/pull/5888) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix issue on Android WebView where there is no default audio device ([PR #5900](https://github.com/azure/communication-ui-library/pull/5900) by 2684369+JamesBurnside@users.noreply.github.com)
+- Add error message for empty content for edit box ([PR #5886](https://github.com/azure/communication-ui-library/pull/5886) by 77021369+jimchou-dev@users.noreply.github.com)
+- Add aria label for upload progress ([PR #5916](https://github.com/azure/communication-ui-library/pull/5916) by 77021369+jimchou-dev@users.noreply.github.com)
+- Update brace-expansion to 1.1.12 ([PR #5914](https://github.com/azure/communication-ui-library/pull/5914) by 2684369+JamesBurnside@users.noreply.github.com)
+### Storybook Changes
+- Update storybook pages to include Vite instead of CRA ([PR #5890](https://github.com/azure/communication-ui-library/pull/5890) by 96077406+carocao-msft@users.noreply.github.com)
 
 ## [1.28.0](https://github.com/azure/communication-ui-library/tree/1.28.0)
 

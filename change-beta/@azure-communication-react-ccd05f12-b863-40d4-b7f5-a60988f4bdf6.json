@@ -1,8 +1,8 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "ESLint9 fix",
-  "comment": "ESLint9 fix for packages/calling-stateful-client",
+  "workstream": "[A11y]Change role to dialog to fix accessible name for effects pane",
+  "comment": "[A11y]Change role to dialog to fix accessible name for effects pane",
   "packageName": "@azure/communication-react",
   "email": "97124699+prabhjot-msft@users.noreply.github.com",
   "dependentChangeType": "patch"

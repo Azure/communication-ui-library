@@ -32,6 +32,7 @@
     "attachmentUploadsPendingError": "Bestand wordt geüpload, even geduld.",
     "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
+    "uploadProgress": "Uploadvoortgang {progress}%",
     "uploadCompleted": "Upload voltooid",
     "attachmentMoreMenu": "Meer opties"
   },
@@ -43,6 +44,7 @@
     "imageUploadsPendingError": "Afbeelding wordt geüpload, even geduld.",
     "removeAttachment": "Bestand verwijderen",
     "uploading": "Uploaden",
+    "uploadProgress": "Uploadvoortgang {progress}%",
     "uploadCompleted": "Upload voltooid",
     "richTextBoldTooltip": "Vet",
     "richTextItalicTooltip": "Cursief",
@@ -156,6 +158,7 @@
     "onSplitButtonMicrophonePrimaryAction": "Microfoon dempen",
     "microphonePrimaryActionSplitButtonTitle": "Microfoon gebruiken",
     "microphoneAriaDescription": "Audio-opties",
+    "defaultMicrophoneLabelFallback": "Standaard",
     "deepNoiseSuppressionTitle": "Ruisonderdrukking",
     "deepNoiseSuppressionOnAnnouncement": "Diepe ruisonderdrukking is ingeschakeld",
     "deepNoiseSuppressionOffAnnouncement": "Diepe ruisonderdrukking is uitgeschakeld"
@@ -169,6 +172,7 @@
     "audioDeviceMenuTooltip": "Audioapparaat kiezen",
     "microphoneMenuTitle": "Microfoon",
     "microphoneMenuTooltip": "Microfoon kiezen",
+    "defaultMicrophoneLabelFallback": "Standaard",
     "speakerMenuTitle": "Spreker",
     "speakerMenuTooltip": "Luidspreker kiezen"
   },
@@ -330,6 +334,7 @@
     "messageContentAriaText": "{status} {author} zei {message}",
     "messageContentMineAriaText": "{status} U zei {message}",
     "editBoxTextLimit": "Uw bericht heeft de limiet van {limitNumber} tekens overschreden",
+    "editBoxEmptyWarningText": "Typ een bericht om door te gaan",
     "editBoxPlaceholderText": "Uw bericht bewerken",
     "newMessagesIndicator": "Nieuwe berichten",
     "noDisplayNameSub": "Geen naam",

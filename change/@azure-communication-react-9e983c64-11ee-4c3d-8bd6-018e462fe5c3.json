@@ -1,9 +1,0 @@
-{
-  "type": "minor",
-  "area": "storybook",
-  "workstream": "Update storybook pages to include Vite instead of CRA",
-  "comment": "Update storybook pages to include Vite instead of CRA",
-  "packageName": "@azure/communication-react",
-  "email": "96077406+carocao-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
