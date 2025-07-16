@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "[A11y]Change role to dialog to fix accessible name for effects pane",
+  "comment": "[A11y]Change role to dialog to fix accessible name for effects pane",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
