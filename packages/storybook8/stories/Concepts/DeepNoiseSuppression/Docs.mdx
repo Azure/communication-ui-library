@@ -14,14 +14,6 @@ This feature is important for most scenarios, as users from every single custome
 1. In a scenario where a patient is consulting the doctor, clarity is crucial for accurate diagnosis and effective communication, allowing the doctor to focus solely on the patient's symptoms and concerns without the interference of background noise. By enabling deep noise suppression, a telehealth organization can filter out these distracting noises, ensuring that the patient's voice is heard clearly by the doctor.
 2. In a scenario where a user is conducting a group meeting in a public space, there can often be noises that can interfere with the call. Being able to remove these distractions is important for the experience of other users, allowing them to focus on what is being said rather than extraneous sounds and distractions.
 
-## Toggles
-
-With the help of these adapter toggles, Contoso has maximum flexibility in the way they want to use DNS in the call.
-
-- DNS on by default: DNS is always enabled in the calling experience by default.
-- Hide UI: DNS button is hidden from user, and they cannot change the state of DNS in call.
-- Disable DNS : If dependency for DNS is not provided it will be disabled for the call.
-
 The UI Library enables users to enhance their video conferencing experiences by providing deep noise suppression by default within the CallComposite and CallWithChat experiences.
 
 <Stack tokens={{ childrenGap: '3rem' }} style={overviewPageImagesStackStyle}>
@@ -36,7 +28,7 @@ The UI Library enables users to enhance their video conferencing experiences by 
   </Stack.Item>
 </Stack>
 
-## Usage
+## Configuration
 
 1. Add import for dependency resolution for deep noise suppression:
 
@@ -45,13 +37,52 @@ import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communicatio
 ```
 
 2. Pass the dependency injection in AzureCommunicationCallAdapterOptions to enable Deep Noise Suppression in the call:
+   > **⚠️ Important:** Deep Noise Suppression is **NOT enabled by default**. You must provide the `onResolveDependency` function to enable DNS functionality. Without this dependency injection, DNS will be completely disabled regardless of other settings.
+
+Deep Noise Suppression provides flexible control through the `deepNoiseSuppressionOptions` configuration:
 
 ```ts
 const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
   return {
     deepNoiseSuppressionOptions: {
-      onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
+      // REQUIRED: Dependency injection to enable DNS functionality
+      onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy,
+
+      // OPTIONAL: Auto-enable DNS when call starts (default: true)
+      deepNoiseSuppressionOnByDefault: true,
+
+      // OPTIONAL: Hide the DNS toggle button from users (default: false)
+      hideDeepNoiseSuppressionButton: false
     }
   };
 }, []);
 ```
+
+### Configuration Scenarios
+
+| Configuration                                | DNS Button Visible | DNS Auto-Enabled | User Can Toggle | Use Case                |
+| -------------------------------------------- | ------------------ | ---------------- | --------------- | ----------------------- |
+| **No `onResolveDependency`**                 | ❌ No              | ❌ No            | ❌ No           | DNS completely disabled |
+| **`onResolveDependency`**                    | ✅ Yes             | ✅ Yes\*         | ✅ Yes          | Standard implementation |
+| **`deepNoiseSuppressionOnByDefault: false`** | ✅ Yes             | ❌ No            | ✅ Yes          | Manual DNS control      |
+| **`hideDeepNoiseSuppressionButton: true`**   | ❌ No              | ✅ Yes\*         | ❌ No           | Force DNS always on     |
+
+\*Default value is `true` for `deepNoiseSuppressionOnByDefault` and `false` for `hideDeepNoiseSuppressionButton`
+
+> **Note:** The DNS button is automatically hidden on Safari browsers due to platform limitations, regardless of configuration.
+
+## API Reference
+
+| Property                          | Type                                                  | Required | Default | Description                                                                                   |
+| --------------------------------- | ----------------------------------------------------- | -------- | ------- | --------------------------------------------------------------------------------------------- |
+| `onResolveDependency`             | `() => Promise<DeepNoiseSuppressionEffectDependency>` | ✅ Yes   | -       | Enables DNS functionality. Use `onResolveDeepNoiseSuppressionDependencyLazy` for lazy loading |
+| `deepNoiseSuppressionOnByDefault` | `boolean`                                             | ❌ No    | `true`  | Auto-start DNS when call begins                                                               |
+| `hideDeepNoiseSuppressionButton`  | `boolean`                                             | ❌ No    | `false` | Hide DNS toggle button from UI                                                                |
+
+## Controls
+
+With the help of these adapter toggles, Contoso has maximum flexibility in the way they want to use DNS in the call.
+
+- DNS on by default: DNS is always enabled in the calling experience by default.
+- Hide UI: DNS button is hidden from user, and they cannot change the state of DNS in call.
+- Disable DNS : If dependency for DNS is not provided it will be disabled for the call.
