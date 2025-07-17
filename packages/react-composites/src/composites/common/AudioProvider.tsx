@@ -1,7 +1,9 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
+import { _logEvent } from '@internal/acs-ui-common';
 import React, { useContext, createContext, useState, useEffect } from 'react';
+import { compositeLogger, EventNames } from './logger';
 
 /**
  * @private
@@ -22,6 +24,12 @@ export const ACSAudioProvider = (props: ACSAudioProviderProps): JSX.Element => {
 
   useEffect(() => {
     // Create the AudioContext only when the component is rendered
+    _logEvent(compositeLogger, {
+      name: EventNames.COMPOSITE_AUDIO_CONTEXT_CREATED,
+      level: 'info',
+      message: 'AudioContext created for composite.',
+      data: { audioContextState: audioContext.state }
+    });
     setStateAudioContext(audioContext);
   }, [audioContext]);
 
