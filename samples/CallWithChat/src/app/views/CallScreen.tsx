@@ -99,6 +99,15 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
         laughReaction: { url: 'assets/reactions/laughEmoji.png', frameCount: 102 },
         applauseReaction: { url: 'assets/reactions/clapEmoji.png', frameCount: 102 },
         surprisedReaction: { url: 'assets/reactions/surprisedEmoji.png', frameCount: 102 }
+      },
+      onFetchProfile: async (
+        userId: string,
+        options: { displayName?: string } = {}
+      ): Promise<{ displayName: string } | undefined> => {
+        const { displayName } = options;
+        return {
+          displayName: `${displayName} - User`
+        };
       }
     };
   }, []);
