@@ -444,6 +444,9 @@ export class FakeChatThreadClient implements IChatThreadClient {
     if (identifier.kind === 'microsoftTeamsApp') {
       throw new Error('Unsupported indentifer kind: microsoftBot');
     }
+    if (identifier.kind === 'teamsExtensionUser') {
+      throw new Error(`Unsupported indentifer kind: ${identifier.kind}`);
+    }
 
     return {
       threadId: thread.id,

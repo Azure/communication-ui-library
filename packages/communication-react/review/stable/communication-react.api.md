@@ -101,6 +101,7 @@ import { StartCaptionsOptions } from '@azure/communication-calling';
 import { TeamsCall } from '@azure/communication-calling';
 import { TeamsCallAgent } from '@azure/communication-calling';
 import { TeamsCallInfo } from '@azure/communication-calling';
+import { TeamsExtensionUserIdentifier } from '@azure/communication-common';
 import { TeamsIncomingCall } from '@azure/communication-calling';
 import { TeamsMeetingIdLocator } from '@azure/communication-calling';
 import { TeamsMeetingLinkLocator } from '@azure/communication-calling';
@@ -1170,7 +1171,7 @@ export interface CallWithChatAdapterManagement {
     setSpokenLanguage(language: string): Promise<void>;
     setTogetherModeSceneSize(width: number, height: number): void;
     startCall(participants: string[], options?: StartCallOptions): Call | undefined;
-    startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
+    startCall(participants: (MicrosoftTeamsAppIdentifier | PhoneNumberIdentifier | CommunicationUserIdentifier | MicrosoftTeamsUserIdentifier | TeamsExtensionUserIdentifier | UnknownIdentifier)[], options?: StartCallOptions): Call | undefined;
     startCamera(options?: VideoStreamOptions): Promise<void>;
     startCaptions(options?: StartCaptionsAdapterOptions): Promise<void>;
     startNoiseSuppressionEffect(): Promise<void>;
