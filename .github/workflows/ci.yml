@@ -852,7 +852,7 @@ jobs:
     runs-on: ${{ vars.RUNS_ON }}
     name: Upload bundle size report to gist - ${{ matrix.app }}
     needs: [build_calling_sample, build_chat_sample, build_call_with_chat_sample]
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/alkwa/save-bundlesizereport-to-artifacts'
     strategy:
       matrix:
         include:
@@ -864,9 +864,16 @@ jobs:
           - app: CallWithChat
             gist_id: c43393ae31b5b08215f3f49ed327d912
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: ${{ matrix.app }}-report
+      - name: Save bundle size report to GitHub artifacts
+        if: github.ref == 'refs/heads/alkwa/save-bundlesizereport-to-artifacts'
+        uses: actions/upload-artifact@v4
+        with:
+          name: bundlesize-report-${{ matrix.app }}
+          path: bundle-size-report.json
+          retention-days: 30
       - name: Upload bundle report to gist
         uses: exuanbo/actions-deploy-gist@v1
         with:
