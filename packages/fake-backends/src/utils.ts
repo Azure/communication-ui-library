@@ -71,6 +71,9 @@ export const chatToSignalingParticipant = (p: ChatParticipant): SignalingChatPar
   if (identifier.kind === 'microsoftTeamsApp') {
     throw new Error('Unsupported indentifier kind: microsoftBot');
   }
+  if (identifier.kind === 'teamsExtensionUser') {
+    throw new Error('Unsupported indentifier kind: teamsExtensionUser');
+  }
 
   return {
     id: identifier,
