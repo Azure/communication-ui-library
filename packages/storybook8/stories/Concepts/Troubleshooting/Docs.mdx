@@ -123,3 +123,17 @@ useEffect(() => {
 This `useEffect` will add an event listener for the `pageshow` event, this event when triggered
 will share if the page is persisted or cached. If the page is cached we will reload the app so the
 user can rejoin the call.
+
+## AudioContext issues
+
+With the nature of react and how it re-renders components it is possible that there will be multiple instances of [`AudioContexts`](https://developer.mozilla.org/en-US/docs/Web/API/AudioContext) created. These Audio Context provide the
+audio playback for the calls and for playing DTMF Tones in our composite experiences. If you are experiencing issues with audio playback or DTMF tones not being played, it is likely that there are multiple AudioContexts created.
+
+In order to detect this we provide logs to detect when the AudioContext is created and closed. You can enable these logs by setting the log level to `info` in your application:
+
+```ts
+import { setLogLevel } from '@azure/communication-react';
+setLogLevel('info');
+```
+
+This will log when the AudioContext is created and closed. If you see multiple logs for the creation of the AudioContext, it is likely that there are multiple instances being created.

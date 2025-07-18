@@ -12,13 +12,15 @@ import {
   useTheme
 } from '@fluentui/react';
 import { FluentThemeProvider, ParticipantMenuItemsCallback } from '@internal/react-components';
-import React, { createContext, useContext } from 'react';
+import React, { createContext, useContext, useEffect } from 'react';
 import { CompositeLocale, LocalizationProvider } from '../localization';
 import { AvatarPersonaDataCallback } from './AvatarPersona';
 import { CallCompositeIcons, CallWithChatCompositeIcons, ChatCompositeIcons, DEFAULT_COMPOSITE_ICONS } from './icons';
 import { globalLayerHostStyle } from './styles/GlobalHostLayer.styles';
 import { useId } from '@fluentui/react-hooks';
 import { ACSAudioProvider } from './AudioProvider';
+import { compositeLogger, EventNames } from './logger';
+import { _logEvent } from '@internal/acs-ui-common';
 /**
  * Properties common to all composites exported from this library.
  *
@@ -112,6 +114,23 @@ export const BaseProvider = (
    * We need to create one context for the AudioProvider to ensure that we only have one instance of the AudioContext.
    */
   const compositeAudioContext = new AudioContext();
+
+  useEffect(() => {
+    return () => {
+      if (compositeAudioContext) {
+        _logEvent(compositeLogger, {
+          name: EventNames.COMPOSITE_AUDIO_CONTEXT_CLOSED,
+          level: 'info',
+          message: 'AudioContext is being closed.',
+          data: {}
+        });
+        compositeAudioContext.close().catch((e) => {
+          console.error('Failed to close AudioContext', e);
+        });
+      }
+    }
+  }, []);
+
   // we use Customizer to override default LayerHost injected to <body />
   // which stop polluting global dom tree and increase compatibility with react-full-screen
   const CompositeElement = (
