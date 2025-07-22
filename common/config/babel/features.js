@@ -49,8 +49,6 @@ module.exports = {
     "mention",
     // Feature to show the total number of participants in a call (currently in beta in calling SDK, hence this must be conditionally compiled)
     "total-participant-count",
-    // conditional-compile for new signaling beta
-    "signaling-beta",
     // Image overlay theme
     'image-overlay-theme',
     // Feature for local recording notification for teams meetings

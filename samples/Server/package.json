@@ -23,7 +23,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-chat": "1.6.0-beta.7 || ^1.5.4",
+    "@azure/communication-chat": "1.6.0-beta.7 || ^1.6.0",
     "@azure/communication-common": "^2.3.2-beta.1 || ^2.4.0",
     "@azure/communication-identity": "^1.3.0",
     "@azure/storage-blob": "^12.15.0",
