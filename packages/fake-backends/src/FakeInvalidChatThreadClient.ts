@@ -18,10 +18,11 @@ import {
   SendMessageRequest,
   SendReadReceiptRequest,
   SendTypingNotificationOptions,
-  UpdateMessageOptions
+  UpdateMessageOptions,
+  UpdateChatThreadPropertiesOptions
 } from '@azure/communication-chat';
 /* @conditional-compile-remove(chat-beta-sdk) */
-import type { UpdateChatThreadPropertiesOptions, UploadChatImageResult } from '@azure/communication-chat';
+import type { UploadChatImageResult } from '@azure/communication-chat';
 
 import { IChatThreadClient } from './types';
 import { CommunicationIdentifier } from '@azure/communication-common';
@@ -94,7 +95,6 @@ export class FakeInvalidChatThreadClient implements IChatThreadClient {
     throw new RestError('FakeInvalidChatThreadClient::sendReadReceipt not implemented.', { statusCode: 403 });
   }
 
-  /* @conditional-compile-remove(chat-beta-sdk) */
   updateProperties(request: UpdateChatThreadPropertiesOptions): Promise<void> {
     throw new RestError('FakeInvalidChatThreadClient::updateProperties not implemented.', { statusCode: 403 });
   }

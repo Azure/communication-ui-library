@@ -16,10 +16,11 @@ import {
   SendMessageRequest,
   SendReadReceiptRequest,
   SendTypingNotificationOptions,
-  UpdateMessageOptions
+  UpdateMessageOptions,
+  UpdateChatThreadPropertiesOptions
 } from '@azure/communication-chat';
 /* @conditional-compile-remove(chat-beta-sdk) */
-import { UpdateChatThreadPropertiesOptions, UploadChatImageResult } from '@azure/communication-chat';
+import { UploadChatImageResult } from '@azure/communication-chat';
 import { CommunicationIdentifier, getIdentifierKind } from '@azure/communication-common';
 import { BaseChatEvent, BaseChatMessageEvent, BaseChatThreadEvent } from '@azure/communication-signaling';
 import { PagedAsyncIterableIterator } from '@azure/core-paging';
@@ -80,12 +81,10 @@ export class FakeChatThreadClient implements IChatThreadClient {
         ...this.baseChatThreadEvent(),
         properties: {
           topic: topic,
-          /* @conditional-compile-remove(signaling-beta) */
           metadata: {}
         },
         updatedOn: new Date(Date.now()),
         updatedBy: chatToSignalingParticipant(this.checkedGetMe()),
-        // /* @conditional-compile-remove(chat-beta-sdk) */
         retentionPolicy: { kind: 'none' }
       }
     );
@@ -323,7 +322,6 @@ export class FakeChatThreadClient implements IChatThreadClient {
     return Promise.resolve();
   }
 
-  /* @conditional-compile-remove(chat-beta-sdk) */
   updateProperties(request: UpdateChatThreadPropertiesOptions): Promise<void> {
     const now = new Date(Date.now());
     this.modifyThreadForUser((thread) => {
@@ -351,12 +349,10 @@ export class FakeChatThreadClient implements IChatThreadClient {
           ...this.baseChatThreadEvent(),
           properties: {
             topic: request.topic,
-            /* @conditional-compile-remove(signaling-beta) */
             metadata: {}
           },
           updatedOn: new Date(Date.now()),
           updatedBy: chatToSignalingParticipant(this.checkedGetMe()),
-          // /* @conditional-compile-remove(chat-beta-sdk) */
           retentionPolicy: { kind: 'none' }
         }
       );
