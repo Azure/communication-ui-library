@@ -14,5 +14,5 @@
       ]
     }
   },
-  "postCreateCommand": "bash -i -c 'nvm install 20.10.0 && nvm use 20.10.0' && npm install @microsoft/rush -g && rush update"
+  "postCreateCommand": "bash -i -c 'nvm install --lts && nvm use --lts' && npm install @microsoft/rush -g && rush update"
 }

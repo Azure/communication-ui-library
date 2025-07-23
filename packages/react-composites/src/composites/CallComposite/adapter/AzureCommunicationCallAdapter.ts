@@ -99,7 +99,8 @@ import {
   isMicrosoftTeamsUserIdentifier,
   MicrosoftTeamsAppIdentifier,
   UnknownIdentifier,
-  isMicrosoftTeamsAppIdentifier
+  isMicrosoftTeamsAppIdentifier,
+  TeamsExtensionUserIdentifier
 } from '@azure/communication-common';
 import { isCommunicationUserIdentifier } from '@azure/communication-common';
 import { isPhoneNumberIdentifier, PhoneNumberIdentifier } from '@azure/communication-common';
@@ -1021,6 +1022,7 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
           | PhoneNumberIdentifier
           | CommunicationUserIdentifier
           | MicrosoftTeamsUserIdentifier
+          | TeamsExtensionUserIdentifier
           | UnknownIdentifier
         )[]
       | /* @conditional-compile-remove(calling-beta-sdk) */ CommunicationIdentifier[],

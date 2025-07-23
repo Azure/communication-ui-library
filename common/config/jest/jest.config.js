@@ -26,7 +26,7 @@ module.exports = {
   // Work around mapping ESM issues; see https://github.com/Azure/azure-sdk-for-js/issues/34195#issuecomment-2850957045
   moduleNameMapper: {
     '^@typespec/ts-http-runtime/internal/(.*)$':
-      '<rootDir>/../../../common/temp/node_modules/.pnpm/@typespec+ts-http-runtime@0.2.2/node_modules/@typespec/ts-http-runtime/dist/commonjs/$1/internal.js'
+      '<rootDir>/../../../common/temp/node_modules/.pnpm/@typespec+ts-http-runtime@0.3.0/node_modules/@typespec/ts-http-runtime/dist/commonjs/$1/internal.js'
   },
 
   // A preset that is used as a base for Jest's configuration
