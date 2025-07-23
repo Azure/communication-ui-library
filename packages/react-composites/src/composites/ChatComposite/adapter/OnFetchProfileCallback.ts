@@ -8,6 +8,7 @@ import { AdapterStateModifier } from './AzureCommunicationChatAdapter';
 import { ChatAdapterState } from './ChatAdapter';
 
 import { ChatMessageWithStatus } from '@internal/chat-stateful-client';
+import { _isIdentityMicrosoftTeamsUser } from '@internal/acs-ui-common';
 
 /**
  * Callback function used to provide custom data to build profile for a user or bot.
@@ -29,6 +30,68 @@ export type ChatProfile = {
    * Primary text to display, usually the name of the person.
    */
   displayName?: string;
+};
+
+/**
+ * Handle Teams users who don't have display names in participant list
+ * but have them available in chat messages
+ * @private
+ */
+const handleTeamsUsersDisplayNames = async (
+  participants: { [id: string]: ChatParticipant } | undefined,
+  chatMessages: { [id: string]: ChatMessageWithStatus } | undefined,
+  cachedDisplayName: { [id: string]: string },
+  onFetchProfile: OnFetchChatProfileCallback,
+  markForUpdate: () => void
+): Promise<void> => {
+  if (!participants || !chatMessages) {
+    return;
+  }
+
+  // Find participants who are Teams users or have missing/invalid display names
+  for (const [participantId, participant] of Object.entries(participants)) {
+    // Use the utility function to identify Teams users
+    const isTeamsUser = _isIdentityMicrosoftTeamsUser(participantId);
+    const needsDisplayName =
+      !participant.displayName ||
+      participant.displayName.trim() === '' ||
+      participant.displayName === 'undefined' ||
+      // Teams users often don't have display names in participant list
+      // but have them in chat messages
+      isTeamsUser ||
+      !cachedDisplayName[participantId] ||
+      cachedDisplayName[participantId].includes('undefined');
+
+    if (needsDisplayName) {
+      // Look for this participant's display name in chat messages
+      for (const message of Object.values(chatMessages)) {
+        if (message?.sender) {
+          const senderId =
+            message.sender.kind === 'microsoftTeamsUser' && message.sender.rawId
+              ? message.sender.rawId
+              : message.sender.kind === 'communicationUser' && message.sender.communicationUserId
+                ? message.sender.communicationUserId
+                : message.sender.kind === 'phoneNumber' && message.sender.phoneNumber
+                  ? message.sender.phoneNumber
+                  : message.sender.kind === 'microsoftTeamsApp' && message.sender.rawId
+                    ? message.sender.rawId
+                    : message.sender.kind === 'unknown' && message.sender.id
+                      ? message.sender.id
+                      : null;
+
+          if (senderId === participantId && message.senderDisplayName && message.senderDisplayName.trim() !== '') {
+            // Found a display name for this participant in a chat message
+            const profile = await onFetchProfile(participantId, { displayName: message.senderDisplayName });
+            if (profile?.displayName && cachedDisplayName[participantId] !== profile?.displayName) {
+              cachedDisplayName[participantId] = profile?.displayName;
+              markForUpdate();
+              break; // Found display name, no need to check more messages for this participant
+            }
+          }
+        }
+      }
+    }
+  }
 };
 
 /**
@@ -63,20 +126,17 @@ export const createProfileStateModifier = (
         }
       }
 
-      for (const [key, name] of Object.entries(cachedDisplayName)) {
-        if (key.includes('8:orgid:') && name.includes('undefined')) {
-          for (const [, message] of Object.entries(originalChatMessages)) {
-            if (!name.includes('undefined')) break;
-            if (message?.sender?.kind === 'microsoftTeamsUser' && message?.sender?.rawId === key) {
-              const profile = await onFetchProfile(key, { displayName: message.senderDisplayName });
-              if (profile?.displayName && cachedDisplayName[key] !== profile?.displayName) {
-                cachedDisplayName[key] = profile?.displayName;
-                shouldNotifyUpdates = true;
-              }
-            }
-          }
-        } else continue;
-      }
+      // Handle Teams users who don't have display names in participant list
+      // but have them available in chat messages
+      await handleTeamsUsersDisplayNames(
+        originalParticipants,
+        originalChatMessages,
+        cachedDisplayName,
+        onFetchProfile,
+        () => {
+          shouldNotifyUpdates = true;
+        }
+      );
       // notify update only when there is a change, which most likely will trigger modifier and setState again
       if (shouldNotifyUpdates) {
         notifyUpdate();
