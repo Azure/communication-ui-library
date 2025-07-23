@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Fix for OnFetchProfile display name in chat for Teams user",
+  "comment": "Fix for OnFetchProfile display name in chat for Teams user",
+  "packageName": "@azure/communication-react",
+  "email": "97124699+prabhjot-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
