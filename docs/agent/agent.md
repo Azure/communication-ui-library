@@ -25,7 +25,7 @@ To switch to the "beta" flavor of the `@azure/communication-calling` package and
    ```bash
    cat common/temp/node_modules/@azure/communication-calling/package.json
    ```
-   You should see `"version": "1.37.1-beta.1"` (or similar beta version) and `"types": "types/communication-calling-beta.d.ts"`
+   You should see `"version": "X.Y.Z-beta.N"` (or similar beta version) and `"types": "types/communication-calling-beta.d.ts"`
 
 4. **Build the Project:**
    Finally, run the build command to ensure everything is compiled and ready to use:
@@ -74,151 +74,6 @@ To switch to the "stable" flavor of the `@azure/communication-calling` package a
   rush build
   ```
   *Estimated time: ~4.5 minutes*
-
-# Instructions for Updating Beta Version
-
-To update the `@azure/communication-calling` package to the latest beta version while already in beta flavor, follow these steps:
-
-**Estimated Time:** ~15-20 minutes total
-
-1. **Verify Beta Flavor:**
-   Confirm you're currently in beta flavor by checking the environment:
-   ```bash
-   echo $COMMUNICATION_REACT_FLAVOR
-   ```
-   Should return `beta`. If not, run `rush switch-flavor:beta` first.
-
-2. **Check Current Beta Version:**
-   Check the currently installed beta version:
-   ```bash
-   cat common/temp/node_modules/@azure/communication-calling/package.json | grep version
-   ```
-   Note the current version (e.g., `"version": "1.37.1-beta.1"`)
-
-3. **Find Latest Beta Version:**
-   Check npm for the latest beta version:
-   ```bash
-   npm view @azure/communication-calling versions --beta --json
-   ```
-   This will show all available beta versions. Use the latest one.
-
-4. **Update Version in Configuration Files:**
-   If a newer beta version is available, update the following files:
-   
-   **a. Update common-versions.json:**
-   ```bash
-   # Edit common/config/rush/common-versions.json
-   # Update both "preferredVersions" and "allowedAlternativeVersions" sections
-   # Replace old beta version with new beta version
-   ```
-   
-   **b. Update package.json files:**
-   The following files typically contain `@azure/communication-calling` dependencies:
-   - `samples/CallWithChat/package.json`
-   - `samples/CallingStateful/package.json`
-   - `packages/calling-stateful-client/package.json`
-   - `packages/communication-react/package.json`
-   - `packages/react-composites/package.json`
-   - `packages/storybook8/package.json`
-   - `samples/ComponentExamples/package.json`
-   - `samples/StaticHtmlComposites/package.json`
-   - `samples/tests/package.json`
-   - `samples/Calling/package.json`
-   - `packages/calling-component-bindings/package.json`
-   
-   *Use search tools to find all files containing the old beta version and replace with the new version.*
-
-5. **Rebuild Project:**
-   After updating all version references, rebuild the entire project:
-   ```bash
-   rush rebuild
-   ```
-   *Estimated time: ~10-15 minutes*
-
-6. **Verify Updated Version:**
-   Confirm the new beta version is installed:
-   ```bash
-   cat common/temp/node_modules/@azure/communication-calling/package.json | grep version
-   ```
-   Should show the new beta version you specified.
-
-## Notes:
-- Always ensure all references to the old beta version are updated consistently across all files
-- The `rush rebuild` command is necessary to ensure all packages are rebuilt with the new version
-
-# Instructions for Updating Stable Version
-
-To update the `@azure/communication-calling` package to the latest stable version while already in stable flavor, follow these steps:
-
-**Estimated Time:** ~15-20 minutes total
-
-1. **Verify Stable Flavor:**
-   Confirm you're currently in stable flavor by checking the environment:
-   ```bash
-   echo $COMMUNICATION_REACT_FLAVOR
-   ```
-   Should return `stable`. If not, follow the "Instructions for Switching to Stable Flavor" section first.
-
-2. **Check Current Stable Version:**
-   Check the currently installed stable version:
-   ```bash
-   cat common/temp/node_modules/@azure/communication-calling/package.json | grep version
-   ```
-   Note the current version (e.g., `"version": "1.37.1"`)
-
-3. **Find Latest Stable Version:**
-   Check npm for the latest stable version (without -beta suffix):
-   ```bash
-   npm view @azure/communication-calling versions --json
-   ```
-   Look for the highest version number without `-beta`, `-alpha`, or `-rc` suffixes.
-
-4. **Update Version in Configuration Files:**
-   If a newer stable version is available, update the following files:
-   
-   **a. Update stable common-versions.json:**
-   ```bash
-   # Edit common/config/rush/variants/stable/common-versions.json
-   # Update both "preferredVersions" and "allowedAlternativeVersions" sections
-   # Replace old stable version with new stable version (e.g., ^1.37.1 -> ^1.37.2)
-   ```
-   
-   **b. Update package.json files:**
-   The following files typically contain `@azure/communication-calling` dependencies with patterns like `"1.38.1-beta.1 || ^1.37.1"`:
-   - `samples/CallWithChat/package.json`
-   - `samples/CallingStateful/package.json`
-   - `packages/calling-stateful-client/package.json`
-   - `packages/communication-react/package.json`
-   - `packages/react-composites/package.json`
-   - `packages/storybook8/package.json`
-   - `samples/ComponentExamples/package.json`
-   - `samples/StaticHtmlComposites/package.json`
-   - `samples/tests/package.json`
-   - `samples/Calling/package.json`
-   - `packages/calling-component-bindings/package.json`
-   
-   *Update the stable version part (after `||`) in each file. For example, change `"1.38.1-beta.1 || ^1.37.1"` to `"1.38.1-beta.1 || ^1.37.2"`*
-
-5. **Rebuild Project:**
-   After updating all version references, rebuild the entire project:
-   ```bash
-   rush rebuild
-   ```
-   *Estimated time: ~10-15 minutes*
-
-6. **Verify Updated Version:**
-   Confirm the new stable version is installed:
-   ```bash
-   cat common/temp/node_modules/@azure/communication-calling/package.json | grep version
-   ```
-   Should show the new stable version you specified.
-
-## Notes:
-- Always ensure all references to the old stable version are updated consistently across all files
-- The `rush rebuild` command is necessary to ensure all packages are rebuilt with the new version
-- Version format should follow pattern: `X.Y.Z` (e.g., `1.37.2`) without any pre-release suffixes
-- Make sure to update both the stable variant configuration and all package.json files that contain version ranges
-- Version format should follow pattern: `X.Y.Z-beta.N` (e.g., `1.38.1-beta.1`)
 
 # Instructions for Updating All Beta Dependencies
 
@@ -300,6 +155,35 @@ When updating to stable versions, the following Azure Communication Services dep
 - **@azure/communication-signaling**: Latest stable version (e.g., `1.0.0-beta.34`)
 - **@azure/communication-calling-effects**: Latest stable version (e.g., `1.1.4`)
 
+## Build Error Handling
+
+**Important:** If any build step fails during the update process, **STOP immediately** and do not proceed with remaining steps. Follow this protocol:
+
+1. **Stop on First Error:** Do not continue with subsequent commands if `rush rebuild` or `rush build` fails
+2. **Capture Error Details:** Note the specific package(s) that failed and the error messages
+3. **Summarize the Problem:** Provide a clear summary including:
+   - Which step failed (e.g., "rush rebuild failed during stable dependency update")
+   - Which package(s) had build errors
+   - Key error messages or TypeScript compilation errors
+   - Suggested next steps (e.g., "Review package.json conflicts" or "Check for breaking changes in X.Y.Z version")
+
+**Example Error Summary:**
+```
+Build failed during step 3 (rush rebuild) of beta dependency update.
+
+Failed packages:
+- @azure/communication-react: TypeScript compilation errors
+- packages/react-composites: Dependency resolution issues
+
+Key errors:
+- TS2304: Cannot find name 'CallClientState' in communication-react
+- Package version conflicts between @azure/communication-calling@1.38.1-beta.1 and @azure/communication-common@2.3.2-beta.1
+
+Recommended action: Investigate breaking changes in beta versions before proceeding.
+```
+
+This approach prevents cascading issues and allows for proper troubleshooting before continuing with the update process.
+
 ## Verification Steps (For Both Beta and Stable)
 
 After the process completes, you can verify the updates:
@@ -342,19 +226,19 @@ When creating a PR for dependency updates, include:
 
 Here are example prompts you can use to request specific update operations:
 
-## For Beta Update Only:
+## For Beta Dependencies Update:
 ```
-Switch to beta flavor and update the @azure/communication-calling package to the latest beta version. Use the agent.md to understand how to do this.
+Switch to beta flavor and update all Azure Communication Services dependencies (including @azure/communication-calling, @azure/communication-chat, @azure/communication-common, @azure/communication-signaling, and @azure/communication-calling-effects) to the latest beta versions. Use the agent.md to understand how to do this.
 ```
 
-## For Stable Update Only:
+## For Stable Dependencies Update:
 ```
-Switch to stable flavor and update the @azure/communication-calling package to the latest stable version. Use the agent.md to understand how to do this.
+Switch to stable flavor and update all Azure Communication Services dependencies (including @azure/communication-calling, @azure/communication-chat, @azure/communication-common, @azure/communication-signaling, and @azure/communication-calling-effects) to the latest stable versions. Use the agent.md to understand how to do this.
 ```
 
 ## For Both Beta and Stable Updates:
 ```
-I want to switch to beta, update the version of calling to the latest beta, then switch to stable, and update the version to the latest stable. Use the agent.md to understand how to do this.
+I want to switch to beta, update all Azure Communication Services dependencies (calling, chat, common, signaling, and calling-effects) to the latest beta versions, then switch to stable, and update all dependencies to the latest stable versions. Use the agent.md to understand how to do this.
 ```
 
 These prompts will guide the assistant to:
