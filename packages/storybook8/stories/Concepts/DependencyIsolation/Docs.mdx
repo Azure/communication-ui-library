@@ -1,0 +1,142 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Concepts/Dependency Isolation" />
+
+# Dependency Isolation
+
+Dependency isolation is a key architectural pattern used in the Azure Communication Services UI Library to optimize bundle size and improve application performance. By isolating optional dependencies, we ensure that features like Deep Noise Suppression and Video Background Effects don't bloat your main application bundle unless explicitly needed.
+
+## Why Dependency Isolation?
+
+Large dependencies can significantly impact your application's performance:
+
+- **Bundle Size**: Audio and video effect libraries can be several megabytes
+- **Load Time**: Users download unnecessary code even if features aren't used
+- **Memory Usage**: Unused dependencies still consume browser memory
+- **Performance**: Larger bundles mean slower initial page loads
+
+## Two Types of Dependency Isolation
+
+### 1. Tree Shaking
+
+By using this method, you can add the package while loading the app. The effects package would be added to the main bundle. Tree shaking eliminates unused code during the build process. The UI Library is designed to be tree-shakeable, meaning bundlers like Webpack can automatically remove unused exports.
+
+**How it works:**
+
+- Import only what you need
+- Build tools remove unused exports
+- Smaller final bundle size
+
+**Example:**
+
+```ts
+// Tree Shaking - Dependency loaded upfront
+import { DeepNoiseSuppressionEffect } from '@azure/communication-calling-effects';
+export const onResolveDeepNoiseSuppressionDependency = async (): Promise<DeepNoiseSuppressionEffectDependency> => {
+  const audioEffect: AudioEffectsStartConfig = {
+    noiseSuppression: new DeepNoiseSuppressionEffect()
+  };
+  return { deepNoiseSuppressionEffect: audioEffect };
+};
+```
+
+### 2. Lazy Loading
+
+Lazy loading defers the loading of dependencies until they're actually needed at runtime. This is particularly useful for optional features like effects libraries.
+
+**How it works:**
+
+- Dependencies are loaded on-demand
+- Main bundle stays lightweight
+- Features load when first used
+
+**Example:**
+
+```ts
+// Lazy loading - Dependency loaded when needed
+export const onResolveDeepNoiseSuppressionDependencyLazy = async (): Promise<DeepNoiseSuppressionEffectDependency> => {
+  const module = await import('@azure/communication-calling-effects');
+  const audioEffect: AudioEffectsStartConfig = {
+    noiseSuppression: new module.DeepNoiseSuppressionEffect()
+  };
+  return { deepNoiseSuppressionEffect: audioEffect };
+};
+```
+
+## Usage in UI Library
+
+### Tree Shaking Approach
+
+**Steps:**
+
+1. Add import for dependency resolution:
+
+```ts
+import { onResolveDeepNoiseSuppressionDependency } from '@azure/communication-react';
+```
+
+2. Pass the dependency injection in AzureCommunicationCallAdapterOptions:
+
+```ts
+const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
+  return {
+    deepNoiseSuppressionOptions: {
+      onResolveDependency: onResolveDeepNoiseSuppressionDependency
+    }
+  };
+}, []);
+```
+
+3. Create the adapter with options:
+
+```ts
+const adapter = useAzureCommunicationCallAdapter(
+  {
+    userId: { communicationUserId: 'user-id' },
+    displayName: 'User Name',
+    credential: new AzureCommunicationTokenCredential('token'),
+    endpoint: 'https://your-endpoint.communication.azure.com',
+    locator: { groupId: 'group-id' }
+  },
+  callAdapterOptions
+);
+```
+
+### Lazy Loading Approach
+
+**Steps:**
+
+1. Add import for lazy dependency resolution:
+
+```ts
+import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
+```
+
+2. Pass the lazy dependency injection in AzureCommunicationCallAdapterOptions:
+
+```ts
+const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
+  return {
+    deepNoiseSuppressionOptions: {
+      onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
+    }
+  };
+}, []);
+```
+
+3. Create the adapter with lazy loading options:
+
+```ts
+const adapter = useAzureCommunicationCallAdapter(
+  {
+    userId: { communicationUserId: 'user-id' },
+    displayName: 'User Name',
+    credential: new AzureCommunicationTokenCredential('token'),
+    endpoint: 'https://your-endpoint.communication.azure.com',
+    locator: { groupId: 'group-id' }
+  },
+  callAdapterOptions
+);
+```
+
+> **Note:** With lazy loading, ensure your bundler supports code splitting. The effects library will be downloaded as a separate chunk when Deep Noise Suppression is first used.
