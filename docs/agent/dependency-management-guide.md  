@@ -21,7 +21,6 @@ rush build                       # ~8 minutes
 # Update to stable variants and switch
 rush update:stable               # ~8 seconds
 rush switch-flavor:stable        # ~7 seconds
-rush update                      # ~2 seconds
 rush build                       # ~4.5 minutes
 ```
  
