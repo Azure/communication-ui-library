@@ -20,7 +20,9 @@ afterAll(() => {
 });
 
 window.AudioContext = jest.fn().mockImplementation(() => {
-  return {};
+  return {
+    close: jest.fn().mockResolvedValue(undefined)
+  };
 });
 // Add `ResizeObserver` to globals. Without this GridLayout jest tests fail with "ReferenceError: ResizeObserver is not defined"
 global.ResizeObserver = require('resize-observer-polyfill');
