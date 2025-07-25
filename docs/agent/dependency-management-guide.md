@@ -19,8 +19,8 @@ rush build                       # ~8 minutes
  
 ```bash
 # Update to stable variants and switch
-rush update:stable               # ~8 seconds
 rush switch-flavor:stable        # ~7 seconds
+rush update:stable               # ~8 seconds
 rush build                       # ~4.5 minutes
 ```
  
@@ -79,7 +79,7 @@ cat common/temp/node_modules/@azure/communication-common/package.json | grep ver
 - **Stable**: [`common/config/rush/variants/stable/common-versions.json`](common/config/rush/variants/stable/common-versions.json)
  
 ### Build Success Indicators
-- All packages build successfully (22/24 typically pass)
+- All packages build successfully (22/24 typically pass, 2/24 pass with warnings)
 - Minor TypeScript warnings are acceptable and non-blocking
 - No critical build failures
  
