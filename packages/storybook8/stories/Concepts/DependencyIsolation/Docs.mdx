@@ -1,0 +1,191 @@
+import { Meta } from '@storybook/addon-docs';
+
+<Meta title="Concepts/Dependency Isolation" />
+
+# Dependency Isolation
+
+Dependency isolation is a key architectural pattern used in the Azure Communication Services UI Library to optimize bundle size and improve application performance. By isolating optional dependencies, we ensure that features like Deep Noise Suppression and Video Background Effects don't bloat your main application bundle unless explicitly needed.
+
+## Why Dependency Isolation?
+
+Large dependencies can significantly impact your application's performance:
+
+- **Bundle Size**: Audio and video effect libraries can be several megabytes
+- **Load Time**: Users download unnecessary code even if features aren't used
+- **Memory Usage**: Unused dependencies still consume browser memory
+- **Performance**: Larger bundles mean slower initial page loads
+
+## Two Types of Dependency Isolation
+
+### 1. Tree Shaking
+
+By using this method, you can add the package while loading the app. The effects package would be added to the main bundle. Tree shaking eliminates unused code during the build process. The UI Library is designed to be tree-shakeable, meaning bundlers like Webpack can automatically remove unused exports.
+
+**How it works:**
+
+- Import only what you need
+- Build tools remove unused exports
+- Smaller final bundle size
+
+**Example:**
+
+```ts
+// Tree Shaking - Dependency loaded upfront
+import { DeepNoiseSuppressionEffect } from '@azure/communication-calling-effects';
+export const onResolveDeepNoiseSuppressionDependency = async (): Promise<DeepNoiseSuppressionEffectDependency> => {
+  const audioEffect: AudioEffectsStartConfig = {
+    noiseSuppression: new DeepNoiseSuppressionEffect()
+  };
+  return { deepNoiseSuppressionEffect: audioEffect };
+};
+```
+
+### 2. Lazy Loading
+
+Lazy loading defers the loading of dependencies until they're actually needed at runtime. This is particularly useful for optional features like effects libraries.
+
+**How it works:**
+
+- Dependencies are loaded on-demand
+- Main bundle stays lightweight
+- Features load when first used
+
+**Example:**
+
+```ts
+// Lazy loading - Dependency loaded when needed
+export const onResolveDeepNoiseSuppressionDependencyLazy = async (): Promise<DeepNoiseSuppressionEffectDependency> => {
+  const module = await import('@azure/communication-calling-effects');
+  const audioEffect: AudioEffectsStartConfig = {
+    noiseSuppression: new module.DeepNoiseSuppressionEffect()
+  };
+  return { deepNoiseSuppressionEffect: audioEffect };
+};
+```
+
+## Usage in UI Library
+
+### Tree Shaking Approach
+
+**Steps:**
+
+1. Add import for dependency resolution:
+
+```ts
+import { onResolveDeepNoiseSuppressionDependency } from '@azure/communication-react';
+```
+
+2. Pass the dependency injection in AzureCommunicationCallAdapterOptions:
+
+```ts
+const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
+  return {
+    deepNoiseSuppressionOptions: {
+      onResolveDependency: onResolveDeepNoiseSuppressionDependency
+    }
+  };
+}, []);
+```
+
+3. Create the adapter with options:
+
+```ts
+const adapter = useAzureCommunicationCallAdapter(
+  {
+    userId: { communicationUserId: 'user-id' },
+    displayName: 'User Name',
+    credential: new AzureCommunicationTokenCredential('token'),
+    endpoint: 'https://your-endpoint.communication.azure.com',
+    locator: { groupId: 'group-id' }
+  },
+  callAdapterOptions
+);
+```
+
+### Lazy Loading Approach
+
+**Steps:**
+
+1. Add import for lazy dependency resolution:
+
+```ts
+import { onResolveDeepNoiseSuppressionDependencyLazy } from '@azure/communication-react';
+```
+
+2. Pass the lazy dependency injection in AzureCommunicationCallAdapterOptions:
+
+```ts
+const callAdapterOptions: AzureCommunicationCallAdapterOptions = useMemo(() => {
+  return {
+    deepNoiseSuppressionOptions: {
+      onResolveDependency: onResolveDeepNoiseSuppressionDependencyLazy
+    }
+  };
+}, []);
+```
+
+3. Create the adapter with lazy loading options:
+
+```ts
+const adapter = useAzureCommunicationCallAdapter(
+  {
+    userId: { communicationUserId: 'user-id' },
+    displayName: 'User Name',
+    credential: new AzureCommunicationTokenCredential('token'),
+    endpoint: 'https://your-endpoint.communication.azure.com',
+    locator: { groupId: 'group-id' }
+  },
+  callAdapterOptions
+);
+```
+
+> **Note:** With lazy loading, ensure your bundler supports code splitting. The effects library will be downloaded as a separate chunk when Deep Noise Suppression is first used.
+
+## Features Supporting Dependency Isolation
+
+The following features in the Azure Communication Services UI Library support dependency isolation:
+
+| Feature                      | Tree Shaking Import                       | Lazy Loading Import                           | Link                                                                          |
+| ---------------------------- | ----------------------------------------- | --------------------------------------------- | ----------------------------------------------------------------------------- |
+| **Deep Noise Suppression**   | `onResolveDeepNoiseSuppressionDependency` | `onResolveDeepNoiseSuppressionDependencyLazy` | [Deep Noise Suppression](./?path=/docs/concepts-deep-noise-suppression--docs) |
+| **Video Background Effects** | `onResolveVideoEffectDependency`          | `onResolveVideoEffectDependencyLazy`          | [Video Background Effects](./?path=/docs/concepts-video-effects--docs)        |
+
+## Frequently Asked Questions
+
+### Q: When should I use tree shaking vs lazy loading?
+
+**A:** Choose based on your application's needs:
+
+- **Tree Shaking**: Use when you want features available immediately and don't mind a larger initial bundle
+- **Lazy Loading**: Use when you want to minimize initial bundle size and can accept a slight delay when features are first used
+
+### Q: Can I use both approaches in the same application?
+
+**A:** Yes, you can use different approaches for different features. For example, use tree shaking for Deep Noise Suppression and lazy loading for Video Background Effects.
+
+### Q: How do I know if code splitting is working?
+
+**A:** Check your browser's Network tab in Developer Tools. With lazy loading, you should see separate chunk files being downloaded when features are first used (e.g., `chunk-123.js`).
+
+### Q: Does this work with all bundlers?
+
+**A:** Both approaches work with modern bundlers:
+
+- **Tree Shaking**: Supported by Webpack, Rollup, Vite, Parcel
+- **Lazy Loading**: Requires code splitting support (Webpack, Vite, Rollup with plugins)
+
+### Q: What if I get "Loading chunk failed" errors?
+
+**A:** This usually indicates code splitting configuration issues:
+
+1. Ensure your bundler is configured for code splitting
+2. Verify chunk files are served correctly
+3. Check network connectivity
+4. As a fallback, switch to tree shaking approach
+
+### Q: Are there any performance implications?
+
+**A:** Yes, consider the following:
+
+- **Tree Shaking**: Larger initial bundle, but features available immediately
+- **Lazy Loading**: Smaller initial bundle, slight delay when features first load (~100-500ms depending on network)
