@@ -40,7 +40,7 @@ rush rebuild                     # Verify compatibility (~8-10 minutes)
 **Expected Updates:**
 - `@azure/communication-calling`: Latest beta (e.g., `1.38.1-beta.1`)
 - `@azure/communication-chat`: Latest beta (e.g., `1.6.0-beta.7`)
-- `@azure/communication-common`: Latest beta (e.g., `2.3.2-beta.1`)
+- `@azure/communication-common`: Latest stable (e.g., `2.4.0`)
 - `@azure/communication-signaling`: Latest beta (e.g., `1.0.0-beta.33`)
 - `@azure/communication-calling-effects`: Latest stable
  
