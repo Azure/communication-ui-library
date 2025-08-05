@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { CaptionsBanner, CaptionsSettingsModal, ControlBarButton, useCall } from '@azure/communication-react';
+import { CallComposite, CaptionsBanner, CaptionsSettingsModal, ControlBarButton, createAzureCommunicationCallAdapterFromClient, useCall } from '@azure/communication-react';
 import {
   usePropsFor,
   VideoGallery,
@@ -11,12 +11,15 @@ import {
   ScreenShareButton,
   EndCallButton,
   VideoStreamOptions,
-  StartCaptionsButton
+  StartCaptionsButton,
+  useCallClient,
+  useCallAgent
 } from '@azure/communication-react';
 import { StartRealTimeTextButton, RealTimeTextModal } from '@azure/communication-react';
 import { Stack } from '@fluentui/react';
 import { LocalLanguage20Regular } from '@fluentui/react-icons';
-import React, { useCallback, useState } from 'react';
+import { CallAdapter } from '@internal/react-composites';
+import React, { useCallback, useEffect, useState } from 'react';
 
 /**
  * CallingComponents component that renders the video gallery and control bar for a calling experience.
@@ -35,7 +38,13 @@ export const CallingComponents = (): JSX.Element => {
   const [showRealTimeTextModal, setShowRealTimeTextModal] = useState(false);
   const [isRealTimeTextStarted, setIsRealTimeTextStarted] = useState(false);
   const [showCaptionsSettingsModal, setShowCaptionsSettingsModal] = useState(false);
+  const [callAdapter, setCallAdapter] = useState<CallAdapter>();
   const call = useCall();
+
+  const callClient = useCallClient();
+  // console.log('CallingComponents callClient', callClient);
+  const callAgent = useCallAgent();
+  // console.log('CallingComponents callAgent', callAgent);
   const localVideoViewOptions = {
     scalingMode: 'Crop',
     isMirrored: true
@@ -54,9 +63,24 @@ export const CallingComponents = (): JSX.Element => {
     return <CallEnded />;
   }
 
+  useEffect(() => {    
+    (async () => {
+      if (callAgent && callClient) {
+        const callerId = callAgent.calls.find(c => c.state === 'Connecting')?.callerInfo?.identifier;
+        if (callerId !== undefined && callerId !== callClient.getState().userId) {
+          console.log('Creating call adapter');
+          setCallAdapter(await createAzureCommunicationCallAdapterFromClient(callClient, callAgent, [callerId]));
+        }
+      }
+    })();
+  }, [callAgent, callClient]);
+
   return (
     <Stack style={{ height: '100%' }}>
-      {videoGalleryProps && (
+      {callAdapter && callAdapter.getState().call?.state === 'Connected' && (
+        <CallComposite adapter={callAdapter} />
+      )}
+      {videoGalleryProps && !callAdapter && (
         <Stack verticalAlign="center" style={{ height: '100%' }}>
           <VideoGallery
             {...videoGalleryProps}
