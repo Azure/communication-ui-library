@@ -41,7 +41,8 @@ const getBeforePastePluginEvent = (fragment: DocumentFragment): BeforePasteEvent
       attributeSanitizers: {},
       formatParserOverride: {},
       processorOverride: {},
-      styleSanitizers: {}
+      styleSanitizers: {},
+      processNonVisibleElements: false
     }
   };
 };
