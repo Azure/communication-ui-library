@@ -14,7 +14,7 @@ Explore interactive storybook pages in our documentation 📖 to try out feature
 
 ## Getting Started
 
-If you're wondering where to start, here are a few scenarios to guide you:
+If you're wondering where to start, here are a few scenarios to guide you:   
 
 - **What is Azure Communication Services?**
   - Dive into our conceptual documentation on [Azure Communication Services](https://docs.microsoft.com/azure/communication-services/overview), [Client-Server Architecture](https://docs.microsoft.com/azure/communication-services/concepts/client-and-server-architecture), [Authentication](https://docs.microsoft.com/azure/communication-services/concepts/authentication), [Calling](https://docs.microsoft.com/azure/communication-services/concepts/voice-video-calling/about-call-types), and [Chat](https://docs.microsoft.com/azure/communication-services/concepts/chat/concepts?branch=pr-en-us-152137).
