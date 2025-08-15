@@ -493,7 +493,7 @@
     },
     "callLocalVideoFreeze": {
       "title": "網路頻寬不佳",
-      "message": "通話中的其他人可能會暫停您的視訊。",
+      "message": "通話中的其他人可能會看到您的視訊暫停。",
       "dismissButtonAriaLabel": "關閉"
     },
     "callCameraAccessDenied": {

@@ -483,7 +483,7 @@
       "dismissButtonAriaLabel": "Fechar"
     },
     "callMicrophoneUnmutedBySystem": {
-      "title": "Seu microfone se recuperou e você foi desativado pelo sistema.",
+      "title": "O seu microfone foi recuperado e o mudo foi desativado pelo sistema para você.",
       "dismissButtonAriaLabel": "Fechar"
     },
     "callMacOsMicrophoneAccessDenied": {

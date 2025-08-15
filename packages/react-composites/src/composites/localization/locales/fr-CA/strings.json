@@ -336,7 +336,7 @@
     },
     "spotlightPrompt": {
       "startSpotlightHeading": "Voulez-vous mettre en évidence pour tout le monde?",
-      "startSpotlightText": "Votre vidéo ne sera plus mise en surbrillance pour tous les participants à la réunion.",
+      "startSpotlightText": "Vous mettrez cette vidéo en avant pour tous les participants à la réunion.",
       "startSpotlightOnSelfText": "Vous mettez en surbrillance votre vidéo pour tous les participants à la réunion.",
       "startSpotlightConfirmButtonLabel": "Mettre en évidence pour tout le monde",
       "startSpotlightCancelButtonLabel": "Annuler",
@@ -437,7 +437,7 @@
     "peopleButtonTooltipOpen": "Afficher les participants",
     "peopleButtonTooltipClose": "Masquer les participants",
     "peopleButtonTooltipOpenAriaLabel": "Bouton Contacts, Afficher les participants",
-    "peopleButtonTooltipCloseAriaLabel": "Bouton Contacts, Masquer les participants",
+    "peopleButtonTooltipCloseAriaLabel": "Bouton Personnes, Masquer les participants",
     "peoplePaneSubTitle": "Pendant cet appel",
     "peoplePaneTitle": "Personnes",
     "pictureInPictureTileAriaLabel": "Flux vidéo. Cliquez pour revenir à l’écran d’appel.",

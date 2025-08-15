@@ -32,7 +32,7 @@
     "attachmentUploadsPendingError": "Chargement du fichier en cours, veuillez patienter.",
     "removeAttachment": "Supprimer un fichier",
     "uploading": "Chargement",
-    "uploadProgress": "Upload progress {progress}%",
+    "uploadProgress": "Progression du chargement {progress} %",
     "uploadCompleted": "Téléchargement terminé",
     "attachmentMoreMenu": "Plus d’options"
   },
@@ -44,7 +44,7 @@
     "imageUploadsPendingError": "Chargement de l’image en cours, veuillez patienter.",
     "removeAttachment": "Supprimer un fichier",
     "uploading": "Chargement",
-    "uploadProgress": "Upload progress {progress}%",
+    "uploadProgress": "Progression du chargement {progress} %",
     "uploadCompleted": "Téléchargement terminé",
     "richTextBoldTooltip": "Gras",
     "richTextItalicTooltip": "Italique",
@@ -548,7 +548,7 @@
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
       "title": "Impossible de mettre en évidence le ou les participants",
-      "message": "Le nombre maximum de participants est déjà mis en évidence.",
+      "message": "Le nombre maximal de participants est déjà mis en évidence.",
       "dismissButtonAriaLabel": "Fermer"
     },
     "mutedByRemoteParticipant": {

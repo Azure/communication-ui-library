@@ -685,7 +685,7 @@
     "unpinnedParticipantAnnouncementAriaLabel": "{participantName} desanclado",
     "startSpotlightVideoTileMenuLabel": "Poner en primer plano para todos",
     "addSpotlightVideoTileMenuLabel": "Agregar primer plano",
-    "spotlightLimitReachedMenuTitle": "Se alcanzó el límite de primer plano",
+    "spotlightLimitReachedMenuTitle": "Se alcanzó el límite destacado",
     "stopSpotlightVideoTileMenuLabel": "Dejar de poner en primer plano",
     "stopSpotlightOnSelfVideoTileMenuLabel": "Salir de primer plano",
     "attendeeRole": "Asistente",

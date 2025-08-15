@@ -68,7 +68,7 @@
     "addSpotlightMenuLabel": "Agregar primer plano",
     "stopSpotlightMenuLabel": "Dejar de poner en primer plano",
     "stopSpotlightOnSelfMenuLabel": "Salir de primer plano",
-    "spotlightLimitReachedMenuTitle": "Se alcanzó el límite de primer plano",
+    "spotlightLimitReachedMenuTitle": "Se alcanzó el límite de contenido destacado",
     "stopAllSpotlightMenuLabel": "Detener todos los primeros planos",
     "returnToCallButtonAriaDescription": "Volver a llamada",
     "returnToCallButtonAriaLabel": "Volver",
