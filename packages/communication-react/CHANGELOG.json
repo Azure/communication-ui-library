@@ -2,6 +2,299 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Fri, 15 Aug 2025 21:19:38 GMT",
+      "version": "1.31.0-beta.1",
+      "tag": "@azure/communication-react_v1.31.0-beta.1",
+      "comments": {
+        "minor": [
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "528556ef5f9e5ecf6a9dfdef61863ed59714cb92",
+            "area": "storybook",
+            "workstream": "Update storybook pages to include Vite instead of CRA",
+            "comment": "Update storybook pages to include Vite instead of CRA"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "1884a9f64563c5fb10a2bcf4c4d61fa85c774988",
+            "area": "improvement",
+            "workstream": "sourcemaps in internally deployed samples",
+            "comment": "making sure we build our apps in development so we can get sourcemaps"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "e0fc55874c37861857972ea8d47c6fb3b9f81dfd",
+            "area": "improvement",
+            "workstream": "updating calling sdk versions",
+            "comment": "updated calling sdk"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d1fb6ea7840be08d0abd298238ceaa758b2e721a",
+            "area": "improvement",
+            "workstream": "updating default version of node",
+            "comment": "update postCreateCommand"
+          },
+          {
+            "author": "9044372+JoshuaLai@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5df12bf689490be3aad7de89760203ebb0c6765d",
+            "area": "improvement",
+            "workstream": "README",
+            "comment": "Updating README to include telemetry disclosure"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a7c9134f965deec86ed49f54aa105329c52ec01a",
+            "area": "feature",
+            "workstream": "Add is speaking indicator for RTT",
+            "comment": "Add is speaking indicator for RTT"
+          },
+          {
+            "author": "79329532+alkwa-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "8e2d9bf7be16b98a5d59534605b8916bc3acbb84",
+            "area": "improvement",
+            "workstream": "updating md files for agents to know how to update dependencies",
+            "comment": "adding agent workflow instructions for dependency management"
+          }
+        ],
+        "patch": [
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2b322d67d32192e0b20ef32f5fedbe827456cb75",
+            "area": "fix",
+            "workstream": "a11y",
+            "comment": "Add aria label for upload progress"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5d2fd85937077ad1041eed7cf5549c20a8b27c82",
+            "area": "fix",
+            "workstream": "Dark text for raise hand button in dark theme",
+            "comment": "Dark text for raise hand button in dark theme"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "95f7927e1de55603231c81f6bf0c5d89900eaf00",
+            "area": "fix",
+            "workstream": "Fixed in code where using splice inside foreach",
+            "comment": "Fixed in code where using splice inside foreach"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "62022b58832be9febf1eed899b6cbc906921bcc2",
+            "area": "improvement",
+            "workstream": "Eslint",
+            "comment": "Fix Eslint errors for calling sample"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f1e8653d1a32aa7e756a8738de568214483c4d56",
+            "area": "fix",
+            "workstream": "Remove condition compile for onFetchProfile",
+            "comment": "Remove conditional-compile for on-fetch-profile"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d582de132fb18a15c14c9cb938253603d0caca68",
+            "area": "feature",
+            "workstream": "RTT and Captions",
+            "comment": "Auto announce completed RTT and caption messages "
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f472160c81faa525f4adc581ea68509634bb3877",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Update brace-expansion to 1.1.12"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9a74b2eaa3be0d7fac208aca0825defc03053c8f",
+            "area": "fix",
+            "workstream": "[A11y]Change role to dialog to fix accessible name for effects pane",
+            "comment": "[A11y]Change role to dialog to fix accessible name for effects pane"
+          },
+          {
+            "author": "3941071+emlynmac@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "690809a339f511656d7c29a319264bc83ce27dd3",
+            "area": "feature",
+            "workstream": "Dependency Updates",
+            "comment": "Update to ESLint 9"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "451774753efa96ff498bf20b52a9b74788b3c1f7",
+            "area": "fix",
+            "workstream": "ESLint9 Fix",
+            "comment": "Fix ESLint9 rules for fake-backend"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "18c7a3ea29ffcdb4245cb0a590d8bc2b48af1696",
+            "area": "storybook",
+            "workstream": "Add details about Deep Noise Suppression configuration",
+            "comment": "Add details about Deep Noise Suppression configuration"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fcfe6710354d3700bb98a2c35e3eae901958b1c3",
+            "area": "improvement",
+            "workstream": "RTTCaptions",
+            "comment": "Refactor captions component, put the announcer to one single private component"
+          },
+          {
+            "author": "98852890+vhuseinova-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "172db32692722d697cc12103a610f7341aab334f",
+            "area": "improvement",
+            "workstream": "Chat",
+            "comment": "Chat SDK version update"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "3c9c10f234bd2984573f09470400cbdd73513508",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix Local Participant's display name in Together Mode"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "ac4114eeea3a7ec185ba0055ced26ac460c8d94f",
+            "area": "improvement",
+            "workstream": "Updating beta version of calling sdk to 1.36.3-beta.1",
+            "comment": "bumping calling beta to 1.36.3-beta.1"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9fdf5a40c1335214a9ed730a1628d9f091a6acea",
+            "area": "improvement",
+            "workstream": "Eslint",
+            "comment": "Fix eslint errors for calling component binding"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "56eec6f5606165209bab8d5add6ebff1e306a2ac",
+            "area": "fix",
+            "workstream": "ESLint9 fix",
+            "comment": "ESLint9 fix for packages/calling-stateful-client"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "73f6715f8a96afec91170facc4d09e111f1fe9f3",
+            "area": "improvement",
+            "workstream": "Logging",
+            "comment": "Add new logger for the composite and add log lines for audio context"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "d68ca84bee67a0cee33a741ca47b844872008ce0",
+            "area": "improvement",
+            "workstream": "Eslint",
+            "comment": "Fix eslint errors for calling stateful sample"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b0ebdda80c878f55005496ad51ed3d4f1fa151be",
+            "area": "improvement",
+            "workstream": "Update dependency",
+            "comment": "Update Multer for security patch"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "9d706eebb91233b8489ce99d240db95ca66608a8",
+            "area": "fix",
+            "workstream": "ESLint9 Fix",
+            "comment": "ESLint9 fix samples/ComponentExamples"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "fa5d48a89fb310518f69815543445c55135f063b",
+            "area": "storybook",
+            "workstream": "",
+            "comment": "Add concept page for Dependency isolation"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "48869f548287819ea9d1ce8f1407c1b45fe04cd3",
+            "area": "fix",
+            "workstream": "ESLint changes",
+            "comment": "ESLint fixes for package/react-composites"
+          },
+          {
+            "author": "alkwa@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "cac794ac1ce6af8e5c1e2030faa49d4264f1954e",
+            "area": "improvement",
+            "workstream": "Updating eslint configs for Calling packlets",
+            "comment": "updated eslint configs for further eslint9 migration"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "348879b4ce05b96a206a15d084aa3a9b06d38a2b",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Improve device permission checks on Android WebViews"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "1a74fe659a4ca7fc240e1f3cc1c9ef6c9fc5b408",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix issue on Android WebView where there is no default audio device"
+          },
+          {
+            "author": "97124699+prabhjot-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "f44ab758224312976a66310501bcadc118508110",
+            "area": "fix",
+            "workstream": "",
+            "comment": "[KTLO][ESLint9]Remove rules for samples/Serverfor"
+          },
+          {
+            "author": "77021369+jimchou-dev@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a1bf6476b9a9063bdbe52c1a89e314c641bb58a6",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Add error message for empty content for edit box"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 08 Jul 2025 16:10:20 GMT",
       "version": "1.29.0",
       "tag": "@azure/communication-react_v1.29.0",

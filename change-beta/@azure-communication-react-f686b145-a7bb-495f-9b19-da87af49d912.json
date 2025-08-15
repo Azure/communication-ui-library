@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "storybook",
-  "workstream": "Add details about Deep Noise Suppression configuration",
-  "comment": "Add details about Deep Noise Suppression configuration",
-  "packageName": "@azure/communication-react",
-  "email": "97124699+prabhjot-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
