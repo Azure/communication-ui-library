@@ -548,7 +548,7 @@
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
       "title": "Impossible de mettre en évidence le ou les participants",
-      "message": "Le nombre maximum de participants est déjà connu.",
+      "message": "Le nombre maximum de participants est déjà indiqué.",
       "dismissButtonAriaLabel": "Fermer"
     },
     "mutedByRemoteParticipant": {
