@@ -1,9 +1,0 @@
-{
-  "type": "prerelease",
-  "area": "improvement",
-  "workstream": "updating md files for agents to know how to update dependencies",
-  "comment": "adding agent workflow instructions for dependency management",
-  "packageName": "@azure/communication-react",
-  "email": "79329532+alkwa-msft@users.noreply.github.com",
-  "dependentChangeType": "patch"
-}
