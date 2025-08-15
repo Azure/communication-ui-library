@@ -1,8 +1,24 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Tue, 08 Jul 2025 16:10:20 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 15 Aug 2025 21:08:46 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.30.0](https://github.com/azure/communication-ui-library/tree/1.30.0)
+
+Fri, 15 Aug 2025 21:08:46 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.29.0...1.30.0)
+
+### Improvements
+- Add new logger for the composite and add log lines for audio context ([PR #5939](https://github.com/azure/communication-ui-library/pull/5939) by dmceachern@microsoft.com)
+- Chat SDK version update ([PR #5942](https://github.com/azure/communication-ui-library/pull/5942) by 98852890+vhuseinova-msft@users.noreply.github.com)
+### Bug Fixes
+- [A11y]Change role to dialog to fix accessible name for effects pane ([PR #5937](https://github.com/azure/communication-ui-library/pull/5937) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix Local Participant's display name in Together Mode ([PR #5927](https://github.com/azure/communication-ui-library/pull/5927) by 2684369+JamesBurnside@users.noreply.github.com)
+### Storybook Changes
+- Add concept page for Dependency isolation ([PR #5953](https://github.com/azure/communication-ui-library/pull/5953) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Add details about Deep Noise Suppression configuration ([PR #5940](https://github.com/azure/communication-ui-library/pull/5940) by 97124699+prabhjot-msft@users.noreply.github.com)
+
 
 ## [1.29.0](https://github.com/azure/communication-ui-library/tree/1.29.0)
 
