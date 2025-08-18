@@ -13,6 +13,7 @@ Fri, 15 Aug 2025 21:08:46 GMT
 
 - Add new logger for the composite and add log lines for audio context ([PR #5939](https://github.com/azure/communication-ui-library/pull/5939) by dmceachern@microsoft.com)
 - Chat SDK version update ([PR #5942](https://github.com/azure/communication-ui-library/pull/5942) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Update localization strings
 
 ### Bug Fixes
 
