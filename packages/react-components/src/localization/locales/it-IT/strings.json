@@ -548,7 +548,7 @@
     },
     "startSpotlightWhileMaxParticipantsAreSpotlighted": {
       "title": "Impossibile avviare i contenuti in evidenza sui partecipanti",
-      "message": "Il numero massimo di partecipanti è già stato indicato.",
+      "message": "Il numero massimo di partecipanti è già in evidenza.",
       "dismissButtonAriaLabel": "Chiudi"
     },
     "mutedByRemoteParticipant": {
