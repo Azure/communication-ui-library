@@ -20,6 +20,8 @@ Fri, 15 Aug 2025 21:19:38 GMT
 - Chat SDK version update ([PR #5942](https://github.com/azure/communication-ui-library/pull/5942) by 98852890+vhuseinova-msft@users.noreply.github.com)
 - Bumping calling beta to 1.36.3-beta.1 ([PR #5876](https://github.com/azure/communication-ui-library/pull/5876) by alkwa@microsoft.com)
 - Add new logger for the composite and add log lines for audio context ([PR #5939](https://github.com/azure/communication-ui-library/pull/5939) by dmceachern@microsoft.com)
+- Update localization strings
+
 
 ### Bug Fixes
 
