@@ -1,8 +1,35 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Mon, 26 May 2025 21:03:25 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 15 Aug 2025 21:19:38 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.31.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.31.0-beta.1)
+
+Fri, 15 Aug 2025 21:19:38 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.29.0...1.31.0-beta.1)
+
+### Features
+
+- Add is speaking indicator for RTT ([PR #5920](https://github.com/azure/communication-ui-library/pull/5920) by 96077406+carocao-msft@users.noreply.github.com)
+
+### Improvements
+
+- making sure we build our apps in development so we can get sourcemaps ([PR #5935](https://github.com/azure/communication-ui-library/pull/5935) by alkwa@microsoft.com)
+- Updating README to include telemetry disclosure ([PR #5874](https://github.com/azure/communication-ui-library/pull/5874) by 9044372+JoshuaLai@users.noreply.github.com)
+- Chat SDK version update ([PR #5942](https://github.com/azure/communication-ui-library/pull/5942) by 98852890+vhuseinova-msft@users.noreply.github.com)
+- Bumping calling beta to 1.36.3-beta.1 ([PR #5876](https://github.com/azure/communication-ui-library/pull/5876) by alkwa@microsoft.com)
+- Add new logger for the composite and add log lines for audio context ([PR #5939](https://github.com/azure/communication-ui-library/pull/5939) by dmceachern@microsoft.com)
+
+### Bug Fixes
+
+- [A11y]Change role to dialog to fix accessible name for effects pane ([PR #5937](https://github.com/azure/communication-ui-library/pull/5937) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Fix Local Participant's display name in Together Mode ([PR #5927](https://github.com/azure/communication-ui-library/pull/5927) by 2684369+JamesBurnside@users.noreply.github.com)
+
+### Storybook Changes
+
+- Add details about Deep Noise Suppression configuration ([PR #5940](https://github.com/azure/communication-ui-library/pull/5940) by 97124699+prabhjot-msft@users.noreply.github.com)
+- Add concept page for Dependency isolation ([PR #5953](https://github.com/azure/communication-ui-library/pull/5953) by 97124699+prabhjot-msft@users.noreply.github.com)
 
 ## [1.28.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.28.0-beta.1)
 
