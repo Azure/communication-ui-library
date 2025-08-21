@@ -164,7 +164,6 @@ jobs:
             echo "hasChanged=false" >> $GITHUB_OUTPUT
           else
             echo "hasChanged=true" >> $GITHUB_OUTPUT
-            exit
           fi
       - name: Push new snapshots, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
@@ -264,7 +263,6 @@ jobs:
             echo "hasChanged=false" >> $GITHUB_OUTPUT
           else
             echo "hasChanged=true" >> $GITHUB_OUTPUT
-            exit
           fi
       - name: Push new snapshots, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
