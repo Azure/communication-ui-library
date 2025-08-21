@@ -42,6 +42,8 @@ jobs:
       # After sanitizing the branchname, confirm it exists (it won't if exploit code was stripped)
       - name: Check sanitized branchname exists
         if: ${{ github.event_name == 'pull_request' }}
+        env:
+          SAFE_BRANCH: ${{ steps.sanitize.outputs.branch }}
         run: |
           if git ls-remote --heads origin "$SAFE_BRANCH" | grep -q "$SAFE_BRANCH"; then
             echo "Branch '$SAFE_BRANCH' found."

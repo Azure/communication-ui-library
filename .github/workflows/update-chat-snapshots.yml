@@ -40,6 +40,8 @@ jobs:
       # After sanitizing the branchname, confirm it exists (it won't if exploit code was stripped)
       - name: Check sanitized branchname exists
         if: ${{ github.event_name == 'pull_request' }}
+        env:
+          SAFE_BRANCH: ${{ steps.sanitize.outputs.branch }}
         run: |
           if [ -z "$SAFE_BRANCH" ]; then
             echo "No branch specified; skipping existence check"
