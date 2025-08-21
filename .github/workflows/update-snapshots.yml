@@ -182,6 +182,7 @@ jobs:
         run: |
           git add samples/tests/*.png
           git commit -m 'Update component examples snapshots'
+          git fetch origin "$TARGET_BRANCH"
           git pull origin "$TARGET_BRANCH" --no-rebase --no-edit
           git push
 
@@ -281,6 +282,7 @@ jobs:
         run: |
           git add samples/tests/*.png
           git commit -m 'Update embed html bundle snapshots'
+          git fetch origin "$TARGET_BRANCH"
           git pull origin "$TARGET_BRANCH" --no-rebase --no-edit
           git push
 
@@ -381,6 +383,7 @@ jobs:
         run: |
           git add packages/react-composites/*.png
           git commit -m 'Update packages/react-composites CallComposite browser test snapshots'
+          git fetch origin "$TARGET_BRANCH"
           git pull origin "$TARGET_BRANCH" --no-rebase --no-edit
           git push
 
@@ -481,6 +484,7 @@ jobs:
         run: |
           git add packages/react-composites/*.png
           git commit -m 'Update packages/react-composites ChatComposite browser test snapshots'
+          git fetch origin "$TARGET_BRANCH"
           git pull origin "$TARGET_BRANCH" --no-rebase --no-edit
           git push
 
@@ -581,6 +585,7 @@ jobs:
         run: |
           git add packages/react-composites/*.png
           git commit -m 'Update packages/react-composites CallWithChatComposite browser test snapshots'
+          git fetch origin "$TARGET_BRANCH"
           git pull origin "$TARGET_BRANCH" --no-rebase --no-edit
           git push
 
@@ -678,6 +683,7 @@ jobs:
         run: |
           git add packages/react-components/*.png
           git commit -m 'Update packages/react-components browser test snapshots'
+          git fetch origin "$TARGET_BRANCH"
           git pull origin "$TARGET_BRANCH" --no-rebase --no-edit
           git push
 
