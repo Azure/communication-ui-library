@@ -17,6 +17,7 @@ jobs:
       pull-requests: write
     outputs:
       met: ${{ steps.label.outputs.found || steps.workflow_dispatch.outputs.found }}
+      active_branch_name_sanitized: ${{ steps.sanitize.outputs.branch }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -26,15 +27,40 @@ jobs:
           # This machine account is only for this PAT, pwd was created and thrown away
           # If an update is needed, create a new account, add access to the repo and generate a new PAT
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+      # Sanitize branch name for any subsequent git checkout to prevent branch name exploits
+      - name: Sanitize branch name
+        id: sanitize
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          BRANCH_REF: ${{ github.event.pull_request.head.ref }}
+        run: |
+          # Sanitize branch name to prevent command injection
+          SAFE_BRANCH=$(echo "$BRANCH_REF" | sed 's/[^a-zA-Z0-9._\/-]//g')
+          echo "branch=$SAFE_BRANCH" >> $GITHUB_OUTPUT
+      # After sanitizing the branchname, confirm it exists (it won't if exploit code was stripped)
+      - name: Check sanitized branchname exists
+        if: ${{ github.event_name == 'pull_request' }}
+        env:
+          SAFE_BRANCH: ${{ steps.sanitize.outputs.branch }}
+        run: |
+          if [ -z "$SAFE_BRANCH" ]; then
+            echo "No branch specified; skipping existence check"
+          elif git ls-remote --heads origin "$SAFE_BRANCH" | grep -q "$SAFE_BRANCH"; then
+            echo "Branch '$SAFE_BRANCH' found."
+          else
+            echo "Error: Branch '$SAFE_BRANCH' not found on origin" >&2
+            exit 1
+          fi
       - name: Found required label
         id: label
         if: ${{ github.event_name == 'pull_request' && contains(github.event.pull_request.labels.*.name, 'update_chat_snapshots') }}
         env:
           # Required for running `gh`.
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.number }}
         run: |
           echo "found=true" >> $GITHUB_OUTPUT
-          gh pr edit ${{ github.event.number }} --remove-label update_chat_snapshots
+          gh pr edit "$PR_NUMBER" --remove-label update_chat_snapshots
 
   get_matrix:
     name: Set CI flavors
@@ -74,9 +100,12 @@ jobs:
           token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
       - name: Checkout branch if on a PR
         if: ${{ github.event_name != 'workflow_dispatch' }}
+        # Use sanitized branch name from precondition job
+        env:
+          SAFE_BRANCH: ${{ needs.precondition.outputs.active_branch_name_sanitized }}
         # On the `pull_request` event, actions/checkout@v4 leaves the local checkout in a detached head state.
         # Explicitly checkout the target branch so we can push later.
-        run: git checkout ${{ github.event.pull_request.head.ref }}
+        run: git checkout "$SAFE_BRANCH"
       - name: Setup bot git information
         # User id of github actions bot. See https://api.github.com/users/better-informatics%5Bbot%5D
         run: |
@@ -130,6 +159,8 @@ jobs:
           fi
       - name: Push new snapshots, if any
         if: ${{ steps.changescheck.outputs.hasChanged == 'true' }}
+        env:
+          SAFE_BRANCH: ${{ needs.precondition.outputs.active_branch_name_sanitized }}
         # Before pushing changes to origin, merge any intervening changes on the upstream branch.
         # This allows multiple snapshot update jobs in this action to run concurrently.
         # - The only files updated locally are UI snapshots
@@ -143,7 +174,7 @@ jobs:
         run: |
           git add packages/react-composites/*.png
           git commit -m 'Update packages/react-composites ChatComposite browser test snapshots'
-          git pull origin ${{ needs.get_target_branch.outputs.target }} --no-rebase --no-edit
+          git pull origin "$SAFE_BRANCH" --no-rebase --no-edit
           git push
 
   push_updated_snapshots:
