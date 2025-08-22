@@ -678,7 +678,6 @@ jobs:
         run: |
           git add packages/react-components/*.png
           git commit -m 'Update packages/react-components browser test snapshots'
-          git fetch origin "$SAFE_BRANCH"
           git pull origin "$SAFE_BRANCH" --no-rebase --no-edit
           git push
 
