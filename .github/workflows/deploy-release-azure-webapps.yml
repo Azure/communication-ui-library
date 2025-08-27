@@ -1,11 +1,6 @@
 name: Deploy release validation samples
 
 on:
-  push:
-    branches:
-      - 'release/**'
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
 # cancel workflow when a newer version of the workflow is triggered on the same github ref
