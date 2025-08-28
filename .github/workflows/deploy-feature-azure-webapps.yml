@@ -3,6 +3,15 @@ name: Deploy feature validation samples
 on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
+    inputs:
+      flavor:
+        description: 'Build flavor to deploy (beta-release or stable)'
+        type: choice
+        required: true
+        default: beta-release
+        options:
+          - beta-release
+          - stable
 
 # cancel workflow when a newer version of the workflow is triggered on the same github ref
 concurrency:
@@ -31,8 +40,8 @@ jobs:
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for beta release build
-        run: rush switch-flavor:beta-release
+      - name: Switch flavor
+        run: rush switch-flavor:${{ inputs.flavor }}
       - name: Build Communication-react
         run: rush build -t @azure/communication-react
       - name: Build Server
@@ -73,8 +82,8 @@ jobs:
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for beta release build
-        run: rush switch-flavor:beta-release
+      - name: Switch flavor
+        run: rush switch-flavor:${{ inputs.flavor }}
       - name: Build Communication-react
         run: rush build -t @azure/communication-react
       - name: Build Server
@@ -115,8 +124,8 @@ jobs:
         run: npm install -g @microsoft/rush@$(jq -r '.rushVersion' "rush.json")
       - name: Install dependencies
         run: rush install
-      - name: Switch flavor for beta release build
-        run: rush switch-flavor:beta-release
+      - name: Switch flavor
+        run: rush switch-flavor:${{ inputs.flavor }}
       - name: Build Communication-react
         run: rush build -t @azure/communication-react
       - name: Build Server
