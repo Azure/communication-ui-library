@@ -38,7 +38,6 @@ import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
-/* @conditional-compile-remove(calling-beta-sdk) */
 import { RemoteParticipantDiagnosticsData } from '@azure/communication-calling';
 
 let backupFreezeFunction: typeof Object.freeze;
@@ -312,7 +311,6 @@ export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeat
   dispose(): void {
     /* No state to clean up */
   }
-  /* @conditional-compile-remove(calling-beta-sdk) */
   public remote = {
     isSendingDiagnosticsEnabled: true,
     startSendingDiagnostics(): void {
