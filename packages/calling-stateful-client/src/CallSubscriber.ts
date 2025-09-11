@@ -120,7 +120,7 @@ export class CallSubscriber {
       this._call.feature(Features.Spotlight)
     );
 
-    if (this._call.feature(Features.Capabilities).capabilities.joinBreakoutRooms.isPresent) {
+    if (this._call.feature(Features.Capabilities) && this._call.feature(Features.Capabilities).capabilities?.joinBreakoutRooms.isPresent) {
       // Clear assigned breakout room closed notification for this call.
       this._context.deleteLatestNotification('assignedBreakoutRoomClosed');
       this._breakoutRoomsSubscriber = new BreakoutRoomsSubscriber(
@@ -256,7 +256,7 @@ export class CallSubscriber {
     this._capabilitiesSubscriber.unsubscribe();
     this._reactionSubscriber?.unsubscribe();
     this._spotlightSubscriber.unsubscribe();
-    if (this._call.feature(Features.Capabilities).capabilities.joinBreakoutRooms.isPresent && this._breakoutRoomsSubscriber) {
+    if (this._call.feature(Features.Capabilities) && this._call.feature(Features.Capabilities).capabilities?.joinBreakoutRooms.isPresent && this._breakoutRoomsSubscriber) {
       this._breakoutRoomsSubscriber.unsubscribe();
     }
     this._togetherModeSubscriber.unsubscribe();
