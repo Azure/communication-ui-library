@@ -181,8 +181,5 @@
   },
   "beachball": {
     "shouldPublish": false
-  },
-  "overrides": {
-    "debug": "4.4.3"
   }
 }
