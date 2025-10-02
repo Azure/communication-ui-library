@@ -4187,7 +4187,7 @@ packages:
     resolution: {integrity: sha512-gWp7NfQW27LaBQz3TITS8L7ZCQ0TLvtmI//4OwlQRx4rnWxcPNIYjxZpDcN4+UlGxgm3jS5QPz8IPTCkb59wZA==}
     engines: {node: ^18.14.0 || ^20.0.0 || ^22.0.0 || >=24.0.0}
     dependencies:
-      '@types/node': 22.17.0
+      '@types/node': 24.2.0
       jest-regex-util: 30.0.1
     dev: false
 
@@ -4314,7 +4314,7 @@ packages:
       '@jest/schemas': 30.0.5
       '@types/istanbul-lib-coverage': 2.0.6
       '@types/istanbul-reports': 3.0.4
-      '@types/node': 22.17.0
+      '@types/node': 24.2.0
       '@types/yargs': 17.0.33
       chalk: 4.1.2
     dev: false
@@ -5483,12 +5483,6 @@ packages:
       unplugin: 1.16.1
     dev: false
 
-  /@storybook/csf@0.1.13:
-    resolution: {integrity: sha512-7xOOwCLGB3ebM87eemep89MYRFTko+D8qE7EdAAq74lgdqRR5cOUtYWJLjO2dLtP94nqoOdHJo6MdLLKzg412Q==}
-    dependencies:
-      type-fest: 2.19.0
-    dev: false
-
   /@storybook/global@5.0.0:
     resolution: {integrity: sha512-FcOqPAXACP0I3oJ/ws6/rrPT9WGhu915Cg8D02a9YxLo0DE9zI+a9A5gRGvmQ09fiWPukqI8ZAEoQEdWUKMQdQ==}
     dev: false
@@ -5662,19 +5656,18 @@ packages:
       typescript: 5.4.5
     dev: false
 
-  /@storybook/test-runner@0.22.1(@types/node@22.17.0)(storybook@8.6.12)(ts-node@10.9.2):
-    resolution: {integrity: sha512-F5omZH0Pj2Y0UXSqShl1RuPrnhLBbb/yPFnZbVWDSPWZHDSX+dfBuu1T2zVfJplNKd04RzJuMbWHPFtZ0mimSw==}
-    engines: {node: ^16.10.0 || ^18.0.0 || >=20.0.0}
+  /@storybook/test-runner@0.23.0(@types/node@22.17.0)(storybook@8.6.12)(ts-node@10.9.2):
+    resolution: {integrity: sha512-AVA6mSotfHAqsKjvWMNR7wcXIoCNQidU9P5GIGEdn+gArzkzTsLXZr6qNjH4XQRg8pSR+IUOuB1MMWZIHxhgoQ==}
+    engines: {node: '>=20.0.0'}
     hasBin: true
     peerDependencies:
-      storybook: ^0.0.0-0 || ^8.2.0 || ^8.3.0-0 || ^8.4.0-0 || ^8.5.0-0 || ^8.6.0-0 || ^9.0.0-0
+      storybook: ^0.0.0-0 || ^8.2.0 || ^9.0.0 || ^9.1.0-0
     dependencies:
       '@babel/core': 7.28.0
       '@babel/generator': 7.28.0
       '@babel/template': 7.27.2
       '@babel/types': 7.28.2
       '@jest/types': 29.6.3
-      '@storybook/csf': 0.1.13
       '@swc/core': 1.13.3
       '@swc/jest': 0.2.39(@swc/core@1.13.3)
       expect-playwright: 0.8.0
@@ -6421,7 +6414,7 @@ packages:
   /@types/wait-on@5.3.4:
     resolution: {integrity: sha512-EBsPjFMrFlMbbUFf9D1Fp+PAB2TwmUn7a3YtHyD9RLuTIk1jDd8SxXVAoez2Ciy+8Jsceo2MYEYZzJ/DvorOKw==}
     dependencies:
-      '@types/node': 22.17.0
+      '@types/node': 24.2.0
     dev: false
 
   /@types/webpack-node-externals@3.0.4(webpack-cli@5.1.4):
@@ -16501,11 +16494,6 @@ packages:
     engines: {node: '>=8'}
     dev: false
 
-  /type-fest@2.19.0:
-    resolution: {integrity: sha512-RAH822pAdBgcNMAfWnCBU3CFZcfZ/i1eZjwFU/dsLKumyuuP3niueg2UAukXYF0E2AAoc82ZSSf9J0WQBinzHA==}
-    engines: {node: '>=12.20'}
-    dev: false
-
   /type-fest@3.13.1:
     resolution: {integrity: sha512-tLq3bSNx+xSpwvAJnzrK0Ep5CLNWjvFTOp71URMaAEWBfRb9nnJiBoUe0tF8bI4ZFO3omgBR6NvnbzVUT3Ly4g==}
     engines: {node: '>=14.16'}
@@ -19236,7 +19224,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-UTFdw1I0VsUSJs0Axh3fdfJcm7rxFxatTI63TnLOzatgp9rLWFk0Px1By18pMdKJfEhGoRX/+GV+hvNe73jYag==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-vWnGgma+Tpq8fQJqKJqqa8rYzvW85XSDS6IwxxAL7t0ACQw13AdiH0jKrkdpQ2UTWIkEHz/Oin+cpYIUtaYf8w==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
@@ -19274,7 +19262,7 @@ packages:
       '@storybook/react': 8.6.12(@storybook/test@8.6.12)(react-dom@18.3.1)(react@18.3.1)(storybook@8.6.12)(typescript@5.4.5)
       '@storybook/react-webpack5': 8.6.12(@storybook/test@8.6.12)(react-dom@18.3.1)(react@18.3.1)(storybook@8.6.12)(typescript@5.4.5)
       '@storybook/test': 8.6.12(storybook@8.6.12)
-      '@storybook/test-runner': 0.22.1(@types/node@22.17.0)(storybook@8.6.12)(ts-node@10.9.2)
+      '@storybook/test-runner': 0.23.0(@types/node@22.17.0)(storybook@8.6.12)(ts-node@10.9.2)
       '@storybook/theming': 8.6.12(storybook@8.6.12)
       '@testing-library/jest-dom': 6.6.4
       '@types/jest': 29.5.14
