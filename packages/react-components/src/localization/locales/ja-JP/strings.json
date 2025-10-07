@@ -309,8 +309,8 @@
     "tooltipOffContent": "ライブ キャプションをオンにする"
   },
   "startRealTimeTextButton": {
-    "label": "この呼び出しの RTT を有効にする",
-    "tooltipOffContent": "この呼び出しの RTT を有効にする"
+    "label": "この呼び出しの RTT をオン",
+    "tooltipOffContent": "この呼び出しの RTT をオン"
   },
   "messageThread": {
     "yesterday": "昨日",
