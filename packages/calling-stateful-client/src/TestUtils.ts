@@ -38,7 +38,6 @@ import { CallClientState } from './CallClientState';
 import { CallContext } from './CallContext';
 import { InternalCallContext } from './InternalCallContext';
 import { createStatefulCallClientWithDeps, StatefulCallClient } from './StatefulCallClient';
-import { RemoteParticipantDiagnosticsData } from '@azure/communication-calling';
 
 let backupFreezeFunction: typeof Object.freeze;
 
@@ -319,7 +318,7 @@ export class StubDiagnosticsCallFeatureImpl implements UserFacingDiagnosticsFeat
     stopSendingDiagnostics(): void {
       /* Stub to appease types */
     },
-    getLatest(): RemoteParticipantDiagnosticsData {
+    getLatest(): any /* using any while `RemoteParticipantDiagnosticsData` is still in beta */ {
       return { diagnostics: [] };
     },
     on(): void {
