@@ -126,7 +126,7 @@
     "captionsBannerMoreButtonCallingLabel": "キャプション設定のその他のオプション",
     "captionsBannerMoreButtonTooltip": "その他のオプション",
     "realTimeTextLabel": "リアルタイム テキスト (RTT)",
-    "startRealTimeTextLabel": "この呼び出しの RTT を有効にする",
+    "startRealTimeTextLabel": "この呼び出しの RTT をオン",
     "disabledStartRealTimeTextLabel": "RTT は現在オンになっています。オフにすることはできません",
     "dismissModalAriaLabel": "ローカルとリモートの画像と画像。通話に戻るには Enter キーを押します",
     "callRejectedTitle": "通話を完了できませんでした",
