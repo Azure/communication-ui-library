@@ -2,6 +2,39 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 14 Oct 2025 22:52:36 GMT",
+      "version": "1.31.0",
+      "tag": "@azure/communication-react_v1.31.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "567cfdb8eb39bf7175d8ea4e273563dcb63c4291",
+            "area": "fix",
+            "workstream": "Breakoutrooms",
+            "comment": "Subscribe to breakoutrooms only when the feature is available."
+          },
+          {
+            "author": "edwardlee@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "567cfdb8eb39bf7175d8ea4e273563dcb63c4291",
+            "area": "fix",
+            "workstream": "Breakoutroom",
+            "comment": "Subscribe to breakoutrooms only when capable."
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b27b2b0d6bd28c0f4276f29430380b64518dddb1",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update @azure/communication-calling sdks to latest (1.39.1 stable and 1.40.1-beta.1 beta)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Aug 2025 21:19:38 GMT",
       "version": "1.31.0-beta.1",
       "tag": "@azure/communication-react_v1.31.0-beta.1",

@@ -1,8 +1,20 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Fri, 15 Aug 2025 21:08:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 14 Oct 2025 22:52:36 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.31.0](https://github.com/azure/communication-ui-library/tree/1.31.0)
+
+Tue, 14 Oct 2025 22:52:36 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.31.0-beta.1...1.31.0)
+
+### Improvements
+- Update @azure/communication-calling sdks to latest (1.39.1 stable and 1.40.1-beta.1 beta) ([PR #5984](https://github.com/azure/communication-ui-library/pull/5984) by 2684369+JamesBurnside@users.noreply.github.com)
+### Bug Fixes
+- Subscribe to breakoutrooms only when the feature is available. ([PR #5978](https://github.com/azure/communication-ui-library/pull/5978) by edwardlee@microsoft.com)
+- Subscribe to breakoutrooms only when capable. ([PR #5978](https://github.com/azure/communication-ui-library/pull/5978) by edwardlee@microsoft.com)
+
 
 ## [1.30.0](https://github.com/azure/communication-ui-library/tree/1.30.0)
 
