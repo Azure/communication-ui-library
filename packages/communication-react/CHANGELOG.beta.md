@@ -1,8 +1,17 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Fri, 15 Aug 2025 21:19:38 GMT and should not be manually modified. -->
+<!-- This log was last generated on Tue, 14 Oct 2025 22:25:40 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.32.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.32.0-beta.1)
+
+Tue, 14 Oct 2025 22:25:40 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.31.0-beta.1...1.32.0-beta.1)
+
+### Improvements
+- Update @azure/communication-calling sdks to latest (1.39.1 stable and 1.40.1-beta.1 beta) ([PR #5984](https://github.com/azure/communication-ui-library/pull/5984) by 2684369+JamesBurnside@users.noreply.github.com)
+
 
 ## [1.31.0-beta.1](https://github.com/azure/communication-ui-library/tree/1.31.0-beta.1)
 

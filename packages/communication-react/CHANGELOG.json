@@ -2,6 +2,23 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Tue, 14 Oct 2025 22:25:40 GMT",
+      "version": "1.32.0-beta.1",
+      "tag": "@azure/communication-react_v1.32.0-beta.1",
+      "comments": {
+        "patch": [
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "b27b2b0d6bd28c0f4276f29430380b64518dddb1",
+            "area": "improvement",
+            "workstream": "",
+            "comment": "Update @azure/communication-calling sdks to latest (1.39.1 stable and 1.40.1-beta.1 beta)"
+          }
+        ]
+      }
+    },
+    {
       "date": "Fri, 15 Aug 2025 21:19:38 GMT",
       "version": "1.31.0-beta.1",
       "tag": "@azure/communication-react_v1.31.0-beta.1",
