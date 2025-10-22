@@ -4,6 +4,15 @@
 
 <!-- Start content -->
 
+## [1.31.0](https://github.com/azure/communication-ui-library/tree/1.31.0)
+
+Tue, 14 Oct 2025 22:52:36 GMT
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.30.0...1.31.0)
+
+### Bug Fixes
+
+- Subscribe to breakoutrooms only when the feature is available. ([PR #5978](https://github.com/azure/communication-ui-library/pull/5978) by edwardlee@microsoft.com)
+
 ## [1.30.0](https://github.com/azure/communication-ui-library/tree/1.30.0)
 
 Fri, 15 Aug 2025 21:08:46 GMT
