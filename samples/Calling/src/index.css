@@ -19,3 +19,8 @@ body {
   /* Prevent pull down to refresh behavior on mobile */
   overscroll-behavior-y: contain;
 }
+
+.Root {
+  min-width: max-content;
+  min-height: max-content;
+}
