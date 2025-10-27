@@ -203,7 +203,7 @@ export const _LocalVideoTile = React.memo(
                 ariaLive="assertive"
                 role="alert"
                 labelPosition="bottom"
-                styles={loadSpinnerStyles(theme, true)}
+                styles={loadSpinnerStyles(theme)}
               />
             </Stack>
           )}
@@ -237,7 +237,7 @@ export const _LocalVideoTile = React.memo(
             ariaLive="assertive"
             labelPosition="bottom"
             role="alert"
-            styles={loadSpinnerStyles(theme, false)}
+            styles={loadSpinnerStyles(theme)}
           />
         </Stack>
       );

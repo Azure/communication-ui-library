@@ -4,7 +4,6 @@
 import { IButtonStyles, IStyle, mergeStyles, Theme, ITheme, ISpinnerStyles } from '@fluentui/react';
 import { keyframes, memoizeFunction } from '@fluentui/react';
 import { REACTION_SCREEN_SHARE_ANIMATION_TIME_MS } from '../VideoGallery/utils/reactionUtils';
-import { isDarkThemed } from '../../theming/themeUtils';
 
 /**
  * @private
@@ -229,7 +228,7 @@ export const reactionRenderingStyle = (args: {
 /**
  * @private
  */
-export const loadSpinnerStyles = (theme: ITheme, isOverLay: boolean): ISpinnerStyles => {
+export const loadSpinnerStyles = (theme: ITheme): ISpinnerStyles => {
   return {
     circle: {
       width: '2rem',
@@ -237,7 +236,7 @@ export const loadSpinnerStyles = (theme: ITheme, isOverLay: boolean): ISpinnerSt
     },
     label: {
       fontSize: '1rem',
-      color: isOverLay ? (isDarkThemed(theme) ? theme.palette.black : theme.palette.white) : theme.palette.themeDarkAlt
+      color: theme.palette.neutralPrimary
     }
   };
 };
