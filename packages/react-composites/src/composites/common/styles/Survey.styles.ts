@@ -22,17 +22,13 @@ export const surveyContainerStyle = (isMobile: boolean): string =>
   mergeStyles(
     isMobile
       ? {
-          width: '20rem',
-          position: 'absolute',
-          top: '10%',
-          left: '50%',
-          transform: 'translateX(-50%)'
+          maxWidth: '20rem',
+          margin: '0 auto',
+          justifyContent: 'center'
         }
       : {
-          width: '24rem',
-          position: 'absolute',
-          top: '20%',
-          left: '50%',
-          transform: 'translateX(-50%)'
+          maxWidth: '24rem',
+          margin: '0 auto',
+          justifyContent: 'center'
         }
   );

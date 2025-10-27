@@ -30,3 +30,8 @@ body {
 .ui-provider {
   height: 0;
 }
+
+.Root {
+  min-width: max-content;
+  min-height: max-content;
+}
