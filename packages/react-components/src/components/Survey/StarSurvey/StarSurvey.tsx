@@ -132,9 +132,11 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
         styles={ratingStyles(theme)}
         icon={selectedIcon ?? 'SurveyStarIconFilled'}
         unselectedIcon={unselectedIcon ?? 'SurveyStarIcon'}
-        ariaLabelFormat={strings?.starRatingAriaLabel}
+        ariaLabelFormat={`${strings?.starRatingAriaLabel}, ${ratingHelperText}`}
       />
-      <Text className={ratingHelperTextStyle(theme)}>{ratingHelperText}</Text>
+      <Text className={ratingHelperTextStyle(theme)} aria-label={ratingHelperText}>
+        {ratingHelperText}
+      </Text>
     </Stack>
   );
 };
