@@ -24,7 +24,7 @@ export function ThankYouForFeedbackPage(props: ThankYouForFeedbackPageProps): JS
     <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={'thank-you-page'} aria-atomic>
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         {props.iconName && <CallCompositeIcon iconName={props.iconName} />}
-        <Text className={mergeStyles(titleStyles)} aria-live="assertive">
+        <Text className={mergeStyles(titleStyles)} tabIndex={0} aria-live={'assertive'} role="alert">
           {strings.endOfSurveyText}
         </Text>
       </Stack>
