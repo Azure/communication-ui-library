@@ -99,6 +99,13 @@ export const CallingCaptionsBanner = (props: {
 
   const desktopViewBannerWidth = windowWidth > 620 ? '35rem' : '80%';
 
+  const containerAriaLabel = // 3 cases, captions only, RTT only, captions + RTT we adjust the aria-label accordingly
+    captionsBannerProps.isCaptionsOn && !(props.isRealTimeTextOn || captionsBannerProps.isRealTimeTextOn)
+      ? strings.liveCaptionsLabel
+      : !captionsBannerProps.isCaptionsOn && (props.isRealTimeTextOn || captionsBannerProps.isRealTimeTextOn)
+        ? strings.realTimeTextLabel
+        : strings.captionsAndRealTimeTextContainerTitle;
+
   return (
     <>
       {isCaptionsSettingsOpen && (
@@ -109,7 +116,7 @@ export const CallingCaptionsBanner = (props: {
         />
       )}
       {
-        <div className={containerClassName} role="region" aria-label={strings.liveCaptionsLabel}>
+        <div className={containerClassName} role="region" aria-label={containerAriaLabel}>
           <Stack horizontalAlign="center">
             <Stack.Item style={{ width: props.isMobile ? mobileViewBannerWidth : desktopViewBannerWidth }}>
               <CaptionsBanner
