@@ -59,6 +59,10 @@ export interface MeetingConferencePhoneInfoModalStrings {
    * No phone number available message
    */
   meetingConferencePhoneInfoModalNoPhoneAvailable: string;
+  /**
+   * Dismiss button aria label
+   */
+  meetingConferencePhoneInfoModalDismissButtonAriaLabel: string;
 }
 
 /**
@@ -104,7 +108,7 @@ export const MeetingConferencePhoneInfoModal = (props: MeetingConferencePhoneInf
           </Text>
           <IconButton
             iconProps={{ iconName: 'Cancel' }}
-            ariaLabel={strings?.meetingConferencePhoneInfoModalTitle}
+            ariaLabel={strings?.meetingConferencePhoneInfoModalDismissButtonAriaLabel}
             onClick={onDismiss}
             style={{ color: theme.palette.black }}
           />
