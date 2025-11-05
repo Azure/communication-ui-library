@@ -3233,7 +3233,13 @@ export const DEFAULT_COMPOSITE_ICONS: {
     ControlButtonVideoEffectsOption: React_2.JSX.Element;
     ConfigurationScreenVideoEffectsButton: React_2.JSX.Element;
     CaptionsIcon: React_2.JSX.Element;
-    CaptionsOffIcon: React_2.JSX.Element;
+    CaptionsOffIcon: React_2.JSX.Element; /**
+    * Icons that can be overridden in one of the composites exported by this library.
+    *
+    * See {@link ChatCompositeIcons}, {@link CallCompositeIcons} and {@link CallWithChatCompositeIcons} for more targeted types.
+    *
+    * @public
+    */
     CaptionsSettingsIcon: React_2.JSX.Element;
     ChangeSpokenLanguageIcon: React_2.JSX.Element;
     ChangeCaptionLanguageIcon: React_2.JSX.Element;
