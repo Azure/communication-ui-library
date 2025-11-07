@@ -849,7 +849,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "No phone available",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Toll-free)",
-    "meetingConferencePhoneInfoModalToll": "(Toll)"
+    "meetingConferencePhoneInfoModalToll": "(Toll)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Close"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Unknown User",

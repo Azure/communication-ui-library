@@ -3864,6 +3864,7 @@ export interface MediaDiagnosticsState {
 // @public
 export interface MeetingConferencePhoneInfoModalStrings {
     meetingConferencePhoneInfoModalDialIn: string;
+    meetingConferencePhoneInfoModalDismissButtonAriaLabel: string;
     meetingConferencePhoneInfoModalMeetingId: string;
     meetingConferencePhoneInfoModalNoPhoneAvailable: string;
     meetingConferencePhoneInfoModalTitle: string;
