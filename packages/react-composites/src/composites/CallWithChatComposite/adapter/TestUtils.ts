@@ -314,10 +314,7 @@ export class MockCallAgent implements CallAgent {
   }
   /* @conditional-compile-remove(calling-beta-sdk) */
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  activeCallTransfer(
-    activeCallDetails: ActiveCallDetails | ActiveMeetingDetails,
-    options?: ActiveCallTransferOptions
-  ): Promise<Call> {
+  activeCallTransfer(activeCallDetails: ActiveCallDetails | ActiveMeetingDetails, options?: ActiveCallTransferOptions): Promise<Call> {
     throw Error('Method not implemented.');
   }
   /* @conditional-compile-remove(calling-beta-sdk) */
