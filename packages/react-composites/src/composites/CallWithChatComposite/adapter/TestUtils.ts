@@ -35,7 +35,16 @@ import {
   UnknownIdentifierKind
 } from '@azure/communication-common';
 /* @conditional-compile-remove(calling-beta-sdk) */
-import { GroupChatCallLocator, MeetingLocator, PushNotificationData } from '@azure/communication-calling';
+import {
+  GroupChatCallLocator,
+  MeetingLocator,
+  PushNotificationData,
+  ActiveCallDetails,
+  ActiveMeetingDetails,
+  ActiveCallTransferOptions,
+  ActiveCallsUpdatedEvent,
+  NoActiveCallsEvent
+} from '@azure/communication-calling';
 import {
   CallState,
   CallClientState,
@@ -303,6 +312,18 @@ export class MockCallAgent implements CallAgent {
   join(meetingLocator: any, options?: any): Call {
     throw Error('Method not implemented.');
   }
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  activeCallTransfer(
+    activeCallDetails: ActiveCallDetails | ActiveMeetingDetails,
+    options?: ActiveCallTransferOptions
+  ): Promise<Call> {
+    throw Error('Method not implemented.');
+  }
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  getActiveCallDetails(): Promise<ActiveCallDetails | ActiveMeetingDetails | undefined> {
+    return Promise.resolve(undefined);
+  }
   dispose(): Promise<void> {
     return Promise.resolve();
   }
@@ -310,6 +331,10 @@ export class MockCallAgent implements CallAgent {
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
   on(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  on(event: 'activeCallsUpdated', listener: ActiveCallsUpdatedEvent): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  on(event: 'noActiveCalls', listener: NoActiveCallsEvent): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
@@ -318,6 +343,10 @@ export class MockCallAgent implements CallAgent {
   off(event: 'incomingCall', listener: IncomingCallEvent): void;
   off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
   off(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  off(event: 'activeCallsUpdated', listener: ActiveCallsUpdatedEvent): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  off(event: 'noActiveCalls', listener: NoActiveCallsEvent): void;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/explicit-module-boundary-types
   off(event: any, listener: any): void {
     this.emitter.off(event, listener);
