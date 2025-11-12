@@ -26,7 +26,12 @@ import {
   CallAgentFeature,
   MeetingLocator,
   GroupChatCallLocator,
-  PushNotificationData
+  PushNotificationData,
+  ActiveCallsUpdatedEvent,
+  NoActiveCallsEvent,
+  ActiveCallDetails,
+  ActiveCallTransferOptions,
+  ActiveMeetingDetails
 } from '@azure/communication-calling';
 import { CommunicationUserIdentifier, PhoneNumberIdentifier, UnknownIdentifier } from '@azure/communication-common';
 import { EventEmitter } from 'events';
@@ -114,6 +119,15 @@ class MockCallAgent implements CallAgent {
     call.remoteParticipants = [remoteParticipant];
     return call;
   }
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  activeCallTransfer(activeCallDetails: ActiveCallDetails | ActiveMeetingDetails, options?: ActiveCallTransferOptions): Promise<Call> {
+    return Promise.resolve(createMockCall(mockCallId));
+  }
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  getActiveCallDetails(): Promise<ActiveCallDetails | ActiveMeetingDetails | undefined> {
+    return Promise.resolve(undefined);
+  }
   dispose(): Promise<void> {
     return Promise.resolve();
   }
@@ -121,12 +135,20 @@ class MockCallAgent implements CallAgent {
   on(event: 'incomingCall', listener: IncomingCallEvent): void;
   on(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
   on(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  on(event: 'activeCallsUpdated', listener: ActiveCallsUpdatedEvent): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  on(event: 'noActiveCalls', listener: NoActiveCallsEvent): void;
   on(event: any, listener: any): void {
     this.emitter.on(event, listener);
   }
   off(event: 'handleIncomingCall', listener: HandleIncomingCallEvent): void;
   off(event: 'incomingCall', listener: IncomingCallEvent): void;
   off(event: 'callsUpdated', listener: CollectionUpdatedEvent<Call>): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  off(event: 'activeCallsUpdated', listener: ActiveCallsUpdatedEvent): void;
+  /* @conditional-compile-remove(calling-beta-sdk) */
+  off(event: 'noActiveCalls', listener: NoActiveCallsEvent): void;
   off(event: 'connectionStateChanged', listener: ConnectionStateChangedEvent): void;
   off(event: any, listener: any): void {
     this.emitter.off(event, listener);

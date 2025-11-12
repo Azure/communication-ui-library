@@ -25,7 +25,7 @@
   "dependencies": {
     "@azure/communication-react": "1.32.0-beta.1",
     "@azure/communication-common": "^2.3.2-beta.1 || ^2.4.0",
-    "@azure/communication-calling": "1.40.1-beta.1 || ^1.39.1",
+    "@azure/communication-calling": "1.41.1-beta.1 || ^1.40.1",
     "@azure/communication-chat": "1.6.0-beta.7 || ^1.6.0",
     "@fluentui/react": "^8.123.0",
     "react": "18.3.1",
