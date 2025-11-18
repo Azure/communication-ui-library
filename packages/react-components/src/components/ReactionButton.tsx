@@ -139,7 +139,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           }}
         >
           <FocusZone shouldFocusOnMount style={{ height: '100%' }}>
-            <Stack horizontal style={{ height: 'inherit' }}>
+            <Stack horizontal style={{ height: 'inherit' }} role="menu">
               {emojis.map((emoji, index) => {
                 const resourceUrl = emojiResource.get(emoji);
                 const frameCount: number =

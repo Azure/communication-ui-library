@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Accessibility",
+  "comment": " Ensure elements with an ARIA role that require child roles contain them ",
+  "packageName": "@azure/communication-react",
+  "email": "96077406+carocao-msft@users.noreply.github.com",
+  "dependentChangeType": "patch"
+}
