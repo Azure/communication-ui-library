@@ -71,7 +71,7 @@ export const ParticipantListWithHeading = (props: {
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
-        h2: {
+        '.participant-container-heading': {
           color: theme.palette.neutralSecondary,
           margin: props.isMobile ? '0.5rem 1rem' : '0.5rem',
           fontSize: theme.fonts.smallPlus.fontSize,
@@ -86,7 +86,7 @@ export const ParticipantListWithHeading = (props: {
     <Stack className={participantListStack}>
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
         <Stack.Item grow styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
-          <span>
+          <span className="participant-container-heading">
             {paneTitleTrampoline(
               title ?? '',
               /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
