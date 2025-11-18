@@ -139,7 +139,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           }}
         >
           <FocusZone shouldFocusOnMount style={{ height: '100%' }}>
-            <Stack horizontal style={{ height: 'inherit' }}>
+            <Stack horizontal style={{ height: 'inherit' }} role="list">
               {emojis.map((emoji, index) => {
                 const resourceUrl = emojiResource.get(emoji);
                 const frameCount: number =
@@ -153,9 +153,9 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                     content={emojiButtonTooltip.get(emoji)}
                     styles={reactionToolTipHostStyle()}
                     calloutProps={{ ...calloutProps }}
+                    role="listitem"
                   >
                     <DefaultButton
-                      role="menuitem"
                       key={index}
                       onClick={() => {
                         props.onReactionClick(emoji);
@@ -165,6 +165,8 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                       className={classname}
                       styles={reactionItemButtonStyles}
                       aria-label={emojiButtonTooltip.get(emoji)}
+                      aria-setsize={emojis.length}
+                      aria-posinset={index + 1}
                     ></DefaultButton>
                   </TooltipHost>
                 );
