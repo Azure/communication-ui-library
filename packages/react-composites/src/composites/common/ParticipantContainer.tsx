@@ -86,12 +86,12 @@ export const ParticipantListWithHeading = (props: {
     <Stack className={participantListStack}>
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
         <Stack.Item grow styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
-          <h2>
+          <span>
             {paneTitleTrampoline(
               title ?? '',
               /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
             )}
-          </h2>
+          </span>
         </Stack.Item>
         {(onClickHeadingMoreButton ||
           (headingMoreButtonMenuProps?.items && headingMoreButtonMenuProps.items.length > 0)) && (
