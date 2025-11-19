@@ -915,7 +915,7 @@ export interface CallCompositeStrings {
   /**
    * Aria label for close button in modal dialogs
    */
-  closeButtonLabel: string;
+  closeButtonLabel?: string;
   /**
    * Label for join breakout room button
    */
