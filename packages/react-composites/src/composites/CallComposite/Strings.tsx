@@ -913,6 +913,10 @@ export interface CallCompositeStrings {
    */
   muteAllCancelButtonLabel: string;
   /**
+   * Aria label for close button in modal dialogs
+   */
+  closeButtonLabel: string;
+  /**
    * Label for join breakout room button
    */
   joinBreakoutRoomButtonLabel: string;
