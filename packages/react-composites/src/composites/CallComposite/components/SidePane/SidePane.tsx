@@ -115,7 +115,7 @@ export const SidePane = (props: SidePaneProps): JSX.Element => {
       verticalFill
       grow
       styles={paneStyles}
-      aria-modal={true}
+      aria-modal={props.ariaLabel ? true : undefined}
       data-ui-id="SidePane"
       tokens={
         props.mobileView || (!props.showAddPeopleButton && sidePaneRenderer?.id === 'people') ? {} : sidePaneTokens
