@@ -55,8 +55,18 @@ export const Prompt = (props: PromptProps): JSX.Element => {
         <Text className={mergeStyles({ fontSize: '0.875rem' })}>{props.text}</Text>
       </Stack>
       <Stack horizontal horizontalAlign="end" tokens={{ childrenGap: '0.5rem' }}>
-        <PrimaryButton styles={buttonTextStyles} text={props.confirmButtonLabel} onClick={props.onConfirm} />
-        <DefaultButton styles={buttonTextStyles} text={props.cancelButtonLabel} onClick={props.onCancel} />
+        <PrimaryButton
+          styles={buttonTextStyles}
+          text={props.confirmButtonLabel}
+          ariaLabel={props.confirmButtonLabel}
+          onClick={props.onConfirm}
+        />
+        <DefaultButton
+          styles={buttonTextStyles}
+          text={props.cancelButtonLabel}
+          ariaLabel={props.cancelButtonLabel}
+          onClick={props.onCancel}
+        />
       </Stack>
     </Modal>
   );

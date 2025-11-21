@@ -699,6 +699,7 @@ export interface CallCompositeStrings {
     captionsSettingsSpokenLanguageDropdownLabel?: string;
     chatButtonLabel: string;
     close: string;
+    closeButtonLabel?: string;
     complianceBannerNowOnlyRecording: string;
     complianceBannerNowOnlyTranscription: string;
     complianceBannerRecordingAndTranscriptionSaved: string;
