@@ -223,7 +223,7 @@ export const useVideoTileContextualMenuProps = (props: {
             styles: { root: { lineHeight: 0 } }
           },
           onClick: () => onStopSpotlight([participant.userId]),
-          ariaLabel: strings.stopSpotlightVideoTileMenuLabel
+          ariaLabel: stopSpotlightMenuLabel
         });
       }
     } else {
