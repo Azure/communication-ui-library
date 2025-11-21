@@ -21,7 +21,7 @@ import {
   useTheme
 } from '@internal/react-components';
 import { getCallingSelector } from '@internal/calling-component-bindings';
-import { Image, mergeStyles, Panel, PanelType, Stack } from '@fluentui/react';
+import { ILayerProps, Image, IPopupProps, mergeStyles, Panel, PanelType, Stack } from '@fluentui/react';
 import {
   callDetailsContainerStyles,
   configurationCenteredContent,
@@ -311,11 +311,18 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
     startCallHandler();
   }, [startCallHandler, closeVideoEffectsPane]);
 
-  const panelLayerProps = useMemo(
+  const panelLayerProps: ILayerProps = useMemo(
     () => ({
       hostId: modalLayerHostId
     }),
     [modalLayerHostId]
+  );
+
+  const panelPopupProps: IPopupProps = useMemo(
+    () => ({
+      role: 'none'
+    }),
+    []
   );
 
   const filteredErrorBarProps = useMemo(
@@ -458,6 +465,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
           styles={panelStyles}
           focusTrapZoneProps={panelFocusProps}
           layerProps={panelLayerProps}
+          popupProps={panelPopupProps}
           type={PanelType.custom}
           customWidth={`${VIDEO_EFFECTS_SIDE_PANE_WIDTH_REM}rem`}
         >

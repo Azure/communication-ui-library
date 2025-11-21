@@ -102,13 +102,15 @@ export const usePeoplePane = (props: {
       confirmButtonLabel: localeStrings.muteAllConfirmButtonLabel,
       heading: localeStrings.muteAllDialogTitle,
       text: localeStrings.muteAllDialogContent,
-      cancelButtonLabel: localeStrings.muteAllCancelButtonLabel
+      cancelButtonLabel: localeStrings.muteAllCancelButtonLabel,
+      closeButtonLabel: localeStrings.closeButtonLabel
     }),
     [
       localeStrings.muteAllConfirmButtonLabel,
       localeStrings.muteAllDialogTitle,
       localeStrings.muteAllDialogContent,
-      localeStrings.muteAllCancelButtonLabel
+      localeStrings.muteAllCancelButtonLabel,
+      localeStrings.closeButtonLabel
     ]
   );
 
@@ -577,6 +579,7 @@ export const usePeoplePane = (props: {
             text={localeStrings.forbidOthersAudioDialogContent}
             confirmButtonLabel={localeStrings.forbidOthersAudioConfirmButtonLabel}
             cancelButtonLabel={localeStrings.forbidOthersAudioCancelButtonLabel}
+            closeButtonLabel={localeStrings.closeButtonLabel}
             styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
             onConfirm={() => onForbidAllAttendeesPromptConfirm()}
             isOpen={showForbidOthersAudioPrompt}
@@ -589,6 +592,7 @@ export const usePeoplePane = (props: {
             text={localeStrings.permitOthersAudioDialogContent}
             confirmButtonLabel={localeStrings.permitOthersAudioConfirmButtonLabel}
             cancelButtonLabel={localeStrings.permitOthersAudioCancelButtonLabel}
+            closeButtonLabel={localeStrings.closeButtonLabel}
             styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
             onConfirm={() => onPermitAllAttendeesPromptConfirm()}
             isOpen={showPermitOthersAudioPrompt}
@@ -601,6 +605,7 @@ export const usePeoplePane = (props: {
             text={localeStrings.forbidOthersVideoDialogContent}
             confirmButtonLabel={localeStrings.forbidOthersVideoConfirmButtonLabel}
             cancelButtonLabel={localeStrings.forbidOthersVideoCancelButtonLabel}
+            closeButtonLabel={localeStrings.closeButtonLabel}
             styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
             onConfirm={() => onForbidOthersVideoPromptConfirm()}
             isOpen={showForbidOthersVideoPrompt}
@@ -613,6 +618,7 @@ export const usePeoplePane = (props: {
             text={localeStrings.permitOthersVideoDialogContent}
             confirmButtonLabel={localeStrings.permitOthersVideoConfirmButtonLabel}
             cancelButtonLabel={localeStrings.permitOthersVideoCancelButtonLabel}
+            closeButtonLabel={localeStrings.closeButtonLabel}
             styles={{ main: { minWidth: '22.5rem', padding: '1.5rem' } }}
             onConfirm={() => onPermitOthersVideoPromptConfirm()}
             isOpen={showPermitOthersVideoPrompt}
