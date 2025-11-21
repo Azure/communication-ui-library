@@ -71,12 +71,10 @@ export const ParticipantListWithHeading = (props: {
   const subheadingStyleThemed = useMemo(
     () => ({
       root: {
-        h2: {
-          color: theme.palette.neutralSecondary,
-          margin: props.isMobile ? '0.5rem 1rem' : '0.5rem',
-          fontSize: theme.fonts.smallPlus.fontSize,
-          fontWeight: 'normal'
-        }
+        color: theme.palette.neutralSecondary,
+        margin: props.isMobile ? '0.5rem 1rem' : '0.5rem',
+        fontSize: theme.fonts.smallPlus.fontSize,
+        fontWeight: 'normal'
       }
     }),
     [theme.palette.neutralSecondary, theme.fonts.smallPlus.fontSize, props.isMobile]
@@ -86,12 +84,10 @@ export const ParticipantListWithHeading = (props: {
     <Stack className={participantListStack}>
       <Stack horizontal horizontalAlign="space-between" verticalAlign="center">
         <Stack.Item grow styles={subheadingStyleThemed} aria-label={title} id={subheadingUniqueId}>
-          <h2>
-            {paneTitleTrampoline(
-              title ?? '',
-              /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
-            )}
-          </h2>
+          {paneTitleTrampoline(
+            title ?? '',
+            /* @conditional-compile-remove(total-participant-count) */ totalParticipantCount
+          )}
         </Stack.Item>
         {(onClickHeadingMoreButton ||
           (headingMoreButtonMenuProps?.items && headingMoreButtonMenuProps.items.length > 0)) && (
