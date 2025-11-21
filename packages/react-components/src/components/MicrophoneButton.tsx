@@ -262,9 +262,11 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
   if (props.showNoiseSuppressionButton) {
     splitButtonMenuItems.push({
       key: 'microphoneDNSToggle',
+      role: 'menuitem',
       onRender: () => {
         return (
           <Stack
+            role="menuitem"
             onClick={async () => {
               await props.onClickNoiseSuppression?.();
               setAnnouncerString(
@@ -295,7 +297,8 @@ export const MicrophoneButton = (props: MicrophoneButtonProps): JSX.Element => {
     iconProps: {
       iconName: props.checked ? 'SplitButtonPrimaryActionMicUnmuted' : 'SplitButtonPrimaryActionMicMuted',
       styles: { root: { lineHeight: 0 } }
-    }
+    },
+    role: 'menuitem'
   });
 
   /**
