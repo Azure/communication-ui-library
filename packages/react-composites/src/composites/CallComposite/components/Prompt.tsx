@@ -43,7 +43,16 @@ export const Prompt = (props: PromptProps): JSX.Element => {
   return (
     <Modal styles={styles} isOpen={props.isOpen} onDismiss={props.onDismiss} isBlocking={false}>
       <Stack className={mergeStyles({ position: 'relative' })}>
-        <Text className={mergeStyles({ fontWeight: 600, fontSize: '1.25rem' })}>{props.heading}</Text>
+        <Text
+          className={mergeStyles({
+            fontWeight: 600,
+            fontSize: '1.25rem',
+            paddingRight: '2rem',
+            overflowWrap: 'break-word'
+          })}
+        >
+          {props.heading}
+        </Text>
         <IconButton
           styles={iconButtonStyles(theme)}
           iconProps={{ iconName: 'Cancel' }}
