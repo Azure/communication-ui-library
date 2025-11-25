@@ -48,7 +48,7 @@ export const Prompt = (props: PromptProps): JSX.Element => {
             fontWeight: 600,
             fontSize: '1.25rem',
             paddingRight: '2rem',
-            wordWrap: 'break-word'
+            overflowWrap: 'break-word'
           })}
         >
           {props.heading}
