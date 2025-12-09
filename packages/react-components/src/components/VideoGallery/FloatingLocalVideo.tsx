@@ -14,7 +14,7 @@ import { useLocale } from '../../localization';
 
 const DRAG_OPTIONS: IDragOptions = {
   moveMenuItemText: 'Move',
-  closeMenuItemText: 'Close',
+  closeMenuItemText: '', // Empty string hides the Close option - FloatingLocalVideo is always open and cannot be dismissed
   menu: ContextualMenu,
   keepInBounds: true
 };
