@@ -471,9 +471,7 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
             <dragOptions.menu
               items={[
                 { key: 'move', text: dragOptions.moveMenuItemText, onClick: handleEnterKeyboardMoveMode },
-                ...(dragOptions.closeMenuItemText
-                  ? [{ key: 'close', text: dragOptions.closeMenuItemText, onClick: handleModalClose }]
-                  : [])
+                { key: 'close', text: dragOptions.closeMenuItemText, onClick: handleModalClose }
               ]}
               onDismiss={setModalMenuClose}
               alignTargetEdge
