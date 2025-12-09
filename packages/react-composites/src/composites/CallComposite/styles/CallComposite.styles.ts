@@ -15,7 +15,7 @@ const mainScreenContainerStyle: IStyle = {
  */
 export const mainScreenContainerStyleDesktop = mergeStyles({
   ...mainScreenContainerStyle,
-  minWidth: '20rem', // max of min-width of composite pages (Call page) 400% zoom compliant size
+  minWidth: 'min(20rem, calc(100vw - 1rem))', // 400% zoom compliant, accounts for potential vertical scrollbar
   minHeight: '16rem' // max height of min-height of composite pages (Configuration page) 400% zoom compliant size
 });
 
