@@ -34,7 +34,7 @@ export const FocusedContentLayout = (props: FocusedContentLayoutProps): JSX.Elem
 
   return (
     <Stack styles={rootLayoutStyle}>
-      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
+      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} aria-hidden="true" />
       <Stack styles={innerLayoutStyle} tokens={videoGalleryLayoutGap}>
         {screenShareComponent ? screenShareComponent : <></>}
       </Stack>
