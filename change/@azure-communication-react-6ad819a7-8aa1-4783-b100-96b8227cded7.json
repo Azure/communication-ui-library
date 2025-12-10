@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "End-call survey",
+  "comment": "Ensure survey page is 400%/320px Reflow compliant and add aria-level attribute to survey title for improved accessibility",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}

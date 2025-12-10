@@ -69,7 +69,15 @@ export interface SurveyPageProps {
 export function SurveyPage(props: SurveyPageProps): JSX.Element {
   const handlers = useHandlers(Survey);
   return (
-    <Stack verticalFill verticalAlign="center" horizontalAlign="center" data-ui-id={props.dataUiId} aria-atomic>
+    <Stack
+      verticalFill
+      verticalAlign="center"
+      horizontalAlign="center"
+      data-ui-id={props.dataUiId}
+      aria-atomic
+      // Ensure the survey page resizes correctly in CallComposite when the viewport size changes
+      styles={{ root: { contain: 'inline-size' } }}
+    >
       <Stack className={mergeStyles(containerStyle)} tokens={containerItemGap}>
         <Survey
           {...handlers}

@@ -83,7 +83,7 @@ export const Survey = (props: {
       )}
       {!showDefaultAfterSubmitScreen && !showDefaultAfterDismissedScreen && (
         <Stack verticalAlign="center" className={surveyContainerStyle(!!isMobile)}>
-          <Text className={questionTextStyle(theme)} role="heading">
+          <Text className={questionTextStyle(theme)} role="heading" aria-level={1}>
             {strings.surveyTitle}
           </Text>
           <SurveyContent
