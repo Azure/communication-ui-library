@@ -273,10 +273,14 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
 
       setModalMenuClose();
       internalState.isInKeyboardMoveMode = false;
-      setIsModalOpen(false);
       setCoordinates(ZERO);
 
-      internalState.disposeOnKeyUp?.();
+      // Only close the modal if the isOpen prop is false.
+      // If isOpen is still true, just reset the position without closing.
+      if (!isOpen) {
+        internalState.disposeOnKeyUp?.();
+        setIsModalOpen(false);
+      }
 
       onDismissed?.();
     };

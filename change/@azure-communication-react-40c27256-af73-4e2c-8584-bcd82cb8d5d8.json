@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "A11y",
+  "comment": "Fix re-focus to modal when \"Close\" is actioned in Ctrl + Alt + Space menu",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
