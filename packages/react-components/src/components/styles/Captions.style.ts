@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import { IStackStyles, ITheme, mergeStyles } from '@fluentui/react';
+import { ISpinnerStyles, IStackStyles, ITheme, mergeStyles } from '@fluentui/react';
 import { _pxToRem } from '@internal/acs-ui-common';
 import { IButtonStyles, ITextFieldStyles } from '@fluentui/react';
 
@@ -221,3 +221,14 @@ export const displayNameContainerClassName = mergeStyles({
   overflow: 'hidden',
   textOverflow: 'ellipsis'
 });
+
+/**
+ * @private
+ */
+export const captionsBannerLoadingSpinnerStyles = (theme: ITheme): ISpinnerStyles => {
+  return {
+    label: {
+      color: theme.palette.neutralPrimary
+    }
+  }
+};
