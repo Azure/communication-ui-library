@@ -197,7 +197,7 @@ export const SpeakerVideoLayout = (props: SpeakerVideoLayoutProps): JSX.Element 
         )}
         {overflowGalleryTrampoline(overflowGallery, props.overflowGalleryPosition)}
       </Stack>
-      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} />
+      <LayerHost id={layerHostId} className={mergeStyles(layerHostStyle)} aria-hidden="true" />
       {wrappedLocalVideoComponent}
     </Stack>
   );
