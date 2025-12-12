@@ -120,6 +120,7 @@ export const TransferPage = (
         latestNotifications={props.latestNotifications}
         /* @conditional-compile-remove(call-readiness) */
         doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
+        isCallWithChatComposite={props.isCallWithChatComposite}
       />
     </Stack>
   );

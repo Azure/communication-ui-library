@@ -712,6 +712,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
               onSidePaneIdChange={onSidePaneIdChange}
               mobileChatTabHeader={chatTabHeaderProps}
               onCloseChatPane={closeChat}
+              isCallWithChatComposite={true}
             />
           </Stack.Item>
         </Stack>

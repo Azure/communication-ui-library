@@ -133,6 +133,7 @@ export interface CallArrangementProps {
   };
   notificationOptions?: NotificationOptions;
   isRTTSupportedCall?: boolean;
+  isCallWithChatComposite?: boolean;
 }
 
 /**
@@ -676,6 +677,7 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
                   onToggleTeamsMeetingConferenceModal={toggleTeamsMeetingConferenceModal}
                   teamsMeetingConferenceModalPresent={showTeamsMeetingConferenceModal}
                   sidePaneDismissButtonRef={sidePaneDismissButtonRef}
+                  isCallWithChatComposite={props.isCallWithChatComposite}
                 />
               )}
             </Stack>

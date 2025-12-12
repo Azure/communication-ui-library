@@ -87,6 +87,7 @@ export interface CommonCallControlBarProps {
   sidePaneDismissButtonRef?: RefObject<IButton>;
   onStartRealTimeText?: () => void;
   startRealTimeTextButtonChecked?: boolean;
+  isCallWithChatComposite?: boolean;
 }
 
 const inferCommonCallControlOptions = (
@@ -573,7 +574,7 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
                     strings={peopleButtonStrings}
                     styles={commonButtonStyles}
                     componentRef={props.peopleButtonRef}
-                    chatButtonPresent={isEnabled(options.chatButton)}
+                    chatButtonPresent={props.isCallWithChatComposite && isEnabled(options.chatButton)}
                     peoplePaneDismissButtonRef={props.sidePaneDismissButtonRef}
                   />
                 )}

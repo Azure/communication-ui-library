@@ -394,6 +394,7 @@ type MainScreenProps = {
   onSidePaneIdChange?: (sidePaneId: string | undefined) => void;
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
   onCloseChatPane?: () => void;
+  isCallWithChatComposite?: boolean;
 };
 
 const isShowing = (overrideSidePane?: InjectedSidePaneProps): boolean => {
@@ -726,6 +727,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onDismissError={onDismissError}
           onDismissNotification={onDismissNotification}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          isCallWithChatComposite={props.isCallWithChatComposite}
         />
       );
       break;
@@ -743,6 +745,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           onDismissError={onDismissError}
           onDismissNotification={onDismissNotification}
           capabilitiesChangedNotificationBarProps={capabilitiesChangedNotificationBarProps}
+          isCallWithChatComposite={props.isCallWithChatComposite}
         />
       );
       break;
@@ -772,6 +775,7 @@ const MainScreen = (props: MainScreenProps): JSX.Element => {
           compositeAudioContext={compositeAudioContext}
           disableAutoShowDtmfDialer={props.options?.disableAutoShowDtmfDialer}
           notificationOptions={props.options?.notificationOptions}
+          isCallWithChatComposite={props.isCallWithChatComposite}
         />
       );
       break;
@@ -880,6 +884,7 @@ export interface InternalCallCompositeProps {
   onCloseChatPane?: () => void;
   // legacy property to avoid breaking change
   mobileChatTabHeader?: MobileChatSidePaneTabHeaderProps;
+  isCallWithChatComposite?: boolean;
 }
 
 /** @private */
@@ -915,6 +920,7 @@ export const CallCompositeInner = (props: CallCompositeProps & InternalCallCompo
             overrideSidePane={props.overrideSidePane}
             mobileChatTabHeader={props.mobileChatTabHeader}
             onCloseChatPane={props.onCloseChatPane}
+            isCallWithChatComposite={props.isCallWithChatComposite ?? false}
           />
           {
             // This layer host is for ModalLocalAndRemotePIP in SidePane. This LayerHost cannot be inside the SidePane
