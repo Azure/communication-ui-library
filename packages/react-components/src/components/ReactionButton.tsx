@@ -159,7 +159,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
             }}
             style={{ height: '100%' }}
           >
-            <Stack horizontal style={{ height: 'inherit' }} role="list">
+            <Stack horizontal style={{ height: 'inherit' }} role="toolbar" aria-label={strings.label}>
               {emojis.map((emoji, index) => {
                 const resourceUrl = emojiResource.get(emoji);
                 const frameCount: number =
@@ -173,7 +173,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                     content={emojiButtonTooltip.get(emoji)}
                     styles={reactionToolTipHostStyle()}
                     calloutProps={{ ...calloutProps }}
-                    role="listitem"
                   >
                     <DefaultButton
                       key={index}
@@ -185,9 +184,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                       }}
                       className={classname}
                       styles={reactionItemButtonStyles}
-                      aria-label={emojiButtonTooltip.get(emoji)}
-                      aria-setsize={emojis.length}
-                      aria-posinset={index + 1}
+                      aria-label={`${emojiButtonTooltip.get(emoji)}, ${index + 1} of ${emojis.length}`}
                     ></DefaultButton>
                   </TooltipHost>
                 );
