@@ -35,7 +35,7 @@ export interface LobbyPageProps {
 
   latestNotifications: ActiveNotification[];
   onDismissError: (error: ActiveErrorMessage | ActiveNotification) => void;
-
+  isCallWithChatComposite?: boolean;
   onDismissNotification: (notification: ActiveNotification) => void;
   capabilitiesChangedNotificationBarProps?: CapabilitiesChangeNotificationBarProps;
 }
@@ -87,6 +87,7 @@ export const LobbyPage = (props: LobbyPageProps): JSX.Element => {
       onDismissNotification={props.onDismissNotification}
       /* @conditional-compile-remove(call-readiness) */
       doNotShowCameraAccessNotifications={props.options?.deviceChecks?.camera === 'doNotPrompt'}
+      isCallWithChatComposite={props.isCallWithChatComposite}
     />
   );
 };

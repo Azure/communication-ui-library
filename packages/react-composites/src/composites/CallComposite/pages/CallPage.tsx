@@ -74,6 +74,7 @@ export interface CallPageProps {
   compositeAudioContext?: AudioContext;
   disableAutoShowDtmfDialer?: boolean | DtmfDialPadOptions;
   notificationOptions?: NotificationOptions;
+  isCallWithChatComposite?: boolean;
 }
 
 /**
@@ -265,6 +266,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
         dtmfDialerOptions={disableAutoShowDtmfDialer}
         notificationOptions={props.notificationOptions}
         isRTTSupportedCall={!isPstnCall && !isCTECall}
+        isCallWithChatComposite={props.isCallWithChatComposite}
       />
       {<Prompt isOpen={isPromptOpen} onDismiss={() => setIsPromptOpen(false)} {...promptProps} />}
     </div>

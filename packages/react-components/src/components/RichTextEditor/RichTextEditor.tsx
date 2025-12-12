@@ -412,6 +412,8 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
           return strings.richTextNewNumberedListItemAnnouncement ?? '';
         case 'announceOnFocusLastCell':
           return '';
+        default:
+          return '';
       }
     },
     [strings.richTextNewBulletedListItemAnnouncement, strings.richTextNewNumberedListItemAnnouncement]
