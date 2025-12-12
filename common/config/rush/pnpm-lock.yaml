@@ -13539,6 +13539,11 @@ packages:
     engines: {node: '>= 6.13.0'}
     dev: false
 
+  /node-forge@1.3.3:
+    resolution: {integrity: sha512-rLvcdSyRCyouf6jcOIPe/BgwG/d7hKjzMKOas33/pHEr6gbq18IK9zV7DiPvzsz0oBJPme6qr6H6kGZuI9/DZg==}
+    engines: {node: '>= 6.13.0'}
+    dev: false
+
   /node-int64@0.4.0:
     resolution: {integrity: sha512-O5lz91xSOeoXP6DulyHfllpq+Eg00MWitZIbtPfoSEvqIHdl5gfcY6hYzDWnj0qD5tz52PI08u9qUvSVeUBeHw==}
     dev: false
@@ -18569,7 +18574,7 @@ packages:
     dev: false
 
   file:projects/communication-react.tgz:
-    resolution: {integrity: sha512-qM80bpHf3OlUsE8JHvY6HC8FyuYn00BUhPqQwnCs2ZI+fGuAACEUdeT2rF0g76BtOnYg+mY3VW0M3Fs/leClOA==, tarball: file:projects/communication-react.tgz}
+    resolution: {integrity: sha512-0EMxT6i7SsdTTMH9Z6mNQEPTYqiU7emvgCF810onS6XZSPyPzJ9edZ+rBb4qEGzPlYPMFAI6UgoCsVQTupp4rA==, tarball: file:projects/communication-react.tgz}
     name: '@rush-temp/communication-react'
     version: 0.0.0
     dependencies:
@@ -18634,7 +18639,7 @@ packages:
       json-stringify-safe: 5.0.1
       memoize-one: 5.2.1
       nanoid: 3.3.8
-      node-forge: 1.3.1
+      node-forge: 1.3.3
       prettier: 3.5.3
       pretty-quick: 4.2.2(prettier@3.5.3)
       react: 18.3.1
@@ -18854,7 +18859,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-heXVoi/VhfUGFnVe/+Yi2ZH7U/ckFCkB4991h4mkDhTal9KXtaIOBPYgSvkyITIT17Yrx71QEPS8TjQG1D6hrQ==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-BpRyS0aT3oBREcJpV5aXPr9iivPaHiuphBJBRhFO4xWE80G0J4jT5GsQlx+I3GYEOBGVP+DvF38M4e4z2Ealbw==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -18921,7 +18926,7 @@ packages:
       jiti: 2.4.2
       json-stringify-safe: 5.0.1
       nan: 2.23.0
-      node-forge: 1.3.1
+      node-forge: 1.3.3
       playwright-core: 1.55.1
       prettier: 3.5.3
       pretty-quick: 4.2.2(prettier@3.5.3)
@@ -18978,7 +18983,7 @@ packages:
     dev: false
 
   file:projects/react-composites.tgz:
-    resolution: {integrity: sha512-X8ZXkWCh5uuWrKJ6Cx/6E/TWV8M94uQlVfn1ZPNpL66cxDhhxlT9G9G+wFg6Goz0LaK6fucQniRKOGErprtviQ==, tarball: file:projects/react-composites.tgz}
+    resolution: {integrity: sha512-GXi9xj/Vlvd/2kC0OGRHRJcnB3k6W1VNSTWOpJtMieBi1C7tqNI5Bca03ecFS7uuvNOAMXf06s3SNwcVXU7csw==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -19056,7 +19061,7 @@ packages:
       memoize-one: 5.2.1
       nan: 2.23.0
       nanoid: 3.3.8
-      node-forge: 1.3.1
+      node-forge: 1.3.3
       prettier: 3.5.3
       pretty-quick: 4.2.2(prettier@3.5.3)
       react: 18.3.1
@@ -19273,7 +19278,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-4+YXFp8Bu1LQ5KIQSMKfFhSZDOb+fXwEaHlqAv9c2cUnETNniG1xiUgKV8A9XYwsHgryHJ8nWbZXUF+IdXP3Qw==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-A2uuuKhnn0n/XNnNtnnAbCDZZSlK7mgd/y4bsNzHv9jT5rE/xuFSERAeWx4vsJQ7SAWUVcFSByOpwDTgkprrgQ==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
@@ -19350,7 +19355,7 @@ packages:
       jest-junit: 16.0.0
       json-stringify-safe: 5.0.1
       nan: 2.23.0
-      node-forge: 1.3.1
+      node-forge: 1.3.3
       preact: 10.27.1
       prettier: 3.5.3
       pretty-quick: 4.2.2(prettier@3.5.3)
