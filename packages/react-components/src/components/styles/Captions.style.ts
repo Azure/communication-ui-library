@@ -186,12 +186,7 @@ export const captionsBannerFullHeightClassName = (theme: ITheme): string => {
 export const loadingBannerStyles = (formFactor: 'default' | 'compact'): IStackStyles => {
   return {
     root: {
-      height: formFactor === 'compact' ? '4.5rem' : '8.75rem',
-      selectors: {
-        ':focus-visible': {
-          outlineColor: 'Highlight'
-        }
-      }
+      height: formFactor === 'compact' ? '4.5rem' : '8.75rem'
     }
   };
 };
@@ -206,12 +201,7 @@ export const loadingBannerFullHeightStyles = (theme: ITheme): IStackStyles => {
       width: '100%',
       position: 'absolute',
       left: 0,
-      backgroundColor: theme.palette.white,
-      selectors: {
-        ':focus-visible': {
-          outlineColor: 'Highlight'
-        }
-      }
+      backgroundColor: theme.palette.white
     }
   };
 };
@@ -221,12 +211,7 @@ export const loadingBannerFullHeightStyles = (theme: ITheme): IStackStyles => {
  */
 export const captionsContentContainerClassName = mergeStyles({
   width: '100%',
-  paddingInlineEnd: _pxToRem(4),
-  selectors: {
-    ':focus-visible': {
-      outlineColor: 'Highlight'
-    }
-  }
+  paddingInlineEnd: _pxToRem(4)
 });
 
 /**

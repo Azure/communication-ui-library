@@ -1,9 +1,0 @@
-{
-  "type": "patch",
-  "area": "fix",
-  "workstream": "A11y",
-  "comment": "Fixing contrast on focus captions",
-  "packageName": "@azure/communication-react",
-  "email": "vriosrada@microsoft.com",
-  "dependentChangeType": "patch"
-}
