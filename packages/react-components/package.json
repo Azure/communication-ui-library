@@ -88,6 +88,7 @@
     "@typescript-eslint/eslint-plugin": "^8.34.0",
     "@typescript-eslint/parser": "^8.34.0",
     "@vitejs/plugin-react": "~4.3.4",
+    "vite": "^6.4.1",
     "ajv": "^8.17.1",
     "babel-jest": "^29.5.0",
     "babel-loader": "8.1.0",
