@@ -9,6 +9,7 @@ import {
   captionContainerClassName,
   captionsBannerClassName,
   captionsBannerFullHeightClassName,
+  captionsBannerLoadingSpinnerStyles,
   captionsContainerClassName,
   loadingBannerFullHeightStyles,
   loadingBannerStyles
@@ -422,7 +423,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               }
               data-is-focusable={true}
             >
-              <Spinner label={strings?.captionsBannerSpinnerText} ariaLive="assertive" labelPosition="right" />
+              <Spinner label={strings?.captionsBannerSpinnerText} ariaLive="assertive" labelPosition="right" styles={captionsBannerLoadingSpinnerStyles(theme)} />
             </Stack>
           )}
         </FocusZone>
