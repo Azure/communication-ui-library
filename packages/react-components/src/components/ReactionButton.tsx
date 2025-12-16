@@ -13,7 +13,7 @@ import {
   TooltipHost,
   useTheme
 } from '@fluentui/react';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { useLocale } from '../localization';
@@ -121,8 +121,14 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
 
   const reactionButtonCalloutRef = useRef<HTMLDivElement>(null);
   const reactionButtonRef = useRef<IButton>(null);
+  const firstEmojiButtonRef = useRef<IButton>(null);
 
   const [calloutIsVisible, setCalloutIsVisible] = useState(false);
+
+  // Focus the first emoji button when callout finishes positioning
+  const handleCalloutPositioned = useCallback(() => {
+    firstEmojiButtonRef.current?.focus();
+  }, []);
 
   return (
     <Stack>
@@ -132,6 +138,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           isBeakVisible={false}
           styles={reactionButtonCalloutStyles}
           target={reactionButtonCalloutRef.current}
+          onPositioned={handleCalloutPositioned}
           onDismiss={() => {
             reactionButtonRef.current?.focus();
             setCalloutIsVisible(false);
@@ -139,6 +146,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
         >
           <FocusTrapZone
             isClickableOutsideFocusTrap={true}
+            disableFirstFocus={true}
             // Allowing escape key to close the callout and return focus to the main reaction button. Tooltips also use
             // escape key to close themselves, so we need to use onKeyDownCapture to ensure the callout closes first.
             onKeyDownCapture={(e) => {
@@ -169,6 +177,7 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                   >
                     <DefaultButton
                       key={index}
+                      componentRef={index === 0 ? firstEmojiButtonRef : undefined}
                       onClick={() => {
                         props.onReactionClick(emoji);
                         reactionButtonRef.current?.focus();
