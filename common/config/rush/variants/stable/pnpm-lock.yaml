@@ -4852,7 +4852,7 @@ packages:
     dependencies:
       playwright: 1.55.1
       playwright-core: 1.55.1
-      vite: 6.3.6(@types/node@22.18.1)(jiti@2.4.2)
+      vite: 6.4.1(@types/node@22.18.1)(jiti@2.4.2)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -4867,13 +4867,13 @@ packages:
       - yaml
     dev: false
 
-  /@playwright/experimental-ct-react@1.55.1(@types/node@22.18.1)(jiti@2.4.2):
+  /@playwright/experimental-ct-react@1.55.1(@types/node@22.18.1)(jiti@2.4.2)(vite@6.4.1):
     resolution: {integrity: sha512-q+qH/J99iV6+99oVT417AA8KsYp3lwxsnxZrLZjIwkEC5+G28QCkr7+UYAOZoNPzelGqHFMLhYMvc6mXuREa2w==}
     engines: {node: '>=18'}
     hasBin: true
     dependencies:
       '@playwright/experimental-ct-core': 1.55.1(@types/node@22.18.1)(jiti@2.4.2)
-      '@vitejs/plugin-react': 4.3.4
+      '@vitejs/plugin-react': 4.3.4(vite@6.4.1)
     transitivePeerDependencies:
       - '@types/node'
       - jiti
@@ -6772,7 +6772,7 @@ packages:
       - supports-color
     dev: false
 
-  /@vitejs/plugin-react@4.3.4:
+  /@vitejs/plugin-react@4.3.4(vite@6.4.1):
     resolution: {integrity: sha512-SCCPBJtYLdE8PX/7ZQAs1QAZ8Jqwih+0VBLum1EGqmCCQal+MIUqLCzj3ZUy8ufbC0cAM4LRlSTm7IQJwWT4ug==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
@@ -6783,6 +6783,7 @@ packages:
       '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.28.4)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
+      vite: 6.4.1(@types/node@22.18.1)(jiti@2.4.2)
     transitivePeerDependencies:
       - supports-color
     dev: false
@@ -17038,8 +17039,8 @@ packages:
       vfile-message: 4.0.3
     dev: false
 
-  /vite@6.3.6(@types/node@22.18.1)(jiti@2.4.2):
-    resolution: {integrity: sha512-0msEVHJEScQbhkbVTb/4iHZdJ6SXp/AvxL2sjwYQFfBqleHtnCqv1J3sa9zbWz/6kW1m9Tfzn92vW+kZ1WV6QA==}
+  /vite@6.4.1(@types/node@22.18.1)(jiti@2.4.2):
+    resolution: {integrity: sha512-+Oxm7q9hDoLMyJOYfUYBuHQo+dkAloi33apOPP56pzj+vsdJDzr+j1NISE5pyaAuKL4A3UD34qd0lx5+kfKp2g==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -18837,7 +18838,7 @@ packages:
     dev: false
 
   file:projects/react-components.tgz:
-    resolution: {integrity: sha512-heXVoi/VhfUGFnVe/+Yi2ZH7U/ckFCkB4991h4mkDhTal9KXtaIOBPYgSvkyITIT17Yrx71QEPS8TjQG1D6hrQ==, tarball: file:projects/react-components.tgz}
+    resolution: {integrity: sha512-68gmc5VazNPdB+L4b6jB1wyIwshUXALDLV1b3f3jmTfaml3AXLjNGR7SHxtesI6Ia1Voch6gc1Cs8em434DqCQ==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -18856,7 +18857,7 @@ packages:
       '@fluentui/react-icons': 2.0.309(react@18.3.1)
       '@fluentui/react-window-provider': 2.2.30(@types/react@18.3.12)(react@18.3.1)
       '@griffel/react': 1.5.30(react@18.3.1)
-      '@playwright/experimental-ct-react': 1.55.1(@types/node@22.18.1)(jiti@2.4.2)
+      '@playwright/experimental-ct-react': 1.55.1(@types/node@22.18.1)(jiti@2.4.2)(vite@6.4.1)
       '@rollup/plugin-json': 6.1.0(rollup@4.50.1)
       '@testing-library/dom': 10.4.1
       '@testing-library/jest-dom': 6.8.0
@@ -18872,7 +18873,7 @@ packages:
       '@types/uuid': 9.0.8
       '@typescript-eslint/eslint-plugin': 8.43.0(@typescript-eslint/parser@8.43.0)(eslint@9.35.0)(typescript@5.4.5)
       '@typescript-eslint/parser': 8.43.0(eslint@9.35.0)(typescript@5.4.5)
-      '@vitejs/plugin-react': 4.3.4
+      '@vitejs/plugin-react': 4.3.4(vite@6.4.1)
       ajv: 8.17.1
       babel-jest: 29.7.0(@babel/core@7.28.4)
       babel-loader: 8.1.0(@babel/core@7.28.4)(webpack@5.99.9)
@@ -18930,6 +18931,7 @@ packages:
       typescript: 5.4.5
       use-debounce: 10.0.6(react@18.3.1)
       uuid: 9.0.1
+      vite: 6.4.1(@types/node@22.18.1)(jiti@2.4.2)
       webpack: 5.99.9(webpack-cli@5.1.4)
     transitivePeerDependencies:
       - '@jest/transform'
@@ -18955,7 +18957,6 @@ packages:
       - tsx
       - uglify-js
       - utf-8-validate
-      - vite
       - webpack-cli
       - yaml
     dev: false
