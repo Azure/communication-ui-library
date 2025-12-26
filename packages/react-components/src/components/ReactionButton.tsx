@@ -5,7 +5,7 @@ import {
   Callout,
   concatStyleSets,
   DefaultButton,
-  FocusZone,
+  FocusTrapZone,
   IButton,
   ICalloutContentStyles,
   mergeStyles,
@@ -13,7 +13,7 @@ import {
   TooltipHost,
   useTheme
 } from '@fluentui/react';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useCallback } from 'react';
 import { ControlBarButton, ControlBarButtonProps } from './ControlBarButton';
 import { _HighContrastAwareIcon } from './HighContrastAwareIcon';
 import { useLocale } from '../localization';
@@ -27,7 +27,6 @@ import {
 import { isDarkThemed } from '../theming/themeUtils';
 import { ReactionResources } from '..';
 import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils';
-import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
  * Reactions types for the Reaction button
@@ -122,8 +121,14 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
 
   const reactionButtonCalloutRef = useRef<HTMLDivElement>(null);
   const reactionButtonRef = useRef<IButton>(null);
+  const firstEmojiButtonRef = useRef<IButton>(null);
 
   const [calloutIsVisible, setCalloutIsVisible] = useState(false);
+
+  // Focus the first emoji button when callout finishes positioning
+  const handleCalloutPositioned = useCallback(() => {
+    firstEmojiButtonRef.current?.focus();
+  }, []);
 
   return (
     <Stack>
@@ -133,13 +138,28 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
           isBeakVisible={false}
           styles={reactionButtonCalloutStyles}
           target={reactionButtonCalloutRef.current}
+          onPositioned={handleCalloutPositioned}
           onDismiss={() => {
             reactionButtonRef.current?.focus();
             setCalloutIsVisible(false);
           }}
         >
-          <FocusZone shouldFocusOnMount style={{ height: '100%' }}>
-            <Stack horizontal style={{ height: 'inherit' }} role="list">
+          <FocusTrapZone
+            isClickableOutsideFocusTrap={true}
+            disableFirstFocus={true}
+            // Allowing escape key to close the callout and return focus to the main reaction button. Tooltips also use
+            // escape key to close themselves, so we need to use onKeyDownCapture to ensure the callout closes first.
+            onKeyDownCapture={(e) => {
+              if (e.key === 'Escape') {
+                e.preventDefault();
+                e.stopPropagation();
+                reactionButtonRef.current?.focus();
+                setCalloutIsVisible(false);
+              }
+            }}
+            style={{ height: '100%' }}
+          >
+            <Stack horizontal style={{ height: 'inherit' }} role="toolbar" aria-label={strings.label}>
               {emojis.map((emoji, index) => {
                 const resourceUrl = emojiResource.get(emoji);
                 const frameCount: number =
@@ -153,10 +173,10 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                     content={emojiButtonTooltip.get(emoji)}
                     styles={reactionToolTipHostStyle()}
                     calloutProps={{ ...calloutProps }}
-                    role="listitem"
                   >
                     <DefaultButton
                       key={index}
+                      componentRef={index === 0 ? firstEmojiButtonRef : undefined}
                       onClick={() => {
                         props.onReactionClick(emoji);
                         reactionButtonRef.current?.focus();
@@ -164,15 +184,13 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                       }}
                       className={classname}
                       styles={reactionItemButtonStyles}
-                      aria-label={emojiButtonTooltip.get(emoji)}
-                      aria-setsize={emojis.length}
-                      aria-posinset={index + 1}
+                      aria-label={`${emojiButtonTooltip.get(emoji)}, ${index + 1} of ${emojis.length}`}
                     ></DefaultButton>
                   </TooltipHost>
                 );
               })}
             </Stack>
-          </FocusZone>
+          </FocusTrapZone>
         </Callout>
       )}
       <div ref={reactionButtonCalloutRef}>
