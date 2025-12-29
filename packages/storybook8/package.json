@@ -110,7 +110,7 @@
     "scheduler": "^0.26.0",
     "shell-quote": "1.8.2",
     "source-map-explorer": "^2.5.0",
-    "storybook": "8.6.12",
+    "storybook": "8.6.15",
     "styled-components": "^5.2.1",
     "tsconfig-paths-webpack-plugin": "^4.1.0",
     "ts-jest": "^29.3.3",
