@@ -1230,8 +1230,10 @@ export class AzureCommunicationCallAdapter<AgentType extends CallAgent | TeamsCa
   }
 
   public async returnFromBreakoutRoom(): Promise<void> {
-    const callState = this.call?.id ? this.callClient.getState().calls[this.call.id] : undefined;
-    const assignedBreakoutRoom = callState?.breakoutRooms?.assignedBreakoutRoom;
+    // Get assignedBreakoutRoom directly from the SDK's BreakoutRooms feature on the originCall (main meeting).
+    // We can't rely on state because the main meeting's call state may not exist in calls when in a breakout room.
+    const breakoutRoomsFeature = this.originCall?.feature(Features.BreakoutRooms);
+    const assignedBreakoutRoom = breakoutRoomsFeature?.assignedBreakoutRooms;
 
     if (!assignedBreakoutRoom) {
       throw new Error(
