@@ -83,8 +83,12 @@ export class BreakoutRoomsSubscriber {
       callState.breakoutRooms?.breakoutRoomDisplayName &&
       callState.breakoutRooms.breakoutRoomDisplayName !== breakoutRoom.displayName
     ) {
+      const target: NotificationTarget =
+        breakoutRoom.autoMoveParticipantToBreakoutRoom === false
+          ? 'assignedBreakoutRoomChangedPromptJoin'
+          : 'assignedBreakoutRoomChanged';
       this._context.setLatestNotification(this._callIdRef.callId, {
-        target: 'assignedBreakoutRoomChanged',
+        target,
         timestamp: new Date(Date.now())
       });
     } else if (
@@ -102,12 +106,14 @@ export class BreakoutRoomsSubscriber {
       this._context.deleteLatestNotification('assignedBreakoutRoomOpened', this._callIdRef.callId);
       this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin', this._callIdRef.callId);
       this._context.deleteLatestNotification('assignedBreakoutRoomChanged', this._callIdRef.callId);
+      this._context.deleteLatestNotification('assignedBreakoutRoomChangedPromptJoin', this._callIdRef.callId);
       this._context.deleteLatestNotification('breakoutRoomJoined', this._callIdRef.callId);
     } else if (breakoutRoom.state === 'closed') {
       // This scenario covers the case where the breakout room is closed
       this._context.deleteLatestNotification('assignedBreakoutRoomOpened', this._callIdRef.callId);
       this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin', this._callIdRef.callId);
       this._context.deleteLatestNotification('assignedBreakoutRoomChanged', this._callIdRef.callId);
+      this._context.deleteLatestNotification('assignedBreakoutRoomChangedPromptJoin', this._callIdRef.callId);
       this._context.deleteLatestNotification('breakoutRoomJoined', this._callIdRef.callId);
       this._context.deleteLatestNotification('breakoutRoomClosingSoon', this._callIdRef.callId);
       clearTimeout(this._breakoutRoomClosingSoonTimeoutId);
@@ -129,6 +135,7 @@ export class BreakoutRoomsSubscriber {
     this._context.deleteLatestNotification('assignedBreakoutRoomOpened', this._callIdRef.callId);
     this._context.deleteLatestNotification('assignedBreakoutRoomOpenedPromptJoin', this._callIdRef.callId);
     this._context.deleteLatestNotification('assignedBreakoutRoomChanged', this._callIdRef.callId);
+    this._context.deleteLatestNotification('assignedBreakoutRoomChangedPromptJoin', this._callIdRef.callId);
 
     // Send latest notification for breakoutRoomJoined on behalf of the call that was joined.
     this._context.setLatestNotification(call.id, {

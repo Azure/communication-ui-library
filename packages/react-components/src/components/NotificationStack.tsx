@@ -256,6 +256,10 @@ export interface NotificationStackStrings {
    */
   assignedBreakoutRoomChanged?: NotificationStrings;
   /**
+   * Message shown in notification when the user is prompted to join their new assigned breakout room
+   */
+  assignedBreakoutRoomChangedPromptJoin?: NotificationStrings;
+  /**
    * Message shown in notification when the user's assigned breakout room is closed
    */
   assignedBreakoutRoomClosed?: NotificationStrings;

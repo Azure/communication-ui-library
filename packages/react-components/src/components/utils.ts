@@ -353,6 +353,7 @@ export const customNotificationIconName: Partial<{ [key in NotificationType]: st
   assignedBreakoutRoomOpened: 'NotificationBarBreakoutRoomOpened',
   assignedBreakoutRoomOpenedPromptJoin: 'NotificationBarBreakoutRoomPromptJoin',
   assignedBreakoutRoomChanged: 'NotificationBarBreakoutRoomChanged',
+  assignedBreakoutRoomChangedPromptJoin: 'NotificationBarBreakoutRoomChanged',
   assignedBreakoutRoomClosed: 'NotificationBarBreakoutRoomClosed',
   breakoutRoomJoined: 'NotificationBarBreakoutRoomJoined',
   breakoutRoomClosingSoon: 'NotificationBarBreakoutRoomClosingSoon',
