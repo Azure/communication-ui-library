@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "A11y",
+  "comment": "Fix issue where next tab after opening people pane is not going into pane on next tab control",
+  "packageName": "@azure/communication-react",
+  "email": "dmceachern@microsoft.com",
+  "dependentChangeType": "patch"
+}
