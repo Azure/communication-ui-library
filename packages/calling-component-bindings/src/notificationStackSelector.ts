@@ -256,6 +256,13 @@ export const notificationStackSelector: NotificationStackSelector = createSelect
         timestamp: latestNotifications['assignedBreakoutRoomChanged'].timestamp
       });
     }
+    if (latestNotifications['assignedBreakoutRoomChangedPromptJoin'] && assignedBreakoutRoom) {
+      activeNotifications.push({
+        type: 'assignedBreakoutRoomChangedPromptJoin',
+        timestamp: latestNotifications['assignedBreakoutRoomChangedPromptJoin'].timestamp,
+        onClickPrimaryButton: () => assignedBreakoutRoom.join()
+      });
+    }
     if (latestNotifications['assignedBreakoutRoomClosed']) {
       activeNotifications.push({
         type: 'assignedBreakoutRoomClosed',
