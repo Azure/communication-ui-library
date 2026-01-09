@@ -14304,8 +14304,8 @@ packages:
       source-map-js: 1.2.1
     dev: false
 
-  /preact@10.27.1:
-    resolution: {integrity: sha512-V79raXEWch/rbqoNc7nT9E4ep7lu+mI3+sBmfRD4i1M73R3WLYcCtdI0ibxGVf4eQL8ZIz2nFacqEC+rmnOORQ==}
+  /preact@10.28.2:
+    resolution: {integrity: sha512-lbteaWGzGHdlIuiJ0l2Jq454m6kcpI1zNje6d8MlGAFlYvP2GO4ibnat7P74Esfz4sPTdM6UxtTwh/d3pwM9JA==}
     dev: false
 
   /prelude-ls@1.2.1:
@@ -19269,7 +19269,7 @@ packages:
     dev: false
 
   file:projects/storybook8.tgz:
-    resolution: {integrity: sha512-XGGDVgcfVR4mB44VnWRt65VXxLHQUCUzBSRcWdmYWlxUZuFYb7+ojVvnOXT3tU8xYN0HlgdtREiywFsLx1cFmg==, tarball: file:projects/storybook8.tgz}
+    resolution: {integrity: sha512-1LhibQPVOuOuDl640MlqSFg317k5hK0FtUdFTmEoxl7JYiuuJPOzh6XWT2mNkqdpuWX82+H6yVfrfzeM2XUVRw==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
@@ -19347,7 +19347,7 @@ packages:
       json-stringify-safe: 5.0.1
       nan: 2.23.0
       node-forge: 1.3.3
-      preact: 10.27.1
+      preact: 10.28.2
       prettier: 3.5.3
       pretty-quick: 4.2.2(prettier@3.5.3)
       raw-loader: 4.0.2(webpack@5.99.9)
