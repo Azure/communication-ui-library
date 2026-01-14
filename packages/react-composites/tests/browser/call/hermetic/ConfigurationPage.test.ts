@@ -100,6 +100,27 @@ test.describe('Call Composite E2E Configuration Screen Tests', () => {
     await stubLocalCameraName(page);
     expect(await stableScreenshot(page)).toMatchSnapshot(`call-configuration-page-camera-error.png`);
   });
+
+  test('Configuration screen should display page title', async ({ page, serverUrl }) => {
+    await page.goto(buildUrlWithMockAdapter(serverUrl, defaultMockConfigurationPageState()));
+    await waitForCallCompositeToLoad(page);
+
+    // Verify the configuration page title text is visible
+    const titleElement = page.locator('svg text[role="heading"]');
+    await expect(titleElement).toBeVisible();
+
+    // Verify the title contains text content (tspan elements added by SvgWithWordWrapping)
+    const tspanElements = page.locator('svg text[role="heading"] tspan');
+    await expect(tspanElements.first()).toBeVisible();
+
+    // Verify the text has a visible fill color (not transparent or missing)
+    const fillColor = await titleElement.evaluate((el) => {
+      return window.getComputedStyle(el).fill;
+    });
+    expect(fillColor).not.toBe('none');
+    expect(fillColor).not.toBe('transparent');
+    expect(fillColor).not.toBe('');
+  });
 });
 
 function defaultMockConfigurationPageState(): MockCallAdapterState {

@@ -162,7 +162,8 @@ const configurationPageTextDecoration = (theme: ITheme): IStyle => {
     paintOrder: 'stroke fill',
     strokeWidth: _pxToRem(1.5),
     text: {
-      letterSpacing: '-0.02rem' // cope with extra width due to stroke width
+      letterSpacing: '-0.02rem', // cope with extra width due to stroke width
+      // fill: 'inherit'
     },
     '@media (forced-colors: active)': {
       textShadow: 'none',
