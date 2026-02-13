@@ -666,6 +666,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "You are sharing your screen",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "Loading {participant}'s screen",
     "localScreenShareLoadingMessage": "Loading your screen",
     "localVideoLabel": "You",
