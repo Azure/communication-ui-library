@@ -4231,6 +4231,7 @@ export type NotificationStackSelector = (state: CallClientState, props: CallingB
 // @public
 export interface NotificationStackStrings {
     assignedBreakoutRoomChanged?: NotificationStrings;
+    assignedBreakoutRoomChangedPromptJoin?: NotificationStrings;
     assignedBreakoutRoomClosed?: NotificationStrings;
     assignedBreakoutRoomOpened?: NotificationStrings;
     assignedBreakoutRoomOpenedPromptJoin?: NotificationStrings;
@@ -4307,7 +4308,7 @@ export interface NotificationStyles {
 }
 
 // @public (undocumented)
-export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'assignedBreakoutRoomClosed' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent' | 'togetherModeStarted' | 'togetherModeEnded';
+export type NotificationTarget = 'assignedBreakoutRoomOpened' | 'assignedBreakoutRoomOpenedPromptJoin' | 'assignedBreakoutRoomChanged' | 'assignedBreakoutRoomChangedPromptJoin' | 'assignedBreakoutRoomClosed' | 'breakoutRoomJoined' | 'breakoutRoomClosingSoon' | 'capabilityTurnVideoOnPresent' | 'capabilityTurnVideoOnAbsent' | 'capabilityUnmuteMicPresent' | 'capabilityUnmuteMicAbsent' | 'togetherModeStarted' | 'togetherModeEnded';
 
 // @public
 export type NotificationType = keyof NotificationStackStrings;
