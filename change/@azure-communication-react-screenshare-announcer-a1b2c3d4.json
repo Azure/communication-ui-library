@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Accessibility",
+  "comment": "Add screen reader announcements when a remote participant starts or stops sharing their screen",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
