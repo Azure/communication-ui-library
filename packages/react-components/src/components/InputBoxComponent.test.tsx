@@ -75,9 +75,9 @@ describe('InputBoxComponent should show mention popover', () => {
 
   const checkExpectedSuggestions = async (): Promise<void> => {
     for (const suggestion of suggestions) {
-      // Check that all suggestions are presented
-      const contextMenuItem = await screen.findByText(suggestion.displayText);
-      expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
+      // Check that all suggestions are presented (use selector to exclude announcer elements)
+      const contextMenuItem = await screen.findByText(suggestion.displayText, { selector: '.ms-Persona-primaryText' });
+      expect(contextMenuItem).toBeTruthy();
     }
   };
 
@@ -154,8 +154,9 @@ describe('InputBoxComponent should show mention popover for a custom trigger', (
 
   const checkExpectedSuggestions = async (): Promise<void> => {
     for (const suggestion of suggestions) {
-      const contextMenuItem = await screen.findByText(suggestion?.displayText);
-      expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
+      // Use selector to exclude announcer elements
+      const contextMenuItem = await screen.findByText(suggestion?.displayText, { selector: '.ms-Persona-primaryText' });
+      expect(contextMenuItem).toBeTruthy();
     }
   };
 
@@ -266,7 +267,8 @@ describe('InputBoxComponent should hide mention popover', () => {
 
   const checkSuggestionsNotShown = (): void => {
     for (const suggestion of suggestions) {
-      const contextMenuItem = screen.queryByText(suggestion?.displayText);
+      // Use selector to exclude announcer elements
+      const contextMenuItem = screen.queryByText(suggestion?.displayText, { selector: '.ms-Persona-primaryText' });
       expect(contextMenuItem).toBeNull();
     }
   };
@@ -276,8 +278,8 @@ describe('InputBoxComponent should hide mention popover', () => {
     if (!firstSuggestionText) {
       throw new Error('Suggestion text is not defined');
     }
-    const firstSuggestionMenuItem = await screen.findByText(firstSuggestionText);
-    expect(firstSuggestionMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
+    // Use selector to exclude announcer elements
+    const firstSuggestionMenuItem = await screen.findByText(firstSuggestionText, { selector: '.ms-Persona-primaryText' });
     return firstSuggestionMenuItem;
   };
 

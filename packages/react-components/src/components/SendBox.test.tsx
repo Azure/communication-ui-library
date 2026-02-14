@@ -66,8 +66,8 @@ describe('SendBox should return correct value with a selected mention', () => {
     if (!suggestions[0]) {
       throw new Error('No suggestions found');
     }
-    const contextMenuItem = await screen.findByText(suggestions[0].displayText);
-    expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
+    // Use selector to exclude announcer elements
+    const contextMenuItem = await screen.findByText(suggestions[0].displayText, { selector: '.ms-Persona-primaryText' });
     contextMenuItem && fireEvent.click(contextMenuItem);
   };
 
@@ -161,8 +161,8 @@ describe('Clicks/Touch should select mention', () => {
     if (!suggestions[0]) {
       throw new Error('No suggestions found');
     }
-    const contextMenuItem = await screen.findByText(suggestions[0].displayText);
-    expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
+    // Use selector to exclude announcer elements
+    const contextMenuItem = await screen.findByText(suggestions[0].displayText, { selector: '.ms-Persona-primaryText' });
     fireEvent.click(contextMenuItem);
   };
 
@@ -421,8 +421,8 @@ describe('Keyboard events should be handled for mentions', () => {
     if (!suggestion) {
       throw new Error('Suggestion not found');
     }
-    const contextMenuItem = await screen.findByText(suggestion.displayText);
-    expect(contextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
+    // Use selector to exclude announcer elements
+    const contextMenuItem = await screen.findByText(suggestion.displayText, { selector: '.ms-Persona-primaryText' });
     fireEvent.click(contextMenuItem);
   };
 
