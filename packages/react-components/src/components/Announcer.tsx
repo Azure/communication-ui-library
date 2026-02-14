@@ -26,6 +26,7 @@ export const Announcer = (props: AnnouncerProps): JSX.Element => {
 
   return (
     <Stack
+      data-testid="announcer"
       aria-live={ariaLive}
       role={role}
       aria-atomic={true}

@@ -396,13 +396,13 @@ describe('Message should display Mention correctly', () => {
       await userEvent.keyboard(' @');
     });
 
-    // Check that Everyone is an option
-    const everyoneMentionContextMenuItem = await screen.findByText('Everyone');
-    expect(everyoneMentionContextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
+    // Check that Everyone is an option (use selector to exclude announcer elements)
+    const everyoneMentionContextMenuItem = await screen.findByText('Everyone', { selector: '.ms-Persona-primaryText' });
+    expect(everyoneMentionContextMenuItem).toBeTruthy();
 
-    // Check that user1Name is an option
-    const user1MentionContextMenuItem = await screen.findByText(user1Name);
-    expect(user1MentionContextMenuItem.classList.contains('ms-Persona-primaryText')).toBe(true);
+    // Check that user1Name is an option (use selector to exclude announcer elements)
+    const user1MentionContextMenuItem = await screen.findByText(user1Name, { selector: '.ms-Persona-primaryText' });
+    expect(user1MentionContextMenuItem).toBeTruthy();
 
     // Select mention from popover for user1Name, verify plain text not contain mention html tag
     fireEvent.click(user1MentionContextMenuItem);
