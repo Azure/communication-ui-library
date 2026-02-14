@@ -1,7 +1,7 @@
 {
   "type": "patch",
   "area": "fix",
-  "workstream": "Accessibility",
+  "workstream": "Breakout rooms",
   "comment": "Add prompt notification for assigned breakout room changes when auto move is false",
   "packageName": "@azure/communication-react",
   "email": "miguelgamis@microsoft.com",
