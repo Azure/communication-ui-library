@@ -2,7 +2,7 @@
 // Licensed under the MIT License.
 
 import { concatStyleSets, IStyle, mergeStyles, Stack } from '@fluentui/react';
-import React, { useCallback, useMemo, useRef } from 'react';
+import React, { useCallback, useLayoutEffect, useMemo, useRef } from 'react';
 import { GridLayoutStyles } from '.';
 import { Announcer } from './Announcer';
 import { useEffect } from 'react';
@@ -92,6 +92,10 @@ export const MAX_PINNED_REMOTE_VIDEO_TILES = 4;
 export interface VideoGalleryStrings {
   /** String to notify that local user is sharing their screen */
   screenIsBeingSharedMessage: string;
+  /** Aria label to announce when a remote participant starts sharing their screen */
+  screenShareStartedAnnouncementAriaLabel: string;
+  /** Aria label to announce when a remote participant stops sharing their screen */
+  screenShareStoppedAnnouncementAriaLabel: string;
   /** String to show when remote screen share stream is loading */
   screenShareLoadingMessage: string;
   /** String to show when local screen share stream is loading */
@@ -656,12 +660,16 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const [announcementString, setAnnouncementString] = React.useState<string>('');
+  const [announcerAriaLive, setAnnouncerAriaLive] = React.useState<'polite' | 'assertive'>('polite');
   /**
    * sets the announcement string for VideoGallery actions so that the screenreader will trigger
+   * @param announcement - The message to announce
+   * @param ariaLive - The aria-live mode ('polite' for non-urgent, 'assertive' for important events)
    */
   const toggleAnnouncerString = useCallback(
-    (announcement: string) => {
+    (announcement: string, ariaLive: 'polite' | 'assertive' = 'polite') => {
       setAnnouncementString(announcement);
+      setAnnouncerAriaLive(ariaLive);
       /**
        * Clears the announcer string after VideoGallery action allowing it to be re-announced.
        */
@@ -669,7 +677,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
         setAnnouncementString('');
       }, 3000);
     },
-    [setAnnouncementString]
+    [setAnnouncementString, setAnnouncerAriaLive]
   );
 
   const defaultOnRenderVideoTile = useCallback(
@@ -771,6 +779,35 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   );
 
   const screenShareParticipant = remoteParticipants.find((participant) => participant.screenShareStream?.isAvailable);
+
+  // Track the previous screen share participant to detect when screen sharing starts or stops
+  const previousScreenShareParticipantRef = useRef<VideoGalleryRemoteParticipant | undefined>(undefined);
+
+  // Announce when a remote participant starts or stops sharing their screen for screen reader accessibility
+  // Use useLayoutEffect to trigger announcement synchronously before browser paint,
+  // which should queue the announcement before any focus-shift induced announcements
+  useLayoutEffect(() => {
+    const previousParticipant = previousScreenShareParticipantRef.current;
+    
+    if (screenShareParticipant && previousParticipant?.userId !== screenShareParticipant.userId) {
+      // Screen share started (or switched to a different participant)
+      const participantName = screenShareParticipant.displayName || strings.displayNamePlaceholder;
+      const announcementMessage = _formatString(strings.screenShareStartedAnnouncementAriaLabel, {
+        participant: participantName
+      });
+      toggleAnnouncerString(announcementMessage, 'assertive');
+    } else if (!screenShareParticipant && previousParticipant) {
+      // Screen share stopped
+      const participantName = previousParticipant.displayName || strings.displayNamePlaceholder;
+      const announcementMessage = _formatString(strings.screenShareStoppedAnnouncementAriaLabel, {
+        participant: participantName
+      });
+      toggleAnnouncerString(announcementMessage, 'assertive');
+    }
+    
+    previousScreenShareParticipantRef.current = screenShareParticipant;
+  }, [screenShareParticipant, strings.displayNamePlaceholder, strings.screenShareStartedAnnouncementAriaLabel, strings.screenShareStoppedAnnouncementAriaLabel, toggleAnnouncerString]);
+
   const localScreenShareStreamComponent = (
     <LocalScreenShare
       localParticipant={localParticipant}
@@ -917,7 +954,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       className={mergeStyles(videoGalleryOuterDivStyle, styles?.root, unselectable)}
     >
       {videoGalleryLayout}
-      <Announcer announcementString={announcementString} ariaLive="polite" />
+      <Announcer announcementString={announcementString} ariaLive={announcerAriaLive} />
     </div>
   );
 };

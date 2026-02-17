@@ -20,14 +20,20 @@ export type AnnouncerProps = {
 export const Announcer = (props: AnnouncerProps): JSX.Element => {
   const { announcementString, ariaLive } = props;
 
+  // Use role="alert" for assertive announcements as it's more reliably announced by screen readers
+  // even when focus is on interactive elements
+  const role = ariaLive === 'assertive' ? 'alert' : 'status';
+
   return (
     <Stack
-      aria-label={announcementString}
+      data-testid="announcer"
       aria-live={ariaLive}
-      role="status"
+      role={role}
       aria-atomic={true}
       styles={announcerStyles}
-    ></Stack>
+    >
+      {announcementString}
+    </Stack>
   );
 };
 

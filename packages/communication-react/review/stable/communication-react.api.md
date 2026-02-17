@@ -5162,6 +5162,8 @@ export interface VideoGalleryStrings {
     pinParticipantMenuItemAriaLabel: string;
     screenIsBeingSharedMessage: string;
     screenShareLoadingMessage: string;
+    screenShareStartedAnnouncementAriaLabel: string;
+    screenShareStoppedAnnouncementAriaLabel: string;
     spotlightLimitReachedMenuTitle: string;
     startSpotlightVideoTileMenuLabel: string;
     stopSpotlightOnSelfVideoTileMenuLabel: string;
