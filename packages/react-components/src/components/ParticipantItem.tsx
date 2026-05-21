@@ -159,7 +159,7 @@ export const ParticipantItem = (props: ParticipantItemProps): JSX.Element => {
   } = props;
   const [itemHovered, setItemHovered] = useState<boolean>(false);
   const [menuHidden, setMenuHidden] = useState<boolean>(true);
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const theme = useTheme();
   const localeStrings = useLocale().strings.participantItem;
   const ids = useIdentifiers();

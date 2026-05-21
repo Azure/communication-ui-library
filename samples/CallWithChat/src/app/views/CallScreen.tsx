@@ -130,7 +130,7 @@ export const CallScreen = (props: CallScreenProps): JSX.Element => {
     };
   }, []);
 
-  const callIdRef = useRef<string>();
+  const callIdRef = useRef<string>(undefined);
   const { currentTheme, currentRtl } = useSwitchableFluentTheme();
   const isMobileSession = useIsMobile();
 

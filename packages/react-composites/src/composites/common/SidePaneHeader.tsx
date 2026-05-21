@@ -22,8 +22,8 @@ export const SidePaneHeader = (props: {
   dismissSidePaneButtonAriaDescription?: string;
   onClose: () => void;
   mobileView: boolean;
-  paneOpenerButton?: RefObject<IButton>;
-  dismissButtonComponentRef?: RefObject<IButton>;
+  paneOpenerButton?: RefObject<IButton | null>;
+  dismissButtonComponentRef?: RefObject<IButton | null>;
   chatButtonPresent?: boolean;
 }): JSX.Element => {
   const theme = useTheme();

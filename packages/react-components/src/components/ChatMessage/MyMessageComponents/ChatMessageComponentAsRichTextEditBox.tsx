@@ -145,7 +145,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
   const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
     undefined
   );
-  const editTextFieldRef = React.useRef<RichTextEditorComponentRef | null>(null);
+  const editTextFieldRef = React.useRef<RichTextEditorComponentRef>(null);
   const theme = useTheme();
   const messageState: MessageState = useMemo(() => {
     // get plain text content from the editor to check if the message is empty
@@ -193,7 +193,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       strings.editBoxTextLimit,
       strings.editBoxEmptyWarningText,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
-    )
+    );
   }, [
     messageState,
     strings.editBoxTextLimit,

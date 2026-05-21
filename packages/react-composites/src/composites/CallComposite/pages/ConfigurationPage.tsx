@@ -146,7 +146,7 @@ export const ConfigurationPage = (props: ConfigurationPageProps): JSX.Element =>
   /* @conditional-compile-remove(call-readiness) */
   getDevicePermissionState(environmentInfo, setVideoState, setAudioState, videoState, audioState);
 
-  const configContainerRef = useRef<HTMLDivElement | null>(null);
+  const configContainerRef = useRef<HTMLDivElement>(null);
 
   const configWidth = _useContainerWidth(configContainerRef);
 

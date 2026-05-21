@@ -407,7 +407,7 @@ const CallWithChatScreen = (props: CallWithChatScreenProps): JSX.Element => {
   const [currentPage, setCurrentPage] = useState<CallCompositePage>();
   const [isChatOpen, setIsChatOpen] = useState(false);
 
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateCallWithChatPage = (newState: CallWithChatAdapterState): void => {

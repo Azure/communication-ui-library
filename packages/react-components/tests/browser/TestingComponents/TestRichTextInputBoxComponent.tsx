@@ -16,7 +16,7 @@ interface TestRichTextInputBoxComponentProps {
  */
 export const TestRichTextInputBoxComponent = (props: TestRichTextInputBoxComponentProps): JSX.Element => {
   const { disabled, minHeight, maxHeight } = props;
-  const ref = useRef<RichTextEditorComponentRef | null>(null);
+  const ref = useRef<RichTextEditorComponentRef>(null);
   const locale = useLocale();
   return (
     <RichTextInputBoxComponent

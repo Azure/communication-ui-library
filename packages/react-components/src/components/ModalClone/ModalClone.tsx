@@ -101,7 +101,7 @@ const getMoveDelta = (ev: KeyboardEvent): number => {
   return delta;
 };
 
-const useComponentRef = (props: IModalProps, focusTrapZone: React.RefObject<IFocusTrapZone>) => {
+const useComponentRef = (props: IModalProps, focusTrapZone: React.RefObject<IFocusTrapZone | null>) => {
   React.useImperativeHandle(
     props.componentRef,
     () => ({
@@ -152,9 +152,9 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
       keyEventElement = window
     } = props;
 
-    const rootRef = React.useRef<HTMLDivElement | null>(null);
-    const focusTrapZone = React.useRef<IFocusTrapZone | null>(null);
-    const focusTrapZoneElm = React.useRef<HTMLDivElement | null>(null);
+    const rootRef = React.useRef<HTMLDivElement>(null);
+    const focusTrapZone = React.useRef<IFocusTrapZone>(null);
+    const focusTrapZoneElm = React.useRef<HTMLDivElement>(null);
     const mergedRef = useMergedRefs(rootRef, ref);
 
     const modalResponsiveMode = useResponsiveMode(mergedRef);

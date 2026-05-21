@@ -41,7 +41,7 @@ export interface RichTextInputBoxComponentProps {
     /* @conditional-compile-remove(rich-text-editor-image-upload) */ removedInlineImages?: Record<string, string>[]
   ) => void;
   onEnterKeyDown?: () => void;
-  editorComponentRef: React.RefObject<RichTextEditorComponentRef>;
+  editorComponentRef: React.RefObject<RichTextEditorComponentRef | null>;
   // Partial needs to be removed when the rich text editor feature goes to GA
   strings: Partial<RichTextSendBoxStrings>;
   disabled: boolean;

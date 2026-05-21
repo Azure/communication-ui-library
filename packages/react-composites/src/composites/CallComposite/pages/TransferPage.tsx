@@ -152,7 +152,7 @@ const TransferTile = (props: TransferTileProps): JSX.Element => {
   const { displayName, initialsName, userId, onFetchAvatarPersonaData, statusText } = props;
 
   const [personaSize, setPersonaSize] = useState<number>();
-  const tileRef = useRef<HTMLDivElement | null>(null);
+  const tileRef = useRef<HTMLDivElement>(null);
 
   const observer = useRef(
     new ResizeObserver((entries): void => {

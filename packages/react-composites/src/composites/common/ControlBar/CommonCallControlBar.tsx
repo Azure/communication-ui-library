@@ -75,16 +75,16 @@ export interface CommonCallControlBarProps {
   onUserSetOverflowGalleryPositionChange?: (position: 'Responsive' | 'horizontalTop') => void;
   onUserSetGalleryLayout?: (layout: VideoGalleryLayout) => void;
   userSetGalleryLayout?: VideoGalleryLayout;
-  peopleButtonRef?: RefObject<IButton>;
-  cameraButtonRef?: RefObject<IButton>;
-  videoBackgroundPickerRef?: RefObject<IButton>;
+  peopleButtonRef?: RefObject<IButton | null>;
+  cameraButtonRef?: RefObject<IButton | null>;
+  videoBackgroundPickerRef?: RefObject<IButton | null>;
   onSetDialpadPage?: () => void;
   dtmfDialerPresent?: boolean;
   onStopLocalSpotlight?: () => void;
   useTeamsCaptions?: boolean;
   onToggleTeamsMeetingConferenceModal?: () => void;
   teamsMeetingConferenceModalPresent?: boolean;
-  sidePaneDismissButtonRef?: RefObject<IButton>;
+  sidePaneDismissButtonRef?: RefObject<IButton | null>;
   onStartRealTimeText?: () => void;
   startRealTimeTextButtonChecked?: boolean;
   isCallWithChatComposite?: boolean;
@@ -118,9 +118,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
   const theme = useTheme();
   const rtl = theme.rtl;
 
-  const controlBarContainerRef = useRef<HTMLHeadingElement | null>(null);
-  const sidepaneControlsRef = useRef<HTMLHeadingElement | null>(null);
-  const controlBarSizeRef = useRef<HTMLHeadingElement | null>(null);
+  const controlBarContainerRef = useRef<HTMLHeadingElement>(null);
+  const sidepaneControlsRef = useRef<HTMLHeadingElement>(null);
+  const controlBarSizeRef = useRef<HTMLHeadingElement>(null);
 
   const [controlBarButtonsWidth, setControlBarButtonsWidth] = useState(0);
   const [panelsButtonsWidth, setPanelsButtonsWidth] = useState(0);

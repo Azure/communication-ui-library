@@ -16,9 +16,9 @@ export const SvgWithWordWrapping = (props: {
   role?: string;
 }): JSX.Element => {
   const { width, text, lineHeightPx, bufferHeightPx, role } = props;
-  const svgRef = useRef<SVGSVGElement | null>(null);
-  const calculationTextElement = useRef<SVGTextElement | null>(null);
-  const visibleTextElement = useRef<SVGTextElement | null>(null);
+  const svgRef = useRef<SVGSVGElement>(null);
+  const calculationTextElement = useRef<SVGTextElement>(null);
+  const visibleTextElement = useRef<SVGTextElement>(null);
   const [height, setHeight] = useState<number>(0);
 
   // useLayoutEffect ensures that the calculationTextElement is rendered before being used for calculations.

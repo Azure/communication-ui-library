@@ -76,7 +76,7 @@ export const SendBoxErrorBar = (props: SendBoxErrorBarProps): JSX.Element => {
   const [errorMessage, setErrorMessage] = React.useState(error?.message);
   // Using `any` because `NodeJS.Timeout` here will cause `declaration error` with jest.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const timeoutRef = React.useRef<any>();
+  const timeoutRef = React.useRef<any>(undefined);
 
   React.useEffect(() => {
     setErrorMessage(error?.message);

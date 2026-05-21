@@ -24,7 +24,7 @@ export const useVideoEffectsPane = (
   mobileView: boolean,
   latestErrors: ActiveErrorMessage[],
   onDismissError: (error: ActiveErrorMessage) => void,
-  cameraButtonRef?: React.RefObject<IButton>
+  cameraButtonRef?: React.RefObject<IButton | null>
 ): {
   openVideoEffectsPane: () => void;
   closeVideoEffectsPane: () => void;
@@ -54,7 +54,7 @@ export const useVideoEffectsPane = (
   }, [closePane, locale.strings, mobileView]);
 
   const latestVideoEffectError = latestErrors.find((error) => error.type === 'unableToStartVideoEffect');
-  const updateFocusHandle = useMemo(() => createRef<{ focus: () => void } | null>(), []);
+  const updateFocusHandle = useMemo(() => createRef<{ focus: () => void }>(), []);
 
   const backgroundImages = useSelector(getVideoBackgroundImages);
 

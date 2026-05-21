@@ -238,7 +238,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   } = props;
   const localeStrings = useLocale().strings.captionsBanner;
   const strings = { ...localeStrings, ...props.strings };
-  const captionsScrollDivRef = useRef<HTMLDivElement | null>(null);
+  const captionsScrollDivRef = useRef<HTMLDivElement>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const theme = useTheme();
 
@@ -423,7 +423,12 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
               }
               data-is-focusable={true}
             >
-              <Spinner label={strings?.captionsBannerSpinnerText} ariaLive="assertive" labelPosition="right" styles={captionsBannerLoadingSpinnerStyles(theme)} />
+              <Spinner
+                label={strings?.captionsBannerSpinnerText}
+                ariaLive="assertive"
+                labelPosition="right"
+                styles={captionsBannerLoadingSpinnerStyles(theme)}
+              />
             </Stack>
           )}
         </FocusZone>

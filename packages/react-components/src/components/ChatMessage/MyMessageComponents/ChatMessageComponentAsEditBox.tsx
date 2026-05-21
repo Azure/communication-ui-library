@@ -70,7 +70,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     attachmentMetadataReducer,
     getMessageWithAttachmentMetadata(message) ?? []
   );
-  const editTextFieldRef = React.useRef<ITextField | null>(null);
+  const editTextFieldRef = React.useRef<ITextField>(null);
   const theme = useTheme();
   const messageState = getMessageState(
     textValue,
@@ -90,15 +90,8 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
   };
 
   const textValidationErrorMessage = useMemo(() => {
-      return getTextValidationErrorMessage(
-        messageState,
-        strings.editBoxTextLimit,
-        strings.editBoxEmptyWarningText)
-    }, [
-      messageState,
-      strings.editBoxTextLimit,
-      strings.editBoxEmptyWarningText,
-    ]);
+    return getTextValidationErrorMessage(messageState, strings.editBoxTextLimit, strings.editBoxEmptyWarningText);
+  }, [messageState, strings.editBoxTextLimit, strings.editBoxEmptyWarningText]);
 
   const iconClassName = useCallback(
     (isHover: boolean) => {

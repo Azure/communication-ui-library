@@ -22,7 +22,7 @@ export const Camera = (props: {
   disabled?: boolean;
 
   onClickVideoEffects?: (showVideoEffects: boolean) => void;
-  componentRef?: React.RefObject<IButton>;
+  componentRef?: React.RefObject<IButton | null>;
   disableTooltip?: boolean;
 }): JSX.Element => {
   const cameraButtonProps = usePropsFor(CameraButton);

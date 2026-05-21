@@ -44,7 +44,7 @@ describe('Display mention popover in the correct position', () => {
       bottom: 0,
       left: 0
     };
-    const ref = React.createRef<HTMLDivElement | null>();
+    const ref = React.createRef<HTMLDivElement>();
     render(<div ref={ref} />);
     if (ref.current) {
       jest.spyOn(ref.current, 'getBoundingClientRect').mockImplementation(() => {

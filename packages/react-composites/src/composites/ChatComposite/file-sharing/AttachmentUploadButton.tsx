@@ -43,7 +43,7 @@ export interface AttachmentUploadButtonProps {
  * @internal
  */
 export const AttachmentUploadButton = (props: AttachmentUploadButtonProps): JSX.Element => {
-  const inputRef = React.useRef<HTMLInputElement | null>(null);
+  const inputRef = React.useRef<HTMLInputElement>(null);
   const theme = useTheme();
   // default supportedMediaTypes is ['*'], meaning all media types are supported.
   // default disableMultipleUploads is false, meaning multiple files can be selected.

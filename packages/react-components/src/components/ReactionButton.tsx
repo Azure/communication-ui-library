@@ -120,8 +120,8 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
     backgroundColor: isDarkThemed(theme) ? theme.palette.neutralLighter : ''
   };
 
-  const reactionButtonCalloutRef = useRef<HTMLDivElement | null>(null);
-  const reactionButtonRef = useRef<IButton | null>(null);
+  const reactionButtonCalloutRef = useRef<HTMLDivElement>(null);
+  const reactionButtonRef = useRef<IButton>(null);
 
   const [calloutIsVisible, setCalloutIsVisible] = useState(false);
 

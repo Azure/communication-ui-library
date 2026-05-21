@@ -50,7 +50,7 @@ export const ResponsiveVerticalGallery = (props: ResponsiveVerticalGalleryProps)
     onFetchTilesToRender,
     onChildrenPerPageChange
   } = props;
-  const containerRef = useRef<HTMLDivElement | null>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const containerHeight = _useContainerHeight(containerRef);
 
   const topPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingTop) : 0;

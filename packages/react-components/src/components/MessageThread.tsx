@@ -821,7 +821,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
 
   const messageIdSeenByMeRef = useRef<string>('');
 
-  const chatScrollDivRef = useRef<HTMLDivElement | null>(null);
+  const chatScrollDivRef = useRef<HTMLDivElement>(null);
   const isLoadingChatMessagesRef = useRef(false);
 
   useEffect(() => {
@@ -863,7 +863,7 @@ export const MessageThreadWrapper = (props: MessageThreadProps): JSX.Element => 
     setChatMessagesInitialized(chatMessagesInitialized);
   };
 
-  const chatThreadRef = useRef<HTMLDivElement | null>(null);
+  const chatThreadRef = useRef<HTMLDivElement>(null);
 
   // When the chat thread is narrow, we perform space optimizations such as overlapping
   // the avatar on top of the chat message and moving the chat accept/reject edit buttons

@@ -40,7 +40,7 @@ export interface TextFieldWithMentionProps {
   onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onEnterKeyDown?: () => void;
-  textFieldRef?: React.RefObject<ITextField>;
+  textFieldRef?: React.RefObject<ITextField | null>;
   supportNewline?: boolean;
   mentionLookupOptions?: MentionLookupOptions;
 }
@@ -60,7 +60,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
     supportNewline,
     mentionLookupOptions
   } = props;
-  const inputBoxRef = useRef<HTMLDivElement | null>(null);
+  const inputBoxRef = useRef<HTMLDivElement>(null);
 
   // Current suggestion list, provided by the callback
   const [mentionSuggestions, setMentionSuggestions] = useState<Mention[]>([]);

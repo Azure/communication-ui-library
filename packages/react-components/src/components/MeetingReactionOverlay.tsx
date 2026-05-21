@@ -79,7 +79,7 @@ export const MeetingReactionOverlay = (props: MeetingReactionOverlayProps): JSX.
   const [emojiSizePx, setEmojiSizePx] = useState(0);
   const [divHeight, setDivHeight] = useState(0);
   const [divWidth, setDivWidth] = useState(0);
-  const videoTileRef = useRef<HTMLDivElement | null>(null);
+  const videoTileRef = useRef<HTMLDivElement>(null);
 
   const observer = useRef(
     new ResizeObserver((entries): void => {
