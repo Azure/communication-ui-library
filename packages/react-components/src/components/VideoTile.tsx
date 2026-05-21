@@ -338,7 +338,7 @@ export const VideoTile = (props: VideoTileProps): JSX.Element => {
   // need to set a default otherwise the resizeObserver will get stuck in an infinite loop.
   const [personaSize, setPersonaSize] = useState<number>(1);
 
-  const videoTileRef = useRef<HTMLDivElement>(null);
+  const videoTileRef = useRef<HTMLDivElement | null>(null);
 
   const locale = useLocale();
   const theme = useTheme();

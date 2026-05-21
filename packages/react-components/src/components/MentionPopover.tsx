@@ -171,7 +171,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings;
   const popoverRef = useRef() as React.MutableRefObject<HTMLDivElement>;
-  const suggestionsListRef = useRef<HTMLDivElement>(null);
+  const suggestionsListRef = useRef<HTMLDivElement | null>(null);
 
   const [position, setPosition] = useState<Position | undefined>();
   const [hoveredSuggestion, setHoveredSuggestion] = useState<Mention | undefined>(undefined);

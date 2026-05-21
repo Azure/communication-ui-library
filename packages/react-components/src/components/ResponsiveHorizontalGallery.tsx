@@ -22,7 +22,7 @@ export const ResponsiveHorizontalGallery = (props: {
   onChildrenPerPageChange?: (childrenPerPage: number) => void;
 }): JSX.Element => {
   const { gapWidthRem, buttonWidthRem = 0, onFetchTilesToRender, onChildrenPerPageChange } = props;
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const containerWidth = _useContainerWidth(containerRef);
 
   const leftPadding = containerRef.current ? parseFloat(getComputedStyle(containerRef.current).paddingLeft) : 0;

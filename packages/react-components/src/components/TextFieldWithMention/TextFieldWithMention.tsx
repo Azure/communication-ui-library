@@ -60,7 +60,7 @@ export const TextFieldWithMention = (props: TextFieldWithMentionProps): JSX.Elem
     supportNewline,
     mentionLookupOptions
   } = props;
-  const inputBoxRef = useRef<HTMLDivElement>(null);
+  const inputBoxRef = useRef<HTMLDivElement | null>(null);
 
   // Current suggestion list, provided by the callback
   const [mentionSuggestions, setMentionSuggestions] = useState<Mention[]>([]);

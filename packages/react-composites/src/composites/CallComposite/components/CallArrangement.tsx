@@ -156,11 +156,11 @@ export const CallArrangement = (props: CallArrangementProps): JSX.Element => {
     [theme.palette.neutralLighterAlt]
   );
 
-  const peopleButtonRef = useRef<IButton>(null);
-  const cameraButtonRef = useRef<IButton>(null);
-  const sidePaneDismissButtonRef = useRef<IButton>(null);
+  const peopleButtonRef = useRef<IButton | null>(null);
+  const cameraButtonRef = useRef<IButton | null>(null);
+  const sidePaneDismissButtonRef = useRef<IButton | null>(null);
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
 

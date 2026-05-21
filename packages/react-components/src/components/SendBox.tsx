@@ -229,7 +229,7 @@ export const SendBox = (props: SendBoxProps): JSX.Element => {
   const [textValue, setTextValue] = useState('');
   const [textValueOverflow, setTextValueOverflow] = useState(false);
 
-  const sendTextFieldRef = React.useRef<ITextField>(null);
+  const sendTextFieldRef = React.useRef<ITextField | null>(null);
 
   /* @conditional-compile-remove(file-sharing-acs) */
   const customV9Styles = useV9CustomStyles();

@@ -132,7 +132,7 @@ export const RichTextEditor = React.forwardRef<RichTextEditorComponentRef, RichT
     onInsertInlineImage
   } = props;
   const editor = useRef<IEditor | null>(null);
-  const editorDiv = useRef<HTMLDivElement>(null);
+  const editorDiv = useRef<HTMLDivElement | null>(null);
   const theme = useTheme();
   const [contextMenuProps, setContextMenuProps] = useState<IContextualMenuProps | null>(null);
   const previousThemeDirection = useRef(themeDirection(theme));

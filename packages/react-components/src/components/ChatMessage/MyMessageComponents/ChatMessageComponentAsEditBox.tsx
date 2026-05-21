@@ -70,7 +70,7 @@ export const ChatMessageComponentAsEditBox = (props: ChatMessageComponentAsEditB
     attachmentMetadataReducer,
     getMessageWithAttachmentMetadata(message) ?? []
   );
-  const editTextFieldRef = React.useRef<ITextField>(null);
+  const editTextFieldRef = React.useRef<ITextField | null>(null);
   const theme = useTheme();
   const messageState = getMessageState(
     textValue,

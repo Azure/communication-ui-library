@@ -50,7 +50,7 @@ export const RichTextToolbar = (props: RichTextToolbarProps): JSX.Element => {
   // need to re-render the buttons when format state changes
   const [formatState, setFormatState] = React.useState<ContentModelFormatState | undefined>(undefined);
 
-  const commandBarRef = useRef<ICommandBar>(null);
+  const commandBarRef = useRef<ICommandBar | null>(null);
 
   useEffect(() => {
     // update the format state on editor events

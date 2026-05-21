@@ -152,9 +152,9 @@ const ModalBase: React.FunctionComponent<_ExtendedIModalProps> = React.forwardRe
       keyEventElement = window
     } = props;
 
-    const rootRef = React.useRef<HTMLDivElement>(null);
-    const focusTrapZone = React.useRef<IFocusTrapZone>(null);
-    const focusTrapZoneElm = React.useRef<HTMLDivElement>(null);
+    const rootRef = React.useRef<HTMLDivElement | null>(null);
+    const focusTrapZone = React.useRef<IFocusTrapZone | null>(null);
+    const focusTrapZoneElm = React.useRef<HTMLDivElement | null>(null);
     const mergedRef = useMergedRefs(rootRef, ref);
 
     const modalResponsiveMode = useResponsiveMode(mergedRef);

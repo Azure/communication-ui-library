@@ -238,7 +238,7 @@ export const CaptionsBanner = (props: CaptionsBannerProps): JSX.Element => {
   } = props;
   const localeStrings = useLocale().strings.captionsBanner;
   const strings = { ...localeStrings, ...props.strings };
-  const captionsScrollDivRef = useRef<HTMLDivElement>(null);
+  const captionsScrollDivRef = useRef<HTMLDivElement | null>(null);
   const [isAtBottomOfScroll, setIsAtBottomOfScroll] = useState<boolean>(true);
   const theme = useTheme();
 

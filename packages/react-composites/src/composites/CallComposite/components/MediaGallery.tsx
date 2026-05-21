@@ -98,7 +98,7 @@ export const MediaGallery = (props: MediaGalleryProps): JSX.Element => {
   const isRoomsCall = useSelector(getIsRoomsCall);
   const reactionResources = useSelector(getReactionResources);
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
 

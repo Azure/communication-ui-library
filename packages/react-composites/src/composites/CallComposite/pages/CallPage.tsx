@@ -115,7 +115,7 @@ export const CallPage = (props: CallPageProps): JSX.Element => {
   const [dtmfDialerPresent, setDtmfDialerPresent] = useState<boolean>(renderDtmfDialerFromStart);
   const isPstnCall = callees?.some((callee) => isPhoneNumberIdentifier(callee));
   const isCTECall = useSelector((state) => state.userId.kind === 'microsoftTeamsUser');
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
   const containerAspectRatio = containerWidth && containerHeight ? containerWidth / containerHeight : 0;

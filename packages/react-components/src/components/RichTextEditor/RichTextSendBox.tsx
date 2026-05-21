@@ -307,7 +307,7 @@ export const RichTextSendBox = (props: RichTextSendBoxProps): JSX.Element => {
   const [attachmentUploadsPendingError, setAttachmentUploadsPendingError] = useState<SendBoxErrorBarError | undefined>(
     undefined
   );
-  const editorComponentRef = useRef<RichTextEditorComponentRef>(null);
+  const editorComponentRef = useRef<RichTextEditorComponentRef | null>(null);
 
   /* @conditional-compile-remove(file-sharing-acs) */
   const customV9Styles = useV9CustomStyles();

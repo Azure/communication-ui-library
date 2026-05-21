@@ -55,7 +55,7 @@ export interface StreamMediaProps {
  * @public
  */
 export const StreamMedia = (props: StreamMediaProps): JSX.Element => {
-  const containerEl = useRef<HTMLDivElement>(null);
+  const containerEl = useRef<HTMLDivElement | null>(null);
   const theme = useTheme();
   /* @conditional-compile-remove(remote-ufd) */
   const reconnectingText = useLocale().strings.videoTile.participantReconnecting || 'Reconnecting...';

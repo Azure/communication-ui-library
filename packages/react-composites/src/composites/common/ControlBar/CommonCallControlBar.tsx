@@ -118,9 +118,9 @@ export const CommonCallControlBar = (props: CommonCallControlBarMergedProps): JS
   const theme = useTheme();
   const rtl = theme.rtl;
 
-  const controlBarContainerRef = useRef<HTMLHeadingElement>(null);
-  const sidepaneControlsRef = useRef<HTMLHeadingElement>(null);
-  const controlBarSizeRef = useRef<HTMLHeadingElement>(null);
+  const controlBarContainerRef = useRef<HTMLHeadingElement | null>(null);
+  const sidepaneControlsRef = useRef<HTMLHeadingElement | null>(null);
+  const controlBarSizeRef = useRef<HTMLHeadingElement | null>(null);
 
   const [controlBarButtonsWidth, setControlBarButtonsWidth] = useState(0);
   const [panelsButtonsWidth, setPanelsButtonsWidth] = useState(0);

@@ -498,7 +498,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
 
   const localTileNotInGrid = (layout === 'floatingLocalVideo' || layout === 'speaker') && remoteParticipants.length > 0;
 
-  const containerRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement | null>(null);
   const containerWidth = _useContainerWidth(containerRef);
   const containerHeight = _useContainerHeight(containerRef);
   const isNarrow = containerWidth ? isNarrowWidth(containerWidth) : false;

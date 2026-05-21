@@ -54,7 +54,7 @@ export const useVideoEffectsPane = (
   }, [closePane, locale.strings, mobileView]);
 
   const latestVideoEffectError = latestErrors.find((error) => error.type === 'unableToStartVideoEffect');
-  const updateFocusHandle = useMemo(() => createRef<{ focus: () => void }>(), []);
+  const updateFocusHandle = useMemo(() => createRef<{ focus: () => void } | null>(), []);
 
   const backgroundImages = useSelector(getVideoBackgroundImages);
 
