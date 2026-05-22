@@ -5,7 +5,6 @@ import React from 'react';
 import { AttachmentMetadata, _formatString } from '@internal/acs-ui-common';
 import parse, { HTMLReactParserOptions, Element as DOMElement } from 'html-react-parser';
 import { attributesToProps } from 'html-react-parser';
-import Linkify from 'react-linkify';
 import { ChatMessage } from '../../types/ChatMessage';
 /* @conditional-compile-remove(data-loss-prevention) */
 import { BlockedMessage } from '../../types/ChatMessage';
@@ -109,6 +108,22 @@ const MessageContentAsRichTextHTML = (props: ChatMessageContentProps): JSX.Eleme
   );
 };
 
+// Splits plain text on http/https URLs, rendering each URL as a <Link>.
+// This replaces react-linkify@1.0.0-alpha which has CJS/ESM interop issues under React 19.
+const URL_PATTERN = /(https?:\/\/[^\s]+)/g;
+const linkifyPlainText = (text: string): React.ReactNode[] => {
+  const parts = text.split(URL_PATTERN);
+  return parts.map((part, i) =>
+    i % 2 === 1 ? (
+      <Link target="_blank" href={part} key={i}>
+        {part}
+      </Link>
+    ) : (
+      part
+    )
+  );
+};
+
 const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
   return (
     <MessageContentWithLiveAria
@@ -116,19 +131,7 @@ const MessageContentAsText = (props: ChatMessageContentProps): JSX.Element => {
       liveMessage={generateLiveMessage(props)}
       ariaLabel={messageContentAriaText(props)}
       className={messageTextContentStyles}
-      content={
-        <Linkify
-          componentDecorator={(decoratedHref: string, decoratedText: string, key: number) => {
-            return (
-              <Link target="_blank" href={decoratedHref} key={key}>
-                {decoratedText}
-              </Link>
-            );
-          }}
-        >
-          {props.message.content}
-        </Linkify>
-      }
+      content={<>{linkifyPlainText(props.message.content ?? '')}</>}
     />
   );
 };
