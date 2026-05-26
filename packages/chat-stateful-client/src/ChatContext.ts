@@ -291,8 +291,9 @@ export class ChatContext {
       const thread = draft.threads[threadId];
       const readReceipts = thread?.readReceipts;
       if (thread && readReceipts) {
-        // TODO(prprabhu): Replace `this.getState()` with `draft`?
-        if (readReceipt.sender !== this.getState().userId && thread.latestReadTime < readReceipt.readOn) {
+        const readReceiptSenderId = toFlatCommunicationIdentifier(readReceipt.sender);
+        const currentUserId = toFlatCommunicationIdentifier(draft.userId);
+        if (readReceiptSenderId !== currentUserId && thread.latestReadTime < readReceipt.readOn) {
           thread.latestReadTime = readReceipt.readOn;
         }
         readReceipts.push(readReceipt);
