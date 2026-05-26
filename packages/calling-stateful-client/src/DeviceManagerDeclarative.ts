@@ -53,7 +53,15 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
     // isSpeakerSelectionAvailable, selectedMicrophone, and selectedSpeaker are properties on DeviceManager. Since they
     // are not functions we can't proxy them so we'll update whenever we think they may need updating such as at
     // construction time or when certain events happen.
-    this._context.setDeviceManagerIsSpeakerSelectionAvailable(this._deviceManager.isSpeakerSelectionAvailable);
+    // The isSpeakerSelectionAvailable getter can throw a CallingCommunicationError when the device manager is not
+    // yet ready (e.g. during a Permissions API change event). Default to false in that case.
+    let isSpeakerSelectionAvailable = false;
+    try {
+      isSpeakerSelectionAvailable = this._deviceManager.isSpeakerSelectionAvailable;
+    } catch (e) {
+      console.warn('DeviceManager.isSpeakerSelectionAvailable threw an error', e);
+    }
+    this._context.setDeviceManagerIsSpeakerSelectionAvailable(isSpeakerSelectionAvailable);
     this._context.setDeviceManagerSelectedMicrophone(this._deviceManager.selectedMicrophone);
     this._context.setDeviceManagerSelectedSpeaker(this._deviceManager.selectedSpeaker);
   };
@@ -149,7 +157,13 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
 
   private audioDevicesUpdated = async (): Promise<void> => {
     this._context.setDeviceManagerMicrophones(dedupeById(await this._deviceManager.getMicrophones()));
-    if (this._deviceManager.isSpeakerSelectionAvailable) {
+    let isSpeakerSelectionAvailable = false;
+    try {
+      isSpeakerSelectionAvailable = this._deviceManager.isSpeakerSelectionAvailable;
+    } catch (e) {
+      console.warn('DeviceManager.isSpeakerSelectionAvailable threw an error', e);
+    }
+    if (isSpeakerSelectionAvailable) {
       this._context.setDeviceManagerSpeakers(dedupeById(await this._deviceManager.getSpeakers()));
     }
   };
