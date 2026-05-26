@@ -271,6 +271,16 @@ class ProxyDeviceManager implements ProxyHandler<DeviceManager> {
           'DeviceManager.askDevicePermission'
         );
       }
+      case 'isSpeakerSelectionAvailable': {
+        // The SDK's isSpeakerSelectionAvailable getter can throw a CallingCommunicationError when the device manager
+        // is not yet ready. Default to false in that case so consumers never see an unhandled exception.
+        try {
+          return target.isSpeakerSelectionAvailable;
+        } catch (e) {
+          console.warn('DeviceManager.isSpeakerSelectionAvailable threw an error', e);
+          return false;
+        }
+      }
       default:
         return Reflect.get(target, prop);
     }
