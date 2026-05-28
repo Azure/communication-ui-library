@@ -124,7 +124,7 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
       </Stack>
       <Rating
         max={5}
-        size={RatingSize.Large}
+        size={(RatingSize?.Large ?? 1) as RatingSize}
         defaultRating={0}
         allowZeroStars
         rating={rating}
