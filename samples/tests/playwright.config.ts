@@ -11,6 +11,10 @@ const config: PlaywrightTestConfig = {
   use: {
     headless: true
   },
+  // Global timeout for the entire test run (20 minutes)
+  globalTimeout: 20 * 60 * 1000,
+  // Timeout for each test (2 minutes)
+  timeout: 2 * 60 * 1000,
   // Add an extra retry to mitigate network issues.
   // This can be removed if we switch to using a mock ACS service.
   retries: 2,
@@ -24,6 +28,8 @@ const config: PlaywrightTestConfig = {
         // Large enough to contain all UI elements from ComponentExamples sample
         viewport: { width: 900, height: 900 },
         launchOptions: {
+          // Use CHROME_PATH if provided (e.g., from browser-actions/setup-chrome in CI)
+          executablePath: process.env.CHROME_PATH || undefined,
           args: [
             '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
             '--enable-font-antialiasing', // Ensures that fonts are rendered consistently.

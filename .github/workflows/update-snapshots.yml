@@ -15,6 +15,7 @@ jobs:
     name: Determine if this workflow is applicable
     runs-on: ${{ vars.RUNS_ON }}
     permissions:
+      contents: read
       pull-requests: write
     outputs:
       met: ${{ steps.label.outputs.found || steps.workflow_dispatch.outputs.found }}
@@ -27,7 +28,7 @@ jobs:
           # actions, when using the default account, cannot trigger other actions.
           # This machine account is only for this PAT, pwd was created and thrown away
           # If an update is needed, create a new account, add access to the repo and generate a new PAT
-          token: ${{ secrets.MACHINE_ACCOUNT_PAT }}
+          token: ${{ secrets.MACHINE_ACCOUNT_PAT || github.token }}
       # Sanitize branch name for any subsequent git checkout to prevent branch name exploits
       - name: Sanitize branch name
         id: sanitize

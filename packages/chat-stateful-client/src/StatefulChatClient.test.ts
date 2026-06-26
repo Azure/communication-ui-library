@@ -319,12 +319,33 @@ describe('declarative chatClient subscribe to event properly after startRealtime
       chatMessageId: 'messageId1'
     };
 
-    client.triggerEvent('readReceiptReceived', addedEvent);
+    await client.triggerEvent('readReceiptReceived', addedEvent);
 
     expect(client.getState().threads[threadId]?.readReceipts.length).toBe(1);
     expect(client.getState().threads[threadId]?.readReceipts[0]?.chatMessageId).toBe(messageId);
 
     expect(client.getState().threads[threadId]?.latestReadTime).toEqual(readOn);
+  });
+
+  test('does not update latestReadTime for readReceiptReceived events from the current user', async () => {
+    const threadId = 'threadId1';
+    const messageId = 'messageId1';
+    const readOn = new Date();
+
+    const addedEvent: ReadReceiptReceivedEvent = {
+      threadId,
+      readOn,
+      recipient: { kind: 'communicationUser', communicationUserId: 'userId1' },
+      sender: { kind: 'communicationUser', communicationUserId: 'userId1' },
+      senderDisplayName: '',
+      chatMessageId: messageId
+    };
+
+    await client.triggerEvent('readReceiptReceived', addedEvent);
+
+    expect(client.getState().threads[threadId]?.readReceipts.length).toBe(1);
+    expect(client.getState().threads[threadId]?.readReceipts[0]?.chatMessageId).toBe(messageId);
+    expect(client.getState().threads[threadId]?.latestReadTime).toEqual(new Date(0));
   });
 });
 

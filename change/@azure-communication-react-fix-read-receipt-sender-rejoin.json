@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Chat",
+  "comment": "Fix read receipts so a sender's own read receipt does not mark their sent message as seen",
+  "packageName": "@azure/communication-react",
+  "email": "pkanukollu@microsoft.com",
+  "dependentChangeType": "patch"
+}
