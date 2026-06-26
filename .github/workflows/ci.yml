@@ -696,13 +696,30 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "version=$(node -p "require('./samples/tests/package.json').devDependencies['@playwright/test']")" >> $GITHUB_OUTPUT
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 10
+        run: cd samples/tests && npx playwright install chromium --with-deps
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        timeout-minutes: 5
+        run: cd samples/tests && npx playwright install-deps chromium
       - name: Build
         run: rush build -v -t sample-static-html-composites
       - name: Visual Regression Tests
         id: visualregressiontests
+        timeout-minutes: 30
         run: |
           cd samples/tests
-          npx playwright install --with-deps
           rushx test:e2e:bundle
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
@@ -746,13 +763,30 @@ jobs:
         id: setup-chrome
         with:
           chrome-version: 120.0.6099
+      - name: Get Playwright version
+        id: playwright-version
+        run: echo "version=$(node -p "require('./samples/tests/package.json').devDependencies['@playwright/test']")" >> $GITHUB_OUTPUT
+      - name: Cache Playwright browsers
+        uses: actions/cache@v4
+        id: playwright-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}
+      - name: Install Playwright browsers
+        if: steps.playwright-cache.outputs.cache-hit != 'true'
+        timeout-minutes: 10
+        run: cd samples/tests && npx playwright install chromium --with-deps
+      - name: Install Playwright system dependencies
+        if: steps.playwright-cache.outputs.cache-hit == 'true'
+        timeout-minutes: 5
+        run: cd samples/tests && npx playwright install-deps chromium
       - name: Build
         run: rush build -v -t component-examples
       - name: Visual Regression Tests
         id: visualregressiontests
+        timeout-minutes: 30
         run: |
           cd samples/tests
-          npx playwright install --with-deps
           rushx test:e2e:examples
         env:
           CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}

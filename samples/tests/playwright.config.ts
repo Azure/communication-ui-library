@@ -11,6 +11,10 @@ const config: PlaywrightTestConfig = {
   use: {
     headless: true
   },
+  // Global timeout for the entire test run (20 minutes)
+  globalTimeout: 20 * 60 * 1000,
+  // Timeout for each test (2 minutes)
+  timeout: 2 * 60 * 1000,
   // Add an extra retry to mitigate network issues.
   // This can be removed if we switch to using a mock ACS service.
   retries: 2,
