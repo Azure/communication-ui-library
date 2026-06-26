@@ -28,6 +28,8 @@ const config: PlaywrightTestConfig = {
         // Large enough to contain all UI elements from ComponentExamples sample
         viewport: { width: 900, height: 900 },
         launchOptions: {
+          // Use CHROME_PATH if provided (e.g., from browser-actions/setup-chrome in CI)
+          executablePath: process.env.CHROME_PATH || undefined,
           args: [
             '--font-render-hinting=none', // Ensures that fonts are rendered consistently.
             '--enable-font-antialiasing', // Ensures that fonts are rendered consistently.
