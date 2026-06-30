@@ -5,7 +5,7 @@ import {
   Callout,
   concatStyleSets,
   DefaultButton,
-  FocusZone,
+  FocusTrapZone,
   IButton,
   ICalloutContentStyles,
   mergeStyles,
@@ -27,7 +27,6 @@ import {
 import { isDarkThemed } from '../theming/themeUtils';
 import { ReactionResources } from '..';
 import { getEmojiFrameCount } from './VideoGallery/utils/videoGalleryLayoutUtils';
-import { _preventDismissOnEvent } from '@internal/acs-ui-common';
 
 /**
  * Reactions types for the Reaction button
@@ -138,8 +137,21 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
             setCalloutIsVisible(false);
           }}
         >
-          <FocusZone shouldFocusOnMount style={{ height: '100%' }}>
-            <Stack horizontal style={{ height: 'inherit' }} role="list">
+          <FocusTrapZone
+            isClickableOutsideFocusTrap={true}
+            // Allowing escape key to close the callout and return focus to the main reaction button. Tooltips also use
+            // escape key to close themselves, so we need to use onKeyDownCapture to ensure the callout closes first.
+            onKeyDownCapture={(e) => {
+              if (e.key === 'Escape') {
+                e.preventDefault();
+                e.stopPropagation();
+                reactionButtonRef.current?.focus();
+                setCalloutIsVisible(false);
+              }
+            }}
+            style={{ height: '100%' }}
+          >
+            <Stack horizontal style={{ height: 'inherit' }} role="toolbar" aria-label={strings.label}>
               {emojis.map((emoji, index) => {
                 const resourceUrl = emojiResource.get(emoji);
                 const frameCount: number =
@@ -153,7 +165,6 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                     content={emojiButtonTooltip.get(emoji)}
                     styles={reactionToolTipHostStyle()}
                     calloutProps={{ ...calloutProps }}
-                    role="listitem"
                   >
                     <DefaultButton
                       key={index}
@@ -164,15 +175,13 @@ export const ReactionButton = (props: ReactionButtonProps): JSX.Element => {
                       }}
                       className={classname}
                       styles={reactionItemButtonStyles}
-                      aria-label={emojiButtonTooltip.get(emoji)}
-                      aria-setsize={emojis.length}
-                      aria-posinset={index + 1}
+                      aria-label={`${emojiButtonTooltip.get(emoji)}, ${index + 1} of ${emojis.length}`}
                     ></DefaultButton>
                   </TooltipHost>
                 );
               })}
             </Stack>
-          </FocusZone>
+          </FocusTrapZone>
         </Callout>
       )}
       <div ref={reactionButtonCalloutRef}>
