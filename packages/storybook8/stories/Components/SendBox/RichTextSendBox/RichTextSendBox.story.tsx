@@ -14,7 +14,7 @@ const RichTextSendBoxStory = (args: {
   hasWarning: any;
   warningMessage: string | undefined;
 }): JSX.Element => {
-  const timeoutRef = React.useRef<NodeJS.Timeout>();
+  const timeoutRef = React.useRef<NodeJS.Timeout>(undefined);
   const delayForSendButton = 300;
   const [inlineImagesWithProgress, setInlineImagesWithProgress] = useState<
     AttachmentMetadataInProgress[] | undefined

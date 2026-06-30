@@ -5,7 +5,7 @@ import { SendBox as SendBoxComponent } from '@azure/communication-react';
 import React, { useEffect, useRef } from 'react';
 
 const SendBoxRender = (args): JSX.Element => {
-  const timeoutRef = useRef<NodeJS.Timeout>();
+  const timeoutRef = useRef<NodeJS.Timeout>(undefined);
   const delayForSendButton = 300;
 
   useEffect(() => {

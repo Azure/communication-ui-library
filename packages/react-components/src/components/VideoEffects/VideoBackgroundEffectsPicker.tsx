@@ -58,7 +58,7 @@ export interface _VideoBackgroundEffectsPickerProps {
    */
   componentRef?: React.RefObject<{
     focus: () => void;
-  }>;
+  } | null>;
 }
 
 /**

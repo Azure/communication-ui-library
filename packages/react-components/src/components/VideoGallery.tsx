@@ -788,7 +788,7 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
   // which should queue the announcement before any focus-shift induced announcements
   useLayoutEffect(() => {
     const previousParticipant = previousScreenShareParticipantRef.current;
-    
+
     if (screenShareParticipant && previousParticipant?.userId !== screenShareParticipant.userId) {
       // Screen share started (or switched to a different participant)
       const participantName = screenShareParticipant.displayName || strings.displayNamePlaceholder;
@@ -804,9 +804,15 @@ export const VideoGallery = (props: VideoGalleryProps): JSX.Element => {
       });
       toggleAnnouncerString(announcementMessage, 'assertive');
     }
-    
+
     previousScreenShareParticipantRef.current = screenShareParticipant;
-  }, [screenShareParticipant, strings.displayNamePlaceholder, strings.screenShareStartedAnnouncementAriaLabel, strings.screenShareStoppedAnnouncementAriaLabel, toggleAnnouncerString]);
+  }, [
+    screenShareParticipant,
+    strings.displayNamePlaceholder,
+    strings.screenShareStartedAnnouncementAriaLabel,
+    strings.screenShareStoppedAnnouncementAriaLabel,
+    toggleAnnouncerString
+  ]);
 
   const localScreenShareStreamComponent = (
     <LocalScreenShare

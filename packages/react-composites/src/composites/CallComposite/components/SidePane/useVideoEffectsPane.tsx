@@ -24,7 +24,7 @@ export const useVideoEffectsPane = (
   mobileView: boolean,
   latestErrors: ActiveErrorMessage[],
   onDismissError: (error: ActiveErrorMessage) => void,
-  cameraButtonRef?: React.RefObject<IButton>
+  cameraButtonRef?: React.RefObject<IButton | null>
 ): {
   openVideoEffectsPane: () => void;
   closeVideoEffectsPane: () => void;

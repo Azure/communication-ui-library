@@ -3,7 +3,8 @@
 
 import React, { useState, useCallback } from 'react';
 import { Text, useTheme, Stack } from '@fluentui/react';
-import { Rating, RatingSize } from '@fluentui/react';
+import { Rating } from '@fluentui/react';
+import type { RatingSize } from '@fluentui/react';
 import { _formatString, _pxToRem } from '@internal/acs-ui-common';
 import { helperTextStyle, ratingHelperTextStyle, ratingStyles, titleContainerClassName } from './StarSurvey.styles';
 import { _CallSurvey, _CallSurveyResponse } from '../SurveyTypes';
@@ -124,7 +125,7 @@ export const _StarSurvey = (props: _StarSurveyProps): JSX.Element => {
       </Stack>
       <Rating
         max={5}
-        size={RatingSize.Large}
+        size={1 as RatingSize}
         defaultRating={0}
         allowZeroStars
         rating={rating}

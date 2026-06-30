@@ -27,7 +27,7 @@ export const ScrollableHorizontalGallery = (props: {
     }
   }, [onFetchTilesToRender, horizontalGalleryElements?.length]);
 
-  const ref = useRef<HTMLDivElement>() as React.MutableRefObject<HTMLInputElement>;
+  const ref = useRef<HTMLDivElement>(null) as React.MutableRefObject<HTMLInputElement>;
   const { events: dragabbleEvents } = useDraggable(ref);
 
   return (

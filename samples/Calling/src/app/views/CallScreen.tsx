@@ -43,7 +43,7 @@ export interface CallScreenProps {
  */
 export const CallScreen = (props: CallScreenProps): JSX.Element => {
   const { token, userId, isTeamsIdentityCall } = props;
-  const callIdRef = useRef<string>();
+  const callIdRef = useRef<string>(undefined);
 
   const subscribeAdapterEvents = useCallback((adapter: CommonCallAdapter) => {
     adapter.on('error', (e) => {

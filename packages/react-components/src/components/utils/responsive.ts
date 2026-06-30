@@ -10,7 +10,7 @@ import { _convertRemToPx as convertRemToPx } from '@internal/acs-ui-common';
  * @param containerRef - Ref of a parent element whose width will be returned.
  * @internal
  */
-export const _useContainerWidth = (containerRef: RefObject<HTMLElement>): number | undefined => {
+export const _useContainerWidth = (containerRef: RefObject<HTMLElement | null>): number | undefined => {
   const [width, setWidth] = useState<number | undefined>(undefined);
 
   const observer = useRef(
@@ -47,7 +47,7 @@ export const _useContainerWidth = (containerRef: RefObject<HTMLElement>): number
  * @param containerRef - Ref of a parent element whose height will be returned.
  * @internal
  */
-export const _useContainerHeight = (containerRef: RefObject<HTMLElement>): number | undefined => {
+export const _useContainerHeight = (containerRef: RefObject<HTMLElement | null>): number | undefined => {
   const [height, setHeight] = useState<number | undefined>(undefined);
 
   const observer = useRef(

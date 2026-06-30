@@ -3,5 +3,5 @@
   "compilerOptions": {
     "noEmit": true
   },
-  "include": ["stories/**/*.snippet.tsx", "stories/**/*.snippet.ts"]
+  "include": ["stories/**/*.snippet.tsx", "stories/**/*.snippet.ts", "stories/react-jsx-global.d.ts"]
 }
