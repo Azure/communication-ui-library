@@ -8,10 +8,10 @@ pr: none
 
 resources:
   repositories:
-    - repository: M365GPT
+    - repository: IC3PT
       type: git
-      name: 1ESPipelineTemplates/M365GPT
-      ref: refs/tags/release
+      name: SCC/IC3PT
+      ref: refs/heads/main
 
 parameters:
   # Parameter to control whether to only pass strings to touchdown (false) or to also create a PR with changes (true)
@@ -21,7 +21,7 @@ parameters:
     default: false
 
 extends:
-  template: v1/M365.Official.PipelineTemplate.yml@M365GPT
+  template: IC3.Official.PipelineTemplate.yml@IC3PT
   parameters:
     pool:
       name: ess-1eshp-windows-latest
