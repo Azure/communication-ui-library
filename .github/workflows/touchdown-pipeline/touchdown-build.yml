@@ -8,9 +8,9 @@ pr: none
 
 resources:
   repositories:
-    - repository: 1esPipelines
+    - repository: M365GPT
       type: git
-      name: 1ESPipelineTemplates/1ESPipelineTemplates
+      name: 1ESPipelineTemplates/M365GPT
       ref: refs/tags/release
 
 parameters:
@@ -21,7 +21,7 @@ parameters:
     default: false
 
 extends:
-  template: v1/1ES.Official.PipelineTemplate.yml@1esPipelines
+  template: v1/M365.Official.PipelineTemplate.yml@M365GPT
   parameters:
     pool:
       name: ess-1eshp-windows-latest
