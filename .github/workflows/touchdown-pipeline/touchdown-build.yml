@@ -8,10 +8,10 @@ pr: none
 
 resources:
   repositories:
-    - repository: IC3PT
+    - repository: ic3Pipelines
       type: git
-      name: SCC/IC3PT
-      ref: refs/heads/main
+      name: ES/internal_build_ic3pt
+      ref: refs/tags/release
 
 parameters:
   # Parameter to control whether to only pass strings to touchdown (false) or to also create a PR with changes (true)
@@ -21,7 +21,7 @@ parameters:
     default: false
 
 extends:
-  template: IC3.Official.PipelineTemplate.yml@IC3PT
+  template: /v1/IC3.Official.PipelineTemplate.yml@ic3Pipelines
   parameters:
     pool:
       name: ess-1eshp-windows-latest
