@@ -604,6 +604,12 @@
       "message": "سننقلك إلى الغرفة المعينة خلال 5 ثوان.",
       "dismissButtonAriaLabel": "إغلاق"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Your breakout room has changed",
+      "message": "You've been assigned to a different breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "تم إغلاق الغرفة الفرعية الخاصة بك",
       "message": "سنعيدك إلى اجتماعك خلال 5 ثوان.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "أنت تشارك شاشتك",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "يتم الآن تحميل شاشة {participant}",
     "localScreenShareLoadingMessage": "تحميل الشاشة",
     "localVideoLabel": "أنت",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "لا يتوفر هاتف",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}، {city}",
     "meetingConferencePhoneInfoModalTollFree": "(رقم مجاني)",
-    "meetingConferencePhoneInfoModalToll": "(الرقم غير المجاني)"
+    "meetingConferencePhoneInfoModalToll": "(الرقم غير المجاني)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "إغلاق"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "مستخدم غير معروف",

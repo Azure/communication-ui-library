@@ -371,6 +371,7 @@
     "muteAllDialogContent": "這會將會議中您以外的所有人設為靜音。",
     "muteAllConfirmButtonLabel": "將所有人設為靜音",
     "muteAllCancelButtonLabel": "取消",
+    "closeButtonLabel": "關閉",
     "joinBreakoutRoomButtonLabel": "加入分組討論區",
     "returnFromBreakoutRoomButtonLabel": "離開分組討論區",
     "leaveBreakoutRoomAndMeetingButtonLabel": "離開會議",

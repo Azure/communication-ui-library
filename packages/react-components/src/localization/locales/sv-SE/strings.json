@@ -604,6 +604,12 @@
       "message": "Du flyttas till det tilldelade rummet om 5 sekunder.",
       "dismissButtonAriaLabel": "Stäng"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Your breakout room has changed",
+      "message": "You've been assigned to a different breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Grupprummet har stängts",
       "message": "Du flyttas tillbaka till mötet om 5 sekunder.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du delar din skärm",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "Läser in {participant}s skärm",
     "localScreenShareLoadingMessage": "Läser in skärmen",
     "localVideoLabel": "Du",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Ingen telefon är tillgänglig",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Avgiftsfritt)",
-    "meetingConferencePhoneInfoModalToll": "(Avgiftsbelagt)"
+    "meetingConferencePhoneInfoModalToll": "(Avgiftsbelagt)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Stäng"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Okänd användare",

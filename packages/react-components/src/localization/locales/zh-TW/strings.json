@@ -604,6 +604,12 @@
       "message": "我們將在 5 秒內將您移至指派的會議室。",
       "dismissButtonAriaLabel": "關閉"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Your breakout room has changed",
+      "message": "You've been assigned to a different breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "您的分組討論區已關閉",
       "message": "我們會在 5 秒後將您移回會議。",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "您現在正在分享螢幕畫面。",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "正在載入 {participant} 的螢幕畫面",
     "localScreenShareLoadingMessage": "正在載入您的畫面",
     "localVideoLabel": "您",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "沒有可用的電話",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(免付費電話)",
-    "meetingConferencePhoneInfoModalToll": "(付費)"
+    "meetingConferencePhoneInfoModalToll": "(付費)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "關閉"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "未知的使用者",

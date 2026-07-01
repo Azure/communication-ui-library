@@ -604,6 +604,12 @@
       "message": "Wir verschieben Sie in 5 Sekunden zu Ihrem zugewiesenen Raum.",
       "dismissButtonAriaLabel": "Schließen"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Your breakout room has changed",
+      "message": "You've been assigned to a different breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Ihr Gruppenraum wurde geschlossen.",
       "message": "Wir bringen Sie in 5 Sekunden zurück zu Ihrer Besprechung.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sie teilen Ihren Bildschirm",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "Der Bildschirm von {participant} wird geladen",
     "localScreenShareLoadingMessage": "Ihr Bildschirm wird geladen.",
     "localVideoLabel": "Sie",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Kein Telefon verfügbar",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Gebührenfrei)",
-    "meetingConferencePhoneInfoModalToll": "(Gebührenpflichtig)"
+    "meetingConferencePhoneInfoModalToll": "(Gebührenpflichtig)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Schließen"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Unbekannter Benutzer",

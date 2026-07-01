@@ -604,6 +604,12 @@
       "message": "Sizi 5 saniye içinde atanan odanıza taşıyacağız.",
       "dismissButtonAriaLabel": "Kapat"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Your breakout room has changed",
+      "message": "You've been assigned to a different breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Tartışma odanız kapatıldı",
       "message": "5 saniye içinde toplantınıza geri taşınacak.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Ekranınızı paylaşıyorsunuz.",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "{participant} adlı katılımcının ekranını yükleme",
     "localScreenShareLoadingMessage": "Ekranınız yükleniyor",
     "localVideoLabel": "Siz",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Kullanılabilir telefon yok",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Ücretsiz)",
-    "meetingConferencePhoneInfoModalToll": "(Ücretli)"
+    "meetingConferencePhoneInfoModalToll": "(Ücretli)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Kapat"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Bilinmeyen Kullanıcı",

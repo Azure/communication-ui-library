@@ -604,6 +604,12 @@
       "message": "Vamos movê-lo para a sala atribuída em 5 segundos.",
       "dismissButtonAriaLabel": "Fechar"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Your breakout room has changed",
+      "message": "You've been assigned to a different breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Sua sala para sessão de grupo foi fechada",
       "message": "Vamos movê-lo de volta para a reunião em 5 segundos.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Você está compartilhando sua tela",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "Carregando a tela do {participant}",
     "localScreenShareLoadingMessage": "Carregando sua tela",
     "localVideoLabel": "Você",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Nenhum telefone disponível",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Chamada gratuita)",
-    "meetingConferencePhoneInfoModalToll": "(Chamada tarifada)"
+    "meetingConferencePhoneInfoModalToll": "(Chamada tarifada)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Fechar"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Usuário Desconhecido",

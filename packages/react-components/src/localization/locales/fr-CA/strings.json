@@ -194,8 +194,8 @@
     "tooltipOffContent": "Présenter votre écran"
   },
   "raiseHandButton": {
-    "offLabel": "Augmenter",
-    "onLabel": "Inférieur",
+    "offLabel": "Lever",
+    "onLabel": "Baisser",
     "tooltipDisabledContent": "L'action lever la main est désactivée.",
     "tooltipOnContent": "Baisser la main",
     "tooltipOffContent": "Lever les mains"
@@ -604,6 +604,12 @@
       "message": "Nous allons vous déplacer vers la salle affectée dans 5 secondes.",
       "dismissButtonAriaLabel": "Fermer"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Your breakout room has changed",
+      "message": "You've been assigned to a different breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Votre salle pour petit groupe s’est fermée",
       "message": "Nous vous redirigerons vers votre réunion dans 5 secondes.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Vous partagez votre écran.",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "Chargement de l’écran de {participant}",
     "localScreenShareLoadingMessage": "Chargement de votre écran",
     "localVideoLabel": "Vous",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Aucun téléphone disponible",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(numéro gratuit)",
-    "meetingConferencePhoneInfoModalToll": "(numéro payant)"
+    "meetingConferencePhoneInfoModalToll": "(numéro payant)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Fermer"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Utilisateur(-trice) inconnu(e)",

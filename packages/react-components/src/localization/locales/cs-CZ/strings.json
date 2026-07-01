@@ -604,6 +604,12 @@
       "message": "Za 5 sekund vás přesuneme do přiřazené místnosti.",
       "dismissButtonAriaLabel": "Zavřít"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Your breakout room has changed",
+      "message": "You've been assigned to a different breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Vaše skupinová místnost byla uzavřena",
       "message": "Za 5 sekund vás přesuneme zpět na schůzku.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Sdílíte obrazovku",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "Načítání obrazovky {participant}",
     "localScreenShareLoadingMessage": "Načítá se obrazovka",
     "localVideoLabel": "Vy",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Není k dispozici žádný telefon.",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Bezplatné)",
-    "meetingConferencePhoneInfoModalToll": "(Placené)"
+    "meetingConferencePhoneInfoModalToll": "(Placené)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Zavřít"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Neznámý uživatel",

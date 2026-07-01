@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Detta stänger av ljudet för alla i mötet utom för dig.",
     "muteAllConfirmButtonLabel": "Stäng av ljudet för alla",
     "muteAllCancelButtonLabel": "Avbryt",
+    "closeButtonLabel": "Stäng",
     "joinBreakoutRoomButtonLabel": "Anslut till separat rum",
     "returnFromBreakoutRoomButtonLabel": "Lämna rum",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Lämna möte",

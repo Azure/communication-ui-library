@@ -604,6 +604,12 @@
       "message": "Vi flytter deg til det tilordnede rommet om fem sekunder.",
       "dismissButtonAriaLabel": "Lukk"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Your breakout room has changed",
+      "message": "You've been assigned to a different breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Grupperommet ditt er lukket",
       "message": "Vi flytter deg tilbake til møtet om fem sekunder.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Du deler skjermen",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "Laster inn skjermen til {participant}",
     "localScreenShareLoadingMessage": "Laster inn skjermen",
     "localVideoLabel": "Du",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Ingen telefon tilgjengelig",
     "meetingConferencePhoneInfoModalTollGeoData": "{city}, {country}",
     "meetingConferencePhoneInfoModalTollFree": "(gratis)",
-    "meetingConferencePhoneInfoModalToll": "(nummer med avgift)"
+    "meetingConferencePhoneInfoModalToll": "(nummer med avgift)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Lukk"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Ukjent bruker",

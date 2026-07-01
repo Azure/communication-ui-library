@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Spowoduje to wyciszenie wszystkich osób na spotkaniu oprócz Ciebie.",
     "muteAllConfirmButtonLabel": "Wycisz wszystkich",
     "muteAllCancelButtonLabel": "Anuluj",
+    "closeButtonLabel": "Zamknij",
     "joinBreakoutRoomButtonLabel": "Dołącz do osobnego pokoju",
     "returnFromBreakoutRoomButtonLabel": "Opuść pokój",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Opuść spotkanie",

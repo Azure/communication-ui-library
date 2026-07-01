@@ -604,6 +604,12 @@
       "message": "U wordt over 5 seconden naar de toegewezen ruimte verplaatst.",
       "dismissButtonAriaLabel": "Sluiten"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Your breakout room has changed",
+      "message": "You've been assigned to a different breakout room.",
+      "dismissButtonAriaLabel": "Close",
+      "primaryButtonLabel": "Join room"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Je aparte vergaderruimte is gesloten",
       "message": "U wordt over 5 seconden terug naar de vergadering verplaatst.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "U deelt uw scherm",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} is sharing their screen",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} stopped sharing their screen",
     "screenShareLoadingMessage": "Scherm van {participant} laden",
     "localScreenShareLoadingMessage": "Uw scherm laden",
     "localVideoLabel": "U",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Geen telefoon beschikbaar",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Gratis)",
-    "meetingConferencePhoneInfoModalToll": "(niet-gratis)"
+    "meetingConferencePhoneInfoModalToll": "(niet-gratis)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Sluiten"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Onbekende gebruiker",

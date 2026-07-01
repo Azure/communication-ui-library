@@ -371,6 +371,7 @@
     "muteAllDialogContent": "פעולה זו תשתיק את כל האנשים בפגישה חוץ ממך.",
     "muteAllConfirmButtonLabel": "השתק הכל",
     "muteAllCancelButtonLabel": "ביטול",
+    "closeButtonLabel": "סגירה",
     "joinBreakoutRoomButtonLabel": "הצטרף לחדר בריחה",
     "returnFromBreakoutRoomButtonLabel": "עזוב את החדר",
     "leaveBreakoutRoomAndMeetingButtonLabel": "עזוב פגישה",
