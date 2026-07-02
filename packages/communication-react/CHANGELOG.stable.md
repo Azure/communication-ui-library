@@ -1,8 +1,38 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Fri, 15 Aug 2025 21:08:46 GMT and should not be manually modified. -->
+<!-- This log was last generated on Thu, 02 Jul 2026 03:01:12 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.32.0](https://github.com/azure/communication-ui-library/tree/1.32.0)
+
+Thu, 02 Jul 2026 03:01:12 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.32.0-beta.1...1.32.0)
+
+### Bug Fixes
+- Fix bug where position info are not announced for reaction buttons ([PR #6008](https://github.com/azure/communication-ui-library/pull/6008) by 96077406+carocao-msft@users.noreply.github.com)
+- Arial label for close button, cancel and confirm button for prompt component ([PR #6014](https://github.com/azure/communication-ui-library/pull/6014) by 96077406+carocao-msft@users.noreply.github.com)
+- Fixed survey accessibility bugs ([PR #5996](https://github.com/azure/communication-ui-library/pull/5996) by 96077406+carocao-msft@users.noreply.github.com)
+- Fixed bug when RTT is on, captions banner aria label is still showing Live Captions ([PR #5997](https://github.com/azure/communication-ui-library/pull/5997) by 96077406+carocao-msft@users.noreply.github.com)
+- Fixing contrast on focus captions ([PR #6025](https://github.com/azure/communication-ui-library/pull/6025) by vriosrada@microsoft.com)
+- Change spotlight arial label to match button label ([PR #6009](https://github.com/azure/communication-ui-library/pull/6009) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix re-focus to modal when "Close" is actioned in Ctrl + Alt + Space menu ([PR #6023](https://github.com/azure/communication-ui-library/pull/6023) by miguelgamis@microsoft.com)
+- Update aria-label for close button in phone pane to reflect the control behavior ([PR #5999](https://github.com/azure/communication-ui-library/pull/5999) by dmceachern@microsoft.com)
+- Fix ACCS bug where side pane without correct role is getting arial model true ([PR #6013](https://github.com/azure/communication-ui-library/pull/6013) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix return to main meeting from breakout room. Fix breakout room notifications after joining breakout room. ([PR #6037](https://github.com/azure/communication-ui-library/pull/6037) by miguelgamis@microsoft.com)
+- Ensure survey page is 400%/320px Reflow compliant and add aria-level attribute to survey title for improved accessibility ([PR #6021](https://github.com/azure/communication-ui-library/pull/6021) by miguelgamis@microsoft.com)
+- Fix background color of the survey on high percentage zooms and smaller screens ([PR #5993](https://github.com/azure/communication-ui-library/pull/5993) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix issue where next tab after opening people pane is not going into pane on next tab control ([PR #6029](https://github.com/azure/communication-ui-library/pull/6029) by dmceachern@microsoft.com)
+- Add prompt notification for assigned breakout room changes when auto move is false ([PR #6048](https://github.com/azure/communication-ui-library/pull/6048) by miguelgamis@microsoft.com)
+- Fix bug where 'in this call' text is incorrectly wrapped inside h2 tag ([PR #6010](https://github.com/azure/communication-ui-library/pull/6010) by 96077406+carocao-msft@users.noreply.github.com)
+- Fixed accessibility bugs on Config screen ([PR #6000](https://github.com/azure/communication-ui-library/pull/6000) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix title potentially overlapping with close button on prompt component ([PR #6017](https://github.com/azure/communication-ui-library/pull/6017) by miguelgamis@microsoft.com)
+-  Ensure elements with an ARIA role that require child roles contain them  ([PR #6011](https://github.com/azure/communication-ui-library/pull/6011) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix erroneous role=dialog div in the Effects pane tree on the Configuration Page of Calling composites ([PR #6006](https://github.com/azure/communication-ui-library/pull/6006) by 2684369+JamesBurnside@users.noreply.github.com)
+- Fix read receipts so a sender's own read receipt does not mark their sent message as seen ([PR #6060](https://github.com/azure/communication-ui-library/pull/6060) by pkanukollu@microsoft.com)
+- Add screen reader announcements when a remote participant starts or stops sharing their screen ([PR #6047](https://github.com/azure/communication-ui-library/pull/6047) by miguelgamis@microsoft.com)
+- Add aria-hidden attribute to LayerHost so that Voice Access can find elements behind it ([PR #6022](https://github.com/azure/communication-ui-library/pull/6022) by miguelgamis@microsoft.com)
+
 
 ## [1.31.0](https://github.com/azure/communication-ui-library/tree/1.31.0)
 

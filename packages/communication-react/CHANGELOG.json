@@ -2,6 +2,193 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Thu, 02 Jul 2026 03:01:12 GMT",
+      "version": "1.32.0",
+      "tag": "@azure/communication-react_v1.32.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "a46c7ccf64cc2df99db28c251fb222248f1f65d1",
+            "area": "fix",
+            "workstream": "Reactions",
+            "comment": "Fix bug where position info are not announced for reaction buttons"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2605a25b95e89292fee36bcae209804fef26de02",
+            "area": "fix",
+            "workstream": "Prompt",
+            "comment": "Arial label for close button, cancel and confirm button for prompt component"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "438806365d35fd4f1c54065ef779e5a68d13ef46",
+            "area": "fix",
+            "workstream": "Survey",
+            "comment": "Fixed survey accessibility bugs"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "0fef847d71b10795c27682242dae59b7018167ef",
+            "area": "fix",
+            "workstream": "Captions",
+            "comment": "Fixed bug when RTT is on, captions banner aria label is still showing Live Captions"
+          },
+          {
+            "author": "vriosrada@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "4da25a5e293ac9fae79fd7da0fab377d549081fe",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fixing contrast on focus captions"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "6a582ce9e7c861042b90980a78a1918dca5d6a37",
+            "area": "fix",
+            "workstream": "Spotlight",
+            "comment": "Change spotlight arial label to match button label"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "6340f1bca8544c20e213e1e8af56286b6e7ab082",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix re-focus to modal when \"Close\" is actioned in Ctrl + Alt + Space menu"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "728f53443ebbdac5b34f15ebe667eb8dc4d480ce",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Update aria-label for close button in phone pane to reflect the control behavior"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "524310ff71c0a655952c42dfa5afb14609c5d382",
+            "area": "fix",
+            "workstream": "sidepane",
+            "comment": "Fix ACCS bug where side pane without correct role is getting arial model true"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "5ab3a4daf2db5b046bcbcce5d7c587f1aac5da50",
+            "area": "fix",
+            "workstream": "Breakout rooms",
+            "comment": "Fix return to main meeting from breakout room. Fix breakout room notifications after joining breakout room."
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "32e8db7667d049e498b2ad36259d522fcd4d65c7",
+            "area": "fix",
+            "workstream": "End-call survey",
+            "comment": "Ensure survey page is 400%/320px Reflow compliant and add aria-level attribute to survey title for improved accessibility"
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "5ac1770778ae83fdaa299cdfc936ed9f01604792",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix background color of the survey on high percentage zooms and smaller screens"
+          },
+          {
+            "author": "dmceachern@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "e644b59f54160553e0c60e79faaada14356e7f72",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix issue where next tab after opening people pane is not going into pane on next tab control"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a36c0911cf7a6252f5b5b05a65a96000b65a0aba",
+            "area": "fix",
+            "workstream": "Breakout rooms",
+            "comment": "Add prompt notification for assigned breakout room changes when auto move is false"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "2f7f3094b3a2cb141b49bbecb345aeadff82561c",
+            "area": "fix",
+            "workstream": "Participant container",
+            "comment": "Fix bug where 'in this call' text is incorrectly wrapped inside h2 tag"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "712acd7892c95aae925d29509c3012ad00a262fa",
+            "area": "fix",
+            "workstream": "Calling Page",
+            "comment": "Fixed accessibility bugs on Config screen"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "bc9bed820c58e3927f923772f17ac690c7b88036",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Fix title potentially overlapping with close button on prompt component"
+          },
+          {
+            "author": "96077406+carocao-msft@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "81124310112d8c4fc2d9b0734b9602ac8d5d8099",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": " Ensure elements with an ARIA role that require child roles contain them "
+          },
+          {
+            "author": "2684369+JamesBurnside@users.noreply.github.com",
+            "package": "@azure/communication-react",
+            "commit": "c38f874dbfcc33189e0c0a81386d4038414a6532",
+            "area": "fix",
+            "workstream": "",
+            "comment": "Fix erroneous role=dialog div in the Effects pane tree on the Configuration Page of Calling composites"
+          },
+          {
+            "author": "pkanukollu@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "a7863f388f3f522082e58c0ec977a931cc44305b",
+            "area": "fix",
+            "workstream": "Chat",
+            "comment": "Fix read receipts so a sender's own read receipt does not mark their sent message as seen"
+          },
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "b5000801bafc06aa316d91a0ae5f48c10850c034",
+            "area": "fix",
+            "workstream": "Accessibility",
+            "comment": "Add screen reader announcements when a remote participant starts or stops sharing their screen"
+          }
+        ],
+        "prerelease": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "06d583504ce811dfd0179a4d13bfaa28f233e192",
+            "area": "fix",
+            "workstream": "A11y",
+            "comment": "Add aria-hidden attribute to LayerHost so that Voice Access can find elements behind it"
+          }
+        ]
+      }
+    },
+    {
       "date": "Tue, 14 Oct 2025 22:25:40 GMT",
       "version": "1.32.0-beta.1",
       "tag": "@azure/communication-react_v1.32.0-beta.1",
