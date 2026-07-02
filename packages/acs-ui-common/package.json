@@ -30,7 +30,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@azure/communication-common": "^2.3.2-beta.1 || ^2.4.0",
+    "@azure/communication-common": "^2.4.0",
     "@azure/logger": "^1.0.4"
   },
   "peerDependencies": {
