@@ -7,7 +7,7 @@
 ## [1.32.0](https://github.com/azure/communication-ui-library/tree/1.32.0)
 
 Thu, 02 Jul 2026 03:01:12 GMT 
-[Compare changes](https://github.com/azure/communication-ui-library/compare/1.32.0-beta.1...1.32.0)
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.31.0...1.32.0)
 
 ### Bug Fixes
 - Fix bug where position info are not announced for reaction buttons ([PR #6008](https://github.com/azure/communication-ui-library/pull/6008) by 96077406+carocao-msft@users.noreply.github.com)
@@ -25,9 +25,9 @@ Thu, 02 Jul 2026 03:01:12 GMT
 - Fix issue where next tab after opening people pane is not going into pane on next tab control ([PR #6029](https://github.com/azure/communication-ui-library/pull/6029) by dmceachern@microsoft.com)
 - Add prompt notification for assigned breakout room changes when auto move is false ([PR #6048](https://github.com/azure/communication-ui-library/pull/6048) by miguelgamis@microsoft.com)
 - Fix bug where 'in this call' text is incorrectly wrapped inside h2 tag ([PR #6010](https://github.com/azure/communication-ui-library/pull/6010) by 96077406+carocao-msft@users.noreply.github.com)
-- Fixed accessibility bugs on Config screen ([PR #6000](https://github.com/azure/communication-ui-library/pull/6000) by 96077406+carocao-msft@users.noreply.github.com)
+- Fix accessibility bugs on Config screen ([PR #6000](https://github.com/azure/communication-ui-library/pull/6000) by 96077406+carocao-msft@users.noreply.github.com)
 - Fix title potentially overlapping with close button on prompt component ([PR #6017](https://github.com/azure/communication-ui-library/pull/6017) by miguelgamis@microsoft.com)
--  Ensure elements with an ARIA role that require child roles contain them  ([PR #6011](https://github.com/azure/communication-ui-library/pull/6011) by 96077406+carocao-msft@users.noreply.github.com)
+- Ensure elements with an ARIA role that require child roles contain them ([PR #6011](https://github.com/azure/communication-ui-library/pull/6011) by 96077406+carocao-msft@users.noreply.github.com)
 - Fix erroneous role=dialog div in the Effects pane tree on the Configuration Page of Calling composites ([PR #6006](https://github.com/azure/communication-ui-library/pull/6006) by 2684369+JamesBurnside@users.noreply.github.com)
 - Fix read receipts so a sender's own read receipt does not mark their sent message as seen ([PR #6060](https://github.com/azure/communication-ui-library/pull/6060) by pkanukollu@microsoft.com)
 - Add screen reader announcements when a remote participant starts or stops sharing their screen ([PR #6047](https://github.com/azure/communication-ui-library/pull/6047) by miguelgamis@microsoft.com)
