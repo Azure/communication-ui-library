@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Cette opération va désactiver le son de tous les autres participants à la réunion et pas le vôtre.",
     "muteAllConfirmButtonLabel": "Désactiver tous les micros",
     "muteAllCancelButtonLabel": "Annuler",
+    "closeButtonLabel": "Fermer",
     "joinBreakoutRoomButtonLabel": "Rejoindre la salle pour petit groupe",
     "returnFromBreakoutRoomButtonLabel": "Quitter la salle",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Quitter la réunion",

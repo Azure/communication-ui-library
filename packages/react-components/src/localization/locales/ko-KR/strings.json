@@ -604,6 +604,12 @@
       "message": "5초 후에 할당된 채팅방으로 이동합니다.",
       "dismissButtonAriaLabel": "닫기"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "소규모 회의실이 변경되었습니다.",
+      "message": "다른 소규모 회의실에 할당되었습니다.",
+      "dismissButtonAriaLabel": "닫기",
+      "primaryButtonLabel": "소회의실 참가"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "소규모 회의실 종료됨",
       "message": "5초 후에 모임으로 돌아갑니다.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "화면을 공유 중입니다.",
+    "screenShareStartedAnnouncementAriaLabel": "{participant}님이 화면을 공유하고 있습니다.",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant}님이 화면 공유를 중지했습니다.",
     "screenShareLoadingMessage": "{participant} 님의 화면 로드 중",
     "localScreenShareLoadingMessage": "화면 로드 중",
     "localVideoLabel": "나",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "사용할 수 있는 전화 없음",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(무료)",
-    "meetingConferencePhoneInfoModalToll": "(유료)"
+    "meetingConferencePhoneInfoModalToll": "(유료)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "닫기"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "알 수 없는 사용자",

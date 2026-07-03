@@ -604,6 +604,12 @@
       "message": "Verrai spostato nella stanza assegnata tra 5 secondi.",
       "dismissButtonAriaLabel": "Chiudi"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "La stanza di lavoro è cambiata",
+      "message": "Ti è stata assegnata una stanza di lavoro diversa.",
+      "dismissButtonAriaLabel": "Chiudi",
+      "primaryButtonLabel": "Accedi alla stanza"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Il gruppo di lavoro è chiuso",
       "message": "Ti reinsegneremo alla riunione tra 5 secondi.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Stai condividendo lo schermo",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} sta condividendo il sul schermo",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} ha arrestato la condivisione del suo schermo",
     "screenShareLoadingMessage": "Caricamento dello schermo di {participant}",
     "localScreenShareLoadingMessage": "Caricamento della schermata in corso...",
     "localVideoLabel": "Tu",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Nessun telefono disponibile",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Numero verde)",
-    "meetingConferencePhoneInfoModalToll": "(Numero a tariffa)"
+    "meetingConferencePhoneInfoModalToll": "(Numero a tariffa)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Chiudi"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Utente sconosciuto",

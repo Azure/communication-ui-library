@@ -604,6 +604,12 @@
       "message": "Мы переместим вас в назначенную комнату через 5 секунд.",
       "dismissButtonAriaLabel": "Закрыть"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Ваша переговорная комната изменилась",
+      "message": "Вы назначены в другую переговорную комнату.",
+      "dismissButtonAriaLabel": "Закрыть",
+      "primaryButtonLabel": "Присоединиться к комнате"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Ваша переговорная комната закрыта",
       "message": "Мы перенастроим вас обратно на собрание через 5 секунд.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Вы демонстрируете свой экран",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} демонстрирует свой экран",
+    "screenShareStoppedAnnouncementAriaLabel": "Пользователь {participant} прекратил демонстрацию своего экрана",
     "screenShareLoadingMessage": "Загрузка экрана пользователя {participant}",
     "localScreenShareLoadingMessage": "Загрузка экрана",
     "localVideoLabel": "Вы",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Нет доступных телефонов",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(бесплатный)",
-    "meetingConferencePhoneInfoModalToll": "(платный)"
+    "meetingConferencePhoneInfoModalToll": "(платный)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Закрыть"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Неизвестный пользователь",

@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Bydd hyn yn tewi pawb yn y cyfarfod ond chi.",
     "muteAllConfirmButtonLabel": "Tewi pawb",
     "muteAllCancelButtonLabel": "Canslo",
+    "closeButtonLabel": "Cau",
     "joinBreakoutRoomButtonLabel": "Ymuno â'r cyfarfod ymylol",
     "returnFromBreakoutRoomButtonLabel": "Gadael yr ystafell",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Gadael y cyfarfod",

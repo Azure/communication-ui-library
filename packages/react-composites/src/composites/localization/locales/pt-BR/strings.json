@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Isso ativará o mudo para todas as pessoas na reunião, exceto para você.",
     "muteAllConfirmButtonLabel": "Ativar mudo de todos",
     "muteAllCancelButtonLabel": "Cancelar",
+    "closeButtonLabel": "Fechar",
     "joinBreakoutRoomButtonLabel": "Ingressar na sala da sessão de grupo",
     "returnFromBreakoutRoomButtonLabel": "Sair da sala",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Sair da reunião",

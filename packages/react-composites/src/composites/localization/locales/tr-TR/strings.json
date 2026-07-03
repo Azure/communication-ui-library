@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Bu, toplantıda sizin dışınızdaki herkesi sessize alır.",
     "muteAllConfirmButtonLabel": "Tümünü sessize al",
     "muteAllCancelButtonLabel": "İptal",
+    "closeButtonLabel": "Kapat",
     "joinBreakoutRoomButtonLabel": "Tartışma odasına katıl",
     "returnFromBreakoutRoomButtonLabel": "Odadan ayrıl",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Toplantıdan ayrıl",
