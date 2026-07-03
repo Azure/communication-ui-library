@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Esto silenciará a todos los participantes de la reunión, excepto a ti.",
     "muteAllConfirmButtonLabel": "Silenciar todo",
     "muteAllCancelButtonLabel": "Cancelar",
+    "closeButtonLabel": "Cerrar",
     "joinBreakoutRoomButtonLabel": "Únete a la sala para sesión de subgrupo",
     "returnFromBreakoutRoomButtonLabel": "Salir de la sala",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Salir de la reunión",

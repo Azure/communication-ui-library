@@ -604,6 +604,12 @@
       "message": "5 秒後に、割り当てられた会議室に移動します。",
       "dismissButtonAriaLabel": "閉じる"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "ブレークアウト ルームが変更されました",
+      "message": "別のブレークアウト ルームに割り当てられています。",
+      "dismissButtonAriaLabel": "閉じる",
+      "primaryButtonLabel": "ルームに参加"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "ブレークアウト ルームが終了しました",
       "message": "5 秒後に会議に戻ります。",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "画面を共有しています",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} さんが画面を共有しています",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} さんが画面の共有を停止しました",
     "screenShareLoadingMessage": "{participant} の画面を読み込んでいます",
     "localScreenShareLoadingMessage": "画面を読み込んでいます",
     "localVideoLabel": "自分",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "利用可能な電話がありません",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}、{city}",
     "meetingConferencePhoneInfoModalTollFree": "(無料電話番号)",
-    "meetingConferencePhoneInfoModalToll": "(有料電話番号)"
+    "meetingConferencePhoneInfoModalToll": "(有料電話番号)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "閉じる"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "不明なユーザー",

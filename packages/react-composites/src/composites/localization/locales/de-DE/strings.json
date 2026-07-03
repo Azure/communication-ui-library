@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Hierdurch werden alle in der Besprechung stummgeschaltet, außer Ihnen.",
     "muteAllConfirmButtonLabel": "Alle stummschalten",
     "muteAllCancelButtonLabel": "Abbrechen",
+    "closeButtonLabel": "Schließen",
     "joinBreakoutRoomButtonLabel": "Breakout-Room beitreten",
     "returnFromBreakoutRoomButtonLabel": "Raum verlassen",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Besprechung verlassen",

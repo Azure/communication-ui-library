@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Tämä toiminto mykistää kaikki muut kokouksen osallistujat paitsi sinut.",
     "muteAllConfirmButtonLabel": "Mykistä kaikki",
     "muteAllCancelButtonLabel": "Peruuta",
+    "closeButtonLabel": "Sulje",
     "joinBreakoutRoomButtonLabel": "Liity pienryhmätilaan",
     "returnFromBreakoutRoomButtonLabel": "Poistu kokoustilasta",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Poistu kokouksesta",

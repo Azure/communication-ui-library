@@ -604,6 +604,12 @@
       "message": "נעביר אותך לחדר שהוקצה לך תוך 5 שניות.",
       "dismissButtonAriaLabel": "סגור"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "פיצול החדרים שלך השתנה",
+      "message": "הועברת לפיצול חדרים אחר.",
+      "dismissButtonAriaLabel": "סגירה",
+      "primaryButtonLabel": "הצטרפות לחדר"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "פיצול החדרים שלך נסגר",
       "message": "נעביר אותך בחזרה לפגישה שלך בעוד 5 שניות.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "אתה משתף את המסך שלך",
+    "screenShareStartedAnnouncementAriaLabel": "‏{participant} משתף/ת את המסך",
+    "screenShareStoppedAnnouncementAriaLabel": "‏{participant} הפסיק/ה לשתף את המסך",
     "screenShareLoadingMessage": "טוען את המסך של {participant}",
     "localScreenShareLoadingMessage": "טוען את המסך שלך",
     "localVideoLabel": "אתה",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "אין טלפון זמין",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(שיחת חינם)",
-    "meetingConferencePhoneInfoModalToll": "(בתשלום)"
+    "meetingConferencePhoneInfoModalToll": "(בתשלום)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "סגירה"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "משתמש לא ידוע",
