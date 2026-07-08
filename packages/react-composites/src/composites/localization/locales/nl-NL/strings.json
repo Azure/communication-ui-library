@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Hiermee wordt iedereen in de vergadering gedempt, behalve u.",
     "muteAllConfirmButtonLabel": "Allen dempen",
     "muteAllCancelButtonLabel": "Annuleren",
+    "closeButtonLabel": "Sluiten",
     "joinBreakoutRoomButtonLabel": "Deelnemen aan aparte vergaderruimte",
     "returnFromBreakoutRoomButtonLabel": "Vergaderruimte verlaten",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Vergadering verlaten",

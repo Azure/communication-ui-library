@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Dette demper alle i møtet, bortsett fra deg selv.",
     "muteAllConfirmButtonLabel": "Demp alle",
     "muteAllCancelButtonLabel": "Avbryt",
+    "closeButtonLabel": "Lukk",
     "joinBreakoutRoomButtonLabel": "Bli med i grupperommet",
     "returnFromBreakoutRoomButtonLabel": "Forlat rom",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Forlat møte",

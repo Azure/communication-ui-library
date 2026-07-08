@@ -604,6 +604,12 @@
       "message": "我们将在 5 秒后将你移动到你分配的聊天室。",
       "dismissButtonAriaLabel": "关闭"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "你的分组讨论室已更改",
+      "message": "已将你分配到其他分组讨论室。",
+      "dismissButtonAriaLabel": "关闭",
+      "primaryButtonLabel": "加入分组讨论室"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "你的分组讨论室已关闭",
       "message": "我们将在 5 秒后将你移回会议。",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "你正在共享你的屏幕",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} 正在共享屏幕",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} 已停止共享屏幕",
     "screenShareLoadingMessage": "正在加载 {participant} 的屏幕",
     "localScreenShareLoadingMessage": "正在加载屏幕",
     "localVideoLabel": "你",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "没有可用的电话",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}，{city}",
     "meetingConferencePhoneInfoModalTollFree": "(免费电话)",
-    "meetingConferencePhoneInfoModalToll": "(收费电话)"
+    "meetingConferencePhoneInfoModalToll": "(收费电话)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "关闭"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "未知用户",
