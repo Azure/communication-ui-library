@@ -39,7 +39,7 @@ type InputBoxComponentProps = {
   id?: string;
   textValue: string; // This could be plain text or HTML.
   onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
-  textFieldRef?: React.RefObject<ITextField>;
+  textFieldRef?: React.RefObject<ITextField | null>;
   inputClassName?: string;
   placeholderText?: string;
   supportNewline?: boolean;

@@ -23,7 +23,7 @@ export const usePeoplePane = (props: {
   onFetchAvatarPersonaData?: AvatarPersonaDataCallback;
   onFetchParticipantMenuItems?: ParticipantMenuItemsCallback;
   mobileView?: boolean;
-  peopleButtonRef?: RefObject<IButton>;
+  peopleButtonRef?: RefObject<IButton | null>;
   setParticipantActioned?: (userId: string) => void;
   spotlightedParticipantUserIds?: string[];
   onStartLocalSpotlight?: () => Promise<void>;
@@ -47,7 +47,7 @@ export const usePeoplePane = (props: {
   onForbidOthersVideo?: () => Promise<void>;
   onPermitOthersVideo?: () => Promise<void>;
   meetingMediaAccess?: MediaAccess;
-  sidePaneDismissButtonRef?: RefObject<IButton>;
+  sidePaneDismissButtonRef?: RefObject<IButton | null>;
   chatButtonPresent?: boolean;
 }): {
   openPeoplePane: () => void;

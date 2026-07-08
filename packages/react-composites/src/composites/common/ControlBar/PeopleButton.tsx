@@ -13,7 +13,7 @@ const icon = (): JSX.Element => <CallCompositeIcon iconName={'ControlBarPeopleBu
  * props for the PeopleButton component
  */
 export interface PeopleButtonProps extends ControlBarButtonProps {
-  peoplePaneDismissButtonRef?: RefObject<IButton>;
+  peoplePaneDismissButtonRef?: RefObject<IButton | null>;
   chatButtonPresent?: boolean;
 }
 
@@ -39,9 +39,9 @@ export const PeopleButton = (props: PeopleButtonProps): JSX.Element => {
 
   const handleTab = useCallback(
     (event: React.KeyboardEvent<HTMLElement>) => {
-      if((event.key === "Tab" || event.code === "Tab" && buttonOpen) && !chatButtonPresent) {
+      if ((event.key === 'Tab' || (event.code === 'Tab' && buttonOpen)) && !chatButtonPresent) {
         event.preventDefault();
-        if(peoplePaneDismissButtonRef?.current) {
+        if (peoplePaneDismissButtonRef?.current) {
           peoplePaneDismissButtonRef.current.focus();
         }
         return;

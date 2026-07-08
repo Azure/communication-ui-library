@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.
 
-import React, { ReactChild } from 'react';
+import React, { ReactElement } from 'react';
 import { submitWithKeyboard } from '../utils/keyboardNavigation';
 import {
   PictureInPictureInPicturePrimaryTile,
@@ -60,8 +60,8 @@ export const _PictureInPictureInPicture = (props: _PictureInPictureInPictureProp
  * This governs positioning and floating of the secondary PiP.
  */
 const PictureInPictureInPictureContainer = (props: {
-  primaryView: ReactChild;
-  secondaryView?: ReactChild;
+  primaryView: ReactElement | number | string;
+  secondaryView?: ReactElement | number | string;
   onClick?: () => void;
   ariaLabel: string;
 }): JSX.Element => {

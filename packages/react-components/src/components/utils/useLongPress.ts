@@ -21,7 +21,7 @@ export default function useLongPress(props: {
   onTouchMove: () => void;
 } {
   const { onClick, onLongPress, touchEventsOnly = false } = props;
-  const timerRef = useRef<ReturnType<typeof setTimeout>>();
+  const timerRef = useRef<ReturnType<typeof setTimeout>>(undefined);
   const [isLongPress, setIsLongPress] = useState(false);
   const [action, setAction] = useState(false);
 

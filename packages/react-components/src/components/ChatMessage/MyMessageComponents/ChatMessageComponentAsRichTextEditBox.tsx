@@ -193,7 +193,7 @@ export const ChatMessageComponentAsRichTextEditBox = (
       strings.editBoxTextLimit,
       strings.editBoxEmptyWarningText,
       /* @conditional-compile-remove(rich-text-editor-image-upload) */ contentValueWithInlineImagesOverflow
-    )
+    );
   }, [
     messageState,
     strings.editBoxTextLimit,

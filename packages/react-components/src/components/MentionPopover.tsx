@@ -38,7 +38,7 @@ export interface _MentionPopoverProps {
   /**
    * Element to anchor the popover to.
    */
-  target: React.RefObject<Element>;
+  target: React.RefObject<Element | null>;
   /**
    * When rendering the popover, where to position it relative to the target.
    */
@@ -170,7 +170,7 @@ export const _MentionPopover = (props: _MentionPopoverProps): JSX.Element => {
   /* @conditional-compile-remove(mention) */
   const ids = useIdentifiers();
   const localeStrings = useLocale().strings;
-  const popoverRef = useRef() as React.MutableRefObject<HTMLDivElement>;
+  const popoverRef = useRef<HTMLDivElement>(null) as React.MutableRefObject<HTMLDivElement>;
   const suggestionsListRef = useRef<HTMLDivElement>(null);
 
   const [position, setPosition] = useState<Position | undefined>();

@@ -40,7 +40,7 @@ export interface TextFieldWithMentionProps {
   onChange: (event?: FormEvent<HTMLInputElement | HTMLTextAreaElement>, newValue?: string) => void;
   onKeyDown?: (ev: React.KeyboardEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   onEnterKeyDown?: () => void;
-  textFieldRef?: React.RefObject<ITextField>;
+  textFieldRef?: React.RefObject<ITextField | null>;
   supportNewline?: boolean;
   mentionLookupOptions?: MentionLookupOptions;
 }

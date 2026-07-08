@@ -39,7 +39,7 @@ export const VideoEffectsPaneContent = (props: {
   activeVideoEffectChange: (effect: ActiveVideoEffect) => void;
   updateFocusHandle: React.RefObject<{
     focus: () => void;
-  }>;
+  } | null>;
   backgroundImages: VideoBackgroundImage[] | undefined;
 }): JSX.Element => {
   const { onDismissError, activeVideoEffectError, activeVideoEffectChange } = props;
@@ -158,7 +158,7 @@ const VideoEffectsPaneTrampoline = (
   onDismissError: (error: ActiveErrorMessage) => void,
   updateFocusHandle: React.RefObject<{
     focus: () => void;
-  }>,
+  } | null>,
   activeVideoEffectError?: ActiveErrorMessage,
   selectableVideoEffects?: _VideoEffectsItemProps[],
   onEffectChange?: (effectKey: string) => Promise<void>

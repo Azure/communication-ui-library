@@ -266,6 +266,53 @@ describe('errors should be reported correctly from DeviceManger when', () => {
   });
 });
 
+describe('device manager isSpeakerSelectionAvailable error handling', () => {
+  let consoleWarnSpy: jest.SpyInstance;
+
+  beforeEach(() => {
+    consoleWarnSpy = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+  });
+
+  afterEach(() => {
+    consoleWarnSpy.mockRestore();
+  });
+
+  test('returns false through the proxy when the SDK getter throws', async () => {
+    const base = createMockDeviceManagerWithMicrophones([microphoneWithName('mic')]);
+    const manager = { ...base } as MockDeviceManager;
+    Object.defineProperty(manager, 'isSpeakerSelectionAvailable', {
+      get(): boolean {
+        throw new Error('injected SDK error');
+      }
+    });
+    const client = createStatefulCallClientWithDeviceManager(manager);
+    const proxied = await client.getDeviceManager();
+
+    expect(proxied.isSpeakerSelectionAvailable).toBe(false);
+    expect(consoleWarnSpy).toHaveBeenCalled();
+  });
+
+  test('audioDevicesUpdated does not throw when the SDK getter throws', async () => {
+    const base = createMockDeviceManagerWithSpeakers([speakerWithName('speaker')]);
+    const manager = {
+      ...base,
+      async getMicrophones(): Promise<AudioDeviceInfo[]> {
+        return [];
+      }
+    } as MockDeviceManager;
+    Object.defineProperty(manager, 'isSpeakerSelectionAvailable', {
+      get(): boolean {
+        throw new Error('injected SDK error');
+      }
+    });
+    const client = createStatefulCallClientWithDeviceManager(manager);
+    await client.getDeviceManager();
+
+    expect(() => manager.emit('audioDevicesUpdated', {})).not.toThrow();
+    expect(await waitWithBreakCondition(() => consoleWarnSpy.mock.calls.length > 0)).toBe(true);
+  });
+});
+
 const createStatefulCallClientWithDeviceManager = (deviceManager: MockDeviceManager): StatefulCallClient => {
   const agent = createMockCallAgent('defaultDisplayName');
   return createStatefulCallClientWithDeps(

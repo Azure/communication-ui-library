@@ -27,9 +27,9 @@
     "@azure/communication-common": "^2.3.2-beta.1 || ^2.4.0",
     "@azure/communication-calling": "1.41.1-beta.1 || ^1.40.1",
     "@azure/communication-chat": "1.6.0-beta.7 || ^1.6.0",
-    "@fluentui/react": "^8.123.0",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "@fluentui/react": "^8.125.6",
+    "react": "19.2.6",
+    "react-dom": "19.2.6",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
@@ -38,8 +38,8 @@
     "@playwright/test": "~1.55.1",
     "@types/copy-webpack-plugin": "^6.4.0",
     "@types/node": "^22.15.18",
-    "@types/react": "18.3.12",
-    "@types/react-dom": "18.3.1",
+    "@types/react": "19.2.15",
+    "@types/react-dom": "19.2.3",
     "babel-loader": "8.1.0",
     "concurrently": "^5.3.0",
     "copy-webpack-plugin": "^11.0.0",

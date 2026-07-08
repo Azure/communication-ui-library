@@ -8,7 +8,7 @@ import Announcer, { AnnouncerMessageBag, EMPTY_MESSAGE } from './Announcer';
 import AnnouncerContext from './AnnouncerContext';
 
 /** @private */
-const LiveAnnouncer = (props: { children: React.ReactChild }): JSX.Element => {
+const LiveAnnouncer = (props: { children: React.ReactElement | number | string }): JSX.Element => {
   const [politeMessage, setPoliteMessage] = React.useState<AnnouncerMessageBag>(EMPTY_MESSAGE);
   const [assertiveMessage, setAssertiveMessage] = React.useState<AnnouncerMessageBag>(EMPTY_MESSAGE);
 
