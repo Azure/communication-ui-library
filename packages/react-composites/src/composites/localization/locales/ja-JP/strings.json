@@ -371,6 +371,7 @@
     "muteAllDialogContent": "会議に参加している自分以外の全員がミュートになります。",
     "muteAllConfirmButtonLabel": "全員をミュート",
     "muteAllCancelButtonLabel": "取り消す",
+    "closeButtonLabel": "閉じる",
     "joinBreakoutRoomButtonLabel": "ブレークアウト ルームに参加",
     "returnFromBreakoutRoomButtonLabel": "ルームから退出",
     "leaveBreakoutRoomAndMeetingButtonLabel": "会議から退出",

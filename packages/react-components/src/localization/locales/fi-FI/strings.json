@@ -604,6 +604,12 @@
       "message": "Siirrämme sinut määritettyihin huoneeseesi 5 sekunnin kuluttua.",
       "dismissButtonAriaLabel": "Sulje"
     },
+    "assignedBreakoutRoomChangedPromptJoin": {
+      "title": "Pienryhmätilasi on muuttunut",
+      "message": "Sinut on määritetty toiseen pienryhmätilaan.",
+      "dismissButtonAriaLabel": "Sulje",
+      "primaryButtonLabel": "Liity tilaan"
+    },
     "assignedBreakoutRoomClosed": {
       "title": "Pienryhmätilasi on suljettu",
       "message": "Siirrämme sinut takaisin kokoukseen 5 sekunnin kuluttua.",
@@ -666,6 +672,8 @@
   },
   "videoGallery": {
     "screenIsBeingSharedMessage": "Näyttösi jaetaan parhaillaan",
+    "screenShareStartedAnnouncementAriaLabel": "{participant} jakaa näyttöään",
+    "screenShareStoppedAnnouncementAriaLabel": "{participant} lopetti näyttönsä jakamisen",
     "screenShareLoadingMessage": "Ladataan käyttäjän {participant} näyttöä",
     "localScreenShareLoadingMessage": "Ladataan näyttöä",
     "localVideoLabel": "Sinä",
@@ -849,7 +857,8 @@
     "meetingConferencePhoneInfoModalNoPhoneAvailable": "Puhelinta ei ole käytettävissä",
     "meetingConferencePhoneInfoModalTollGeoData": "{country}, {city}",
     "meetingConferencePhoneInfoModalTollFree": "(Maksuton)",
-    "meetingConferencePhoneInfoModalToll": "(Maksullinen)"
+    "meetingConferencePhoneInfoModalToll": "(Maksullinen)",
+    "meetingConferencePhoneInfoModalDismissButtonAriaLabel": "Sulje"
   },
   "IncomingCallNotification": {
     "incomingCallNotificationPlaceholderId": "Tuntematon käyttäjä",

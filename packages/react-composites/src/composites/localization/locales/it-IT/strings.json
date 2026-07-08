@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Questa operazione disattiverà l'audio di tutte le persone nella riunione, tranne te.",
     "muteAllConfirmButtonLabel": "Disattivare l'audio di tutti",
     "muteAllCancelButtonLabel": "Annullare",
+    "closeButtonLabel": "Chiudi",
     "joinBreakoutRoomButtonLabel": "Partecipa al gruppo di lavoro",
     "returnFromBreakoutRoomButtonLabel": "Esci dalla stanza",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Abbandona riunione",

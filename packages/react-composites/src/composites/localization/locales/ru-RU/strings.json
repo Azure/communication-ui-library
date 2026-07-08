@@ -371,6 +371,7 @@
     "muteAllDialogContent": "Будут отключены микрофоны всех участников собрания, кроме вас.",
     "muteAllConfirmButtonLabel": "Отключить все микрофоны",
     "muteAllCancelButtonLabel": "Отмена",
+    "closeButtonLabel": "Закрыть",
     "joinBreakoutRoomButtonLabel": "Присоединиться к переговорной комнате",
     "returnFromBreakoutRoomButtonLabel": "Покинуть комнату",
     "leaveBreakoutRoomAndMeetingButtonLabel": "Покинуть собрание",

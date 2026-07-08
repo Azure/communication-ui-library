@@ -371,6 +371,7 @@
     "muteAllDialogContent": "나를 제외한 모임 참여자를 모두 음소거합니다.",
     "muteAllConfirmButtonLabel": "모두 음소거",
     "muteAllCancelButtonLabel": "취소",
+    "closeButtonLabel": "닫기",
     "joinBreakoutRoomButtonLabel": "소규모 회의실 참가",
     "returnFromBreakoutRoomButtonLabel": "회의실 나가기",
     "leaveBreakoutRoomAndMeetingButtonLabel": "모임 나가기",
