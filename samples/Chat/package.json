@@ -95,7 +95,7 @@
     "url-loader": "^4.1.1",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "5.2.2",
-    "webpack": "5.99.9",
+    "webpack": "5.104.1",
     "webpack-bundle-analyzer": "^4.5.0",
     "@babel/cli": "^7.27.2",
     "@eslint/compat": "~1.2.9",
