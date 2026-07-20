@@ -20,6 +20,7 @@ import {
   CallFeature
 } from '@azure/communication-calling';
 import { RaiseHandCallFeature, RaisedHandListener, RaisedHand } from '@azure/communication-calling';
+import { ReactionCallFeature, ReactionListener, ReactionMessage } from '@azure/communication-calling';
 import {
   MediaAccessCallFeature,
   MediaAccessChangedListener,
@@ -122,6 +123,28 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
 
   off(event: any, listener: any): void {
     this.emitter.on(event, listener);
+  }
+  dispose(): void {
+    /* No state to clean up */
+  }
+}
+
+/**
+ * @private
+ */
+export class MockReactionCallFeatureImpl implements ReactionCallFeature {
+  public name = 'Reaction';
+  public emitter = new EventEmitter();
+  sendReaction(_reactionMessage: ReactionMessage): Promise<void> {
+    return Promise.resolve();
+  }
+  on(event: 'reaction', listener: ReactionListener): void;
+  on(event: any, listener: any): void {
+    this.emitter.on(event, listener);
+  }
+  off(event: 'reaction', listener: ReactionListener): void;
+  off(event: any, listener: any): void {
+    this.emitter.off(event, listener);
   }
   dispose(): void {
     /* No state to clean up */
