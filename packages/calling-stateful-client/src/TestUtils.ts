@@ -135,7 +135,8 @@ export class MockRecordingCallFeatureImpl implements RecordingCallFeature {
 export class MockReactionCallFeatureImpl implements ReactionCallFeature {
   public name = 'Reaction';
   public emitter = new EventEmitter();
-  sendReaction(_reactionMessage: ReactionMessage): Promise<void> {
+  sendReaction(reactionMessage: ReactionMessage): Promise<void> {
+    void reactionMessage;
     return Promise.resolve();
   }
   on(event: 'reaction', listener: ReactionListener): void;
