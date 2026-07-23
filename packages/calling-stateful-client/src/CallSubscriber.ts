@@ -95,11 +95,20 @@ export class CallSubscriber {
       this._context,
       this._call.feature(Features.RaiseHand)
     );
-    this._reactionSubscriber = new ReactionSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.Reaction)
-    );
+    // Creating the ReactionSubscriber registers a 'reaction' listener on the Reaction feature.
+    // That registration is policy-gated by the Calling SDK and can throw an ExpectedError
+    // (e.g. Teams-identity outbound group/PSTN calls: code=403 subCode=45802
+    // EVENT_SUBSCRIBE_FAIL_POLICY "Unable to register listener due to meeting policy").
+    // Reactions are an optional feature that the app may not use, so this must never abort
+    // call setup / null out the returned Call. Wrap it with _safeSubscribe so the error is
+    // tee'd to state instead of propagating out of startCall/join.
+    this._safeSubscribe(() => {
+      this._reactionSubscriber = new ReactionSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.Reaction)
+      );
+    });
     this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
       callIdRef: this._callIdRef,
       context: this._context,
