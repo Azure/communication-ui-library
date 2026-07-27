@@ -10,7 +10,8 @@ import {
   TranscriptionCallFeature,
   VideoStreamRendererView,
   CallFeatureFactory,
-  CallFeature
+  CallFeature,
+  ReactionCallFeature
 } from '@azure/communication-calling';
 import { CommunicationUserKind } from '@azure/communication-common';
 import { toFlatCommunicationIdentifier } from '@internal/acs-ui-common';
@@ -33,6 +34,7 @@ import {
   MockCall,
   MockCallAgent,
   MockRecordingCallFeatureImpl,
+  MockReactionCallFeatureImpl,
   MockRemoteParticipant,
   MockRemoteVideoStream,
   MockTranscriptionCallFeatureImpl,
@@ -63,6 +65,9 @@ jest.mock('@azure/communication-calling', () => {
       },
       get Diagnostics(): CallFeatureFactory<UserFacingDiagnosticsFeature> {
         return { callApiCtor: StubDiagnosticsCallFeatureImpl };
+      },
+      get Reaction(): CallFeatureFactory<ReactionCallFeature> {
+        return { callApiCtor: MockReactionCallFeatureImpl };
       }
     }
   };
@@ -532,6 +537,31 @@ describe('Stateful call client', () => {
     expect(
       await waitWithBreakCondition(() => !client.getState().calls[callId]?.transcription.isTranscriptionActive)
     ).toBe(true);
+  });
+
+  test('should not fail call setup when registering the reaction listener is rejected by meeting policy', async () => {
+    // Regression test: the ReactionSubscriber registers a 'reaction' listener during call setup.
+    // For Teams-identity outbound group/PSTN calls the Calling SDK rejects this with an
+    // ExpectedError (code=403 subCode=45802 EVENT_SUBSCRIBE_FAIL_POLICY). Reactions are an
+    // optional feature, so this must not abort call setup / return a null Call.
+    const reaction = addMockEmitter({ name: 'Reaction' });
+    reaction.on = (): void => {
+      const error: Error & { code?: number; subCode?: number } = new Error(
+        'Unable to register listener due to meeting policy'
+      );
+      error.code = 403;
+      error.subCode = 45802;
+      throw error;
+    };
+
+    const { client, callId } = await prepareCallWithFeatures(
+      createMockApiFeatures(new Map<any, any>([[Features.Reaction, reaction]]))
+    );
+
+    // The call is still tracked in state (setup did not throw out of startCall/join).
+    expect(Object.keys(client.getState().calls)).toContain(callId);
+    // The policy error is tee'd to state rather than propagated.
+    expect(client.getState().latestErrors['Call.on']).toBeDefined();
   });
 
   test('should not update state for an ended call', async () => {

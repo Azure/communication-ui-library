@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Calling",
+  "comment": "Prevent startCall/join from failing when the internal reaction listener cannot be registered due to meeting policy (e.g. Teams-identity outbound group/PSTN calls returning 403 subCode 45802). The reaction subscription is now created safely so an optional-feature policy error no longer aborts call setup or returns a null Call.",
+  "packageName": "@azure/communication-react",
+  "email": "brianuk@microsoft.com",
+  "dependentChangeType": "patch"
+}
