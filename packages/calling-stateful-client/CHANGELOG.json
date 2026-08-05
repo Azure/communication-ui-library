@@ -2,6 +2,21 @@
   "name": "@internal/calling-stateful-client",
   "entries": [
     {
+      "date": "Wed, 05 Aug 2026 20:51:20 GMT",
+      "version": "1.33.0",
+      "tag": "@internal/calling-stateful-client_v1.33.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/calling-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.33.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Thu, 02 Jul 2026 03:01:13 GMT",
       "version": "1.32.0",
       "tag": "@internal/calling-stateful-client_v1.32.0",

@@ -1,8 +1,17 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Thu, 02 Jul 2026 03:01:12 GMT and should not be manually modified. -->
+<!-- This log was last generated on Wed, 05 Aug 2026 20:51:20 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.33.0](https://github.com/azure/communication-ui-library/tree/1.33.0)
+
+Wed, 05 Aug 2026 20:51:20 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.32.0...1.33.0)
+
+### Bug Fixes
+- Prevent startCall/join from failing when the internal reaction listener cannot be registered due to meeting policy (e.g. Teams-identity outbound group/PSTN calls returning 403 subCode 45802). The reaction subscription is now created safely so an optional-feature policy error no longer aborts call setup or returns a null Call. ([PR #6065](https://github.com/azure/communication-ui-library/pull/6065) by brianuk@microsoft.com)
+
 
 ## [1.32.0](https://github.com/azure/communication-ui-library/tree/1.32.0)
 
