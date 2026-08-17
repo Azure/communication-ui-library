@@ -73,28 +73,45 @@ export class CallSubscriber {
     this._context = context;
     this._internalContext = internalContext;
 
-    this._diagnosticsSubscriber = new UserFacingDiagnosticsSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.UserFacingDiagnostics)
-    );
+    // Creating diagnostic subscribers registers listeners which can throw policy-gated errors
+    // (e.g. Teams-identity outbound group/PSTN calls: code=403 subCode=45802).
+    // Wrap with _safeSubscribe so policy errors don't abort call setup.
+    this._safeSubscribe(() => {
+      this._diagnosticsSubscriber = new UserFacingDiagnosticsSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.UserFacingDiagnostics)
+      );
+    });
     this._participantSubscribers = new Map<string, ParticipantSubscriber>();
-    this._recordingSubscriber = new RecordingSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.Recording)
-    );
+    // Recording listener registration can throw policy-gated errors (403 subCode 45802).
+    // Wrap with _safeSubscribe so optional-feature policy errors don't abort call setup.
+    this._safeSubscribe(() => {
+      this._recordingSubscriber = new RecordingSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.Recording)
+      );
+    });
     this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
-    this._transcriptionSubscriber = new TranscriptionSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.Transcription)
-    );
-    this._raiseHandSubscriber = new RaiseHandSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.RaiseHand)
-    );
+    // Transcription listener registration can throw policy-gated errors (403 subCode 45802).
+    // Wrap with _safeSubscribe so optional-feature policy errors don't abort call setup.
+    this._safeSubscribe(() => {
+      this._transcriptionSubscriber = new TranscriptionSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.Transcription)
+      );
+    });
+    // RaiseHand listener registration can throw policy-gated errors (403 subCode 45802).
+    // Wrap with _safeSubscribe so optional-feature policy errors don't abort call setup.
+    this._safeSubscribe(() => {
+      this._raiseHandSubscriber = new RaiseHandSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.RaiseHand)
+      );
+    });
     // Creating the ReactionSubscriber registers a 'reaction' listener on the Reaction feature.
     // That registration is policy-gated by the Calling SDK and can throw an ExpectedError
     // (e.g. Teams-identity outbound group/PSTN calls: code=403 subCode=45802
@@ -109,45 +126,69 @@ export class CallSubscriber {
         this._call.feature(Features.Reaction)
       );
     });
-    this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
-      callIdRef: this._callIdRef,
-      context: this._context,
-      localOptimalVideoCountFeature: this._call.feature(Features.OptimalVideoCount)
+    // OptimalVideoCount listener registration can throw policy-gated errors (403 subCode 45802).
+    // Wrap with _safeSubscribe so optional-feature policy errors don't abort call setup.
+    this._safeSubscribe(() => {
+      this._optimalVideoCountSubscriber = new OptimalVideoCountSubscriber({
+        callIdRef: this._callIdRef,
+        context: this._context,
+        localOptimalVideoCountFeature: this._call.feature(Features.OptimalVideoCount)
+      });
     });
 
     this._localVideoStreamVideoEffectsSubscribers = new Map();
 
-    this._capabilitiesSubscriber = new CapabilitiesSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.Capabilities)
-    );
+    // Capabilities listener registration can throw policy-gated errors (403 subCode 45802).
+    // Wrap with _safeSubscribe so optional-feature policy errors don't abort call setup.
+    this._safeSubscribe(() => {
+      this._capabilitiesSubscriber = new CapabilitiesSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.Capabilities)
+      );
+    });
 
-    this._spotlightSubscriber = new SpotlightSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.Spotlight)
-    );
+    // Spotlight listener registration can throw policy-gated errors (403 subCode 45802).
+    // Wrap with _safeSubscribe so optional-feature policy errors don't abort call setup.
+    this._safeSubscribe(() => {
+      this._spotlightSubscriber = new SpotlightSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.Spotlight)
+      );
+    });
 
     this._context.deleteLatestNotification('assignedBreakoutRoomClosed');
-    this._breakoutRoomsSubscriber = new BreakoutRoomsSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.BreakoutRooms)
-    );
+    // BreakoutRooms listener registration can throw policy-gated errors (403 subCode 45802).
+    // Wrap with _safeSubscribe so optional-feature policy errors don't abort call setup.
+    this._safeSubscribe(() => {
+      this._breakoutRoomsSubscriber = new BreakoutRoomsSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.BreakoutRooms)
+      );
+    });
 
-    this._togetherModeSubscriber = new TogetherModeSubscriber(
-      this._callIdRef,
-      this._context,
-      this._internalContext,
-      this._call.feature(Features.TogetherMode)
-    );
+    // TogetherMode listener registration can throw policy-gated errors (403 subCode 45802).
+    // Wrap with _safeSubscribe so optional-feature policy errors don't abort call setup.
+    this._safeSubscribe(() => {
+      this._togetherModeSubscriber = new TogetherModeSubscriber(
+        this._callIdRef,
+        this._context,
+        this._internalContext,
+        this._call.feature(Features.TogetherMode)
+      );
+    });
 
-    this._mediaAccessSubscriber = new MediaAccessSubscriber(
-      this._callIdRef,
-      this._context,
-      this._call.feature(Features.MediaAccess)
-    );
+    // MediaAccess listener registration can throw policy-gated errors (403 subCode 45802).
+    // Wrap with _safeSubscribe so optional-feature policy errors don't abort call setup.
+    this._safeSubscribe(() => {
+      this._mediaAccessSubscriber = new MediaAccessSubscriber(
+        this._callIdRef,
+        this._context,
+        this._call.feature(Features.MediaAccess)
+      );
+    });
 
     this.subscribe();
   }
