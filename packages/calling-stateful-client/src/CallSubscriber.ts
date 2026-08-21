@@ -93,7 +93,9 @@ export class CallSubscriber {
         this._call.feature(Features.Recording)
       );
     });
-    this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
+    this._safeSubscribe(() => {
+      this._pptLiveSubscriber = new PPTLiveSubscriber(this._callIdRef, this._context, this._call);
+    });
     // Transcription listener registration can throw policy-gated errors (403 subCode 45802).
     // Wrap with _safeSubscribe so optional-feature policy errors don't abort call setup.
     this._safeSubscribe(() => {

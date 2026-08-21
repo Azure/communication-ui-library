@@ -564,6 +564,34 @@ describe('Stateful call client', () => {
     expect(client.getState().latestErrors['Call.on']).toBeDefined();
   });
 
+  test('should not fail call setup when optional feature listeners are rejected by meeting policy', async () => {
+    const policyRestrictedFeature = addMockEmitter({
+      name: 'PolicyRestrictedFeature',
+      isRecordingActive: false,
+      isTranscriptionActive: false,
+      getAllOthersMediaAccess: () => [],
+      getMeetingMediaAccess: () => ({ isAudioPermitted: true, isVideoPermitted: true })
+    });
+    policyRestrictedFeature.on = (event: string, listener: unknown): void => {
+      if (event === 'isActiveChanged' || event === 'dominantSpeakersChanged') {
+        policyRestrictedFeature.emitter.on(event, listener);
+        return;
+      }
+
+      const error: Error & { code?: number; subCode?: number } = new Error(
+        'Unable to register listener due to meeting policy'
+      );
+      error.code = 403;
+      error.subCode = 45802;
+      throw error;
+    };
+
+    const { client, callId } = await prepareCallWithFeatures(() => policyRestrictedFeature);
+
+    expect(Object.keys(client.getState().calls)).toContain(callId);
+    expect(client.getState().latestErrors['Call.on']).toBeDefined();
+  });
+
   test('should not update state for an ended call', async () => {
     const recording = addMockEmitter({ name: 'Default', isRecordingActive: true });
     const transcription = addMockEmitter({ name: 'Default', isTranscriptionActive: true });
