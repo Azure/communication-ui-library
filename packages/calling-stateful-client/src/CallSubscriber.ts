@@ -45,14 +45,14 @@ export class CallSubscriber {
   private _context: CallContext;
   private _internalContext: InternalCallContext;
 
-  private _diagnosticsSubscriber: UserFacingDiagnosticsSubscriber;
+  private _diagnosticsSubscriber?: UserFacingDiagnosticsSubscriber;
   private _participantSubscribers: Map<string, ParticipantSubscriber>;
-  private _recordingSubscriber: RecordingSubscriber;
-  private _transcriptionSubscriber: TranscriptionSubscriber;
+  private _recordingSubscriber?: RecordingSubscriber;
+  private _transcriptionSubscriber?: TranscriptionSubscriber;
   /* @conditional-compile-remove(local-recording-notification) */
   private _localRecordingSubscriber?: LocalRecordingSubscriber;
-  private _pptLiveSubscriber: PPTLiveSubscriber;
-  private _optimalVideoCountSubscriber: OptimalVideoCountSubscriber;
+  private _pptLiveSubscriber?: PPTLiveSubscriber;
+  private _optimalVideoCountSubscriber?: OptimalVideoCountSubscriber;
   private _CaptionsFeatureSubscriber?: CaptionsFeatureSubscriber;
   private _realTimeTextSubscriber?: RealTimeTextSubscriber;
   private _raiseHandSubscriber?: RaiseHandSubscriber;
@@ -60,12 +60,12 @@ export class CallSubscriber {
 
   private _localVideoStreamVideoEffectsSubscribers: Map<string, LocalVideoStreamVideoEffectsSubscriber>;
 
-  private _capabilitiesSubscriber: CapabilitiesSubscriber;
-  private _spotlightSubscriber: SpotlightSubscriber;
+  private _capabilitiesSubscriber?: CapabilitiesSubscriber;
+  private _spotlightSubscriber?: SpotlightSubscriber;
   private _breakoutRoomsSubscriber?: BreakoutRoomsSubscriber;
 
-  private _togetherModeSubscriber: TogetherModeSubscriber;
-  private _mediaAccessSubscriber: MediaAccessSubscriber;
+  private _togetherModeSubscriber?: TogetherModeSubscriber;
+  private _mediaAccessSubscriber?: MediaAccessSubscriber;
 
   constructor(call: CallCommon, context: CallContext, internalContext: InternalCallContext) {
     this._call = call;
@@ -289,25 +289,25 @@ export class CallSubscriber {
       this._internalContext.deleteLocalRenderInfo(this._callIdRef.callId, mediaStreamType);
     }
 
-    this._diagnosticsSubscriber.unsubscribe();
-    this._recordingSubscriber.unsubscribe();
-    this._transcriptionSubscriber.unsubscribe();
+    this._diagnosticsSubscriber?.unsubscribe();
+    this._recordingSubscriber?.unsubscribe();
+    this._transcriptionSubscriber?.unsubscribe();
     /* @conditional-compile-remove(local-recording-notification) */
     this._localRecordingSubscriber?.unsubscribe();
-    this._optimalVideoCountSubscriber.unsubscribe();
-    this._pptLiveSubscriber.unsubscribe();
+    this._optimalVideoCountSubscriber?.unsubscribe();
+    this._pptLiveSubscriber?.unsubscribe();
     this._CaptionsFeatureSubscriber?.unsubscribe();
     if (this._realTimeTextSubscriber) {
       this._realTimeTextSubscriber.unsubscribe();
     }
     this._raiseHandSubscriber?.unsubscribe();
 
-    this._capabilitiesSubscriber.unsubscribe();
+    this._capabilitiesSubscriber?.unsubscribe();
     this._reactionSubscriber?.unsubscribe();
-    this._spotlightSubscriber.unsubscribe();
+    this._spotlightSubscriber?.unsubscribe();
     this._breakoutRoomsSubscriber?.unsubscribe();
-    this._togetherModeSubscriber.unsubscribe();
-    this._mediaAccessSubscriber.unsubscribe();
+    this._togetherModeSubscriber?.unsubscribe();
+    this._mediaAccessSubscriber?.unsubscribe();
   };
 
   // This is a helper function to safely call subscriber functions. This is needed in order to prevent events
