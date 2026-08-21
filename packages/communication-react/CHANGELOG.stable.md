@@ -10,7 +10,7 @@ Fri, 21 Aug 2026 21:48:21 GMT
 [Compare changes](https://github.com/azure/communication-ui-library/compare/1.33.0...1.34.0)
 
 ### Bug Fixes
-- fix: wrap all optional feature subscribers with safe subscribe in CallSubscriber ([PR #6069](https://github.com/azure/communication-ui-library/pull/6069) by miguelgamis@microsoft.com)
+- Wrap all optional feature subscribers with safe subscribe in CallSubscriber ([PR #6069](https://github.com/azure/communication-ui-library/pull/6069) by miguelgamis@microsoft.com)
 
 
 ## [1.33.0](https://github.com/azure/communication-ui-library/tree/1.33.0)
