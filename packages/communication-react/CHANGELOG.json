@@ -2,6 +2,23 @@
   "name": "@azure/communication-react",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2026 21:48:21 GMT",
+      "version": "1.34.0",
+      "tag": "@azure/communication-react_v1.34.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "miguelgamis@microsoft.com",
+            "package": "@azure/communication-react",
+            "commit": "814951c1b314842fae33e7f32f69d9d75edd7e4d",
+            "area": "fix",
+            "workstream": "Call feature subscribers",
+            "comment": "fix: wrap all optional feature subscribers with safe subscribe in CallSubscriber"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Aug 2026 20:51:20 GMT",
       "version": "1.33.0",
       "tag": "@azure/communication-react_v1.33.0",
