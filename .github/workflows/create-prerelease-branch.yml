@@ -30,7 +30,7 @@ jobs:
     permissions: write-all
     steps:
       # Check-out repo
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
 
@@ -47,13 +47,13 @@ jobs:
 
       # Ensure node version is great enough
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 'lts/*'
 
       # Try get node_modules from cache
       - name: Restore node_modules from cache
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 # v4.3.0
         with:
           path: common/temp/pnpm-store
           key: ${{ runner.os }}-${{ hashFiles('common/config/rush/pnpm-lock.yaml') }}
