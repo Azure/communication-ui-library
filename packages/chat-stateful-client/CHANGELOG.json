@@ -2,6 +2,21 @@
   "name": "@internal/chat-stateful-client",
   "entries": [
     {
+      "date": "Fri, 21 Aug 2026 21:48:21 GMT",
+      "version": "1.34.0",
+      "tag": "@internal/chat-stateful-client_v1.34.0",
+      "comments": {
+        "patch": [
+          {
+            "author": "beachball",
+            "package": "@internal/chat-stateful-client",
+            "comment": "Bump @internal/acs-ui-common to v1.34.0",
+            "commit": "not available"
+          }
+        ]
+      }
+    },
+    {
       "date": "Wed, 05 Aug 2026 20:51:20 GMT",
       "version": "1.33.0",
       "tag": "@internal/chat-stateful-client_v1.33.0",
