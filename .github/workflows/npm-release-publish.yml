@@ -52,13 +52,13 @@ jobs:
       id-token: write
     steps:
       # Check-out repo
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
         with:
           fetch-depth: 0
 
       # Ensure node version is great enough
       - name: Use Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 'lts/*'
 
@@ -128,7 +128,7 @@ jobs:
 
       # Login via OIDC to permit uploading to azure blob store
       - name: Azure login
-        uses: azure/login@v2
+        uses: azure/login@7184910d9eb2b1c5e48f7073824a90609bb9b6d6 # v2.3.1
         with:
           client-id: ${{ secrets.NPM_DEPLOY_AZURE_CLIENT_ID }}
           tenant-id: ${{ secrets.NPM_DEPLOY_AZURE_TENANT_ID }}
@@ -178,7 +178,7 @@ jobs:
       # Upload non-react releases for public preview
       - name: Upload Public Preview Release
         if: ${{ github.event.inputs.release-flavor == 'beta' }}
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@3bb12739c298aeb8a4eeaf626c5b8d85266b0e65 # v2.6.2
         with:
           name: PublicPreview ${{ steps.version.outputs.version }}
           tag_name: PublicPreview/${{ steps.version.outputs.version }}
