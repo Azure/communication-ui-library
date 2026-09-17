@@ -67,7 +67,7 @@
     "events": "^3.3.0",
     "immer": "10.1.1",
     "memoize-one": "^5.2.1",
-    "react-linkify": "^1.0.0-alpha",
+    "linkify-it": "^6.1.0",
     "reselect": "^4.0.0",
     "uuid": "^9.0.0",
     "nanoid": "3.3.8"
@@ -99,7 +99,6 @@
     "@types/json-stringify-safe": "^5.0.3",
     "@types/node": "^22.15.18",
     "@types/react-dom": "18.3.1",
-    "@types/react-linkify": "^1.0.4",
     "@types/react": "18.3.12",
     "@types/uuid": "^9.0.8",
     "@types/yargs": "^17.0.29",
