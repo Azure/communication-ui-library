@@ -15,7 +15,7 @@ describe('ChatMessageContent', () => {
           messageId: 'message-id',
           messageType: 'chat',
           contentType: 'text',
-          content: 'Visit https://contoso.com or email user@contoso.com for help.',
+          content: 'Visit https://contoso.com, www.fabrikam.com, or fabrikam.com and email user@contoso.com for help.',
           createdOn: new Date()
         }}
         strings={COMPONENT_LOCALE_EN_US.strings.messageThread}
@@ -23,7 +23,7 @@ describe('ChatMessageContent', () => {
     );
 
     expect(screen.getByRole('text').textContent).toBe(
-      'Visit https://contoso.com or email user@contoso.com for help.'
+      'Visit https://contoso.com, www.fabrikam.com, or fabrikam.com and email user@contoso.com for help.'
     );
     expect(screen.getByRole('link', { name: 'https://contoso.com' }).getAttribute('href')).toBe(
       'https://contoso.com'
@@ -31,6 +31,10 @@ describe('ChatMessageContent', () => {
     expect(screen.getByRole('link', { name: 'user@contoso.com' }).getAttribute('href')).toBe(
       'mailto:user@contoso.com'
     );
+    expect(screen.getByRole('link', { name: 'www.fabrikam.com' }).getAttribute('href')).toBe(
+      'http://www.fabrikam.com'
+    );
+    expect(screen.getByRole('link', { name: 'fabrikam.com' }).getAttribute('href')).toBe('http://fabrikam.com');
     screen.getAllByRole('link').forEach((link) => expect(link.getAttribute('target')).toBe('_blank'));
   });
 });

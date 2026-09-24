@@ -25,7 +25,7 @@ import { _AttachmentDownloadCardsStrings } from '../Attachment/AttachmentDownloa
 import { dataLossIconStyle } from '../styles/MessageThread.styles';
 import { messageTextContentStyles } from '../styles/MessageThread.styles';
 
-const linkify = new LinkifyIt();
+const linkify = new LinkifyIt({ fuzzyLink: true });
 
 type ChatMessageContentProps = {
   message: ChatMessage;
