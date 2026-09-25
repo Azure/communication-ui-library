@@ -1,8 +1,17 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Fri, 21 Aug 2026 21:48:21 GMT and should not be manually modified. -->
+<!-- This log was last generated on Fri, 25 Sep 2026 19:02:57 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [1.35.0](https://github.com/azure/communication-ui-library/tree/1.35.0)
+
+Fri, 25 Sep 2026 19:02:57 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.34.0...1.35.0)
+
+### Bug Fixes
+- Fix linkify-it CVE in communication-react dependencies ([PR #6076](https://github.com/azure/communication-ui-library/pull/6076) by miguelgamis@microsoft.com)
+
 
 ## [1.34.0](https://github.com/azure/communication-ui-library/tree/1.34.0)
 
