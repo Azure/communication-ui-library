@@ -1,0 +1,9 @@
+{
+  "type": "minor",
+  "area": "improvement",
+  "workstream": "Calling dependency",
+  "comment": "Upgrade stable @azure/communication-calling to 1.48.1-beta.1",
+  "packageName": "@azure/communication-react",
+  "email": "miguelgamis@microsoft.com",
+  "dependentChangeType": "patch"
+}
