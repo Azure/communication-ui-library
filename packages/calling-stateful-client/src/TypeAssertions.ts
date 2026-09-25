@@ -41,6 +41,8 @@ type InferredCallErrorTargets =
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admit'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.rejectParticipant'
   | /* @conditional-compile-remove(calling-beta-sdk) */ 'Call.admitAll'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.activeCallTransfer'
+  | /* @conditional-compile-remove(calling-beta-sdk) */ 'CallAgent.getActiveCallDetails'
   | 'Call.mutedByOthers'
   | 'DeviceManager.stopPreheatDevices'
   | 'DeviceManager.startPreheatDevices';
