@@ -2,19 +2,43 @@
 // Licensed under the MIT License.
 
 import { DEFAULT_COMPONENT_ICONS, FluentThemeProvider, LocalizationProvider } from '@azure/communication-react';
+import { DocsContainer } from '@storybook/addon-docs/blocks';
 import React from 'react';
 
 import { THEMES } from '../stories/themes';
 import { LOCALES } from '../stories/locales'
-import { initializeIcons, registerIcons } from '@fluentui/react';
+import { initializeIcons, Link, MessageBar, MessageBarType, registerIcons } from '@fluentui/react';
 import { initializeFileTypeIcons } from '@fluentui/react-file-type-icons';
 initializeIcons();
 initializeFileTypeIcons();
 registerIcons({ icons: { ...DEFAULT_COMPONENT_ICONS } });
 
+const RetirementWarning = () => (
+  <MessageBar
+    messageBarType={MessageBarType.warning}
+    isMultiline={true}
+    styles={{ root: { marginBottom: '1rem', padding: '0.25rem 0' }, text: { lineHeight: '1.5' } }}
+  >
+    <strong>Azure Communication Services UI Library is being retired.</strong> We recommend that new customers do not
+    onboard to the ACS UI Library. Existing customers should review the retirement timeline and guidance in the{' '}
+    <Link href="https://aka.ms/acs-retirement-and-breaking-changes-guide" target="_blank" rel="noreferrer">
+      Azure Communication Services retirement and breaking changes guide
+    </Link>
+    .
+  </MessageBar>
+);
+
+const DocsPageContainer = ({ children, context }: any) => (
+  <DocsContainer context={context}>
+    <RetirementWarning />
+    {children}
+  </DocsContainer>
+);
+
 export const parameters = {
   layout: 'fullscreen',
   docs: {
+    container: DocsPageContainer,
     toc: {
         title: 'On this page',
         headingSelector: 'h2'
@@ -154,7 +178,7 @@ const withLocalization = (Story: any, context: any) => {
   }
 };
 
-const withCenterStory = (Story: any, context: any) => {
+const withStoryPageLayout = (Story: any, context: any) => {
   if(context.viewMode === 'docs') {
     return <Story />;
   }
@@ -162,16 +186,23 @@ const withCenterStory = (Story: any, context: any) => {
   return (
     <div style={{
       display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
+      flexDirection: 'column',
       height: '100vh'
     }}>
-      <Story />
+      <RetirementWarning />
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1
+      }}>
+        <Story />
+      </div>
     </div>
   );
 };
 
-export const decorators = [withCenterStory, withThemeProvider, withLocalization];
+export const decorators = [withStoryPageLayout, withThemeProvider, withLocalization];
 
 export const globalTypes = {
   theme: {
