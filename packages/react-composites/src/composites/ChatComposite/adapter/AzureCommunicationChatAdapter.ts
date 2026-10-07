@@ -678,7 +678,7 @@ export const useAzureCommunicationChatAdapter = (
    */
   beforeDispose?: (adapter: ChatAdapter) => Promise<void>
 ): ChatAdapter | undefined => {
-  const { credential, displayName, endpoint, threadId, userId } = args;
+  const { credential, displayName, endpoint, threadId, userId, chatAdapterOptions } = args;
 
   // State update needed to rerender the parent component when a new adapter is created.
   const [adapter, setAdapter] = useState<ChatAdapter | undefined>(undefined);
@@ -688,12 +688,14 @@ export const useAzureCommunicationChatAdapter = (
 
   const afterCreateRef = useRef<((adapter: ChatAdapter) => Promise<ChatAdapter>) | undefined>(undefined);
   const beforeDisposeRef = useRef<((adapter: ChatAdapter) => Promise<void>) | undefined>(undefined);
+  const chatAdapterOptionsRef = useRef<ChatAdapterOptions | undefined>(undefined);
   // These refs are updated on *each* render, so that the latest values
   // are used in the `useEffect` closures below.
   // Using a Ref ensures that new values for the callbacks do not trigger the
   // useEffect blocks, and a new adapter creation / distruction is not triggered.
   afterCreateRef.current = afterCreate;
   beforeDisposeRef.current = beforeDispose;
+  chatAdapterOptionsRef.current = chatAdapterOptions;
 
   useEffect(
     () => {
@@ -725,7 +727,8 @@ export const useAzureCommunicationChatAdapter = (
           displayName,
           endpoint,
           threadId,
-          userId
+          userId,
+          ...(chatAdapterOptionsRef.current ? { chatAdapterOptions: chatAdapterOptionsRef.current } : undefined)
         });
         if (afterCreateRef.current) {
           newAdapter = await afterCreateRef.current(newAdapter);
@@ -736,7 +739,17 @@ export const useAzureCommunicationChatAdapter = (
       })();
     },
     // Explicitly list all arguments so that caller doesn't have to memoize the `args` object.
-    [adapterRef, afterCreateRef, beforeDisposeRef, credential, displayName, endpoint, threadId, userId]
+    [
+      adapterRef,
+      afterCreateRef,
+      beforeDisposeRef,
+      chatAdapterOptionsRef,
+      credential,
+      displayName,
+      endpoint,
+      threadId,
+      userId
+    ]
   );
 
   // Dispose any existing adapter when the component unmounts.
