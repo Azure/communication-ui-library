@@ -108,18 +108,19 @@ export class EventSubscriber {
       this.chatContext.createThreadIfNotExist(event.threadId);
       this.chatContext.setParticipants(event.threadId, participantsToAdd);
     });
-    this.fetchLastParticipantMessage(event.threadId, 'participantAdded');
+    this.fetchLastParticipantMessage(event.threadId, 'participantAdded', event.addedOn);
   };
 
   // This is a temporary fix that no participant message is received for onChatMessageReceived event, which should be handled by JS SDK.
   // Without the temporary fix, there are missing 'participant joined' and 'participant left' system messages in the chat thread.
   private fetchLastParticipantMessage = async (
     threadId: string,
-    actionType: 'participantAdded' | 'participantRemoved'
+    actionType: 'participantAdded' | 'participantRemoved',
+    actionTimestamp: Date
   ): Promise<void> => {
     for await (const message of this.chatClient
       .getChatThreadClient(threadId)
-      .listMessages({ startTime: new Date(Date.now() - maxSyncTimeInMs) })) {
+      .listMessages({ startTime: new Date(actionTimestamp.getTime() - maxSyncTimeInMs) })) {
       if (message.type === actionType) {
         this.chatContext.setChatMessage(threadId, { ...message, status: 'delivered' });
       }
@@ -137,7 +138,7 @@ export class EventSubscriber {
     const currentUserId = toFlatCommunicationIdentifier(this.chatContext.getState().userId);
     const wasCurrentUserRemoved = participantIds.find((id) => toFlatCommunicationIdentifier(id) === currentUserId);
     if (!wasCurrentUserRemoved) {
-      this.fetchLastParticipantMessage(event.threadId, 'participantRemoved');
+      this.fetchLastParticipantMessage(event.threadId, 'participantRemoved', event.removedOn);
     }
   };
 
