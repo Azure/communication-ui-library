@@ -154,9 +154,13 @@ export class EventSubscriber {
   };
 
   private onTypingIndicatorReceived = (typingIndicator: TypingIndicatorReceivedEvent): void => {
+    const receivedTypingIndicator = {
+      ...typingIndicator,
+      receivedOn: new Date()
+    };
     this.chatContext.batch(() => {
       this.chatContext.createThreadIfNotExist(typingIndicator.threadId);
-      this.chatContext.addTypingIndicator(typingIndicator.threadId, typingIndicator);
+      this.chatContext.addTypingIndicator(typingIndicator.threadId, receivedTypingIndicator);
     });
   };
 
