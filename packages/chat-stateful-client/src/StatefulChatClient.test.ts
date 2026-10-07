@@ -268,6 +268,46 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     expect(Object.keys(client.getState().threads[threadId]?.participants ?? {}).length).toBe(1);
   });
 
+  test('fetches participant system messages relative to the event time when the client clock is skewed', async () => {
+    const threadId = 'threadId1';
+    const chatClient = createMockChatClient();
+    const chatThreadClient = chatClient.getChatThreadClient(threadId);
+    const listMessagesSpy = jest.spyOn(chatThreadClient, 'listMessages');
+    chatClient.getChatThreadClient = jest.fn(() => chatThreadClient);
+    const skewedClient = _createStatefulChatClientWithDeps(
+      chatClient,
+      defaultClientArgs
+    ) as StatefulChatClientWithEventTrigger;
+    await skewedClient.startRealtimeNotifications();
+
+    const addedOn = new Date('2020-01-01T00:00:00.000Z');
+    const removedOn = new Date('2020-01-01T00:01:00.000Z');
+    const participant = mockParticipants[0];
+    if (!participant) {
+      throw new Error('mockParticipants is empty');
+    }
+
+    await skewedClient.triggerEvent('participantsAdded', {
+      threadId,
+      addedBy: participant,
+      addedOn,
+      participantsAdded: mockParticipants,
+      version: ''
+    } satisfies ParticipantsAddedEvent);
+    await skewedClient.triggerEvent('participantsRemoved', {
+      threadId,
+      removedBy: participant,
+      removedOn,
+      participantsRemoved: [participant],
+      version: ''
+    } satisfies ParticipantsRemovedEvent);
+
+    expect(listMessagesSpy).toHaveBeenNthCalledWith(1, { startTime: new Date('2019-12-31T23:59:50.000Z') });
+    expect(listMessagesSpy).toHaveBeenNthCalledWith(2, { startTime: new Date('2020-01-01T00:00:50.000Z') });
+
+    await skewedClient.stopRealtimeNotifications();
+  });
+
   test('set internal store correctly when receive typingIndicator events', async () => {
     const threadId = 'threadId1';
 
