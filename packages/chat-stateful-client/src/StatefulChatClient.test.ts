@@ -286,8 +286,9 @@ describe('declarative chatClient subscribe to event properly after startRealtime
     expect(client.getState().threads[threadId]?.typingIndicators.length).toBe(2);
   });
 
-  test('only maintain recent 30s typingIndicator', async () => {
+  test('maintains a typing indicator from local receipt time when the event timestamp is stale', async () => {
     const threadId = 'threadId1';
+    const receivedAt = new Date();
 
     const addedEvent: TypingIndicatorReceivedEvent = {
       threadId,
@@ -300,7 +301,9 @@ describe('declarative chatClient subscribe to event properly after startRealtime
 
     await client.triggerEvent('typingIndicatorReceived', addedEvent);
 
-    jest.advanceTimersByTime(1500);
+    expect(client.getState().threads[threadId]?.typingIndicators[0]?.receivedOn).toEqual(receivedAt);
+
+    jest.advanceTimersByTime(Constants.TYPING_INDICATOR_MAINTAIN_TIME + 1000);
 
     expect(client.getState().threads[threadId]?.typingIndicators.length).toBe(0);
   });
