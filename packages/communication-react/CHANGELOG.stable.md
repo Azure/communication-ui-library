@@ -11,6 +11,8 @@ Mon, 28 Sep 2026 05:18:19 GMT
 
 ### Improvements
 - Upgrade stable @azure/communication-calling to 2.0.0 ([PR #6078](https://github.com/azure/communication-ui-library/pull/6078) by miguelgamis@microsoft.com)
+- Fix typing indicators being hidden when the client clock differs from the event timestamp ([PR #6084](https://github.com/azure/communication-ui-library/pull/6085) by miguelgamis@microsoft.com)
+- Fix participant system messages being hidden when the client clock differs from event timestamps ([PR #6085](https://github.com/azure/communication-ui-library/pull/6085) by miguelgamis@microsoft.com)
 
 
 ## [1.35.0](https://github.com/azure/communication-ui-library/tree/1.35.0)
