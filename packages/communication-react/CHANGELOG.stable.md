@@ -1,8 +1,19 @@
 # Change Log - @azure/communication-react
 
-<!-- This log was last generated on Fri, 25 Sep 2026 19:02:57 GMT and should not be manually modified. -->
+<!-- This log was last generated on Mon, 28 Sep 2026 05:18:19 GMT and should not be manually modified. -->
 
 <!-- Start content -->
+
+## [2.0.0](https://github.com/azure/communication-ui-library/tree/2.0.0)
+
+Mon, 28 Sep 2026 05:18:19 GMT 
+[Compare changes](https://github.com/azure/communication-ui-library/compare/1.35.0...2.0.0)
+
+### Improvements
+- Upgrade stable @azure/communication-calling to 2.0.0 ([PR #6078](https://github.com/azure/communication-ui-library/pull/6078) by miguelgamis@microsoft.com)
+- Fix typing indicators being hidden when the client clock differs from the event timestamp ([PR #6084](https://github.com/azure/communication-ui-library/pull/6085) by miguelgamis@microsoft.com)
+- Fix participant system messages being hidden when the client clock differs from event timestamps ([PR #6085](https://github.com/azure/communication-ui-library/pull/6085) by miguelgamis@microsoft.com)
+
 
 ## [1.35.0](https://github.com/azure/communication-ui-library/tree/1.35.0)
 
