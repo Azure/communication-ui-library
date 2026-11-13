@@ -36,7 +36,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - id: get-matrix
         run: echo "matrix=$(node ./common/scripts/workflow-read-matrix.mjs)" >> $GITHUB_OUTPUT
 
@@ -58,7 +58,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v4
@@ -136,7 +136,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v4
@@ -229,7 +229,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       # Try get node_modules from cache
       - name: Restore node_modules from cache
         uses: actions/cache@v4
@@ -280,7 +280,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -347,7 +347,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -414,7 +414,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -480,7 +480,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -534,7 +534,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -565,7 +565,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -597,7 +597,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -629,7 +629,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -661,7 +661,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Restore node_modules from cache
         uses: actions/cache@v4
         with:
@@ -689,7 +689,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Install Dependencies
         run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
@@ -742,7 +742,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
+          node-version: '22.x'
       - name: Install Dependencies
         run: node ./common/scripts/install-dependencies-ci.mjs ${{ matrix.flavor }}
       - uses: browser-actions/setup-chrome@v1
