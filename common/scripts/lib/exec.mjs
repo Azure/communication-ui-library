@@ -6,7 +6,7 @@ import child_process from 'child_process';
 /**
  * Execute a command by shelling out.
  *
- * @param cmd: string - command to run.
+ * @param cmd: string | string[] - shell command or executable and literal arguments.
  * @param extraEnv: Optional environment variables for the child process. By default, process.env is forwarded.
  *
  * - stdout, stderr are piped to the current process' stdout and stderr respectively.
@@ -18,10 +18,11 @@ export async function exec(cmd, extraEnv) {
       console.log(`  with extraEnv ${JSON.stringify(extraEnv)}`);
     }
 
-    const child = child_process.spawn(cmd, {
+    const useShell = !Array.isArray(cmd);
+    const child = child_process.spawn(useShell ? cmd : cmd[0], useShell ? [] : cmd.slice(1), {
       // undefined env gets default behavior of forwarding `process.env`.
       env: extraEnv ? {...process.env, ...extraEnv} : undefined,
-      shell: true,
+      shell: useShell,
       // Inheriting the stdio (and implied stderr and stdin) ensures that colorized output is preserved.
       stdio: 'inherit'
     });
