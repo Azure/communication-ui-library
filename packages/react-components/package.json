@@ -30,7 +30,7 @@
     "_build:by-flavor": "rushx clean && rushx build:esm && rushx build:cjs",
     "_by-flavor": "rushx _current-flavor && env-cmd -f ../../common/config/env/.env --use-shell",
     "_current-flavor": "echo You are running under COMMUNICATION_REACT_FLAVOR: && env-cmd -f ../../common/config/env/.env node -p process.env.COMMUNICATION_REACT_FLAVOR",
-    "_test:by-flavor": "node ../../common/scripts/preprocess-tests.mjs && jest",
+    "_test:by-flavor": "(npm run _if-preprocess && rushx preprocess || if-env COMMUNICATION_REACT_FLAVOR=beta && echo \"skip preprocess\") && jest",
     "test:components": "rushx _by-flavor \"npx playwright test -c playwright.config.components.ts\"",
     "test:components:update": "rushx _by-flavor \"npx playwright test -c playwright.config.components.ts --update-snapshots\""
   },
