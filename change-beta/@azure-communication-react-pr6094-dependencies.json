@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Dependency maintenance",
+  "comment": "Update the scoped HTTP-client Undici dependency to 6.27.0.",
+  "packageName": "@azure/communication-react",
+  "email": "v-sureshpag@microsoft.com",
+  "dependentChangeType": "patch"
+}
