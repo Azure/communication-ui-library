@@ -6,10 +6,12 @@ settings:
 
 overrides:
   axios: ^1.12.2
+  picomatch@^2.0.0: 2.3.2
+  picomatch@^4.0.0: 4.0.4
   playwright: ^1.55.1
   playwright-core: ^1.55.1
   glob@^10.0.0: ^10.5.0
-  node-forge: ^1.3.3
+  node-forge: ^1.4.0
   qs: ^6.14.1
 
 dependencies:
@@ -4978,7 +4980,7 @@ packages:
     dependencies:
       '@types/estree': 0.0.39
       estree-walker: 1.0.1
-      picomatch: 2.3.1
+      picomatch: 2.3.2
       rollup: 4.50.1
     dev: false
 
@@ -4993,7 +4995,7 @@ packages:
     dependencies:
       '@types/estree': 1.0.8
       estree-walker: 2.0.2
-      picomatch: 4.0.3
+      picomatch: 4.0.4
       rollup: 4.50.1
     dev: false
 
@@ -7294,7 +7296,7 @@ packages:
     engines: {node: '>= 8'}
     dependencies:
       normalize-path: 3.0.0
-      picomatch: 2.3.1
+      picomatch: 2.3.2
     dev: false
 
   /append-field@1.0.0:
@@ -7643,7 +7645,7 @@ packages:
       '@babel/helper-module-imports': 7.27.1(supports-color@5.5.0)
       '@babel/plugin-syntax-jsx': 7.27.1(@babel/core@7.28.4)
       lodash: 4.17.21
-      picomatch: 2.3.1
+      picomatch: 2.3.2
       styled-components: 5.3.11(@babel/core@7.28.4)(react-dom@18.3.1)(react-is@18.3.1)(react@18.3.1)
     transitivePeerDependencies:
       - '@babel/core'
@@ -10072,7 +10074,7 @@ packages:
       bser: 2.1.1
     dev: false
 
-  /fdir@6.5.0(picomatch@4.0.3):
+  /fdir@6.5.0(picomatch@4.0.4):
     resolution: {integrity: sha512-tIbYtZbucOs0BRGqPJkshJUYdL+SDH7dVM8gjy+ERp3WAUjLEFJE+02kanyHtwjWOnwrKYBiwAmM0p4kLJAnXg==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -10081,7 +10083,7 @@ packages:
       picomatch:
         optional: true
     dependencies:
-      picomatch: 4.0.3
+      picomatch: 4.0.4
     dev: false
 
   /file-entry-cache@8.0.0:
@@ -12159,7 +12161,7 @@ packages:
       chalk: 4.1.2
       ci-info: 3.9.0
       graceful-fs: 4.2.11
-      picomatch: 2.3.1
+      picomatch: 2.3.2
     dev: false
 
   /jest-validate@29.7.0:
@@ -13315,7 +13317,7 @@ packages:
     engines: {node: '>=8.6'}
     dependencies:
       braces: 3.0.3
-      picomatch: 2.3.1
+      picomatch: 2.3.2
     dev: false
 
   /mime-db@1.52.0:
@@ -13549,8 +13551,8 @@ packages:
       whatwg-url: 5.0.0
     dev: false
 
-  /node-forge@1.3.3:
-    resolution: {integrity: sha512-rLvcdSyRCyouf6jcOIPe/BgwG/d7hKjzMKOas33/pHEr6gbq18IK9zV7DiPvzsz0oBJPme6qr6H6kGZuI9/DZg==}
+  /node-forge@1.4.3:
+    resolution: {integrity: sha512-P6wzfh6t70avmV8FrVEAd/36sOPJQ+hkaJVX1Laap9J/77m7M0eyozDvc8SwnDf4P7MP94gwbAAo0rg3YVXT+g==}
     engines: {node: '>= 6.13.0'}
     dev: false
 
@@ -14170,13 +14172,13 @@ packages:
     resolution: {integrity: sha512-xceH2snhtb5M9liqDsmEw56le376mTZkEX/jEb/RxNFyegNul7eNslCXP9FDj/Lcu0X8KEyMceP2ntpaHrDEVA==}
     dev: false
 
-  /picomatch@2.3.1:
-    resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
+  /picomatch@2.3.2:
+    resolution: {integrity: sha512-V7+vQEJ06Z+c5tSye8S+nHUfI51xoXIXjHQ99cQtKUkQqqO1kO/KCJUfZXuB47h/YBlDhah2H3hdUGXn8ie0oA==}
     engines: {node: '>=8.6'}
     dev: false
 
-  /picomatch@4.0.3:
-    resolution: {integrity: sha512-5gTmgEY/sqK6gFXLIsQNH19lWb4ebPDLA4SdLP7dsWkIXHWlG66oPuVvXSGFPppYZz8ZDZq0dYYrbHfBCVUb1Q==}
+  /picomatch@4.0.4:
+    resolution: {integrity: sha512-QP88BAKvMam/3NxH6vj2o21R6MjxZUAd6nlwAS/pnGvN9IVLocLHxGYIzFhg6fUQ+5th6P4dv4eW9jX3DSIj7A==}
     engines: {node: '>=12'}
     dev: false
 
@@ -14374,7 +14376,7 @@ packages:
       ignore: 7.0.5
       mri: 1.2.0
       picocolors: 1.1.1
-      picomatch: 4.0.3
+      picomatch: 4.0.4
       prettier: 3.5.3
       tinyexec: 0.3.2
       tslib: 2.8.1
@@ -14714,7 +14716,7 @@ packages:
     engines: {node: '>=8.10.0'}
     requiresBuild: true
     dependencies:
-      picomatch: 2.3.1
+      picomatch: 2.3.2
     dev: false
 
   /recast@0.23.11:
@@ -15267,7 +15269,7 @@ packages:
     engines: {node: '>=10'}
     dependencies:
       '@types/node-forge': 1.3.14
-      node-forge: 1.3.3
+      node-forge: 1.4.3
     dev: false
 
   /semver@5.7.2:
@@ -16236,8 +16238,8 @@ packages:
     resolution: {integrity: sha512-j2Zq4NyQYG5XMST4cbs02Ak8iJUdxRM0XI5QyxXuZOzKOINmWurp3smXu3y5wDcJrptwpSjgXHzIQxR0omXljQ==}
     engines: {node: '>=12.0.0'}
     dependencies:
-      fdir: 6.5.0(picomatch@4.0.3)
-      picomatch: 4.0.3
+      fdir: 6.5.0(picomatch@4.0.4)
+      picomatch: 4.0.4
     dev: false
 
   /tinyrainbow@1.2.0:
@@ -17097,9 +17099,9 @@ packages:
     dependencies:
       '@types/node': 22.18.1
       esbuild: 0.25.9
-      fdir: 6.5.0(picomatch@4.0.3)
+      fdir: 6.5.0(picomatch@4.0.4)
       jiti: 2.4.2
-      picomatch: 4.0.3
+      picomatch: 4.0.4
       postcss: 8.5.6
       rollup: 4.50.1
       tinyglobby: 0.2.15
@@ -18632,7 +18634,7 @@ packages:
       linkify-it: 6.1.0
       memoize-one: 5.2.1
       nanoid: 3.3.8
-      node-forge: 1.3.3
+      node-forge: 1.4.3
       prettier: 3.5.3
       pretty-quick: 4.2.2(prettier@3.5.3)
       react: 18.3.1
@@ -18918,7 +18920,7 @@ packages:
       json-stringify-safe: 5.0.1
       linkify-it: 6.1.0
       nan: 2.23.0
-      node-forge: 1.3.3
+      node-forge: 1.4.3
       playwright-core: 1.55.1
       prettier: 3.5.3
       pretty-quick: 4.2.2(prettier@3.5.3)
@@ -19052,7 +19054,7 @@ packages:
       memoize-one: 5.2.1
       nan: 2.23.0
       nanoid: 3.3.8
-      node-forge: 1.3.3
+      node-forge: 1.4.3
       prettier: 3.5.3
       pretty-quick: 4.2.2(prettier@3.5.3)
       react: 18.3.1
@@ -19344,7 +19346,7 @@ packages:
       jest-junit: 16.0.0
       json-stringify-safe: 5.0.1
       nan: 2.23.0
-      node-forge: 1.3.3
+      node-forge: 1.4.3
       preact: 10.28.2
       prettier: 3.5.3
       pretty-quick: 4.2.2(prettier@3.5.3)

@@ -1,0 +1,9 @@
+{
+  "area": "fix",
+  "workstream": "Dependencies",
+  "type": "patch",
+  "comment": "Upgrade node-forge and picomatch build dependencies to patched versions",
+  "packageName": "@azure/communication-react",
+  "email": "v-cpattan@microsoft.com",
+  "dependentChangeType": "patch"
+}
