@@ -9,6 +9,14 @@ import * as identity from '../src/lib/identityClient';
 import app from './app';
 import { CommunicationUserToken } from '@azure/communication-identity';
 
+jest.mock('./lib/envHelper', () => ({
+  getResourceConnectionString: jest.fn(),
+  getEndpoint: jest.fn(),
+  getAdminUserId: jest.fn(),
+  getAzureBlobStorageEndpoint: jest.fn(),
+  getAzureBlobStorageConnectionString: jest.fn()
+}));
+
 // Setup mocks
 const mockUserToken: CommunicationUserToken = {
   user: { communicationUserId: 'mock-token-user' },
