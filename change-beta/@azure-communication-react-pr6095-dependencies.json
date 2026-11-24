@@ -1,0 +1,9 @@
+{
+  "type": "patch",
+  "area": "fix",
+  "workstream": "Dependency maintenance",
+  "comment": "Update scoped transitive and brace-expansion dependency resolutions.",
+  "packageName": "@azure/communication-react",
+  "email": "v-sureshpag@microsoft.com",
+  "dependentChangeType": "patch"
+}
