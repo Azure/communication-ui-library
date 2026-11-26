@@ -29,21 +29,11 @@
     "@azure/communication-chat": "1.6.0-beta.7",
     "@azure/communication-signaling": "1.0.0-beta.33",
     "@azure/communication-calling-effects": "1.3.2",
-    // CVE-2026-39363 fix: force transitive dependency (via @playwright/experimental-ct-react) to patched version.
     "vite": "6.4.2",
-    // CVE-2026-9277 / CVE-2026-13311 fix: force transitive dependency (via babel-loader, ts-loader,
-    // copy-webpack-plugin, @storybook/react-webpack5, etc.) to patched version.
     "shell-quote": "1.9.0",
-    // CVE-2026-73646 / CVE-2026-45623 fix: force transitive dependency (via css-loader,
-    // @playwright/experimental-ct-react, @storybook/react-webpack5) to patched version.
     "postcss": "8.5.18",
-    // CVE-2026-27606 fix: force transitive dependency (via rollup-plugin-sourcemaps,
-    // @rollup/plugin-json, @rollup/plugin-commonjs, @playwright/experimental-ct-react) to patched version.
     "rollup": "4.59.0",
-    // GHSA-5c6j-r48x-rmvq fix: force transitive dependency (via babel-loader, url-loader, style-loader,
-    // raw-loader, ts-loader, copy-webpack-plugin, css-loader, @storybook/react-webpack5, etc.) to patched version.
     "serialize-javascript": "7.0.3",
-    // CVE-2026-27212 fix: force dependency (via adaptivecards, adaptivecards-react) to patched version.
     "swiper": "12.1.2"
   },
 
@@ -79,6 +69,7 @@
     "@azure/communication-calling-effects": [ "1.3.2" ],
     "rollup": [ "^4.40.2" ],
     "swiper": [ "~12.1.2" ],
+    "vite": [ "^6.4.2" ],
     "typescript": [
       // All projects should use this version by default
       "5.3.3",
