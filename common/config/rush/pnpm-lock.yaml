@@ -19038,7 +19038,6 @@ packages:
 
   file:projects/react-components.tgz:
     resolution: {integrity: sha512-SLyye2LA4XhXtfWoz+1/Q9+1dSORLQOCi0hylJZuaSAHgFJlSVTO4Udtp8zRkM7LY5KZbMQgY8tKe2/4YiEXdA==, tarball: file:projects/react-components.tgz}
-    resolution: {integrity: sha512-og0GzIqdDIDxxdsirYzD65hjfwxMMuB5XAUtdLpxeHakhYCFbBtVghs7AtAv0luUKIESsmr4DxWAiytfIrpTPA==, tarball: file:projects/react-components.tgz}
     name: '@rush-temp/react-components'
     version: 0.0.0
     dependencies:
@@ -19162,7 +19161,6 @@ packages:
 
   file:projects/react-composites.tgz:
     resolution: {integrity: sha512-WgIImdtN+h8TIFLZt/nY/f0gJ6FtFkVos+QjD6cmAs4BafqXI5wTpeZLfRIn8Frz44EZeLGsxKprBjUwVWzDtw==, tarball: file:projects/react-composites.tgz}
-    resolution: {integrity: sha512-/G5BbQ72vuqMjil7WUcyyg0OTq0JkanZ/nu+0bJUmZHuS4a1IEGGfi9K3idhOO3O1bAiZa3Ek6/4YtOX//RW4A==, tarball: file:projects/react-composites.tgz}
     name: '@rush-temp/react-composites'
     version: 0.0.0
     dependencies:
@@ -19457,7 +19455,6 @@ packages:
 
   file:projects/storybook8.tgz:
     resolution: {integrity: sha512-G6lfG4aRjZUjCvVMXzuAw9wsVH6t3IcoVU1R4ilE4Sdql+WU6ztZA+mDfp2TH1VPuRguxlzxYraFTJlzqMkuPw==, tarball: file:projects/storybook8.tgz}
-    resolution: {integrity: sha512-DXojKx/aSuDEAPfqVlesCrnwSdwxQ5dPz3zmL0O4zexoimX0xIJJpy7OILY1AQeGLzmXJq1qaqnxFlAJGNRxYw==, tarball: file:projects/storybook8.tgz}
     name: '@rush-temp/storybook8'
     version: 0.0.0
     dependencies:
