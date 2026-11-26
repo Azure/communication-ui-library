@@ -41,6 +41,7 @@ extends:
                 inputs:
                   environment: 'PRODEXT'
                   teamId: '35669'
+                  serviceTreeId: 'e38fcba7-191b-47ad-bb71-aeff7c983e3f'
                   authType: 'FederatedIdentity'
                   FederatedIdentityServiceConnection: 'Touchdown-Build-authentication-for-acs-web-ui'
                   isPreview: false
@@ -53,6 +54,7 @@ extends:
                 inputs:
                   environment: 'PRODEXT'
                   teamId: '35669'
+                  serviceTreeId: 'e38fcba7-191b-47ad-bb71-aeff7c983e3f'
                   authType: 'FederatedIdentity'
                   FederatedIdentityServiceConnection: 'Touchdown-Build-authentication-for-acs-web-ui'
                   isPreview: false
